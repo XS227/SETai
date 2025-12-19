@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "setai"
+version = "0.1.0"
+description = "SETai web application"
+authors = ["SETai Team <dev@setai.local>"]
+packages = [{ include = "apps" }, { include = "setai" }]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+django = "^4.2"
+djangorestframework = "^3.14"
+psycopg2-binary = "^2.9"
+
+[tool.poetry.group.dev.dependencies]
+black = "^24.3"
+flake8 = "^7.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
