@@ -1,21 +1,22 @@
 [tool.poetry]
 name = "setai"
 version = "0.1.0"
-description = "SETai web application"
-authors = ["SETai Team <dev@setai.local>"]
-packages = [{ include = "apps" }, { include = "setai" }]
+description = "SETai MVP"
+authors = ["SETai"]
 
 [tool.poetry.dependencies]
 python = "^3.11"
-django = "^4.2"
-djangorestframework = "^3.14"
-psycopg2-binary = "^2.9"
-PyGithub = "^2.3.0"
+django = "^5.0"
+djangorestframework = "^3.15"
+django-allauth = "^0.63"
+pygithub = "^2.3"
+httpx = "^0.27"
+python-dotenv = "^1.0"
 
 [tool.poetry.group.dev.dependencies]
-black = "^24.3"
-flake8 = "^7.0"
+ruff = "^0.5"
+black = "^24.4"
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
+requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
