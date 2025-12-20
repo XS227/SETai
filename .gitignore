@@ -11,3 +11,4 @@ venv/
 staticfiles/
 node_modules/
 .DS_Store
+locale/**/*.mo

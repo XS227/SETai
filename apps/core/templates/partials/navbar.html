@@ -1,10 +1,21 @@
+{% load i18n %}
 <nav>
-    <a href="/">SETai</a>
+    <a href="/">{% trans "SETai" %}</a>
     <ul>
-        <li><a href="/accounts/dashboard/">Dashboard</a></li>
-        <li><a href="/projects/connect/">Connect Repo</a></li>
-        <li><a href="/projects/command/">Command</a></li>
-        <li><a href="/projects/proposal/">Proposal</a></li>
-        <li><a href="/projects/history/">History</a></li>
+        <li><a href="/accounts/dashboard/">{% trans "Dashboard" %}</a></li>
+        <li><a href="/projects/connect/">{% trans "Connect Repo" %}</a></li>
+        <li><a href="/projects/command/">{% trans "Command" %}</a></li>
+        <li><a href="/projects/proposal/">{% trans "Proposal" %}</a></li>
+        <li><a href="/projects/history/">{% trans "History" %}</a></li>
     </ul>
+    <form action="/i18n/setlang/" method="post">
+        {% csrf_token %}
+        <label for="language-select" class="sr-only">{% trans "Select language" %}</label>
+        <select name="language" id="language-select">
+            <option value="en" {% if request.LANGUAGE_CODE == "en" %}selected{% endif %}>{% trans "English" %}</option>
+            <option value="no" {% if request.LANGUAGE_CODE == "no" %}selected{% endif %}>{% trans "Norwegian" %}</option>
+        </select>
+        <input type="hidden" name="next" value="{{ request.path }}" />
+        <button type="submit">{% trans "Change" %}</button>
+    </form>
 </nav>

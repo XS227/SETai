@@ -1,8 +1,8 @@
 from django.contrib import admin
-from .models import Project
+from .models import WebsiteProject
 
 
-@admin.register(Project)
+@admin.register(WebsiteProject)
 class ProjectAdmin(admin.ModelAdmin):
-    list_display = ("name", "repository_url", "created_at")
-    search_fields = ("name", "repository_url")
+    list_display = ("name", "repo_full_name", "default_branch", "created_at")
+    search_fields = ("name", "repo_full_name")
