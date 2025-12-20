@@ -1,6 +1,89 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: SETai\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-12-20 00:03+0000\n"
 "Language: en\n"
+"MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
 
+#: apps/accounts/templates/accounts/dashboard.html:5
+msgid "Account dashboard"
+msgstr "Account dashboard"
+
+#: apps/accounts/templates/accounts/dashboard.html:6
+msgid "Welcome to your account overview."
+msgstr "Welcome to your account overview."
+
+#: apps/core/templates/base.html:8 apps/core/templates/partials/navbar.html:3
+msgid "SETai"
+msgstr "SETai"
+
+#: apps/core/templates/partials/navbar.html:5
+msgid "Dashboard"
+msgstr "Dashboard"
+
+#: apps/core/templates/partials/navbar.html:6
+msgid "Connect Repo"
+msgstr "Connect Repo"
+
+#: apps/core/templates/partials/navbar.html:7
+msgid "Command"
+msgstr "Command"
+
+#: apps/core/templates/partials/navbar.html:8
+msgid "Proposal"
+msgstr "Proposal"
+
+#: apps/core/templates/partials/navbar.html:9
+msgid "History"
+msgstr "History"
+
+#: apps/core/templates/partials/navbar.html:13
+msgid "Select language"
+msgstr "Select language"
+
+#: apps/core/templates/partials/navbar.html:15
+msgid "English"
+msgstr "English"
+
+#: apps/core/templates/partials/navbar.html:16
+msgid "Norwegian"
+msgstr "Norwegian"
+
+#: apps/core/templates/partials/navbar.html:19
+msgid "Change"
+msgstr "Change"
+
+#: apps/projects/templates/projects/command.html:5
+msgid "Run a command"
+msgstr "Run a command"
+
+#: apps/projects/templates/projects/command.html:6
+msgid "Enter a natural language command to request a change."
+msgstr "Enter a natural language command to request a change."
+
+#: apps/projects/templates/projects/connect_repo.html:5
+msgid "Connect a repository"
+msgstr "Connect a repository"
+
+#: apps/projects/templates/projects/connect_repo.html:6
+msgid "Use this page to link your GitHub repository."
+msgstr "Use this page to link your GitHub repository."
+
+#: apps/projects/templates/projects/history.html:5
+msgid "Deployment history"
+msgstr "Deployment history"
+
+#: apps/projects/templates/projects/history.html:6
+msgid "Track previous deployments and approvals."
+msgstr "Track previous deployments and approvals."
+
+#: apps/projects/templates/projects/proposal.html:5
+msgid "AI proposal"
+msgstr "AI proposal"
+
+#: apps/projects/templates/projects/proposal.html:6
+msgid "Review the proposed changes before deployment."
+msgstr "Review the proposed changes before deployment."

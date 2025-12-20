@@ -1,6 +1,7 @@
 """Serializers for project change request endpoints."""
 
 from rest_framework import serializers
+from apps.projects.models import WebsiteProject
 
 from apps.projects.models import ChangeRequest, ProposedFileChange
 
@@ -20,13 +21,5 @@ class ChangeRequestSerializer(serializers.ModelSerializer):
     file_changes = ProposedFileChangeSerializer(read_only=True, many=True)
 
     class Meta:
-        model = ChangeRequest
-        fields = [
-            "id",
-            "project",
-            "command",
-            "status",
-            "error_message",
-            "created_at",
-            "file_changes",
-        ]
+        model = WebsiteProject
+        fields = ["id", "name", "repo_full_name", "default_branch", "deploy_webhook_url", "created_at"]

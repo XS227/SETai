@@ -1,6 +1,7 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block content %}
-<h1>Run a command</h1>
-<p>Enter a natural language command to request a change.</p>
+<h1>{% trans "Run a command" %}</h1>
+<p>{% trans "Enter a natural language command to request a change." %}</p>
 {% endblock %}

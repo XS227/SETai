@@ -6,4 +6,5 @@ urlpatterns = [
     path("accounts/", include("allauth.urls")),
     path("accounts/", include("apps.accounts.urls")),
     path("projects/", include("apps.projects.urls")),
+    path("i18n/", include("django.conf.urls.i18n")),
 ]
