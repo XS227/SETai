@@ -1,10 +1,10 @@
-"""API endpoints for projects (placeholder)."""
+"""API endpoints for projects."""
 
 from rest_framework import generics
-from apps.projects.models import Project
+from apps.projects.models import WebsiteProject
 from .serializers import ProjectSerializer
 
 
 class ProjectListCreateView(generics.ListCreateAPIView):
-    queryset = Project.objects.all()
+    queryset = WebsiteProject.objects.all()
     serializer_class = ProjectSerializer
