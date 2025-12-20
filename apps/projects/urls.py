@@ -1,13 +1,10 @@
-from django.urls import include, path
-from . import views
-
-
-app_name = "projects"
+from django.urls import path
+from .views import command_view, history_view, new_project, proposal_view, publish_view
 
 urlpatterns = [
-    path("api/", include("apps.projects.api.urls")),
-    path("connect/", views.connect_repo, name="connect-repo"),
-    path("command/", views.command, name="command"),
-    path("proposal/", views.proposal, name="proposal"),
-    path("history/", views.history, name="history"),
+    path("new/", new_project, name="new_project"),
+    path("<int:project_id>/command/", command_view, name="command"),
+    path("proposal/<int:change_request_id>/", proposal_view, name="proposal"),
+    path("publish/<int:change_request_id>/", publish_view, name="publish"),
+    path("<int:project_id>/history/", history_view, name="history"),
 ]

@@ -2,6 +2,26 @@
 {% load i18n %}
 
 {% block content %}
-<h1>{% trans "Connect a repository" %}</h1>
-<p>{% trans "Use this page to link your GitHub repository." %}</p>
+  <h2>{% trans "Connect website repo" %}</h2>
+
+  <form method="post" class="form">
+    {% csrf_token %}
+    <label>{% trans "Project name" %}</label>
+    <input name="name" placeholder="SETai Demo Site"/>
+
+    <label>{% trans "GitHub repo (owner/name)" %}</label>
+    <input name="repo_full_name" placeholder="XS227/setai-demo-site" required/>
+
+    <label>{% trans "Default branch" %}</label>
+    <input name="default_branch" value="main"/>
+
+    <label>{% trans "Deploy webhook URL (VPS)" %}</label>
+    <input name="deploy_webhook_url" placeholder="https://your-vps.example.com/deploy"/>
+
+    <button class="btn" type="submit">{% trans "Save project" %}</button>
+  </form>
+
+  <p class="hint">
+    {% trans "MVP convention: your website repo must contain site_content.json at the repo root." %}
+  </p>
 {% endblock %}

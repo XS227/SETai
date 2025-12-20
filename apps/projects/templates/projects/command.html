@@ -2,6 +2,16 @@
 {% load i18n %}
 
 {% block content %}
-<h1>{% trans "Run a command" %}</h1>
-<p>{% trans "Enter a natural language command to request a change." %}</p>
+  <h2>{% trans "Send a command" %}</h2>
+  <p><strong>{{ project.name }}</strong> — {{ project.repo_full_name }}</p>
+
+  {% if error %}<p class="error">{{ error }}</p>{% endif %}
+
+  <form method="post" class="form">
+    {% csrf_token %}
+    <label>{% trans "What should we change?" %}</label>
+    <textarea name="command" rows="4" placeholder="{% trans 'Example: Update opening hours to Mon–Fri 09–17' %}" required></textarea>
+
+    <button class="btn" type="submit">{% trans "Generate proposal" %}</button>
+  </form>
 {% endblock %}

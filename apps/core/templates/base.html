@@ -1,17 +1,26 @@
 {% load i18n %}
-{% get_current_language as LANGUAGE_CODE %}
-<!DOCTYPE html>
+<!doctype html>
 <html lang="{{ LANGUAGE_CODE }}">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{% trans "SETai" %}</title>
-    <link rel="stylesheet" href="/static/app.css" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>SETai</title>
+  <link rel="stylesheet" href="/static/app.css" />
 </head>
 <body>
-    {% include "partials/navbar.html" %}
-    <main>
-        {% block content %}{% endblock %}
-    </main>
+  {% include "partials/navbar.html" %}
+  <main class="container">
+    {% block content %}
+      <section class="hero">
+        <h1>{% trans "Update your business website with AI — without coding" %}</h1>
+        <p>{% trans "Connect GitHub, propose changes, approve, and publish live." %}</p>
+        {% if user.is_authenticated %}
+          <a class="btn" href="/dashboard/">{% trans "Go to dashboard" %}</a>
+        {% else %}
+          <a class="btn" href="/accounts/github/login/">{% trans "Sign in with GitHub" %}</a>
+        {% endif %}
+      </section>
+    {% endblock %}
+  </main>
 </body>
 </html>

@@ -2,6 +2,27 @@
 {% load i18n %}
 
 {% block content %}
-<h1>{% trans "AI proposal" %}</h1>
-<p>{% trans "Review the proposed changes before deployment." %}</p>
+  <h2>{% trans "Proposed change" %}</h2>
+  <p><strong>{% trans "Command" %}:</strong> {{ cr.command }}</p>
+
+  <div class="card">
+    <p><strong>{% trans "File" %}:</strong> {{ fc.path }}</p>
+
+    <div class="diff">
+      <div>
+        <h4>{% trans "Before" %}</h4>
+        <pre>{{ fc.before_text }}</pre>
+      </div>
+      <div>
+        <h4>{% trans "After" %}</h4>
+        <pre>{{ fc.after_text }}</pre>
+      </div>
+    </div>
+
+    <form method="post" action="/projects/publish/{{ cr.id }}/">
+      {% csrf_token %}
+      <button class="btn" type="submit">{% trans "Approve & publish" %}</button>
+      <a class="btn-secondary" href="/dashboard/">{% trans "Cancel" %}</a>
+    </form>
+  </div>
 {% endblock %}

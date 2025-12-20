@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+  {% if error %}
+    <h2>{% trans "Publish failed" %}</h2>
+    <p class="error">{{ error }}</p>
+  {% else %}
+    <h2>{% trans "Published" %}</h2>
+    <p>{% trans "Commit SHA" %}: <code>{{ sha }}</code></p>
+    <p>{% trans "If your VPS webhook is connected, the deploy was triggered." %}</p>
+  {% endif %}
+
+  <a class="btn" href="/dashboard/">{% trans "Back to dashboard" %}</a>
+{% endblock %}

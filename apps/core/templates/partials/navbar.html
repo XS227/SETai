@@ -1,21 +1,24 @@
 {% load i18n %}
-<nav>
-    <a href="/">{% trans "SETai" %}</a>
-    <ul>
-        <li><a href="/accounts/dashboard/">{% trans "Dashboard" %}</a></li>
-        <li><a href="/projects/connect/">{% trans "Connect Repo" %}</a></li>
-        <li><a href="/projects/command/">{% trans "Command" %}</a></li>
-        <li><a href="/projects/proposal/">{% trans "Proposal" %}</a></li>
-        <li><a href="/projects/history/">{% trans "History" %}</a></li>
-    </ul>
-    <form action="/i18n/setlang/" method="post">
-        {% csrf_token %}
-        <label for="language-select" class="sr-only">{% trans "Select language" %}</label>
-        <select name="language" id="language-select">
-            <option value="en" {% if request.LANGUAGE_CODE == "en" %}selected{% endif %}>{% trans "English" %}</option>
-            <option value="no" {% if request.LANGUAGE_CODE == "no" %}selected{% endif %}>{% trans "Norwegian" %}</option>
-        </select>
-        <input type="hidden" name="next" value="{{ request.path }}" />
-        <button type="submit">{% trans "Change" %}</button>
+<header class="nav">
+  <div class="nav-left">
+    <strong>SETai</strong>
+  </div>
+
+  <div class="nav-right">
+    <form action="/i18n/setlang/" method="post" style="display:inline">
+      {% csrf_token %}
+      <input type="hidden" name="next" value="{{ request.path }}">
+      <select name="language" onchange="this.form.submit()">
+        <option value="en" {% if LANGUAGE_CODE == "en" %}selected{% endif %}>EN</option>
+        <option value="no" {% if LANGUAGE_CODE == "no" %}selected{% endif %}>NO</option>
+      </select>
     </form>
-</nav>
+
+    {% if user.is_authenticated %}
+      <a href="/dashboard/">{% trans "Dashboard" %}</a>
+      <a href="/accounts/logout/">{% trans "Log out" %}</a>
+    {% else %}
+      <a href="/accounts/github/login/">{% trans "Log in" %}</a>
+    {% endif %}
+  </div>
+</header>
