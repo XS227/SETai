@@ -1,35 +1,23 @@
-"""AI proposal utilities."""
-
 from dataclasses import dataclass
-from typing import Any, Dict
-
-
-def generate_proposal(prompt: str) -> Dict[str, Any]:
-    """Return a placeholder proposal for the given prompt."""
-    return {"prompt": prompt, "proposal": "This is a proposed change."}
 
 
 @dataclass
-class ParsedCommand:
+class AIResult:
     target_key: str
     new_value: str
 
 
-def simple_rule_based_parser(command: str) -> ParsedCommand:
-    """
-    Extremely small helper to extract a target key and value from a natural-language command.
+def simple_rule_based_parser(command: str) -> AIResult:
+    c = command.lower()
 
-    Examples:
-        "title: Welcome" -> target_key="title", new_value="Welcome"
-        "headline = Hello" -> target_key="headline", new_value="Hello"
-        "Just update the hero copy" -> target_key="content", new_value="Just update the hero copy"
-    """
-    if ":" in command:
-        key, value = command.split(":", 1)
-        return ParsedCommand(target_key=key.strip(), new_value=value.strip())
+    if "opening" in c or "åpning" in c:
+        # MVP: store the full command as value; refine later
+        return AIResult("opening_hours", command.strip())
 
-    if "=" in command:
-        key, value = command.split("=", 1)
-        return ParsedCommand(target_key=key.strip(), new_value=value.strip())
+    if "email" in c or "epost" in c or "e-post" in c:
+        return AIResult("contact_email", command.split()[-1])
 
-    return ParsedCommand(target_key="content", new_value=command.strip())
+    if "banner" in c or "announcement" in c or "tilbud" in c:
+        return AIResult("homepage_banner", command.strip())
+
+    return AIResult("homepage_banner", command.strip())

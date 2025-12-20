@@ -1,7 +1,29 @@
 {% extends "base.html" %}
 {% load i18n %}
-
 {% block content %}
-<h1>{% trans "Account dashboard" %}</h1>
-<p>{% trans "Welcome to your account overview." %}</p>
+  <h2>{% trans "Dashboard" %}</h2>
+
+  <div class="card">
+    <h3>{% trans "Your projects" %}</h3>
+    <a class="btn" href="/projects/new/">{% trans "Connect a website repo" %}</a>
+  </div>
+
+  {% if projects %}
+    <ul class="list">
+      {% for p in projects %}
+        <li class="list-item">
+          <div>
+            <strong>{{ p.name }}</strong><br/>
+            <small>{{ p.repo_full_name }} ({{ p.default_branch }})</small>
+          </div>
+          <div>
+            <a class="btn-secondary" href="/projects/{{ p.id }}/command/">{% trans "Send command" %}</a>
+            <a class="btn-secondary" href="/projects/{{ p.id }}/history/">{% trans "History" %}</a>
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>{% trans "No projects yet. Connect your first repo." %}</p>
+  {% endif %}
 {% endblock %}

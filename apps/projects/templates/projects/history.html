@@ -2,6 +2,20 @@
 {% load i18n %}
 
 {% block content %}
-<h1>{% trans "Deployment history" %}</h1>
-<p>{% trans "Track previous deployments and approvals." %}</p>
+  <h2>{% trans "History" %}</h2>
+  <p><strong>{{ project.name }}</strong></p>
+
+  <ul class="list">
+    {% for c in changes %}
+      <li class="list-item">
+        <div>
+          <strong>{{ c.command }}</strong><br/>
+          <small>{{ c.created_at }} — {{ c.status }}</small>
+          {% if c.error_message %}<div class="error"><small>{{ c.error_message }}</small></div>{% endif %}
+        </div>
+      </li>
+    {% empty %}
+      <li>{% trans "No changes yet." %}</li>
+    {% endfor %}
+  </ul>
 {% endblock %}

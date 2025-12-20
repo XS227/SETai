@@ -8,10 +8,13 @@ def store_github_token(request, sociallogin, **kwargs):
     if sociallogin.account.provider != "github":
         return
 
-    token = sociallogin.token.token
-    login = sociallogin.account.extra_data.get("login", "")
+    token = getattr(sociallogin, "token", None)
+    if not token:
+        return
+
+    github_login = sociallogin.account.extra_data.get("login", "")
 
     GithubConnection.objects.update_or_create(
         user=sociallogin.user,
-        defaults={"access_token": token, "github_login": login},
+        defaults={"access_token": token.token, "github_login": github_login},
     )
