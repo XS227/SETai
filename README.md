@@ -74,11 +74,12 @@ SETai/
    ```bash
    cp .env.example .env
    ```
-2. Install dependencies with Poetry:
+2. Update `.env` with your Django secret key and, if you plan to enable GitHub OAuth, set `GITHUB_CLIENT_ID` and `GITHUB_CLIENT_SECRET`.
+3. Install dependencies with Poetry:
    ```bash
    poetry install
    ```
-3. Run the development server:
+4. Run the development server:
    ```bash
    poetry run python manage.py runserver
    ```
