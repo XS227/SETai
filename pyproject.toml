@@ -8,6 +8,7 @@ packages = [{ include = "apps" }, { include = "setai" }]
 [tool.poetry.dependencies]
 python = "^3.11"
 django = "^4.2"
+django-allauth = "^0.63.3"
 djangorestframework = "^3.14"
 psycopg2-binary = "^2.9"
 PyGithub = "^2.3.0"

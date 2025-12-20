@@ -14,6 +14,11 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.sites",
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "allauth.socialaccount.providers.github",
     "rest_framework",
     "apps.accounts",
     "apps.projects",
@@ -51,6 +56,20 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "setai.wsgi.application"
 ASGI_APPLICATION = "setai.asgi.application"
+
+AUTHENTICATION_BACKENDS = [
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
+]
+
+SITE_ID = int(os.environ.get("DJANGO_SITE_ID", "1"))
+
+SOCIALACCOUNT_PROVIDERS = {
+    "github": {
+        "VERIFIED_EMAIL": True,
+        "SCOPE": ["read:user", "repo"],
+    }
+}
 
 if os.environ.get("POSTGRES_DB"):
     DATABASES = {
