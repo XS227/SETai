@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import WebsiteProject
 
+from .models import ChangeRequest, ProposedFileChange, WebsiteProject
 
 @admin.register(WebsiteProject)
 class ProjectAdmin(admin.ModelAdmin):
