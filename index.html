@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>SETai | AI-powered website updates</title>
+  <link rel="stylesheet" href="/static/app.css" />
+  <style>
+    body { background: #0c1021; color: #f5f7ff; }
+    .container { max-width: 1080px; }
+    .nav { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.08); }
+    .nav a { color: #f5f7ff; }
+    .nav strong { color: #fff; letter-spacing: 0.5px; }
+    .hero { padding: 56px 0; }
+    .hero h1 { font-size: 2.6rem; margin-bottom: 12px; color: #fff; }
+    .hero p { color: #c8d0ff; font-size: 1.15rem; max-width: 760px; }
+    .card { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.08); color: #e8ecff; }
+    .pill { background: rgba(47, 99, 255, 0.15); color: #aecdff; }
+    .muted { color: #c2c8e4; }
+    .status.success { background:#113120; color:#4fe487; }
+    .status.warning { background:#312511; color:#f3c05f; }
+    .workflow-grid { margin-top: 12px; }
+    .timeline { border-left: 2px solid rgba(255,255,255,0.18); padding-left: 12px; margin: 0; }
+    .timeline li { margin: 6px 0; color: #c8d0ff; }
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <div class="nav-left">
+      <strong>SETai</strong>
+    </div>
+    <div class="nav-right">
+      <a href="/">Home</a>
+      <a href="/showcase/">Showcase</a>
+      <a href="/accounts/github/login/">Sign in</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <h1>Update your business website with AI — without coding</h1>
+      <p>Describe the change, review an AI-generated diff, approve with confidence, and ship live in minutes.</p>
+      <div style="margin-top:16px;">
+        <a class="btn" href="/accounts/github/login/">Sign in with GitHub</a>
+        <a class="btn-secondary" href="/showcase/" style="margin-left:10px;">See workflow</a>
+      </div>
+    </section>
+
+    <section class="grid workflow-grid">
+      <article class="card">
+        <h2>Connect your repo</h2>
+        <p class="muted">Link GitHub once and SETai prepares a safe workspace with branch protection and CI hooks.</p>
+        <div class="pill">Onboarding</div>
+        <ul class="list timeline">
+          <li>OAuth with GitHub</li>
+          <li>Select repo & environment</li>
+          <li>Auto-create preview branch</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h2>Describe the change</h2>
+        <p class="muted">Ask for content edits, layout tweaks, or feature updates in natural language.</p>
+        <div class="pill">Prompt</div>
+        <p class="muted">“Add a pricing CTA in the hero and replace testimonials with a carousel.”</p>
+      </article>
+
+      <article class="card">
+        <h2>Review the proposal</h2>
+        <p class="muted">Inspect the diff with highlighted additions and removals before approving.</p>
+        <div class="pill">Quality gate</div>
+        <div class="diff-preview">
+          <div>
+            <h3>Before</h3>
+<pre><code>&lt;section class="testimonials"&gt;
+- &lt;ul&gt;
+-   &lt;li&gt;"Great experience!"&lt;/li&gt;
+- &lt;/ul&gt;
+&lt;/section&gt;</code></pre>
+          </div>
+          <div>
+            <h3>After</h3>
+<pre><code>&lt;section class="testimonials"&gt;
+  &lt;div class="carousel"&gt;
+    &lt;button aria-label="Prev"&gt;◀&lt;/button&gt;
+    &lt;div class="slides"&gt;…&lt;/div&gt;
+    &lt;button aria-label="Next"&gt;▶&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</code></pre>
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <h2>Approve & deploy</h2>
+        <p class="muted">Merge the PR, run CI, and deploy automatically to production once checks pass.</p>
+        <div class="pill">Delivery</div>
+        <p class="muted">Proposal #42 — Hero CTA refresh <span class="status success">Deployed</span></p>
+        <p class="muted">Proposal #40 — Dark mode toggle <span class="status warning">Needs review</span></p>
+      </article>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero">
+  <h1>SETai Workflow Showcase</h1>
+  <p class="lead">See how SETai helps you propose, review, and deploy website changes with AI assistance.</p>
+</section>
+
+<section class="grid">
+  <article class="card">
+    <h2>1. Describe your update</h2>
+    <p>Provide a plain-language request describing the change you want on your website. SETai parses the intent and prepares an actionable plan.</p>
+    <div class="pill">Input</div>
+    <p class="muted">"Add a hero banner with a call-to-action linking to pricing, and replace the testimonials section with a carousel."</p>
+  </article>
+
+  <article class="card">
+    <h2>2. Generate a proposal</h2>
+    <p>SETai produces a proposed code diff, previewing HTML, CSS, and configuration changes. You can inspect the diff without touching your repo.</p>
+    <div class="pill">AI draft</div>
+    <ul class="list">
+      <li>New hero section with primary CTA</li>
+      <li>Updated navigation to include Pricing</li>
+      <li>Replaced testimonials list with carousel component</li>
+    </ul>
+  </article>
+
+  <article class="card">
+    <h2>3. Review the diff</h2>
+    <p>Compare code changes side by side, add comments, and iterate until the proposal meets your standards.</p>
+    <div class="pill">Quality gate</div>
+    <div class="diff-preview">
+      <div>
+        <h3>Before</h3>
+        <pre><code>&lt;section class="testimonials"&gt;
+-  &lt;ul&gt;
+-    &lt;li&gt;"Great experience!"&lt;/li&gt;
+-  &lt;/ul&gt;
+&lt;/section&gt;</code></pre>
+      </div>
+      <div>
+        <h3>After</h3>
+        <pre><code>&lt;section class="testimonials"&gt;
+  &lt;div class="carousel"&gt;
+    &lt;button aria-label="Previous"&gt;◀&lt;/button&gt;
+    &lt;div class="slides"&gt;...&lt;/div&gt;
+    &lt;button aria-label="Next"&gt;▶&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</code></pre>
+      </div>
+    </div>
+  </article>
+
+  <article class="card">
+    <h2>4. Approve and deploy</h2>
+    <p>Click <strong>Approve</strong> to merge and deploy. SETai handles GitHub PRs, CI, and production rollout for you.</p>
+    <div class="pill">Deployment</div>
+    <p class="muted">Automated checks run before merge, then your live site updates with the approved changes.</p>
+  </article>
+
+  <article class="card">
+    <h2>5. Track history</h2>
+    <p>View a chronological history of proposals, approvals, and deployments. Quickly roll back or revisit previous versions.</p>
+    <div class="pill">Audit log</div>
+    <ul class="list">
+      <li>Proposal #42 – Hero CTA update – <span class="status success">Deployed</span></li>
+      <li>Proposal #41 – Footer social links – <span class="status success">Deployed</span></li>
+      <li>Proposal #40 – Dark mode toggle – <span class="status warning">Needs review</span></li>
+    </ul>
+  </article>
+
+  <article class="card">
+    <h2>Ready to try it?</h2>
+    <p>Connect your GitHub repository and start shipping improvements with AI-assisted workflows.</p>
+    <a class="btn" href="/accounts/github/login/">Sign in with GitHub</a>
+    <a class="btn-secondary" href="/">Back to home</a>
+  </article>
+</section>
+{% endblock %}

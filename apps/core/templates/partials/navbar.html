@@ -6,19 +6,21 @@
 
   <div class="nav-right">
     <form action="/i18n/setlang/" method="post" style="display:inline">
-      {% csrf_token %}
-      <input type="hidden" name="next" value="{{ request.path }}">
-      <select name="language" onchange="this.form.submit()">
-        <option value="en" {% if LANGUAGE_CODE == "en" %}selected{% endif %}>EN</option>
-        <option value="no" {% if LANGUAGE_CODE == "no" %}selected{% endif %}>NO</option>
-      </select>
-    </form>
+    {% csrf_token %}
+    <input type="hidden" name="next" value="{{ request.path }}">
+    <select name="language" onchange="this.form.submit()">
+      <option value="en" {% if LANGUAGE_CODE == "en" %}selected{% endif %}>EN</option>
+      <option value="no" {% if LANGUAGE_CODE == "no" %}selected{% endif %}>NO</option>
+    </select>
+  </form>
 
-    {% if user.is_authenticated %}
-      <a href="/dashboard/">{% trans "Dashboard" %}</a>
-      <a href="/accounts/logout/">{% trans "Log out" %}</a>
-    {% else %}
-      <a href="/accounts/github/login/">{% trans "Log in" %}</a>
+  <a href="/showcase/">{% trans "Showcase" %}</a>
+
+  {% if user.is_authenticated %}
+    <a href="/dashboard/">{% trans "Dashboard" %}</a>
+    <a href="/accounts/logout/">{% trans "Log out" %}</a>
+  {% else %}
+    <a href="/accounts/github/login/">{% trans "Log in" %}</a>
     {% endif %}
   </div>
 </header>

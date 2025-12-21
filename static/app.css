@@ -14,3 +14,11 @@ pre { background:#0b1020; color:#d7e0ff; padding:12px; border-radius:12px; overf
 .list-item { display:flex; justify-content:space-between; align-items:center; background:#fff; border:1px solid #eee; border-radius:14px; padding:12px; margin-top:10px; }
 .error { color:#b00020; }
 .hint { color:#555; margin-top: 10px; }
+.lead { color:#333; font-size:1.1rem; max-width:720px; }
+.grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:16px; }
+.pill { display:inline-block; padding:6px 12px; border-radius:999px; background:#eef2ff; color:#2f63ff; font-weight:600; margin:8px 0; }
+.muted { color:#555; }
+.status { padding:4px 8px; border-radius:8px; font-weight:600; }
+.status.success { background:#e8fff0; color:#0f8b45; }
+.status.warning { background:#fff7e6; color:#b57400; }
+.diff-preview { display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:12px; }
