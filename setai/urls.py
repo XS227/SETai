@@ -1,10 +1,11 @@
 from django.contrib import admin
 from django.urls import include, path
-from apps.core.views import home
+from apps.core.views import home, showcase
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", home, name="home"),
+    path("showcase/", showcase, name="showcase"),
     path("accounts/", include("allauth.urls")),
     path("i18n/", include("django.conf.urls.i18n")),
     path("", include("apps.accounts.urls")),
