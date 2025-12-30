@@ -1,0 +1,739 @@
+<!-- =========================================
+  Setaei Persian Chat Kit (Standalone HTML)
+  - Drop-in widget (RTL, Persian UI)
+  - Button-first flow + optional WhatsApp handoff
+  - No backend required
+  ========================================= -->
+
+<style>
+  :root{
+    --sk-bg: #0b0f14;
+    --sk-panel: rgba(18, 24, 33, 0.92);
+    --sk-border: rgba(255,255,255,0.10);
+    --sk-text: rgba(255,255,255,0.92);
+    --sk-muted: rgba(255,255,255,0.68);
+    --sk-accent: #1fb6ff;
+    --sk-accent-2: #7c5cff;
+    --sk-shadow: 0 18px 45px rgba(0,0,0,0.45);
+    --sk-radius: 18px;
+    --sk-radius-sm: 12px;
+    --sk-font: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans Arabic", "Noto Naskh Arabic", "Vazirmatn", "IRANSans", sans-serif;
+  }
+
+  /* Floating Button */
+  .sk-chat-launcher{
+    position: fixed;
+    right: 18px;
+    bottom: 18px;
+    z-index: 2147483000;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    border-radius: 999px;
+    border: 1px solid var(--sk-border);
+    background: linear-gradient(135deg, rgba(31,182,255,0.16), rgba(124,92,255,0.16));
+    color: var(--sk-text);
+    box-shadow: var(--sk-shadow);
+    cursor: pointer;
+    user-select: none;
+    font-family: var(--sk-font);
+    backdrop-filter: blur(10px);
+  }
+  .sk-chat-launcher:focus{ outline: 2px solid rgba(31,182,255,0.45); outline-offset: 2px; }
+  .sk-chat-badge{
+    width: 38px;
+    height: 38px;
+    border-radius: 999px;
+    display: grid;
+    place-items: center;
+    background: radial-gradient(circle at 30% 30%, rgba(31,182,255,0.45), rgba(124,92,255,0.35));
+    border: 1px solid rgba(255,255,255,0.12);
+  }
+  .sk-chat-launcher small{ color: var(--sk-muted); display:block; margin-top:2px; font-size:12px; }
+  .sk-chat-launcher .sk-launcher-text{ line-height: 1.25; text-align: right; }
+
+  /* Panel */
+  .sk-chat{
+    position: fixed;
+    right: 18px;
+    bottom: 78px;
+    width: 360px;
+    max-width: calc(100vw - 36px);
+    height: 520px;
+    max-height: calc(100vh - 110px);
+    z-index: 2147483001;
+    display: none;
+    flex-direction: column;
+    border-radius: var(--sk-radius);
+    border: 1px solid var(--sk-border);
+    background: linear-gradient(180deg, rgba(18,24,33,0.92), rgba(10,14,20,0.92));
+    box-shadow: var(--sk-shadow);
+    font-family: var(--sk-font);
+    overflow: hidden;
+    direction: rtl;
+    backdrop-filter: blur(12px);
+  }
+  .sk-chat.open{ display: flex; }
+
+  /* Header */
+  .sk-chat-header{
+    padding: 14px 14px 12px;
+    border-bottom: 1px solid var(--sk-border);
+    background: linear-gradient(135deg, rgba(31,182,255,0.14), rgba(124,92,255,0.10));
+    color: var(--sk-text);
+  }
+  .sk-header-row{
+    display:flex;
+    align-items:center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  .sk-title{
+    display:flex;
+    align-items:center;
+    gap: 10px;
+  }
+  .sk-title strong{ font-size: 14px; }
+  .sk-title span{ font-size: 12px; color: var(--sk-muted); display:block; margin-top:2px; }
+  .sk-avatar{
+    width: 34px;
+    height: 34px;
+    border-radius: 999px;
+    display:grid;
+    place-items:center;
+    border: 1px solid rgba(255,255,255,0.14);
+    background: radial-gradient(circle at 30% 30%, rgba(31,182,255,0.35), rgba(124,92,255,0.25));
+    flex: 0 0 auto;
+  }
+  .sk-icon-btn{
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.06);
+    color: var(--sk-text);
+    cursor: pointer;
+  }
+  .sk-icon-btn:hover{ background: rgba(255,255,255,0.10); }
+
+  /* Messages */
+  .sk-chat-body{
+    padding: 14px;
+    overflow: auto;
+    flex: 1 1 auto;
+    background:
+      radial-gradient(800px 400px at 15% 15%, rgba(31,182,255,0.08), transparent 50%),
+      radial-gradient(700px 300px at 85% 25%, rgba(124,92,255,0.07), transparent 45%),
+      rgba(10, 14, 20, 0.68);
+  }
+  .sk-msg{
+    display:flex;
+    margin: 10px 0;
+    gap: 10px;
+  }
+  .sk-msg.user{ justify-content: flex-start; }
+  .sk-msg.bot{ justify-content: flex-end; }
+  .sk-bubble{
+    max-width: 85%;
+    padding: 10px 12px;
+    border-radius: 16px;
+    border: 1px solid rgba(255,255,255,0.10);
+    color: var(--sk-text);
+    font-size: 13px;
+    line-height: 1.55;
+    white-space: pre-line;
+  }
+  .sk-msg.user .sk-bubble{
+    background: rgba(31,182,255,0.12);
+    border-color: rgba(31,182,255,0.18);
+    border-bottom-left-radius: 8px;
+  }
+  .sk-msg.bot .sk-bubble{
+    background: rgba(255,255,255,0.06);
+    border-color: rgba(255,255,255,0.10);
+    border-bottom-right-radius: 8px;
+  }
+
+  /* Quick Actions */
+  .sk-actions{
+    margin-top: 10px;
+    display:flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: flex-end;
+  }
+  .sk-chip{
+    border: 1px solid rgba(255,255,255,0.14);
+    background: rgba(255,255,255,0.06);
+    color: var(--sk-text);
+    border-radius: 999px;
+    padding: 8px 10px;
+    font-size: 12px;
+    cursor: pointer;
+    user-select:none;
+  }
+  .sk-chip:hover{ background: rgba(255,255,255,0.10); }
+  .sk-chip.primary{
+    border-color: rgba(31,182,255,0.30);
+    background: rgba(31,182,255,0.12);
+  }
+
+  /* Composer */
+  .sk-chat-footer{
+    padding: 12px;
+    border-top: 1px solid var(--sk-border);
+    background: rgba(18,24,33,0.88);
+  }
+  .sk-composer{
+    display:flex;
+    gap: 8px;
+    align-items:center;
+  }
+  .sk-input{
+    flex: 1 1 auto;
+    border: 1px solid rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.06);
+    color: var(--sk-text);
+    border-radius: 12px;
+    padding: 10px 10px;
+    font-size: 13px;
+    outline: none;
+    direction: rtl;
+  }
+  .sk-input::placeholder{ color: rgba(255,255,255,0.55); }
+  .sk-send{
+    border: 1px solid rgba(31,182,255,0.30);
+    background: rgba(31,182,255,0.12);
+    color: var(--sk-text);
+    border-radius: 12px;
+    padding: 10px 12px;
+    cursor: pointer;
+    font-size: 13px;
+  }
+  .sk-send:hover{ background: rgba(31,182,255,0.18); }
+  .sk-footnote{
+    margin-top: 8px;
+    font-size: 11px;
+    color: var(--sk-muted);
+    line-height: 1.45;
+    text-align: right;
+  }
+
+  /* Mobile tweaks */
+  @media (max-width: 420px){
+    .sk-chat{ width: calc(100vw - 36px); height: 64vh; }
+  }
+</style>
+
+<!-- Launcher -->
+<button class="sk-chat-launcher" id="skLauncher" aria-label="باز کردن چت">
+  <div class="sk-chat-badge" aria-hidden="true">
+    <!-- Simple chat icon -->
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+      <path d="M7 8h10M7 12h6M12 20c5 0 9-3.58 9-8s-4-8-9-8-9 3.58-9 8c0 1.7.6 3.26 1.62 4.53L4 20l4.12-1.17C9.39 19.58 10.66 20 12 20Z"
+            stroke="rgba(255,255,255,0.92)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+  <div class="sk-launcher-text">
+    <div style="font-size:13px;">مشاوره سریع</div>
+    <small>راهنمای خدمات، دوره‌ها و ایجنت‌ها</small>
+  </div>
+</button>
+
+<!-- Chat Panel -->
+<section class="sk-chat" id="skChat" aria-label="چت سایت">
+  <header class="sk-chat-header">
+    <div class="sk-header-row">
+      <button class="sk-icon-btn" id="skClose" aria-label="بستن">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M18 6L6 18M6 6l12 12" stroke="rgba(255,255,255,0.90)" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+      </button>
+
+      <div class="sk-title">
+        <div class="sk-avatar" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <path d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4Zm0 2c-4.42 0-8 2.01-8 4.5V20h16v-1.5c0-2.49-3.58-4.5-8-4.5Z"
+                  stroke="rgba(255,255,255,0.90)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div>
+          <strong>دستیار Setaei</strong>
+          <span>برای انتخاب بهترین مسیر</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="sk-chat-body" id="skBody" tabindex="0"></main>
+
+  <footer class="sk-chat-footer">
+    <div class="sk-composer">
+      <input class="sk-input" id="skInput" type="text" placeholder="پیام خود را بنویسید..." autocomplete="off" />
+      <button class="sk-send" id="skSend">ارسال</button>
+    </div>
+    <div class="sk-footnote">
+      این چت برای راهنمایی و جمع‌آوری نیاز شماست. برای گفتگو با انسان، گزینه «ارتباط در واتساپ» را انتخاب کنید.
+    </div>
+  </footer>
+</section>
+
+<script>
+  (function(){
+    // ====== Config ======
+    const WHATSAPP_NUMBER = "09001422227"; // as provided by you
+    const BRAND = "Setaei";
+    const STORAGE_KEY = "setaei_chatkit_state_v1";
+
+    // Auto-open behavior (optional): open after X seconds once per session
+    const AUTO_OPEN_ENABLED = false;
+    const AUTO_OPEN_DELAY_MS = 35000;
+
+    // ====== Elements ======
+    const launcher = document.getElementById("skLauncher");
+    const chat = document.getElementById("skChat");
+    const closeBtn = document.getElementById("skClose");
+    const body = document.getElementById("skBody");
+    const input = document.getElementById("skInput");
+    const sendBtn = document.getElementById("skSend");
+
+    // ====== State ======
+    let state = {
+      step: "root",
+      context: {
+        interest: null,   // "services" | "course" | "agents" | "human"
+        name: null,
+        contact: null
+      },
+      history: [] // {role:"bot"|"user", text:"..."}
+    };
+
+    // ====== Helpers ======
+    function saveState(){
+      try { sessionStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e){}
+    }
+    function loadState(){
+      try {
+        const raw = sessionStorage.getItem(STORAGE_KEY);
+        if(raw) state = JSON.parse(raw);
+      } catch(e){}
+    }
+
+    function escapeHtml(str){
+      return String(str).replace(/[&<>"']/g, m => ({
+        "&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"
+      }[m]));
+    }
+
+    function scrollToBottom(){
+      body.scrollTop = body.scrollHeight;
+    }
+
+    function addMessage(role, text, actions){
+      const msg = document.createElement("div");
+      msg.className = "sk-msg " + (role === "user" ? "user" : "bot");
+
+      const bubble = document.createElement("div");
+      bubble.className = "sk-bubble";
+      bubble.innerHTML = escapeHtml(text).replace(/\n/g, "<br>");
+
+      msg.appendChild(bubble);
+      body.appendChild(msg);
+
+      if(actions && actions.length){
+        const actionWrap = document.createElement("div");
+        actionWrap.className = "sk-actions";
+
+        actions.forEach(a => {
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "sk-chip" + (a.primary ? " primary" : "");
+          btn.textContent = a.label;
+          btn.addEventListener("click", () => a.onClick());
+          actionWrap.appendChild(btn);
+        });
+
+        body.appendChild(actionWrap);
+      }
+
+      state.history.push({ role, text });
+      saveState();
+      scrollToBottom();
+    }
+
+    function openChat(){
+      chat.classList.add("open");
+      // Accessibility focus
+      setTimeout(() => { input.focus(); }, 50);
+    }
+    function closeChat(){
+      chat.classList.remove("open");
+      launcher.focus();
+    }
+
+    function resetChat(){
+      state = {
+        step: "root",
+        context: { interest: null, name: null, contact: null },
+        history: []
+      };
+      saveState();
+      body.innerHTML = "";
+      bootConversation(true);
+    }
+
+    function waLink(message){
+      const text = encodeURIComponent(message);
+      // WhatsApp deep link. If it's a local number, WA expects international; keep as-is for your use-case.
+      return `https://wa.me/${WHATSAPP_NUMBER.replace(/\D/g,'') || WHATSAPP_NUMBER}?text=${text}`;
+    }
+
+    // ====== Conversation Flow ======
+    function bootConversation(isReset){
+      if(state.history.length){
+        // Re-render history
+        body.innerHTML = "";
+        state.history.forEach(h => addMessage(h.role, h.text));
+        // If user comes back, offer quick actions
+        addMessage("bot",
+          "ادامه می‌دهیم. لطفاً انتخاب کنید چه کاری می‌خواهید انجام دهید:",
+          rootActions()
+        );
+        return;
+      }
+
+      addMessage("bot",
+        `سلام. من دستیار ${BRAND} هستم.\nبرای این‌که سریع‌تر راهنمایی‌تان کنم، یکی از گزینه‌های زیر را انتخاب کنید:`,
+        rootActions()
+      );
+
+      if(!isReset){
+        addMessage("bot",
+          "اگر ترجیح می‌دهید مستقیم با انسان صحبت کنید، «ارتباط در واتساپ» را بزنید.",
+          [
+            { label: "ارتباط در واتساپ", primary: true, onClick: () => handoffWhatsApp("درخواست ارتباط با مشاور انسانی") }
+          ]
+        );
+      }
+    }
+
+    function rootActions(){
+      return [
+        { label: "انتخاب خدمت مناسب", primary: true, onClick: () => pickInterest("services") },
+        { label: "انتخاب دوره / سطح مناسب", onClick: () => pickInterest("course") },
+        { label: "دیدن نمونه ایجنت‌ها", onClick: () => pickInterest("agents") },
+        { label: "صحبت با مشاور انسانی", onClick: () => pickInterest("human") }
+      ];
+    }
+
+    function pickInterest(val){
+      state.context.interest = val;
+      saveState();
+
+      if(val === "services"){
+        state.step = "services";
+        addMessage("bot",
+          "عالی. شما بیشتر دنبال کدام مورد هستید؟",
+          [
+            { label: "SEO و رشد ارگانیک", primary: true, onClick: () => servicesExplain("seo") },
+            { label: "طراحی/وب‌سایت", onClick: () => servicesExplain("web") },
+            { label: "اتوماسیون و AI Agent", onClick: () => servicesExplain("ai") },
+            { label: "مشاوره کوتاه", onClick: () => servicesExplain("consult") }
+          ]
+        );
+        return;
+      }
+
+      if(val === "course"){
+        state.step = "course";
+        addMessage("bot",
+          "برای پیشنهاد سطح دوره، دو سؤال کوتاه:\n1) هدف شما چیست؟\n2) تجربه‌تان در حوزه AI/برنامه‌نویسی چقدر است؟\n\nمی‌توانید کوتاه پاسخ دهید، یا از گزینه‌های آماده استفاده کنید:",
+          [
+            { label: "هدف: ساخت ایجنت برای کسب‌وکار", primary: true, onClick: () => coursePreset("agent") },
+            { label: "هدف: یادگیری پایه‌های AI", onClick: () => coursePreset("basics") },
+            { label: "تجربه: مبتدی", onClick: () => setCourseExperience("beginner") },
+            { label: "تجربه: متوسط/پیشرفته", onClick: () => setCourseExperience("advanced") }
+          ]
+        );
+        return;
+      }
+
+      if(val === "agents"){
+        state.step = "agents";
+        addMessage("bot",
+          "نمونه‌ها را در کدام دسته می‌خواهید؟",
+          [
+            { label: "فروش و لید", primary: true, onClick: () => agentsExplain("sales") },
+            { label: "پشتیبانی مشتری", onClick: () => agentsExplain("support") },
+            { label: "اتوماسیون داخلی", onClick: () => agentsExplain("ops") },
+            { label: "بازاریابی محتوا", onClick: () => agentsExplain("content") }
+          ]
+        );
+        return;
+      }
+
+      if(val === "human"){
+        state.step = "handoff";
+        addMessage("bot",
+          "حتماً. برای ارتباط سریع، واتساپ بهترین گزینه است.\nاگر چند کلمه درباره نیازتان بگویید، پیام آماده می‌کنم.",
+          [
+            { label: "ارتباط در واتساپ", primary: true, onClick: () => handoffWhatsApp("درخواست مشاوره انسانی") }
+          ]
+        );
+        return;
+      }
+    }
+
+    function servicesExplain(topic){
+      const map = {
+        seo: "برای SEO، معمولاً این سه مرحله را پیشنهاد می‌کنیم:\n- بررسی فنی سایت و بهینه‌سازی پایه\n- استراتژی کلمات کلیدی و ساختار صفحات\n- تولید/بهبود محتوا و لینک‌سازی سالم\n\nاگر بگویید حوزه کسب‌وکار شما چیست و سایت دارید یا نه، دقیق‌تر راهنمایی می‌کنم.",
+        web: "برای وب‌سایت، دو مسیر رایج است:\n- لندینگ سریع برای لیدگیری\n- سایت کامل با ساختار خدمات/نمونه‌کار/وبلاگ\n\nهدف اصلی شما فروش است یا معرفی برند؟",
+        ai: "برای AI Agent، ابتدا مشخص می‌کنیم:\n- هدف (لید، پشتیبانی، اتوماسیون)\n- کانال (سایت، واتساپ، تلگرام، ایمیل)\n- داده و سناریوهای گفتگو\n\nاگر بگویید مخاطب شما چه کسانی هستند، یک مسیر پیشنهادی می‌دهم.",
+        consult: "مشاوره کوتاه معمولاً برای تعیین مسیر مناسب است:\n- بررسی وضعیت فعلی\n- هدف‌گذاری\n- انتخاب بهترین بسته/مسیر اجرا\n\nاگر موضوع را در یک جمله بگویید، شروع کنیم."
+      };
+
+      addMessage("bot", map[topic] || "لطفاً کمی بیشتر توضیح دهید.");
+      addMessage("bot",
+        "می‌خواهید در ادامه چه کار کنیم؟",
+        [
+          { label: "چند سؤال برای پیشنهاد دقیق‌تر", primary: true, onClick: () => askQualifying() },
+          { label: "ارتباط در واتساپ", onClick: () => handoffWhatsApp("درخواست خدمات: " + topic) },
+          { label: "بازگشت به منوی اصلی", onClick: () => bootRootAgain() }
+        ]
+      );
+    }
+
+    function agentsExplain(cat){
+      const map = {
+        sales: "ایجنت‌های فروش و لید معمولاً:\n- سؤالات کلیدی را می‌پرسند (بودجه/نیاز/زمان)\n- پیشنهاد بسته مناسب می‌دهند\n- کاربر را به واتساپ/فرم هدایت می‌کنند\n\nاگر بگویید چه چیزی می‌فروشید، یک سناریوی نمونه می‌نویسم.",
+        support: "ایجنت پشتیبانی:\n- پاسخ به FAQ\n- پیگیری وضعیت سفارش/تیکت\n- جمع‌آوری اطلاعات قبل از انتقال به انسان\n\nبهترین نتیجه وقتی است که FAQ و مستندات مرتب باشد.",
+        ops: "اتوماسیون داخلی:\n- خلاصه‌سازی ایمیل/تیکت\n- تولید گزارش\n- اتصال به CRM/Sheets\n- دسته‌بندی لیدها\n\nاگر ابزارهای فعلی‌تان را بگویید (مثلاً Google Sheets/CRM)، مسیر اتصال را می‌گویم.",
+        content: "ایجنت محتوا:\n- پیشنهاد موضوعات بر اساس خدمات شما\n- تولید اسکلت مقاله/پست\n- بهینه‌سازی برای سئو\n\nاگر حوزه‌تان را بگویید، ۱۰ موضوع آماده می‌کنم."
+      };
+
+      addMessage("bot", map[cat] || "لطفاً دسته را مشخص کنید.");
+      addMessage("bot",
+        "گام بعدی:",
+        [
+          { label: "سناریوی نمونه بساز", primary: true, onClick: () => askScenario(cat) },
+          { label: "ارتباط در واتساپ", onClick: () => handoffWhatsApp("درخواست AI Agent: " + cat) },
+          { label: "بازگشت به منوی اصلی", onClick: () => bootRootAgain() }
+        ]
+      );
+    }
+
+    function coursePreset(goal){
+      state.context.goal = goal;
+      saveState();
+      addMessage("bot",
+        goal === "agent"
+          ? "هدف شما ساخت ایجنت برای کسب‌وکار است. عالی.\nلطفاً بگویید مخاطب شما «مشتری نهایی» است یا «B2B»؟"
+          : "برای یادگیری پایه‌های AI، بهتر است با مسیر مرحله‌ای جلو برویم.\nلطفاً بگویید آیا تا حالا با ابزارهای AI (مثل ChatGPT) پروژه عملی داشته‌اید؟"
+      );
+    }
+
+    function setCourseExperience(level){
+      state.context.experience = level;
+      saveState();
+      addMessage("bot",
+        level === "beginner"
+          ? "متوجه شدم: مبتدی.\nپیشنهاد من معمولاً شروع با سطح مقدماتی و تمرکز روی کاربردهای واقعی است.\nحالا هدف اصلی‌تان را یک جمله بگویید."
+          : "متوجه شدم: متوسط/پیشرفته.\nمی‌توانیم سریع‌تر وارد طراحی سناریو و پیاده‌سازی ایجنت شویم.\nهدف اصلی‌تان را یک جمله بگویید."
+      );
+    }
+
+    function askQualifying(){
+      addMessage("bot",
+        "برای پیشنهاد دقیق‌تر، لطفاً این‌ها را بفرمایید:\n- نوع کسب‌وکار\n- هدف (لید/فروش/برندینگ)\n- وضعیت فعلی سایت (دارید یا ندارید)\n- بازه زمانی مدنظر"
+      );
+    }
+
+    function askScenario(cat){
+      addMessage("bot",
+        "برای ساخت سناریوی نمونه، لطفاً این ۳ مورد را بگویید:\n1) محصول/خدمت شما چیست؟\n2) مشتری ایده‌آل چه کسی است؟\n3) خروجی مطلوب چیست؟ (ثبت شماره/رزرو تماس/خرید)"
+      );
+    }
+
+    function bootRootAgain(){
+      state.step = "root";
+      state.context.interest = null;
+      saveState();
+      addMessage("bot", "بازگشت به منوی اصلی:");
+      addMessage("bot", "یکی را انتخاب کنید:", rootActions());
+    }
+
+    function handoffWhatsApp(reason){
+      // Compose message using collected info
+      const name = state.context.name ? `نام: ${state.context.name}\n` : "";
+      const contact = state.context.contact ? `راه ارتباطی: ${state.context.contact}\n` : "";
+      const interest = state.context.interest ? `موضوع: ${state.context.interest}\n` : "";
+      const msg = `سلام.\n${reason}\n${name}${contact}${interest}پیام کاربر: ${lastUserText() || "—"}\n\nارسال از سایت ${BRAND}.`;
+
+      const url = waLink(msg);
+      window.open(url, "_blank", "noopener,noreferrer");
+
+      addMessage("bot",
+        "لینک واتساپ باز شد. اگر باز نشد، می‌توانید شماره را مستقیم پیام دهید.\nآیا می‌خواهید قبل از رفتن، نام یا راه ارتباطی‌تان را هم ثبت کنم؟",
+        [
+          { label: "ثبت نام", primary: true, onClick: () => promptForName() },
+          { label: "ثبت شماره/ایمیل", onClick: () => promptForContact() },
+          { label: "خیر، ممنون", onClick: () => addMessage("bot", "باشه. هر زمان آماده بودید، همین‌جا برگردید.") }
+        ]
+      );
+    }
+
+    function promptForName(){
+      addMessage("bot", "لطفاً نام خود را وارد کنید (مثلاً: علی).");
+      state.step = "collect_name";
+      saveState();
+      input.focus();
+    }
+    function promptForContact(){
+      addMessage("bot", "لطفاً یک راه ارتباطی بفرستید (شماره یا ایمیل).");
+      state.step = "collect_contact";
+      saveState();
+      input.focus();
+    }
+
+    function lastUserText(){
+      for(let i = state.history.length - 1; i >= 0; i--){
+        if(state.history[i].role === "user") return state.history[i].text;
+      }
+      return "";
+    }
+
+    // Very lightweight routing for free-text messages
+    function handleUserText(text){
+      const t = text.trim();
+      if(!t) return;
+
+      addMessage("user", t);
+
+      // Step-based collection
+      if(state.step === "collect_name"){
+        state.context.name = t;
+        state.step = "root";
+        saveState();
+        addMessage("bot", `ممنون ${t}. ثبت شد.`);
+        addMessage("bot", "می‌خواهید شماره/ایمیل هم ثبت شود؟", [
+          { label: "بله", primary: true, onClick: () => promptForContact() },
+          { label: "نه", onClick: () => addMessage("bot", "باشه. اگر سوالی دارید همینجا بپرسید.") }
+        ]);
+        return;
+      }
+
+      if(state.step === "collect_contact"){
+        state.context.contact = t;
+        state.step = "root";
+        saveState();
+        addMessage("bot", "ممنون. راه ارتباطی ثبت شد.");
+        addMessage("bot", "می‌خواهید الان به واتساپ منتقل شوید؟", [
+          { label: "ارتباط در واتساپ", primary: true, onClick: () => handoffWhatsApp("پیگیری مشاوره") },
+          { label: "فعلاً نه", onClick: () => addMessage("bot", "باشه. هر سوالی دارید همینجا بپرسید.") }
+        ]);
+        return;
+      }
+
+      // Keyword triggers
+      const hasWhatsApp = /(واتساپ|whatsapp|wa)/i.test(t);
+      const hasSEO = /(سئو|seo)/i.test(t);
+      const hasCourse = /(دوره|کلاس|آموزش)/i.test(t);
+      const hasAgent = /(ایجنت|agent|اتوماسیون)/i.test(t);
+
+      if(hasWhatsApp){
+        state.context.interest = state.context.interest || "human";
+        saveState();
+        handoffWhatsApp("درخواست ارتباط از طریق واتساپ");
+        return;
+      }
+
+      if(hasSEO){
+        state.context.interest = "services";
+        saveState();
+        servicesExplain("seo");
+        return;
+      }
+
+      if(hasCourse){
+        state.context.interest = "course";
+        saveState();
+        pickInterest("course");
+        return;
+      }
+
+      if(hasAgent){
+        state.context.interest = "agents";
+        saveState();
+        pickInterest("agents");
+        return;
+      }
+
+      // Default helpful response (still non-AI)
+      addMessage("bot",
+        "متوجه شدم. برای این‌که دقیق‌تر راهنمایی کنم، لطفاً یکی از این‌ها را مشخص کنید:\n- خدمت می‌خواهید یا دوره یا ایجنت؟",
+        [
+          { label: "خدمت", primary: true, onClick: () => pickInterest("services") },
+          { label: "دوره", onClick: () => pickInterest("course") },
+          { label: "ایجنت", onClick: () => pickInterest("agents") },
+          { label: "مشاور انسانی", onClick: () => pickInterest("human") }
+        ]
+      );
+    }
+
+    // ====== Events ======
+    launcher.addEventListener("click", () => {
+      openChat();
+      if(!state.history.length) bootConversation(false);
+    });
+
+    closeBtn.addEventListener("click", closeChat);
+
+    sendBtn.addEventListener("click", () => {
+      const t = input.value;
+      input.value = "";
+      handleUserText(t);
+    });
+
+    input.addEventListener("keydown", (e) => {
+      if(e.key === "Enter"){
+        e.preventDefault();
+        sendBtn.click();
+      }
+      if(e.key === "Escape"){
+        closeChat();
+      }
+    });
+
+    // Load previous session state (sessionStorage)
+    loadState();
+    if(state.history.length){
+      // Prepare panel content even before open
+      body.innerHTML = "";
+      state.history.forEach(h => addMessage(h.role, h.text));
+      addMessage("bot", "می‌خواهید ادامه بدهیم؟", rootActions());
+    } else {
+      // Empty state; do nothing until open
+    }
+
+    // Optional auto-open
+    if(AUTO_OPEN_ENABLED){
+      const autoKey = "setaei_chatkit_auto_opened_v1";
+      const already = sessionStorage.getItem(autoKey);
+      if(!already){
+        setTimeout(() => {
+          sessionStorage.setItem(autoKey, "1");
+          openChat();
+          bootConversation(false);
+        }, AUTO_OPEN_DELAY_MS);
+      }
+    }
+
+    // Public API (optional) for debugging
+    window.SetaeiChatKit = {
+      open: openChat,
+      close: closeChat,
+      reset: resetChat
+    };
+  })();
+</script>
