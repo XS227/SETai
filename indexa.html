@@ -16,8 +16,8 @@
       /* Setaei Brand Tokens (v1.0) */
       --color-bg:#0F1115;
       --color-surface:#141821;
-      --color-primary:#4B3FE4;     /* Deep Indigo */
-      --color-accent:#19D3C5;      /* Intelligence Teal */
+      --color-primary:#4A2CFF;     /* Indigo-violet (33/6) */
+      --color-accent:#18C38B;      /* Green (5) */
       --color-text:#FFFFFF;
       --color-muted:#B5B8C0;
       --color-divider:#2A2E36;
@@ -44,8 +44,8 @@
     body{
       margin:0;
       font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background: radial-gradient(1100px 700px at 20% 10%, rgba(75,63,228,.18), transparent 55%),
-                  radial-gradient(900px 600px at 90% 35%, rgba(25,211,197,.10), transparent 55%),
+      background: radial-gradient(1100px 700px at 20% 10%, rgba(74,44,255,.18), transparent 55%),
+                  radial-gradient(900px 600px at 90% 35%, rgba(24,195,139,.10), transparent 55%),
                   var(--color-bg);
       color:var(--color-text);
       line-height:1.5;
@@ -53,6 +53,75 @@
 
     a{color:inherit; text-decoration:none}
     a:hover{opacity:.92}
+
+    /* ========== SETAEI BRAND OVERRIDES (v1.0) ==========
+       Purpose: Keep existing layout. Only replace the old blue with numerology palette.
+       Primary: 33/6 → Indigo-violet
+       Accent : 5 → Green
+    ==================================================== */
+
+    :root{
+      --color-bg: #0F1115;
+      --color-text: #FFFFFF;
+      --color-muted: #B5B8C0;
+      --color-divider: #2A2E36;
+
+      /* Replace previous "blue" */
+      --color-primary: #4A2CFF; /* Indigo-violet */
+      --color-accent:  #18C38B; /* Green */
+    }
+
+    /* Safe fallbacks if your site doesn't use variables everywhere */
+    a,
+    .nav a.active,
+    .button.primary,
+    .btn-primary{
+      color: var(--color-text);
+    }
+
+    .button.primary,
+    .btn-primary,
+    .cta-primary{
+      background: var(--color-primary);
+      border-color: color-mix(in oklab, var(--color-primary), white 12%);
+    }
+
+    .button.primary:hover,
+    .btn-primary:hover,
+    .cta-primary:hover{
+      filter: brightness(1.06);
+    }
+
+    .badge,
+    .tag,
+    .pill,
+    .chip{
+      border-color: color-mix(in oklab, var(--color-divider), white 12%);
+    }
+
+    .highlight,
+    .accent,
+    .kicker-dot,
+    .status-dot{
+      background: var(--color-accent);
+    }
+
+    /* Links (subtle, clean) */
+    a{
+      text-decoration-line: underline;
+      text-decoration-color: color-mix(in oklab, var(--color-primary), white 35%);
+      text-underline-offset: 3px;
+    }
+    a:hover{
+      text-decoration-color: var(--color-accent);
+    }
+
+    /* Optional: very subtle brand glow (keeps premium feel, no redesign) */
+    .hero,
+    .header,
+    .section-title{
+      text-shadow: 0 0 30px rgba(74, 44, 255, .08);
+    }
 
     .container{
       width:100%;
@@ -108,9 +177,9 @@
       width:34px; height:34px;
       border-radius: 10px;
       background:
-        radial-gradient(14px 14px at 68% 40%, rgba(25,211,197,.9), rgba(25,211,197,0) 60%),
-        radial-gradient(22px 22px at 35% 70%, rgba(75,63,228,.85), rgba(75,63,228,0) 62%),
-        linear-gradient(135deg, rgba(75,63,228,.75), rgba(25,211,197,.25));
+        radial-gradient(14px 14px at 68% 40%, rgba(24,195,139,.9), rgba(24,195,139,0) 60%),
+        radial-gradient(22px 22px at 35% 70%, rgba(74,44,255,.85), rgba(74,44,255,0) 62%),
+        linear-gradient(135deg, rgba(74,44,255,.75), rgba(24,195,139,.25));
       box-shadow: 0 10px 24px rgba(0,0,0,.35);
       border: 1px solid rgba(255,255,255,.06);
     }
@@ -125,6 +194,7 @@
     .navLinks a{
       color:var(--color-muted);
       font-size:14px;
+      text-decoration: none;
     }
     .navLinks a:hover{color:var(--color-text)}
     .navCtas{display:flex; gap:10px; align-items:center}
@@ -141,6 +211,7 @@
       user-select:none;
       transition: transform .08s ease, filter .15s ease, background .15s ease, border-color .15s ease;
       white-space:nowrap;
+      text-decoration: none;
     }
     .btn:active{transform: translateY(1px)}
     .btnPrimary{
@@ -183,7 +254,7 @@
     .kickerDot{
       width:8px; height:8px; border-radius:999px;
       background: var(--color-accent);
-      box-shadow: 0 0 0 6px rgba(25,211,197,.12);
+      box-shadow: 0 0 0 6px rgba(24,195,139,.12);
     }
 
     /* Hero */
@@ -218,8 +289,8 @@
     }
     .badge i{
       width:8px; height:8px; border-radius:999px; display:inline-block;
-      background: rgba(25,211,197,.95);
-      box-shadow: 0 0 0 6px rgba(25,211,197,.10);
+      background: rgba(24,195,139,.95);
+      box-shadow: 0 0 0 6px rgba(24,195,139,.10);
     }
     .heroActions{display:flex; gap:12px; flex-wrap:wrap; margin-top: var(--space-3)}
     .heroMeta{
@@ -238,7 +309,7 @@
     .metaPill{
       width:10px; height:10px; border-radius:999px;
       background: var(--color-primary);
-      box-shadow: 0 0 0 6px rgba(75,63,228,.12);
+      box-shadow: 0 0 0 6px rgba(74,44,255,.12);
     }
 
     .videoWrap{
@@ -265,8 +336,8 @@
       width:10px; height:10px; border-radius:999px;
       background: rgba(255,255,255,.16);
     }
-    .traffic span:nth-child(2){background: rgba(25,211,197,.35)}
-    .traffic span:nth-child(3){background: rgba(75,63,228,.35)}
+    .traffic span:nth-child(2){background: rgba(24,195,139,.35)}
+    .traffic span:nth-child(3){background: rgba(74,44,255,.35)}
     .videoFrame{
       aspect-ratio: 16/9;
       width: 100%;
@@ -345,7 +416,7 @@
     .socialIcon{
       width:10px; height:10px; border-radius:999px;
       background: var(--color-accent);
-      box-shadow: 0 0 0 6px rgba(25,211,197,.10);
+      box-shadow: 0 0 0 6px rgba(24,195,139,.10);
     }
 
     /* Projects */
@@ -364,8 +435,8 @@
       content:"";
       position:absolute; inset:-40px;
       background:
-        radial-gradient(500px 220px at 15% 10%, rgba(75,63,228,.30), transparent 60%),
-        radial-gradient(420px 220px at 85% 60%, rgba(25,211,197,.18), transparent 60%);
+        radial-gradient(500px 220px at 15% 10%, rgba(74,44,255,.30), transparent 60%),
+        radial-gradient(420px 220px at 85% 60%, rgba(24,195,139,.18), transparent 60%);
       filter: blur(0px);
       opacity:.9;
     }
@@ -393,6 +464,53 @@
       .project{grid-column: span 12}
     }
 
+    .projects-ongoing{
+      margin: 28px 0 18px;
+    }
+
+    .projects-ongoing h3{
+      margin: 0 0 14px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+
+    .projects-grid{
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    @media (max-width: 860px){
+      .projects-grid{ grid-template-columns: 1fr; }
+    }
+
+    .project-card{
+      display: block;
+      padding: 14px 14px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(255,255,255,.06);
+      transition: transform .12s ease, border-color .12s ease, background .12s ease;
+      text-decoration: none;
+    }
+
+    .project-card:hover{
+      transform: translateY(-1px);
+      border-color: color-mix(in oklab, var(--color-primary), white 18%);
+      background: rgba(255,255,255,.045);
+    }
+
+    .project-title{
+      color: var(--color-text);
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .project-meta{
+      color: var(--color-muted);
+      font-size: 13px;
+    }
+
     /* Testimonials */
     .quote{
       font-size:16px;
@@ -407,7 +525,7 @@
     }
     .avatar{
       width:36px; height:36px; border-radius:999px;
-      background: linear-gradient(135deg, rgba(75,63,228,.65), rgba(25,211,197,.35));
+      background: linear-gradient(135deg, rgba(74,44,255,.65), rgba(24,195,139,.35));
       border: 1px solid rgba(255,255,255,.08);
       box-shadow: 0 10px 24px rgba(0,0,0,.35);
     }
@@ -457,8 +575,8 @@
       outline: none;
     }
     input:focus, textarea:focus{
-      border-color: rgba(25,211,197,.75);
-      box-shadow: 0 0 0 4px rgba(25,211,197,.10);
+      border-color: rgba(24,195,139,.75);
+      box-shadow: 0 0 0 4px rgba(24,195,139,.10);
     }
     textarea{min-height: 120px; resize: vertical}
     .note{
@@ -748,6 +866,33 @@
               </div>
             </div>
           </article>
+        </div>
+
+        <!-- On-going projects -->
+        <div class="projects-ongoing">
+          <h3>Pågående prosjekter</h3>
+
+          <div class="projects-grid">
+            <a class="project-card" href="https://fjlosenbanden.no" target="_blank" rel="noreferrer">
+              <div class="project-title">FjOlsenbanden</div>
+              <div class="project-meta">Nettside / innhold / drift</div>
+            </a>
+
+            <a class="project-card" href="https://somiklinikken.no" target="_blank" rel="noreferrer">
+              <div class="project-title">Somi Klinikken</div>
+              <div class="project-meta">Klinikkside / booking / konvertering</div>
+            </a>
+
+            <a class="project-card" href="https://numerologist.setaei.no" target="_blank" rel="noreferrer">
+              <div class="project-title">Numerologist</div>
+              <div class="project-meta">Eksperiment / numerologi / AI</div>
+            </a>
+
+            <a class="project-card" href="https://dekapost.com" target="_blank" rel="noreferrer">
+              <div class="project-title">Dekapost Iran</div>
+              <div class="project-meta">Brand / innhold / system</div>
+            </a>
+          </div>
         </div>
       </div>
     </section>
