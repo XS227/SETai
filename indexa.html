@@ -1,1024 +1,923 @@
 <!doctype html>
-<html lang="nb">
+<html lang="no">
 <head>
   <meta charset="utf-8" />
-  <title>SETAEI – Designet. Bygget. Intelligent.</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="SETAEI: AI-automatisering og nettsider som kan oppdateres på sekunder — med kontroll, backup og tydelig struktur." />
+  <title>Setaei — Designed. Engineered. Intelligent.</title>
+  <meta name="description" content="Setaei designer og bygger intelligente systemer." />
+
+  <!-- Inter (recommended). If you prefer self-hosting, swap this for local files. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
   <style>
-    :root {
-      /* Base (fra malen) – justér her dersom du vil matche en eksakt brand-palette */
-      --bg: #050b2b;
-      --bg-alt: #071133;
-      --card: #0d1636;
-      --card-alt: #101a3e;
-      --text: #ffffff;
-      --muted: #a6b0d8;
-      --primary: #00a6ff;
-      --accent: #ff2da4;
+    :root{
+      /* Setaei Brand Tokens (v1.0) */
+      --color-bg:#0F1115;
+      --color-surface:#141821;
+      --color-primary:#4B3FE4;     /* Deep Indigo */
+      --color-accent:#19D3C5;      /* Intelligence Teal */
+      --color-text:#FFFFFF;
+      --color-muted:#B5B8C0;
+      --color-divider:#2A2E36;
 
-      --radius-lg: 24px;
-      --radius-md: 18px;
-      --radius-pill: 999px;
-      --shadow-soft: 0 24px 60px rgba(0, 0, 0, 0.6);
+      --radius-sm:8px;
+      --radius-md:12px;
+      --radius-lg:20px;
+
+      --shadow-soft: 0 10px 30px rgba(0,0,0,.35);
+      --shadow-card: 0 14px 40px rgba(0,0,0,.45);
+
+      --space-1:8px;
+      --space-2:16px;
+      --space-3:24px;
+      --space-4:32px;
+      --space-5:48px;
+      --space-6:64px;
+
+      --max-w:1200px;
     }
 
-    *,
-    *::before,
-    *::after {
-      box-sizing: border-box;
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(1100px 700px at 20% 10%, rgba(75,63,228,.18), transparent 55%),
+                  radial-gradient(900px 600px at 90% 35%, rgba(25,211,197,.10), transparent 55%),
+                  var(--color-bg);
+      color:var(--color-text);
+      line-height:1.5;
     }
 
-    html,
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #020317;
-      color: var(--text);
-      scroll-behavior: smooth;
+    a{color:inherit; text-decoration:none}
+    a:hover{opacity:.92}
+
+    .container{
+      width:100%;
+      max-width:var(--max-w);
+      padding:0 var(--space-6);
+      margin:0 auto;
+    }
+    @media (max-width: 900px){
+      .container{padding:0 var(--space-4)}
+    }
+    @media (max-width: 520px){
+      .container{padding:0 var(--space-2)}
     }
 
-    body {
-      min-height: 100vh;
+    /* Typography scale (web/UI) */
+    h1{
+      font-size:48px; line-height:56px; font-weight:600; margin:0 0 var(--space-2);
+      letter-spacing:-0.02em;
+    }
+    h2{
+      font-size:36px; line-height:44px; font-weight:600; margin:0 0 var(--space-2);
+      letter-spacing:-0.02em;
+    }
+    h3{
+      font-size:28px; line-height:36px; font-weight:500; margin:0 0 var(--space-2);
+      letter-spacing:-0.01em;
+    }
+    p{margin:0 0 var(--space-2); color:var(--color-muted)}
+    .lead{font-size:18px; line-height:28px; color:var(--color-muted)}
+    .caption{font-size:12px; line-height:16px; color:var(--color-muted)}
+
+    /* Header */
+    .header{
+      position:sticky;
+      top:0;
+      z-index:50;
+      backdrop-filter: blur(10px);
+      background: rgba(15,17,21,.65);
+      border-bottom:1px solid rgba(42,46,54,.6);
+    }
+    .nav{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:18px 0;
+      gap:var(--space-3);
+    }
+    .brand{
+      display:flex; align-items:center; gap:12px;
+      min-width: 180px;
+    }
+    .logoMark{
+      width:34px; height:34px;
+      border-radius: 10px;
+      background:
+        radial-gradient(14px 14px at 68% 40%, rgba(25,211,197,.9), rgba(25,211,197,0) 60%),
+        radial-gradient(22px 22px at 35% 70%, rgba(75,63,228,.85), rgba(75,63,228,0) 62%),
+        linear-gradient(135deg, rgba(75,63,228,.75), rgba(25,211,197,.25));
+      box-shadow: 0 10px 24px rgba(0,0,0,.35);
+      border: 1px solid rgba(255,255,255,.06);
+    }
+    .brandName{
+      font-weight:600;
+      letter-spacing:-0.01em;
     }
 
-    a {
-      color: inherit;
-      text-decoration: none;
+    .navLinks{
+      display:flex; align-items:center; gap:18px;
     }
-
-    /* Layout */
-
-    .container {
-      max-width: 1120px;
-      margin: 0 auto;
-      padding: 0 1.5rem;
+    .navLinks a{
+      color:var(--color-muted);
+      font-size:14px;
     }
+    .navLinks a:hover{color:var(--color-text)}
+    .navCtas{display:flex; gap:10px; align-items:center}
 
-    .section {
-      padding: 5rem 0;
-      background: radial-gradient(circle at center, #101a3e 0, #050b2b 55%, #020317 100%);
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      gap:10px;
+      padding:10px 14px;
+      border-radius: var(--radius-sm);
+      border:1px solid transparent;
+      font-weight:500;
+      font-size:14px;
+      cursor:pointer;
+      user-select:none;
+      transition: transform .08s ease, filter .15s ease, background .15s ease, border-color .15s ease;
+      white-space:nowrap;
     }
-
-    .section.alt {
-      background: radial-gradient(circle at center, #0d1636 0, #050b2b 60%, #020317 100%);
-    }
-
-    .section h2 {
-      font-size: clamp(2rem, 3vw, 2.5rem);
-      margin-bottom: 0.5rem;
-      text-align: center;
-    }
-
-    .subtitle {
-      color: var(--muted);
-      max-width: 780px;
-      margin: 0 auto 2.5rem;
-      text-align: center;
-      line-height: 1.6;
-    }
-
-    /* Top nav */
-
-    .top-nav {
-      position: sticky;
-      top: 0;
-      z-index: 999;
-      background: rgba(5, 11, 43, 0.96);
-      backdrop-filter: blur(18px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-    }
-
-    .nav-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      padding: 0.75rem 1.5rem;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      min-width: 220px;
-    }
-
-    .brand-mark {
-      width: 42px;
-      height: 42px;
-      border-radius: 14px;
-      background: radial-gradient(circle at top left, rgba(0,166,255,0.9), rgba(255,45,164,0.35) 55%, rgba(16,26,62,1));
-      box-shadow: 0 0 18px rgba(0, 166, 255, 0.22);
-      border: 1px solid rgba(255,255,255,0.08);
-      flex: 0 0 auto;
-    }
-
-    .brand-text {
-      display: flex;
-      flex-direction: column;
-      line-height: 1.1;
-    }
-
-    .brand-text strong {
-      letter-spacing: 0.12em;
-      font-size: 0.95rem;
-    }
-
-    .brand-text span {
-      color: var(--muted);
-      font-size: 0.8rem;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 1.1rem;
-      font-size: 0.9rem;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    .nav-links a {
-      color: var(--muted);
-      padding: 0.2rem 0.25rem;
-    }
-
-    .nav-links a:hover {
-      color: var(--primary);
-    }
-
-    .nav-actions {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      min-width: 220px;
-      justify-content: flex-end;
-    }
-
-    /* Buttons */
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.4rem;
-      padding: 0.85rem 1.7rem;
-      border-radius: var(--radius-pill);
-      border: none;
-      cursor: pointer;
-      font-weight: 600;
-      font-size: 0.95rem;
-      transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
-      user-select: none;
-    }
-
-    .btn.small {
-      padding: 0.55rem 1.15rem;
-      font-size: 0.85rem;
-    }
-
-    .btn-primary {
-      background: var(--primary);
-      color: #fff;
-      box-shadow: 0 0 18px rgba(0, 166, 255, 0.45);
-    }
-
-    .btn-primary:hover {
-      filter: brightness(1.05);
-      transform: translateY(-1px);
-    }
-
-    .btn-secondary {
-      background: var(--accent);
-      color: #fff;
-      box-shadow: 0 0 18px rgba(255, 45, 164, 0.45);
-    }
-
-    .btn-secondary:hover {
-      filter: brightness(1.05);
-      transform: translateY(-1px);
-    }
-
-    .btn-ghost {
-      background: transparent;
-      border: 1px solid rgba(0, 166, 255, 0.75);
-      color: var(--primary);
-    }
-
-    .btn-ghost:hover {
-      transform: translateY(-1px);
-      filter: brightness(1.06);
-    }
-
-    /* Generic cards */
-
-    .card {
-      background: radial-gradient(circle at top left, var(--card-alt), var(--card));
-      border-radius: var(--radius-lg);
-      padding: 1.6rem 1.8rem;
+    .btn:active{transform: translateY(1px)}
+    .btnPrimary{
+      background: var(--color-primary);
+      color: var(--color-text);
       box-shadow: var(--shadow-soft);
-      border: 1px solid rgba(255, 255, 255, 0.04);
     }
-
-    .card h3 {
-      margin: 0 0 0.35rem;
-      font-size: 1.15rem;
+    .btnPrimary:hover{filter: brightness(1.08)}
+    .btnSecondary{
+      background: transparent;
+      border-color: rgba(42,46,54,.95);
+      color: var(--color-text);
     }
+    .btnSecondary:hover{border-color: rgba(181,184,192,.45)}
+    .btnGhost{
+      background: rgba(255,255,255,.04);
+      border-color: rgba(255,255,255,.06);
+      color: var(--color-text);
+    }
+    .btnGhost:hover{background: rgba(255,255,255,.06)}
 
-    .card p {
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.6;
+    /* Sections */
+    section{padding: var(--space-6) 0}
+    .sectionHead{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap: var(--space-4);
+      margin-bottom: var(--space-4);
+    }
+    .kicker{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      font-size:12px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color: rgba(181,184,192,.85);
+    }
+    .kickerDot{
+      width:8px; height:8px; border-radius:999px;
+      background: var(--color-accent);
+      box-shadow: 0 0 0 6px rgba(25,211,197,.12);
     }
 
     /* Hero */
-
-    .hero {
-      padding-top: 6rem;
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
-      gap: 3rem;
+    .heroGrid{
+      display:grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: var(--space-5);
       align-items: center;
+      padding: var(--space-6) 0 var(--space-4);
     }
-
-    .hero-text h1 {
-      font-size: clamp(2.35rem, 3.4vw, 3.05rem);
-      margin: 0.65rem 0 1rem;
-      line-height: 1.05;
+    @media (max-width: 980px){
+      .heroGrid{grid-template-columns: 1fr; gap: var(--space-4)}
     }
-
-    .hero-text .lead {
-      color: var(--muted);
-      max-width: 34rem;
-      line-height: 1.65;
-      margin: 0 0 1.35rem;
+    .heroCard{
+      background: linear-gradient(180deg, rgba(20,24,33,.95), rgba(20,24,33,.72));
+      border: 1px solid rgba(255,255,255,.06);
+      border-radius: var(--radius-lg);
+      padding: var(--space-4);
+      box-shadow: var(--shadow-card);
     }
-
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      padding: 0.3rem 1rem;
-      border-radius: var(--radius-pill);
-      background: rgba(0, 166, 255, 0.12);
-      border: 1px solid rgba(0, 166, 255, 0.3);
-      color: var(--primary);
-      font-weight: 600;
-      font-size: 0.85rem;
-      letter-spacing: 0.02em;
-      gap: 0.5rem;
+    .heroBadges{
+      display:flex; flex-wrap:wrap; gap:10px; margin: 14px 0 22px;
     }
-
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.8rem;
-      margin-top: 1.25rem;
+    .badge{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:8px 10px;
+      border-radius: 999px;
+      border:1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.03);
+      color: rgba(255,255,255,.9);
+      font-size:13px;
     }
-
-    .hero-meta {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 1rem;
-      margin-top: 2.25rem;
+    .badge i{
+      width:8px; height:8px; border-radius:999px; display:inline-block;
+      background: rgba(25,211,197,.95);
+      box-shadow: 0 0 0 6px rgba(25,211,197,.10);
     }
-
-    .mini {
-      padding: 1.05rem 1.15rem;
+    .heroActions{display:flex; gap:12px; flex-wrap:wrap; margin-top: var(--space-3)}
+    .heroMeta{
+      margin-top: var(--space-3);
+      display:flex; gap:16px; flex-wrap:wrap;
+      color: rgba(181,184,192,.9);
+      font-size: 13px;
+    }
+    .metaItem{
+      display:flex; gap:10px; align-items:center;
+      border:1px solid rgba(255,255,255,.06);
+      background: rgba(255,255,255,.03);
+      padding:10px 12px;
       border-radius: var(--radius-md);
-      background: rgba(16, 26, 62, 0.65);
-      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .metaPill{
+      width:10px; height:10px; border-radius:999px;
+      background: var(--color-primary);
+      box-shadow: 0 0 0 6px rgba(75,63,228,.12);
     }
 
-    .mini strong {
-      display: block;
-      margin-bottom: 0.25rem;
-    }
-
-    .mini span {
-      color: var(--muted);
-      font-size: 0.95rem;
-    }
-
-    .video-card {
-      padding: 0;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .video-wrap {
-      aspect-ratio: 16 / 10;
-      width: 100%;
-      background:
-        radial-gradient(circle at top left, rgba(0,166,255,0.25), rgba(255,45,164,0.08) 55%, rgba(13,22,54,0.95)),
-        linear-gradient(180deg, rgba(0,0,0,0.2), rgba(0,0,0,0.65));
-      display: grid;
-      place-items: center;
+    .videoWrap{
+      background: linear-gradient(180deg, rgba(20,24,33,.9), rgba(20,24,33,.65));
+      border:1px solid rgba(255,255,255,.06);
       border-radius: var(--radius-lg);
+      overflow:hidden;
+      box-shadow: var(--shadow-card);
+      position:relative;
+      min-height: 320px;
     }
-
-    .video-wrap video,
-    .video-wrap iframe {
+    .videoTopbar{
+      display:flex; align-items:center; justify-content:space-between;
+      padding: 12px 14px;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      background: rgba(255,255,255,.02);
+      color: rgba(181,184,192,.95);
+      font-size: 13px;
+    }
+    .traffic{
+      display:flex; gap:8px; align-items:center;
+    }
+    .traffic span{
+      width:10px; height:10px; border-radius:999px;
+      background: rgba(255,255,255,.16);
+    }
+    .traffic span:nth-child(2){background: rgba(25,211,197,.35)}
+    .traffic span:nth-child(3){background: rgba(75,63,228,.35)}
+    .videoFrame{
+      aspect-ratio: 16/9;
       width: 100%;
-      height: 100%;
-      border: 0;
+      background: #0A0C10;
+    }
+    .videoFrame iframe, .videoFrame video{
+      width:100%; height:100%;
+      border:0; display:block;
+    }
+    .videoHint{
+      position:absolute;
+      right: 14px;
+      bottom: 14px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      background: rgba(15,17,21,.55);
+      border: 1px solid rgba(255,255,255,.08);
+      color: rgba(255,255,255,.88);
+      font-size: 13px;
+      backdrop-filter: blur(8px);
+    }
+
+    /* Cards / Grids */
+    .grid3{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-3);
+    }
+    @media (max-width: 980px){
+      .grid3{grid-template-columns: 1fr}
+    }
+    .card{
+      background: linear-gradient(180deg, rgba(20,24,33,.9), rgba(20,24,33,.70));
+      border: 1px solid rgba(255,255,255,.06);
       border-radius: var(--radius-lg);
-      display: block;
-      background: #000;
+      padding: var(--space-4);
+      box-shadow: var(--shadow-soft);
     }
-
-    .video-overlay {
-      position: absolute;
-      inset: auto 1.25rem 1.15rem 1.25rem;
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      gap: 1rem;
-      pointer-events: none;
+    .cardTitle{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: var(--space-2);
+      margin-bottom: var(--space-2);
     }
-
-    .video-overlay .hint {
-      color: rgba(255,255,255,0.85);
-      font-size: 0.9rem;
-      line-height: 1.3;
+    .pill{
+      font-size:12px;
+      color: rgba(255,255,255,.9);
+      border: 1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.03);
+      padding:6px 10px;
+      border-radius:999px;
+      white-space:nowrap;
     }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      padding: 0.3rem 0.8rem;
-      border-radius: var(--radius-pill);
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255,255,255,0.08);
-      color: rgba(255,255,255,0.92);
-      font-size: 0.85rem;
-      font-weight: 600;
-      letter-spacing: 0.02em;
-    }
-
-    /* Grid helpers */
-
-    .grid {
-      display: grid;
-      gap: 1.2rem;
-    }
-
-    .grid.cols-3 {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-
-    .grid.cols-2 {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+    .divider{
+      height:1px;
+      background: rgba(42,46,54,.85);
+      margin: var(--space-4) 0;
     }
 
     /* Social */
-
-    .social-row {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 1rem;
-      align-items: stretch;
-      margin-top: 2rem;
+    .socialRow{
+      display:flex; flex-wrap:wrap;
+      gap: 10px;
+      margin-top: var(--space-2);
     }
-
-    .social-card {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.75rem;
-      padding: 1.15rem 1.25rem;
-      border-radius: var(--radius-lg);
-      background: rgba(16, 26, 62, 0.65);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      transition: transform 0.12s ease, border-color 0.12s ease;
+    .socialChip{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:10px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(255,255,255,.06);
+      color: rgba(255,255,255,.92);
+      font-size: 14px;
     }
-
-    .social-card:hover {
-      transform: translateY(-2px);
-      border-color: rgba(0,166,255,0.28);
-    }
-
-    .social-left {
-      display: flex;
-      flex-direction: column;
-      gap: 0.2rem;
-    }
-
-    .social-left strong {
-      font-size: 0.95rem;
-    }
-
-    .social-left span {
-      color: var(--muted);
-      font-size: 0.85rem;
-    }
-
-    .social-chip {
-      font-size: 0.85rem;
-      color: var(--primary);
-      font-weight: 700;
-      letter-spacing: 0.02em;
+    .socialIcon{
+      width:10px; height:10px; border-radius:999px;
+      background: var(--color-accent);
+      box-shadow: 0 0 0 6px rgba(25,211,197,.10);
     }
 
     /* Projects */
-
-    .tag-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-top: 0.9rem;
+    .projectsGrid{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: var(--space-3);
     }
-
-    .tag {
-      display: inline-flex;
-      align-items: center;
-      padding: 0.25rem 0.65rem;
-      border-radius: var(--radius-pill);
-      background: rgba(0, 166, 255, 0.12);
-      border: 1px solid rgba(0, 166, 255, 0.24);
-      color: var(--primary);
-      font-weight: 600;
-      font-size: 0.8rem;
+    .project{
+      grid-column: span 6;
+      min-height: 220px;
+      position:relative;
+      overflow:hidden;
     }
-
-    .project-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.6rem;
-      margin-top: 1.1rem;
+    .project::before{
+      content:"";
+      position:absolute; inset:-40px;
+      background:
+        radial-gradient(500px 220px at 15% 10%, rgba(75,63,228,.30), transparent 60%),
+        radial-gradient(420px 220px at 85% 60%, rgba(25,211,197,.18), transparent 60%);
+      filter: blur(0px);
+      opacity:.9;
+    }
+    .projectInner{
+      position:relative;
+      height:100%;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      gap: var(--space-3);
+    }
+    .projectMeta{
+      display:flex; flex-wrap:wrap; gap:10px;
+      margin-top: 10px;
+    }
+    .tag{
+      font-size:12px;
+      color: rgba(181,184,192,.95);
+      border: 1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.03);
+      padding:6px 10px;
+      border-radius:999px;
+    }
+    @media (max-width: 980px){
+      .project{grid-column: span 12}
     }
 
     /* Testimonials */
-
-    .quote {
-      position: relative;
-      padding-top: 1.2rem;
+    .quote{
+      font-size:16px;
+      line-height:26px;
+      color: rgba(255,255,255,.90);
+      margin: 0 0 var(--space-2);
+    }
+    .person{
+      display:flex; align-items:center; gap:12px;
+      color: rgba(181,184,192,.95);
+      font-size:14px;
+    }
+    .avatar{
+      width:36px; height:36px; border-radius:999px;
+      background: linear-gradient(135deg, rgba(75,63,228,.65), rgba(25,211,197,.35));
+      border: 1px solid rgba(255,255,255,.08);
+      box-shadow: 0 10px 24px rgba(0,0,0,.35);
     }
 
-    .quote::before {
-      content: "\201C";
-      position: absolute;
-      top: -0.2rem;
-      left: 0;
-      font-size: 4rem;
-      line-height: 1;
-      color: rgba(0, 166, 255, 0.25);
+    /* Logos strip */
+    .logos{
+      display:flex; flex-wrap:wrap;
+      gap: 12px;
+      align-items:center;
     }
-
-    .quote p {
-      margin: 0 0 1rem;
-      color: rgba(255,255,255,0.92);
-    }
-
-    .quote footer {
-      color: var(--muted);
-      font-weight: 600;
-    }
-
-    /* Partners */
-
-    .logo-grid {
-      display: grid;
-      grid-template-columns: repeat(6, minmax(0, 1fr));
-      gap: 0.85rem;
-      align-items: center;
-      margin-top: 2rem;
-    }
-
-    .logo-pill {
-      display: grid;
-      place-items: center;
-      padding: 0.95rem 0.75rem;
-      border-radius: var(--radius-pill);
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.06);
-      color: rgba(255,255,255,0.85);
-      font-weight: 800;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      font-size: 0.78rem;
-      text-align: center;
+    .logoBox{
+      flex: 1 1 160px;
+      min-height: 56px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(255,255,255,.06);
+      background: rgba(255,255,255,.02);
+      color: rgba(181,184,192,.95);
+      font-size: 14px;
+      padding: 12px;
     }
 
     /* Contact */
-
-    form {
-      display: grid;
-      gap: 0.9rem;
-      margin-top: 1.5rem;
+    .contactGrid{
+      display:grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: var(--space-3);
+      align-items:start;
     }
-
-    label {
-      display: grid;
-      gap: 0.4rem;
-      color: var(--muted);
-      font-size: 0.9rem;
+    @media (max-width: 980px){
+      .contactGrid{grid-template-columns: 1fr}
     }
-
-    input,
-    textarea {
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,0.10);
-      background: rgba(2,3,23,0.55);
-      color: var(--text);
-      padding: 0.85rem 1rem;
-      font-size: 1rem;
+    .field{
+      display:flex; flex-direction:column; gap:8px;
+      margin-bottom: 14px;
+    }
+    label{font-size:13px; color: rgba(181,184,192,.95)}
+    input, textarea{
+      font: inherit;
+      color: var(--color-text);
+      background: rgba(20,24,33,.92);
+      border: 1px solid rgba(42,46,54,.95);
+      border-radius: var(--radius-sm);
+      padding: 12px 12px;
       outline: none;
     }
-
-    textarea {
-      min-height: 140px;
-      resize: vertical;
+    input:focus, textarea:focus{
+      border-color: rgba(25,211,197,.75);
+      box-shadow: 0 0 0 4px rgba(25,211,197,.10);
     }
-
-    input:focus,
-    textarea:focus {
-      border-color: rgba(0,166,255,0.55);
-      box-shadow: 0 0 0 3px rgba(0,166,255,0.14);
-    }
-
-    .contact-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
-      gap: 1.25rem;
-      align-items: start;
-      margin-top: 2.25rem;
-    }
-
-    .contact-list {
-      display: grid;
-      gap: 0.6rem;
-      margin-top: 1rem;
-      color: var(--muted);
-    }
-
-    .contact-list a {
-      color: rgba(255,255,255,0.9);
-    }
-
-    .contact-list a:hover {
-      color: var(--primary);
+    textarea{min-height: 120px; resize: vertical}
+    .note{
+      border: 1px solid rgba(255,255,255,.06);
+      background: rgba(255,255,255,.03);
+      border-radius: var(--radius-lg);
+      padding: var(--space-4);
+      color: rgba(181,184,192,.95);
     }
 
     /* Footer */
-
-    footer {
-      padding: 2.5rem 0;
-      border-top: 1px solid rgba(255,255,255,0.06);
-      background: rgba(2,3,23,0.7);
+    footer{
+      padding: var(--space-5) 0;
+      border-top: 1px solid rgba(42,46,54,.85);
+      background: rgba(15,17,21,.55);
     }
-
-    .footer-inner {
-      display: flex;
+    .footerRow{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap: var(--space-4);
       flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1.2rem;
-      color: var(--muted);
-      font-size: 0.9rem;
+    }
+    .footerLinks{
+      display:flex; gap:14px; flex-wrap:wrap;
+      color: rgba(181,184,192,.95);
+      font-size:14px;
+    }
+    .footerLinks a:hover{color: var(--color-text)}
+    .tiny{
+      color: rgba(181,184,192,.85);
+      font-size: 12px;
+      margin-top: 10px;
     }
 
-    /* Responsive */
-
-    @media (max-width: 960px) {
-      .hero-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .hero-meta {
-        grid-template-columns: 1fr;
-      }
-
-      .grid.cols-3 {
-        grid-template-columns: 1fr;
-      }
-
-      .grid.cols-2 {
-        grid-template-columns: 1fr;
-      }
-
-      .social-row {
-        grid-template-columns: 1fr;
-      }
-
-      .logo-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      .contact-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .brand {
-        min-width: auto;
-      }
-
-      .nav-actions {
-        display: none;
-      }
-
-      .nav-links {
-        justify-content: flex-end;
-      }
-    }
+    /* Utility */
+    .muted{color: var(--color-muted)}
+    .rightHint{max-width: 520px}
   </style>
 </head>
 
 <body>
-  <!-- NAV -->
-  <header class="top-nav">
-    <div class="nav-inner container">
-      <a class="brand" href="#hero" aria-label="Til toppen">
-        <div class="brand-mark" aria-hidden="true"></div>
-        <div class="brand-text">
-          <strong>SETAEI</strong>
-          <span>Designet. Bygget. Intelligent.</span>
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <div class="nav">
+        <a class="brand" href="#top" aria-label="Setaei Home">
+          <!-- Replace .logoMark with your real SVG mark when ready -->
+          <div class="logoMark" aria-hidden="true"></div>
+          <div class="brandName">Setaei</div>
+        </a>
+
+        <nav class="navLinks" aria-label="Main navigation">
+          <a href="#services">Tjenester</a>
+          <a href="#projects">Prosjekter</a>
+          <a href="#testimonials">Tilbakemeldinger</a>
+          <a href="#partners">Erfaring</a>
+          <a href="#contact">Kontakt</a>
+        </nav>
+
+        <div class="navCtas">
+          <a class="btn btnSecondary" href="#projects">Se arbeid</a>
+          <a class="btn btnPrimary" href="#contact">Ta en prat</a>
         </div>
-      </a>
-
-      <nav class="nav-links" aria-label="Hovedmeny">
-        <a href="#hero">Hjem</a>
-        <a href="#social">Sosialt</a>
-        <a href="#services">Tjenester</a>
-        <a href="#projects">Prosjekter</a>
-        <a href="#testimonials">Tilbakemeldinger</a>
-        <a href="#partners">Erfaring</a>
-        <a href="#contact">Kontakt</a>
-      </nav>
-
-      <div class="nav-actions">
-        <a class="btn small btn-ghost" href="#projects">Se prosjekter</a>
-        <a class="btn small btn-primary" href="#contact">Bestill en prat</a>
       </div>
     </div>
   </header>
 
-  <!-- HERO -->
-  <main>
-    <section id="hero" class="section hero">
-      <div class="container hero-grid">
-        <div class="hero-text">
-          <div class="pill">
-            <span aria-hidden="true">•</span>
-            AI-automatisering • Webutvikling • Merkevare • SEO
-          </div>
-
-          <h1>Jeg er Setaei.<br/>Jeg bygger systemer.<br/>Nå med <span style="color: var(--primary)">SETai</span>.</h1>
-
-          <p class="lead">
-            AI-automatisering og nettsider som kan oppdateres på sekunder — med kontroll, backup og tydelig struktur.
-            <br/><br/>
-            Hvem: Setaei. Hva: AI + web som faktisk fungerer i drift. Hvor: Norge (remote). Hvordan: raske iterasjoner, tydelig struktur, og et produkt som gjør oppdateringer og vedlikehold mye enklere.
-          </p>
-
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="#services">Se tjenester</a>
-            <a class="btn btn-ghost" href="#projects">Se prosjekter</a>
-            <a class="btn btn-secondary" href="#contact">Bestill en prat</a>
-          </div>
-
-          <div class="hero-meta">
-            <div class="mini">
-              <strong>Premium leveranse</strong>
-              <span>Kontrollerbar kreativitet</span>
-            </div>
-            <div class="mini">
-              <strong>Kontrollert drift</strong>
-              <span>Versjoner, backup, rollback</span>
-            </div>
-            <div class="mini">
-              <strong>Effekt</strong>
-              <span>Struktur, konvertering og SEO</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Video til høyre -->
-        <aside class="card video-card" aria-label="Video-presentasjon">
-          <div class="video-wrap">
-            <!--
-              Alternativ A (MP4):
-              <video controls preload="metadata" poster="assets/setaei-video-poster.jpg">
-                <source src="assets/setaei-intro.mp4" type="video/mp4" />
-              </video>
-
-              Alternativ B (YouTube/Vimeo):
-              <iframe src="https://www.youtube.com/embed/VIDEO_ID" allowfullscreen></iframe>
-            -->
-            <div style="padding: 2rem; text-align: center;">
-              <div class="badge">Video presentasjon</div>
-              <p style="margin: 0.9rem 0 0; color: var(--muted); line-height: 1.55;">
-                Sett inn din video her (MP4 eller embed). Dette feltet er en plassholder.
-              </p>
-            </div>
-          </div>
-          <div class="video-overlay" aria-hidden="true">
-            <div class="hint">Bytt ut med din faktiske video når den er klar.</div>
-            <div class="badge">16:10</div>
-          </div>
-        </aside>
-      </div>
-    </section>
-
-    <!-- SOSIALE KANALER -->
-    <section id="social" class="section alt">
+  <!-- Hero -->
+  <main id="top">
+    <section>
       <div class="container">
-        <h2>Sosiale kanaler</h2>
-        <p class="subtitle">
-          Én tydelig inngang til Setaei på tvers av kanaler. Oppdater URL-er når du vil.
-        </p>
+        <div class="heroGrid">
+          <div>
+            <div class="kicker"><span class="kickerDot"></span> Designed. Engineered. Intelligent.</div>
+            <h1>Setaei bygger presise, intelligente systemer som skalerer.</h1>
+            <p class="lead">
+              Vi kombinerer produktdesign og software engineering for å levere robuste løsninger – fra strategi til produksjon.
+              Bytt teksten her med din faktiske “one-liner”.
+            </p>
 
-        <div class="social-row">
-          <a class="social-card" href="#" target="_blank" rel="noreferrer">
-            <div class="social-left">
-              <strong>LinkedIn</strong>
-              <span>Profesjonelle oppdateringer</span>
+            <div class="heroBadges">
+              <span class="badge"><i></i> Produkt & design</span>
+              <span class="badge"><i></i> Full-stack engineering</span>
+              <span class="badge"><i></i> AI/automatisering</span>
+              <span class="badge"><i></i> Arkitektur & skalerbarhet</span>
             </div>
-            <div class="social-chip">Åpne</div>
-          </a>
 
-          <a class="social-card" href="#" target="_blank" rel="noreferrer">
-            <div class="social-left">
-              <strong>GitHub</strong>
-              <span>Kode, eksperimenter, prototyper</span>
+            <div class="heroActions">
+              <a class="btn btnPrimary" href="#contact">Book introduksjon</a>
+              <a class="btn btnGhost" href="#services">Se tjenester</a>
+              <a class="btn btnSecondary" href="#projects">Referanser</a>
             </div>
-            <div class="social-chip">Åpne</div>
-          </a>
 
-          <a class="social-card" href="https://wa.me" target="_blank" rel="noreferrer">
-            <div class="social-left">
-              <strong>WhatsApp</strong>
-              <span>Rask kontakt</span>
+            <div class="heroMeta">
+              <div class="metaItem"><span class="metaPill"></span><span>Leveranse: MVP → produksjon</span></div>
+              <div class="metaItem"><span class="metaPill"></span><span>Fokus: kvalitet, ytelse, sikkerhet</span></div>
+              <div class="metaItem"><span class="metaPill"></span><span>Modus: prosjekt / retainer</span></div>
             </div>
-            <div class="social-chip">Åpne</div>
-          </a>
+          </div>
 
-          <a class="social-card" href="#" target="_blank" rel="noreferrer">
-            <div class="social-left">
-              <strong>Medium / Blogg</strong>
-              <span>Innsikt, artikler og rammeverk</span>
+          <aside class="videoWrap" aria-label="Video">
+            <div class="videoTopbar">
+              <div class="traffic" aria-hidden="true"><span></span><span></span><span></span></div>
+              <div>Introduksjon</div>
             </div>
-            <div class="social-chip">Åpne</div>
-          </a>
+
+            <!-- Replace iframe src with your own. You can also use <video> -->
+            <div class="videoFrame">
+              <iframe
+                title="Setaei introduction video"
+                src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen>
+              </iframe>
+            </div>
+
+            <div class="videoHint">Bytt til din video (YouTube/Vimeo/MP4)</div>
+          </aside>
         </div>
       </div>
     </section>
 
-    <!-- SERVICES -->
-    <section id="services" class="section">
+    <!-- Social -->
+    <section>
       <div class="container">
-        <h2>Tjenester</h2>
-        <p class="subtitle">
-          Jeg bygger løsninger for bedrifter som vil ha effekt — ikke bare fine ord. Design, engineering og AI settes sammen til et system som fungerer i drift.
-        </p>
-
-        <div class="grid cols-2">
-          <div class="card">
-            <h3>AI-automatisering</h3>
-            <p>AI-agenter og arbeidsflyt-automatisering med logging og kontroll — fra workshop → prototype → produksjon.</p>
-            <div class="tag-row">
-              <span class="tag">Agenter</span>
-              <span class="tag">Automatisering</span>
-              <span class="tag">Roadmap</span>
-            </div>
+        <div class="sectionHead">
+          <div>
+            <div class="kicker"><span class="kickerDot"></span> Sosiale kanaler</div>
+            <h2>Finn Setaei</h2>
           </div>
-
-          <div class="card">
-            <h3>Web og plattformer</h3>
-            <p>Premium nettside som selger, integrasjoner, tracking og måling — med ytelse, struktur og SEO som standard.</p>
-            <div class="tag-row">
-              <span class="tag">Konvertering</span>
-              <span class="tag">Ytelse</span>
-              <span class="tag">Integrasjoner</span>
-            </div>
-          </div>
-
-          <div class="card">
-            <h3>Merkevare og innhold</h3>
-            <p>Visuell identitet og tydelig budskap, landingssider og konverteringsflyt — innhold med struktur som skalerer.</p>
-            <div class="tag-row">
-              <span class="tag">Posisjonering</span>
-              <span class="tag">Innholdssystem</span>
-              <span class="tag">Landingssider</span>
-            </div>
-          </div>
-
-          <div class="card">
-            <h3>SEO og synlighet</h3>
-            <p>Teknisk SEO og informasjonsarkitektur, innholdsplan med tydelig prioritering — langsiktig vekst (ikke bare trafikk).</p>
-            <div class="tag-row">
-              <span class="tag">Teknisk SEO</span>
-              <span class="tag">IA</span>
-              <span class="tag">Vekst</span>
-            </div>
+          <div class="rightHint">
+            <p class="caption">Hold dette kompakt. Bruk få, sterke kanaler.</p>
           </div>
         </div>
 
-        <div style="display:flex; justify-content:center; margin-top: 2rem; gap: 0.8rem; flex-wrap: wrap;">
-          <a class="btn btn-primary" href="#contact">Send e-post</a>
-          <a class="btn btn-ghost" href="#contact">Ring</a>
+        <div class="card">
+          <div class="socialRow">
+            <!-- Replace href values -->
+            <a class="socialChip" href="#" target="_blank" rel="noreferrer"><span class="socialIcon"></span> LinkedIn</a>
+            <a class="socialChip" href="#" target="_blank" rel="noreferrer"><span class="socialIcon"></span> GitHub</a>
+            <a class="socialChip" href="#" target="_blank" rel="noreferrer"><span class="socialIcon"></span> X / Twitter</a>
+            <a class="socialChip" href="#" target="_blank" rel="noreferrer"><span class="socialIcon"></span> YouTube</a>
+            <a class="socialChip" href="mailto:hello@setaei.com"><span class="socialIcon"></span> hello@setaei.com</a>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- PROSJEKTER / REFERANSER -->
-    <section id="projects" class="section alt">
+    <!-- Services -->
+    <section id="services">
       <div class="container">
-        <h2>Prosjekter / referanser</h2>
-        <p class="subtitle">
-          Utvalgte prosjekter — tidligere, pågående og eksperimentelle. Her ligger også Shahnameh, Numerologist og mer.
-        </p>
+        <div class="sectionHead">
+          <div>
+            <div class="kicker"><span class="kickerDot"></span> Tjenester</div>
+            <h2>Hva vi leverer</h2>
+          </div>
+          <div class="rightHint">
+            <p class="caption">3–6 tjenester er optimalt. Hold formuleringene konkrete og målbare.</p>
+          </div>
+        </div>
 
-        <div class="grid cols-2">
-          <article class="card">
-            <h3>Shahnameh (spill / Web3)</h3>
-            <p>En dApp/spillprofil med Web3-infrastruktur. Bygget og distribuert som et prosjekt i krysningspunktet mellom spill, blokkjede og community.</p>
-            <div class="tag-row">
-              <span class="tag">Web3</span>
-              <span class="tag">TON-økosystem</span>
-              <span class="tag">Token-økonomi</span>
+        <div class="grid3">
+          <div class="card">
+            <div class="cardTitle">
+              <h3>Produktdesign</h3>
+              <span class="pill">Design system</span>
             </div>
-            <div class="project-actions">
-              <a class="btn small btn-primary" href="https://dyor.io" target="_blank" rel="noreferrer">Prosjektside</a>
-              <a class="btn small btn-ghost" href="https://dyor.io" target="_blank" rel="noreferrer">Token (REAL)</a>
+            <p>Brukerflyt, UX/UI, prototyping og design system som tåler vekst og flere produkter.</p>
+            <div class="divider"></div>
+            <p class="caption">Leveranser: IA, wireframes, UI-kit, komponenter.</p>
+          </div>
+
+          <div class="card">
+            <div class="cardTitle">
+              <h3>Engineering</h3>
+              <span class="pill">Full-stack</span>
             </div>
-            <p style="margin-top: 1rem; color: var(--muted);">Teknologi/plattform: Web3 (TON-økosystem), token-økonomi, produkt/brand + teknisk leveranse.</p>
+            <p>Robust utvikling med fokus på ytelse, sikkerhet og vedlikeholdbarhet.</p>
+            <div class="divider"></div>
+            <p class="caption">Leveranser: API, web, integrasjoner, DevOps-light.</p>
+          </div>
+
+          <div class="card">
+            <div class="cardTitle">
+              <h3>Intelligens & automasjon</h3>
+              <span class="pill">AI-ready</span>
+            </div>
+            <p>Systemer som automatiserer arbeidsflyt, innhold og beslutninger – uten å miste kontroll.</p>
+            <div class="divider"></div>
+            <p class="caption">Leveranser: agenter, workflows, evals, guardrails.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects / References -->
+    <section id="projects">
+      <div class="container">
+        <div class="sectionHead">
+          <div>
+            <div class="kicker"><span class="kickerDot"></span> Prosjekter</div>
+            <h2>Utvalgte referanser</h2>
+          </div>
+          <div class="rightHint">
+            <p class="caption">Hver case: problem, løsning, effekt. Lenke til detaljside om du ønsker.</p>
+          </div>
+        </div>
+
+        <div class="projectsGrid">
+          <article class="card project">
+            <div class="projectInner">
+              <div>
+                <div class="cardTitle">
+                  <h3>Case 01 — Plattform / portal</h3>
+                  <span class="pill">MVP → prod</span>
+                </div>
+                <p>Beskriv kort hva som ble bygget og hvorfor det betydde noe. Maks 2 linjer.</p>
+                <div class="projectMeta">
+                  <span class="tag">Arkitektur</span>
+                  <span class="tag">Design system</span>
+                  <span class="tag">Integrasjoner</span>
+                </div>
+              </div>
+              <div>
+                <a class="btn btnSecondary" href="#">Se case</a>
+              </div>
+            </div>
           </article>
 
-          <article class="card">
-            <h3>Numerologist (eksperiment)</h3>
-            <p>Et eksperimentprosjekt hvor jeg utforsker tall og AI, med Åse Steinsland sin velsignelse. Målet er å teste hvordan symbolikk, mønstre og modeller kan presenteres på en moderne måte.</p>
-            <div class="tag-row">
-              <span class="tag">AI</span>
-              <span class="tag">Eksperiment</span>
-              <span class="tag">Produkt-tenkning</span>
+          <article class="card project">
+            <div class="projectInner">
+              <div>
+                <div class="cardTitle">
+                  <h3>Case 02 — Automatisering</h3>
+                  <span class="pill">Ops</span>
+                </div>
+                <p>Beskriv verdien. Eksempel: “Reduserte manuell håndtering med 70%”.</p>
+                <div class="projectMeta">
+                  <span class="tag">Workflows</span>
+                  <span class="tag">AI/ML</span>
+                  <span class="tag">Observability</span>
+                </div>
+              </div>
+              <div>
+                <a class="btn btnSecondary" href="#">Se case</a>
+              </div>
             </div>
-            <div class="project-actions">
-              <a class="btn small btn-primary" href="https://numerologist.setaei.com" target="_blank" rel="noreferrer">Åpne Numerologist</a>
-              <a class="btn small btn-ghost" href="https://www.linkedin.com" target="_blank" rel="noreferrer">Åse Steinsland</a>
+          </article>
+
+          <article class="card project">
+            <div class="projectInner">
+              <div>
+                <div class="cardTitle">
+                  <h3>Case 03 — SaaS produkt</h3>
+                  <span class="pill">Scale</span>
+                </div>
+                <p>Beskriv kort hva som ble levert: bygg, migrasjon, performance, security.</p>
+                <div class="projectMeta">
+                  <span class="tag">Frontend</span>
+                  <span class="tag">API</span>
+                  <span class="tag">Cloud</span>
+                </div>
+              </div>
+              <div>
+                <a class="btn btnSecondary" href="#">Se case</a>
+              </div>
             </div>
-            <p style="margin-top: 1rem; color: var(--muted);">Fokus: «AI-automatisering for bedrift som faktisk skaper effekt» — test, læring og produkt-tenkning.</p>
+          </article>
+
+          <article class="card project">
+            <div class="projectInner">
+              <div>
+                <div class="cardTitle">
+                  <h3>Case 04 — Brand/Design</h3>
+                  <span class="pill">System</span>
+                </div>
+                <p>Designretning, UI-system og implementering som gjorde produktet konsistent og raskere å bygge.</p>
+                <div class="projectMeta">
+                  <span class="tag">UI-kit</span>
+                  <span class="tag">Komponenter</span>
+                  <span class="tag">Web</span>
+                </div>
+              </div>
+              <div>
+                <a class="btn btnSecondary" href="#">Se case</a>
+              </div>
+            </div>
           </article>
         </div>
-
-        <div style="margin-top: 1.6rem;" class="card">
-          <h3>SETai – et produkt fra Setaei</h3>
-          <p>
-            SETai er en Artificial Intelligence Website (AI-nettside): et sett med AI-agenter som kan lage, endre, oppdatere og vedlikeholde nettløsninger for bedrifter — raskere, mer moderne og mer kreativt, med færre feil og full kontroll.
-          </p>
-          <div class="grid cols-2" style="margin-top: 1.15rem;">
-            <div class="mini">
-              <strong>Hva SETai gjør</strong>
-              <span>
-                Oppdaterer innhold og seksjoner på sekunder • Holder struktur og design konsekvent • Logger endringer • Versjoner og backup.
-              </span>
-            </div>
-            <div class="mini">
-              <strong>Hvordan det settes opp</strong>
-              <span>
-                Du peker domenet ditt mot vår VPS • SETai tar over oppdatering, vedlikehold og forbedring • Du beholder kontroll.
-              </span>
-            </div>
-          </div>
-          <div style="display:flex; gap: 0.8rem; flex-wrap: wrap; margin-top: 1.2rem;">
-            <a class="btn btn-primary" href="#contact">Bestill en prat</a>
-            <a class="btn btn-ghost" href="#testimonials">Se tilbakemeldinger</a>
-          </div>
-        </div>
       </div>
     </section>
 
-    <!-- TILBAKEMELDINGER -->
-    <section id="testimonials" class="section">
+    <!-- Testimonials -->
+    <section id="testimonials">
       <div class="container">
-        <h2>Tilbakemeldinger</h2>
-        <p class="subtitle">
-          Signal-anbefalinger fra utvalgte samarbeid — med fokus på presisjon, tempo og kontrollerbar leveranse.
-        </p>
-
-        <div class="grid cols-3">
-          <div class="card quote">
-            <p>Presis, strategisk og ekstremt gjennomføringssterk — leverer premium kvalitet med ro og kontroll.</p>
-            <footer>Åse Steinsland</footer>
+        <div class="sectionHead">
+          <div>
+            <div class="kicker"><span class="kickerDot"></span> Tilbakemeldinger</div>
+            <h2>Hva kunder sier</h2>
           </div>
-
-          <div class="card quote">
-            <p>Sterk teknisk arkitektur og ansvarlighet — bygger systemer som tåler skala og endring.</p>
-            <footer>Tor Martin Olsen</footer>
-          </div>
-
-          <div class="card quote">
-            <p>Rask problemløser med høy presisjon — enkel å samarbeide med og leverer alltid som avtalt.</p>
-            <footer>Stein Alvern</footer>
+          <div class="rightHint">
+            <p class="caption">2–4 sitater er nok. Fokuser på effekt og kvalitet.</p>
           </div>
         </div>
 
-        <p class="subtitle" style="margin-top: 2rem;">
-          Ønsker du flere referanser, deler jeg gjerne i dialog.
-        </p>
-      </div>
-    </section>
-
-    <!-- PARTNERE / ERFARING -->
-    <section id="partners" class="section alt">
-      <div class="container">
-        <h2>Partnere og erfaring</h2>
-        <p class="subtitle">
-          Kunde-/erfaringslogoer og signaler på tvers av leveranser, plattformer og verktøy.
-        </p>
-
-        <div class="logo-grid" aria-label="Logoer">
-          <div class="logo-pill">Apple</div>
-          <div class="logo-pill">Google</div>
-          <div class="logo-pill">Telenor</div>
-          <div class="logo-pill">Telia</div>
-          <div class="logo-pill">Microsoft</div>
-          <div class="logo-pill">GitHub</div>
-          <div class="logo-pill">GPT</div>
-          <div class="logo-pill">Codex</div>
-          <div class="logo-pill">AI</div>
-          <div class="logo-pill">Web</div>
-          <div class="logo-pill">SEO</div>
-          <div class="logo-pill">Automation</div>
-        </div>
-
-        <div class="card" style="margin-top: 2rem;">
-          <h3>Hva som kommer</h3>
-          <p>
-            Vipps-integrering (modul under arbeid) • Sosiale medier og publiseringsflyt • Mer automatisering på tvers av kanaler.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- KONTAKT -->
-    <section id="contact" class="section">
-      <div class="container">
-        <h2>Kontakt</h2>
-        <p class="subtitle">
-          Send en kort melding, så svarer jeg raskt. Prosjekter: brand systems, AI-automatisering, plattformer. Lokasjon: Norge (remote-first).
-        </p>
-
-        <div class="contact-grid">
+        <div class="grid3">
           <div class="card">
-            <h3>Send melding</h3>
-            <p>Hold dette enkelt: 3–5 felt og en tydelig responsforventning.</p>
+            <p class="quote">“Setaei leverte raskt og med høy teknisk presisjon. Resultatet var merkbart bedre kvalitet i produksjon.”</p>
+            <div class="person">
+              <div class="avatar" aria-hidden="true"></div>
+              <div>
+                <div style="color: rgba(255,255,255,.92); font-weight:500;">Navn Etternavn</div>
+                <div class="caption">Rolle, Selskap</div>
+              </div>
+            </div>
+          </div>
 
-            <form onsubmit="event.preventDefault(); alert('Skjemaet er en demo. Koble til e-post/CRM når du er klar.');">
-              <label>
-                Navn
-                <input name="name" autocomplete="name" placeholder="Ditt navn" required />
-              </label>
-              <label>
-                E-post
-                <input type="email" name="email" autocomplete="email" placeholder="din@epost.no" required />
-              </label>
-              <label>
-                Melding
-                <textarea name="message" placeholder="Hva ønsker du å få gjort?" required></textarea>
-              </label>
-              <button class="btn btn-primary" type="submit">Send</button>
+          <div class="card">
+            <p class="quote">“Design og engineering hang sammen. Kommunikasjonen var tydelig, og scope ble håndtert profesjonelt.”</p>
+            <div class="person">
+              <div class="avatar" aria-hidden="true"></div>
+              <div>
+                <div style="color: rgba(255,255,255,.92); font-weight:500;">Navn Etternavn</div>
+                <div class="caption">Rolle, Selskap</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <p class="quote">“Strukturelle forbedringer ga lavere kostnader og bedre hastighet i leveranser. Solid håndverk.”</p>
+            <div class="person">
+              <div class="avatar" aria-hidden="true"></div>
+              <div>
+                <div style="color: rgba(255,255,255,.92); font-weight:500;">Navn Etternavn</div>
+                <div class="caption">Rolle, Selskap</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Partners / Experience -->
+    <section id="partners">
+      <div class="container">
+        <div class="sectionHead">
+          <div>
+            <div class="kicker"><span class="kickerDot"></span> Partnere og erfaring</div>
+            <h2>Bygget med og for</h2>
+          </div>
+          <div class="rightHint">
+            <p class="caption">Legg inn ekte logoer når du har rettigheter. Inntil da: tekstplasserholdere.</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="logos">
+            <div class="logoBox">Partner / Kunde 01</div>
+            <div class="logoBox">Partner / Kunde 02</div>
+            <div class="logoBox">Partner / Kunde 03</div>
+            <div class="logoBox">Partner / Kunde 04</div>
+            <div class="logoBox">Partner / Kunde 05</div>
+            <div class="logoBox">Partner / Kunde 06</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact">
+      <div class="container">
+        <div class="sectionHead">
+          <div>
+            <div class="kicker"><span class="kickerDot"></span> Kontakt</div>
+            <h2>La oss bygge noe solid</h2>
+          </div>
+          <div class="rightHint">
+            <p class="caption">Hold kontakt seksjonen enkel. Ett klart neste steg.</p>
+          </div>
+        </div>
+
+        <div class="contactGrid">
+          <div class="card">
+            <!-- Wire form; hook to your backend or use a service (Formspree, etc.) -->
+            <form action="#" method="post">
+              <div class="field">
+                <label for="name">Navn</label>
+                <input id="name" name="name" type="text" placeholder="Ditt navn" />
+              </div>
+              <div class="field">
+                <label for="email">E-post</label>
+                <input id="email" name="email" type="email" placeholder="din@epost.no" />
+              </div>
+              <div class="field">
+                <label for="message">Hva ønsker du å få til?</label>
+                <textarea id="message" name="message" placeholder="Kort beskrivelse av behov, tidslinje og eventuelle lenker."></textarea>
+              </div>
+
+              <div style="display:flex; gap:12px; flex-wrap:wrap; align-items:center;">
+                <button class="btn btnPrimary" type="submit">Send</button>
+                <a class="btn btnSecondary" href="mailto:hello@setaei.com">E-post direkte</a>
+                <span class="caption">Svar normalt innen 1–2 virkedager.</span>
+              </div>
             </form>
-
-            <p style="margin-top: 1rem; color: var(--muted);">Response SLA: 24–48 timer</p>
           </div>
 
-          <aside class="card">
-            <h3>Direkte</h3>
-            <p>Velg kanal. Oppdater e-post/telefon når du vil.</p>
-            <div class="contact-list">
-              <div>• <a href="mailto:hello@setaei.com">Send e-post</a></div>
-              <div>• <a href="tel:+47">Ring</a></div>
-              <div>• <a href="https://wa.me" target="_blank" rel="noreferrer">WhatsApp</a></div>
-            </div>
+          <aside class="note">
+            <h3 style="margin-top:0">Arbeidsmodus</h3>
+            <p>
+              Prosjektleveranser eller retainer. Typisk prosess:
+              scope → design/arkitektur → implementering → drift/videreutvikling.
+            </p>
+            <div class="divider"></div>
+            <p class="caption">
+              Bytt teksten til din reelle modell, priser eller “minimum engagement” om du ønsker.
+            </p>
 
-            <div style="margin-top: 1.25rem; display:flex; gap: 0.8rem; flex-wrap: wrap;">
-              <a class="btn btn-secondary" href="#hero">Til toppen</a>
-              <a class="btn btn-ghost" href="#projects">Se prosjekter</a>
+            <div style="margin-top: var(--space-3); display:flex; gap:10px; flex-wrap:wrap;">
+              <span class="tag">Kvalitet</span>
+              <span class="tag">Hastighet</span>
+              <span class="tag">Sikkerhet</span>
+              <span class="tag">Skalerbarhet</span>
             </div>
           </aside>
         </div>
       </div>
     </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <div class="footerRow">
+          <div>
+            <div style="display:flex; align-items:center; gap:12px;">
+              <div class="logoMark" aria-hidden="true" style="width:28px;height:28px;border-radius:10px;"></div>
+              <div style="font-weight:600;">Setaei</div>
+            </div>
+            <div class="tiny">Designed. Engineered. Intelligent.</div>
+          </div>
+
+          <div class="footerLinks">
+            <a href="#services">Tjenester</a>
+            <a href="#projects">Prosjekter</a>
+            <a href="#testimonials">Tilbakemeldinger</a>
+            <a href="#partners">Erfaring</a>
+            <a href="#contact">Kontakt</a>
+          </div>
+        </div>
+
+        <div class="tiny" style="margin-top: var(--space-4);">
+          © <span id="year"></span> Setaei. All rights reserved.
+        </div>
+      </div>
+    </footer>
   </main>
 
-  <!-- FOOTER -->
-  <footer>
-    <div class="container footer-inner">
-      <div>
-        <strong style="color: rgba(255,255,255,0.9); letter-spacing: 0.12em;">SETAEI</strong>
-        <span style="margin-left: 0.6rem;">Designet. Bygget. Intelligent.</span>
-      </div>
-      <div>© <span id="year"></span> Setaei. Alle rettigheter reservert. · Norge</div>
-    </div>
-  </footer>
-
   <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
+    document.getElementById("year").textContent = new Date().getFullYear();
   </script>
 </body>
 </html>
