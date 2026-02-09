@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>POS Demo – Offline</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+  background:#0f172a;
+  font-family: Arial, sans-serif;
+  color:#e5e7eb;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+}
+.pos {
+  width:320px;
+  background:#020617;
+  border-radius:16px;
+  padding:20px;
+  box-shadow:0 0 30px rgba(0,0,0,.6);
+}
+.header {
+  text-align:center;
+  margin-bottom:15px;
+}
+.header h2 {
+  margin:0;
+  font-size:18px;
+}
+.screen {
+  background:#020617;
+  border:1px solid #334155;
+  border-radius:10px;
+  padding:15px;
+  min-height:150px;
+  margin-bottom:15px;
+}
+.row {
+  margin-bottom:8px;
+}
+.label {
+  font-size:12px;
+  color:#94a3b8;
+}
+.value {
+  font-size:16px;
+}
+.amount {
+  font-size:22px;
+  text-align:center;
+  margin:10px 0;
+}
+.buttons button {
+  width:100%;
+  padding:10px;
+  margin-top:8px;
+  border:none;
+  border-radius:8px;
+  font-size:14px;
+  cursor:pointer;
+}
+.swipe { background:#2563eb; color:#fff; }
+.chip { background:#16a34a; color:#fff; }
+.tap { background:#9333ea; color:#fff; }
+.reset { background:#334155; color:#fff; }
+.approved { color:#22c55e; font-weight:bold; }
+.demo { color:#facc15; font-size:12px; text-align:center; margin-top:8px; }
+</style>
+</head>
+
+<body>
+
+<div class="pos">
+  <div class="header">
+    <h2>POS TERMINAL</h2>
+    <div style="font-size:12px;color:#94a3b8">Offline Demo Mode</div>
+  </div>
+
+  <div class="screen" id="screen">
+    <div class="row">
+      <div class="label">Status</div>
+      <div class="value">Insert / Swipe / Tap Card</div>
+    </div>
+    <div class="amount">Amount: 0.00</div>
+  </div>
+
+  <div class="buttons">
+    <button class="swipe" onclick="process('Magstripe')">Swipe Card</button>
+    <button class="chip" onclick="process('Chip EMV')">Insert Chip</button>
+    <button class="tap" onclick="process('Contactless NFC')">Tap Card</button>
+    <button class="reset" onclick="resetPOS()">Reset</button>
+  </div>
+
+  <div class="demo">⚠ DEMO ONLY – No real transaction</div>
+</div>
+
+<script>
+function process(type){
+  const amount = (Math.floor(Math.random()*900)+100) * 1000;
+  document.getElementById("screen").innerHTML = `
+    <div class="row">
+      <div class="label">Card Method</div>
+      <div class="value">${type}</div>
+    </div>
+    <div class="row">
+      <div class="label">Card</div>
+      <div class="value">**** **** **** ${Math.floor(Math.random()*9000+1000)}</div>
+    </div>
+    <div class="amount">Amount: ${amount.toLocaleString()}</div>
+    <div class="approved">APPROVED</div>
+    <div class="label">Balance (Demo)</div>
+    <div class="value">${(amount*10).toLocaleString()}</div>
+  `;
+}
+
+function resetPOS(){
+  document.getElementById("screen").innerHTML = `
+    <div class="row">
+      <div class="label">Status</div>
+      <div class="value">Insert / Swipe / Tap Card</div>
+    </div>
+    <div class="amount">Amount: 0.00</div>
+  `;
+}
+</script>
+
+</body>
+</html>
