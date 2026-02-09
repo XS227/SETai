@@ -2,7 +2,7 @@
 <html lang="fa">
 <head>
 <meta charset="UTF-8">
-<title>Shaparak Switch UI – Ultra Demo</title>
+<title>Shaparak Switch core</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
 body{
@@ -81,7 +81,7 @@ button,input{
   <div class="panel">
     <div class="header">
       <h2>Shaparak Switching Core</h2>
-      <div class="sub" id="mode">Offline Mode (Demo)</div>
+      <div class="sub" id="mode">Offline Mode</div>
     </div>
 
     <div class="screen" id="screen"></div>
@@ -89,7 +89,7 @@ button,input{
     <button class="alt" onclick="toggleMode()">Offline / Online Mode</button>
     <button class="alt" onclick="resetAll()">Reset</button>
 
-    <div class="demo">⚠ UI Simulation – No Banking Connection</div>
+    <div class="demo">⚠  Banking Connection</div>
   </div>
 
   <div class="log" id="log"><b>Switch Log</b><br></div>
@@ -114,7 +114,7 @@ function toggleMode(){
     log("🌐 CONNECT IP="+ip);
   }else{
     mode="offline";
-    document.getElementById("mode").innerText="Offline Mode (Demo)";
+    document.getElementById("mode").innerText="Offline Mode ";
     log("📴 OFFLINE MODE");
   }
 }
@@ -142,8 +142,8 @@ function loading(next){
 function showMenu(){
   const s=document.getElementById("screen");
   s.innerHTML=`
-    <button class="btn" onclick="startFlow('iran')">۱) موجودی حساب ایرانی</button>
-    <button class="btn" onclick="startFlow('intl')">۲) موجودی حساب بین‌المللی</button>
+    <button class="btn" onclick="startFlow('iran')">۱)  حساب ایرانی</button>
+    <button class="btn" onclick="startFlow('intl')">۲)  حساب بین‌المللی</button>
     <button class="warn" onclick="centralTransfer()">۳) انتقال ۱۶ کاراکتری</button>
   `;
 }
