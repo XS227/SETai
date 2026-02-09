@@ -76,7 +76,7 @@ body {
 <div class="pos">
   <div class="header">
     <h2>POS TERMINAL</h2>
-    <div style="font-size:12px;color:#94a3b8">Offline Demo Mode</div>
+    <div style="font-size:12px;color:#94a3b8">Offline Mode</div>
   </div>
 
   <div class="screen" id="screen">
@@ -94,7 +94,7 @@ body {
     <button class="reset" onclick="resetPOS()">Reset</button>
   </div>
 
-  <div class="demo">⚠ DEMO ONLY – No real transaction</div>
+  <div class="demo">⚠ OFFLINE MODE</div>
 </div>
 
 <script>
@@ -111,8 +111,8 @@ function process(type){
     </div>
     <div class="amount">Amount: ${amount.toLocaleString()}</div>
     <div class="approved">APPROVED</div>
-    <div class="label">Balance (Demo)</div>
-    <div class="value">${(amount*10).toLocaleString()}</div>
+    <div class="label">Available balance</div>
+    <div class="value">${(amount*10).toLocaleString()} $ </div>
   `;
 }
 
