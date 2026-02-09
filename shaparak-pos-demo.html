@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+<meta charset="UTF-8">
+<title>Shaparak POS Demo</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+  background:#0b1220;
+  font-family:tahoma, Arial;
+  color:#e5e7eb;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  direction:rtl;
+}
+.pos{
+  width:330px;
+  background:#020617;
+  border-radius:18px;
+  padding:18px;
+  box-shadow:0 0 35px rgba(0,0,0,.7);
+}
+.header{
+  text-align:center;
+  margin-bottom:10px;
+}
+.header h2{
+  margin:0;
+  font-size:17px;
+}
+.header .sub{
+  font-size:12px;
+  color:#94a3b8;
+}
+.screen{
+  background:#020617;
+  border:1px solid #334155;
+  border-radius:10px;
+  padding:14px;
+  min-height:165px;
+  margin-bottom:12px;
+}
+.row{ margin-bottom:6px; }
+.label{
+  font-size:12px;
+  color:#94a3b8;
+}
+.value{
+  font-size:15px;
+}
+.amount{
+  font-size:22px;
+  text-align:center;
+  margin:8px 0;
+}
+.success{
+  color:#22c55e;
+  font-weight:bold;
+  text-align:center;
+  margin-top:6px;
+}
+.buttons button{
+  width:100%;
+  padding:10px;
+  margin-top:7px;
+  border:none;
+  border-radius:8px;
+  font-size:14px;
+  cursor:pointer;
+}
+.swipe{ background:#2563eb; color:#fff; }
+.chip{ background:#16a34a; color:#fff; }
+.tap{ background:#9333ea; color:#fff; }
+.reset{ background:#334155; color:#fff; }
+.demo{
+  text-align:center;
+  font-size:11px;
+  color:#facc15;
+  margin-top:8px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="pos">
+  <div class="header">
+    <h2>شبکه پرداخت شاپرک</h2>
+    <div class="sub">پایانه فروش – حالت آفلاین</div>
+  </div>
+
+  <div class="screen" id="screen">
+    <div class="row">
+      <div class="label">وضعیت</div>
+      <div class="value">لطفاً کارت را وارد / بکشید / نزدیک کنید</div>
+    </div>
+    <div class="amount">مبلغ: ۰ ریال</div>
+  </div>
+
+  <div class="buttons">
+    <button class="swipe" onclick="process('کارت مغناطیسی')">کشیدن کارت</button>
+    <button class="chip" onclick="process('چیپ (EMV)')">وارد کردن کارت</button>
+    <button class="tap" onclick="process('بدون تماس (NFC)')">نزدیک کردن کارت</button>
+    <button class="reset" onclick="resetPOS()">شروع مجدد</button>
+  </div>
+
+  <div class="demo">⚠ حالت آفلاین </div>
+</div>
+
+<script>
+function process(method){
+  const amount = (Math.floor(Math.random()*900)+100)*1000000;
+  const rrn = Math.floor(Math.random()*900000000000)+100000000000;
+
+  document.getElementById("screen").innerHTML = `
+    <div class="row">
+      <div class="label">روش پرداخت</div>
+      <div class="value">${method}</div>
+    </div>
+    <div class="row">
+      <div class="label">شماره کارت</div>
+      <div class="value">**** **** **** ${Math.floor(Math.random()*9000+1000)}</div>
+    </div>
+    <div class="row">
+      <div class="label">مبلغ</div>
+      <div class="amount">${amount.toLocaleString('fa-IR')} ریال</div>
+    </div>
+    <div class="success">تراکنش موفق</div>
+    <div class="row">
+      <div class="label">شماره پیگیری</div>
+      <div class="value">${rrn}</div>
+    </div>
+    <div class="row">
+      <div class="label">وضعیت تسویه</div>
+      <div class="value">آفلاین)</div>
+    </div>
+  `;
+}
+
+function resetPOS(){
+  document.getElementById("screen").innerHTML = `
+    <div class="row">
+      <div class="label">وضعیت</div>
+      <div class="value">لطفاً کارت را وارد / بکشید / نزدیک کنید</div>
+    </div>
+    <div class="amount">مبلغ: ۰ ریال</div>
+  `;
+}
+</script>
+
+</body>
+</html>
