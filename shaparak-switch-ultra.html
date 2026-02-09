@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+<meta charset="UTF-8">
+<title>Shaparak Switch UI – Ultra Demo</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{
+  background:#020617;
+  font-family:tahoma, monospace;
+  color:#e5e7eb;
+  display:flex;
+  justify-content:center;
+  padding:20px;
+  direction:rtl;
+}
+.app{width:400px}
+.panel{
+  background:#020617;
+  border:1px solid #1e293b;
+  border-radius:12px;
+  padding:14px;
+  box-shadow:0 0 40px rgba(0,0,0,.8);
+}
+.header{text-align:center;margin-bottom:8px}
+.header h2{margin:0;font-size:15px}
+.sub{font-size:11px;color:#94a3b8}
+
+.screen{
+  border:1px solid #334155;
+  border-radius:8px;
+  padding:10px;
+  min-height:160px;
+  margin:8px 0;
+}
+button,input{
+  width:100%;
+  padding:8px;
+  margin-top:6px;
+  border:none;
+  border-radius:6px;
+  font-size:13px;
+}
+.btn{background:#2563eb;color:#fff}
+.alt{background:#475569;color:#fff}
+.ok{background:#16a34a;color:#fff}
+.warn{background:#9333ea;color:#fff}
+
+.log{
+  margin-top:10px;
+  background:#020617;
+  border:1px solid #334155;
+  border-radius:8px;
+  padding:8px;
+  font-size:11px;
+  color:#94a3b8;
+  height:200px;
+  overflow:auto;
+}
+
+.code{
+  background:#020617;
+  border:1px dashed #475569;
+  padding:6px;
+  font-size:11px;
+  margin-top:6px;
+  color:#facc15;
+}
+
+.signal{color:#22c55e;font-size:11px}
+.visa{color:#60a5fa}
+.master{color:#f97316}
+.demo{font-size:10px;color:#facc15;text-align:center;margin-top:6px}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <div class="panel">
+    <div class="header">
+      <h2>Shaparak Switching Core</h2>
+      <div class="sub" id="mode">Offline Mode (Demo)</div>
+    </div>
+
+    <div class="screen" id="screen"></div>
+
+    <button class="alt" onclick="toggleMode()">Offline / Online Mode</button>
+    <button class="alt" onclick="resetAll()">Reset</button>
+
+    <div class="demo">⚠ UI Simulation – No Banking Connection</div>
+  </div>
+
+  <div class="log" id="log"><b>Switch Log</b><br></div>
+
+</div>
+
+<script>
+let mode="offline", step=0, currentType="";
+
+function log(t){
+  const l=document.getElementById("log");
+  l.innerHTML+=t+"<br>";
+  l.scrollTop=l.scrollHeight;
+}
+
+function toggleMode(){
+  if(mode==="offline"){
+    const ip=prompt("Online Mode\nEnter Switch IP:");
+    if(!ip) return;
+    mode="online";
+    document.getElementById("mode").innerText="Online Mode | IP "+ip;
+    log("🌐 CONNECT IP="+ip);
+  }else{
+    mode="offline";
+    document.getElementById("mode").innerText="Offline Mode (Demo)";
+    log("📴 OFFLINE MODE");
+  }
+}
+
+function resetAll(){
+  step=0;
+  showMenu();
+  log("— SYSTEM RESET —");
+}
+
+function loading(next){
+  const s=document.getElementById("screen");
+  s.innerHTML=`<div>Connecting to Shaparak Switch...</div>
+               <div class="signal">📡 Signal: LINK UP</div>`;
+  log("⏳ TCP Handshake");
+  setTimeout(()=>{
+    log("✔ ISO8583 Session Open");
+    log("✔ Auth PSP");
+    log("✔ Route → Central Switch");
+    log("✔ Waiting Response");
+    next();
+  },5000);
+}
+
+function showMenu(){
+  const s=document.getElementById("screen");
+  s.innerHTML=`
+    <button class="btn" onclick="startFlow('iran')">۱) موجودی حساب ایرانی</button>
+    <button class="btn" onclick="startFlow('intl')">۲) موجودی حساب بین‌المللی</button>
+    <button class="warn" onclick="centralTransfer()">۳) انتقال ۱۶ کاراکتری</button>
+  `;
+}
+
+function startFlow(type){
+  currentType=type;
+  const s=document.getElementById("screen");
+  s.innerHTML=`
+    <div>روش کارت را انتخاب کنید</div>
+    <button class="btn" onclick="processCard('SWIPE')">Swipe</button>
+    <button class="btn" onclick="processCard('CHIP')">Insert Chip</button>
+    <button class="btn" onclick="processCard('NFC')">Tap NFC</button>
+  `;
+}
+
+function processCard(method){
+  loading(()=>{
+    const s=document.getElementById("screen");
+    s.innerHTML=`
+      <div class="code">
+      &lt;html&gt;<br>
+      AUTH_METHOD=${method}<br>
+      EMV_DATA=93AF01...<br>
+      ARQC=GENERATED<br>
+      &lt;/html&gt;
+      </div>
+      <div>PIN Code</div>
+      <input type="password" maxlength="4" id="pin">
+      <button class="ok" onclick="approve()">OK</button>
+    `;
+    log("💳 CARD="+method);
+    log("🔐 PIN Requested");
+  });
+}
+
+function approve(){
+  if(currentType==="iran"){
+    const hemat=Math.floor(Math.random()*5)+3;
+    const rial=hemat*1000000000000;
+    document.getElementById("screen").innerHTML=
+      `<div>Balance (IR)</div>
+       <h3>${rial.toLocaleString('fa-IR')} ریال</h3>`;
+    log("DE39=00 APPROVED");
+    log("BAL="+hemat+" HEMAT");
+  }
+  if(currentType==="intl"){
+    document.getElementById("screen").innerHTML=
+      `<div class="visa">VISA: 4,800,000 USD</div>
+       <div class="master">MASTER: 1,900,000 EUR</div>`;
+    log("INTL ROUTE → VISA / MC");
+    log("DE39=00");
+  }
+}
+
+function centralTransfer(){
+  const s=document.getElementById("screen");
+  s.innerHTML=`
+    <div>Enter 16 Digit ID</div>
+    <input maxlength="16" oninput="if(this.value.length==16)showCBI()">
+  `;
+}
+
+function showCBI(){
+  loading(()=>{
+    document.getElementById("screen").innerHTML=
+      `<div>Issuer</div>
+       <h3>بانک مرکزی جمهوری اسلامی ایران</h3>`;
+    log("ROUTE → CBI");
+    log("TRANSFER COMPLETED (UI)");
+  });
+}
+
+showMenu();
+</script>
+
+</body>
+</html>
