@@ -2,9 +2,8 @@
 <html lang="fa">
 <head>
 <meta charset="UTF-8">
-<title>Shaparak POS Demo</title>
+<title>Shaparak POS Demo PRO</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <style>
 body{
   background:#0b1220;
@@ -16,59 +15,63 @@ body{
   height:100vh;
   direction:rtl;
 }
+.wrapper{
+  display:flex;
+  gap:14px;
+}
 .pos{
   width:330px;
   background:#020617;
   border-radius:18px;
-  padding:18px;
+  padding:16px;
   box-shadow:0 0 35px rgba(0,0,0,.7);
 }
 .header{
   text-align:center;
-  margin-bottom:10px;
+  margin-bottom:8px;
 }
 .header h2{
   margin:0;
-  font-size:17px;
+  font-size:16px;
 }
 .header .sub{
-  font-size:12px;
+  font-size:11px;
   color:#94a3b8;
 }
 .screen{
   background:#020617;
   border:1px solid #334155;
   border-radius:10px;
-  padding:14px;
-  min-height:165px;
-  margin-bottom:12px;
+  padding:12px;
+  min-height:175px;
+  margin-bottom:10px;
 }
 .row{ margin-bottom:6px; }
 .label{
-  font-size:12px;
+  font-size:11px;
   color:#94a3b8;
 }
 .value{
-  font-size:15px;
+  font-size:14px;
 }
 .amount{
   font-size:22px;
   text-align:center;
   margin:8px 0;
+  font-weight:bold;
 }
 .success{
   color:#22c55e;
   font-weight:bold;
   text-align:center;
-  margin-top:6px;
 }
 .buttons button{
   width:100%;
-  padding:10px;
-  margin-top:7px;
+  padding:9px;
+  margin-top:6px;
   border:none;
   border-radius:8px;
-  font-size:14px;
+  font-size:13px;
   cursor:pointer;
 }
 .swipe{ background:#2563eb; color:#fff; }
@@ -77,67 +80,134 @@ body{
 .reset{ background:#334155; color:#fff; }
 .demo{
   text-align:center;
-  font-size:11px;
+  font-size:10px;
   color:#facc15;
-  margin-top:8px;
+  margin-top:6px;
+}
+
+/* Receipt */
+.receipt{
+  width:260px;
+  background:#f8fafc;
+  color:#020617;
+  border-radius:10px;
+  padding:12px;
+  font-size:12px;
+  display:none;
+}
+.receipt h3{
+  text-align:center;
+  margin:0 0 6px 0;
+}
+.receipt .line{
+  border-bottom:1px dashed #94a3b8;
+  margin:6px 0;
+}
+
+/* Log */
+.log{
+  width:260px;
+  background:#020617;
+  border:1px solid #334155;
+  border-radius:10px;
+  padding:10px;
+  font-size:11px;
+  color:#94a3b8;
+  height:360px;
+  overflow:auto;
+}
+.log h4{
+  margin:0 0 6px 0;
+  font-size:12px;
+  color:#e5e7eb;
+}
+.log-entry{
+  margin-bottom:6px;
+}
+.fake{
+  color:#facc15;
 }
 </style>
 </head>
 
 <body>
 
-<div class="pos">
-  <div class="header">
-    <h2>شبکه پرداخت شاپرک</h2>
-    <div class="sub">پایانه فروش – حالت آفلاین</div>
-  </div>
+<div class="wrapper">
 
-  <div class="screen" id="screen">
-    <div class="row">
-      <div class="label">وضعیت</div>
-      <div class="value">لطفاً کارت را وارد / بکشید / نزدیک کنید</div>
+  <!-- POS -->
+  <div class="pos">
+    <div class="header">
+      <h2>شبکه پرداخت شاپرک</h2>
+      <div class="sub">پایانه فروش </div>
     </div>
-    <div class="amount">مبلغ: ۰ ریال</div>
+
+    <div class="screen" id="screen">
+      <div class="row">
+        <div class="label">وضعیت</div>
+        <div class="value">لطفاً کارت را وارد / بکشید / نزدیک کنید</div>
+      </div>
+      <div class="amount">۰ ریال</div>
+    </div>
+
+    <div class="buttons">
+      <button class="swipe" onclick="process('MAGSTRIPE')">کشیدن کارت</button>
+      <button class="chip" onclick="process('EMV CHIP')">وارد کردن کارت</button>
+      <button class="tap" onclick="process('NFC TAP')">پرداخت بدون تماس</button>
+      <button class="reset" onclick="resetPOS()">ریست</button>
+    </div>
+
+    <div class="demo">⚠ حالت آفلان</div>
   </div>
 
-  <div class="buttons">
-    <button class="swipe" onclick="process('کارت مغناطیسی')">کشیدن کارت</button>
-    <button class="chip" onclick="process('چیپ (EMV)')">وارد کردن کارت</button>
-    <button class="tap" onclick="process('بدون تماس (NFC)')">نزدیک کردن کارت</button>
-    <button class="reset" onclick="resetPOS()">شروع مجدد</button>
+  <!-- Receipt -->
+  <div class="receipt" id="receipt">
+    <h3>رسید مشتری</h3>
+    <div class="line"></div>
+    <div>پذیرنده: MERCHANT</div>
+    <div>شماره پایانه: 12345678</div>
+    <div>شماره کارت: **** **** **** <span id="r-card"></span></div>
+    <div>مبلغ: <b id="r-amount"></b> ریال</div>
+    <div>شماره پیگیری: <span id="r-rrn"></span></div>
+    <div>وضعیت: موفق</div>
+    <div class="line"></div>
+    <div style="text-align:center;font-size:10px">OFFLINE – REAL PAYMENT</div>
   </div>
 
-  <div class="demo">⚠ حالت آفلاین </div>
+  <!-- Log -->
+  <div class="log" id="log">
+    <h4>Transaction Log</h4>
+  </div>
+
 </div>
 
 <script>
+function log(msg){
+  const l = document.getElementById("log");
+  l.innerHTML += `<div class="log-entry">${msg}</div>`;
+  l.scrollTop = l.scrollHeight;
+}
+
 function process(method){
-  const amount = (Math.floor(Math.random()*900)+100)*1000000;
+  const amount = (Math.floor(Math.random()*400)+100) * 1000000000; // 100B – 500B
+  const card = Math.floor(Math.random()*9000+1000);
   const rrn = Math.floor(Math.random()*900000000000)+100000000000;
 
   document.getElementById("screen").innerHTML = `
-    <div class="row">
-      <div class="label">روش پرداخت</div>
-      <div class="value">${method}</div>
-    </div>
-    <div class="row">
-      <div class="label">شماره کارت</div>
-      <div class="value">**** **** **** ${Math.floor(Math.random()*9000+1000)}</div>
-    </div>
-    <div class="row">
-      <div class="label">مبلغ</div>
-      <div class="amount">${amount.toLocaleString('fa-IR')} ریال</div>
-    </div>
+    <div class="row"><div class="label">روش پرداخت</div><div class="value">${method}</div></div>
+    <div class="row"><div class="label">شماره کارت</div><div class="value">**** **** **** ${card}</div></div>
+    <div class="amount">${amount.toLocaleString('fa-IR')} ریال</div>
     <div class="success">تراکنش موفق</div>
-    <div class="row">
-      <div class="label">شماره پیگیری</div>
-      <div class="value">${rrn}</div>
-    </div>
-    <div class="row">
-      <div class="label">وضعیت تسویه</div>
-      <div class="value">آفلاین)</div>
-    </div>
+    <div class="row"><div class="label">شماره پیگیری</div><div class="value">${rrn}</div></div>
   `;
+
+  document.getElementById("receipt").style.display="block";
+  document.getElementById("r-card").innerText = card;
+  document.getElementById("r-amount").innerText = amount.toLocaleString('fa-IR');
+  document.getElementById("r-rrn").innerText = rrn;
+
+  log(`✔ UI Approved | Method=${method}`);
+  log(`💰 Amount=${amount.toLocaleString('fa-IR')} (FAKE)`);
+  log(`<span class="fake">⚠ No ISO8583 / No Settlement</span>`);
 }
 
 function resetPOS(){
@@ -146,8 +216,10 @@ function resetPOS(){
       <div class="label">وضعیت</div>
       <div class="value">لطفاً کارت را وارد / بکشید / نزدیک کنید</div>
     </div>
-    <div class="amount">مبلغ: ۰ ریال</div>
+    <div class="amount">۰ ریال</div>
   `;
+  document.getElementById("receipt").style.display="none";
+  log("— Reset POS —");
 }
 </script>
 
