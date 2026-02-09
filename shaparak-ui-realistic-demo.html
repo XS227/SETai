@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+<meta charset="UTF-8">
+<title>Shaparak Payment UI – Demo</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{
+  background:#0b1220;
+  font-family:tahoma, Arial;
+  color:#e5e7eb;
+  display:flex;
+  justify-content:center;
+  padding:20px;
+  direction:rtl;
+}
+.app{width:380px}
+.card{
+  background:#020617;
+  border-radius:16px;
+  padding:14px;
+  box-shadow:0 0 30px rgba(0,0,0,.7);
+}
+.header{text-align:center}
+.header h2{margin:0;font-size:16px}
+.sub{font-size:11px;color:#94a3b8}
+
+.screen{
+  border:1px solid #334155;
+  border-radius:10px;
+  padding:12px;
+  min-height:160px;
+  margin:10px 0;
+}
+button,input{
+  width:100%;
+  padding:9px;
+  border-radius:8px;
+  border:none;
+  margin-top:6px;
+  font-size:13px;
+}
+.btn{background:#2563eb;color:#fff}
+.alt{background:#475569;color:#fff}
+.ok{background:#16a34a;color:#fff}
+.warn{background:#9333ea;color:#fff}
+
+.signal{font-size:11px;color:#22c55e;margin-bottom:6px}
+.loader{color:#facc15;font-size:12px}
+
+.log{
+  margin-top:10px;
+  background:#020617;
+  border:1px solid #334155;
+  border-radius:10px;
+  padding:8px;
+  font-size:11px;
+  color:#94a3b8;
+  max-height:180px;
+  overflow:auto;
+}
+
+.receipt{
+  display:none;
+  margin-top:10px;
+  background:#f8fafc;
+  color:#020617;
+  border-radius:10px;
+  padding:10px;
+  font-size:12px;
+}
+.receipt h4{text-align:center;margin:0 0 6px 0}
+.line{border-bottom:1px dashed #94a3b8;margin:6px 0}
+
+.demo{
+  text-align:center;
+  font-size:10px;
+  color:#facc15;
+  margin-top:6px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <div class="card">
+    <div class="header">
+      <h2>شبکه پرداخت شاپرک</h2>
+      <div class="sub" id="mode">Offline Mode (Demo)</div>
+    </div>
+
+    <div class="screen" id="screen"></div>
+
+    <button class="alt" onclick="toggleMode()">تغییر Mode (Offline / Online)</button>
+    <button class="alt" onclick="resetAll()">ریست</button>
+
+    <div class="demo">⚠ شبیه‌سازی آموزشی – بدون ارتباط بانکی</div>
+  </div>
+
+  <div class="log" id="log"><b>System Log</b><br></div>
+
+  <div class="receipt" id="receipt">
+    <h4>رسید تراکنش</h4>
+    <div class="line"></div>
+    <div>سیستم: Shaparak Demo Switch</div>
+    <div>مبلغ: <b id="r-amount"></b></div>
+    <div>نوع عملیات: <span id="r-type"></span></div>
+    <div>وضعیت: موفق</div>
+    <div class="line"></div>
+    <div style="text-align:center;font-size:10px">DEMO – NO REAL SETTLEMENT</div>
+  </div>
+
+</div>
+
+<script>
+let step=0, mode="offline", balanceHemat=0;
+
+function log(t){
+  const l=document.getElementById("log");
+  l.innerHTML+=t+"<br>";
+  l.scrollTop=l.scrollHeight;
+}
+
+function toggleMode(){
+  if(mode==="offline"){
+    const ip=prompt("Online Mode\nIP را وارد کنید:");
+    if(!ip) return;
+    mode="online";
+    document.getElementById("mode").innerText="Online Mode | IP "+ip;
+    log("🌐 Online Mode | IP="+ip);
+  }else{
+    mode="offline";
+    document.getElementById("mode").innerText="Offline Mode (Demo)";
+    log("📴 Offline Mode فعال شد");
+  }
+}
+
+function resetAll(){
+  step=0;
+  document.getElementById("receipt").style.display="none";
+  showMenu();
+  log("— Reset System —");
+}
+
+function loading(next){
+  const s=document.getElementById("screen");
+  s.innerHTML=`<div class="loader">در حال اتصال به سرور...</div>
+               <div class="signal">📡 Signal: Connecting</div>`;
+  log("⏳ Connecting to switch...");
+  setTimeout(()=>{
+    log("✔ Handshake OK");
+    log("✔ Authenticated");
+    log("✔ Routing request");
+    next();
+  },3000);
+}
+
+function showMenu(){
+  const s=document.getElementById("screen");
+  s.innerHTML=`
+    <button class="btn" onclick="iranBalance()">۱) موجودی حساب ایرانی</button>
+    <button class="btn" onclick="intlBalance()">۲) موجودی حساب بین‌المللی</button>
+    <button class="warn" onclick="transfer16()">۳) انتقال از طریق سیستم ۱۶ کاراکتری</button>
+  `;
+}
+
+function iranBalance(){
+  loading(()=>{
+    balanceHemat=Math.floor(Math.random()*5)+3; // 3–7
+    const rial=balanceHemat*1000000000000;
+    document.getElementById("screen").innerHTML=
+      `<div>موجودی حساب ایرانی:</div>
+       <h3>${rial.toLocaleString('fa-IR')} ریال</h3>`;
+    log("💰 Iranian Balance = "+balanceHemat+" Hemat");
+    showReceipt(rial,"موجودی حساب ایرانی");
+  });
+}
+
+function intlBalance(){
+  loading(()=>{
+    document.getElementById("screen").innerHTML=
+      `<div>International Balance</div>
+       <div>VISA: 4,200,000 USD</div>
+       <div>MASTER: 1,100,000 EUR</div>`;
+    log("🌍 International balance (Demo)");
+    showReceipt("—","موجودی بین‌المللی");
+  });
+}
+
+function transfer16(){
+  const s=document.getElementById("screen");
+  s.innerHTML=`
+    <div>شماره ۱۶ رقمی را وارد کنید</div>
+    <input maxlength="16" oninput="if(this.value.length==16)doTransfer()">
+  `;
+}
+
+function doTransfer(){
+  loading(()=>{
+    log("➡ Transfer Processed");
+    alert("انتقال انجام شد (Demo)");
+    showReceipt("—","انتقال ۱۶ کاراکتری");
+    showMenu();
+  });
+}
+
+function showReceipt(amount,type){
+  document.getElementById("receipt").style.display="block";
+  document.getElementById("r-amount").innerText=amount.toLocaleString?amount.toLocaleString('fa-IR')+" ریال":amount;
+  document.getElementById("r-type").innerText=type;
+}
+
+showMenu();
+</script>
+
+</body>
+</html>
