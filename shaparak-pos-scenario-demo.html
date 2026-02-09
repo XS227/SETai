@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+<meta charset="UTF-8">
+<title>Shaparak POS – Scenario Demo</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{
+  background:#0b1220;
+  font-family:tahoma, Arial;
+  color:#e5e7eb;
+  display:flex;
+  justify-content:center;
+  padding:20px;
+  direction:rtl;
+}
+.container{ width:360px; }
+.pos{
+  background:#020617;
+  border-radius:16px;
+  padding:14px;
+  box-shadow:0 0 30px rgba(0,0,0,.7);
+}
+.header{text-align:center;margin-bottom:10px}
+.header h2{margin:0;font-size:16px}
+.sub{font-size:11px;color:#94a3b8}
+
+.screen{
+  border:1px solid #334155;
+  border-radius:10px;
+  padding:12px;
+  min-height:150px;
+  margin-bottom:10px;
+}
+input{
+  width:100%;
+  padding:8px;
+  border-radius:6px;
+  border:none;
+  margin-top:6px;
+  font-size:14px;
+}
+button{
+  width:100%;
+  padding:9px;
+  margin-top:6px;
+  border:none;
+  border-radius:8px;
+  font-size:13px;
+  cursor:pointer;
+}
+.mode{background:#334155;color:#fff}
+.primary{background:#2563eb;color:#fff}
+.success{background:#16a34a;color:#fff}
+.warn{background:#9333ea;color:#fff}
+.reset{background:#475569;color:#fff}
+
+.log{
+  margin-top:10px;
+  background:#020617;
+  border:1px solid #334155;
+  border-radius:10px;
+  padding:8px;
+  font-size:11px;
+  color:#94a3b8;
+  max-height:200px;
+  overflow:auto;
+}
+.log b{color:#facc15}
+.demo{
+  text-align:center;
+  font-size:10px;
+  color:#facc15;
+  margin-top:6px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <div class="pos">
+    <div class="header">
+      <h2>شبکه پرداخت شاپرک</h2>
+      <div class="sub" id="modeLabel">Mode: Offline (Demo)</div>
+    </div>
+
+    <div class="screen" id="screen"></div>
+
+    <button class="mode" onclick="setMode()">تغییر Mode (Offline / Online)</button>
+    <button class="reset" onclick="resetAll()">ریست کامل</button>
+
+    <div class="demo">⚠ شبیه‌سازی آموزشی – بدون تراکنش واقعی</div>
+  </div>
+
+  <div class="log" id="log">
+    <b>Transaction Log</b><br>
+  </div>
+</div>
+
+<script>
+let step=0, mode="offline", balance=0, cardSrc="", cardDst="";
+
+const banks={
+  "603799":"بانک ملی",
+  "589210":"بانک سپه",
+  "627412":"بانک اقتصاد نوین",
+  "627961":"بانک صنعت و معدن",
+  "628023":"بانک مسکن"
+};
+
+function log(msg){
+  const l=document.getElementById("log");
+  l.innerHTML+=msg+"<br>";
+  l.scrollTop=l.scrollHeight;
+}
+
+function setMode(){
+  if(mode==="offline"){
+    const ip=prompt("Online Mode\nلطفاً IP را وارد کنید:");
+    if(!ip) return;
+    mode="online";
+    document.getElementById("modeLabel").innerText="Mode: Online (IP "+ip+")";
+    log("🌐 Online Mode | IP="+ip);
+  }else{
+    mode="offline";
+    document.getElementById("modeLabel").innerText="Mode: Offline (Demo)";
+    log("📴 Offline Mode فعال شد");
+  }
+}
+
+function resetAll(){
+  step=0; cardSrc=""; cardDst="";
+  showStep();
+  log("— Reset Scenario —");
+}
+
+function showStep(){
+  const s=document.getElementById("screen");
+  if(step===0){
+    s.innerHTML=`
+      <div>۱۶ رقم کارت را وارد کنید</div>
+      <input maxlength="16" oninput="if(this.value.length==16)nextCard(this.value)">
+    `;
+  }
+  if(step===1){
+    s.innerHTML=`
+      <div>رمز ۴ رقمی</div>
+      <input maxlength="4" type="password" oninput="if(this.value.length==4)showBalance()">
+    `;
+  }
+  if(step===2){
+    s.innerHTML=`
+      <div>موجودی:</div>
+      <h3>${balance} همت</h3>
+      <button class="warn" onclick="transfer()">انتقال وجه (کارت به کارت)</button>
+    `;
+  }
+  if(step===3){
+    s.innerHTML=`
+      <div>شماره کارت مقصد</div>
+      <input maxlength="16" oninput="if(this.value.length==16)confirmTransfer(this.value)">
+    `;
+  }
+  if(step===4){
+    s.innerHTML=`
+      <div>رمز ۴ رقمی</div>
+      <input maxlength="4" type="password" oninput="if(this.value.length==4)done()">
+    `;
+  }
+}
+
+function nextCard(v){
+  cardSrc=v;
+  const bin=v.substr(0,6);
+  const bank=banks[bin]||"بانک نامشخص";
+  log("💳 Card="+v+" | "+bank);
+  log("📅 Exp: 12/30 (Demo)");
+  step=1; showStep();
+}
+
+function showBalance(){
+  balance=Math.floor(Math.random()*900)+100;
+  log("🔐 PIN OK");
+  log("💰 Balance="+balance+" همت (Demo)");
+  step=2; showStep();
+}
+
+function transfer(){
+  step=3; showStep();
+}
+
+function confirmTransfer(v){
+  cardDst=v;
+  log("➡ Destination Card="+v);
+  step=4; showStep();
+}
+
+function done(){
+  log("✅ Transfer Approved (UI Only)");
+  alert("تراکنش انجام شد (Demo)");
+  resetAll();
+}
+
+showStep();
+</script>
+
+</body>
+</html>
