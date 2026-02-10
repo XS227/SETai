@@ -1,131 +1,446 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fa" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<title>POS Demo – Offline</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>POS Demo - Switch Simulation</title>
 <style>
-body {
-  background:#0f172a;
-  font-family: Arial, sans-serif;
-  color:#e5e7eb;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  height:100vh;
-}
-.pos {
-  width:320px;
-  background:#020617;
-  border-radius:16px;
-  padding:20px;
-  box-shadow:0 0 30px rgba(0,0,0,.6);
-}
-.header {
-  text-align:center;
-  margin-bottom:15px;
-}
-.header h2 {
-  margin:0;
-  font-size:18px;
-}
-.screen {
-  background:#020617;
-  border:1px solid #334155;
-  border-radius:10px;
-  padding:15px;
-  min-height:150px;
-  margin-bottom:15px;
-}
-.row {
-  margin-bottom:8px;
-}
-.label {
-  font-size:12px;
-  color:#94a3b8;
-}
-.value {
-  font-size:16px;
-}
-.amount {
-  font-size:22px;
-  text-align:center;
-  margin:10px 0;
-}
-.buttons button {
-  width:100%;
-  padding:10px;
-  margin-top:8px;
-  border:none;
-  border-radius:8px;
-  font-size:14px;
-  cursor:pointer;
-}
-.swipe { background:#2563eb; color:#fff; }
-.chip { background:#16a34a; color:#fff; }
-.tap { background:#9333ea; color:#fff; }
-.reset { background:#334155; color:#fff; }
-.approved { color:#22c55e; font-weight:bold; }
-.demo { color:#facc15; font-size:12px; text-align:center; margin-top:8px; }
+  :root {
+    --bg: #0b1120;
+    --panel: #0f172a;
+    --panel-soft: #111c34;
+    --line: #253454;
+    --text: #e2e8f0;
+    --muted: #94a3b8;
+    --ok: #22c55e;
+    --warn: #f59e0b;
+    --err: #ef4444;
+    --accent: #38bdf8;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: radial-gradient(circle at top, #131f38, var(--bg));
+    color: var(--text);
+    font-family: Tahoma, "IRANSans", Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 16px;
+  }
+  .terminal {
+    width: min(980px, 100%);
+    background: rgba(7, 12, 24, 0.95);
+    border: 1px solid #1f2a44;
+    border-radius: 18px;
+    padding: 14px;
+    display: grid;
+    gap: 12px;
+    grid-template-columns: 1.1fr .9fr;
+    box-shadow: 0 20px 60px rgba(0,0,0,.4);
+  }
+  .left, .right {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 14px;
+  }
+  .title {
+    font-size: 18px;
+    margin: 0 0 6px;
+  }
+  .subtitle {
+    color: var(--muted);
+    font-size: 12px;
+    margin-bottom: 10px;
+  }
+  .menu {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+  .menu button {
+    background: #14213d;
+    color: var(--text);
+    border: 1px solid #22365c;
+    border-radius: 10px;
+    padding: 9px;
+    cursor: pointer;
+    font-size: 13px;
+  }
+  .menu button.active { border-color: var(--accent); color: #dff6ff; background: #193055; }
+
+  .card {
+    background: var(--panel-soft);
+    border: 1px solid #253454;
+    border-radius: 12px;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  .field { margin-bottom: 8px; }
+  label { display:block; font-size: 12px; color: var(--muted); margin-bottom: 4px; }
+  input, .readonly {
+    width: 100%;
+    background: #0a1328;
+    color: var(--text);
+    border: 1px solid #2b3e66;
+    border-radius: 9px;
+    padding: 9px;
+    font-size: 14px;
+  }
+  input:focus { outline: 1px solid #3b82f6; }
+  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .btns { display:flex; gap:8px; flex-wrap: wrap; }
+  .btn {
+    border: none;
+    border-radius: 10px;
+    padding: 10px 12px;
+    cursor: pointer;
+    color: #fff;
+    font-size: 13px;
+  }
+  .primary { background: #2563eb; }
+  .ok { background: #16a34a; }
+  .neutral { background: #334155; }
+  .warn { background: #b45309; }
+
+  .pinpad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    max-width: 260px;
+  }
+  .pinpad button {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #314364;
+    background: #12213d;
+    color: #fff;
+    cursor: pointer;
+  }
+  .pin { letter-spacing: 6px; font-size: 18px; min-height: 40px; display:flex; align-items:center; justify-content:center; }
+
+  .balances {
+    border-top: 1px dashed #2c3f66;
+    margin-top: 8px;
+    padding-top: 8px;
+    font-size: 13px;
+    line-height: 1.8;
+  }
+
+  .log-wrap { height: 560px; display:flex; flex-direction:column; }
+  .log {
+    margin-top: 8px;
+    background: #060c19;
+    border: 1px solid #223355;
+    border-radius: 10px;
+    padding: 10px;
+    overflow: auto;
+    flex: 1;
+    font-size: 12px;
+    line-height: 1.7;
+  }
+  .entry { margin-bottom: 4px; white-space: pre-wrap; }
+  .info { color: #93c5fd; }
+  .success { color: #86efac; }
+  .warning { color: #fcd34d; }
+  .error { color: #fca5a5; }
+  .hidden { display: none; }
+
+  .receipt {
+    background: #fff;
+    color: #000;
+    direction: rtl;
+    font-family: "Courier New", monospace;
+    line-height: 1.6;
+    padding: 16px;
+  }
+
+  @media (max-width: 900px) {
+    .terminal { grid-template-columns: 1fr; }
+    .log-wrap { height: 280px; }
+  }
 </style>
 </head>
-
 <body>
+  <div class="terminal">
+    <section class="left">
+      <h2 class="title">🎛 POS Demo | شبیه‌ساز سوییچ واقعی</h2>
+      <div class="subtitle">منوی ۳ گزینه‌ای + تشخیص BIN + ورود PIN + چاپ رسید + لاگ مرحله‌به‌مرحله</div>
 
-<div class="pos">
-  <div class="header">
-    <h2>POS TERMINAL</h2>
-    <div style="font-size:12px;color:#94a3b8">Offline Mode</div>
+      <div class="menu">
+        <button class="active" data-menu="transfer">🔄 کارت‌به‌کارت</button>
+        <button data-menu="balance">💰 مانده قابل برداشت</button>
+        <button data-menu="identity">👤 اطلاعات مالک</button>
+      </div>
+
+      <div class="card">
+        <div class="field">
+          <label>شماره کارت مبدا (۱۶ رقم)</label>
+          <input id="sourceCard" maxlength="19" placeholder="5892 10xx xxxx xxxx / 4xxx / 5xxx" />
+        </div>
+        <div class="row2">
+          <div class="field">
+            <label>BIN تشخیص داده شده</label>
+            <div class="readonly" id="binInfo">-</div>
+          </div>
+          <div class="field">
+            <label>مالک مبدا</label>
+            <div class="readonly" id="ownerInfo">-</div>
+          </div>
+        </div>
+      </div>
+
+      <div id="transferPane" class="card">
+        <div class="field">
+          <label>کارت مقصد / شماره حساب مرکزی / IBAN</label>
+          <input id="targetInput" placeholder="6037... یا IRxxxxxxxxxxxxxxxxxxxxxxxx" />
+        </div>
+        <div class="row2">
+          <div class="field">
+            <label>مالک مقصد</label>
+            <div class="readonly" id="targetOwner">-</div>
+          </div>
+          <div class="field">
+            <label>مبلغ (ریال)</label>
+            <input id="amount" type="number" min="10000" step="10000" value="12500000" />
+          </div>
+        </div>
+      </div>
+
+      <div id="balancePane" class="card hidden">
+        <strong>💰 مانده قابل برداشت:</strong>
+        <div>۱ هزار و ۸۵۰ ملیون ریال</div>
+        <div class="balances"><strong>مبلغ مسدودی:</strong> ۹۳ تریلیون و ۸۹۳ ملیارد و ۶۷۰ ملیون ریال</div>
+      </div>
+
+      <div id="identityPane" class="card hidden">
+        <div><strong>بانک سپه</strong> → نام و نام خانوادگی: سید جلیل هاشمی نیا</div>
+        <div>نام پدر: سید مسیح | کد ملی: ۵۳۰۹۵۲ | تاریخ تولد: ۱۳۰۹/۱۱/۲۵</div>
+        <div>جنسیت: مرد | شماره شناسنامه: ۴۴۶۲ | سری سریال شناسنامه: ۴۶۰۴۷۸ - (۱ / ۷۲)</div>
+        <div>وضعیت حیات: فوت شده | تاریخ فوت: ۱۴۰۲/۱۱/۲۲</div>
+        <div>کد شهاب: ۱۰۰۰۰۰۵۳۹۰۵۲۶۰۸۱ | تاریخ آخرین تغییرات: ۱۴۰۳/۱۲/۱۱</div>
+      </div>
+
+      <div class="card">
+        <label>🔐 ورود PIN</label>
+        <div class="readonly pin" id="pinView">----</div>
+        <div class="pinpad" id="pinpad"></div>
+      </div>
+
+      <div class="btns">
+        <button class="btn primary" id="runBtn">شروع تراکنش</button>
+        <button class="btn ok" id="printBtn">🧾 چاپ رسید</button>
+        <button class="btn neutral" id="resetBtn">Reset</button>
+      </div>
+    </section>
+
+    <section class="right log-wrap">
+      <h3 class="title" style="font-size:16px">📜 Log Engine</h3>
+      <div class="subtitle">BIN + Owner + TCP Handshake + Auth + Delay تا ۱۳ ثانیه</div>
+      <div class="log" id="log"></div>
+    </section>
   </div>
-
-  <div class="screen" id="screen">
-    <div class="row">
-      <div class="label">Status</div>
-      <div class="value">Insert / Swipe / Tap Card</div>
-    </div>
-    <div class="amount">Amount: 0.00</div>
-  </div>
-
-  <div class="buttons">
-    <button class="swipe" onclick="process('Magstripe')">Swipe Card</button>
-    <button class="chip" onclick="process('Chip EMV')">Insert Chip</button>
-    <button class="tap" onclick="process('Contactless NFC')">Tap Card</button>
-    <button class="reset" onclick="resetPOS()">Reset</button>
-  </div>
-
-  <div class="demo">⚠ OFFLINE MODE</div>
-</div>
 
 <script>
-function process(type){
-  const amount = (Math.floor(Math.random()*900)+100) * 1000;
-  document.getElementById("screen").innerHTML = `
-    <div class="row">
-      <div class="label">Card Method</div>
-      <div class="value">${type}</div>
-    </div>
-    <div class="row">
-      <div class="label">Card</div>
-      <div class="value">**** **** **** ${Math.floor(Math.random()*9000+1000)}</div>
-    </div>
-    <div class="amount">Amount: ${amount.toLocaleString()}</div>
-    <div class="approved">APPROVED</div>
-    <div class="label">Available balance</div>
-    <div class="value">${(amount*10).toLocaleString()} $ </div>
-  `;
-}
+  const sourceCard = document.getElementById('sourceCard');
+  const targetInput = document.getElementById('targetInput');
+  const amountInput = document.getElementById('amount');
+  const binInfo = document.getElementById('binInfo');
+  const ownerInfo = document.getElementById('ownerInfo');
+  const targetOwner = document.getElementById('targetOwner');
+  const pinView = document.getElementById('pinView');
+  const logEl = document.getElementById('log');
 
-function resetPOS(){
-  document.getElementById("screen").innerHTML = `
-    <div class="row">
-      <div class="label">Status</div>
-      <div class="value">Insert / Swipe / Tap Card</div>
-    </div>
-    <div class="amount">Amount: 0.00</div>
-  `;
-}
+  const sepahFullOwner = 'سید جلیل هاشمی نیا';
+  const ownerByType = {
+    visa: 'Alex Mercer',
+    master: 'Noah Bennett',
+    sepah: sepahFullOwner,
+    unknown: 'نامشخص'
+  };
+
+  const binTable = [
+    { prefix: /^589210/, bank: 'بانک سپه', type: 'sepah' },
+    { prefix: /^4/, bank: 'VISA', type: 'visa' },
+    { prefix: /^5[1-5]/, bank: 'MasterCard', type: 'master' }
+  ];
+
+  const targetOwners = {
+    '603799': 'رضا مرادی',
+    '589210': sepahFullOwner,
+    '627412': 'نگین امینی',
+    'IR': 'حساب مرکزی پایا/ساتنا'
+  };
+
+  let pin = '';
+
+  function appendLog(msg, type = 'info') {
+    const div = document.createElement('div');
+    div.className = `entry ${type}`;
+    const t = new Date().toLocaleTimeString('fa-IR');
+    div.textContent = `[${t}] ${msg}`;
+    logEl.appendChild(div);
+    logEl.scrollTop = logEl.scrollHeight;
+  }
+
+  function formatCardInput(el) {
+    const raw = el.value.replace(/\D/g, '').slice(0, 16);
+    el.value = raw.replace(/(.{4})/g, '$1 ').trim();
+    return raw;
+  }
+
+  function detectBIN(cardRaw) {
+    if (!cardRaw) return { bank: '-', owner: '-', bin: '-' };
+    const rec = binTable.find(x => x.prefix.test(cardRaw));
+    if (!rec) return { bank: 'Unknown BIN', owner: ownerByType.unknown, bin: cardRaw.slice(0, 6) || '-' };
+    return {
+      bank: rec.bank,
+      owner: ownerByType[rec.type],
+      bin: cardRaw.slice(0, 6)
+    };
+  }
+
+  function detectTargetOwner(value) {
+    const v = value.trim().replace(/\s/g, '');
+    if (!v) return '-';
+    if (v.startsWith('IR')) return targetOwners.IR;
+    const key = v.slice(0, 6);
+    return targetOwners[key] || 'مالک نامشخص (قابل توسعه)';
+  }
+
+  sourceCard.addEventListener('input', () => {
+    const raw = formatCardInput(sourceCard);
+    const d = detectBIN(raw);
+    binInfo.textContent = `${d.bank} | BIN: ${d.bin}`;
+    ownerInfo.textContent = d.owner;
+    appendLog(`BIN Detection => ${d.bank} | BIN ${d.bin} | Owner ${d.owner}`, 'info');
+  });
+
+  targetInput.addEventListener('input', () => {
+    targetOwner.textContent = detectTargetOwner(targetInput.value);
+  });
+
+  function buildPinpad() {
+    const pad = document.getElementById('pinpad');
+    const keys = ['1','2','3','4','5','6','7','8','9','پاک','0','OK'];
+    keys.forEach(k => {
+      const b = document.createElement('button');
+      b.textContent = k;
+      b.onclick = () => {
+        if (k === 'پاک') pin = '';
+        else if (k === 'OK') appendLog(`PIN Confirmed => ${'*'.repeat(pin.length || 4)}`, pin.length === 4 ? 'success' : 'warning');
+        else if (pin.length < 4) pin += k;
+        pinView.textContent = (pin + '----').slice(0, 4).replace(/./g, '•');
+      };
+      pad.appendChild(b);
+    });
+  }
+
+  async function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+  async function runTransaction() {
+    const src = sourceCard.value.replace(/\D/g, '');
+    const dst = targetInput.value.trim();
+    const amount = Number(amountInput.value || 0);
+
+    if (src.length !== 16) return appendLog('خطا: شماره کارت مبدا باید ۱۶ رقم باشد.', 'error');
+    if (!dst) return appendLog('خطا: کارت مقصد / IBAN را وارد کنید.', 'error');
+    if (pin.length !== 4) return appendLog('خطا: PIN باید ۴ رقم باشد و OK زده شود.', 'error');
+    if (amount < 10000) return appendLog('خطا: مبلغ باید حداقل ۱۰,۰۰۰ ریال باشد.', 'error');
+
+    const d = detectBIN(src);
+    const tOwner = detectTargetOwner(dst);
+    appendLog('--- شروع سناریوی سوییچ بانکی ---', 'warning');
+    appendLog(`Source BIN/Owner => ${d.bin} / ${d.owner}`, 'info');
+    appendLog(`Target Owner => ${tOwner}`, 'info');
+
+    appendLog('TCP Handshake: SYN →', 'info');
+    await sleep(800);
+    appendLog('TCP Handshake: SYN-ACK ←', 'info');
+    await sleep(800);
+    appendLog('TCP Handshake: ACK → (Connection Established)', 'success');
+
+    appendLog('Auth: ارسال درخواست ISO8583 MTI 0200', 'info');
+    await sleep(1200);
+    appendLog('Auth: بررسی PIN Block + CVV + ExpDate', 'info');
+    await sleep(1200);
+    appendLog('Auth Result: Approved (RC=00)', 'success');
+
+    const delay = Math.floor(Math.random() * 8000) + 5000;
+    appendLog(`Network Delay Simulation: ${Math.floor(delay/1000)}s / تا 13 ثانیه`, 'warning');
+    await sleep(delay);
+
+    appendLog(`Transaction Complete | مبلغ: ${amount.toLocaleString('fa-IR')} ریال`, 'success');
+    appendLog('Available Withdrawal: ۱ هزار و ۸۵۰ ملیون ریال', 'success');
+    appendLog('Blocked Amount: ۹۳ تریلیون و ۸۹۳ ملیارد و ۶۷۰ ملیون ریال', 'warning');
+  }
+
+  function printReceipt() {
+    const src = sourceCard.value || '---- ---- ---- ----';
+    const dst = targetInput.value || '----';
+    const owner = ownerInfo.textContent || '-';
+    const toOwner = targetOwner.textContent || '-';
+    const amount = Number(amountInput.value || 0).toLocaleString('fa-IR');
+
+    const w = window.open('', '_blank', 'width=420,height=620');
+    w.document.write(`
+      <html lang="fa" dir="rtl"><head><title>رسید تراکنش</title></head>
+      <body class="receipt">
+        <h3 style="text-align:center">رسید کارت‌به‌کارت</h3>
+        <hr>
+        تاریخ: ${new Date().toLocaleString('fa-IR')}<br>
+        کارت مبدا: ${src}<br>
+        مالک مبدا: ${owner}<br>
+        کارت/حساب مقصد: ${dst}<br>
+        مالک مقصد: ${toOwner}<br>
+        مبلغ: ${amount} ریال<br>
+        وضعیت: موفق (00)<br>
+        کد رهگیری: ${Math.floor(Math.random()*9e11+1e11)}<br>
+        <hr>
+        مانده قابل برداشت: ۱ هزار و ۸۵۰ ملیون ریال<br>
+        مبلغ مسدودی: ۹۳ تریلیون و ۸۹۳ ملیارد و ۶۷۰ ملیون ریال
+      </body></html>
+    `);
+    w.document.close();
+    w.focus();
+    w.print();
+    appendLog('Receipt popup opened for print.', 'success');
+  }
+
+  function resetAll() {
+    sourceCard.value = '';
+    targetInput.value = '';
+    amountInput.value = 12500000;
+    pin = '';
+    pinView.textContent = '----';
+    binInfo.textContent = '-';
+    ownerInfo.textContent = '-';
+    targetOwner.textContent = '-';
+    logEl.innerHTML = '';
+    appendLog('Reset کامل انجام شد.', 'warning');
+  }
+
+  document.querySelectorAll('.menu button').forEach(btn => {
+    btn.onclick = () => {
+      document.querySelectorAll('.menu button').forEach(x => x.classList.remove('active'));
+      btn.classList.add('active');
+      const m = btn.dataset.menu;
+      document.getElementById('transferPane').classList.toggle('hidden', m !== 'transfer');
+      document.getElementById('balancePane').classList.toggle('hidden', m !== 'balance');
+      document.getElementById('identityPane').classList.toggle('hidden', m !== 'identity');
+      appendLog(`Menu changed => ${m}`, 'info');
+    };
+  });
+
+  document.getElementById('runBtn').onclick = runTransaction;
+  document.getElementById('printBtn').onclick = printReceipt;
+  document.getElementById('resetBtn').onclick = resetAll;
+
+  buildPinpad();
+  appendLog('POS Demo loaded. منتظر ورود کارت ۱۶ رقمی...', 'info');
 </script>
-
 </body>
 </html>
