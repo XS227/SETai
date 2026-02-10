@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>POS Demo - Switch Simulation</title>
+<title>POS Offline - Switch Simulation</title>
 <style>
   :root {
     --bg: #0b1120;
@@ -50,6 +50,34 @@
     font-size: 18px;
     margin: 0 0 6px;
   }
+  .topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+  .top-actions {
+    display: flex;
+    gap: 6px;
+  }
+  .icon-btn {
+    border: 1px solid #2b3e66;
+    background: #12203a;
+    color: #dbeafe;
+    border-radius: 8px;
+    padding: 6px 8px;
+    cursor: pointer;
+    font-size: 12px;
+  }
+  .mode-pill {
+    padding: 6px 8px;
+    border-radius: 999px;
+    border: 1px solid #2b3e66;
+    font-size: 12px;
+  }
+  .mode-pill.online { color: #86efac; border-color: #166534; background: rgba(22, 101, 52, .25); }
+  .mode-pill.offline { color: #fcd34d; border-color: #92400e; background: rgba(146, 64, 14, .2); }
   .subtitle {
     color: var(--muted);
     font-size: 12px;
@@ -161,14 +189,25 @@
   @media (max-width: 900px) {
     .terminal { grid-template-columns: 1fr; }
     .log-wrap { height: 280px; }
+    .row2 { grid-template-columns: 1fr; }
+    .menu { grid-template-columns: 1fr; }
+    .btns .btn { width: 100%; }
+    .pinpad { max-width: 100%; }
   }
 </style>
 </head>
 <body>
   <div class="terminal">
     <section class="left">
-      <h2 class="title">🎛 POS Demo | شبیه‌ساز سوییچ واقعی</h2>
+      <div class="topbar">
+        <h2 class="title">🎛 POS Offline | شبیه‌ساز سوییچ واقعی</h2>
+        <div class="top-actions">
+          <button class="icon-btn" id="modeBtn" title="تغییر وضعیت آنلاین/آفلاین">📶 Offline</button>
+          <button class="icon-btn" id="fullViewBtn" title="نمایش تمام صفحه">⛶ Full View</button>
+        </div>
+      </div>
       <div class="subtitle">منوی ۳ گزینه‌ای + تشخیص BIN + ورود PIN + چاپ رسید + لاگ مرحله‌به‌مرحله</div>
+      <div id="modeInfo" class="mode-pill offline">System mode: OFFLINE</div>
 
       <div class="menu">
         <button class="active" data-menu="transfer">🔄 کارت‌به‌کارت</button>
@@ -253,6 +292,9 @@
   const targetOwner = document.getElementById('targetOwner');
   const pinView = document.getElementById('pinView');
   const logEl = document.getElementById('log');
+  const modeBtn = document.getElementById('modeBtn');
+  const modeInfo = document.getElementById('modeInfo');
+  const fullViewBtn = document.getElementById('fullViewBtn');
 
   const sepahFullOwner = 'سید جلیل هاشمی نیا';
   const ownerByType = {
@@ -276,6 +318,8 @@
   };
 
   let pin = '';
+  let isOnline = false;
+  let onlineIP = '';
 
   function appendLog(msg, type = 'info') {
     const div = document.createElement('div');
@@ -354,6 +398,7 @@
     const d = detectBIN(src);
     const tOwner = detectTargetOwner(dst);
     appendLog('--- شروع سناریوی سوییچ بانکی ---', 'warning');
+    appendLog(`Mode => ${isOnline ? `ONLINE @ ${onlineIP}` : 'OFFLINE'}`, isOnline ? 'success' : 'warning');
     appendLog(`Source BIN/Owner => ${d.bin} / ${d.owner}`, 'info');
     appendLog(`Target Owner => ${tOwner}`, 'info');
 
@@ -423,6 +468,50 @@
     appendLog('Reset کامل انجام شد.', 'warning');
   }
 
+  function setModeUI() {
+    modeInfo.textContent = isOnline ? `System mode: ONLINE (${onlineIP})` : 'System mode: OFFLINE';
+    modeInfo.classList.toggle('online', isOnline);
+    modeInfo.classList.toggle('offline', !isOnline);
+    modeBtn.textContent = isOnline ? '📶 Online' : '📶 Offline';
+  }
+
+  function toggleMode() {
+    if (!isOnline) {
+      const inputIP = prompt('Enter IP address to connect online:');
+      if (!inputIP) {
+        appendLog('Online mode canceled: IP was not entered.', 'warning');
+        return;
+      }
+      const sure = confirm('are you sure to use one times ip for cost of 371$ ?');
+      if (!sure) {
+        appendLog('Online mode canceled by user confirmation.', 'warning');
+        return;
+      }
+      isOnline = true;
+      onlineIP = inputIP;
+      appendLog(`System is ONLINE now. Connected IP: ${onlineIP}`, 'success');
+    } else {
+      isOnline = false;
+      onlineIP = '';
+      appendLog('System switched back to OFFLINE mode.', 'warning');
+    }
+    setModeUI();
+  }
+
+  async function toggleFullView() {
+    try {
+      if (!document.fullscreenElement) {
+        await document.documentElement.requestFullscreen();
+        appendLog('Full view enabled.', 'info');
+      } else {
+        await document.exitFullscreen();
+        appendLog('Full view disabled.', 'info');
+      }
+    } catch (e) {
+      appendLog('Fullscreen failed in this environment.', 'error');
+    }
+  }
+
   document.querySelectorAll('.menu button').forEach(btn => {
     btn.onclick = () => {
       document.querySelectorAll('.menu button').forEach(x => x.classList.remove('active'));
@@ -438,9 +527,12 @@
   document.getElementById('runBtn').onclick = runTransaction;
   document.getElementById('printBtn').onclick = printReceipt;
   document.getElementById('resetBtn').onclick = resetAll;
+  modeBtn.onclick = toggleMode;
+  fullViewBtn.onclick = toggleFullView;
 
   buildPinpad();
-  appendLog('POS Demo loaded. منتظر ورود کارت ۱۶ رقمی...', 'info');
+  setModeUI();
+  appendLog('POS Offline loaded. منتظر ورود کارت ۱۶ رقمی...', 'info');
 </script>
 </body>
 </html>
