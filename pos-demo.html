@@ -29,6 +29,48 @@
     align-items: center;
     padding: 16px;
   }
+  .app-shell {
+    width: min(980px, 100%);
+    display: grid;
+    gap: 14px;
+  }
+  .onboarding {
+    background: rgba(7, 12, 24, 0.95);
+    border: 1px solid #1f2a44;
+    border-radius: 18px;
+    padding: 18px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.4);
+  }
+  .onboarding h1 { margin: 0 0 8px; font-size: 22px; }
+  .onboarding p { margin: 0 0 8px; color: var(--muted); }
+  .welcome {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 12px;
+    margin: 10px 0;
+  }
+  .step-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid #365082;
+    border-radius: 999px;
+    padding: 4px 12px;
+    font-size: 12px;
+    margin-bottom: 10px;
+    background: #10203f;
+  }
+  .codes-preview {
+    background: #060c19;
+    border: 1px solid #223355;
+    border-radius: 10px;
+    padding: 8px;
+    margin: 10px 0;
+    font-size: 12px;
+    line-height: 1.8;
+  }
+  .codes-preview .success { display: block; }
   .terminal {
     width: min(980px, 100%);
     background: rgba(7, 12, 24, 0.95);
@@ -197,7 +239,30 @@
 </style>
 </head>
 <body>
-  <div class="terminal">
+  <div class="app-shell">
+  <section class="onboarding" id="onboardingBox">
+    <div class="step-indicator" id="stepIndicator">Step 1/5</div>
+    <h1>Secure Core Banking Gateway</h1>
+    <div class="welcome">
+      <div>به پرتال بانک مرکزی جمهوری اسلامی ایران خوش آمدید</div>
+      <div>لطفا رمز عبور سیستم رو وارد کنید</div>
+    </div>
+    <p id="onboardingText">کد ۱۱ رقمی ورود را وارد کنید تا اتصال امن آغاز شود.</p>
+    <div class="field">
+      <label id="onboardingLabel">کد ۱۱ رقمی ورود</label>
+      <input id="onboardingInput" maxlength="11" placeholder="***********" />
+    </div>
+    <div class="codes-preview hidden" id="codesPreview">
+      <span class="success">ISO Auth Code: 00-2A7-OK</span>
+      <span class="success">Session Token: CBI-SECURE-LIVE-9912</span>
+      <span class="success">Realtime Stream: ACTIVE</span>
+    </div>
+    <div class="btns">
+      <button class="btn primary" id="onboardingNextBtn">ادامه</button>
+    </div>
+  </section>
+
+  <div class="terminal hidden" id="terminalApp">
     <section class="left">
       <div class="topbar">
         <h2 class="title">🎛 POS Offline | شبیه‌ساز سوییچ واقعی</h2>
@@ -282,6 +347,7 @@
       <div class="log" id="log"></div>
     </section>
   </div>
+</div>
 
 <script>
   const sourceCard = document.getElementById('sourceCard');
@@ -295,6 +361,14 @@
   const modeBtn = document.getElementById('modeBtn');
   const modeInfo = document.getElementById('modeInfo');
   const fullViewBtn = document.getElementById('fullViewBtn');
+  const onboardingBox = document.getElementById('onboardingBox');
+  const terminalApp = document.getElementById('terminalApp');
+  const onboardingInput = document.getElementById('onboardingInput');
+  const onboardingLabel = document.getElementById('onboardingLabel');
+  const onboardingText = document.getElementById('onboardingText');
+  const onboardingNextBtn = document.getElementById('onboardingNextBtn');
+  const stepIndicator = document.getElementById('stepIndicator');
+  const codesPreview = document.getElementById('codesPreview');
 
   const sepahFullOwner = 'سید جلیل هاشمی نیا';
   const ownerByType = {
@@ -320,6 +394,8 @@
   let pin = '';
   let isOnline = false;
   let onlineIP = '';
+  let onboardingStep = 1;
+  const onboardingData = { accessCode: '', ip: '', nationalId: '', accountNo: '' };
 
   function appendLog(msg, type = 'info') {
     const div = document.createElement('div');
@@ -475,6 +551,80 @@
     modeBtn.textContent = isOnline ? '📶 Online' : '📶 Offline';
   }
 
+  function updateOnboardingStep() {
+    stepIndicator.textContent = `Step ${onboardingStep}/5`;
+    onboardingInput.value = '';
+    codesPreview.classList.toggle('hidden', onboardingStep < 3);
+
+    if (onboardingStep === 1) {
+      onboardingLabel.textContent = 'کد ۱۱ رقمی ورود';
+      onboardingText.textContent = 'کد ۱۱ رقمی ورود را وارد کنید تا اتصال امن آغاز شود.';
+      onboardingInput.placeholder = '***********';
+      onboardingInput.maxLength = 11;
+    } else if (onboardingStep === 2) {
+      onboardingLabel.textContent = 'IP Address';
+      onboardingText.textContent = 'برای رفتن به حالت آنلاین، IP آدرس سرور را اضافه کنید.';
+      onboardingInput.placeholder = '185.30.22.110';
+      onboardingInput.maxLength = 32;
+    } else if (onboardingStep === 3) {
+      onboardingLabel.textContent = 'لطفا کد ملی رو وارد کنید';
+      onboardingText.textContent = 'اتصال برقرار شد. در این مرحله کدهای ارتباطی به صورت زنده نمایش داده می‌شوند.';
+      onboardingInput.placeholder = '**********';
+      onboardingInput.maxLength = 10;
+    } else if (onboardingStep === 4) {
+      onboardingLabel.textContent = 'لطفا شماره حساب را وارد کنید';
+      onboardingText.textContent = 'برای واکشی اطلاعات کاربر دمو، شماره حساب را وارد کنید.';
+      onboardingInput.placeholder = '603799xxxxxx';
+      onboardingInput.maxLength = 24;
+    }
+  }
+
+  function completeOnboarding() {
+    onboardingBox.classList.add('hidden');
+    terminalApp.classList.remove('hidden');
+    isOnline = true;
+    onlineIP = onboardingData.ip;
+    setModeUI();
+
+    sourceCard.value = '5892101234567890'.replace(/(.{4})/g, '$1 ').trim();
+    const d = detectBIN(sourceCard.value.replace(/\D/g, ''));
+    binInfo.textContent = `${d.bank} | BIN: ${d.bin}`;
+    ownerInfo.textContent = d.owner;
+    targetInput.value = onboardingData.accountNo;
+    targetOwner.textContent = detectTargetOwner(targetInput.value);
+
+    document.querySelector('[data-menu="identity"]').click();
+    appendLog(`Login accepted by gateway (11-digit code): ${'*'.repeat(onboardingData.accessCode.length)}`, 'success');
+    appendLog(`Online bridge active on IP: ${onboardingData.ip}`, 'success');
+    appendLog(`National ID captured: ${onboardingData.nationalId}`, 'info');
+    appendLog(`Account number validated: ${onboardingData.accountNo}`, 'success');
+    appendLog('Demo user profile loaded successfully.', 'success');
+  }
+
+  function nextOnboardingStep() {
+    const value = onboardingInput.value.trim();
+    if (onboardingStep === 1) {
+      if (!/^\d{11}$/.test(value)) return appendLog('ورود نامعتبر: کد باید ۱۱ رقم باشد.', 'error');
+      onboardingData.accessCode = value;
+    } else if (onboardingStep === 2) {
+      if (!/^((25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(25[0-5]|2[0-4]\d|[01]?\d\d?)$/.test(value)) {
+        return appendLog('IP نامعتبر است. نمونه درست: 185.30.22.110', 'error');
+      }
+      onboardingData.ip = value;
+    } else if (onboardingStep === 3) {
+      if (!/^\d{10}$/.test(value)) return appendLog('کد ملی باید ۱۰ رقم باشد.', 'error');
+      onboardingData.nationalId = value;
+    } else if (onboardingStep === 4) {
+      if (value.length < 10) return appendLog('شماره حساب وارد شده معتبر نیست.', 'error');
+      onboardingData.accountNo = value;
+      onboardingStep = 5;
+      return completeOnboarding();
+    }
+
+    onboardingStep += 1;
+    updateOnboardingStep();
+  }
+
   function toggleMode() {
     if (!isOnline) {
       const inputIP = prompt('Enter IP address to connect online:');
@@ -529,10 +679,15 @@
   document.getElementById('resetBtn').onclick = resetAll;
   modeBtn.onclick = toggleMode;
   fullViewBtn.onclick = toggleFullView;
+  onboardingNextBtn.onclick = nextOnboardingStep;
+  onboardingInput.addEventListener('keydown', e => {
+    if (e.key === 'Enter') nextOnboardingStep();
+  });
 
   buildPinpad();
   setModeUI();
-  appendLog('POS Offline loaded. منتظر ورود کارت ۱۶ رقمی...', 'info');
+  updateOnboardingStep();
+  appendLog('Secure gateway initialized. Awaiting onboarding sequence...', 'info');
 </script>
 </body>
 </html>
