@@ -391,7 +391,7 @@
             <div><strong>جنسیت:</strong> مرد</div>
             <div><strong>شماره شناسنامه:</strong> ۴۴۶۲</div>
             <div><strong>سریال شناسنامه:</strong> ۴۶۰۴۷۸ - (۱ / ۷۲)</div>
-            <div><strong>کد شهاب:</strong> ۱۰۰۰۰۰۵۳۹۰۵۲۶۰۸۱</div>
+            <div><strong>کد شهاب:</strong> ۱۰۰۰۰۰۵۳۰۹۵۲۶۰۸۱</div>
             <div><strong>شناسه رهگیری استعلام:</strong> ۰۱۰۰۳۴۲۱</div>
             <div><strong>تاریخ فوت:</strong> ۱۴۰۲/۱۱/۲۲</div>
             <div class="wide"><strong>تاریخ آخرین تغییرات:</strong> ۱۴۰۳/۱۲/۱۱</div>
@@ -454,7 +454,7 @@
   const demoUser = {
     fullName: 'سید جلیل هاشمی نیا',
     nationalId: '5309526080',
-    shahab: '1000005390526081',
+    shahab: '1000005309526081',
     bank: 'سپه'
   };
 
@@ -606,9 +606,9 @@
       onboardingInput.placeholder = '**********';
       onboardingInput.maxLength = 10;
     } else if (onboardingStep === 4) {
-      onboardingLabel.textContent = 'کد شهاب کاربر دمو ۱';
-      onboardingText.textContent = 'کد شهاب ۱۶ رقمی کاربر دمو ۱ را وارد کنید.';
-      onboardingInput.placeholder = '1000005390526081';
+      onboardingLabel.textContent = 'کد شهاب کاربر ';
+      onboardingText.textContent = 'کد شهاب ۱۶ رقمی کاربر را وارد کنید.';
+      onboardingInput.placeholder = 'اینجا وارد کنید';
       onboardingInput.maxLength = 16;
       onboardingInput.classList.remove('hidden');
       onboardingNextBtn.textContent = 'ادامه';
@@ -663,11 +663,11 @@
       onboardingData.ip = value;
     } else if (onboardingStep === 3) {
       if (!/^\d{10}$/.test(value)) return appendLog('کد ملی باید ۱۰ رقم باشد.', 'error');
-      if (value !== demoUser.nationalId) return appendLog('کد ملی کاربر دمو ۱ صحیح نیست.', 'error');
+      if (value !== demoUser.nationalId) return appendLog('کد ملی کاربر صحیح نیست.', 'error');
       onboardingData.nationalId = value;
     } else if (onboardingStep === 4) {
       if (!/^\d{16}$/.test(value)) return appendLog('کد شهاب باید ۱۶ رقم باشد.', 'error');
-      if (value !== demoUser.shahab) return appendLog('کد شهاب کاربر دمو ۱ صحیح نیست.', 'error');
+      if (value !== demoUser.shahab) return appendLog('کد شهاب کاربر صحیح نیست.', 'error');
       onboardingData.accountNo = value;
     } else if (onboardingStep === 5) {
       onboardingStep = 6;
