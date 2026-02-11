@@ -193,6 +193,22 @@
   }
   .pin { letter-spacing: 6px; font-size: 18px; min-height: 40px; display:flex; align-items:center; justify-content:center; }
 
+  .pin-config {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  .pin-config select {
+    width: 120px;
+    background: #0a1328;
+    color: var(--text);
+    border: 1px solid #2b3e66;
+    border-radius: 9px;
+    padding: 8px;
+  }
+
   .balances {
     border-top: 1px dashed #2c3f66;
     margin-top: 8px;
@@ -327,13 +343,26 @@
 
       <div id="transferPane" class="card">
         <div class="field">
-          <label>مشخصات حساب گیرنده / مقصد</label>
-          <input id="targetInput" placeholder="6037... یا IRxxxxxxxxxxxxxxxxxxxxxxxx" />
+          <label>کد شهاب مقصد (۱۶ رقم)</label>
+          <input id="targetInput" maxlength="16" inputmode="numeric" placeholder="۱۰۰۰۰۰۵۳۹۰۵۲۶۰۸۱" />
         </div>
         <div class="row2">
           <div class="field">
-            <label>مالک مقصد</label>
-            <div class="readonly" id="targetOwner">-</div>
+            <label>بانک مقصد</label>
+            <select id="bankSelect">
+              <option value="">انتخاب بانک</option>
+              <option value="سپه">سپه</option>
+              <option value="ملی ایران">ملی ایران</option>
+              <option value="صادرات ایران">صادرات ایران</option>
+              <option value="ملت">ملت</option>
+              <option value="تجارت">تجارت</option>
+              <option value="کشاورزی">کشاورزی</option>
+              <option value="مسکن">مسکن</option>
+              <option value="پاسارگاد">پاسارگاد</option>
+              <option value="پارسیان">پارسیان</option>
+              <option value="اقتصاد نوین">اقتصاد نوین</option>
+              <option value="سامان">سامان</option>
+            </select>
           </div>
           <div class="field">
             <label>مبلغ (ریال)</label>
@@ -344,8 +373,8 @@
 
       <div id="balancePane" class="card hidden">
         <strong>💰 موجودیها</strong>
-        <div class="balances"><strong>موجودی حساب:</strong> ۱ هزار و ۸۵۰ ملیون ریال</div>
-        <div class="balances"><strong>موجودی مسدود شده:</strong> ۹۳ تریلیون و ۸۹۳ ملیارد و ۶۷۰ ملیون ریال</div>
+        <div class="balances"><strong>موجودی حساب:</strong> 1,850,000,000 ریال</div>
+        <div class="balances"><strong>موجودی مسدود شده:</strong> 93,893,670,000,000 ریال</div>
       </div>
 
       <div id="identityPane" class="card hidden">
@@ -370,15 +399,24 @@
         </div>
       </div>
 
-      <div class="card">
+      <div class="card" id="pinCard">
         <label>🔐 ورود PIN</label>
-        <div class="readonly pin" id="pinView">----</div>
+        <div class="pin-config">
+          <label for="pinLength" style="margin:0">طول PIN</label>
+          <select id="pinLength">
+            <option value="4">4 PIN</option>
+            <option value="6">6 PIN</option>
+            <option value="9">9 PIN</option>
+            <option value="11">11 PIN</option>
+            <option value="13">13 PIN</option>
+          </select>
+        </div>
+        <div class="readonly pin" id="pinView">••••</div>
         <div class="pinpad" id="pinpad"></div>
       </div>
 
       <div class="btns">
         <button class="btn primary" id="runBtn">شروع تراکنش</button>
-        <button class="btn ok" id="printBtn">🧾 چاپ رسید</button>
         <button class="btn neutral" id="resetBtn">Reset</button>
       </div>
     </section>
@@ -386,15 +424,19 @@
 
   <section class="global-log log-wrap">
     <h3 class="title" style="font-size:16px">📜 Log Engine</h3>
-    <div class="subtitle">این لاگ از اولین قدم تا پایان فرآیند همیشه قابل مشاهده است.</div>
+    <div class="btns" style="margin-bottom:6px">
+      <button class="btn ok" id="printBtn">🧾 چاپ‌رسید (Log)</button>
+    </div>
     <div class="log" id="log"></div>
   </section>
 </div>
 
 <script>
   const targetInput = document.getElementById('targetInput');
+  const bankSelect = document.getElementById('bankSelect');
   const amountInput = document.getElementById('amount');
-  const targetOwner = document.getElementById('targetOwner');
+  const pinLengthSelect = document.getElementById('pinLength');
+  const pinCard = document.getElementById('pinCard');
   const pinView = document.getElementById('pinView');
   const logEl = document.getElementById('log');
   const modeBtn = document.getElementById('modeBtn');
@@ -409,16 +451,15 @@
   const stepIndicator = document.getElementById('stepIndicator');
   const codesPreview = document.getElementById('codesPreview');
 
-  const sepahFullOwner = 'سید جلیل هاشمی نیا';
-
-  const targetOwners = {
-    '603799': 'رضا مرادی',
-    '589210': sepahFullOwner,
-    '627412': 'نگین امینی',
-    'IR': 'حساب مرکزی پایا/ساتنا'
+  const demoUser = {
+    fullName: 'سید جلیل هاشمی نیا',
+    nationalId: '5309526080',
+    shahab: '1000005390526081',
+    bank: 'سپه'
   };
 
   let pin = '';
+  let pinLength = 4;
   let isOnline = false;
   let onlineIP = '';
   let onboardingStep = 1;
@@ -433,16 +474,19 @@
     logEl.scrollTop = logEl.scrollHeight;
   }
 
-  function detectTargetOwner(value) {
-    const v = value.trim().replace(/\s/g, '');
-    if (!v) return '-';
-    if (v.startsWith('IR')) return targetOwners.IR;
-    const key = v.slice(0, 6);
-    return targetOwners[key] || 'مالک نامشخص (قابل توسعه)';
+  function maskPinDisplay() {
+    pinView.textContent = `${'#'.repeat(pin.length)}${'•'.repeat(Math.max(pinLength - pin.length, 0))}`;
   }
 
   targetInput.addEventListener('input', () => {
-    targetOwner.textContent = detectTargetOwner(targetInput.value);
+    targetInput.value = targetInput.value.replace(/\D/g, '').slice(0, 16);
+  });
+
+  pinLengthSelect.addEventListener('change', () => {
+    pinLength = Number(pinLengthSelect.value);
+    pin = '';
+    maskPinDisplay();
+    appendLog(`PIN length changed => ${pinLength}`, 'info');
   });
 
   function buildPinpad() {
@@ -453,9 +497,9 @@
       b.textContent = k;
       b.onclick = () => {
         if (k === 'پاک') pin = '';
-        else if (k === 'OK') appendLog(`PIN Confirmed => ${'*'.repeat(pin.length || 4)}`, pin.length === 4 ? 'success' : 'warning');
-        else if (pin.length < 4) pin += k;
-        pinView.textContent = (pin + '----').slice(0, 4).replace(/./g, '•');
+        else if (k === 'OK') appendLog(`PIN Confirmed => ${'#'.repeat(pin.length || pinLength)}`, pin.length === pinLength ? 'success' : 'warning');
+        else if (pin.length < pinLength) pin += k;
+        maskPinDisplay();
       };
       pad.appendChild(b);
     });
@@ -467,15 +511,19 @@
     const dst = targetInput.value.trim();
     const amount = Number(amountInput.value || 0);
 
-    if (!dst) return appendLog('خطا: مشخصات حساب گیرنده / مقصد را وارد کنید.', 'error');
-    if (pin.length !== 4) return appendLog('خطا: PIN باید ۴ رقم باشد و OK زده شود.', 'error');
+    if (!/^\d{16}$/.test(dst)) return appendLog('خطا: کد شهاب باید ۱۶ رقم باشد.', 'error');
+    if (!bankSelect.value) return appendLog('خطا: بانک مقصد را انتخاب کنید.', 'error');
+    if (pin.length !== pinLength) return appendLog(`خطا: PIN باید ${pinLength} رقم باشد و OK زده شود.`, 'error');
     if (amount < 10000) return appendLog('خطا: مبلغ باید حداقل ۱۰,۰۰۰ ریال باشد.', 'error');
+    if (dst !== demoUser.shahab || bankSelect.value !== demoUser.bank) {
+      return appendLog('خطا: اطلاعات انتقال برای کاربر دمو ۱ مطابقت ندارد.', 'error');
+    }
 
-    const tOwner = detectTargetOwner(dst);
     appendLog('--- شروع سناریوی انتقال ---', 'warning');
     appendLog(`Mode => ${isOnline ? `ONLINE @ ${onlineIP}` : 'OFFLINE'}`, isOnline ? 'success' : 'warning');
     appendLog('کارت مبدا احراز شد و شماره کارت نمایش داده نمی‌شود.', 'info');
-    appendLog(`Target Owner => ${tOwner}`, 'info');
+    appendLog(`کد شهاب مقصد => ${dst}`, 'info');
+    appendLog(`بانک مقصد => ${bankSelect.value}`, 'info');
 
     appendLog('TCP Handshake: SYN →', 'info');
     await sleep(800);
@@ -494,30 +542,23 @@
     await sleep(delay);
 
     appendLog(`Transaction Complete | مبلغ: ${amount.toLocaleString('fa-IR')} ریال`, 'success');
-    appendLog('موجودی حساب: ۱ هزار و ۸۵۰ ملیون ریال', 'success');
-    appendLog('موجودی مسدود شده: ۹۳ تریلیون و ۸۹۳ ملیارد و ۶۷۰ ملیون ریال', 'warning');
+    appendLog('موجودی حساب: 1,850,000,000 ریال', 'success');
+    appendLog('موجودی مسدود شده: 93,893,670,000,000 ریال', 'warning');
   }
 
   function printReceipt() {
-    const dst = targetInput.value || '----';
-    const toOwner = targetOwner.textContent || '-';
-    const amount = Number(amountInput.value || 0).toLocaleString('fa-IR');
+    const rows = Array.from(logEl.querySelectorAll('.entry')).map(item => item.textContent).join('<br>');
 
     const w = window.open('', '_blank', 'width=420,height=620');
     w.document.write(`
-      <html lang="fa" dir="rtl"><head><title>رسید تراکنش</title></head>
+      <html lang="fa" dir="rtl"><head><title>Log Engine Print</title></head>
       <body class="receipt">
-        <h3 style="text-align:center">رسید انتقال</h3>
+        <h3 style="text-align:center">چاپ کامل لاگ فرآیند</h3>
         <hr>
         تاریخ: ${new Date().toLocaleString('fa-IR')}<br>
-        کارت/حساب مقصد: ${dst}<br>
-        مالک مقصد: ${toOwner}<br>
-        مبلغ: ${amount} ریال<br>
-        وضعیت: موفق (00)<br>
-        کد رهگیری: ${Math.floor(Math.random()*9e11+1e11)}<br>
+        تعداد رویداد: ${logEl.querySelectorAll('.entry').length}<br>
         <hr>
-        موجودی حساب: ۱ هزار و ۸۵۰ ملیون ریال<br>
-        موجودی مسدود شده: ۹۳ تریلیون و ۸۹۳ ملیارد و ۶۷۰ ملیون ریال
+        ${rows || 'لاگی ثبت نشده است.'}
       </body></html>
     `);
     w.document.close();
@@ -528,10 +569,10 @@
 
   function resetAll() {
     targetInput.value = '';
+    bankSelect.value = '';
     amountInput.value = 12500000;
     pin = '';
-    pinView.textContent = '----';
-    targetOwner.textContent = '-';
+    maskPinDisplay();
     appendLog('Reset کامل انجام شد.', 'warning');
   }
 
@@ -565,10 +606,10 @@
       onboardingInput.placeholder = '**********';
       onboardingInput.maxLength = 10;
     } else if (onboardingStep === 4) {
-      onboardingLabel.textContent = 'لطفا شماره حساب را وارد کنید';
-      onboardingText.textContent = 'برای واکشی اطلاعات کاربر دمو، شماره حساب را وارد کنید.';
-      onboardingInput.placeholder = '603799xxxxxx';
-      onboardingInput.maxLength = 24;
+      onboardingLabel.textContent = 'کد شهاب کاربر دمو ۱';
+      onboardingText.textContent = 'کد شهاب ۱۶ رقمی کاربر دمو ۱ را وارد کنید.';
+      onboardingInput.placeholder = '1000005390526081';
+      onboardingInput.maxLength = 16;
       onboardingInput.classList.remove('hidden');
       onboardingNextBtn.textContent = 'ادامه';
     } else if (onboardingStep === 5) {
@@ -599,14 +640,14 @@
     onlineIP = onboardingData.ip;
     setModeUI();
 
-    targetInput.value = onboardingData.accountNo;
-    targetOwner.textContent = detectTargetOwner(targetInput.value);
+    targetInput.value = '';
+    bankSelect.value = '';
 
     document.querySelector('[data-menu="identity"]').click();
     appendLog(`Login accepted by gateway (11-digit code): ${'*'.repeat(onboardingData.accessCode.length)}`, 'success');
     appendLog(`Online bridge active on IP: ${onboardingData.ip}`, 'success');
     appendLog(`National ID captured: ${onboardingData.nationalId}`, 'info');
-    appendLog(`Account number validated: ${onboardingData.accountNo}`, 'success');
+    appendLog(`Demo SHAHAB code validated: ${onboardingData.accountNo}`, 'success');
     appendLog('مشخصات کاربر و موجودیها نمایش داده شد.', 'success');
   }
 
@@ -622,9 +663,11 @@
       onboardingData.ip = value;
     } else if (onboardingStep === 3) {
       if (!/^\d{10}$/.test(value)) return appendLog('کد ملی باید ۱۰ رقم باشد.', 'error');
+      if (value !== demoUser.nationalId) return appendLog('کد ملی کاربر دمو ۱ صحیح نیست.', 'error');
       onboardingData.nationalId = value;
     } else if (onboardingStep === 4) {
-      if (value.length < 10) return appendLog('شماره حساب وارد شده معتبر نیست.', 'error');
+      if (!/^\d{16}$/.test(value)) return appendLog('کد شهاب باید ۱۶ رقم باشد.', 'error');
+      if (value !== demoUser.shahab) return appendLog('کد شهاب کاربر دمو ۱ صحیح نیست.', 'error');
       onboardingData.accountNo = value;
     } else if (onboardingStep === 5) {
       onboardingStep = 6;
@@ -670,6 +713,7 @@
       document.getElementById('transferPane').classList.toggle('hidden', m !== 'transfer');
       document.getElementById('balancePane').classList.toggle('hidden', m !== 'balance');
       document.getElementById('identityPane').classList.toggle('hidden', m !== 'identity');
+      pinCard.classList.toggle('hidden', m !== 'transfer');
       appendLog(`Menu changed => ${m}`, 'info');
     };
   });
@@ -685,6 +729,7 @@
   });
 
   buildPinpad();
+  maskPinDisplay();
   setModeUI();
   updateOnboardingStep();
   appendLog('Secure gateway initialized. Awaiting onboarding sequence...', 'info');
