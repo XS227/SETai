@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>POS Connection Flow Demo</title>
+<title>POS Connection</title>
 <style>
   :root {
     --bg: #0b1120;
@@ -326,13 +326,13 @@
   <div class="terminal hidden" id="terminalApp">
     <section class="left">
       <div class="topbar">
-        <h2 class="title">🎛 پایانه پوز</h2>
+        <h2 class="title">🎛 پایانه پوز بانک مرکزی</h2>
         <div class="top-actions">
           <button class="icon-btn" id="modeBtn" title="اتصال/قطع اتصال پوز">Connect</button>
           <button class="icon-btn" id="fullViewBtn" title="نمایش تمام صفحه">⛶ Full View</button>
         </div>
       </div>
-      <div class="subtitle">فرآیند اتصال پوز، چیپ و مگنت + انتقال و نمایش اطلاعات حساب</div>
+      <div class="subtitle"> اتصال پوز، چیپ و مگنت + انتقال و نمایش اطلاعات حساب</div>
       <div id="modeInfo" class="mode-pill offline" aria-label="offline"></div>
 
       <div class="menu">
@@ -516,7 +516,7 @@
     if (pin.length !== pinLength) return appendLog(`خطا: PIN باید ${pinLength} رقم باشد و OK زده شود.`, 'error');
     if (amount < 10000) return appendLog('خطا: مبلغ باید حداقل ۱۰,۰۰۰ ریال باشد.', 'error');
     if (dst !== demoUser.shahab || bankSelect.value !== demoUser.bank) {
-      return appendLog('خطا: اطلاعات انتقال برای کاربر دمو ۱ مطابقت ندارد.', 'error');
+      return appendLog('خطا: اطلاعات انتقال برای کاربر مطابقت ندارد.', 'error');
     }
 
     appendLog('--- شروع سناریوی انتقال ---', 'warning');
@@ -542,7 +542,7 @@
     await sleep(delay);
 
     appendLog(`Transaction Complete | مبلغ: ${amount.toLocaleString('fa-IR')} ریال`, 'success');
-    appendLog('موجودی حساب: 1,850,000,000 ریال', 'success');
+    appendLog('موجودی حساب: 1,830,000,000 ریال', 'success');
     appendLog('موجودی مسدود شده: 93,893,670,000,000 ریال', 'warning');
   }
 
