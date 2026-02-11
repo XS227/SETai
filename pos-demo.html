@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>POS Offline - Switch Simulation</title>
+<title>POS Connection Flow Demo</title>
 <style>
   :root {
     --bg: #0b1120;
@@ -79,7 +79,7 @@
     padding: 14px;
     display: grid;
     gap: 12px;
-    grid-template-columns: 1.1fr .9fr;
+    grid-template-columns: 1fr;
     box-shadow: 0 20px 60px rgba(0,0,0,.4);
   }
   .left, .right {
@@ -113,13 +113,14 @@
     font-size: 12px;
   }
   .mode-pill {
-    padding: 6px 8px;
-    border-radius: 999px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
     border: 1px solid #2b3e66;
-    font-size: 12px;
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,.4);
   }
-  .mode-pill.online { color: #86efac; border-color: #166534; background: rgba(22, 101, 52, .25); }
-  .mode-pill.offline { color: #fcd34d; border-color: #92400e; background: rgba(146, 64, 14, .2); }
+  .mode-pill.online { background: #22c55e; border-color: #166534; }
+  .mode-pill.offline { background: #f59e0b; border-color: #92400e; }
   .subtitle {
     color: var(--muted);
     font-size: 12px;
@@ -228,13 +229,57 @@
     padding: 16px;
   }
 
+
+  .identity-layout {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 14px;
+    align-items: start;
+  }
+  .identity-photo {
+    background: #081126;
+    border: 1px solid #2b3e66;
+    border-radius: 10px;
+    overflow: hidden;
+    text-align: center;
+  }
+  .identity-photo img {
+    width: 100%;
+    display: block;
+    object-fit: cover;
+  }
+  .identity-photo .caption {
+    padding: 6px;
+    color: #fca5a5;
+    background: #1e293b;
+    font-size: 12px;
+  }
+  .identity-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px 12px;
+    line-height: 1.9;
+    font-size: 14px;
+  }
+  .identity-grid .wide { grid-column: 1 / -1; }
+
+  .global-log {
+    width: min(980px, 100%);
+    background: rgba(7, 12, 24, 0.95);
+    border: 1px solid #1f2a44;
+    border-radius: 18px;
+    padding: 14px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.4);
+    height: 320px;
+  }
+
   @media (max-width: 900px) {
-    .terminal { grid-template-columns: 1fr; }
     .log-wrap { height: 280px; }
     .row2 { grid-template-columns: 1fr; }
     .menu { grid-template-columns: 1fr; }
     .btns .btn { width: 100%; }
     .pinpad { max-width: 100%; }
+    .identity-layout { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -265,41 +310,24 @@
   <div class="terminal hidden" id="terminalApp">
     <section class="left">
       <div class="topbar">
-        <h2 class="title">🎛 POS Offline | شبیه‌ساز سوییچ واقعی</h2>
+        <h2 class="title">🎛 پایانه پوز</h2>
         <div class="top-actions">
-          <button class="icon-btn" id="modeBtn" title="تغییر وضعیت آنلاین/آفلاین">📶 Offline</button>
+          <button class="icon-btn" id="modeBtn" title="اتصال/قطع اتصال پوز">Connect</button>
           <button class="icon-btn" id="fullViewBtn" title="نمایش تمام صفحه">⛶ Full View</button>
         </div>
       </div>
-      <div class="subtitle">منوی ۳ گزینه‌ای + تشخیص BIN + ورود PIN + چاپ رسید + لاگ مرحله‌به‌مرحله</div>
-      <div id="modeInfo" class="mode-pill offline">System mode: OFFLINE</div>
+      <div class="subtitle">فرآیند اتصال پوز، چیپ و مگنت + انتقال و نمایش اطلاعات حساب</div>
+      <div id="modeInfo" class="mode-pill offline" aria-label="offline"></div>
 
       <div class="menu">
-        <button class="active" data-menu="transfer">🔄 کارت‌به‌کارت</button>
-        <button data-menu="balance">💰 مانده قابل برداشت</button>
-        <button data-menu="identity">👤 اطلاعات مالک</button>
-      </div>
-
-      <div class="card">
-        <div class="field">
-          <label>شماره کارت مبدا (۱۶ رقم)</label>
-          <input id="sourceCard" maxlength="19" placeholder="5892 10xx xxxx xxxx / 4xxx / 5xxx" />
-        </div>
-        <div class="row2">
-          <div class="field">
-            <label>BIN تشخیص داده شده</label>
-            <div class="readonly" id="binInfo">-</div>
-          </div>
-          <div class="field">
-            <label>مالک مبدا</label>
-            <div class="readonly" id="ownerInfo">-</div>
-          </div>
-        </div>
+        <button class="active" data-menu="transfer">🔄 انتقال</button>
+        <button data-menu="balance">💰 موجودیها</button>
+        <button data-menu="identity">👤 اطلاعات کاربر</button>
       </div>
 
       <div id="transferPane" class="card">
         <div class="field">
-          <label>کارت مقصد / شماره حساب مرکزی / IBAN</label>
+          <label>مشخصات حساب گیرنده / مقصد</label>
           <input id="targetInput" placeholder="6037... یا IRxxxxxxxxxxxxxxxxxxxxxxxx" />
         </div>
         <div class="row2">
@@ -315,17 +343,31 @@
       </div>
 
       <div id="balancePane" class="card hidden">
-        <strong>💰 مانده قابل برداشت:</strong>
-        <div>۱ هزار و ۸۵۰ ملیون ریال</div>
-        <div class="balances"><strong>مبلغ مسدودی:</strong> ۹۳ تریلیون و ۸۹۳ ملیارد و ۶۷۰ ملیون ریال</div>
+        <strong>💰 موجودیها</strong>
+        <div class="balances"><strong>موجودی حساب:</strong> ۱ هزار و ۸۵۰ ملیون ریال</div>
+        <div class="balances"><strong>موجودی مسدود شده:</strong> ۹۳ تریلیون و ۸۹۳ ملیارد و ۶۷۰ ملیون ریال</div>
       </div>
 
       <div id="identityPane" class="card hidden">
-        <div><strong>بانک سپه</strong> → نام و نام خانوادگی: سید جلیل هاشمی نیا</div>
-        <div>نام پدر: سید مسیح | کد ملی: ۵۳۰۹۵۲ | تاریخ تولد: ۱۳۰۹/۱۱/۲۵</div>
-        <div>جنسیت: مرد | شماره شناسنامه: ۴۴۶۲ | سری سریال شناسنامه: ۴۶۰۴۷۸ - (۱ / ۷۲)</div>
-        <div>وضعیت حیات: فوت شده | تاریخ فوت: ۱۴۰۲/۱۱/۲۲</div>
-        <div>کد شهاب: ۱۰۰۰۰۰۵۳۹۰۵۲۶۰۸۱ | تاریخ آخرین تغییرات: ۱۴۰۳/۱۲/۱۱</div>
+        <div class="identity-layout">
+          <div class="identity-photo">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Portrait_Placeholder.png/300px-Portrait_Placeholder.png" alt="عکس کاربر" />
+            <div class="caption">وضعیت حیات: فوت شده</div>
+          </div>
+          <div class="identity-grid">
+            <div class="wide"><strong>نام و نام خانوادگی:</strong> سید جلیل هاشمی نیا</div>
+            <div><strong>کد ملی:</strong> ۵۳۰۹۵۲۶۰۸۰</div>
+            <div><strong>نام پدر:</strong> سیدمسیح</div>
+            <div><strong>تاریخ تولد:</strong> ۱۳۰۹/۱۱/۲۵</div>
+            <div><strong>جنسیت:</strong> مرد</div>
+            <div><strong>شماره شناسنامه:</strong> ۴۴۶۲</div>
+            <div><strong>سریال شناسنامه:</strong> ۴۶۰۴۷۸ - (۱ / ۷۲)</div>
+            <div><strong>کد شهاب:</strong> ۱۰۰۰۰۰۵۳۹۰۵۲۶۰۸۱</div>
+            <div><strong>شناسه رهگیری استعلام:</strong> ۰۱۰۰۳۴۲۱</div>
+            <div><strong>تاریخ فوت:</strong> ۱۴۰۲/۱۱/۲۲</div>
+            <div class="wide"><strong>تاریخ آخرین تغییرات:</strong> ۱۴۰۳/۱۲/۱۱</div>
+          </div>
+        </div>
       </div>
 
       <div class="card">
@@ -340,21 +382,18 @@
         <button class="btn neutral" id="resetBtn">Reset</button>
       </div>
     </section>
-
-    <section class="right log-wrap">
-      <h3 class="title" style="font-size:16px">📜 Log Engine</h3>
-      <div class="subtitle">BIN + Owner + TCP Handshake + Auth + Delay تا ۱۳ ثانیه</div>
-      <div class="log" id="log"></div>
-    </section>
   </div>
+
+  <section class="global-log log-wrap">
+    <h3 class="title" style="font-size:16px">📜 Log Engine</h3>
+    <div class="subtitle">این لاگ از اولین قدم تا پایان فرآیند همیشه قابل مشاهده است.</div>
+    <div class="log" id="log"></div>
+  </section>
 </div>
 
 <script>
-  const sourceCard = document.getElementById('sourceCard');
   const targetInput = document.getElementById('targetInput');
   const amountInput = document.getElementById('amount');
-  const binInfo = document.getElementById('binInfo');
-  const ownerInfo = document.getElementById('ownerInfo');
   const targetOwner = document.getElementById('targetOwner');
   const pinView = document.getElementById('pinView');
   const logEl = document.getElementById('log');
@@ -371,18 +410,6 @@
   const codesPreview = document.getElementById('codesPreview');
 
   const sepahFullOwner = 'سید جلیل هاشمی نیا';
-  const ownerByType = {
-    visa: 'Alex Mercer',
-    master: 'Noah Bennett',
-    sepah: sepahFullOwner,
-    unknown: 'نامشخص'
-  };
-
-  const binTable = [
-    { prefix: /^589210/, bank: 'بانک سپه', type: 'sepah' },
-    { prefix: /^4/, bank: 'VISA', type: 'visa' },
-    { prefix: /^5[1-5]/, bank: 'MasterCard', type: 'master' }
-  ];
 
   const targetOwners = {
     '603799': 'رضا مرادی',
@@ -406,23 +433,6 @@
     logEl.scrollTop = logEl.scrollHeight;
   }
 
-  function formatCardInput(el) {
-    const raw = el.value.replace(/\D/g, '').slice(0, 16);
-    el.value = raw.replace(/(.{4})/g, '$1 ').trim();
-    return raw;
-  }
-
-  function detectBIN(cardRaw) {
-    if (!cardRaw) return { bank: '-', owner: '-', bin: '-' };
-    const rec = binTable.find(x => x.prefix.test(cardRaw));
-    if (!rec) return { bank: 'Unknown BIN', owner: ownerByType.unknown, bin: cardRaw.slice(0, 6) || '-' };
-    return {
-      bank: rec.bank,
-      owner: ownerByType[rec.type],
-      bin: cardRaw.slice(0, 6)
-    };
-  }
-
   function detectTargetOwner(value) {
     const v = value.trim().replace(/\s/g, '');
     if (!v) return '-';
@@ -430,14 +440,6 @@
     const key = v.slice(0, 6);
     return targetOwners[key] || 'مالک نامشخص (قابل توسعه)';
   }
-
-  sourceCard.addEventListener('input', () => {
-    const raw = formatCardInput(sourceCard);
-    const d = detectBIN(raw);
-    binInfo.textContent = `${d.bank} | BIN: ${d.bin}`;
-    ownerInfo.textContent = d.owner;
-    appendLog(`BIN Detection => ${d.bank} | BIN ${d.bin} | Owner ${d.owner}`, 'info');
-  });
 
   targetInput.addEventListener('input', () => {
     targetOwner.textContent = detectTargetOwner(targetInput.value);
@@ -462,20 +464,17 @@
   async function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
   async function runTransaction() {
-    const src = sourceCard.value.replace(/\D/g, '');
     const dst = targetInput.value.trim();
     const amount = Number(amountInput.value || 0);
 
-    if (src.length !== 16) return appendLog('خطا: شماره کارت مبدا باید ۱۶ رقم باشد.', 'error');
-    if (!dst) return appendLog('خطا: کارت مقصد / IBAN را وارد کنید.', 'error');
+    if (!dst) return appendLog('خطا: مشخصات حساب گیرنده / مقصد را وارد کنید.', 'error');
     if (pin.length !== 4) return appendLog('خطا: PIN باید ۴ رقم باشد و OK زده شود.', 'error');
     if (amount < 10000) return appendLog('خطا: مبلغ باید حداقل ۱۰,۰۰۰ ریال باشد.', 'error');
 
-    const d = detectBIN(src);
     const tOwner = detectTargetOwner(dst);
-    appendLog('--- شروع سناریوی سوییچ بانکی ---', 'warning');
+    appendLog('--- شروع سناریوی انتقال ---', 'warning');
     appendLog(`Mode => ${isOnline ? `ONLINE @ ${onlineIP}` : 'OFFLINE'}`, isOnline ? 'success' : 'warning');
-    appendLog(`Source BIN/Owner => ${d.bin} / ${d.owner}`, 'info');
+    appendLog('کارت مبدا احراز شد و شماره کارت نمایش داده نمی‌شود.', 'info');
     appendLog(`Target Owner => ${tOwner}`, 'info');
 
     appendLog('TCP Handshake: SYN →', 'info');
@@ -495,14 +494,12 @@
     await sleep(delay);
 
     appendLog(`Transaction Complete | مبلغ: ${amount.toLocaleString('fa-IR')} ریال`, 'success');
-    appendLog('Available Withdrawal: ۱ هزار و ۸۵۰ ملیون ریال', 'success');
-    appendLog('Blocked Amount: ۹۳ تریلیون و ۸۹۳ ملیارد و ۶۷۰ ملیون ریال', 'warning');
+    appendLog('موجودی حساب: ۱ هزار و ۸۵۰ ملیون ریال', 'success');
+    appendLog('موجودی مسدود شده: ۹۳ تریلیون و ۸۹۳ ملیارد و ۶۷۰ ملیون ریال', 'warning');
   }
 
   function printReceipt() {
-    const src = sourceCard.value || '---- ---- ---- ----';
     const dst = targetInput.value || '----';
-    const owner = ownerInfo.textContent || '-';
     const toOwner = targetOwner.textContent || '-';
     const amount = Number(amountInput.value || 0).toLocaleString('fa-IR');
 
@@ -510,19 +507,17 @@
     w.document.write(`
       <html lang="fa" dir="rtl"><head><title>رسید تراکنش</title></head>
       <body class="receipt">
-        <h3 style="text-align:center">رسید کارت‌به‌کارت</h3>
+        <h3 style="text-align:center">رسید انتقال</h3>
         <hr>
         تاریخ: ${new Date().toLocaleString('fa-IR')}<br>
-        کارت مبدا: ${src}<br>
-        مالک مبدا: ${owner}<br>
         کارت/حساب مقصد: ${dst}<br>
         مالک مقصد: ${toOwner}<br>
         مبلغ: ${amount} ریال<br>
         وضعیت: موفق (00)<br>
         کد رهگیری: ${Math.floor(Math.random()*9e11+1e11)}<br>
         <hr>
-        مانده قابل برداشت: ۱ هزار و ۸۵۰ ملیون ریال<br>
-        مبلغ مسدودی: ۹۳ تریلیون و ۸۹۳ ملیارد و ۶۷۰ ملیون ریال
+        موجودی حساب: ۱ هزار و ۸۵۰ ملیون ریال<br>
+        موجودی مسدود شده: ۹۳ تریلیون و ۸۹۳ ملیارد و ۶۷۰ ملیون ریال
       </body></html>
     `);
     w.document.close();
@@ -532,29 +527,27 @@
   }
 
   function resetAll() {
-    sourceCard.value = '';
     targetInput.value = '';
     amountInput.value = 12500000;
     pin = '';
     pinView.textContent = '----';
-    binInfo.textContent = '-';
-    ownerInfo.textContent = '-';
     targetOwner.textContent = '-';
-    logEl.innerHTML = '';
     appendLog('Reset کامل انجام شد.', 'warning');
   }
 
   function setModeUI() {
-    modeInfo.textContent = isOnline ? `System mode: ONLINE (${onlineIP})` : 'System mode: OFFLINE';
+    modeInfo.setAttribute('aria-label', isOnline ? 'online' : 'offline');
     modeInfo.classList.toggle('online', isOnline);
     modeInfo.classList.toggle('offline', !isOnline);
-    modeBtn.textContent = isOnline ? '📶 Online' : '📶 Offline';
+    modeBtn.textContent = isOnline ? 'Disconnect' : 'Connect';
   }
 
   function updateOnboardingStep() {
     stepIndicator.textContent = `Step ${onboardingStep}/5`;
     onboardingInput.value = '';
-    codesPreview.classList.toggle('hidden', onboardingStep < 3);
+    onboardingInput.classList.remove('hidden');
+    onboardingNextBtn.textContent = 'ادامه';
+    codesPreview.classList.toggle('hidden', onboardingStep < 5);
 
     if (onboardingStep === 1) {
       onboardingLabel.textContent = 'کد ۱۱ رقمی ورود';
@@ -576,20 +569,36 @@
       onboardingText.textContent = 'برای واکشی اطلاعات کاربر دمو، شماره حساب را وارد کنید.';
       onboardingInput.placeholder = '603799xxxxxx';
       onboardingInput.maxLength = 24;
+      onboardingInput.classList.remove('hidden');
+      onboardingNextBtn.textContent = 'ادامه';
+    } else if (onboardingStep === 5) {
+      onboardingLabel.textContent = 'اتصال دستگاه پوز';
+      onboardingText.textContent = 'بعد از وارد کردن اطلاعات کاربر، اتصال پوز را انجام دهید و دکمه Connect را بزنید.';
+      onboardingInput.classList.add('hidden');
+      onboardingNextBtn.textContent = 'Connect';
     }
   }
 
-  function completeOnboarding() {
+  async function completeOnboarding() {
+    appendLog('درخواست اتصال پوز ثبت شد.', 'info');
+    appendLog('در حال برقراری ارتباط با پوز...', 'info');
+    await sleep(1000);
+    appendLog('ارتباط با پوز برقرار شد. در حال اتصال به سیستم بانک مرکزی...', 'info');
+    await sleep(1400);
+    appendLog('سیگنال: اتصال برقرار ✅', 'success');
+    appendLog('لطفا کارت را در قسمت چیپ پوز وارد کنید (مهلت ۱۵ ثانیه).', 'warning');
+    await sleep(15000);
+    appendLog('ارتباط با چیپ برقرار شد.', 'success');
+    appendLog('لطفا کارت دوم را در قسمت مگنت پوز بکشید.', 'warning');
+    await sleep(2000);
+    appendLog('اتصال مگنت کارت دوم تایید شد.', 'success');
+
     onboardingBox.classList.add('hidden');
     terminalApp.classList.remove('hidden');
     isOnline = true;
     onlineIP = onboardingData.ip;
     setModeUI();
 
-    sourceCard.value = '5892101234567890'.replace(/(.{4})/g, '$1 ').trim();
-    const d = detectBIN(sourceCard.value.replace(/\D/g, ''));
-    binInfo.textContent = `${d.bank} | BIN: ${d.bin}`;
-    ownerInfo.textContent = d.owner;
     targetInput.value = onboardingData.accountNo;
     targetOwner.textContent = detectTargetOwner(targetInput.value);
 
@@ -598,10 +607,10 @@
     appendLog(`Online bridge active on IP: ${onboardingData.ip}`, 'success');
     appendLog(`National ID captured: ${onboardingData.nationalId}`, 'info');
     appendLog(`Account number validated: ${onboardingData.accountNo}`, 'success');
-    appendLog('Demo user profile loaded successfully.', 'success');
+    appendLog('مشخصات کاربر و موجودیها نمایش داده شد.', 'success');
   }
 
-  function nextOnboardingStep() {
+  async function nextOnboardingStep() {
     const value = onboardingInput.value.trim();
     if (onboardingStep === 1) {
       if (!/^\d{11}$/.test(value)) return appendLog('ورود نامعتبر: کد باید ۱۱ رقم باشد.', 'error');
@@ -617,7 +626,8 @@
     } else if (onboardingStep === 4) {
       if (value.length < 10) return appendLog('شماره حساب وارد شده معتبر نیست.', 'error');
       onboardingData.accountNo = value;
-      onboardingStep = 5;
+    } else if (onboardingStep === 5) {
+      onboardingStep = 6;
       return completeOnboarding();
     }
 
@@ -627,23 +637,13 @@
 
   function toggleMode() {
     if (!isOnline) {
-      const inputIP = prompt('Enter IP address to connect online:');
-      if (!inputIP) {
-        appendLog('Online mode canceled: IP was not entered.', 'warning');
-        return;
-      }
-      const sure = confirm('are you sure to use one times ip for cost of 371$ ?');
-      if (!sure) {
-        appendLog('Online mode canceled by user confirmation.', 'warning');
-        return;
-      }
       isOnline = true;
-      onlineIP = inputIP;
-      appendLog(`System is ONLINE now. Connected IP: ${onlineIP}`, 'success');
+      onlineIP = onboardingData.ip || '185.30.22.110';
+      appendLog(`پوز آنلاین شد. IP: ${onlineIP}`, 'success');
     } else {
       isOnline = false;
       onlineIP = '';
-      appendLog('System switched back to OFFLINE mode.', 'warning');
+      appendLog('پوز آفلاین شد.', 'warning');
     }
     setModeUI();
   }
