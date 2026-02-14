@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Khabat Setaei | AI Systems Architect</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Inter',sans-serif;
+}
+
+body{
+    background:#0b0f14;
+    color:#fff;
+    overflow-x:hidden;
+}
+
+/* HERO */
+.hero{
+    height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    position:relative;
+}
+
+.hero h1{
+    font-size:4rem;
+    font-weight:800;
+    letter-spacing:2px;
+}
+
+.hero p{
+    margin-top:20px;
+    font-size:1.2rem;
+    opacity:0.7;
+}
+
+.glow{
+    position:absolute;
+    width:600px;
+    height:600px;
+    background:radial-gradient(circle, rgba(0,200,255,0.2) 0%, transparent 60%);
+    border-radius:50%;
+    animation:move 12s infinite alternate ease-in-out;
+}
+
+@keyframes move{
+    from{transform:translate(-200px,-100px);}
+    to{transform:translate(200px,100px);}
+}
+
+/* AGENT VISUAL */
+.agent-system{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+}
+
+.agent-wrapper{
+    position:relative;
+    width:400px;
+    height:400px;
+}
+
+.core{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    width:120px;
+    height:120px;
+    background:#00c8ff;
+    border-radius:50%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-weight:600;
+    color:#000;
+    box-shadow:0 0 40px #00c8ff;
+}
+
+.agent{
+    position:absolute;
+    width:80px;
+    height:80px;
+    border-radius:50%;
+    background:#1a1f27;
+    border:1px solid #00c8ff;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:0.7rem;
+    text-align:center;
+    padding:5px;
+}
+
+.agent1{ top:0; left:50%; transform:translateX(-50%); }
+.agent2{ bottom:0; left:50%; transform:translateX(-50%); }
+.agent3{ left:0; top:50%; transform:translateY(-50%); }
+.agent4{ right:0; top:50%; transform:translateY(-50%); }
+
+.line{
+    position:absolute;
+    width:2px;
+    height:200px;
+    background:#00c8ff;
+    top:100px;
+    left:50%;
+    transform:translateX(-50%);
+    opacity:0.2;
+}
+
+/* TIMELINE */
+.timeline{
+    padding:100px 20px;
+    max-width:900px;
+    margin:auto;
+}
+
+.timeline h2{
+    text-align:center;
+    margin-bottom:50px;
+}
+
+.timeline-item{
+    margin-bottom:40px;
+    padding:20px;
+    background:#141a22;
+    border-left:3px solid #00c8ff;
+    transition:0.4s;
+}
+
+.timeline-item:hover{
+    transform:translateX(10px);
+    background:#1c242e;
+}
+
+/* CONTACT */
+.contact{
+    height:80vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+}
+
+.contact a{
+    color:#00c8ff;
+    text-decoration:none;
+}
+
+footer{
+    padding:20px;
+    text-align:center;
+    font-size:0.8rem;
+    opacity:0.5;
+}
+</style>
+</head>
+
+<body>
+
+<section class="hero">
+    <div class="glow"></div>
+    <h1>Khabat Setaei</h1>
+    <p>AI Systems Architect • CTO • Multi-Agent Infrastructure</p>
+</section>
+
+<section class="agent-system">
+    <h2>Multi-Agent Architecture Mindset</h2>
+    <div class="agent-wrapper">
+        <div class="core">ORCHESTRATOR</div>
+        <div class="agent agent1">Research<br>Agent</div>
+        <div class="agent agent2">Strategy<br>Agent</div>
+        <div class="agent agent3">Security<br>Layer</div>
+        <div class="agent agent4">Optimization<br>Engine</div>
+    </div>
+</section>
+
+<section class="timeline">
+    <h2>Experience Timeline</h2>
+
+    <div class="timeline-item">
+        <strong>CEO – XS22 STAE</strong><br>
+        Built international AI & blockchain digital systems. Structured distributed teams.
+    </div>
+
+    <div class="timeline-item">
+        <strong>CTO – Subscription AS</strong><br>
+        Led technical strategy, SaaS infrastructure, cloud architecture.
+    </div>
+
+    <div class="timeline-item">
+        <strong>Senior AI & Security Engineer</strong><br>
+        Designed AI-based security frameworks for telecom & finance.
+    </div>
+
+    <div class="timeline-item">
+        <strong>Head of Cybersecurity</strong><br>
+        Reduced security incidents by 75% in financial systems.
+    </div>
+</section>
+
+<section class="contact">
+    <h2>Contact</h2>
+    <p>
+        📩 <a href="mailto:khabat.setaei@gmail.com">khabat.setaei@gmail.com</a><br>
+        🌐 <a href="https://www.setai.no" target="_blank">www.setai.no</a><br>
+        📱 WhatsApp: +47 412 27 175
+    </p>
+</section>
+
+<footer>
+    © 2026 Khabat Setaei • Built as Intelligent System Architecture
+</footer>
+
+</body>
+</html>
