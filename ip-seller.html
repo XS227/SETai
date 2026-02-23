@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Premium IP Purchase</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #0b0f19;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+.container {
+  background: #111827;
+  padding: 30px;
+  border-radius: 14px;
+  width: 420px;
+}
+h2 { margin-top: 0; }
+select, input, button {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 6px;
+  border: none;
+}
+button {
+  background: #2563eb;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+button:hover {
+  background: #1d4ed8;
+}
+.step { display: none; }
+.step.active { display: block; }
+.price {
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+.flag {
+  margin-right: 8px;
+}
+.small {
+  font-size: 12px;
+  opacity: 0.7;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- STEP 1 -->
+  <div class="step active" id="step1">
+    <h2>Select IP Location</h2>
+
+    <select id="country" onchange="updatePrice()">
+      <option value="">-- Choose Location --</option>
+      <option value="usa">🇺🇸 USA</option>
+      <option value="netherlands">🇳🇱 Netherlands</option>
+      <option value="england">🇬🇧 England</option>
+      <option value="norway">🇳🇴 Norway</option>
+      <option value="russia">🇷🇺 Russia</option>
+      <option value="china">🇨🇳 China</option>
+    </select>
+
+    <div class="price" id="priceDisplay"></div>
+
+    <button onclick="goToStep2()">Continue</button>
+  </div>
+
+  <!-- STEP 2 -->
+  <div class="step" id="step2">
+    <h2>Order Summary</h2>
+    <p id="summary"></p>
+    <p class="small">Click confirm to simulate secure payment.</p>
+    <button onclick="simulatePayment()">Confirm & Pay</button>
+  </div>
+
+  <!-- STEP 3 -->
+  <div class="step" id="step3">
+    <h2>Payment Successful</h2>
+    <p>Your IP Address:</p>
+    <div class="price" id="ipResult"></div>
+  </div>
+
+</div>
+
+<script>
+let selectedCountry = "";
+let selectedPrice = 0;
+
+function updatePrice() {
+  const country = document.getElementById("country").value;
+  selectedCountry = country;
+
+  if (country === "usa") {
+    selectedPrice = 14570;
+  } else if (country === "netherlands" || country === "england" || country === "norway") {
+    selectedPrice = 8430;
+  } else if (country === "russia" || country === "china") {
+    selectedPrice = 2300;
+  } else {
+    selectedPrice = 0;
+  }
+
+  document.getElementById("priceDisplay").innerText =
+    selectedPrice ? "Price: $" + selectedPrice : "";
+}
+
+function goToStep2() {
+  if (!selectedCountry) {
+    alert("Please select a location.");
+    return;
+  }
+
+  document.getElementById("summary").innerText =
+    "Selected Location: " + selectedCountry.toUpperCase() +
+    "\nTotal Price: $" + selectedPrice;
+
+  document.getElementById("step1").classList.remove("active");
+  document.getElementById("step2").classList.add("active");
+}
+
+function simulatePayment() {
+  document.getElementById("step2").classList.remove("active");
+  document.getElementById("step3").classList.add("active");
+
+  const generatedIP =
+    Math.floor(Math.random()*255) + "." +
+    Math.floor(Math.random()*255) + "." +
+    Math.floor(Math.random()*255) + "." +
+    Math.floor(Math.random()*255);
+
+  document.getElementById("ipResult").innerText = generatedIP;
+}
+</script>
+
+</body>
+</html>
