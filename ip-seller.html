@@ -43,12 +43,35 @@ button:hover {
   font-weight: bold;
   margin-top: 10px;
 }
-.flag {
-  margin-right: 8px;
-}
 .small {
   font-size: 12px;
   opacity: 0.7;
+}
+.payment-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 12px 0;
+}
+.payment-option input {
+  width: auto;
+  margin: 0;
+}
+.status-box {
+  background: #0f172a;
+  border: 1px solid #1e293b;
+  border-radius: 8px;
+  padding: 14px;
+  min-height: 76px;
+  margin-top: 10px;
+}
+.status-line {
+  margin: 8px 0;
+  opacity: 0.75;
+}
+.status-line.active {
+  color: #93c5fd;
+  opacity: 1;
 }
 </style>
 </head>
@@ -56,7 +79,6 @@ button:hover {
 
 <div class="container">
 
-  <!-- STEP 1 -->
   <div class="step active" id="step1">
     <h2>Select IP Location</h2>
 
@@ -75,17 +97,43 @@ button:hover {
     <button onclick="goToStep2()">Continue</button>
   </div>
 
-  <!-- STEP 2 -->
   <div class="step" id="step2">
-    <h2>Order Summary</h2>
+    <h2>Choose Payment Method</h2>
     <p id="summary"></p>
-    <p class="small">Click confirm to simulate secure payment.</p>
-    <button onclick="simulatePayment()">Confirm & Pay</button>
+
+    <label class="payment-option">
+      <input type="radio" name="paymentMethod" value="Visa">
+      <span>Visa</span>
+    </label>
+
+    <label class="payment-option">
+      <input type="radio" name="paymentMethod" value="MasterCard">
+      <span>MasterCard</span>
+    </label>
+
+    <button onclick="goToStep3()">Continue to Card Details</button>
   </div>
 
-  <!-- STEP 3 -->
   <div class="step" id="step3">
+    <h2>Enter Card Details</h2>
+    <input id="cardNumber" type="text" placeholder="Card Number" maxlength="19">
+    <input id="cardName" type="text" placeholder="Cardholder Name">
+    <input id="cardExpiry" type="text" placeholder="MM/YY" maxlength="5">
+    <input id="cardCvv" type="password" placeholder="CVV" maxlength="4">
+    <p class="small">This is a demo simulation and does not process real payments.</p>
+    <button onclick="startProcessing()">Pay Now</button>
+  </div>
+
+  <div class="step" id="step4">
+    <h2>Processing Payment</h2>
+    <p>Please wait about 20 seconds while we prepare your IP...</p>
+    <div class="status-box" id="statusBox"></div>
+  </div>
+
+  <div class="step" id="step5">
     <h2>Payment Successful</h2>
+    <p>Your selected location:</p>
+    <div id="selectedLocationResult"></div>
     <p>Your IP Address:</p>
     <div class="price" id="ipResult"></div>
   </div>
@@ -95,6 +143,21 @@ button:hover {
 <script>
 let selectedCountry = "";
 let selectedPrice = 0;
+let selectedPaymentMethod = "";
+
+const countryLabels = {
+  usa: "USA",
+  netherlands: "Netherlands",
+  england: "England",
+  norway: "Norway",
+  russia: "Russia",
+  china: "China"
+};
+
+function showStep(stepId) {
+  document.querySelectorAll(".step").forEach((step) => step.classList.remove("active"));
+  document.getElementById(stepId).classList.add("active");
+}
 
 function updatePrice() {
   const country = document.getElementById("country").value;
@@ -110,8 +173,7 @@ function updatePrice() {
     selectedPrice = 0;
   }
 
-  document.getElementById("priceDisplay").innerText =
-    selectedPrice ? "Price: $" + selectedPrice : "";
+  document.getElementById("priceDisplay").innerText = selectedPrice ? "Price: $" + selectedPrice : "";
 }
 
 function goToStep2() {
@@ -121,24 +183,88 @@ function goToStep2() {
   }
 
   document.getElementById("summary").innerText =
-    "Selected Location: " + selectedCountry.toUpperCase() +
+    "Selected Location: " + countryLabels[selectedCountry] +
     "\nTotal Price: $" + selectedPrice;
 
-  document.getElementById("step1").classList.remove("active");
-  document.getElementById("step2").classList.add("active");
+  showStep("step2");
 }
 
-function simulatePayment() {
-  document.getElementById("step2").classList.remove("active");
-  document.getElementById("step3").classList.add("active");
+function goToStep3() {
+  const selectedMethod = document.querySelector('input[name="paymentMethod"]:checked');
 
+  if (!selectedMethod) {
+    alert("Please choose Visa or MasterCard.");
+    return;
+  }
+
+  selectedPaymentMethod = selectedMethod.value;
+  showStep("step3");
+}
+
+function startProcessing() {
+  const cardNumber = document.getElementById("cardNumber").value.trim();
+  const cardName = document.getElementById("cardName").value.trim();
+  const cardExpiry = document.getElementById("cardExpiry").value.trim();
+  const cardCvv = document.getElementById("cardCvv").value.trim();
+
+  if (!cardNumber || !cardName || !cardExpiry || !cardCvv) {
+    alert("Please complete all card details.");
+    return;
+  }
+
+  showStep("step4");
+
+  const statusMessages = [
+    "Connecting to the server...",
+    "Choosing IP...",
+    "Checking payment details...",
+    "Paid.",
+    "Reconnecting to server...",
+    "IP is downloading..."
+  ];
+
+  const statusBox = document.getElementById("statusBox");
+  statusBox.innerHTML = "";
+
+  statusMessages.forEach((message) => {
+    const line = document.createElement("div");
+    line.className = "status-line";
+    line.innerText = message;
+    statusBox.appendChild(line);
+  });
+
+  const lines = statusBox.querySelectorAll(".status-line");
+  let index = 0;
+  const intervalMs = Math.floor(20000 / statusMessages.length);
+
+  const timer = setInterval(() => {
+    if (index > 0) {
+      lines[index - 1].classList.remove("active");
+    }
+
+    if (index < lines.length) {
+      lines[index].classList.add("active");
+      index++;
+    } else {
+      clearInterval(timer);
+      showFinalIp();
+    }
+  }, intervalMs);
+
+  lines[0].classList.add("active");
+  index = 1;
+}
+
+function showFinalIp() {
   const generatedIP =
-    Math.floor(Math.random()*255) + "." +
-    Math.floor(Math.random()*255) + "." +
-    Math.floor(Math.random()*255) + "." +
-    Math.floor(Math.random()*255);
+    Math.floor(Math.random() * 255) + "." +
+    Math.floor(Math.random() * 255) + "." +
+    Math.floor(Math.random() * 255) + "." +
+    Math.floor(Math.random() * 255);
 
+  document.getElementById("selectedLocationResult").innerText = countryLabels[selectedCountry] + " (" + selectedPaymentMethod + ")";
   document.getElementById("ipResult").innerText = generatedIP;
+  showStep("step5");
 }
 </script>
 
