@@ -112,6 +112,7 @@
     .field:focus{border-color:rgba(56,189,248,.65);box-shadow:0 0 0 3px rgba(56,189,248,.08)}
     .hint{font-size:12px;color:#64748b;margin:4px 0 14px}
     .split-inputs{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:8px;margin:14px 0 10px}
+    .split-inputs.account{grid-template-columns:repeat(13,minmax(0,1fr))}
     .split-field{height:48px;text-align:center;padding:0;border:1px solid var(--border);background:#020617;color:var(--text);border-radius:12px;font-size:20px;outline:none}
     .split-field:focus{border-color:rgba(56,189,248,.65);box-shadow:0 0 0 3px rgba(56,189,248,.08)}
     .code-row{display:grid;grid-template-columns:repeat(var(--digits),1fr);gap:8px;margin:18px 0}
@@ -182,7 +183,25 @@
       display:none;
     }
     .small{font-size:12px;color:#64748b;margin-top:12px}
-    @media(max-width:640px){.content{padding:20px}.code-row{gap:5px}.code-cell{height:36px;font-size:16px}.bank-card{grid-template-columns:1fr}.actions{display:grid}.btn{width:100%}}
+    @media(max-width:900px){
+      .content{min-height:auto}
+      .split-inputs.account{grid-template-columns:repeat(8,minmax(0,1fr))}
+    }
+    @media(max-width:640px){
+      body{padding:12px;overflow:auto}
+      .shell{border-radius:18px}
+      .topbar{padding:12px 14px}
+      .badge{font-size:10px;padding:5px 8px}
+      .content{padding:18px}
+      .split-inputs{grid-template-columns:repeat(5,minmax(0,1fr))}
+      .split-inputs.account{grid-template-columns:repeat(4,minmax(0,1fr))}
+      .split-field{height:44px;font-size:18px}
+      .code-row{gap:5px}
+      .code-cell{height:36px;font-size:16px}
+      .bank-card{grid-template-columns:1fr}
+      .actions{display:grid}
+      .btn{width:100%}
+    }
   </style>
 </head>
 <body>
@@ -213,8 +232,8 @@
 
       <div class="screen" id="accountInputScreen">
         <h2>Verify Account Number</h2>
-        <div class="code-row" id="accountRow" style="--digits:26"></div>
-        <input class="field" id="accountInput" autocomplete="off" placeholder="Account number" />
+        <p>Step 4: enter the account number one character per box.</p>
+        <div class="split-inputs account" id="accountFields"></div>
       </div>
 
       <div class="screen" id="connectScreen">
@@ -321,16 +340,22 @@
       }
     }
 
-    function setupSplitNumberValidator(containerId, expected, nextScreen){
+    function setupSplitValidator(containerId, expected, nextScreen, mode = 'numeric'){
       const box = $(containerId);
       box.innerHTML = '';
       const inputs = [];
+      const allowAlpha = mode === 'alnum';
+      const validKey = allowAlpha ? /^[a-zA-Z0-9]$/ : /^[0-9]$/;
+      const cleanValue = (value) => {
+        const cleaned = allowAlpha ? value.replace(/[^a-zA-Z0-9]/g, '') : value.replace(/\D/g, '');
+        return cleaned.toUpperCase();
+      };
 
       for(let i=0;i<expected.length;i++){
         const input = document.createElement('input');
         input.className = 'split-field';
         input.type = 'text';
-        input.inputMode = 'numeric';
+        input.inputMode = allowAlpha ? 'text' : 'numeric';
         input.autocomplete = 'off';
         input.maxLength = 1;
         box.appendChild(input);
@@ -341,18 +366,18 @@
             if(!input.value && i > 0) inputs[i-1].focus();
             return;
           }
-          if(e.key.length === 1 && !/^[0-9]$/.test(e.key)) e.preventDefault();
+          if(e.key.length === 1 && !validKey.test(e.key)) e.preventDefault();
         });
 
         input.addEventListener('input', () => {
-          input.value = input.value.replace(/\D/g, '').slice(0,1);
+          input.value = cleanValue(input.value).slice(0,1);
           if(input.value && i < inputs.length - 1) inputs[i+1].focus();
           validate();
         });
 
         input.addEventListener('paste', (e) => {
           e.preventDefault();
-          const pasted = (e.clipboardData?.getData('text') || '').replace(/\D/g, '').slice(0, expected.length);
+          const pasted = cleanValue(e.clipboardData?.getData('text') || '').slice(0, expected.length);
           pasted.split('').forEach((digit, idx) => {
             if(inputs[idx]) inputs[idx].value = digit;
           });
@@ -419,11 +444,9 @@
     });
 
     setupCodeCells('accessRow', ACCESS_CODE.length);
-    setupCodeCells('accountRow', ACCOUNT_NUMBER.length);
-
     setupHiddenValidator('accessInput', 'accessRow', ACCESS_CODE, 'ipScreen');
-    setupSplitNumberValidator('ipFields', TARGET_IP, 'accountInputScreen');
-    setupHiddenValidator('accountInput', 'accountRow', ACCOUNT_NUMBER, 'connectScreen');
+    setupSplitValidator('ipFields', TARGET_IP, 'accountInputScreen', 'numeric');
+    setupSplitValidator('accountFields', ACCOUNT_NUMBER, 'connectScreen', 'alnum');
 
     const observer = new MutationObserver(() => {
       if($('connectScreen').classList.contains('active') && !$('terminal').dataset.started){
