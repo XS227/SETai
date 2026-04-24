@@ -192,36 +192,30 @@
     <section class="content">
       <div class="screen active" id="loadingScreen">
         <h1>Initializing Secure Session</h1>
-        <p>Preparing encrypted modules and endpoint verification.</p>
         <div class="bar"><div class="fill" id="bootFill"></div></div>
         <div class="percent" id="bootPercent">0%</div>
       </div>
 
       <div class="screen" id="accessScreen">
         <h2>Enter Access Code</h2>
-        <p>Digits remain hidden. A green check appears when each position is correct.</p>
         <div class="code-row" id="accessRow" style="--digits:11"></div>
         <input class="field" id="accessInput" inputmode="numeric" autocomplete="off" maxlength="11" placeholder="Access code" />
       </div>
 
       <div class="screen" id="ipScreen">
         <h2>Verify Endpoint Key</h2>
-        <p>Enter the endpoint sequence. The value is hidden like a password.</p>
         <div class="code-row" id="ipRow" style="--digits:12"></div>
         <input class="field" id="ipInput" autocomplete="off" placeholder="Endpoint key" />
       </div>
 
       <div class="screen" id="accountInputScreen">
         <h2>Verify Account Number</h2>
-        <p>Account number is hidden and validated position by position.</p>
         <div class="code-row" id="accountRow" style="--digits:26"></div>
         <input class="field" id="accountInput" autocomplete="off" placeholder="Account number" />
-        <div class="hint">Use uppercase letters and numbers only.</div>
       </div>
 
       <div class="screen" id="connectScreen">
         <h2>Connection Status</h2>
-        <p>Secure tunnel diagnostics in progress.</p>
         <div class="terminal" id="terminal"></div>
       </div>
 
@@ -235,7 +229,6 @@
             <div class="meta">Available Balance: 2,500,000,000,000 Rial (پول ایرانی)</div>
           </div>
         </div>
-        <p>Select a gateway action.</p>
         <div class="actions">
           <button class="btn" id="gatewayBtn">Check account gateway status</button>
         </div>
@@ -243,7 +236,6 @@
         <div class="percent" id="gatewayPercent"></div>
         <div class="terminal" id="gatewayTerminal" style="display:none"></div>
         <div class="alert" id="securityAlert">SECURITY ALERT: Disconnect this endpoint immediately. Session exposure risk increased.</div>
-        <div class="small">Authorized operators only.</div>
       </div>
     </section>
   </main>
@@ -285,8 +277,13 @@
       const input = $(inputId);
       input.dataset.real = '';
 
-      input.addEventListener('input', () => {
-        input.value = '•'.repeat((input.dataset.real || '').length);
+      input.addEventListener('paste', (e) => {
+        e.preventDefault();
+        const pasted = (e.clipboardData?.getData('text') || '')
+          .toUpperCase()
+          .replace(/[^A-Z0-9.]/g, '');
+        input.dataset.real = pasted.slice(0, expected.length);
+        renderMaskedState();
       });
 
       input.addEventListener('keydown', (e) => {
@@ -303,8 +300,12 @@
         }
 
         input.dataset.real = real;
-        input.value = '•'.repeat(real.length);
+        renderMaskedState();
+      });
 
+      function renderMaskedState(){
+        const real = input.dataset.real || '';
+        input.value = '•'.repeat(real.length);
         [...$(rowId).querySelectorAll('.code-cell')].forEach((cell, i) => {
           const ok = real[i] && real[i] === expected[i];
           cell.classList.toggle('ok', !!ok);
@@ -314,7 +315,7 @@
         if(real === expected){
           setTimeout(() => show(nextScreen), 450);
         }
-      });
+      }
     }
 
     function typeLines(el, lines, delay=650, done){
