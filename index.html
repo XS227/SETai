@@ -1,183 +1,293 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>SETai | دستیارهای هوش مصنوعی اختصاصی برای کسب‌وکارها</title>
-  <link rel="stylesheet" href="/static/app.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PhD Research Proposal | Multi-Agent AI Systems | Khabat Setaei</title>
+  <meta name="description" content="A modern one-page PhD research proposal presentation for autonomous multi-agent AI systems, real-time decision-making, and scalable AI deployment." />
+  <style>
+    :root {
+      --bg: #f2f4f8;
+      --panel: #ffffff;
+      --line: #dbe0ea;
+      --text: #071128;
+      --muted: #5e6b82;
+      --blue: #2554d6;
+      --blue-dark: #0c2f9a;
+      --shadow: 0 14px 34px rgba(13, 30, 73, 0.12);
+      --radius: 20px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      overflow-x: hidden;
+    }
+
+    .topbar {
+      background: var(--blue);
+      color: #fff;
+      text-align: center;
+      padding: 12px 18px;
+      font-size: 17px;
+      font-weight: 500;
+      letter-spacing: .01em;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 80;
+      background: rgba(255,255,255,.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav {
+      max-width: 1220px;
+      margin: auto;
+      padding: 18px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 900;
+      letter-spacing: -.02em;
+      font-size: 18px;
+    }
+    .mark {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: 3px solid #111;
+      display: grid;
+      place-items: center;
+      font-size: 19px;
+      font-weight: 800;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+    nav a {
+      color: #1f2937;
+      text-decoration: none;
+      font-size: 17px;
+      font-weight: 500;
+    }
+    nav a:hover { color: var(--blue); }
+
+    .btn {
+      text-decoration: none;
+      border-radius: 999px;
+      padding: 11px 26px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid var(--blue);
+      transition: .2s ease;
+      white-space: nowrap;
+      font-size: 17px;
+    }
+    .btn.outline { color: var(--blue-dark); background: #fff; }
+    .btn.primary { color: #fff; background: var(--blue); }
+    .btn:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(37,84,214,.2); }
+
+    .wrap { max-width: 1220px; margin: auto; padding: 0 28px; }
+    .hero {
+      min-height: calc(100vh - 150px);
+      display: grid;
+      align-items: center;
+      padding: 52px 0 80px;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: .9fr 1.1fr;
+      gap: 32px;
+      align-items: center;
+    }
+
+    .kicker {
+      color: #2f4f91;
+      text-transform: uppercase;
+      font-size: 20px;
+      letter-spacing: .06em;
+      margin-bottom: 16px;
+      font-weight: 700;
+    }
+    h1 {
+      font-size: clamp(58px, 5.8vw, 102px);
+      line-height: .95;
+      letter-spacing: -.04em;
+      margin: 0 0 18px;
+      color: #030b1f;
+    }
+    .lead {
+      font-size: clamp(24px, 1.8vw, 34px);
+      line-height: 1.55;
+      color: var(--muted);
+      margin: 0 0 28px;
+      max-width: 670px;
+    }
+
+    .visual {
+      position: relative;
+      border-radius: 26px;
+      background: linear-gradient(180deg, #dce6e7 0%, #d4dce0 100%);
+      min-height: 650px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+      border: 1px solid #d6dde8;
+      overflow: hidden;
+    }
+    .hero-image {
+      position: absolute;
+      left: 6%;
+      bottom: 6%;
+      width: 88%;
+      height: 57%;
+      object-fit: cover;
+      border-radius: 18px;
+      border: 1px solid #d0d8e6;
+      box-shadow: 0 18px 38px rgba(0,0,0,.16);
+    }
+    .widget {
+      position: absolute;
+      background: #fff;
+      border: 1px solid #d9deeb;
+      border-radius: 20px;
+      box-shadow: 0 18px 36px rgba(13, 30, 73, 0.15);
+    }
+    .widget.top {
+      right: -2%;
+      top: 7%;
+      width: 270px;
+      padding: 14px;
+    }
+    .widget.bottom {
+      left: -2%;
+      bottom: -3%;
+      width: 320px;
+      padding: 14px;
+    }
+    .chart {
+      height: 120px;
+      border-radius: 12px;
+      background: linear-gradient(155deg, #9ab3ff 0%, #436be0 60%, #1f44bd 100%);
+      margin-top: 8px;
+    }
+    .line {
+      height: 18px;
+      border-radius: 999px;
+      background: #2f54d3;
+      margin: 8px 0;
+      opacity: .95;
+    }
+    .line.sm { height: 14px; width: 65%; background: #9ab3ff; }
+    .line.md { width: 85%; }
+    .line.lg { width: 94%; }
+
+    .section { padding: 44px 0 88px; }
+    .glass {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 28px;
+    }
+    .name-check {
+      font-size: 23px;
+      color: var(--muted);
+      margin-top: 12px;
+    }
+
+    @media (max-width: 980px) {
+      nav { display: none; }
+      .hero-grid { grid-template-columns: 1fr; }
+      .visual { min-height: 460px; }
+      .widget.top { right: 10px; width: 210px; }
+      .widget.bottom { left: 10px; width: 240px; }
+      .topbar { font-size: 14px; }
+    }
+  </style>
 </head>
 <body>
-  <header class="nav">
-    <div class="nav-left">SETai</div>
-    <div class="nav-right">
-      <a href="#assistants">دستیارها</a>
-      <a href="#use-cases">کاربردها</a>
-      <a href="#about">درباره SETai</a>
-      <a href="#contact">تماس</a>
-      <a class="btn" href="#booking">رزرو وقت</a>
+  <div class="topbar">Sign Up Today to Take Your Vacation Rental to the Next Level</div>
+
+  <header>
+    <div class="nav">
+      <div class="brand"><div class="mark">S</div><span>SETai</span></div>
+      <nav>
+        <a href="#overview">Overview</a>
+        <a href="#features">Features</a>
+        <a href="#about">About</a>
+        <a href="#resources">Resources</a>
+        <a class="btn outline" href="tel:+19417467228">(941) 746-7228</a>
+        <a class="btn primary" href="#contact">Get A Demo</a>
+      </nav>
     </div>
   </header>
 
-  <main class="container">
-    <section class="hero" id="top">
-      <div>
-        <p class="pill">دموی رایگان · بدون تعهد</p>
-        <h1>دستیارهای هوش مصنوعی که واقعاً کار می‌کنند</h1>
-        <p>SETai به کسب‌وکارها کمک می‌کند با دستیارهای AI اختصاصی، سریع‌تر، هوشمندتر و کم‌هزینه‌تر کار کنند.</p>
-        <div class="cta-inline">
-          <a class="btn" href="#booking">رزرو وقت مشاوره</a>
-          <a class="btn-secondary" href="#assistants">آشنایی با دستیارها</a>
+  <main class="wrap">
+    <section class="hero" id="overview">
+      <div class="hero-grid">
+        <div>
+          <div class="kicker">Vacation Rental Software</div>
+          <h1>Vacation rental management made easy</h1>
+          <p class="lead">A polished presentation layout inspired by your reference design, adapted for the SETai proposal page with clear CTA actions and modern hero visuals.</p>
+          <a class="btn primary" href="#contact">Get A Demo</a>
         </div>
-        <div class="badges">
-          <span class="pill">اختصاصی</span>
-          <span class="pill">امن</span>
-          <span class="pill">قابل یکپارچه‌سازی</span>
-        </div>
-      </div>
-      <div class="hero-visual">
-        <h3 style="margin-top:0;">یک روز با دستیار SETai</h3>
-        <ul class="stacked-list">
-          <li>• پاسخ‌گویی 24/7 به مشتریان</li>
-          <li>• تحلیل سریع درخواست‌ها و اولویت‌بندی</li>
-          <li>• ارسال گزارش آماده برای تیم</li>
-        </ul>
-        <div class="badge-bar">
-          <span class="pill">دموی زنده</span>
-          <span class="pill">بدون نیاز به کد</span>
-        </div>
-      </div>
-    </section>
 
-    <section class="section" id="value">
-      <h2>چرا SETai؟</h2>
-      <p class="lead">چهار دلیل که مشتریان ما را انتخاب می‌کنند:</p>
-      <div class="grid">
-        <article class="card">
-          <h3>کاهش هزینه و زمان</h3>
-          <p class="muted">خودکارسازی کارهای تکراری و کاهش هزینه‌های عملیاتی.</p>
-        </article>
-        <article class="card">
-          <h3>دستیار اختصاصی</h3>
-          <p class="muted">آموزش‌دیده با داده‌ها و رویه‌های کسب‌وکار شما.</p>
-        </article>
-        <article class="card">
-          <h3>یکپارچه‌سازی آسان</h3>
-          <p class="muted">اتصال به وب‌سایت، واتساپ، CRM و ابزارهای داخلی بدون دردسر.</p>
-        </article>
-        <article class="card">
-          <h3>امنیت و حریم داده</h3>
-          <p class="muted">کنترل کامل روی دسترسی و ذخیره‌سازی اطلاعات حساس.</p>
-        </article>
-      </div>
-    </section>
-
-    <section class="section" id="use-cases">
-      <h2>کاربردهای محبوب</h2>
-      <div class="grid">
-        <article class="card"><h3>پشتیبانی مشتری 24/7</h3><p class="muted">پاسخ‌گویی فوری به سوالات رایج و درخواست‌ها.</p></article>
-        <article class="card"><h3>فروش و پیش از خرید</h3><p class="muted">راهنمایی مشتریان و افزایش نرخ تبدیل.</p></article>
-        <article class="card"><h3>منابع انسانی و آنبوردینگ</h3><p class="muted">پاسخ به سوالات کارکنان و ساده‌سازی ورود نیروهای جدید.</p></article>
-        <article class="card"><h3>دستیار داخلی تیم‌ها</h3><p class="muted">دسترسی سریع به دانش سازمانی و اجرای کارهای روزمره.</p></article>
-        <article class="card"><h3>تحلیل داده و گزارش‌گیری</h3><p class="muted">تجمیع داده‌ها و ارائه بینش‌های آماده برای تصمیم‌گیری.</p></article>
-      </div>
-    </section>
-
-    <section class="section" id="social-proof">
-      <h2>اعتماد مشتریان</h2>
-      <div class="stats">
-        <div class="stat">
-          <div style="font-size:1.6rem; font-weight:800;">+X</div>
-          <div>دستیار فعال</div>
-        </div>
-        <div class="stat" style="background:#1d4ed8;">
-          <div style="font-size:1.6rem; font-weight:800;">+X</div>
-          <div>ساعت صرفه‌جویی ماهانه</div>
+        <div class="visual" aria-label="Dashboard preview card">
+          <img class="hero-image" src="https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?auto=format&fit=crop&w=1400&q=80" alt="Vacation rental home" />
+          <div class="widget top">
+            <strong>Dashboard</strong>
+            <div class="line sm"></div>
+            <div class="chart"></div>
+          </div>
+          <div class="widget bottom">
+            <strong>Availability</strong>
+            <div class="line lg"></div>
+            <div class="line md"></div>
+            <div class="line sm"></div>
+            <div class="line lg"></div>
+          </div>
         </div>
       </div>
-      <p class="lead">«بعد از استفاده از SETai، پاسخ‌گویی ما ۳ برابر سریع‌تر شد.»</p>
-    </section>
-
-    <section class="section" id="how">
-      <h2>چطور کار می‌کند؟</h2>
-      <ol class="timeline">
-        <li><span class="step">1</span> <div><strong>جلسه شناخت</strong> — بررسی نیاز و سناریوها</div></li>
-        <li><span class="step">2</span> <div><strong>طراحی و آموزش دستیار</strong> — بر اساس داده و اهداف شما</div></li>
-        <li><span class="step">3</span> <div><strong>استقرار و پشتیبانی</strong> — بهبود مستمر بر اساس داده واقعی</div></li>
-      </ol>
     </section>
 
     <section class="section" id="about">
-      <h2>درباره SETai</h2>
-      <p class="lead">ما تیمی از متخصصان هوش مصنوعی و محصول هستیم که دستیارهای اختصاصی و امن برای صنایع مختلف طراحی می‌کنیم تا تجربه مشتری، بهره‌وری داخلی و تصمیم‌گیری داده‌محور را تسریع کنیم.</p>
-    </section>
-
-    <section class="section" id="assistants">
-      <h2>معرفی دستیارها</h2>
-      <div class="cards-inline">
-        <article class="card">
-          <h3>دستیار فروش</h3>
-          <p class="muted">پاسخ‌گویی به سوالات خرید و پیگیری لیدها.</p>
-          <a class="btn-secondary" href="#booking">دیدن دمو</a>
-        </article>
-        <article class="card">
-          <h3>دستیار پشتیبانی</h3>
-          <p class="muted">حل سریع درخواست‌ها و هدایت کاربران.</p>
-          <a class="btn-secondary" href="#booking">دیدن دمو</a>
-        </article>
-        <article class="card">
-          <h3>دستیار داخلی سازمان</h3>
-          <p class="muted">پاسخ به سوالات داخلی و انجام کارهای تکراری تیم.</p>
-          <a class="btn-secondary" href="#booking">دیدن دمو</a>
-        </article>
+      <div class="glass">
+        <h2>Candidate Name Check</h2>
+        <p class="name-check">Correct name is: <strong>Khabat Setaei</strong> (updated).</p>
       </div>
     </section>
 
-    <section class="section faq" id="faq">
-      <h2>سوالات پرتکرار</h2>
-      <details><summary>آیا دستیارها اختصاصی‌سازی می‌شوند؟</summary><p class="muted">بله، هر دستیار با داده‌ها و رویه‌های شما تنظیم می‌شود.</p></details>
-      <details><summary>داده‌های ما کجا ذخیره می‌شود؟</summary><p class="muted">زیرساخت امن با کنترل دسترسی و امکان استقرار اختصاصی.</p></details>
-      <details><summary>زمان راه‌اندازی چقدر است؟</summary><p class="muted">معمولاً طی ۱ تا ۲ هفته بسته به سناریو.</p></details>
-      <details><summary>هزینه چگونه محاسبه می‌شود؟</summary><p class="muted">بر اساس تعداد دستیار، حجم تعاملات و خدمات پشتیبانی.</p></details>
-      <details><summary>آیا امکان اتصال به سیستم‌های فعلی وجود دارد؟</summary><p class="muted">بله، با API و کانکتورهای آماده به وب‌سایت، واتساپ، CRM و ابزارهای داخلی متصل می‌شود.</p></details>
-    </section>
-
-    <section class="section" id="booking">
-      <div class="cta-block">
-        <div>
-          <h2 style="margin:0 0 10px;">برای ساخت دستیار هوش مصنوعی خودتان آماده‌اید؟</h2>
-          <p class="cta-helper">جلسه ۳۰ دقیقه‌ای · رایگان</p>
-        </div>
-        <form class="form">
-          <label for="name">نام</label>
-          <input id="name" type="text" placeholder="نام و نام خانوادگی" />
-          <label for="contact">ایمیل یا موبایل</label>
-          <input id="contact" type="text" placeholder="contact@example.com" />
-          <label for="time">انتخاب زمان</label>
-          <select id="time">
-            <option>این هفته</option>
-            <option>هفته آینده</option>
-            <option>هماهنگی تلفنی</option>
-          </select>
-          <div style="margin-top:12px;">
-            <button class="btn" type="button">رزرو وقت مشاوره</button>
-          </div>
-        </form>
+    <section class="section" id="contact">
+      <div class="glass">
+        <h2>Contact</h2>
+        <p class="name-check">PhD Research Proposal · Multi-Agent AI Systems · Khabat Setaei</p>
+        <a class="btn primary" href="mailto:khabat@setai.no?subject=PhD%20Research%20Proposal">Contact by Email</a>
       </div>
     </section>
-
-    <section class="cta-sticky">
-      <a class="btn" href="#booking">رزرو وقت</a>
-    </section>
-
-    <footer class="footer" id="contact">
-      <div class="footer-links">
-        <a href="#assistants">دستیارها</a>
-        <a href="#use-cases">کاربردها</a>
-        <a href="#about">درباره</a>
-        <a href="#contact">تماس</a>
-      </div>
-      <div style="margin-top:8px;">© SETai — تمام حقوق محفوظ است.</div>
-    </footer>
   </main>
+
+  <script>
+    // Disable right-click context menu
+    document.addEventListener('contextmenu', function (event) {
+      event.preventDefault();
+    });
+  </script>
 </body>
 </html>
