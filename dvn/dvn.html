@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dolce Vita-Norge | DVN</title>
+  <title>Dolce Vita-Norge | Veiledning, støtte og menneskerettigheter</title>
   <style>
     :root {
       --blue: #0b2f5d;
@@ -66,17 +66,6 @@
 
     .nav-links a { color: var(--text); text-decoration: none; font-weight: 600; }
 
-    .lang-switch { display: flex; align-items: center; gap: 8px; }
-
-    .flag-btn {
-      border: 1px solid #c5d1e0;
-      background: #fff;
-      border-radius: 999px;
-      padding: 4px 10px;
-      cursor: pointer;
-      font-size: 15px;
-    }
-
     .cta {
       background: linear-gradient(135deg, #0f60b6, #1b78d1);
       color: #fff;
@@ -132,15 +121,15 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      gap: 14px;
     }
 
     .tony {
       width: 100%;
-      max-height: 330px;
+      max-height: 280px;
       object-fit: cover;
       border-radius: 12px;
       border: 2px solid rgba(255,255,255,.3);
-      margin-bottom: 14px;
     }
 
     .section { padding: 44px 0; }
@@ -163,14 +152,45 @@
       box-shadow: 0 8px 18px rgba(16, 39, 74, 0.08);
     }
 
-    .card img {
-      width: 44px;
-      height: 44px;
-      object-fit: contain;
-      background: #f3f7fc;
-      border-radius: 10px;
-      padding: 6px;
-      margin-bottom: 10px;
+    .card .icon { font-size: 28px; margin: 0 0 8px; }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .stat {
+      background: #fff;
+      border-radius: 14px;
+      padding: 14px;
+      border: 1px solid #dde7f3;
+      text-align: center;
+      box-shadow: 0 8px 18px rgba(16, 39, 74, 0.08);
+    }
+
+    .stat strong { display: block; font-size: 24px; color: var(--blue); }
+    .stat span { color: var(--muted); font-size: 14px; }
+
+    .process {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 20px;
+    }
+
+    .step-number {
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      background: #e8f0fb;
+      color: var(--blue);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      margin-bottom: 8px;
     }
 
     .highlight {
@@ -189,7 +209,7 @@
       display: grid;
       grid-template-columns: .9fr 1.1fr;
       gap: 18px;
-      margin-top: 28px;
+      margin-top: 20px;
     }
 
     .contact-card,
@@ -212,13 +232,14 @@
 
     .facebook-link img { width: 22px; height: 22px; }
 
-    input, textarea {
+    input, textarea, select {
       width: 100%;
       border: 1px solid #cad9eb;
       border-radius: 10px;
       padding: 12px;
       margin: 8px 0;
       font: inherit;
+      background: #fff;
     }
 
     button {
@@ -240,18 +261,9 @@
       font-size: 14px;
     }
 
-    [data-lang="en"] { display: none; }
-
-    body.lang-en [data-lang="no"] { display: none; }
-    body.lang-en [data-lang="en"] { display: inline; }
-    body.lang-en .block-en { display: block; }
-    body.lang-en .block-no { display: none; }
-
-    .block-en { display: none; }
-
     @media (max-width: 920px) {
-      .hero, .contact-grid { grid-template-columns: 1fr; }
-      .cards { grid-template-columns: 1fr; }
+      .hero, .contact-grid, .cards, .process, .stats { grid-template-columns: 1fr; }
+      .highlight { flex-direction: column; align-items: flex-start; }
     }
   </style>
 </head>
@@ -264,13 +276,11 @@
       </a>
 
       <div class="nav-links">
-        <a href="#hjelp"><span data-lang="no">Hva vi gjør</span><span data-lang="en">What we do</span></a>
-        <a href="#kontakt"><span data-lang="no">Kontakt</span><span data-lang="en">Contact</span></a>
-        <div class="lang-switch">
-          <button class="flag-btn" id="to-en" aria-label="Switch to English">🇬🇧</button>
-          <button class="flag-btn" id="to-no" aria-label="Bytt til norsk">🇳🇴</button>
-        </div>
-        <a href="#kontakt" class="cta"><span data-lang="no">Få veiledning</span><span data-lang="en">Get guidance</span></a>
+        <a href="#hjelp">Hva vi gjør</a>
+        <a href="#om-oss">Om oss</a>
+        <a href="#slik-hjelper-vi">Slik hjelper vi</a>
+        <a href="#kontakt">Kontakt</a>
+        <a href="#kontakt" class="cta">Få veiledning</a>
       </div>
     </div>
   </header>
@@ -278,108 +288,153 @@
   <main class="container">
     <section class="hero" id="intro">
       <div>
-        <div class="badge">Rettferdighet • Livsstilling • Menneskerettigheter</div>
-        <h1 class="block-no">Støtte og veiledning når livet blir vanskelig.</h1>
-        <h1 class="block-en">Support and guidance when life gets difficult.</h1>
-        <p class="block-no">Dolce Vita-Norge hjelper enkeltpersoner med familierett, NAV, UDI, politi, barnevern og private utfordringer.</p>
-        <p class="block-en">Dolce Vita-Norge supports people with family matters, NAV, UDI, police, child welfare, and private case challenges.</p>
+        <div class="badge">Rettferdighet · Likestilling · Menneskerettigheter</div>
+        <h1>Støtte og veiledning når livet blir vanskelig.</h1>
+        <p>Dolce Vita-Norge hjelper enkeltpersoner og familier med å forstå rettigheter, offentlige brev og krevende prosesser i møte med NAV, UDI, politi, barnevern og private utfordringer.</p>
         <div class="hero-buttons">
-          <a class="btn btn-gold" href="tel:+4792522052"><span data-lang="no">Ring oss</span><span data-lang="en">Call us</span></a>
-          <a class="btn btn-outline" href="mailto:dolce-vitapost1@hotmail.com"><span data-lang="no">Send e-post</span><span data-lang="en">Send email</span></a>
+          <a class="btn btn-gold" href="tel:+4792522052">Ring oss</a>
+          <a class="btn btn-outline" href="mailto:dolce-vitapost1@hotmail.com">Send e-post</a>
         </div>
       </div>
 
       <aside class="intro-card">
-        <img src="/dvn/tony.jpg" alt="Tony" class="tony" />
+        <p style="margin:0; color:#dbe8fb;">Org.nr. 927800853 · Oslo, Norge · Flerspråklig støtte</p>
+        <img src="/dvn/logo.jpg" alt="Dolce Vita-Norge human rights logo" class="tony" />
         <div>
-          <strong><span data-lang="no">Kontakt direkte</span><span data-lang="en">Direct contact</span></strong>
+          <strong>Kontakt direkte</strong>
           <p style="margin:8px 0 0;">+47 925 22 052<br/>dolce-vitapost1@hotmail.com</p>
         </div>
       </aside>
     </section>
 
     <section class="section" id="hjelp">
-      <h2 class="section-title block-no">Praktisk støtte i møte med vanskelige systemer.</h2>
-      <h2 class="section-title block-en">Practical support when facing complex systems.</h2>
-      <p class="section-subtitle block-no">Vi hjelper deg å forstå situasjonen, lese brev og finne riktig vei videre.</p>
-      <p class="section-subtitle block-en">We help you understand your situation, review letters, and find your next steps.</p>
+      <p class="section-subtitle" style="margin-bottom:4px;">Hva vi hjelper med</p>
+      <h2 class="section-title">Praktisk støtte i møte med vanskelige systemer.</h2>
+      <p class="section-subtitle">Vi hjelper mennesker med å forstå situasjonen, samle informasjon, lese brev og finne riktig vei videre.</p>
 
       <div class="cards">
         <article class="card">
-          <img src="https://www.nav.no/_next/image?url=%2Fimages%2Fnav-logo.svg&w=96&q=75" alt="NAV logo" />
+          <p class="icon">🏛️</p>
           <h3>NAV</h3>
-          <p class="block-no">Veiledning i ytelser, klager og saksbehandling.</p>
-          <p class="block-en">Guidance with benefits, appeals, and case handling.</p>
+          <p>Veiledning ved sosiale ytelser, saksbehandling, klager og opplevelse av urettferdig behandling.</p>
         </article>
         <article class="card">
-          <img src="https://www.politiet.no/globalassets/01-logos/logo.svg" alt="Politiet logo" />
-          <h3><span data-lang="no">Politi</span><span data-lang="en">Police</span></h3>
-          <p class="block-no">Støtte når du har spørsmål om anmeldelser eller avhør.</p>
-          <p class="block-en">Support when you need help with police reports or questioning.</p>
+          <p class="icon">⚖️</p>
+          <h3>Politi</h3>
+          <p>Råd og støtte for personer som opplever juridiske eller personlige utfordringer i møte med politiet.</p>
         </article>
         <article class="card">
-          <img src="https://www.udi.no/globalassets/global/ikoner/udi-logo.svg" alt="UDI logo" />
+          <p class="icon">🌍</p>
           <h3>UDI</h3>
-          <p class="block-no">Hjelp i innvandrings- og oppholdssaker.</p>
-          <p class="block-en">Help with immigration and residency matters.</p>
+          <p>Støtte til innvandrere og flyktninger i saker om opphold, asyl, familieinnvandring og dokumentasjon.</p>
+        </article>
+        <article class="card">
+          <p class="icon">👨‍👩‍👧‍👦</p>
+          <h3>Barnevern</h3>
+          <p>Rådgivning til foreldre og familier i konflikt med barnevernet, med fokus på rettigheter og forståelse.</p>
+        </article>
+        <article class="card">
+          <p class="icon">💔</p>
+          <h3>Samlivsbrudd</h3>
+          <p>Praktisk og emosjonell støtte rundt skilsmisse, økonomi, barnefordeling og videre prosess.</p>
+        </article>
+        <article class="card">
+          <p class="icon">✉️</p>
+          <h3>Brev og språk</h3>
+          <p>Hjelp til å forstå norsk språk, offentlige brev, skjemaer og viktige meldinger fra instanser.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="om-oss">
+      <p class="section-subtitle" style="margin-bottom:4px;">Om Dolce Vita-Norge</p>
+      <h2 class="section-title">En organisasjon for mennesker som trenger noen på sin side.</h2>
+      <p class="section-subtitle">Dolce Vita-Norge jobber for at internasjonale lover, regler og menneskerettigheter skal bidra til fattigdomsbekjempelse, rettferdighet og bedre forståelse av norske prosesser.</p>
+      <p class="section-subtitle">Organisasjonen støtter både innvandrere og norske statsborgere med utenlandsk opprinnelse når språk, regelverk eller offentlige brev skaper problemer.</p>
+      <p class="section-subtitle"><strong>Merk:</strong> Vi tilbyr veiledning og støtte. Ved behov for juridisk representasjon anbefales autorisert advokat.</p>
+
+      <div class="stats">
+        <div class="stat"><strong>6+</strong><span>områder vi bistår med</span></div>
+        <div class="stat"><strong>927800853</strong><span>organisasjonsnummer</span></div>
+        <div class="stat"><strong>Oslo</strong><span>basert i Norge</span></div>
+        <div class="stat"><strong>Human Rights</strong><span>rettigheter i fokus</span></div>
+      </div>
+    </section>
+
+    <section class="section" id="slik-hjelper-vi">
+      <p class="section-subtitle" style="margin-bottom:4px;">Slik hjelper vi</p>
+      <h2 class="section-title">En trygg og ryddig prosess fra første kontakt.</h2>
+
+      <div class="process">
+        <article class="card">
+          <span class="step-number">1</span>
+          <h3>Fortell kort om saken</h3>
+          <p>Du kontakter oss med en kort forklaring av hva som har skjedd og hvilken instans saken gjelder.</p>
+        </article>
+        <article class="card">
+          <span class="step-number">2</span>
+          <h3>Vi går gjennom dokumenter og situasjon</h3>
+          <p>Vi hjelper med å forstå brev, krav, tidsfrister, rettigheter og mulige neste steg.</p>
+        </article>
+        <article class="card">
+          <span class="step-number">3</span>
+          <h3>Du får veiledning videre</h3>
+          <p>Vi gir praktisk støtte, språkforståelse og råd om hvordan du kan gå videre på en ryddig måte.</p>
         </article>
       </div>
 
       <div class="highlight">
         <div>
-          <h3 class="block-no" style="margin:0 0 8px;">Trenger du hjelp med NAV, UDI, politi eller offentlige brev?</h3>
-          <h3 class="block-en" style="margin:0 0 8px;">Need help with NAV, UDI, police or public letters?</h3>
-          <p class="block-no" style="margin:0; color:#dbe8fb;">Ta kontakt for en trygg og tydelig samtale om saken din.</p>
-          <p class="block-en" style="margin:0; color:#dbe8fb;">Contact us for a clear and supportive conversation about your case.</p>
+          <h3 style="margin:0 0 8px;">Trenger du hjelp med NAV, UDI, politi, barnevern eller offentlige brev?</h3>
+          <p style="margin:0; color:#dbe8fb;">Ta kontakt for en uforpliktende samtale. Forklar kort hva saken gjelder, så hjelper vi deg med å forstå prosessen videre.</p>
         </div>
-        <a href="#kontakt" class="btn btn-gold"><span data-lang="no">Kontakt oss</span><span data-lang="en">Contact us</span></a>
+        <a href="#kontakt" class="btn btn-gold">Kontakt oss</a>
       </div>
     </section>
 
     <section class="section" id="kontakt">
+      <p class="section-subtitle" style="margin-bottom:4px;">Kontakt</p>
+      <h2 class="section-title">Snakk med oss</h2>
+
       <div class="contact-grid">
         <div class="contact-card">
-          <h3 class="block-no">Snakk med oss</h3>
-          <h3 class="block-en">Talk to us</h3>
           <p><strong>Telefon:</strong><br/>+47 925 22 052</p>
           <p><strong>E-post:</strong><br/>dolce-vitapost1@hotmail.com</p>
           <p><strong>Adresse:</strong><br/>Alundamveien 56, 0957 Oslo</p>
           <p>
             <a class="facebook-link" href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">
               <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook logo"/>
-              <span class="block-no">Besøk Facebook-gruppen</span>
-              <span class="block-en">Visit Facebook group</span>
+              <span>Besøk Facebook-gruppen</span>
             </a>
           </p>
         </div>
         <div class="form-card">
-          <h3 class="block-no">Send en kort melding</h3>
-          <h3 class="block-en">Send a short message</h3>
-          <input type="text" placeholder="Navn / Name" />
-          <input type="email" placeholder="E-post / Email" />
-          <input type="tel" placeholder="Telefon / Phone" />
-          <textarea rows="5" placeholder="Skriv kort hva du trenger hjelp med / Briefly describe your case"></textarea>
-          <button type="button"><span data-lang="no">Send melding</span><span data-lang="en">Send message</span></button>
+          <h3>Send en kort melding</h3>
+          <input type="text" placeholder="Navn" />
+          <input type="email" placeholder="E-post" />
+          <input type="tel" placeholder="Telefon" />
+          <select>
+            <option>Hva gjelder saken?</option>
+            <option>NAV</option>
+            <option>UDI</option>
+            <option>Politi</option>
+            <option>Barnevern</option>
+            <option>Samlivsbrudd</option>
+            <option>Annet</option>
+          </select>
+          <textarea rows="5" placeholder="Skriv kort hva du trenger hjelp med"></textarea>
+          <button type="button">Send melding</button>
         </div>
       </div>
     </section>
   </main>
 
   <footer>
-    <div class="container">© 2026 Dolce Vita-Norge. <span data-lang="no">Alle rettigheter reservert.</span><span data-lang="en">All rights reserved.</span></div>
+    <div class="container">
+      <div>Dolce Vita-Norge</div>
+      <div>Org.nr. 927800853 · Human Rights · Oslo, Norge</div>
+      <div>© 2026 Dolce Vita-Norge. Alle rettigheter reservert.</div>
+    </div>
   </footer>
-
-  <script>
-    const toEn = document.getElementById('to-en');
-    const toNo = document.getElementById('to-no');
-    toEn.addEventListener('click', () => {
-      document.body.classList.add('lang-en');
-      document.documentElement.lang = 'en';
-    });
-    toNo.addEventListener('click', () => {
-      document.body.classList.remove('lang-en');
-      document.documentElement.lang = 'no';
-    });
-  </script>
 </body>
 </html>
