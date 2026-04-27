@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dolce Vita-Norge | Veiledning, støtte og menneskerettigheter</title>
+  <meta name="description" content="Dolce Vita-Norge støtter enkeltpersoner og familier i møte med NAV, UDI, politi, barnevern og andre krevende situasjoner." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --blue:#0b7fbd;
+      --blue-dark:#075982;
+      --red:#d71920;
+      --ink:#102033;
+      --muted:#64748b;
+      --line:#e5edf5;
+      --soft:#f4f9fc;
+      --white:#ffffff;
+      --shadow:0 24px 70px rgba(15, 40, 70, .12);
+      --radius:28px;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      color:var(--ink);
+      background:#fff;
+      line-height:1.6;
+    }
+    a{text-decoration:none;color:inherit}
+    img{max-width:100%;display:block}
+
+    .nav{
+      position:sticky;top:0;z-index:50;
+      background:rgba(255,255,255,.86);
+      backdrop-filter:blur(18px);
+      border-bottom:1px solid rgba(229,237,245,.8);
+    }
+    .nav-inner{
+      max-width:1180px;margin:auto;
+      padding:14px 22px;
+      display:flex;align-items:center;justify-content:space-between;gap:20px;
+    }
+    .brand{display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:-.04em;font-size:20px}
+    .brand-logo{
+      width:50px;height:50px;border-radius:50%;
+      object-fit:cover;border:3px solid var(--blue);
+      background:#fff;
+    }
+    .menu{display:flex;gap:24px;align-items:center;color:#516072;font-weight:600;font-size:14px}
+    .menu a:hover{color:var(--blue)}
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:8px;
+      padding:13px 20px;border-radius:999px;
+      font-weight:800;border:1px solid transparent;
+      transition:.2s ease;cursor:pointer;
+    }
+    .btn-primary{background:var(--blue);color:white;box-shadow:0 12px 30px rgba(11,127,189,.24)}
+    .btn-primary:hover{background:var(--blue-dark);transform:translateY(-1px)}
+    .btn-soft{background:white;color:var(--blue);border-color:var(--line)}
+
+    .hero{
+      position:relative;overflow:hidden;
+      background:
+        radial-gradient(circle at 12% 12%, rgba(11,127,189,.16), transparent 30%),
+        radial-gradient(circle at 88% 20%, rgba(215,25,32,.12), transparent 25%),
+        linear-gradient(180deg,#f6fbff 0%,#ffffff 72%);
+    }
+    .hero:before{
+      content:"";position:absolute;inset:auto -10% -180px -10%;height:360px;
+      background:linear-gradient(90deg,rgba(11,127,189,.08),rgba(215,25,32,.05));
+      transform:skewY(-5deg);
+    }
+    .hero-inner{
+      max-width:1180px;margin:auto;padding:84px 22px 70px;
+      display:grid;grid-template-columns:1.08fr .92fr;gap:46px;align-items:center;position:relative;
+    }
+    .eyebrow{
+      display:inline-flex;align-items:center;gap:8px;
+      background:white;border:1px solid var(--line);border-radius:999px;
+      padding:8px 13px;color:var(--blue-dark);font-weight:800;font-size:13px;
+      box-shadow:0 12px 34px rgba(15,40,70,.07);
+    }
+    .dot{width:8px;height:8px;border-radius:50%;background:var(--red)}
+    h1{
+      margin-top:22px;font-size:clamp(38px,6vw,72px);line-height:.98;letter-spacing:-.07em;
+    }
+    .lead{margin-top:24px;font-size:20px;color:#475569;max-width:680px}
+    .hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:34px}
+    .trust-row{display:flex;gap:14px;flex-wrap:wrap;margin-top:30px;color:#64748b;font-weight:700;font-size:14px}
+    .trust-pill{background:#fff;border:1px solid var(--line);border-radius:999px;padding:9px 13px}
+
+    .hero-card{
+      background:rgba(255,255,255,.82);border:1px solid var(--line);
+      border-radius:36px;padding:26px;box-shadow:var(--shadow);
+      backdrop-filter:blur(18px);
+    }
+    .logo-frame{
+      background:white;border-radius:32px;padding:24px;
+      border:1px solid var(--line);
+    }
+    .logo-frame img{border-radius:24px}
+    .quick-contact{
+      margin-top:18px;display:grid;gap:10px;
+      background:#0e2236;color:white;border-radius:24px;padding:20px;
+    }
+    .quick-contact span{color:#b8d9ec;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.08em}
+    .quick-contact strong{font-size:18px}
+
+    section{padding:82px 22px}
+    .container{max-width:1180px;margin:auto}
+    .section-head{max-width:760px;margin-bottom:34px}
+    .kicker{color:var(--blue);font-weight:900;text-transform:uppercase;letter-spacing:.12em;font-size:13px;margin-bottom:12px}
+    h2{font-size:clamp(30px,4vw,48px);line-height:1.08;letter-spacing:-.05em;margin-bottom:16px}
+    .section-head p{color:var(--muted);font-size:18px}
+
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .service-card{
+      background:white;border:1px solid var(--line);border-radius:var(--radius);padding:26px;
+      box-shadow:0 16px 46px rgba(15,40,70,.06);
+      transition:.2s ease;
+    }
+    .service-card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+    .icon{
+      width:48px;height:48px;border-radius:16px;
+      display:grid;place-items:center;
+      background:linear-gradient(135deg,rgba(11,127,189,.12),rgba(215,25,32,.08));
+      color:var(--blue);font-size:24px;margin-bottom:18px;
+    }
+    .service-card h3{font-size:21px;margin-bottom:8px;letter-spacing:-.03em}
+    .service-card p{color:var(--muted)}
+
+    .about{background:var(--soft)}
+    .about-grid{display:grid;grid-template-columns:.95fr 1.05fr;gap:24px;align-items:stretch}
+    .about-panel{background:white;border:1px solid var(--line);border-radius:32px;padding:32px;box-shadow:0 18px 55px rgba(15,40,70,.06)}
+    .about-panel p{color:#526173;margin-bottom:16px}
+    .stats{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+    .stat{background:#0e2236;color:white;border-radius:26px;padding:24px}
+    .stat b{font-size:34px;display:block;letter-spacing:-.05em}
+    .stat span{color:#b8d9ec;font-weight:700}
+
+    .process-list{display:grid;gap:14px}
+    .step{display:flex;gap:16px;background:white;border:1px solid var(--line);border-radius:24px;padding:20px;align-items:flex-start}
+    .step-no{flex:0 0 38px;width:38px;height:38px;border-radius:50%;background:var(--blue);color:#fff;display:grid;place-items:center;font-weight:900}
+    .step p{color:var(--muted)}
+
+    .notice{
+      background:linear-gradient(135deg,#0e2236,#123a57);color:white;border-radius:34px;padding:34px;
+      display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center;
+    }
+    .notice p{color:#c8d9e8;max-width:760px}
+
+    .contact-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:22px}
+    .contact-card,.form-card{background:white;border:1px solid var(--line);border-radius:32px;padding:30px;box-shadow:0 18px 55px rgba(15,40,70,.07)}
+    .contact-item{padding:15px 0;border-bottom:1px solid var(--line)}
+    .contact-item:last-child{border-bottom:0}
+    .contact-item span{display:block;color:var(--muted);font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.08em}
+    .contact-item strong{font-size:18px}
+    form{display:grid;gap:14px}
+    input,textarea,select{
+      width:100%;padding:15px 16px;border:1px solid var(--line);border-radius:16px;
+      font:inherit;background:#f8fbfd;color:var(--ink);
+    }
+    textarea{min-height:132px;resize:vertical}
+
+    footer{background:#071827;color:white;padding:42px 22px}
+    .footer-inner{max-width:1180px;margin:auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:center}
+    footer p{color:#b8c7d6}
+
+    @media(max-width:900px){
+      .menu{display:none}
+      .hero-inner,.about-grid,.contact-grid{grid-template-columns:1fr}
+      .grid-3{grid-template-columns:1fr}
+      .notice{grid-template-columns:1fr}
+      section{padding:62px 18px}
+      .hero-inner{padding:56px 18px}
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="#top" class="brand">
+        <img class="brand-logo" src="/mnt/data/FB_IMG_1777281632679.jpg" alt="Dolce Vita-Norge logo" />
+        <span>Dolce Vita-Norge</span>
+      </a>
+      <div class="menu">
+        <a href="#hjelp">Hva vi gjør</a>
+        <a href="#om">Om oss</a>
+        <a href="#prosess">Slik hjelper vi</a>
+        <a href="#kontakt">Kontakt</a>
+      </div>
+      <a class="btn btn-primary" href="#kontakt">Få veiledning</a>
+    </div>
+  </nav>
+
+  <header class="hero" id="top">
+    <div class="hero-inner">
+      <div>
+        <div class="eyebrow"><span class="dot"></span> Rettferdighet · Likestilling · Menneskerettigheter</div>
+        <h1>Støtte og veiledning når livet blir vanskelig.</h1>
+        <p class="lead">Dolce Vita-Norge hjelper enkeltpersoner og familier med å forstå rettigheter, offentlige brev og krevende prosesser i møte med NAV, UDI, politi, barnevern og private utfordringer.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="tel:+4792522052">Ring oss</a>
+          <a class="btn btn-soft" href="mailto:dolce-vitapost1@hotmail.com">Send e-post</a>
+        </div>
+        <div class="trust-row">
+          <span class="trust-pill">Org.nr. 927800853</span>
+          <span class="trust-pill">Oslo, Norge</span>
+          <span class="trust-pill">Flerspråklig støtte</span>
+        </div>
+      </div>
+
+      <div class="hero-card">
+        <div class="logo-frame">
+          <img src="/mnt/data/FB_IMG_1777281632679.jpg" alt="Dolce Vita-Norge human rights logo" />
+        </div>
+        <div class="quick-contact">
+          <span>Kontakt direkte</span>
+          <strong>+47 925 22 052</strong>
+          <strong>dolce-vitapost1@hotmail.com</strong>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section id="hjelp">
+    <div class="container">
+      <div class="section-head">
+        <div class="kicker">Hva vi hjelper med</div>
+        <h2>Praktisk støtte i møte med vanskelige systemer.</h2>
+        <p>Vi hjelper mennesker med å forstå situasjonen, samle informasjon, lese brev og finne riktig vei videre.</p>
+      </div>
+      <div class="grid-3">
+        <div class="service-card"><div class="icon">🏛️</div><h3>NAV</h3><p>Veiledning ved sosiale ytelser, saksbehandling, klager og opplevelse av urettferdig behandling.</p></div>
+        <div class="service-card"><div class="icon">⚖️</div><h3>Politi</h3><p>Råd og støtte for personer som opplever juridiske eller personlige utfordringer i møte med politiet.</p></div>
+        <div class="service-card"><div class="icon">🌍</div><h3>UDI</h3><p>Støtte til innvandrere og flyktninger i saker om opphold, asyl, familieinnvandring og dokumentasjon.</p></div>
+        <div class="service-card"><div class="icon">👨‍👩‍👧</div><h3>Barnevern</h3><p>Rådgivning til foreldre og familier i konflikt med barnevernet, med fokus på rettigheter og forståelse.</p></div>
+        <div class="service-card"><div class="icon">🤝</div><h3>Samlivsbrudd</h3><p>Praktisk og emosjonell støtte rundt skilsmisse, økonomi, barnefordeling og videre prosess.</p></div>
+        <div class="service-card"><div class="icon">📄</div><h3>Brev og språk</h3><p>Hjelp til å forstå norsk språk, offentlige brev, skjemaer og viktige meldinger fra instanser.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="about" id="om">
+    <div class="container about-grid">
+      <div class="about-panel">
+        <div class="kicker">Om Dolce Vita-Norge</div>
+        <h2>En organisasjon for mennesker som trenger noen på sin side.</h2>
+        <p>Dolce Vita-Norge jobber for at internasjonale lover, regler og menneskerettigheter skal bidra til fattigdomsbekjempelse, rettferdighet og bedre forståelse av norske prosesser.</p>
+        <p>Organisasjonen støtter både innvandrere og norske statsborgere med utenlandsk opprinnelse når språk, regelverk eller offentlige brev skaper problemer.</p>
+        <p><strong>Merk:</strong> Vi tilbyr veiledning og støtte. Ved behov for juridisk representasjon anbefales autorisert advokat.</p>
+      </div>
+      <div class="stats">
+        <div class="stat"><b>6+</b><span>områder vi bistår med</span></div>
+        <div class="stat"><b>927800853</b><span>organisasjonsnummer</span></div>
+        <div class="stat"><b>Oslo</b><span>basert i Norge</span></div>
+        <div class="stat"><b>Human Rights</b><span>rettigheter i fokus</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="prosess">
+    <div class="container">
+      <div class="section-head">
+        <div class="kicker">Slik hjelper vi</div>
+        <h2>En trygg og ryddig prosess fra første kontakt.</h2>
+      </div>
+      <div class="process-list">
+        <div class="step"><div class="step-no">1</div><div><h3>Fortell kort om saken</h3><p>Du kontakter oss med en kort forklaring av hva som har skjedd og hvilken instans saken gjelder.</p></div></div>
+        <div class="step"><div class="step-no">2</div><div><h3>Vi går gjennom dokumenter og situasjon</h3><p>Vi hjelper med å forstå brev, krav, tidsfrister, rettigheter og mulige neste steg.</p></div></div>
+        <div class="step"><div class="step-no">3</div><div><h3>Du får veiledning videre</h3><p>Vi gir praktisk støtte, språkforståelse og råd om hvordan du kan gå videre på en ryddig måte.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="notice">
+        <div>
+          <h2>Trenger du hjelp med NAV, UDI, politi, barnevern eller offentlige brev?</h2>
+          <p>Ta kontakt for en uforpliktende samtale. Forklar kort hva saken gjelder, så hjelper vi deg med å forstå prosessen videre.</p>
+        </div>
+        <a class="btn btn-primary" href="#kontakt">Kontakt oss</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="kontakt">
+    <div class="container contact-grid">
+      <div class="contact-card">
+        <div class="kicker">Kontakt</div>
+        <h2>Snakk med oss</h2>
+        <div class="contact-item"><span>Telefon</span><strong><a href="tel:+4792522052">+47 925 22 052</a></strong></div>
+        <div class="contact-item"><span>E-post</span><strong><a href="mailto:dolce-vitapost1@hotmail.com">dolce-vitapost1@hotmail.com</a></strong></div>
+        <div class="contact-item"><span>Adresse</span><strong>Alundamveien 56, 0957 Oslo</strong></div>
+        <div class="contact-item"><span>Facebook</span><strong><a href="https://www.facebook.com/groups/1111149315679800" target="_blank" rel="noopener">Besøk Facebook-gruppen</a></strong></div>
+      </div>
+
+      <div class="form-card">
+        <h2>Send en kort melding</h2>
+        <form action="mailto:dolce-vitapost1@hotmail.com" method="post" enctype="text/plain">
+          <input type="text" name="navn" placeholder="Navn" required>
+          <input type="email" name="epost" placeholder="E-post" required>
+          <input type="tel" name="telefon" placeholder="Telefon">
+          <select name="tema">
+            <option>Hva gjelder saken?</option>
+            <option>NAV</option>
+            <option>UDI</option>
+            <option>Politi</option>
+            <option>Barnevern</option>
+            <option>Samlivsbrudd</option>
+            <option>Annet</option>
+          </select>
+          <textarea name="melding" placeholder="Skriv kort hva du trenger hjelp med"></textarea>
+          <button class="btn btn-primary" type="submit">Send melding</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <strong>Dolce Vita-Norge</strong>
+        <p>Org.nr. 927800853 · Human Rights · Oslo, Norge</p>
+      </div>
+      <p>© 2026 Dolce Vita-Norge. Alle rettigheter reservert.</p>
+    </div>
+  </footer>
+</body>
+</html>
