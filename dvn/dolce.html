@@ -22,6 +22,8 @@
     .menu{display:flex;gap:24px;align-items:center;color:#516072;font-weight:600;font-size:14px}
     .menu a:hover{color:var(--blue)}
     .lang-switch{display:flex;gap:8px;align-items:center}
+    .lang-switch[data-lang="no"] #toNorwegian,
+    .lang-switch[data-lang="en"] #toEnglish{display:none}
     .flag-btn{border:1px solid var(--line);background:#fff;padding:7px 10px;border-radius:999px;cursor:pointer;font-size:18px;line-height:1}
     .flag-btn.active{border-color:var(--blue);box-shadow:0 0 0 2px rgba(11,127,189,.15)}
     .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 20px;border-radius:999px;font-weight:800;border:1px solid transparent;transition:.2s ease;cursor:pointer}
@@ -147,12 +149,12 @@
         <p data-no="Vi hjelper mennesker med å forstå situasjonen, samle informasjon, lese brev og finne riktig vei videre." data-en="We help people understand their situation, collect information, read letters, and find the right way forward.">Vi hjelper mennesker med å forstå situasjonen, samle informasjon, lese brev og finne riktig vei videre.</p>
       </div>
       <div class="grid-3">
-        <div class="service-card"><div class="icon"><img src="https://www.nav.no/_next/static/media/nav-logo-hvit.9966b2f0.svg" alt="NAV logo"></div><h3>NAV</h3><p data-no="Veiledning ved sosiale ytelser, saksbehandling, klager og opplevelse av urettferdig behandling." data-en="Guidance on social benefits, case handling, appeals, and experiences of unfair treatment.">Veiledning ved sosiale ytelser, saksbehandling, klager og opplevelse av urettferdig behandling.</p></div>
-        <div class="service-card"><div class="icon"><img src="https://www.politiet.no/globalassets/01-pnp/politiet-logo.svg" alt="Politiet logo"></div><h3 data-no="Politi" data-en="Police">Politi</h3><p data-no="Råd og støtte for personer som opplever juridiske eller personlige utfordringer i møte med politiet." data-en="Advice and support for people facing legal or personal challenges when dealing with the police.">Råd og støtte for personer som opplever juridiske eller personlige utfordringer i møte med politiet.</p></div>
-        <div class="service-card"><div class="icon"><img src="https://www.udi.no/globalassets/global/logo-udi.svg" alt="UDI logo"></div><h3>UDI</h3><p data-no="Støtte til innvandrere og flyktninger i saker om opphold, asyl, familieinnvandring og dokumentasjon." data-en="Support for immigrants and refugees in residence, asylum, family immigration, and documentation cases.">Støtte til innvandrere og flyktninger i saker om opphold, asyl, familieinnvandring og dokumentasjon.</p></div>
-        <div class="service-card"><div class="icon">👨‍👩‍👧</div><h3 data-no="Barnevern" data-en="Child Welfare">Barnevern</h3><p data-no="Rådgivning til foreldre og familier i konflikt med barnevernet, med fokus på rettigheter og forståelse." data-en="Guidance for parents and families in conflict with child welfare services, with focus on rights and understanding.">Rådgivning til foreldre og familier i konflikt med barnevernet, med fokus på rettigheter og forståelse.</p></div>
-        <div class="service-card"><div class="icon">🤝</div><h3 data-no="Samlivsbrudd" data-en="Relationship breakdown">Samlivsbrudd</h3><p data-no="Praktisk og emosjonell støtte rundt skilsmisse, økonomi, barnefordeling og videre prosess." data-en="Practical and emotional support around divorce, finances, child arrangements, and next steps.">Praktisk og emosjonell støtte rundt skilsmisse, økonomi, barnefordeling og videre prosess.</p></div>
-        <div class="service-card"><div class="icon">📄</div><h3 data-no="Brev og språk" data-en="Letters and language">Brev og språk</h3><p data-no="Hjelp til å forstå norsk språk, offentlige brev, skjemaer og viktige meldinger fra instanser." data-en="Help understanding Norwegian language, public letters, forms, and important messages from authorities.">Hjelp til å forstå norsk språk, offentlige brev, skjemaer og viktige meldinger fra instanser.</p></div>
+        <div class="service-card"><div class="icon"><img src="https://images.seeklogo.com/logo-png/30/2/nav-norwegian-labour-and-welfare-logo-png_seeklogo-306701.png" alt="NAV logo"></div><h3>NAV</h3><p data-no="Veiledning ved sosiale ytelser, saksbehandling, klager og opplevelse av urettferdig behandling." data-en="Guidance on social benefits, case handling, appeals, and experiences of unfair treatment.">Veiledning ved sosiale ytelser, saksbehandling, klager og opplevelse av urettferdig behandling.</p></div>
+        <div class="service-card"><div class="icon"><img src="https://avatars.githubusercontent.com/u/121799172?s=280&v=4" alt="Politiet logo"></div><h3 data-no="Politi" data-en="Police">Politi</h3><p data-no="Råd og støtte for personer som opplever juridiske eller personlige utfordringer i møte med politiet." data-en="Advice and support for people facing legal or personal challenges when dealing with the police.">Råd og støtte for personer som opplever juridiske eller personlige utfordringer i møte med politiet.</p></div>
+        <div class="service-card"><div class="icon"><img src="https://www.udi.no/Resources/Internal/img/udi_logo.png" alt="UDI logo"></div><h3>UDI</h3><p data-no="Støtte til innvandrere og flyktninger i saker om opphold, asyl, familieinnvandring og dokumentasjon." data-en="Support for immigrants and refugees in residence, asylum, family immigration, and documentation cases.">Støtte til innvandrere og flyktninger i saker om opphold, asyl, familieinnvandring og dokumentasjon.</p></div>
+        <div class="service-card"><div class="icon"><img src="https://vestbv.no/wp-content/uploads/2024/05/Group-633038.png" alt="Barnevernet logo"></div><h3 data-no="Barnevern" data-en="Child Welfare">Barnevern</h3><p data-no="Rådgivning til foreldre og familier i konflikt med barnevernet, med fokus på rettigheter og forståelse." data-en="Guidance for parents and families in conflict with child welfare services, with focus on rights and understanding.">Rådgivning til foreldre og familier i konflikt med barnevernet, med fokus på rettigheter og forståelse.</p></div>
+        <div class="service-card"><div class="icon"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQe2biJcXgECzkhEat7sXIldwE_uPpR1Pi41w&s" alt="Samlivsbrudd icon"></div><h3 data-no="Samlivsbrudd" data-en="Relationship breakdown">Samlivsbrudd</h3><p data-no="Praktisk og emosjonell støtte rundt skilsmisse, økonomi, barnefordeling og videre prosess." data-en="Practical and emotional support around divorce, finances, child arrangements, and next steps.">Praktisk og emosjonell støtte rundt skilsmisse, økonomi, barnefordeling og videre prosess.</p></div>
+        <div class="service-card"><div class="icon"><img src="https://res.cloudinary.com/unitedprint-com-se/image/upload/c_fill,f_auto,h_250,q_auto:best/v1/master/Icon_Letterheads_DINA4_utcgtt" alt="Brev og språk icon"></div><h3 data-no="Brev og språk" data-en="Letters and language">Brev og språk</h3><p data-no="Hjelp til å forstå norsk språk, offentlige brev, skjemaer og viktige meldinger fra instanser." data-en="Help understanding Norwegian language, public letters, forms, and important messages from authorities.">Hjelp til å forstå norsk språk, offentlige brev, skjemaer og viktige meldinger fra instanser.</p></div>
       </div>
     </div>
   </section>
@@ -247,6 +249,7 @@
   <script>
     const toEnglish = document.getElementById('toEnglish');
     const toNorwegian = document.getElementById('toNorwegian');
+    const langSwitch = document.querySelector('.lang-switch');
 
     function setLanguage(lang) {
       document.documentElement.lang = lang === 'en' ? 'en' : 'no';
@@ -258,10 +261,12 @@
       });
       toEnglish.classList.toggle('active', lang === 'en');
       toNorwegian.classList.toggle('active', lang === 'no');
+      langSwitch.dataset.lang = lang;
     }
 
     toEnglish.addEventListener('click', () => setLanguage('en'));
     toNorwegian.addEventListener('click', () => setLanguage('no'));
+    setLanguage('no');
   </script>
 </body>
 </html>
