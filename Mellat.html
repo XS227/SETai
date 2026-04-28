@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Keshavarzi Secure Connection</title>
+  <title>Mellat Secure Gateway Simulation</title>
   <style>
     :root{
       --bg:#05070d;
@@ -183,6 +183,30 @@
       display:none;
     }
     .small{font-size:12px;color:#64748b;margin-top:12px}
+
+    .command-box{
+      display:none;
+      grid-template-columns:auto 1fr;
+      gap:8px;
+      align-items:center;
+      background:#020617;
+      border:1px solid var(--border);
+      border-radius:14px;
+      padding:10px 12px;
+      margin-top:10px;
+    }
+    .prompt{color:#86efac;font-size:13px;white-space:nowrap}
+    .cmd-input{
+      border:0;
+      outline:0;
+      background:transparent;
+      color:#e5e7eb;
+      font:inherit;
+      font-size:13px;
+      width:100%;
+    }
+    .cmd-input::placeholder{color:#475569}
+
     @media(max-width:900px){
       .content{min-height:auto}
       .split-inputs.account{grid-template-columns:repeat(8,minmax(0,1fr))}
@@ -208,7 +232,7 @@
   <main class="shell">
     <div class="topbar">
       <div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-      <div class="badge">SECURE CONNECTION PORTAL</div>
+      <div class="badge">SECURE BANKING GATEWAY</div>
     </div>
 
     <section class="content">
@@ -257,6 +281,10 @@
         <div class="bar" id="gatewayBarBox" style="display:none"><div class="fill" id="gatewayFill"></div></div>
         <div class="percent" id="gatewayPercent"></div>
         <div class="terminal" id="gatewayTerminal" style="display:none"></div>
+        <div class="command-box" id="commandBox">
+          <span class="prompt">operator@gateway:~$</span>
+          <input class="cmd-input" id="commandInput" autocomplete="off" spellcheck="false" placeholder="type command and press Enter" />
+        </div>
         <div class="alert" id="securityAlert">SECURITY ALERT: Disconnect this endpoint immediately. Session exposure risk increased.</div>
         <button class="btn" id="disconnectBtn" style="display:none;margin-top:12px">disconnect</button>
       </div>
@@ -431,20 +459,135 @@
       ], 650, () => setTimeout(() => show('accountScreen'), 900));
     }
 
+    function appendLine(el, html){
+      const line = document.createElement('div');
+      line.innerHTML = html;
+      el.appendChild(line);
+      el.scrollTop = el.scrollHeight;
+    }
+
+    function typeMoreLines(el, lines, delay=420, done){
+      let i = 0;
+      const timer = setInterval(() => {
+        appendLine(el, lines[i]);
+        i++;
+        if(i >= lines.length){ clearInterval(timer); done && done(); }
+      }, delay);
+    }
+
+    const portSteps = [
+      {
+        hint: 'scan port 21',
+        result: [
+          '<span class="bad">[PORT 21]</span> CLOSED &nbsp;&nbsp; FTP service unavailable',
+          '<span class="warn">[NOTE]</span> No route accepted on this service.'
+        ]
+      },
+      {
+        hint: 'scan port 22',
+        result: [
+          '<span class="warn">[PORT 22]</span> FILTERED &nbsp; SSH shielded by perimeter firewall',
+          '<span class="bad">[BLOCKED]</span> Direct shell channel rejected.'
+        ]
+      },
+      {
+        hint: 'scan port 80',
+        result: [
+          '<span class="ok">[PORT 80]</span> OPEN &nbsp;&nbsp;&nbsp;&nbsp; Web redirect service active',
+          '<span class="warn">[INFO]</span> Redirects traffic toward secure gateway.'
+        ]
+      },
+      {
+        hint: 'scan port 443',
+        result: [
+          '<span class="ok">[PORT 443]</span> OPEN &nbsp;&nbsp;&nbsp; Secure web gateway active',
+          '[ATTEMPT] Connecting via port 443...',
+          '[HANDSHAKE] Sending encrypted request envelope...',
+          '<span class="bad">[BLOCKED]</span> Firewall active. Request rejected.',
+          '<span class="bad">[DENIED]</span> Unauthorized session signature detected.'
+        ]
+      },
+      {
+        hint: 'scan port 3306',
+        result: [
+          '<span class="bad">[PORT 3306]</span> CLOSED &nbsp; Database service isolated',
+          '<span class="ok">[SAFE]</span> Core data layer not exposed externally.'
+        ]
+      },
+      {
+        hint: 'try port 8080',
+        result: [
+          '<span class="ok">[PORT 8080]</span> OPEN &nbsp;&nbsp; Internal gateway proxy detected',
+          '[RETRY] Switching to alternate route via port 8080...',
+          '[ATTEMPT] Sending secondary gateway request...',
+          '<span class="bad">[BLOCKED]</span> Firewall active. Access denied again.',
+          '<span class="warn">[SECURITY]</span> Intrusion prevention policy triggered.'
+        ]
+      },
+      {
+        hint: 'force access',
+        result: [
+          '<span class="bad">[CRITICAL]</span> Multiple unauthorized access attempts detected.',
+          '<span class="bad">[LOCKDOWN]</span> External gateway access restricted.',
+          '<span class="warn">[TRACE]</span> Source identification in progress...',
+          '<span class="bad">[DISCONNECTED]</span> Connection forcibly terminated.'
+        ],
+        final: true
+      }
+    ];
+
+    let currentPortStep = 0;
+
+    function prepareNextCommand(){
+      const input = $('commandInput');
+      const step = portSteps[currentPortStep];
+      if(!step) return;
+      input.disabled = false;
+      input.value = '';
+      input.placeholder = 'type: ' + step.hint + '  + Enter';
+      input.focus();
+    }
+
+    function runPortStep(command){
+      const terminal = $('gatewayTerminal');
+      const input = $('commandInput');
+      const step = portSteps[currentPortStep];
+      if(!step) return;
+
+      input.disabled = true;
+      appendLine(terminal, '<span class="ok">operator@gateway:~$</span> ' + (command || step.hint));
+      typeMoreLines(terminal, step.result, 520, () => {
+        currentPortStep++;
+        if(step.final){
+          $('securityAlert').textContent = 'FIREWALL ACTIVE: Unauthorized access blocked. Session terminated by security policy.';
+          $('securityAlert').style.display = 'block';
+          $('disconnectBtn').style.display = 'inline-block';
+          $('commandBox').style.display = 'none';
+        } else {
+          prepareNextCommand();
+        }
+      });
+    }
+
+    $('commandInput').addEventListener('keydown', (e) => {
+      if(e.key === 'Enter'){
+        e.preventDefault();
+        runPortStep(e.target.value.trim());
+      }
+    });
+
     $('gatewayBtn').addEventListener('click', () => {
       $('gatewayBtn').disabled = true;
       $('gatewayBarBox').style.display = 'block';
       $('gatewayTerminal').style.display = 'block';
-      $('gatewayTerminal').innerHTML = '<div>[..] Starting gateway diagnostic...</div>';
-      animateBar($('gatewayFill'), $('gatewayPercent'), 11000, () => {
-        typeLines($('gatewayTerminal'), [
-          '<span class="bad">[ERROR]</span> Gateway capacity test failed.',
-          '<span class="warn">[LIMIT]</span> Incoming large transfer is temporarily restricted.',
-          '<span class="bad">[ACTION]</span> Request manual authorization to proceed.'
-        ], 700, () => {
-          $('securityAlert').style.display = 'block';
-          $('disconnectBtn').style.display = 'inline-block';
-        });
+      $('gatewayTerminal').innerHTML = '';
+      $('commandBox').style.display = 'grid';
+      currentPortStep = 0;
+      appendLine($('gatewayTerminal'), '<span class="ok">[READY]</span> Interactive gateway diagnostic started.');
+      appendLine($('gatewayTerminal'), '<span class="warn">[INFO]</span> TCP/UDP port range: 1-65535. Sample diagnostic uses selected gateway ports only.');
+      animateBar($('gatewayFill'), $('gatewayPercent'), 2500, () => {
+        appendLine($('gatewayTerminal'), '<span class="ok">[SCAN]</span> Awaiting operator command...');
+        prepareNextCommand();
       });
     });
 
