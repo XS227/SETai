@@ -198,6 +198,14 @@
     }
     .navLinks a:hover{color:var(--color-text)}
     .navCtas{display:flex; gap:10px; align-items:center}
+    .langSelect{
+      background: rgba(13,17,27,.9);
+      color: var(--color-text);
+      border: 1px solid var(--color-border);
+      border-radius: 10px;
+      padding: 9px 10px;
+      font: inherit;
+    }
 
     .btn{
       display:inline-flex; align-items:center; justify-content:center;
@@ -638,6 +646,10 @@
         </nav>
 
         <div class="navCtas">
+          <select id="lang-switch" class="langSelect" aria-label="Velg språk">
+            <option value="no" selected>Norsk</option>
+            <option value="en">English</option>
+          </select>
           <a class="btn btnSecondary" href="#projects">Se arbeid</a>
           <a class="btn btnPrimary" href="#contact">Ta en prat</a>
         </div>
@@ -652,8 +664,8 @@
         <div class="heroGrid">
           <div>
             <div class="kicker"><span class="kickerDot"></span> Designed. Engineered. Intelligent.</div>
-            <h1>Setaei bygger presise, intelligente systemer som skalerer.</h1>
-            <p class="lead">
+            <h1 id="hero-title">Setaei bygger presise, intelligente systemer som skalerer.</h1>
+            <p class="lead" id="hero-lead">
               Vi kombinerer produktdesign og software engineering for å levere robuste løsninger – fra strategi til produksjon.
               Bytt teksten her med din faktiske “one-liner”.
             </p>
@@ -666,8 +678,8 @@
             </div>
 
             <div class="heroActions">
-              <a class="btn btnPrimary" href="#contact">Book introduksjon</a>
-              <a class="btn btnGhost" href="#services">Se tjenester</a>
+              <a class="btn btnPrimary" href="#contact">Work with SETai</a>
+              <a class="btn btnGhost" href="#services" id="services-cta">Se tjenester</a>
               <a class="btn btnSecondary" href="#projects">Referanser</a>
             </div>
 
@@ -1063,6 +1075,27 @@
 
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
+
+    const languageSelect = document.getElementById("lang-switch");
+    const heroTitle = document.getElementById("hero-title");
+    const heroLead = document.getElementById("hero-lead");
+    const servicesCta = document.getElementById("services-cta");
+
+    languageSelect.addEventListener("change", (event) => {
+      if (event.target.value === "en") {
+        document.documentElement.lang = "en";
+        heroTitle.textContent = "Setaei builds precise, intelligent systems that scale.";
+        heroLead.textContent = "We combine product design and software engineering to deliver robust solutions — from strategy to production. Replace this text with your actual one-liner.";
+        servicesCta.textContent = "Explore services";
+        languageSelect.setAttribute("aria-label", "Choose language");
+      } else {
+        document.documentElement.lang = "no";
+        heroTitle.textContent = "Setaei bygger presise, intelligente systemer som skalerer.";
+        heroLead.textContent = "Vi kombinerer produktdesign og software engineering for å levere robuste løsninger – fra strategi til produksjon. Bytt teksten her med din faktiske “one-liner”.";
+        servicesCta.textContent = "Se tjenester";
+        languageSelect.setAttribute("aria-label", "Velg språk");
+      }
+    });
   </script>
 </body>
 </html>
