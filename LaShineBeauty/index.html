@@ -1,199 +1,213 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>La Shine Beauty | Shine With Confidence</title>
-  <meta name="description" content="La Shine Beauty in Mahmutlar, Alanya offers premium skincare, laser hair removal, nail studio, permanent makeup, body slimming and manicure-pedicure with professional care." />
-  <link rel="icon" type="image/png" href="Lashine_Logo.png" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <style>
-    :root{--pink:#e56c95;--rose:#d95486;--blush:#ffeef3;--rose-gold:#c89286;--text:#432e35;--muted:#785f67;--cream:#fffaf8;--shadow:0 16px 40px rgba(201,122,149,.16);--radius:22px}
-    *{box-sizing:border-box} body{margin:0;font-family:Inter,sans-serif;color:var(--text);background:linear-gradient(180deg,#fff,#fff7fa 45%,#fff)}
-    h1,h2,h3,h4{font-family:"Playfair Display",serif;margin:0 0 10px} a{text-decoration:none;color:inherit} img{max-width:100%;display:block}
-    .container{width:min(1180px,92vw);margin:auto}
-    .top-contact{background:#fceaf0;color:#7c5d67;font-size:13px;border-bottom:1px solid #f3d8e2}
-    .top-contact .container{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:9px 0}
-    .top-contact a{color:#b34773;font-weight:600}
-    header{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.88);backdrop-filter:blur(12px);border-bottom:1px solid #f4dce5}
-    .nav{display:flex;align-items:center;justify-content:space-between;padding:12px 0;gap:16px}
-    .logo img{height:62px;width:auto;object-fit:contain}
-    .menu{display:flex;gap:28px;font-weight:600;color:#5f444d}
-    .menu a:hover{color:var(--rose)}
-    .cta{background:linear-gradient(135deg,var(--pink),var(--rose));padding:12px 18px;border-radius:999px;color:#fff;font-weight:700;box-shadow:var(--shadow);display:inline-flex;align-items:center;gap:8px}
-    .menu-toggle{display:none;background:#fff;border:1px solid #f1cddd;border-radius:10px;padding:7px 10px;font-size:20px}
+import React from "react";
+import { motion } from "framer-motion";
+import { Calendar, MapPin, Phone, Instagram, Sparkles, Heart, ShieldCheck, Gem, Users, Star, ArrowRight, Menu } from "lucide-react";
 
-    .hero{padding:62px 0;background:radial-gradient(circle at 75% 8%,#ffdbe8 0,#fff 40%),linear-gradient(135deg,#fff,#fff2f7)}
-    .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:38px;align-items:center}
-    .eyebrow{color:var(--rose);font-weight:700;letter-spacing:.12em;font-size:12px;text-transform:uppercase}
-    h1{font-size:clamp(42px,7vw,84px);line-height:.95}
-    .hero p{font-size:18px;line-height:1.8;color:var(--muted);max-width:620px}
-    .hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:24px}
-    .ghost{background:#fff;color:var(--rose);border:1px solid #f2cddd;box-shadow:none}
-    .hero-image{border-radius:34px;overflow:hidden;box-shadow:var(--shadow);position:relative}
-    .hero-image img{height:100%;min-height:500px;object-fit:cover}
-    .hero-badge{position:absolute;left:18px;bottom:18px;background:rgba(255,255,255,.9);padding:12px 16px;border-radius:16px;font-weight:600;color:#66424e}
+const services = [
+  {
+    title: "Skincare",
+    desc: "Deep cleansing, hydration, acne treatment and anti-aging care.",
+    image: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=900&q=80",
+  },
+  {
+    title: "Laser Hair Removal",
+    desc: "Safe, effective and long-lasting smooth skin treatments.",
+    image: "https://images.unsplash.com/photo-1620331311520-246422fd82f9?auto=format&fit=crop&w=900&q=80",
+  },
+  {
+    title: "Nail Studio",
+    desc: "Manicure, pedicure, gel, nail art and elegant finishing.",
+    image: "https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&w=900&q=80",
+  },
+  {
+    title: "Permanent Makeup",
+    desc: "Microblading, powder brows, lip blush and eyeliner.",
+    image: "https://images.unsplash.com/photo-1589710751893-f9a6770ad71b?auto=format&fit=crop&w=900&q=80",
+  },
+  {
+    title: "Body Care",
+    desc: "Massage, slimming, lifting, G5 therapy and body treatments.",
+    image: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=900&q=80",
+  },
+];
 
-    section{padding:68px 0}
-    .section-head{text-align:center;max-width:760px;margin:0 auto 34px}
-    .section-head h2{font-size:clamp(32px,4vw,54px)}
-    .section-head p{color:var(--muted);line-height:1.7}
+const features = [
+  { icon: Gem, title: "Premium Quality", text: "High quality products and advanced beauty technology." },
+  { icon: Users, title: "Expert Team", text: "Experienced beauty professionals with personal care." },
+  { icon: ShieldCheck, title: "Safe & Hygienic", text: "Clean, comfortable and professional salon standards." },
+  { icon: Heart, title: "Personalized Care", text: "Treatments tailored to your unique beauty goals." },
+  { icon: Sparkles, title: "Visible Results", text: "A glow you can feel from the first visit." },
+];
 
-    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-    .card{background:#fff;border:1px solid #f5dce5;border-radius:var(--radius);overflow:hidden;box-shadow:0 12px 30px rgba(181,116,139,.1)}
-    .card img{height:170px;width:100%;object-fit:cover}
-    .card .body{padding:16px}
-    .icon{font-size:24px;color:var(--rose);margin:0 0 8px}
-    .card p{color:var(--muted);font-size:14px;line-height:1.6}
+export default function LaShineBeautyWebsite() {
+  return (
+    <div className="min-h-screen bg-[#fff6f8] text-[#3b272b]">
+      <div className="hidden md:flex items-center justify-between px-12 py-3 text-sm bg-[#ffe7ee] text-[#8d4d5d]">
+        <div className="flex items-center gap-2"><MapPin size={16}/> Mahmutlar Mah. Barbaros Cad. No: 45/A Alanya, Antalya, Türkiye</div>
+        <div className="flex items-center gap-8">
+          <span className="flex items-center gap-2"><Phone size={16}/> +90 552 123 45 67</span>
+          <span className="flex items-center gap-2"><Instagram size={16}/> @lashinebeauty_</span>
+        </div>
+      </div>
 
-    .about-wrap,.story{background:linear-gradient(180deg,#fff,#fff6f9);border:1px solid #f4d8e2;border-radius:30px;padding:36px;box-shadow:var(--shadow)}
-    .why-grid,.reviews,.contact-grid,.footer-grid{display:grid;gap:16px}
-    .why-grid{grid-template-columns:repeat(3,1fr)} .why{background:#fff;border:1px solid #f3d8e2;border-radius:18px;padding:18px}
-    .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-    .gallery img{border-radius:18px;box-shadow:0 10px 25px rgba(171,108,131,.14);height:210px;object-fit:cover;width:100%}
-    .reviews{grid-template-columns:repeat(3,1fr)}
-    .review{background:#fff;border:1px solid #f4d9e3;border-radius:18px;padding:18px}
-    .stars{color:#e3a34d;margin-bottom:10px}
+      <header className="sticky top-0 z-50 bg-white/85 backdrop-blur-xl border-b border-pink-100">
+        <div className="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-16 h-16 rounded-full bg-gradient-to-br from-pink-100 to-rose-200 border border-rose-200 flex items-center justify-center shadow-sm">
+              <Sparkles className="text-[#cf647c]" size={28}/>
+            </div>
+            <div>
+              <div className="font-serif text-3xl tracking-[0.12em] text-[#b84e64]">LA SHINE</div>
+              <div className="text-xs tracking-[0.5em] text-[#b56a78]">BEAUTY</div>
+              <div className="text-xs italic text-[#cf647c] mt-1">Shine With Confidence</div>
+            </div>
+          </div>
+          <nav className="hidden lg:flex items-center gap-9 text-sm font-medium">
+            <a className="text-[#d85f79]" href="#">Home</a>
+            <a href="#about">About Us</a>
+            <a href="#services">Services</a>
+            <a href="#gallery">Gallery</a>
+            <a href="#reviews">Reviews</a>
+            <a href="#contact">Contact</a>
+          </nav>
+          <button className="hidden md:flex items-center gap-2 rounded-xl bg-[#df657e] text-white px-6 py-3 shadow-lg shadow-pink-200 hover:bg-[#cc5870] transition">
+            <Calendar size={17}/> Book Appointment
+          </button>
+          <Menu className="lg:hidden text-[#b84e64]" />
+        </div>
+      </header>
 
-    .contact-grid{grid-template-columns:1fr 1fr;align-items:stretch}
-    .contact-card{background:#fff;border:1px solid #f4d8e2;border-radius:22px;padding:24px}
-    .contact-item{margin:10px 0;color:var(--muted)} .contact-item b{color:var(--text)}
-    iframe{border:0;border-radius:22px;width:100%;min-height:350px}
+      <section className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_75%_35%,#ffc8d6_0,#fff6f8_35%,transparent_70%)]" />
+        <div className="max-w-7xl mx-auto px-6 py-16 md:py-24 grid lg:grid-cols-2 gap-14 items-center relative">
+          <motion.div initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} transition={{duration:.7}}>
+            <p className="uppercase tracking-[0.35em] text-[#db6a82] font-semibold text-sm mb-5">Welcome to La Shine Beauty</p>
+            <h1 className="font-serif text-6xl md:text-8xl leading-[0.95] mb-7">
+              Shine With <span className="italic text-[#d85f79]">Confidence</span>
+            </h1>
+            <p className="text-lg leading-8 text-[#6c4b52] max-w-xl mb-8">
+              At La Shine Beauty, beauty is more than a treatment — it is confidence, glow and self-care. We combine advanced technology with professional care to bring out your natural beauty.
+            </p>
+            <div className="flex flex-wrap gap-4">
+              <button className="rounded-xl bg-[#df657e] text-white px-7 py-4 shadow-lg shadow-pink-200 flex items-center gap-2">Our Services <ArrowRight size={18}/></button>
+              <button className="rounded-xl bg-white border border-pink-200 text-[#d85f79] px-7 py-4 flex items-center gap-2">Book Now <Calendar size={18}/></button>
+            </div>
+          </motion.div>
+          <motion.div initial={{opacity:0, scale:.96}} animate={{opacity:1, scale:1}} transition={{duration:.8}} className="relative">
+            <div className="rounded-[3rem] overflow-hidden shadow-2xl shadow-pink-200 border-8 border-white">
+              <img src="https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?auto=format&fit=crop&w=1200&q=90" className="w-full h-[620px] object-cover" />
+            </div>
+            <div className="absolute -bottom-8 -left-8 bg-white/90 backdrop-blur p-6 rounded-3xl shadow-xl border border-pink-100 max-w-xs">
+              <p className="font-serif text-2xl text-[#b84e64]">Your Glow, Our Passion ✨</p>
+              <p className="text-sm text-[#76565d] mt-2">A premium beauty experience in Mahmutlar, Alanya.</p>
+            </div>
+          </motion.div>
+        </div>
+      </section>
 
-    footer{margin-top:58px;background:linear-gradient(135deg,#df6f95,#bf537f);color:#fff;padding:42px 0}
-    .footer-grid{grid-template-columns:1.2fr 1fr 1fr 1fr}
-    .footer-logo{max-width:240px;margin-bottom:8px}
-    .footer-col a{display:block;opacity:.95;margin:7px 0}
+      <section className="max-w-7xl mx-auto px-6 -mt-4 relative z-10">
+        <div className="grid md:grid-cols-5 bg-white rounded-3xl shadow-xl shadow-pink-100 border border-pink-100 overflow-hidden">
+          {features.map((item, i) => (
+            <div key={item.title} className="p-7 text-center border-b md:border-b-0 md:border-r last:border-r-0 border-pink-100">
+              <item.icon className="mx-auto text-[#df657e] mb-4" size={34}/>
+              <h3 className="font-semibold mb-2">{item.title}</h3>
+              <p className="text-sm text-[#7a5d63] leading-6">{item.text}</p>
+            </div>
+          ))}
+        </div>
+      </section>
 
-    .mobile-menu{display:none}
-    @media (max-width:960px){
-      .menu,.nav .cta{display:none}.menu-toggle{display:block}
-      .mobile-menu.open{display:grid;gap:12px;padding:12px 0 18px;border-top:1px solid #f5dfe8}
-      .mobile-menu a{padding:8px 0;font-weight:600;color:#5f444d}
-      .hero-grid,.contact-grid{grid-template-columns:1fr}
-      .cards,.why-grid,.reviews,.footer-grid{grid-template-columns:repeat(2,1fr)}
-      .hero-image img{min-height:340px}
-    }
-    @media (max-width:640px){
-      .cards,.why-grid,.gallery,.reviews,.footer-grid{grid-template-columns:1fr}
-      .top-contact .container{font-size:12px}
-      .logo img{height:52px}
-    }
-  </style>
-</head>
-<body>
-  <div class="top-contact">
-    <div class="container">
-      <span>📍 Mahmutlar Mah. Barbaros Cad. No: 45/A Alanya, Antalya, Türkiye</span>
-      <span>📞 <a href="tel:+905521234567">+90 552 123 45 67</a> · Instagram: <a href="https://www.instagram.com/lashinebeautysaloon" target="_blank" rel="noopener">@lashinebeautysaloon</a></span>
-    </div>
-  </div>
-  <header>
-    <div class="container nav">
-      <a class="logo" href="#home"><img src="Lashine_Logo.png" alt="La Shine Beauty logo"></a>
-      <nav class="menu" aria-label="Primary">
-        <a href="#home">Home</a><a href="#about">About Us</a><a href="#services">Services</a><a href="#gallery">Gallery</a><a href="#reviews">Reviews</a><a href="#contact">Contact</a>
-      </nav>
-      <a class="cta" href="https://wa.me/905551859900?text=Hello%20La%20Shine%2C%20I%20would%20like%20to%20book%20an%20appointment" target="_blank" rel="noopener">Book Appointment</a>
-      <button class="menu-toggle" id="menuToggle" aria-label="Open menu">☰</button>
-    </div>
-    <div class="container mobile-menu" id="mobileMenu">
-      <a href="#home">Home</a><a href="#about">About Us</a><a href="#services">Services</a><a href="#gallery">Gallery</a><a href="#reviews">Reviews</a><a href="#contact">Contact</a>
-      <a class="cta" href="https://wa.me/905551859900" target="_blank" rel="noopener">Book Appointment</a>
-    </div>
-  </header>
+      <section id="services" className="max-w-7xl mx-auto px-6 py-24">
+        <div className="text-center mb-12">
+          <p className="uppercase tracking-[0.35em] text-[#db6a82] font-semibold text-sm">Our Services</p>
+          <h2 className="font-serif text-4xl md:text-5xl mt-3">Beauty That <span className="italic text-[#d85f79]">Shines</span> From Head to Toe</h2>
+        </div>
+        <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-6">
+          {services.map((service) => (
+            <motion.div whileHover={{y:-8}} key={service.title} className="bg-white rounded-3xl overflow-hidden shadow-lg shadow-pink-100 border border-pink-100">
+              <img src={service.image} className="h-48 w-full object-cover" />
+              <div className="p-6 text-center">
+                <div className="w-16 h-16 rounded-full bg-[#ffe6ed] flex items-center justify-center mx-auto -mt-14 mb-5 border-4 border-white">
+                  <Sparkles className="text-[#df657e]" />
+                </div>
+                <h3 className="font-serif text-2xl mb-3">{service.title}</h3>
+                <p className="text-sm text-[#73555c] leading-6 min-h-[72px]">{service.desc}</p>
+                <button className="mt-5 text-[#df657e] text-sm font-semibold flex items-center gap-1 mx-auto">Learn More <ArrowRight size={16}/></button>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </section>
 
-  <main id="home">
-    <section class="hero">
-      <div class="container hero-grid">
+      <section id="about" className="max-w-7xl mx-auto px-6 pb-24 grid lg:grid-cols-2 gap-12 items-center">
+        <div className="grid grid-cols-2 gap-4">
+          <img className="rounded-[2rem] h-80 w-full object-cover shadow-lg" src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=900&q=80" />
+          <img className="rounded-[2rem] h-80 w-full object-cover shadow-lg mt-10" src="https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?auto=format&fit=crop&w=900&q=80" />
+        </div>
         <div>
-          <div class="eyebrow">Welcome to La Shine Beauty</div>
-          <h1>Shine With <span style="color:var(--rose)">Confidence</span></h1>
-          <p>At La Shine Beauty, we combine advanced treatments with professional care to bring out your natural beauty and confidence. Experience modern beauty rituals designed for your glow, comfort and self-care.</p>
-          <div class="hero-actions">
-            <a class="cta" href="https://wa.me/905551859900?text=Hello%20La%20Shine%2C%20I%20would%20like%20to%20book%20an%20appointment" target="_blank" rel="noopener">Book Appointment</a>
-            <a class="cta ghost" href="#services">View Services</a>
+          <p className="uppercase tracking-[0.35em] text-[#db6a82] font-semibold text-sm">About Us</p>
+          <h2 className="font-serif text-5xl mt-3 mb-6">A place where beauty feels <span className="italic text-[#d85f79]">personal</span></h2>
+          <p className="text-[#6c4b52] leading-8 mb-5">La Shine Beauty is created to make every client feel valued, relaxed and radiant. From advanced laser technology to skincare, nails and permanent makeup, every detail is designed with care.</p>
+          <p className="text-[#6c4b52] leading-8 mb-8">Our mission is simple: leave glowing, leave confident, leave shining.</p>
+          <button className="rounded-xl bg-[#df657e] text-white px-7 py-4 shadow-lg shadow-pink-200">Learn More About Us</button>
+        </div>
+      </section>
+
+      <section id="gallery" className="bg-white py-20 border-y border-pink-100">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-10">
+            <p className="uppercase tracking-[0.35em] text-[#db6a82] font-semibold text-sm">Gallery</p>
+            <h2 className="font-serif text-5xl mt-3">Elegant Moments</h2>
+          </div>
+          <div className="grid md:grid-cols-4 gap-4">
+            {["https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?auto=format&fit=crop&w=700&q=80"].map((img) => (
+              <img key={img} src={img} className="h-64 w-full object-cover rounded-3xl shadow-md" />
+            ))}
           </div>
         </div>
-        <div class="hero-image">
-          <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1200&q=80" alt="Elegant beauty portrait at La Shine Beauty">
-          <div class="hero-badge">La Shine Beauty · Shine With Confidence</div>
+      </section>
+
+      <section id="reviews" className="max-w-7xl mx-auto px-6 py-24">
+        <div className="text-center mb-12">
+          <p className="uppercase tracking-[0.35em] text-[#db6a82] font-semibold text-sm">What Clients Say</p>
+          <h2 className="font-serif text-5xl mt-3">Loved by our clients</h2>
         </div>
-      </div>
-    </section>
-
-    <section id="services">
-      <div class="container">
-        <div class="section-head"><h2>Premium Beauty Services</h2><p>Professional treatments designed with quality products, modern technology, and personalized care.</p></div>
-        <div class="cards">
-          <article class="card"><img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=900&q=80" alt="Skincare treatment"><div class="body"><div class="icon">✨</div><h3>Skincare</h3><p>Deep cleansing, hydration and advanced facial treatments for radiant skin.</p></div></article>
-          <article class="card"><img src="https://images.unsplash.com/photo-1560750588-73207b1ef5b8?auto=format&fit=crop&w=900&q=80" alt="Laser hair removal"><div class="body"><div class="icon">⚡</div><h3>Laser Hair Removal</h3><p>Safe and effective laser solutions for smooth skin and long-lasting results.</p></div></article>
-          <article class="card"><img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&w=900&q=80" alt="Nail studio manicure"><div class="body"><div class="icon">💅</div><h3>Nail Studio</h3><p>Gel nails, nail art, manicure and elegant finishing touches for every style.</p></div></article>
-          <article class="card"><img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=900&q=80" alt="Permanent makeup"><div class="body"><div class="icon">👁️</div><h3>Permanent Makeup</h3><p>Microblading, powder brows and lip blush with premium artistic precision.</p></div></article>
-          <article class="card"><img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=900&q=80" alt="Body care slimming"><div class="body"><div class="icon">🌿</div><h3>Body Care / Slimming</h3><p>Body contouring and relaxation therapies that support confidence and wellness.</p></div></article>
-          <article class="card"><img src="https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?auto=format&fit=crop&w=900&q=80" alt="Manicure and pedicure"><div class="body"><div class="icon">🫶</div><h3>Manicure & Pedicure</h3><p>Hygienic nail care rituals focused on comfort, beauty and visible results.</p></div></article>
+        <div className="grid md:grid-cols-3 gap-6">
+          {["Amazing experience! The staff is so friendly and professional.", "I love my nails. The attention to detail is incredible.", "Very clean, modern and professional salon. Highly recommended."].map((review, i) => (
+            <div key={review} className="bg-white rounded-3xl p-8 shadow-lg shadow-pink-100 border border-pink-100">
+              <div className="flex gap-1 text-[#df657e] mb-4">{[1,2,3,4,5].map(s => <Star key={s} size={17} fill="currentColor"/> )}</div>
+              <p className="text-[#6c4b52] leading-7 mb-5">“{review}”</p>
+              <p className="font-semibold">Client {i + 1}</p>
+            </div>
+          ))}
         </div>
-      </div>
-    </section>
+      </section>
 
-    <section id="about"><div class="container about-wrap"><h2>Your Glow, Our Passion</h2><p>At La Shine Beauty, beauty is more than a treatment — it is confidence, glow and self-care. Our experienced specialists combine modern technology with personal care to help every client feel beautiful, radiant and confident.</p></div></section>
-    <section><div class="container story"><h2>Brand Story</h2><p>La Shine Beauty was created to reflect elegance, radiance and modern beauty. Inspired by the word Shine, the brand represents glow, confidence and transformation — with a luxurious feminine touch.</p></div></section>
-
-    <section>
-      <div class="container">
-        <div class="section-head"><h2>Why Choose Us</h2></div>
-        <div class="why-grid">
-          <div class="why">👩‍🔬 Experienced Beauty Specialists</div><div class="why">🧬 Advanced Technology</div><div class="why">🌸 Premium Quality Products</div><div class="why">🧼 Hygienic & Comfortable Environment</div><div class="why">💖 Personalized Care</div><div class="why">📈 Visible Results</div>
+      <footer id="contact" className="bg-gradient-to-br from-[#c9556d] to-[#e98298] text-white">
+        <div className="max-w-7xl mx-auto px-6 py-14 grid md:grid-cols-4 gap-10">
+          <div>
+            <div className="font-serif text-3xl tracking-[0.12em]">LA SHINE</div>
+            <div className="text-xs tracking-[0.5em]">BEAUTY</div>
+            <p className="mt-5 text-white/80 leading-7">Where beauty meets glow. Shine with confidence every day.</p>
+          </div>
+          <div>
+            <h4 className="font-semibold mb-4">Quick Links</h4>
+            <div className="space-y-2 text-white/80"><p>Home</p><p>About Us</p><p>Services</p><p>Gallery</p><p>Reviews</p></div>
+          </div>
+          <div>
+            <h4 className="font-semibold mb-4">Services</h4>
+            <div className="space-y-2 text-white/80"><p>Skincare</p><p>Laser Hair Removal</p><p>Nail Studio</p><p>Permanent Makeup</p><p>Body Care</p></div>
+          </div>
+          <div>
+            <h4 className="font-semibold mb-4">Contact Us</h4>
+            <div className="space-y-3 text-white/85">
+              <p className="flex gap-2"><MapPin size={18}/> Mahmutlar Mah. Barbaros Cad. No: 45/A Alanya, Antalya</p>
+              <p className="flex gap-2"><Phone size={18}/> +90 552 123 45 67</p>
+              <p className="flex gap-2"><Instagram size={18}/> @lashinebeauty_</p>
+            </div>
+          </div>
         </div>
-      </div>
-    </section>
-
-    <section id="gallery"><div class="container"><div class="section-head"><h2>Gallery</h2></div><div class="gallery">
-      <img src="https://images.unsplash.com/photo-1522338242992-e1a54906a8da?auto=format&fit=crop&w=900&q=80" alt="Salon interior">
-      <img src="https://images.unsplash.com/photo-1610992015732-2449b76344bc?auto=format&fit=crop&w=900&q=80" alt="Skincare room">
-      <img src="https://images.unsplash.com/photo-1519014816548-bf5fe059798b?auto=format&fit=crop&w=900&q=80" alt="Nail set">
-      <img src="https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?auto=format&fit=crop&w=900&q=80" alt="Laser consultation">
-      <img src="https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=900&q=80" alt="Permanent makeup">
-      <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=900&q=80" alt="Beauty treatment">
-    </div></div></section>
-
-    <section id="reviews"><div class="container"><div class="section-head"><h2>Client Reviews</h2></div><div class="reviews">
-      <article class="review"><div class="stars">★★★★★</div><p>“Amazing experience! The team is very professional and my skin has never looked better.”</p><b>— Ece K.</b></article>
-      <article class="review"><div class="stars">★★★★★</div><p>“I loved my nails and facial. Elegant atmosphere and perfect hygiene standards.”</p><b>— Merve A.</b></article>
-      <article class="review"><div class="stars">★★★★★</div><p>“Laser sessions are effective and the staff always makes me feel comfortable.”</p><b>— Duygu T.</b></article>
-    </div></div></section>
-
-    <section id="contact"><div class="container contact-grid"><div class="contact-card">
-      <h2>Contact Us</h2>
-      <div class="contact-item"><b>Address:</b> Mahmutlar, 202. Sk. No:4/6, 07460 Alanya/Antalya, Türkiye</div>
-      <div class="contact-item"><b>Phone:</b> <a href="tel:+905551859900">+90 555 185 99 00</a></div>
-      <div class="contact-item"><b>Website:</b> lashinebeauty.com</div>
-      <div class="contact-item"><b>Instagram:</b> <a href="https://www.instagram.com/lashinebeautysaloon" target="_blank" rel="noopener">@lashinebeautysaloon</a></div>
-      <div class="contact-item"><b>Email:</b> lashinenailart@gmail.com</div>
-      <div class="hero-actions"><a class="cta" href="https://maps.app.goo.gl/W4bagdjujHgtSZz4A" target="_blank" rel="noopener">Open Google Maps</a><a class="cta ghost" href="https://wa.me/905551859900" target="_blank" rel="noopener">WhatsApp</a></div>
+        <div className="text-center py-5 border-t border-white/20 text-white/75 text-sm">© 2026 La Shine Beauty. All Rights Reserved.</div>
+      </footer>
     </div>
-      <iframe src="https://www.google.com/maps?q=Mahmutlar%20202.%20Sk.%20No%3A4%20Alanya%20Antalya%20Turkey&output=embed" loading="lazy" title="La Shine Beauty location map"></iframe>
-    </div></section>
-  </main>
-
-  <footer>
-    <div class="container footer-grid">
-      <div>
-        <img class="footer-logo" src="Lashine_Logo.png" alt="La Shine Beauty logo">
-        <p>Shine With Confidence</p>
-      </div>
-      <div class="footer-col"><h4>Quick Links</h4><a href="#home">Home</a><a href="#about">About Us</a><a href="#services">Services</a><a href="#gallery">Gallery</a><a href="#contact">Contact</a></div>
-      <div class="footer-col"><h4>Services</h4><a href="#services">Skincare</a><a href="#services">Laser Hair Removal</a><a href="#services">Nail Studio</a><a href="#services">Permanent Makeup</a></div>
-      <div class="footer-col"><h4>Contact</h4><a href="tel:+905551859900">+90 555 185 99 00</a><a href="https://www.instagram.com/lashinebeautysaloon" target="_blank" rel="noopener">Instagram</a><a href="https://maps.app.goo.gl/W4bagdjujHgtSZz4A" target="_blank" rel="noopener">Location</a></div>
-    </div>
-  </footer>
-
-  <script>
-    const menuToggle = document.getElementById('menuToggle');
-    const mobileMenu = document.getElementById('mobileMenu');
-    menuToggle.addEventListener('click', () => mobileMenu.classList.toggle('open'));
-  </script>
-</body>
-</html>
+  );
+}
