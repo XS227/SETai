@@ -8,159 +8,38 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Parisienne&display=swap" rel="stylesheet">
   <style>
-    :root{
-      --pink:#df6b83;
-      --rose:#c9556f;
-      --soft:#fff0f4;
-      --blush:#f9dce4;
-      --cream:#fff9f7;
-      --deep:#3b2c2e;
-      --muted:#806b70;
-      --line:#f4c8d2;
-      --gold:#d8a760;
-      --shadow:0 20px 60px rgba(198,76,105,.18);
-      --radius:24px;
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      background:linear-gradient(180deg,#fff7f8 0%,#fff1f5 47%,#fffaf8 100%);
-      color:var(--deep);
-      font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-      overflow-x:hidden;
-    }
-    a{text-decoration:none;color:inherit}
-    .topbar{
-      height:42px;
-      background:linear-gradient(90deg,#fde6ec,#fff7f7,#fde1e9);
-      display:flex;align-items:center;justify-content:space-between;
-      padding:0 64px;font-size:13px;color:#80565f;border-bottom:1px solid #f5d0d8;
-    }
-    .topbar span{display:flex;gap:8px;align-items:center}
-    .nav{
-      min-height:112px;background:rgba(255,255,255,.82);backdrop-filter:blur(18px);
-      display:flex;align-items:center;justify-content:space-between;padding:0 64px;position:sticky;top:0;z-index:20;
-      box-shadow:0 8px 30px rgba(203,90,112,.06)
-    }
-    .brand{display:flex;align-items:center;gap:15px}
-    .mark{width:132px;height:82px;position:relative;display:flex;align-items:center;justify-content:center}
-    .face{position:absolute;left:4px;top:10px;width:46px;height:60px;border-left:5px solid var(--pink);border-radius:60% 20% 60% 40%;transform:skew(-7deg)}
-    .hair{position:absolute;left:4px;top:8px;width:58px;height:72px;border-left:4px solid var(--pink);border-top:4px solid var(--pink);border-radius:70% 10% 70% 30%;transform:rotate(11deg)}
-    .brand-text strong{font-family:Cormorant Garamond,serif;font-size:31px;letter-spacing:4px;color:var(--rose);display:block;line-height:.92}
-    .brand-text small{display:block;letter-spacing:4px;color:var(--rose);font-size:12px;text-align:center;margin-top:4px}
-    .brand-text em{display:block;color:var(--pink);font-size:10px;font-style:normal;text-align:center;margin-top:2px}
-    .navlinks{display:flex;align-items:center;gap:42px;font-size:14px;font-weight:500;color:#443438}
-    .navlinks a.active{color:var(--pink);position:relative}
-    .navlinks a.active:after{content:"";position:absolute;left:0;bottom:-14px;width:32px;height:2px;background:var(--pink)}
-    .book{background:linear-gradient(135deg,var(--pink),#d65b74);color:white;border:0;border-radius:9px;padding:15px 24px;font-weight:700;box-shadow:0 12px 24px rgba(215,91,116,.22)}
-    .hero{position:relative;min-height:620px;padding:72px 64px 110px;display:grid;grid-template-columns:1.05fr .95fr;align-items:center;overflow:hidden}
-    .hero:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 78% 52%,#f8b9c7 0%,rgba(248,185,199,.34) 27%,rgba(255,255,255,0) 53%)}
-    .hero-copy{position:relative;z-index:2;max-width:620px}.eyebrow{letter-spacing:4px;text-transform:uppercase;color:var(--pink);font-weight:700;font-size:13px;margin-bottom:20px}
-    h1{font-family:Cormorant Garamond,serif;font-size:86px;line-height:.9;margin:0 0 28px;font-weight:600;letter-spacing:-2px}
-    h1 em{font-family:Cormorant Garamond,serif;color:var(--pink);font-style:italic;font-weight:500}
-    .hero-copy p{font-size:18px;line-height:1.8;color:#5d4d52;max-width:510px;margin:0 0 30px}.actions{display:flex;gap:18px}.btn{border-radius:8px;padding:16px 28px;font-weight:700;font-size:14px}.btn.primary{background:linear-gradient(135deg,var(--pink),#d95d78);color:#fff}.btn.outline{border:1px solid var(--pink);color:var(--pink);background:white}
-    .hero-art{height:520px;position:relative;z-index:1;border-radius:0 0 0 110px;overflow:hidden;background:linear-gradient(140deg,#fff0f4 0%,#f6b6c7 50%,#d86a82 100%);box-shadow:var(--shadow)}
-    .hero-art:before{content:"";position:absolute;right:-20px;bottom:-40px;width:430px;height:520px;background:linear-gradient(180deg,#f8c6ce,#e899a6);border-radius:220px 220px 0 0;filter:blur(.1px)}
-    .model{position:absolute;right:95px;bottom:0;width:290px;height:430px;background:linear-gradient(180deg,#f0c1b3,#d98c82);border-radius:48% 48% 0 0;box-shadow:inset 20px 0 60px rgba(255,255,255,.45)}
-    .model:before{content:"";position:absolute;left:34px;top:38px;width:220px;height:245px;border-radius:48%;background:linear-gradient(135deg,#ffe1d4,#f4b9a9);box-shadow:0 0 0 25px rgba(97,39,33,.17)}
-    .flower{position:absolute;right:245px;top:215px;width:112px;height:112px;border-radius:50%;background:radial-gradient(circle,#ffd7df 10%,#f4a8b9 35%,#df6b83 65%,transparent 66%);filter:drop-shadow(0 8px 18px rgba(188,70,93,.25))}.flower:before,.flower:after{content:"";position:absolute;inset:16px;border-radius:50%;border:12px solid rgba(255,255,255,.45)}.flower:after{inset:34px;border-width:8px}
-    .arch{position:absolute;right:30px;top:85px;width:210px;height:320px;border-radius:110px 110px 20px 20px;background:rgba(255,220,228,.35);border:8px solid rgba(255,255,255,.32);display:flex;align-items:center;justify-content:center;color:white;font-size:25px;font-weight:800;letter-spacing:2px;text-align:center;text-shadow:0 0 12px rgba(255,255,255,.8)}
-    .float-social{position:absolute;right:22px;top:250px;display:grid;gap:14px;z-index:4}.float-social div{width:48px;height:48px;border-radius:14px;background:rgba(217,95,119,.8);display:grid;place-items:center;color:white;font-size:23px;box-shadow:0 10px 25px rgba(173,67,87,.25)}
-    .trustbar{position:relative;z-index:5;margin:-62px auto 0;max-width:1120px;background:rgba(255,255,255,.92);display:grid;grid-template-columns:repeat(5,1fr);border-radius:20px;box-shadow:0 22px 55px rgba(169,74,93,.15);overflow:hidden;border:1px solid #fde0e7}.trust{padding:28px 26px;text-align:center;border-right:1px solid #f2ccd5}.trust:last-child{border:0}.trust i{display:block;font-size:34px;color:var(--pink);font-style:normal;margin-bottom:8px}.trust h3{font-size:16px;margin:0 0 8px}.trust p{font-size:13px;color:var(--muted);line-height:1.45;margin:0}
-    .section{padding:86px 64px}.center{text-align:center}.kicker{color:var(--pink);font-weight:800;letter-spacing:4px;font-size:12px;text-transform:uppercase}.section h2{font-family:Cormorant Garamond,serif;font-size:43px;font-weight:500;margin:12px 0 44px}.script{font-family:Parisienne,cursive;color:var(--pink);font-size:1.15em}.cards{display:grid;grid-template-columns:repeat(5,1fr);gap:24px;max-width:1120px;margin:0 auto}.card{background:white;border:1px solid #f8d3dc;border-radius:16px;overflow:hidden;box-shadow:0 12px 35px rgba(197,91,111,.1);transition:.2s}.card:hover{transform:translateY(-4px)}.photo{height:160px;background:linear-gradient(135deg,#ffdbe3,#f3a8b7);position:relative;overflow:hidden}.photo:after{content:"";position:absolute;inset:20px;border-radius:18px;background:rgba(255,255,255,.28)}.photo.skin{background:linear-gradient(135deg,#ffe4e8,#e8b09b)}.photo.laser{background:linear-gradient(135deg,#ffe6ed,#d6c5bd)}.photo.nails{background:linear-gradient(135deg,#ffd4dd,#f4b4c1)}.photo.pmu{background:linear-gradient(135deg,#f8c5ce,#b36f61)}.photo.body{background:linear-gradient(135deg,#ffe4eb,#ddb8a6)}.iconbubble{width:58px;height:58px;border-radius:50%;background:#fff0f4;border:1px solid #f5c4cf;display:grid;place-items:center;margin:-29px auto 12px;position:relative;color:var(--pink);font-size:27px}.card-body{text-align:center;padding:0 20px 26px}.card h3{font-family:Cormorant Garamond,serif;font-size:25px;margin:0 0 8px}.card p{font-size:13px;color:#76666a;line-height:1.55;margin:0 0 18px}.learn{color:var(--pink);font-weight:700;font-size:13px}.viewall{display:block;width:max-content;margin:28px auto 0;background:var(--pink);color:#fff;border-radius:8px;padding:13px 27px;font-weight:800;font-size:13px}
-    .about{display:grid;grid-template-columns:.9fr 1.1fr;gap:70px;align-items:center;max-width:1120px;margin:0 auto}.salon-img{height:310px;border-radius:18px;background:linear-gradient(135deg,#f4a6b7,#fff0f3 46%,#c86b7b);box-shadow:var(--shadow);position:relative;overflow:hidden}.salon-img:before{content:"LA SHINE\A BEAUTY";white-space:pre;position:absolute;left:42px;top:54px;color:white;font-weight:800;letter-spacing:2px;font-size:26px;text-align:center}.salon-img:after{content:"";position:absolute;right:40px;bottom:0;width:190px;height:170px;background:repeating-linear-gradient(90deg,rgba(255,255,255,.4) 0 18px,rgba(203,93,113,.18) 18px 34px);border-radius:90px 90px 0 0}.about h2{text-align:left;margin:0 0 18px}.about p{color:#6d5d62;line-height:1.8}.signature{font-family:Parisienne,cursive;color:var(--pink);font-size:31px}.rose-deco{position:absolute;right:100px;width:170px;height:170px;border-radius:50%;background:radial-gradient(circle,#f8bac8 8%,#e56f89 45%,transparent 46%);opacity:.55}.testimonials{max-width:1060px;margin:20px auto 0;display:grid;grid-template-columns:repeat(3,1fr);gap:24px}.quote{background:white;border:1px solid #f5d1da;border-radius:17px;padding:22px;box-shadow:0 10px 30px rgba(194,87,109,.08)}.quote strong{display:block;margin-bottom:4px}.stars{color:var(--pink);font-size:13px}.quote p{font-size:13px;color:#6d5d62;line-height:1.55}
-    footer{background:linear-gradient(135deg,#c9546e,#dd7890);color:white;padding:50px 64px 24px}.footgrid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1.3fr 1.4fr;gap:34px;max-width:1180px;margin:0 auto}.foot-logo{font-family:Cormorant Garamond,serif;font-size:28px;letter-spacing:4px}.footgrid h4{margin:0 0 16px}.footgrid a,.footgrid p{display:block;color:rgba(255,255,255,.9);font-size:13px;line-height:1.9;margin:0}.newsletter{display:flex;gap:8px;margin-top:14px}.newsletter input{border:0;border-radius:7px;padding:13px;width:100%}.newsletter button{border:0;border-radius:7px;padding:0 18px;background:#f9a8b8;color:white;font-weight:800}.copyright{text-align:center;margin-top:34px;padding-top:20px;border-top:1px solid rgba(255,255,255,.25);font-size:12px;color:rgba(255,255,255,.8)}
-    @media(max-width:950px){.topbar,.nav{padding-left:22px;padding-right:22px}.nav{align-items:flex-start;padding-top:18px;padding-bottom:18px}.navlinks{display:none}.hero{grid-template-columns:1fr;padding:50px 24px 90px}h1{font-size:58px}.hero-art{height:420px;margin-top:28px}.trustbar,.cards,.testimonials,.footgrid,.about{grid-template-columns:1fr}.trustbar{margin-left:22px;margin-right:22px}.trust{border-right:0;border-bottom:1px solid #f2ccd5}.section{padding:62px 24px}footer{padding:42px 24px}.topbar{font-size:11px;gap:12px;flex-wrap:wrap;height:auto;padding-top:10px;padding-bottom:10px}}
+    :root{--pink:#df6b83;--rose:#c9556f;--deep:#3b2c2e;--muted:#806b70;--shadow:0 20px 60px rgba(198,76,105,.18)}
+    *{box-sizing:border-box} body{margin:0;background:linear-gradient(180deg,#fff7f8 0%,#fff1f5 47%,#fffaf8 100%);color:var(--deep);font-family:Inter,system-ui,sans-serif;overflow-x:hidden}
+    a{text-decoration:none;color:inherit}.topbar{height:42px;background:linear-gradient(90deg,#fde6ec,#fff7f7,#fde1e9);display:flex;align-items:center;justify-content:space-between;padding:0 64px;font-size:13px;color:#80565f;border-bottom:1px solid #f5d0d8;gap:12px}
+    .nav{min-height:110px;background:rgba(255,255,255,.88);backdrop-filter:blur(18px);display:flex;align-items:center;justify-content:space-between;padding:0 64px;position:sticky;top:0;z-index:20}
+    .brand{display:flex;align-items:center;gap:16px}.brand img{width:180px;max-width:42vw;height:auto}.brand-text em{display:block;color:var(--pink);font-size:11px}
+    .navlinks{display:flex;gap:30px;font-size:14px;font-weight:600}.book,.btn.primary{background:linear-gradient(135deg,var(--pink),#d65b74);color:#fff;border-radius:9px;padding:13px 22px;font-weight:700}
+    .hero{padding:72px 64px 80px;display:grid;grid-template-columns:1.05fr .95fr;align-items:center;gap:30px}.hero h1{font-family:Cormorant Garamond,serif;font-size:72px;line-height:.95;margin:0 0 20px}.hero h1 em{color:var(--pink)}
+    .hero-copy p{font-size:18px;line-height:1.7;color:#5d4d52}.actions{display:flex;gap:14px;flex-wrap:wrap}.btn{border-radius:8px;padding:14px 24px;font-weight:700}.btn.outline{border:1px solid var(--pink);color:var(--pink);background:#fff}
+    .hero-art{height:470px;border-radius:24px;background:linear-gradient(140deg,#fff0f4 0%,#f6b6c7 50%,#d86a82 100%);box-shadow:var(--shadow)}
+    .section{padding:72px 64px}.center{text-align:center}.kicker{color:var(--pink);font-weight:800;letter-spacing:4px;font-size:12px;text-transform:uppercase}.section h2{font-family:Cormorant Garamond,serif;font-size:42px;margin:10px 0 34px}
+    .testimonials{max-width:1060px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:24px}.quote{background:#fff;border:1px solid #f5d1da;border-radius:17px;padding:22px}.stars{color:var(--pink);font-size:13px}
+    .g5{max-width:1060px;margin:0 auto;background:#fff;border:1px solid #f4c6d1;border-radius:18px;padding:30px;text-align:left}.g5 h3{margin:0 0 10px;font-family:Cormorant Garamond,serif;font-size:34px}
+    footer{background:linear-gradient(135deg,#c9546e,#dd7890);color:white;padding:38px 64px 24px}
+    @media(max-width:950px){.topbar,.nav,.hero,.section,footer{padding-left:22px;padding-right:22px}.navlinks{display:none}.hero{grid-template-columns:1fr;padding-top:44px}.hero h1{font-size:52px}.hero-art{height:280px}.testimonials{grid-template-columns:1fr}.topbar{height:auto;flex-wrap:wrap;padding-top:10px;padding-bottom:10px}}
   </style>
 </head>
 <body>
-  <div class="topbar">
-    <span>📍 Mahmutlar Mah. Barbaros Cad. No: 45/A Alanya, Antalya, Türkiye</span>
-    <span>☎ +90 552 123 45 67</span>
-    <span>◎ @lashinebeauty_</span>
-  </div>
-
+  <div class="topbar"><span>📍 Mahmutlar, Alanya</span><span>☎ +90 552 123 45 67</span><span>◎ @lashinebeauty_</span></div>
   <header class="nav">
     <a class="brand" href="#">
-      <div class="mark"><div class="hair"></div><div class="face"></div></div>
-      <div class="brand-text"><strong>LA SHINE</strong><small>BEAUTY</small><em>Shine With Confidence</em></div>
+      <img src="Lashine_Logo.png" alt="La Shine Beauty logo" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+      <div class="brand-text" style="display:none"><strong>LA SHINE BEAUTY</strong><em>Shine With Confidence</em></div>
     </a>
-    <nav class="navlinks">
-      <a href="#" class="active">Home</a><a href="#about">About Us</a><a href="#services">Services⌄</a><a href="#gallery">Gallery</a><a href="#reviews">Reviews</a><a href="#contact">Contact</a>
-    </nav>
-    <a class="book" href="#contact">▣ Book Appointment</a>
+    <nav class="navlinks"><a href="#about">About Us</a><a href="services.html">Services</a><a href="#contact">Contact</a></nav>
+    <a class="book" href="https://wa.me/905521234567" target="_blank" rel="noopener">Book on WhatsApp</a>
   </header>
-
   <main>
-    <section class="hero">
-      <div class="hero-copy">
-        <div class="eyebrow">Welcome to La Shine Beauty</div>
-        <h1>Shine With <em>Confidence</em></h1>
-        <p>At La Shine Beauty, we combine advanced technology with professional care to bring out your natural beauty and confidence.</p>
-        <div class="actions"><a class="btn primary" href="#services">Our Services →</a><a class="btn outline" href="#contact">Book Now ▣</a></div>
-      </div>
-      <div class="hero-art" aria-label="Beauty salon visual">
-        <div class="arch">LA SHINE<br>BEAUTY</div><div class="model"></div><div class="flower"></div>
-        <div class="float-social"><div>☏</div><div>◎</div><div>⌖</div></div>
-      </div>
-    </section>
-
-    <section class="trustbar">
-      <div class="trust"><i>◇</i><h3>Premium Quality</h3><p>High quality products and advanced technology</p></div>
-      <div class="trust"><i>♙</i><h3>Expert Team</h3><p>Experienced and certified beauty professionals</p></div>
-      <div class="trust"><i>♢</i><h3>Safe & Hygienic</h3><p>Your safety and comfort are our priority</p></div>
-      <div class="trust"><i>♡</i><h3>Personalized Care</h3><p>Treatments tailored to your unique beauty needs</p></div>
-      <div class="trust"><i>✧</i><h3>Visible Results</h3><p>Effective results that make you shine every day</p></div>
-    </section>
-
-    <section class="section center" id="services">
-      <div class="kicker">Our Services</div>
-      <h2>Beauty That <span class="script">Shines</span> From Head to Toe</h2>
-      <div class="cards">
-        <article class="card"><div class="photo skin"></div><div class="iconbubble">♨</div><div class="card-body"><h3>Skincare</h3><p>Deep cleansing, hydration, acne treatment & more</p><a class="learn">Learn More →</a></div></article>
-        <article class="card"><div class="photo laser"></div><div class="iconbubble">⌁</div><div class="card-body"><h3>Laser Hair Removal</h3><p>Safe, effective & long lasting results</p><a class="learn">Learn More →</a></div></article>
-        <article class="card"><div class="photo nails"></div><div class="iconbubble">▥</div><div class="card-body"><h3>Nail Studio</h3><p>Manicure, pedicure, gel, nail art & more</p><a class="learn">Learn More →</a></div></article>
-        <article class="card"><div class="photo pmu"></div><div class="iconbubble">◉</div><div class="card-body"><h3>Permanent Makeup</h3><p>Microblading, powder brows, lip blush & more</p><a class="learn">Learn More →</a></div></article>
-        <article class="card"><div class="photo body"></div><div class="iconbubble">♧</div><div class="card-body"><h3>Body Care</h3><p>Massage, slimming, lifting & more</p><a class="learn">Learn More →</a></div></article>
-      </div>
-      <a class="viewall">View All Services →</a>
-    </section>
-
-    <section class="section" id="about">
-      <div class="about">
-        <div class="salon-img"></div>
-        <div style="position:relative">
-          <div class="kicker">About Us</div>
-          <h2>Your <span class="script">Glow</span>, Our Passion ✨</h2>
-          <p>La Shine Beauty is more than a beauty salon — it is a place where you feel valued, relaxed, and confident.</p>
-          <p>We are dedicated to delivering exceptional beauty experiences with care, passion, and the latest techniques.</p>
-          <div class="signature">La Shine Beauty ♡</div>
-          <a class="btn primary" style="display:inline-block;margin-top:18px">Learn More About Us →</a>
-          <div class="rose-deco"></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section center" id="reviews">
-      <div class="kicker">What Our Clients Say</div>
-      <div class="testimonials">
-        <div class="quote"><strong>Ece K.</strong><div class="stars">★★★★★</div><p>Amazing experience! The staff is so friendly and professional. My skin has never looked better!</p></div>
-        <div class="quote"><strong>Merve A.</strong><div class="stars">★★★★★</div><p>I love my nails! The attention to detail is incredible. Highly recommend La Shine Beauty.</p></div>
-        <div class="quote"><strong>Duygu T.</strong><div class="stars">★★★★★</div><p>Laser hair removal results are fantastic. Very clean, modern and professional salon!</p></div>
-      </div>
-    </section>
+    <section class="hero"><div class="hero-copy"><div class="kicker">Welcome to La Shine Beauty</div><h1>Shine With <em>Confidence</em></h1><p>Beauty, lashes, nails, skincare and body contouring in Mahmutlar. Fast WhatsApp booking for locals and tourists.</p><div class="actions"><a class="btn primary" href="services.html">See Services & Prices</a><a class="btn outline" href="https://wa.me/905521234567" target="_blank" rel="noopener">Book Now</a></div></div><div class="hero-art" aria-label="Beauty salon visual"></div></section>
+    <section class="section center" id="about"><div class="kicker">About Us</div><h2>Soft luxury beauty with visible results</h2></section>
+    <section class="section" id="g5"><div class="g5"><div class="kicker">New Section</div><h3>G5 Therapy • Body Contouring</h3><p>Mechanical vibration massage that supports circulation, helps reduce the appearance of cellulite and contributes to body contouring goals.</p><p><strong>Price:</strong> 1,100 TRY per session</p><a class="btn primary" href="https://wa.me/905521234567" target="_blank" rel="noopener">Book G5 Therapy</a></div></section>
+    <section class="section center" id="reviews"><div class="kicker">Google Reviews</div><h2>What guests say</h2><div class="testimonials"><div class="quote"><strong>Mann K</strong><div class="stars">★★★★★ • Google</div><p>"Absolutely loved my facial experience... My skin feels refreshed, glowing, and rejuvenated."</p></div><div class="quote"><strong>Rajdeep Kaur Tiwana</strong><div class="stars">★★★★★ • Google</div><p>"Excellent facial service! My skin feels fresh and glowing... highly recommended."</p></div><div class="quote"><strong>Kelsey Kobayashi</strong><div class="stars">★★★★★ • Google</div><p>"My to-go place for threading!... went above and beyond to give my skin the help it needed."</p></div></div></section>
   </main>
-
-  <footer id="contact">
-    <div class="footgrid">
-      <div><div class="foot-logo">LA SHINE<br>BEAUTY</div><p>Where beauty meets glow. Shine with confidence every day.</p><p style="font-size:24px;margin-top:12px">◎ ☏ ⌖</p></div>
-      <div><h4>Quick Links</h4><a>Home</a><a>About Us</a><a>Services</a><a>Gallery</a><a>Reviews</a><a>Contact</a></div>
-      <div><h4>Services</h4><a>Skincare</a><a>Laser Hair Removal</a><a>Nail Studio</a><a>Permanent Makeup</a><a>Body Care</a></div>
-      <div><h4>Contact Us</h4><p>📍 Mahmutlar Mah. Barbaros Cad. No: 45/A Alanya, Antalya, Türkiye</p><p>☎ +90 552 123 45 67</p><p>🌐 lashinebeauty.com</p><p>◎ @lashinebeauty_</p></div>
-      <div><h4>Newsletter</h4><p>Subscribe to get special offers and beauty tips.</p><div class="newsletter"><input placeholder="Your email address"><button>Subscribe</button></div></div>
-    </div>
-    <div class="copyright">© 2024 La Shine Beauty. All Rights Reserved.</div>
-  </footer>
+  <footer id="contact"><p>© 2026 La Shine Beauty • Mahmutlar, Alanya</p></footer>
 </body>
 </html>
-
