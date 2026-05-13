@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SETAEI Lead Dashboard</title>
+  <link rel="stylesheet" href="assets/css/lead-agent.css" />
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <h2>SETAEI</h2>
+    <a class="active" href="#leads">Leads</a>
+    <a href="#drafts">Drafts</a>
+    <a href="#settings">Settings</a>
+    <a href="#logs">Logs</a>
+  </aside>
+  <main class="main" id="app">
+    <div class="notice">Kontroller lovlighet og relevans før utsending. MVP lager kun e-postutkast (ingen auto-send).</div>
+
+    <section class="card" id="settings">
+      <h3>Import fra Brreg / CSV fallback</h3>
+      <div class="grid-2">
+        <div>
+          <label>Fra dato</label><input id="fromDate" type="date" />
+        </div>
+        <div>
+          <label>Til dato</label><input id="toDate" type="date" />
+        </div>
+      </div>
+      <div class="actions" style="margin-top:10px">
+        <button class="primary" id="fetchBrreg">Hent fra Brreg</button>
+      </div>
+      <p style="margin-top:12px">Hvis API-filter ikke gir nok data, last opp CSV eksport:</p>
+      <input id="csvFile" type="file" accept=".csv" />
+      <div class="actions" style="margin-top:10px">
+        <button class="secondary" id="importCsv">Importer CSV</button>
+      </div>
+    </section>
+
+    <section class="card" id="leads">
+      <h3>Leads</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Selskap</th><th>Org.nr</th><th>Bransje</th><th>By</th><th>Registrert</th><th>Nettside</th><th>Score</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody id="leadRows"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card" id="detail">
+      <h3>Lead-detaljer</h3>
+      <div id="leadDetail">Velg en handling for å se detaljer.</div>
+    </section>
+  </main>
+</div>
+<script src="assets/js/lead-agent.js"></script>
+</body>
+</html>
