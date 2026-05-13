@@ -31,10 +31,10 @@
       <div class="actions" style="margin-top:10px">
         <button class="primary" id="fetchBrreg">Hent fra Brreg</button>
       </div>
-      <p style="margin-top:12px">Hvis API-filter ikke gir nok data, last opp CSV eksport:</p>
-      <input id="csvFile" type="file" accept=".csv" />
+      <p style="margin-top:12px">Hvis API-filter ikke gir nok data, last opp CSV eller XLSX eksport:</p>
+      <input id="csvFile" type="file" accept=".csv,.xlsx" />
       <div class="actions" style="margin-top:10px">
-        <button class="secondary" id="importCsv">Importer CSV</button>
+        <button class="secondary" id="importCsv">Importer fil</button>
       </div>
     </section>
 
@@ -54,6 +54,7 @@
     </section>
   </main>
 </div>
+<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
 <script src="assets/js/lead-agent.js"></script>
 </body>
 </html>
