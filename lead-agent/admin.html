@@ -114,7 +114,15 @@
 <div class="modal-overlay" id="modalOverlay" style="display:none">
   <div class="modal-box">
     <h3>Send tilbud</h3>
-    <label>Emne</label>
+    <label>Mal (valgfri)</label>
+    <select id="offerTemplate">
+      <option value="">Velg mal…</option>
+      <option value="bilvask">Bilvask</option>
+      <option value="frisor">Frisør</option>
+      <option value="restaurant">Restaurant</option>
+      <option value="klinikk">Klinikk</option>
+    </select>
+    <label style="margin-top:10px">Emne</label>
     <input id="offerSubject" type="text" placeholder="E.g. Vi kan hjelpe deg med nettside" />
     <label style="margin-top:10px">Melding</label>
     <textarea id="offerMessage" rows="6" placeholder="Skriv meldingen her…"></textarea>

@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nettside for din bilvask — SETAEI</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: Inter, Arial, sans-serif; background: #f5f7fb; color: #13223a; }
+    .hero { background: #246bff; color: #fff; padding: 60px 20px; text-align: center; }
+    .hero h1 { font-size: 2rem; margin-bottom: 12px; }
+    .hero p  { font-size: 1.1rem; opacity: .9; max-width: 520px; margin: 0 auto 28px; }
+    .cta-btn { display: inline-block; background: #fff; color: #246bff; font-weight: 700; padding: 14px 32px; border-radius: 10px; text-decoration: none; font-size: 1rem; }
+    .cta-btn:hover { background: #eef3ff; }
+    .section { max-width: 680px; margin: 40px auto; padding: 0 20px; }
+    .card { background: #fff; border: 1px solid #e4e9f2; border-radius: 14px; padding: 28px; margin-bottom: 20px; }
+    .card h2 { font-size: 1.2rem; margin-bottom: 10px; }
+    .card p, .card li { font-size: .95rem; color: #44556f; line-height: 1.6; }
+    .card ul { padding-left: 18px; }
+    form { display: flex; flex-direction: column; gap: 12px; }
+    form input, form textarea { padding: 11px; border: 1px solid #e4e9f2; border-radius: 8px; font-size: .95rem; width: 100%; }
+    form textarea { resize: vertical; min-height: 90px; }
+    form button { background: #246bff; color: #fff; border: 0; border-radius: 8px; padding: 13px; font-size: 1rem; cursor: pointer; font-weight: 600; }
+    form button:hover { background: #1a55d4; }
+    #formStatus { font-size: .9rem; margin-top: 6px; }
+    footer { text-align: center; padding: 30px 20px; font-size: .85rem; color: #66758f; }
+  </style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>Få flere kunder til din bilvask</h1>
+  <p>Vi bygger enkle, raske nettsider for bilvask-bedrifter. Åpningstider, priser og booking — alt på ett sted.</p>
+  <a class="cta-btn" href="#kontakt" id="ctaBtn">Få et gratis tilbud</a>
+</div>
+
+<div class="section">
+  <div class="card">
+    <h2>Hva du får</h2>
+    <ul>
+      <li>Profesjonell nettside klar på 5 dager</li>
+      <li>Mobiloptimalisert og rask</li>
+      <li>Online booking og kontaktskjema</li>
+      <li>Synlighet på Google Maps og søk</li>
+      <li>Ingen bindingstid</li>
+    </ul>
+  </div>
+
+  <div class="card" id="kontakt">
+    <h2>Kontakt oss</h2>
+    <form id="contactForm">
+      <input type="text"  name="name"    placeholder="Navn / firmanavn" required />
+      <input type="tel"   name="phone"   placeholder="Telefon" />
+      <input type="email" name="email"   placeholder="E-post" required />
+      <textarea           name="message" placeholder="Kort beskrivelse av bedriften…"></textarea>
+      <button type="submit">Send forespørsel</button>
+      <div id="formStatus"></div>
+    </form>
+  </div>
+</div>
+
+<footer>SETAEI &mdash; ks@setai.no</footer>
+
+<script>
+  const TRACK = '/lead-agent/api/landing-track.php';
+  const PAGE  = 'bilvask';
+
+  function track(event) {
+    fetch(TRACK, { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ page: PAGE, event }) }).catch(() => {});
+  }
+
+  // Track visit
+  track('visit');
+
+  // Track CTA click
+  document.getElementById('ctaBtn').addEventListener('click', () => track('cta_click'));
+
+  // Track form submit
+  document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    track('form_submit');
+    document.getElementById('formStatus').innerHTML = '<span style="color:#1e9b62">Takk! Vi tar kontakt innen 24 timer.</span>';
+    this.querySelectorAll('input,textarea,button').forEach(el => el.disabled = true);
+  });
+</script>
+</body>
+</html>

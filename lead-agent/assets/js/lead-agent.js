@@ -1,5 +1,16 @@
 const LEAD_AGENT_ADMIN_TOKEN = 'change-me-in-production';
 
+const OFFER_TEMPLATES = {
+  bilvask:    { subject: 'Profesjonell nettside for din bilvask', cta: 'https://setai.no/tilbud/bilvask',
+    message: 'Hei!\n\nVi har lagt merke til at dere ikke har en moderne nettside ennå.\n\nVi hjelper lokale bilvask-bedrifter med å få flere kunder via nett. Åpningstider, priser og bestilling — alt på ett sted.\n\nKan vi ta en kort prat?\n\nMvh\nKhabat — SETAEI' },
+  frisor:     { subject: 'Mer kunder til din salong', cta: 'https://setai.no/tilbud',
+    message: 'Hei!\n\nVi hjelper frisørsalonger med enkel online booking og nettsynlighet.\n\nIngen teknisk kompetanse kreves — vi setter opp alt.\n\nInteressert i en gratis demo?\n\nMvh\nKhabat — SETAEI' },
+  restaurant: { subject: 'Få flere bordreservasjoner på nett', cta: 'https://setai.no/tilbud',
+    message: 'Hei!\n\nVi hjelper restauranter med å ta imot reservasjoner og vise meny på nett.\n\nRask oppsett, lokalt fokus, ingen bindingstid.\n\nVil du høre mer?\n\nMvh\nKhabat — SETAEI' },
+  klinikk:    { subject: 'Enkel timebestilling for din klinikk', cta: 'https://setai.no/tilbud',
+    message: 'Hei!\n\nVi hjelper klinikker med digital timebestilling og synlighet på nett.\n\nKlientene kan booke 24/7 — uten at du trenger å svare telefon.\n\nTa kontakt for en gratis gjennomgang!\n\nMvh\nKhabat — SETAEI' }
+};
+
 const api = (path, options={}) => {
   const headers = {
     ...(options.headers || {}),
@@ -13,7 +24,16 @@ const api = (path, options={}) => {
 };
 
 function statusBadge(status='new'){ return `<span class="badge status-${status}">${status}</span>`; }
-function websiteText(row){ return row.has_website ? (row.website_url || 'Ja') : 'Ingen'; }
+function websiteText(row) {
+  if (!row.has_website) return 'Ingen';
+  const cms = (row.website_cms || '').toLowerCase();
+  let badges = '';
+  if      (cms === 'wordpress') badges += ' <span class="badge cms-wp">WP</span>';
+  else if (cms === 'wix')       badges += ' <span class="badge cms-wix">Wix</span>';
+  else if (cms === 'shopify')   badges += ' <span class="badge cms-shopify">Shopify</span>';
+  if (row.website_has_ssl === 0 || row.website_has_ssl === '0') badges += ' <span class="badge no-ssl">No SSL</span>';
+  return 'Ja' + badges;
+}
 function emailBadge(row) {
   return row.contact_email
     ? `<span class="badge email-yes" title="${row.contact_email}">${row.contact_email}</span>`
@@ -137,10 +157,19 @@ async function researchLead(id) {
   detail.innerHTML = '<div class="notice">Henter data fra nettside…</div>';
   try {
     const res = await api('research-lead.php', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({lead_id:id})});
-    const f = res.found || {};
-    detail.innerHTML = res.cached
-      ? `<div class="notice">Allerede researched nylig. E-post: ${res.email || '—'} Tlf: ${res.phone || '—'}</div>`
-      : `<div class="notice">Research fullført: e-post=${f.contact_email||'—'} tlf=${f.contact_phone||'—'} fb=${f.facebook_url||'—'} ig=${f.instagram_url||'—'}</div>`;
+    if (res.cached) {
+      detail.innerHTML = `<div class="notice">Allerede researched nylig. E-post: ${res.email||'—'}</div>`;
+    } else {
+      const f = res.found || {};
+      const w = res.website || {};
+      const flags = w.flags || {};
+      detail.innerHTML = `<div class="notice">
+        <strong>Research fullført</strong> (score: ${res.score ?? '—'})<br>
+        E-post: ${f.contact_email||'—'} &nbsp;|&nbsp; Tlf: ${f.contact_phone||'—'}<br>
+        CMS: ${w.cms||'—'} &nbsp;|&nbsp; SSL: ${w.has_ssl ? '✓' : '✗'} &nbsp;|&nbsp;
+        Mobiloptimert: ${flags.mobile_friendly ? '✓' : '✗'} &nbsp;|&nbsp; Booking: ${flags.has_booking ? '✓' : '✗'}
+      </div>`;
+    }
     loadLeads(getFilters());
   } catch(err) {
     detail.innerHTML = `<div class="notice">Research feilet: ${err.message}</div>`;
@@ -218,6 +247,7 @@ function openSendModal() {
   const sendBtn = document.getElementById('modalSend');
   sendBtn.disabled = withEmail.length === 0;
 
+  document.getElementById('offerTemplate').value   = '';
   document.getElementById('offerSubject').value    = '';
   document.getElementById('offerMessage').value    = '';
   document.getElementById('offerCta').value        = '';
@@ -265,6 +295,13 @@ document.getElementById('btnSendTilbud').addEventListener('click', openSendModal
 document.getElementById('modalCancel').addEventListener('click', closeSendModal);
 document.getElementById('modalSend').addEventListener('click', sendOffer);
 document.getElementById('modalOverlay').addEventListener('click', (e) => { if (e.target === document.getElementById('modalOverlay')) closeSendModal(); });
+document.getElementById('offerTemplate').addEventListener('change', function() {
+  const tpl = OFFER_TEMPLATES[this.value];
+  if (!tpl) return;
+  document.getElementById('offerSubject').value = tpl.subject;
+  document.getElementById('offerMessage').value = tpl.message;
+  document.getElementById('offerCta').value     = tpl.cta;
+});
 
 // --- Sendte tilbud tab ---
 async function loadSentOffers() {
@@ -277,6 +314,7 @@ async function loadSentOffers() {
       if (r.clicked_at) status = 'clicked';
       else if (r.opened_at) status = 'opened';
       const statusColor = status === 'clicked' ? 'var(--success)' : status === 'opened' ? 'var(--primary)' : status === 'failed' ? 'var(--danger)' : 'var(--muted)';
+      const smtpDetail = r.last_error ? `<br><small style="color:var(--danger)">${r.last_error}</small>` : (r.smtp_response === 'OK' ? '' : '');
       return `<tr>
         <td>${r.company_name || '—'}</td>
         <td>${r.email || '—'}</td>
@@ -284,7 +322,7 @@ async function loadSentOffers() {
         <td>${r.sent_at || ''}</td>
         <td>${r.opened_at || '—'}</td>
         <td>${r.clicked_at || '—'}</td>
-        <td><span style="font-weight:600;color:${statusColor}">${status}</span></td>
+        <td><span style="font-weight:600;color:${statusColor}">${status}</span>${smtpDetail}</td>
       </tr>`;
     }).join('') : '<tr><td colspan="7" style="color:var(--muted)">Ingen sendte tilbud ennå.</td></tr>';
   } catch (err) {
@@ -310,8 +348,8 @@ document.getElementById('btnSendTestEmail').addEventListener('click', async () =
   try {
     const res = await api('send-test-email.php', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({to_email:to, subject, message})});
     status.innerHTML = res.ok
-      ? `<span style="color:var(--success)">Testmail sendt til ${to}.</span>`
-      : `<span style="color:var(--danger)">Feil: ${res.error}</span>`;
+      ? `<span style="color:var(--success)">Testmail sendt til ${to}. ${res.response_ms}ms via ${res.smtp_host||'SMTP'}</span>`
+      : `<span style="color:var(--danger)">Feil: ${res.error} (${res.response_ms}ms)</span>`;
   } catch(err) {
     status.innerHTML = `<span style="color:var(--danger)">Feil: ${err.message}</span>`;
   } finally {

@@ -12,7 +12,9 @@ $rows = $pdo->query("
         sor.email,
         sor.opened_at,
         sor.clicked_at,
-        sor.send_status
+        sor.send_status,
+        sor.smtp_response,
+        sor.last_error
     FROM sent_offer_recipients sor
     JOIN sent_offers so ON so.id = sor.offer_id
     ORDER BY so.sent_at DESC, sor.id DESC

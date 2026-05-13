@@ -25,6 +25,8 @@ if (!$subject || !$message) {
     exit;
 }
 
+$t0 = microtime(true);
+
 try {
     $mail = new PHPMailer(true);
     if (MAIL_HOST) {
@@ -44,7 +46,9 @@ try {
     $mail->Subject = $subject;
     $mail->Body    = $message;
     $mail->send();
-    echo json_encode(['ok' => true]);
+    $ms = (int)round((microtime(true) - $t0) * 1000);
+    echo json_encode(['ok' => true, 'response_ms' => $ms, 'smtp_host' => MAIL_HOST ?: 'mail()']);
 } catch (Exception $e) {
-    echo json_encode(['ok' => false, 'error' => $mail->ErrorInfo]);
+    $ms = (int)round((microtime(true) - $t0) * 1000);
+    echo json_encode(['ok' => false, 'error' => $mail->ErrorInfo, 'response_ms' => $ms]);
 }

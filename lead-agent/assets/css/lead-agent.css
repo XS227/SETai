@@ -48,6 +48,12 @@ pre { white-space: pre-wrap; background: #f8fafe; padding: 10px; border-radius: 
 .email-yes { background: #e2f8ec; color: #10613a; font-size: 11px; }
 .email-no  { background: #f0f2f5; color: #66758f; font-size: 11px; }
 
+/* Website / CMS badges */
+.cms-wp      { background: #e8f4ff; color: #1b69b6; font-size: 11px; }
+.cms-wix     { background: #fff4e0; color: #8a5c00; font-size: 11px; }
+.cms-shopify { background: #e8faf0; color: #277047; font-size: 11px; }
+.no-ssl      { background: #ffe4e4; color: #a52b2b; font-size: 11px; }
+
 /* Bulk action bar */
 .bulk-bar { display: flex; align-items: center; gap: 12px; background: #eef3ff; border: 1px solid #c5d4ff; border-radius: 8px; padding: 8px 14px; margin-bottom: 10px; }
 .bulk-bar span { font-weight: 600; color: var(--primary); }
