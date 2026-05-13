@@ -39,8 +39,14 @@ textarea, input, select { width: 100%; padding: 9px; border: 1px solid var(--lin
 pre { white-space: pre-wrap; background: #f8fafe; padding: 10px; border-radius: 8px; border: 1px solid var(--line); }
 
 /* Filter bar */
-.filter-bar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
-.filter-bar input, .filter-bar select { width: auto; flex: 1; min-width: 120px; }
+.filter-bar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 10px; }
+.filter-bar select { width: auto; flex: 1; min-width: 120px; }
+.filter-check { display: flex; align-items: center; gap: 5px; font-size: 13px; white-space: nowrap; cursor: pointer; }
+.filter-check input { width: auto; padding: 0; }
+
+/* Email badges */
+.email-yes { background: #e2f8ec; color: #10613a; font-size: 11px; }
+.email-no  { background: #f0f2f5; color: #66758f; font-size: 11px; }
 
 /* Bulk action bar */
 .bulk-bar { display: flex; align-items: center; gap: 12px; background: #eef3ff; border: 1px solid #c5d4ff; border-radius: 8px; padding: 8px 14px; margin-bottom: 10px; }

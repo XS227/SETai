@@ -42,14 +42,17 @@
     <section class="card" id="leads">
       <h3>Leads</h3>
       <div class="filter-bar">
-        <input id="filterIndustry" type="text" placeholder="Bransje…" />
-        <input id="filterCity" type="text" placeholder="By…" />
-        <input id="filterMinScore" type="number" min="0" max="100" placeholder="Min score" />
-        <select id="filterWebsite">
-          <option value="">Nettside (alle)</option>
-          <option value="yes">Har nettside</option>
-          <option value="no">Ingen nettside</option>
+        <select id="filterIndustry"><option value="">Alle bransjer</option></select>
+        <select id="filterCity"><option value="">Alle byer</option></select>
+        <select id="filterMinScore">
+          <option value="">Alle score</option>
+          <option value="20">Min 20</option>
+          <option value="40">Min 40</option>
+          <option value="60">Min 60</option>
+          <option value="80">Min 80</option>
         </select>
+        <label class="filter-check"><input type="checkbox" id="filterHasEmail" /> Har e-post</label>
+        <label class="filter-check"><input type="checkbox" id="filterHasWebsite" /> Har nettside</label>
         <button class="secondary" id="applyFilters">Filtrer</button>
         <button class="secondary" id="clearFilters">Nullstill</button>
       </div>
@@ -61,7 +64,7 @@
         <table>
           <thead><tr>
             <th><input type="checkbox" id="selectAll" /></th>
-            <th>Selskap</th><th>Org.nr</th><th>Bransje</th><th>By</th><th>Registrert</th><th>Nettside</th><th>Score</th><th>Status</th><th>Actions</th>
+            <th>Selskap</th><th>Org.nr</th><th>Bransje</th><th>By</th><th>Registrert</th><th>Nettside</th><th>E-post</th><th>Score</th><th>Status</th><th>Actions</th>
           </tr></thead>
           <tbody id="leadRows"></tbody>
         </table>
@@ -78,7 +81,7 @@
       <div class="table-wrap">
         <table>
           <thead><tr>
-            <th>Sendt</th><th>Emne</th><th>Mottakere</th><th>Åpnet</th><th>Klikket</th>
+            <th>Selskap</th><th>E-post</th><th>Emne</th><th>Sendt</th><th>Åpnet</th><th>Klikket</th><th>Status</th>
           </tr></thead>
           <tbody id="sentOffersRows"></tbody>
         </table>

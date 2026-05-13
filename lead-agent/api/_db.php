@@ -9,6 +9,7 @@ function db(): PDO {
   $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   $pdo->exec(file_get_contents(__DIR__ . '/../sql/001_lead_agent.sql'));
   $pdo->exec(file_get_contents(__DIR__ . '/../sql/002_sent_offers.sql'));
+  try { $pdo->exec('ALTER TABLE leads ADD COLUMN researched_at TEXT'); } catch (PDOException $e) { /* already exists */ }
   return $pdo;
 }
 

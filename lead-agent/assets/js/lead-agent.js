@@ -14,6 +14,11 @@ const api = (path, options={}) => {
 
 function statusBadge(status='new'){ return `<span class="badge status-${status}">${status}</span>`; }
 function websiteText(row){ return row.has_website ? (row.website_url || 'Ja') : 'Ingen'; }
+function emailBadge(row) {
+  return row.contact_email
+    ? `<span class="badge email-yes" title="${row.contact_email}">${row.contact_email}</span>`
+    : '<span class="badge email-no">No email</span>';
+}
 
 // --- Selection state ---
 const selectedIds = new Set();
@@ -33,10 +38,11 @@ function updateBulkBar() {
 // --- Load leads with optional filters ---
 async function loadLeads(filters={}) {
   const params = new URLSearchParams();
-  if (filters.industry)   params.set('industry',    filters.industry);
-  if (filters.city)       params.set('city',         filters.city);
-  if (filters.min_score)  params.set('min_score',    filters.min_score);
-  if (filters.has_website)params.set('has_website',  filters.has_website);
+  if (filters.industry)    params.set('industry',    filters.industry);
+  if (filters.city)        params.set('city',        filters.city);
+  if (filters.min_score)   params.set('min_score',   filters.min_score);
+  if (filters.has_email)   params.set('has_email',   filters.has_email);
+  if (filters.has_website) params.set('has_website', filters.has_website);
 
   const qs = params.toString() ? '?' + params.toString() : '';
   const res = await api('list-leads.php' + qs);
@@ -47,6 +53,7 @@ async function loadLeads(filters={}) {
       <td><input type="checkbox" class="lead-check" data-id="${row.id}" ${selectedIds.has(row.id) ? 'checked' : ''} /></td>
       <td>${row.company_name||''}</td><td>${row.org_number||''}</td><td>${row.industry_name||''}</td>
       <td>${row.city||''}</td><td>${row.registration_date||''}</td><td>${websiteText(row)}</td>
+      <td>${emailBadge(row)}</td>
       <td>${row.lead_score ?? '-'}</td><td>${statusBadge(row.lead_status)}</td>
       <td class="actions">
         <button class="secondary" onclick="researchLead(${row.id})">Research</button>
@@ -58,7 +65,6 @@ async function loadLeads(filters={}) {
     </tr>
   `).join('');
 
-  // Per-row checkbox listeners
   tbody.querySelectorAll('.lead-check').forEach(cb => {
     cb.addEventListener('change', () => {
       const id = parseInt(cb.dataset.id);
@@ -81,7 +87,6 @@ function syncSelectAll() {
   chk.indeterminate = checkedCount > 0 && checkedCount < all.length;
 }
 
-// Select all checkbox
 document.getElementById('selectAll').addEventListener('change', function() {
   document.querySelectorAll('.lead-check').forEach(cb => {
     const id = parseInt(cb.dataset.id);
@@ -94,24 +99,54 @@ document.getElementById('selectAll').addEventListener('change', function() {
 // --- Filters ---
 function getFilters() {
   return {
-    industry:    document.getElementById('filterIndustry').value.trim(),
-    city:        document.getElementById('filterCity').value.trim(),
-    min_score:   document.getElementById('filterMinScore').value.trim(),
-    has_website: document.getElementById('filterWebsite').value
+    industry:    document.getElementById('filterIndustry').value,
+    city:        document.getElementById('filterCity').value,
+    min_score:   document.getElementById('filterMinScore').value,
+    has_email:   document.getElementById('filterHasEmail').checked   ? 'yes' : '',
+    has_website: document.getElementById('filterHasWebsite').checked ? 'yes' : ''
   };
+}
+
+async function populateFilterOptions() {
+  try {
+    const res = await api('filter-options.php');
+    const indSel  = document.getElementById('filterIndustry');
+    const citySel = document.getElementById('filterCity');
+    (res.industries || []).forEach(v => {
+      const o = document.createElement('option'); o.value = v; o.textContent = v; indSel.appendChild(o);
+    });
+    (res.cities || []).forEach(v => {
+      const o = document.createElement('option'); o.value = v; o.textContent = v; citySel.appendChild(o);
+    });
+  } catch(e) { /* non-critical */ }
 }
 
 document.getElementById('applyFilters').addEventListener('click', () => loadLeads(getFilters()));
 document.getElementById('clearFilters').addEventListener('click', () => {
-  document.getElementById('filterIndustry').value = '';
-  document.getElementById('filterCity').value = '';
-  document.getElementById('filterMinScore').value = '';
-  document.getElementById('filterWebsite').value = '';
+  document.getElementById('filterIndustry').value   = '';
+  document.getElementById('filterCity').value       = '';
+  document.getElementById('filterMinScore').value   = '';
+  document.getElementById('filterHasEmail').checked   = false;
+  document.getElementById('filterHasWebsite').checked = false;
   loadLeads();
 });
 
-// --- Existing actions (unchanged) ---
-async function researchLead(id){ const res = await api('research-lead.php', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({lead_id:id})}); document.getElementById('leadDetail').innerHTML = `<pre>${JSON.stringify(res, null, 2)}</pre>`; loadLeads(getFilters()); }
+// --- Lead actions ---
+async function researchLead(id) {
+  const detail = document.getElementById('leadDetail');
+  detail.innerHTML = '<div class="notice">Henter data fra nettside…</div>';
+  try {
+    const res = await api('research-lead.php', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({lead_id:id})});
+    const f = res.found || {};
+    detail.innerHTML = res.cached
+      ? `<div class="notice">Allerede researched nylig. E-post: ${res.email || '—'} Tlf: ${res.phone || '—'}</div>`
+      : `<div class="notice">Research fullført: e-post=${f.contact_email||'—'} tlf=${f.contact_phone||'—'} fb=${f.facebook_url||'—'} ig=${f.instagram_url||'—'}</div>`;
+    loadLeads(getFilters());
+  } catch(err) {
+    detail.innerHTML = `<div class="notice">Research feilet: ${err.message}</div>`;
+  }
+}
+
 async function genEmail(id){ const res = await api('generate-email.php', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({lead_id:id, tone:'vennlig'})}); document.getElementById('leadDetail').innerHTML = `<h4>${res.subject||''}</h4><pre>${res.body||''}</pre>`; loadLeads(getFilters()); }
 async function updateStatus(id,status){ const res = await api('update-lead-status.php', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({lead_id:id,status})}); document.getElementById('leadDetail').innerHTML = `<pre>${JSON.stringify(res, null, 2)}</pre>`; loadLeads(getFilters()); }
 
@@ -119,10 +154,8 @@ async function fetchBrreg(){
   const btn = document.getElementById('fetchBrreg');
   const detail = document.getElementById('leadDetail');
   const original = btn.textContent;
-  btn.disabled = true;
-  btn.textContent = 'Henter…';
+  btn.disabled = true; btn.textContent = 'Henter…';
   detail.innerHTML = '<div class="notice">Henter data fra Brreg…</div>';
-
   try {
     const payload={from_date:document.getElementById('fromDate').value,to_date:document.getElementById('toDate').value};
     const res=await api('brreg-fetch.php',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
@@ -131,8 +164,7 @@ async function fetchBrreg(){
   } catch (err) {
     detail.innerHTML = `<div class="notice">Feil ved Brreg-import: ${err.message || err}</div>`;
   } finally {
-    btn.disabled = false;
-    btn.textContent = original;
+    btn.disabled = false; btn.textContent = original;
   }
 }
 
@@ -140,27 +172,14 @@ async function importCsv(){
   const input = document.getElementById('csvFile');
   const file = input.files[0];
   if (!file) return alert('Velg CSV- eller XLSX-fil');
-
   try {
     const rows = await parseImportFile(file);
-    if (!rows.length) {
-      document.getElementById('leadDetail').innerHTML = '<div class="notice">Ingen rader funnet i filen.</div>';
-      return;
-    }
-
+    if (!rows.length) { document.getElementById('leadDetail').innerHTML = '<div class="notice">Ingen rader funnet i filen.</div>'; return; }
     const leads = rows.map(normalizeLeadRow).filter((row) => row.org_number || row.company_name);
-    if (!leads.length) {
-      document.getElementById('leadDetail').innerHTML = '<div class="notice">Kunne ikke tolke kolonner. Sjekk at filen inneholder Brreg-felter.</div>';
-      return;
-    }
-
+    if (!leads.length) { document.getElementById('leadDetail').innerHTML = '<div class="notice">Kunne ikke tolke kolonner. Sjekk at filen inneholder Brreg-felter.</div>'; return; }
     const source = file.name.toLowerCase().endsWith('.xlsx') ? 'xlsx_upload' : 'csv_upload';
     const res=await api('save-lead.php',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({bulk:leads,source})});
-    if (res.ok) {
-      document.getElementById('leadDetail').innerHTML = `<div class="notice">Import fullført: lagret ${res.saved||0} leads fra ${file.name}.</div>`;
-      loadLeads(getFilters());
-      return;
-    }
+    if (res.ok) { document.getElementById('leadDetail').innerHTML = `<div class="notice">Import fullført: lagret ${res.saved||0} leads fra ${file.name}.</div>`; loadLeads(getFilters()); return; }
     document.getElementById('leadDetail').innerHTML = `<div class="notice">Import feilet: ${res.error || 'ukjent feil'}</div><pre>${JSON.stringify(res,null,2)}</pre>`;
   } catch (err) {
     document.getElementById('leadDetail').innerHTML = `<div class="notice">Import feilet: ${err.message || err}</div>`;
@@ -173,37 +192,36 @@ async function parseImportFile(file){ if (file.name.toLowerCase().endsWith('.xls
 
 function setDefaultDates(){
   const from = document.getElementById('fromDate');
-  const to = document.getElementById('toDate');
-  const today = new Date();
-  const monthAgo = new Date();
+  const to   = document.getElementById('toDate');
+  const today = new Date(), monthAgo = new Date();
   monthAgo.setDate(today.getDate() - 30);
-  to.value = today.toISOString().slice(0,10);
+  to.value   = today.toISOString().slice(0,10);
   from.value = monthAgo.toISOString().slice(0,10);
 }
 
 // --- Send tilbud modal ---
 function openSendModal() {
-  const ids = [...selectedIds];
+  const ids      = [...selectedIds];
   if (!ids.length) return;
-
-  const selected = leadsData.filter(l => ids.includes(l.id));
-  const noEmail  = selected.filter(l => !l.contact_email);
+  const selected  = leadsData.filter(l => ids.includes(l.id));
+  const withEmail = selected.filter(l => l.contact_email && l.contact_email.includes('@'));
+  const noEmail   = selected.filter(l => !l.contact_email || !l.contact_email.includes('@'));
 
   const recDiv = document.getElementById('modalRecipients');
-  let html = `<p>${selected.length} mottaker(e) valgt</p>`;
+  let html = `<p><strong>${withEmail.length}</strong> vil motta e-post. <strong>${noEmail.length}</strong> hoppes over (ingen e-post).</p>`;
   html += selected.map(l => {
-    const warn = l.contact_email ? '' : ' <em style="color:var(--warning)">(ingen e-post — hoppes over)</em>';
+    const warn = l.contact_email ? '' : ' <em style="color:var(--warning)">(ingen e-post)</em>';
     return `<div>${l.company_name || l.org_number}${warn}</div>`;
   }).join('');
-  if (noEmail.length) {
-    html += `<p style="color:var(--warning);margin-top:6px">${noEmail.length} lead(s) uten e-post hoppes over.</p>`;
-  }
   recDiv.innerHTML = html;
 
-  document.getElementById('offerSubject').value  = '';
-  document.getElementById('offerMessage').value  = '';
-  document.getElementById('offerCta').value      = '';
-  document.getElementById('offerConfirm').checked = false;
+  const sendBtn = document.getElementById('modalSend');
+  sendBtn.disabled = withEmail.length === 0;
+
+  document.getElementById('offerSubject').value    = '';
+  document.getElementById('offerMessage').value    = '';
+  document.getElementById('offerCta').value        = '';
+  document.getElementById('offerConfirm').checked  = false;
   document.getElementById('modalStatus').textContent = '';
   document.getElementById('modalOverlay').style.display = 'flex';
 }
@@ -213,35 +231,33 @@ function closeSendModal() {
 }
 
 async function sendOffer() {
-  const subject = document.getElementById('offerSubject').value.trim();
-  const message = document.getElementById('offerMessage').value.trim();
-  const cta_link = document.getElementById('offerCta').value.trim();
+  const subject   = document.getElementById('offerSubject').value.trim();
+  const message   = document.getElementById('offerMessage').value.trim();
+  const cta_link  = document.getElementById('offerCta').value.trim();
   const confirmed = document.getElementById('offerConfirm').checked;
-  const statusEl = document.getElementById('modalStatus');
+  const statusEl  = document.getElementById('modalStatus');
 
   if (!subject || !message) { statusEl.textContent = 'Emne og melding er påkrevd.'; return; }
   if (!confirmed)           { statusEl.textContent = 'Bekreft at utsendingen er gjennomgått.'; return; }
 
   const btn = document.getElementById('modalSend');
-  btn.disabled = true;
-  btn.textContent = 'Sender…';
+  btn.disabled = true; btn.textContent = 'Sender…';
   statusEl.textContent = '';
 
   try {
-    const res = await api('send-offer.php', {
+    const res = await api('send-offers.php', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({subject, message, cta_link, lead_ids: [...selectedIds]})
     });
-    statusEl.innerHTML = `<span style="color:var(--success)">Sendt til ${res.sent} mottaker(e).${res.skipped ? ` ${res.skipped} hoppet over (ingen e-post).` : ''}${res.failed ? ` ${res.failed} feilet.` : ''}</span>`;
+    statusEl.innerHTML = `<span style="color:var(--success)">Sendt til ${res.sent} mottaker(e).${res.skipped ? ` ${res.skipped} hoppet over.` : ''}${res.failed ? ` ${res.failed} feilet.` : ''}</span>`;
     selectedIds.clear();
     updateBulkBar();
     loadLeads(getFilters());
   } catch (err) {
     statusEl.innerHTML = `<span style="color:var(--danger)">Feil: ${err.message}</span>`;
   } finally {
-    btn.disabled = false;
-    btn.textContent = 'Send';
+    btn.disabled = false; btn.textContent = 'Send';
   }
 }
 
@@ -252,22 +268,27 @@ document.getElementById('modalOverlay').addEventListener('click', (e) => { if (e
 
 // --- Sendte tilbud tab ---
 async function loadSentOffers() {
-  const section = document.getElementById('sent-offers');
-  section.style.display = 'block';
+  document.getElementById('sent-offers').style.display = 'block';
   try {
-    const res = await api('list-sent-offers.php');
-    const offers = res.offers || [];
-    document.getElementById('sentOffersRows').innerHTML = offers.length ? offers.map(o => `
-      <tr>
-        <td>${o.sent_at || ''}</td>
-        <td>${o.subject || ''}</td>
-        <td>${o.sent_count || 0}</td>
-        <td>${o.opened || 0}</td>
-        <td>${o.clicked || 0}</td>
-      </tr>
-    `).join('') : '<tr><td colspan="5" style="color:var(--muted)">Ingen sendte tilbud ennå.</td></tr>';
+    const res  = await api('list-sent-offers.php');
+    const rows = res.rows || [];
+    document.getElementById('sentOffersRows').innerHTML = rows.length ? rows.map(r => {
+      let status = r.send_status;
+      if (r.clicked_at) status = 'clicked';
+      else if (r.opened_at) status = 'opened';
+      const statusColor = status === 'clicked' ? 'var(--success)' : status === 'opened' ? 'var(--primary)' : status === 'failed' ? 'var(--danger)' : 'var(--muted)';
+      return `<tr>
+        <td>${r.company_name || '—'}</td>
+        <td>${r.email || '—'}</td>
+        <td>${r.subject || ''}</td>
+        <td>${r.sent_at || ''}</td>
+        <td>${r.opened_at || '—'}</td>
+        <td>${r.clicked_at || '—'}</td>
+        <td><span style="font-weight:600;color:${statusColor}">${status}</span></td>
+      </tr>`;
+    }).join('') : '<tr><td colspan="7" style="color:var(--muted)">Ingen sendte tilbud ennå.</td></tr>';
   } catch (err) {
-    document.getElementById('sentOffersRows').innerHTML = `<tr><td colspan="5" style="color:var(--danger)">Feil: ${err.message}</td></tr>`;
+    document.getElementById('sentOffersRows').innerHTML = `<tr><td colspan="7" style="color:var(--danger)">Feil: ${err.message}</td></tr>`;
   }
 }
 
@@ -277,10 +298,11 @@ document.getElementById('tabSentOffers').addEventListener('click', (e) => {
   document.getElementById('sent-offers').scrollIntoView({behavior: 'smooth'});
 });
 
-// --- Wiring ---
+// --- Init ---
 document.getElementById('fetchBrreg').addEventListener('click', fetchBrreg);
 document.getElementById('importCsv').addEventListener('click', importCsv);
 setDefaultDates();
+populateFilterOptions();
 loadLeads();
 
 window.researchLead = researchLead;
