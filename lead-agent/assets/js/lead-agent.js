@@ -298,6 +298,27 @@ document.getElementById('tabSentOffers').addEventListener('click', (e) => {
   document.getElementById('sent-offers').scrollIntoView({behavior: 'smooth'});
 });
 
+// --- Test email ---
+document.getElementById('btnSendTestEmail').addEventListener('click', async () => {
+  const btn    = document.getElementById('btnSendTestEmail');
+  const status = document.getElementById('testEmailStatus');
+  const to      = document.getElementById('testTo').value.trim();
+  const subject = document.getElementById('testSubject').value.trim();
+  const message = document.getElementById('testMessage').value.trim();
+  if (!to || !subject || !message) { status.innerHTML = '<span style="color:var(--danger)">Fyll inn alle felt.</span>'; return; }
+  btn.disabled = true; btn.textContent = 'Sender…'; status.textContent = '';
+  try {
+    const res = await api('send-test-email.php', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({to_email:to, subject, message})});
+    status.innerHTML = res.ok
+      ? `<span style="color:var(--success)">Testmail sendt til ${to}.</span>`
+      : `<span style="color:var(--danger)">Feil: ${res.error}</span>`;
+  } catch(err) {
+    status.innerHTML = `<span style="color:var(--danger)">Feil: ${err.message}</span>`;
+  } finally {
+    btn.disabled = false; btn.textContent = 'Send testmail';
+  }
+});
+
 // --- Init ---
 document.getElementById('fetchBrreg').addEventListener('click', fetchBrreg);
 document.getElementById('importCsv').addEventListener('click', importCsv);

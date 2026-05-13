@@ -39,6 +39,26 @@
       </div>
     </section>
 
+    <section class="card" id="test-email">
+      <h3>Send testmail</h3>
+      <div class="grid-2">
+        <div>
+          <label>Mottaker e-post</label>
+          <input id="testTo" type="email" placeholder="din@epost.no" />
+        </div>
+        <div>
+          <label>Emne</label>
+          <input id="testSubject" type="text" value="Test fra SETAEI Lead Agent" />
+        </div>
+      </div>
+      <label style="margin-top:10px;display:block">Melding</label>
+      <textarea id="testMessage" rows="3">Dette er en testmail sendt fra SETAEI Lead Agent.</textarea>
+      <div class="actions" style="margin-top:10px">
+        <button class="secondary" id="btnSendTestEmail">Send testmail</button>
+      </div>
+      <div id="testEmailStatus" style="margin-top:8px;font-size:13px"></div>
+    </section>
+
     <section class="card" id="leads">
       <h3>Leads</h3>
       <div class="filter-bar">
