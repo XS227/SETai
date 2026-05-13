@@ -20,6 +20,8 @@ function db(): PDO {
     'ALTER TABLE leads ADD COLUMN research_notes TEXT',
     'ALTER TABLE sent_offer_recipients ADD COLUMN smtp_response TEXT',
     'ALTER TABLE sent_offer_recipients ADD COLUMN last_error TEXT',
+    'ALTER TABLE sent_offer_recipients ADD COLUMN manual_status TEXT',
+    'ALTER TABLE email_drafts ADD COLUMN cta_link TEXT',
   ];
   foreach ($alters as $sql) {
     try { $pdo->exec($sql); } catch (PDOException $e) { /* column already exists */ }

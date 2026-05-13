@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SETAEI — Drafts</title>
+  <title>SETAEI — E-postutkast</title>
   <link rel="stylesheet" href="assets/css/lead-agent.css" />
   <script src="assets/js/access.js"></script>
 </head>
@@ -16,10 +16,24 @@
   <a href="settings.html">Settings</a>
   <a href="logs.html">Logs</a>
 </nav>
+
+<!-- Draft detail panel -->
+<div class="preview-overlay" id="draftOverlay"></div>
+<aside class="preview-panel" id="draftPanel">
+  <div class="preview-header">
+    <span class="preview-title" id="draftPanelTitle">Utkast</span>
+    <button class="preview-close" id="draftPanelClose">&times;</button>
+  </div>
+  <div class="preview-body" id="draftPanelBody">
+    <p style="color:var(--muted)">Klikk på et utkast for å åpne det.</p>
+  </div>
+</aside>
+
 <main class="main">
   <section class="card">
     <div class="section-header">
       <h3>E-postutkast</h3>
+      <button class="secondary btn-sm" onclick="loadDrafts()">Oppdater</button>
     </div>
     <div class="table-wrap">
       <table>
@@ -31,33 +45,190 @@
     </div>
   </section>
 </main>
+
 <script>
-window.LA_READY.then(function () {
-  const token = window.LA_TOKEN;
-  const api = (path) => fetch('api/' + path, {headers:{'X-Lead-Agent-Token': token}}).then(r => r.json());
+const TOKEN = window.LA_TOKEN;
+const post  = (path, body) => fetch('api/' + path, {
+  method: 'POST',
+  headers: {'Content-Type':'application/json','X-Lead-Agent-Token':TOKEN},
+  body: JSON.stringify(body)
+}).then(r => r.json());
 
-  const STATUS_LABELS = { draft: 'Utkast', approved: 'Godkjent', sent: 'Sendt' };
+const STATUS_LABELS = { draft: 'Utkast', approved: 'Godkjent', sent: 'Sendt' };
+const STATUS_CLASS  = { draft: 'status-new', approved: 'status-approved', sent: 'status-contacted' };
 
-  api('list-drafts.php').then(function (res) {
-    const rows = res.drafts || [];
-    const tbody = document.getElementById('draftRows');
-    if (!rows.length) {
-      tbody.innerHTML = '<tr><td colspan="7" style="color:var(--muted)">Ingen utkast ennå.</td></tr>';
-      return;
+let allDrafts = [];
+let currentDraft = null;
+
+function closeDraftPanel() {
+  document.getElementById('draftPanel').classList.remove('open');
+  document.getElementById('draftOverlay').classList.remove('open');
+}
+
+function openDraftPanel(draft) {
+  currentDraft = draft;
+  document.getElementById('draftPanelTitle').textContent = draft.company_name || 'Utkast';
+  renderDraftPanel(draft);
+  document.getElementById('draftPanel').classList.add('open');
+  document.getElementById('draftOverlay').classList.add('open');
+}
+
+function renderDraftPanel(draft) {
+  const hasEmail = !!(draft.contact_email && draft.contact_email.includes('@'));
+  const body = document.getElementById('draftPanelBody');
+  body.innerHTML = `
+    <div class="preview-section">
+      <h4>Selskap</h4>
+      <div class="preview-field" style="font-weight:700;font-size:15px">${draft.company_name || '—'}</div>
+      <div class="preview-field" style="font-size:12px;color:var(--muted)">${draft.industry_name || ''} ${draft.city ? '· ' + draft.city : ''}</div>
+      <div class="preview-field">
+        ${hasEmail ? `<a href="mailto:${draft.contact_email}">${draft.contact_email}</a>` : '<span style="color:var(--warning)">Ingen e-post — kan ikke sende</span>'}
+        ${draft.contact_phone ? ` &nbsp;·&nbsp; <a href="tel:${draft.contact_phone}">${draft.contact_phone}</a>` : ''}
+      </div>
+      ${draft.website_url ? `<div class="preview-field"><a href="${draft.website_url}" target="_blank" rel="noopener" class="btn-link">Se nettside</a></div>` : ''}
+    </div>
+
+    <div class="preview-section">
+      <h4>Emne</h4>
+      <input id="dpSubject" type="text" value="${escHtml(draft.subject || '')}" style="width:100%;padding:8px;border:1px solid var(--line);border-radius:8px;font-size:13px" />
+    </div>
+
+    <div class="preview-section">
+      <h4>Melding</h4>
+      <textarea id="dpBody" rows="12" style="width:100%;padding:8px;border:1px solid var(--line);border-radius:8px;font-size:12px;line-height:1.6;resize:vertical">${escHtml(draft.body || '')}</textarea>
+    </div>
+
+    <div class="preview-section">
+      <h4>CTA-lenke</h4>
+      <input id="dpCta" type="url" value="${escHtml(draft.cta_link || '')}" style="width:100%;padding:8px;border:1px solid var(--line);border-radius:8px;font-size:13px" />
+    </div>
+
+    <div class="preview-section">
+      <h4>Handlinger</h4>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="secondary btn-sm" onclick="saveDraft(${draft.id})">Lagre endringer</button>
+        <button class="secondary btn-sm" onclick="copyDraft()">Kopier tekst</button>
+        ${hasEmail && draft.status !== 'sent'
+          ? `<button class="primary btn-sm" id="btnSendDraft" onclick="sendDraft(${draft.id})">Send til ${escHtml(draft.contact_email)}</button>`
+          : (draft.status === 'sent' ? '<span class="badge status-contacted">Allerede sendt</span>' : '<span style="color:var(--muted);font-size:12px">Ingen e-post</span>')}
+        <button class="danger btn-sm" onclick="deleteDraft(${draft.id})">Slett</button>
+      </div>
+      <div id="dpStatus" style="margin-top:8px;font-size:13px"></div>
+    </div>
+  `;
+}
+
+function escHtml(s) {
+  return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function copyDraft() {
+  const subject = document.getElementById('dpSubject')?.value || currentDraft?.subject || '';
+  const body    = document.getElementById('dpBody')?.value    || currentDraft?.body    || '';
+  const text    = `Emne: ${subject}\n\n${body}`;
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(() => { showDpStatus('Kopiert!', 'var(--success)'); }).catch(() => {});
+  }
+}
+
+function showDpStatus(msg, color) {
+  const el = document.getElementById('dpStatus');
+  if (el) { el.innerHTML = `<span style="color:${color}">${msg}</span>`; setTimeout(() => { el.textContent = ''; }, 3000); }
+}
+
+async function saveDraft(id) {
+  const subject  = document.getElementById('dpSubject')?.value.trim();
+  const body     = document.getElementById('dpBody')?.value.trim();
+  const cta_link = document.getElementById('dpCta')?.value.trim();
+  try {
+    const res = await post('update-draft.php', {draft_id: id, subject, body, cta_link});
+    if (res.ok) {
+      showDpStatus('Lagret!', 'var(--success)');
+      // Update local data
+      const d = allDrafts.find(x => x.id === id);
+      if (d) { d.subject = subject; d.body = body; d.cta_link = cta_link; }
+    } else {
+      showDpStatus('Feil: ' + (res.error || 'ukjent'), 'var(--danger)');
     }
-    tbody.innerHTML = rows.map(r => `<tr>
-      <td style="font-weight:600">${r.company_name || '—'}</td>
-      <td>${r.city || '—'}</td>
-      <td>${r.contact_email ? `<a href="mailto:${r.contact_email}">${r.contact_email}</a>` : '<span style="color:var(--muted)">—</span>'}</td>
-      <td>${r.subject || ''}</td>
-      <td><span class="badge cms-other">${r.offer_type || '—'}</span></td>
-      <td><span class="badge status-${r.status}">${STATUS_LABELS[r.status] || r.status}</span></td>
-      <td>${(r.created_at || '').slice(0, 16)}</td>
-    </tr>`).join('');
-  }).catch(function (e) {
+  } catch(e) {
+    showDpStatus('Feil: ' + e.message, 'var(--danger)');
+  }
+}
+
+async function sendDraft(id) {
+  const btn = document.getElementById('btnSendDraft');
+  if (btn) { btn.disabled = true; btn.textContent = 'Sender…'; }
+
+  // Save any pending changes first
+  const subject  = document.getElementById('dpSubject')?.value.trim();
+  const body     = document.getElementById('dpBody')?.value.trim();
+  const cta_link = document.getElementById('dpCta')?.value.trim();
+  if (subject || body) await post('update-draft.php', {draft_id: id, subject, body, cta_link}).catch(() => {});
+
+  try {
+    const res = await post('send-draft.php', {draft_id: id});
+    if (res.ok) {
+      showDpStatus('Sendt! E-post levert.', 'var(--success)');
+      if (btn) { btn.textContent = 'Sendt ✓'; btn.className = 'secondary btn-sm'; }
+      const d = allDrafts.find(x => x.id === id);
+      if (d) { d.status = 'sent'; renderDraftRows(); }
+    } else {
+      showDpStatus('Sendfeil: ' + (res.error || 'Ukjent feil'), 'var(--danger)');
+      if (btn) { btn.disabled = false; btn.textContent = 'Send nå'; }
+    }
+  } catch(e) {
+    showDpStatus('Feil: ' + e.message, 'var(--danger)');
+    if (btn) { btn.disabled = false; btn.textContent = 'Send nå'; }
+  }
+}
+
+async function deleteDraft(id) {
+  if (!confirm('Slett dette utkastet?')) return;
+  try {
+    const res = await post('delete-draft.php', {draft_id: id});
+    if (res.ok) {
+      allDrafts = allDrafts.filter(d => d.id !== id);
+      renderDraftRows();
+      closeDraftPanel();
+    }
+  } catch(e) { alert('Feil: ' + e.message); }
+}
+
+function renderDraftRows() {
+  const tbody = document.getElementById('draftRows');
+  if (!allDrafts.length) {
+    tbody.innerHTML = '<tr><td colspan="7" style="color:var(--muted)">Ingen utkast ennå.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = allDrafts.map(r => `<tr style="cursor:pointer" onclick="openDraftPanel(allDrafts.find(d=>d.id===${r.id}))">
+    <td style="font-weight:600">${escHtml(r.company_name || '—')}</td>
+    <td>${escHtml(r.city || '—')}</td>
+    <td>${r.contact_email ? `<span class="badge email-yes">${escHtml(r.contact_email)}</span>` : '<span class="badge email-no">Ingen e-post</span>'}</td>
+    <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${escHtml(r.subject || '')}</td>
+    <td><span class="badge cms-other">${escHtml(r.offer_type || '—')}</span></td>
+    <td><span class="badge ${STATUS_CLASS[r.status] || 'status-new'}">${STATUS_LABELS[r.status] || r.status}</span></td>
+    <td style="color:var(--muted);font-size:12px">${(r.created_at || '').slice(0,16)}</td>
+  </tr>`).join('');
+}
+
+async function loadDrafts() {
+  try {
+    const res = await fetch('api/list-drafts.php', {headers:{'X-Lead-Agent-Token':TOKEN}}).then(r=>r.json());
+    allDrafts = res.drafts || [];
+    renderDraftRows();
+  } catch(e) {
     document.getElementById('draftRows').innerHTML = `<tr><td colspan="7" style="color:var(--danger)">Feil: ${e.message}</td></tr>`;
-  });
+  }
+}
+
+window.LA_READY.then(function() {
+  document.getElementById('draftPanelClose').addEventListener('click', closeDraftPanel);
+  document.getElementById('draftOverlay').addEventListener('click', closeDraftPanel);
+  loadDrafts();
 });
+
+window.openDraftPanel = openDraftPanel;
+window.allDrafts = allDrafts;
 </script>
 </body>
 </html>

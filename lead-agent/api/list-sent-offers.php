@@ -6,15 +6,21 @@ $pdo = db();
 
 $rows = $pdo->query("
     SELECT
-        so.subject,
-        so.sent_at,
+        sor.id,
+        sor.lead_id,
         sor.company_name,
         sor.email,
         sor.opened_at,
         sor.clicked_at,
         sor.send_status,
         sor.smtp_response,
-        sor.last_error
+        sor.last_error,
+        sor.manual_status,
+        so.id      AS offer_id,
+        so.subject,
+        so.message,
+        so.cta_link,
+        so.sent_at
     FROM sent_offer_recipients sor
     JOIN sent_offers so ON so.id = sor.offer_id
     ORDER BY so.sent_at DESC, sor.id DESC

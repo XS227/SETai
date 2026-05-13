@@ -3,11 +3,11 @@ const LEAD_AGENT_ADMIN_TOKEN = (typeof window.LA_TOKEN !== 'undefined') ? window
 const OFFER_TEMPLATES = {
   bilvask:    { subject: 'Profesjonell nettside for din bilvask', cta: 'https://setai.no/tilbud/bilvask',
     message: 'Hei!\n\nVi har lagt merke til at dere ikke har en moderne nettside ennå.\n\nVi hjelper lokale bilvask-bedrifter med å få flere kunder via nett. Åpningstider, priser og bestilling — alt på ett sted.\n\nKan vi ta en kort prat?\n\nMvh\nKhabat — SETAEI' },
-  frisor:     { subject: 'Mer kunder til din salong', cta: 'https://setai.no/tilbud',
+  frisor:     { subject: 'Mer kunder til din salong', cta: 'https://setai.no/tilbud/frisor',
     message: 'Hei!\n\nVi hjelper frisørsalonger med enkel online booking og nettsynlighet.\n\nIngen teknisk kompetanse kreves — vi setter opp alt.\n\nInteressert i en gratis demo?\n\nMvh\nKhabat — SETAEI' },
-  restaurant: { subject: 'Få flere bordreservasjoner på nett', cta: 'https://setai.no/tilbud',
+  restaurant: { subject: 'Få flere bordreservasjoner på nett', cta: 'https://setai.no/tilbud/restaurant',
     message: 'Hei!\n\nVi hjelper restauranter med å ta imot reservasjoner og vise meny på nett.\n\nRask oppsett, lokalt fokus, ingen bindingstid.\n\nVil du høre mer?\n\nMvh\nKhabat — SETAEI' },
-  klinikk:    { subject: 'Enkel timebestilling for din klinikk', cta: 'https://setai.no/tilbud',
+  klinikk:    { subject: 'Enkel timebestilling for din klinikk', cta: 'https://setai.no/tilbud/klinikk',
     message: 'Hei!\n\nVi hjelper klinikker med digital timebestilling og synlighet på nett.\n\nKlientene kan booke 24/7 — uten at du trenger å svare telefon.\n\nTa kontakt for en gratis gjennomgang!\n\nMvh\nKhabat — SETAEI' }
 };
 
@@ -82,8 +82,8 @@ async function loadLeads(filters={}) {
   tbody.innerHTML = leadsData.map(row => `
     <tr>
       <td><input type="checkbox" class="lead-check" data-id="${row.id}" ${selectedIds.has(row.id) ? 'checked' : ''} /></td>
-      <td><span class="lead-name" onclick="openPreview(${row.id})">${row.company_name||''}</span></td><td>${row.org_number||''}</td><td>${row.industry_name||''}</td>
-      <td>${row.city||''}</td><td>${row.registration_date||''}</td>
+      <td><span class="lead-name" onclick="openPreview(${row.id})">${row.company_name||''}</span></td><td>${row.industry_name||''}</td>
+      <td>${row.city||''}</td>
       <td>${websiteText(row)}</td>
       <td>${emailBadge(row)}</td>
       <td>${row.contact_phone ? row.contact_phone : '<span class="muted-text">Ingen tlf</span>'}</td>
@@ -189,8 +189,9 @@ async function researchLead(id) {
         ${hints ? `<br>Google: ${hints}` : ''}
       </div>`;
     }
-    loadLeads(getFilters());
+    await loadLeads(getFilters());
     loadStats();
+    if (document.getElementById('previewPanel').classList.contains('open')) openPreview(id);
   } catch(err) {
     detail.innerHTML = `<div class="notice">Research feilet: ${err.message}</div>`;
   }
@@ -276,24 +277,55 @@ function setDefaultDates(){
 // --- Auto research after Brreg import ---
 async function autoResearchLeads(leads) {
   if (!leads || !leads.length) return;
-  const detail = document.getElementById('leadDetail');
-  const toResearch = leads.filter(l => l.id && !l.contact_email);
+  const toResearch = leads.filter(l => l.id);
   if (!toResearch.length) return;
 
-  detail.innerHTML += `<div class="notice" id="autoResearchNotice">Auto-research: 0 / ${toResearch.length} leads…</div>`;
-  const notice = document.getElementById('autoResearchNotice');
-
-  let done = 0;
-  for (const lead of toResearch) {
-    notice.innerHTML = `Auto-research: <strong>${done}/${toResearch.length}</strong> — ${lead.company_name || '#' + lead.id}…`;
-    try {
-      await api('research-lead.php', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({lead_id:lead.id})});
-    } catch(e) { /* continue on error */ }
-    done++;
+  // Inject a persistent progress card above the leads section
+  let progWrap = document.getElementById('autoResearchProgress');
+  if (!progWrap) {
+    progWrap = document.createElement('div');
+    progWrap.id = 'autoResearchProgress';
+    progWrap.className = 'card';
+    progWrap.style.cssText = 'margin-bottom:12px;padding:14px 18px';
+    const leadsSection = document.getElementById('leads');
+    leadsSection.parentNode.insertBefore(progWrap, leadsSection);
   }
-  notice.innerHTML = `Auto-research ferdig: ${done} / ${toResearch.length} leads prosessert.`;
-  loadLeads(getFilters());
+
+  const results = { found_email: 0, found_website: 0, no_contact: 0, errors: 0 };
+  let done = 0;
+
+  for (const lead of toResearch) {
+    const pct = Math.round((done / toResearch.length) * 100);
+    progWrap.innerHTML = `
+      <strong>Auto-research ${done}/${toResearch.length}</strong> — ${lead.company_name || '#' + lead.id}…
+      <div class="progress-bar-wrap" style="margin:8px 0 0"><div class="progress-bar" style="width:${pct}%"></div></div>
+    `;
+    try {
+      const res = await api('research-lead.php', {
+        method: 'POST', headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({lead_id: lead.id})
+      });
+      const st = res.cached ? (res.status || 'cached') : (res.status || 'no_contact');
+      if (st === 'found_email')        results.found_email++;
+      else if (st === 'found_website') results.found_website++;
+      else                             results.no_contact++;
+    } catch(e) { results.errors++; }
+    done++;
+    if (done % 5 === 0 || done === toResearch.length) await loadLeads(getFilters());
+  }
+
+  await loadLeads(getFilters());
   loadStats();
+  progWrap.innerHTML = `
+    <strong>Auto-research ferdig</strong> &mdash; ${done} av ${toResearch.length} leads prosessert<br>
+    <span style="font-size:13px">
+      E-post funnet: <strong style="color:var(--success)">${results.found_email}</strong> &nbsp;|&nbsp;
+      Nettside funnet: <strong style="color:var(--primary)">${results.found_website}</strong> &nbsp;|&nbsp;
+      Ingen kontakt: <strong style="color:var(--muted)">${results.no_contact}</strong>
+      ${results.errors ? ` &nbsp;|&nbsp; Feil: <strong style="color:var(--danger)">${results.errors}</strong>` : ''}
+    </span>
+  `;
+  setTimeout(() => { if (progWrap.parentNode) progWrap.parentNode.removeChild(progWrap); }, 60000);
 }
 
 // --- Bulk research ---
@@ -466,40 +498,45 @@ function openPreview(id) {
   const lead = leadsData.find(l => l.id === id);
   if (!lead) return;
 
-  const flags = (() => { try { return JSON.parse(lead.website_flags || '{}'); } catch(e) { return {}; } })();
-  const cms   = (lead.website_cms || '').toLowerCase();
+  const flags    = (() => { try { return JSON.parse(lead.website_flags || '{}'); } catch(e) { return {}; } })();
+  const resNotes = (() => { try { return JSON.parse(lead.research_notes || '{}'); } catch(e) { return {}; } })();
+  const cms      = (lead.website_cms || '').toLowerCase();
+  const siteStatus = resNotes.site_status || 'active';
 
-  const sslBadge = lead.website_url
-    ? (lead.website_has_ssl == 1
-        ? '<span class="badge" style="background:#e2f8ec;color:#10613a">SSL</span>'
-        : '<span class="badge no-ssl">No SSL</span>')
-    : '';
-  const mobileBadge  = flags.mobile_friendly ? '<span class="badge" style="background:#e7efff;color:#2754b7">Mobil</span>' : '';
-  const bookingBadge = flags.has_booking     ? '<span class="badge" style="background:#f0ebff;color:#5b21b6">Booking</span>' : '';
+  const sslBadge    = lead.website_url ? (lead.website_has_ssl == 1 ? '<span class="badge" style="background:#e2f8ec;color:#10613a">SSL ✓</span>' : '<span class="badge no-ssl">No SSL</span>') : '';
+  const mobileBadge = flags.mobile_friendly ? '<span class="badge" style="background:#e7efff;color:#2754b7">Mobil</span>' : '';
+  const bookingBadge = flags.has_booking    ? '<span class="badge" style="background:#f0ebff;color:#5b21b6">Booking</span>' : '';
+
+  // Build detected issues list
+  const issues = [];
+  if (!lead.has_website && !lead.website_url) issues.push('Ingen nettside funnet');
+  else if (siteStatus === 'parked') issues.push('Domenet er parkert — ingen aktiv nettside');
+  else if (siteStatus === 'under_construction') issues.push('Siden er under utbygging');
+  if (lead.website_url && lead.website_has_ssl != 1) issues.push('Mangler SSL (Google-rangering påvirkes)');
+  if (cms && ['wordpress', 'wix'].includes(cms)) issues.push(`Bruker ${CMS_BADGES[cms]?.[1] || cms} — utdatert plattform`);
+  if (lead.website_url && flags.has_booking === false) issues.push('Ingen online booking funnet');
+  if (!lead.contact_email) issues.push('Ingen e-postadresse funnet');
+  else if (/gmail\.|hotmail\.|yahoo\./i.test(lead.contact_email)) issues.push('Bruker gratis e-post (Gmail/Hotmail) — ikke profesjonelt');
+  if (!lead.contact_phone) issues.push('Ingen telefon registrert');
 
   let html = `
     <div class="preview-section">
       <h4>Selskap</h4>
       <div class="preview-field" style="font-size:16px;font-weight:700">${lead.company_name || '—'}</div>
       <div class="preview-field" style="color:var(--muted);font-size:12px">
-        ${lead.org_number ? 'Org.nr ' + lead.org_number : ''} ${lead.organization_form ? '· ' + lead.organization_form : ''}
+        ${lead.org_number ? 'Org.nr ' + lead.org_number : ''}${lead.organization_form ? ' · ' + lead.organization_form : ''}${lead.registration_date ? ' · Reg. ' + lead.registration_date : ''}
       </div>
-      <div class="preview-field">${lead.industry_name || '—'} ${lead.city ? '· ' + lead.city : ''}</div>
-      <div class="preview-field">Registrert: ${lead.registration_date || '—'} &nbsp; Score: <strong>${lead.lead_score ?? '—'}</strong></div>
-      <div class="preview-field" style="margin-top:6px">${statusBadge(lead.lead_status)}</div>
+      <div class="preview-field">${lead.industry_name || '—'}${lead.city ? ' · ' + lead.city : ''}</div>
+      <div class="preview-field">Prioritet: <strong>${lead.lead_score ?? '—'}</strong> &nbsp; ${statusBadge(lead.lead_status)}</div>
     </div>
 
     <div class="preview-section">
       <h4>Kontakt</h4>
       <div class="preview-field">
-        ${lead.contact_email
-          ? `<a href="mailto:${lead.contact_email}">${lead.contact_email}</a>`
-          : '<span style="color:var(--muted)">Ingen e-post funnet</span>'}
+        ${lead.contact_email ? `<a href="mailto:${lead.contact_email}">${lead.contact_email}</a>` : '<span style="color:var(--muted)">Ingen e-post funnet</span>'}
       </div>
       <div class="preview-field">
-        ${lead.contact_phone
-          ? `<a href="tel:${lead.contact_phone}">${lead.contact_phone}</a>`
-          : '<span style="color:var(--muted)">Ingen telefon funnet</span>'}
+        ${lead.contact_phone ? `<a href="tel:${lead.contact_phone}">${lead.contact_phone}</a>` : '<span style="color:var(--muted)">Ingen telefon funnet</span>'}
       </div>
     </div>
 
@@ -507,13 +544,20 @@ function openPreview(id) {
       <h4>Nettside</h4>
       <div class="preview-field">
         ${lead.website_url
-          ? `<a href="${lead.website_url}" target="_blank" rel="noopener">${lead.website_url}</a>`
+          ? `<a href="${lead.website_url}" target="_blank" rel="noopener">${lead.website_url}</a>${siteStatus !== 'active' ? ` <span class="badge" style="background:#fff3dc;color:#916001;font-size:10px">${siteStatus}</span>` : ''}`
           : '<span style="color:var(--muted)">Ingen nettside registrert</span>'}
       </div>
       <div style="display:flex;gap:5px;flex-wrap:wrap;margin-top:6px">
         ${cmsBadge(cms)} ${sslBadge} ${mobileBadge} ${bookingBadge}
       </div>
     </div>`;
+
+  if (issues.length) {
+    html += `<div class="preview-section">
+      <h4>Identifiserte behov</h4>
+      ${issues.map(i => `<div class="preview-field" style="color:var(--warning);font-size:12px">▸ ${i}</div>`).join('')}
+    </div>`;
+  }
 
   if (lead.facebook_url || lead.instagram_url) {
     html += `<div class="preview-section">
@@ -523,10 +567,17 @@ function openPreview(id) {
     </div>`;
   }
 
-  if (lead.research_status) {
+  const guessedDomains = resNotes.guessed_domains || [];
+  const foundDomain    = resNotes.found_domain || '';
+  const searchHints    = resNotes.search_hints || [];
+  if (lead.research_status || lead.researched_at || guessedDomains.length || searchHints.length) {
     html += `<div class="preview-section">
       <h4>Research</h4>
-      <div class="preview-field">Status: <strong>${lead.research_status}</strong></div>
+      ${lead.researched_at ? `<div class="preview-field" style="font-size:12px;color:var(--muted)">Sist researched: ${(lead.researched_at||'').slice(0,16)}</div>` : ''}
+      ${lead.research_status ? `<div class="preview-field">Status: <strong>${lead.research_status}</strong></div>` : ''}
+      ${guessedDomains.length ? `<div class="preview-field" style="font-size:12px;color:var(--muted)">Forsøkte domener: ${guessedDomains.join(', ')}</div>` : ''}
+      ${foundDomain ? `<div class="preview-field" style="font-size:12px">Fant domene: <strong>${foundDomain}</strong></div>` : ''}
+      ${searchHints.length ? `<div class="preview-field" style="font-size:12px">Søk: ${searchHints.map(h => `<a href="https://www.google.com/search?q=${encodeURIComponent(h)}" target="_blank" rel="noopener">${h}</a>`).join(' | ')}</div>` : ''}
     </div>`;
   }
 
@@ -535,12 +586,14 @@ function openPreview(id) {
     <div style="display:flex;gap:8px;flex-wrap:wrap">
       <button class="secondary btn-sm" onclick="researchLead(${id})">Research</button>
       <button class="primary btn-sm" id="btnPreviewDraft" onclick="previewGenDraft(${id})">Generer AI Offer</button>
+      ${lead.contact_email ? `<button class="warn btn-sm" onclick="quickSend(${id})">Send tilbud</button>` : ''}
     </div>
   </div>
 
   <div class="preview-section" id="previewDraftSection" style="display:none">
     <h4>E-postutkast</h4>
     <div class="preview-draft" id="previewDraftBody"></div>
+    <div id="previewDraftActions" style="display:flex;gap:6px;flex-wrap:wrap;margin-top:10px"></div>
   </div>`;
 
   document.getElementById('previewTitle').textContent = lead.company_name || 'Lead';
@@ -558,13 +611,27 @@ async function previewGenDraft(id) {
   const btn       = document.getElementById('btnPreviewDraft');
   const draftSec  = document.getElementById('previewDraftSection');
   const draftBody = document.getElementById('previewDraftBody');
+  const draftActs = document.getElementById('previewDraftActions');
   if (btn) { btn.disabled = true; btn.textContent = 'Genererer…'; }
   try {
     const res = await api('generate-email.php', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({lead_id:id, tone:'vennlig'})});
-    if (draftBody) draftBody.textContent = `Emne: ${res.subject || ''}\n\n${res.body || ''}`;
+    const bodyText = `Emne: ${res.subject || ''}\n\n${res.body || ''}`;
+    if (draftBody) draftBody.textContent = bodyText;
     if (draftSec)  draftSec.style.display = 'block';
-    // Pre-fill send modal fields for convenience
-    window._lastDraft = { subject: res.subject, body: res.body, cta_url: res.cta_url };
+    window._lastDraft = { subject: res.subject, body: res.body, cta_url: res.cta_url, draft_id: res.draft_id };
+
+    // Action buttons
+    const lead = leadsData.find(l => l.id === id);
+    const hasEmail = !!(lead?.contact_email);
+    if (draftActs) {
+      draftActs.innerHTML = `
+        <button class="secondary btn-sm" onclick="copyText(${JSON.stringify(bodyText)}, this)">Kopier tekst</button>
+        <a class="btn-link" href="drafts.html" target="_blank">Åpne utkast</a>
+        ${hasEmail
+          ? `<button class="primary btn-sm" id="btnSendDraftNow" onclick="sendDraftNow(${res.draft_id}, ${id})">Send til ${lead.contact_email}</button>`
+          : '<span style="color:var(--muted);font-size:12px">Ingen e-post — kan ikke sende</span>'}
+      `;
+    }
     loadLeads(getFilters());
     loadStats();
   } catch(err) {
@@ -573,6 +640,47 @@ async function previewGenDraft(id) {
   } finally {
     if (btn) { btn.disabled = false; btn.textContent = 'Regenerer AI Offer'; }
   }
+}
+
+function copyText(text, btn) {
+  const copy = () => {
+    if (navigator.clipboard) return navigator.clipboard.writeText(text);
+    const ta = document.createElement('textarea');
+    ta.value = text; document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); } catch(e) {}
+    document.body.removeChild(ta);
+    return Promise.resolve();
+  };
+  copy().then(() => {
+    if (btn) { const orig = btn.textContent; btn.textContent = 'Kopiert!'; setTimeout(() => { btn.textContent = orig; }, 1500); }
+  });
+}
+
+async function sendDraftNow(draftId, leadId) {
+  const btn = document.getElementById('btnSendDraftNow');
+  if (btn) { btn.disabled = true; btn.textContent = 'Sender…'; }
+  try {
+    const res = await api('send-draft.php', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({draft_id: draftId})});
+    if (res.ok) {
+      if (btn) { btn.textContent = 'Sendt ✓'; btn.className = 'secondary btn-sm'; }
+      loadStats();
+      await loadLeads(getFilters());
+      openPreview(leadId);
+    } else {
+      alert('Sendfeil: ' + (res.error || 'Ukjent feil'));
+      if (btn) { btn.disabled = false; btn.textContent = 'Send nå'; }
+    }
+  } catch(e) {
+    alert('Sendfeil: ' + e.message);
+    if (btn) { btn.disabled = false; btn.textContent = 'Send nå'; }
+  }
+}
+
+function quickSend(id) {
+  const lead = leadsData.find(l => l.id === id);
+  if (!lead) return;
+  selectedIds.clear(); selectedIds.add(id); updateBulkBar();
+  openSendModal();
 }
 
 // --- Export leads CSV ---
@@ -624,10 +732,13 @@ if (typeof window.LA_READY !== 'undefined') {
   document.addEventListener('DOMContentLoaded', pageInit);
 }
 
-window.researchLead   = researchLead;
-window.genEmail       = genEmail;
-window.updateStatus   = updateStatus;
-window.bulkResearch   = bulkResearch;
-window.openPreview    = openPreview;
-window.closePreview   = closePreview;
+window.researchLead    = researchLead;
+window.genEmail        = genEmail;
+window.updateStatus    = updateStatus;
+window.bulkResearch    = bulkResearch;
+window.openPreview     = openPreview;
+window.closePreview    = closePreview;
 window.previewGenDraft = previewGenDraft;
+window.copyText        = copyText;
+window.sendDraftNow    = sendDraftNow;
+window.quickSend       = quickSend;

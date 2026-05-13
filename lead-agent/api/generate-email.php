@@ -85,10 +85,11 @@ $body = "{$greeting}\n\n" .
     "setai.no | khabat@setai.no\n\n" .
     "—\nSvar «avmeld» for å bli fjernet fra listen vår.";
 
-$pdo->prepare('INSERT INTO email_drafts (lead_id,subject,body,offer_type,tone,status,created_at,updated_at) VALUES (?,?,?,?,?,?,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP)')
-    ->execute([$id, $subject, $body, $type, $tone, 'draft']);
+$pdo->prepare('INSERT INTO email_drafts (lead_id,subject,body,offer_type,cta_link,tone,status,created_at,updated_at) VALUES (?,?,?,?,?,?,?,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP)')
+    ->execute([$id, $subject, $body, $type, $cta_url, $tone, 'draft']);
+$draft_id = (int)$pdo->lastInsertId();
 $pdo->prepare('UPDATE leads SET lead_status=?,updated_at=CURRENT_TIMESTAMP WHERE id=?')
     ->execute(['draft_ready', $id]);
 
 $sales_argument = $hook . ' ' . $pitch;
-echo json_encode(['ok'=>true, 'subject'=>$subject, 'body'=>$body, 'cta_url'=>$cta_url, 'offer_type'=>$type, 'auto_send'=>false, 'sales_argument'=>$sales_argument]);
+echo json_encode(['ok'=>true, 'subject'=>$subject, 'body'=>$body, 'cta_url'=>$cta_url, 'offer_type'=>$type, 'auto_send'=>false, 'sales_argument'=>$sales_argument, 'draft_id'=>$draft_id]);
