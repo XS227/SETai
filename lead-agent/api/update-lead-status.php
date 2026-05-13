@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/_db.php';
 header('Content-Type: application/json');
+require_admin_token();
 $pdo = db();
 $input = json_input();
 $id = (int)($input['lead_id'] ?? 0);

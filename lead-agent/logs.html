@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SETAEI — Research Logs</title>
+  <link rel="stylesheet" href="assets/css/lead-agent.css" />
+  <script src="assets/js/access.js"></script>
+</head>
+<body>
+<nav class="topnav">
+  <span class="brand">SETAEI</span>
+  <a href="admin.html">Leads</a>
+  <a href="drafts.html">Drafts</a>
+  <a href="sent.html">Sendte tilbud</a>
+  <a href="settings.html">Settings</a>
+  <a class="active" href="logs.html">Logs</a>
+</nav>
+<main class="main">
+  <section class="card">
+    <div class="section-header">
+      <h3>Research Logs</h3>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr>
+          <th>Selskap</th><th>By</th><th>Research-status</th><th>E-post</th><th>Kilde</th><th>Sammendrag</th><th>Tidspunkt</th>
+        </tr></thead>
+        <tbody id="logRows"><tr><td colspan="7" style="color:var(--muted)">Laster…</td></tr></tbody>
+      </table>
+    </div>
+  </section>
+</main>
+<script>
+window.LA_READY.then(function () {
+  const token = window.LA_TOKEN;
+  fetch('api/list-logs.php', {headers:{'X-Lead-Agent-Token': token}})
+    .then(r => r.json())
+    .then(function (res) {
+      const rows = res.logs || [];
+      const tbody = document.getElementById('logRows');
+      if (!rows.length) {
+        tbody.innerHTML = '<tr><td colspan="7" style="color:var(--muted)">Ingen research-logger ennå.</td></tr>';
+        return;
+      }
+      const STATUS_CLASS = {
+        found_email:   'status-approved',
+        found_website: 'status-draft_ready',
+        no_contact:    'status-new',
+        cached:        'status-new',
+      };
+      tbody.innerHTML = rows.map(function (r) {
+        const cls = STATUS_CLASS[r.research_status] || 'status-new';
+        return `<tr>
+          <td style="font-weight:600">${r.company_name || '—'}</td>
+          <td>${r.city || '—'}</td>
+          <td><span class="badge ${cls}">${r.research_status || '—'}</span></td>
+          <td>${r.contact_email ? `<a href="mailto:${r.contact_email}">${r.contact_email}</a>` : '<span style="color:var(--muted)">—</span>'}</td>
+          <td><span style="font-size:11px;color:var(--muted)">${r.source || '—'}</span></td>
+          <td style="font-size:12px;color:var(--muted);max-width:260px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${(r.summary||'').replace(/"/g,'&quot;')}">${r.summary || '—'}</td>
+          <td>${(r.created_at || '').slice(0, 16)}</td>
+        </tr>`;
+      }).join('');
+    }).catch(function (e) {
+      document.getElementById('logRows').innerHTML = `<tr><td colspan="7" style="color:var(--danger)">Feil: ${e.message}</td></tr>`;
+    });
+});
+</script>
+</body>
+</html>

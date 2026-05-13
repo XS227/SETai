@@ -125,6 +125,7 @@ for ($page = 0; $page < $maxPages; $page++) {
 
     if ($stmt->rowCount() > 0) {
       $inserted++;
+      $row['id'] = (int)$pdo->lastInsertId();
       $newLeads[] = $row;
     } else {
       $existing++;

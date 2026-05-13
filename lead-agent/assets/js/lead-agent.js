@@ -1,4 +1,4 @@
-const LEAD_AGENT_ADMIN_TOKEN = 'change-me-in-production';
+const LEAD_AGENT_ADMIN_TOKEN = (typeof window.LA_TOKEN !== 'undefined') ? window.LA_TOKEN : '0227';
 
 const OFFER_TEMPLATES = {
   bilvask:    { subject: 'Profesjonell nettside for din bilvask', cta: 'https://setai.no/tilbud/bilvask',
@@ -89,7 +89,6 @@ async function loadLeads(filters={}) {
       <td>${row.contact_phone ? row.contact_phone : '<span class="muted-text">Ingen tlf</span>'}</td>
       <td>${row.lead_score ?? '-'}</td><td>${statusBadge(row.lead_status)}</td>
       <td class="row-actions">
-        <button class="secondary btn-sm" onclick="researchLead(${row.id})">Research</button>
         <button class="primary btn-sm" onclick="genEmail(${row.id})">AI Offer</button>
         <select class="status-select" onchange="updateStatus(${row.id},this.value);this.value=''">
           <option value="">Status…</option>
@@ -235,6 +234,7 @@ async function fetchBrreg(){
       Trenger research: <strong>${needResearch}</strong>
     </div>`;
     await loadLeads(getFilters());
+    autoResearchLeads(res.new_leads || []);
   } catch (err) {
     detail.innerHTML = `<div class="notice">Feil ved Brreg-import: ${err.message || err}</div>`;
   } finally {
@@ -271,6 +271,29 @@ function setDefaultDates(){
   monthAgo.setDate(today.getDate() - 30);
   to.value   = today.toISOString().slice(0,10);
   from.value = monthAgo.toISOString().slice(0,10);
+}
+
+// --- Auto research after Brreg import ---
+async function autoResearchLeads(leads) {
+  if (!leads || !leads.length) return;
+  const detail = document.getElementById('leadDetail');
+  const toResearch = leads.filter(l => l.id && !l.contact_email);
+  if (!toResearch.length) return;
+
+  detail.innerHTML += `<div class="notice" id="autoResearchNotice">Auto-research: 0 / ${toResearch.length} leads…</div>`;
+  const notice = document.getElementById('autoResearchNotice');
+
+  let done = 0;
+  for (const lead of toResearch) {
+    notice.innerHTML = `Auto-research: <strong>${done}/${toResearch.length}</strong> — ${lead.company_name || '#' + lead.id}…`;
+    try {
+      await api('research-lead.php', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({lead_id:lead.id})});
+    } catch(e) { /* continue on error */ }
+    done++;
+  }
+  notice.innerHTML = `Auto-research ferdig: ${done} / ${toResearch.length} leads prosessert.`;
+  loadLeads(getFilters());
+  loadStats();
 }
 
 // --- Bulk research ---
@@ -421,59 +444,6 @@ document.getElementById('offerTemplate').addEventListener('change', function() {
   document.getElementById('offerCta').value     = tpl.cta;
 });
 
-// --- Sendte tilbud tab ---
-async function loadSentOffers() {
-  document.getElementById('sent-offers').style.display = 'block';
-  try {
-    const res  = await api('list-sent-offers.php');
-    const rows = res.rows || [];
-    document.getElementById('sentOffersRows').innerHTML = rows.length ? rows.map(r => {
-      let status = r.send_status;
-      if (r.clicked_at)     status = 'clicked';
-      else if (r.opened_at) status = 'opened';
-      const delClass = { sent:'del-sent', opened:'del-opened', clicked:'del-clicked', failed:'del-failed', skipped:'del-skipped' }[status] || 'del-sent';
-      const errDetail = r.last_error ? `<br><small style="color:var(--danger);font-size:11px">${r.last_error}</small>` : '';
-      return `<tr>
-        <td>${r.company_name || '—'}</td>
-        <td>${r.email || '—'}</td>
-        <td>${r.subject || ''}</td>
-        <td>${r.sent_at || ''}</td>
-        <td>${r.opened_at || '—'}</td>
-        <td>${r.clicked_at || '—'}</td>
-        <td><span class="badge ${delClass}">${status}</span>${errDetail}</td>
-      </tr>`;
-    }).join('') : '<tr><td colspan="7" style="color:var(--muted)">Ingen sendte tilbud ennå.</td></tr>';
-  } catch (err) {
-    document.getElementById('sentOffersRows').innerHTML = `<tr><td colspan="7" style="color:var(--danger)">Feil: ${err.message}</td></tr>`;
-  }
-}
-
-document.getElementById('tabSentOffers').addEventListener('click', (e) => {
-  e.preventDefault();
-  loadSentOffers();
-  document.getElementById('sent-offers').scrollIntoView({behavior: 'smooth'});
-});
-
-// --- Test email ---
-document.getElementById('btnSendTestEmail').addEventListener('click', async () => {
-  const btn    = document.getElementById('btnSendTestEmail');
-  const status = document.getElementById('testEmailStatus');
-  const to      = document.getElementById('testTo').value.trim();
-  const subject = document.getElementById('testSubject').value.trim();
-  const message = document.getElementById('testMessage').value.trim();
-  if (!to || !subject || !message) { status.innerHTML = '<span style="color:var(--danger)">Fyll inn alle felt.</span>'; return; }
-  btn.disabled = true; btn.textContent = 'Sender…'; status.textContent = '';
-  try {
-    const res = await api('send-test-email.php', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({to_email:to, subject, message})});
-    status.innerHTML = res.ok
-      ? `<span style="color:var(--success)">Testmail sendt til ${to}. ${res.response_ms}ms via ${res.smtp_host||'SMTP'}</span>`
-      : `<span style="color:var(--danger)">Feil: ${res.error} (${res.response_ms}ms)</span>`;
-  } catch(err) {
-    status.innerHTML = `<span style="color:var(--danger)">Feil: ${err.message}</span>`;
-  } finally {
-    btn.disabled = false; btn.textContent = 'Send testmail';
-  }
-});
 
 // --- Stats bar ---
 async function loadStats() {
@@ -635,16 +605,24 @@ async function exportLeads() {
 }
 
 // --- Init ---
-document.getElementById('fetchBrreg').addEventListener('click', fetchBrreg);
-document.getElementById('importCsv').addEventListener('click', importCsv);
-document.getElementById('btnExport').addEventListener('click', exportLeads);
-document.getElementById('previewClose').addEventListener('click', closePreview);
-document.getElementById('previewOverlay').addEventListener('click', closePreview);
+function pageInit() {
+  document.getElementById('fetchBrreg').addEventListener('click', fetchBrreg);
+  document.getElementById('importCsv').addEventListener('click', importCsv);
+  document.getElementById('btnExport').addEventListener('click', exportLeads);
+  document.getElementById('previewClose').addEventListener('click', closePreview);
+  document.getElementById('previewOverlay').addEventListener('click', closePreview);
 
-setDefaultDates();
-populateFilterOptions();
-loadLeads();
-loadStats();
+  setDefaultDates();
+  populateFilterOptions();
+  loadLeads();
+  loadStats();
+}
+
+if (typeof window.LA_READY !== 'undefined') {
+  window.LA_READY.then(pageInit);
+} else {
+  document.addEventListener('DOMContentLoaded', pageInit);
+}
 
 window.researchLead   = researchLead;
 window.genEmail       = genEmail;

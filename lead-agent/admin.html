@@ -5,15 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SETAEI Lead Dashboard</title>
   <link rel="stylesheet" href="assets/css/lead-agent.css" />
+  <script src="assets/js/access.js"></script>
 </head>
 <body>
 <nav class="topnav">
   <span class="brand">SETAEI</span>
-  <a class="active" href="#leads">Leads</a>
-  <a href="#drafts">Drafts</a>
-  <a href="#sent-offers" id="tabSentOffers">Sendte tilbud</a>
-  <a href="#settings">Settings</a>
-  <a href="#logs">Logs</a>
+  <a class="active" href="admin.html">Leads</a>
+  <a href="drafts.html">Drafts</a>
+  <a href="sent.html">Sendte tilbud</a>
+  <a href="settings.html">Settings</a>
+  <a href="logs.html">Logs</a>
 </nav>
 <main class="main" id="app">
   <div class="stats-bar" id="statsBar">
@@ -28,7 +29,7 @@
   </div>
     <div class="notice">Kontroller lovlighet og relevans før utsending. MVP lager kun e-postutkast (ingen auto-send).</div>
 
-    <section class="card" id="settings">
+    <section class="card" id="import">
       <h3>Import fra Brreg / CSV fallback</h3>
       <div class="grid-2">
         <div>
@@ -46,26 +47,6 @@
       <div class="actions" style="margin-top:10px">
         <button class="secondary" id="importCsv">Importer fil</button>
       </div>
-    </section>
-
-    <section class="card" id="test-email">
-      <h3>Send testmail</h3>
-      <div class="grid-2">
-        <div>
-          <label>Mottaker e-post</label>
-          <input id="testTo" type="email" placeholder="din@epost.no" />
-        </div>
-        <div>
-          <label>Emne</label>
-          <input id="testSubject" type="text" value="Test fra SETAEI Lead Agent" />
-        </div>
-      </div>
-      <label style="margin-top:10px;display:block">Melding</label>
-      <textarea id="testMessage" rows="3">Dette er en testmail sendt fra SETAEI Lead Agent.</textarea>
-      <div class="actions" style="margin-top:10px">
-        <button class="secondary" id="btnSendTestEmail">Send testmail</button>
-      </div>
-      <div id="testEmailStatus" style="margin-top:8px;font-size:13px"></div>
     </section>
 
     <section class="card" id="leads">
@@ -97,7 +78,7 @@
         <table>
           <thead><tr>
             <th><input type="checkbox" id="selectAll" /></th>
-            <th>Selskap</th><th>Org.nr</th><th>Bransje</th><th>By</th><th>Registrert</th><th>Nettside</th><th>E-post</th><th>Tlf</th><th>Score</th><th>Status</th><th>Actions</th>
+            <th>Selskap</th><th>Org.nr</th><th>Bransje</th><th>By</th><th>Registrert</th><th>Nettside</th><th>E-post</th><th>Tlf</th><th title="Beregnet prioritetsscore 0–100 basert på bransje, nettside, SSL og kontaktdata">Prioritet ⓘ</th><th>Status</th><th>Actions</th>
           </tr></thead>
           <tbody id="leadRows"></tbody>
         </table>
@@ -109,17 +90,6 @@
       <div id="leadDetail">Velg en handling for å se detaljer.</div>
     </section>
 
-    <section class="card" id="sent-offers" style="display:none">
-      <h3>Sendte tilbud</h3>
-      <div class="table-wrap">
-        <table>
-          <thead><tr>
-            <th>Selskap</th><th>E-post</th><th>Emne</th><th>Sendt</th><th>Åpnet</th><th>Klikket</th><th>Status</th>
-          </tr></thead>
-          <tbody id="sentOffersRows"></tbody>
-        </table>
-      </div>
-    </section>
   </main>
 
 <!-- Send tilbud modal -->

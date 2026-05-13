@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SETAEI — Drafts</title>
+  <link rel="stylesheet" href="assets/css/lead-agent.css" />
+  <script src="assets/js/access.js"></script>
+</head>
+<body>
+<nav class="topnav">
+  <span class="brand">SETAEI</span>
+  <a href="admin.html">Leads</a>
+  <a class="active" href="drafts.html">Drafts</a>
+  <a href="sent.html">Sendte tilbud</a>
+  <a href="settings.html">Settings</a>
+  <a href="logs.html">Logs</a>
+</nav>
+<main class="main">
+  <section class="card">
+    <div class="section-header">
+      <h3>E-postutkast</h3>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr>
+          <th>Selskap</th><th>By</th><th>E-post</th><th>Emne</th><th>Type</th><th>Status</th><th>Opprettet</th>
+        </tr></thead>
+        <tbody id="draftRows"><tr><td colspan="7" style="color:var(--muted)">Laster…</td></tr></tbody>
+      </table>
+    </div>
+  </section>
+</main>
+<script>
+window.LA_READY.then(function () {
+  const token = window.LA_TOKEN;
+  const api = (path) => fetch('api/' + path, {headers:{'X-Lead-Agent-Token': token}}).then(r => r.json());
+
+  const STATUS_LABELS = { draft: 'Utkast', approved: 'Godkjent', sent: 'Sendt' };
+
+  api('list-drafts.php').then(function (res) {
+    const rows = res.drafts || [];
+    const tbody = document.getElementById('draftRows');
+    if (!rows.length) {
+      tbody.innerHTML = '<tr><td colspan="7" style="color:var(--muted)">Ingen utkast ennå.</td></tr>';
+      return;
+    }
+    tbody.innerHTML = rows.map(r => `<tr>
+      <td style="font-weight:600">${r.company_name || '—'}</td>
+      <td>${r.city || '—'}</td>
+      <td>${r.contact_email ? `<a href="mailto:${r.contact_email}">${r.contact_email}</a>` : '<span style="color:var(--muted)">—</span>'}</td>
+      <td>${r.subject || ''}</td>
+      <td><span class="badge cms-other">${r.offer_type || '—'}</span></td>
+      <td><span class="badge status-${r.status}">${STATUS_LABELS[r.status] || r.status}</span></td>
+      <td>${(r.created_at || '').slice(0, 16)}</td>
+    </tr>`).join('');
+  }).catch(function (e) {
+    document.getElementById('draftRows').innerHTML = `<tr><td colspan="7" style="color:var(--danger)">Feil: ${e.message}</td></tr>`;
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SETAEI — Settings</title>
+  <link rel="stylesheet" href="assets/css/lead-agent.css" />
+  <script src="assets/js/access.js"></script>
+</head>
+<body>
+<nav class="topnav">
+  <span class="brand">SETAEI</span>
+  <a href="admin.html">Leads</a>
+  <a href="drafts.html">Drafts</a>
+  <a href="sent.html">Sendte tilbud</a>
+  <a class="active" href="settings.html">Settings</a>
+  <a href="logs.html">Logs</a>
+</nav>
+<main class="main">
+  <section class="card">
+    <h3>Send testmail</h3>
+    <div class="grid-2">
+      <div>
+        <label>Mottaker e-post</label>
+        <input id="testTo" type="email" placeholder="din@epost.no" />
+      </div>
+      <div>
+        <label>Emne</label>
+        <input id="testSubject" type="text" value="Test fra SETAEI Lead Agent" />
+      </div>
+    </div>
+    <label style="margin-top:10px;display:block">Melding</label>
+    <textarea id="testMessage" rows="3">Dette er en testmail sendt fra SETAEI Lead Agent.</textarea>
+    <div class="actions" style="margin-top:10px">
+      <button class="secondary" id="btnSendTestEmail">Send testmail</button>
+    </div>
+    <div id="testEmailStatus" style="margin-top:8px;font-size:13px"></div>
+  </section>
+
+  <section class="card">
+    <h3>E-postmaler</h3>
+    <p style="color:var(--muted);font-size:13px">Disse malene er tilgjengelige i utsendingsmodalen på Leads-siden.</p>
+    <table>
+      <thead><tr><th>Type</th><th>CTA-lenke</th></tr></thead>
+      <tbody>
+        <tr><td>Bilvask</td><td>https://setai.no/tilbud/bilvask</td></tr>
+        <tr><td>Frisør / Salong</td><td>https://setai.no/tilbud/frisor</td></tr>
+        <tr><td>Restaurant</td><td>https://setai.no/tilbud/restaurant</td></tr>
+        <tr><td>Klinikk</td><td>https://setai.no/tilbud/klinikk</td></tr>
+        <tr><td>Generell</td><td>https://setai.no/tilbud</td></tr>
+      </tbody>
+    </table>
+  </section>
+</main>
+<script>
+window.LA_READY.then(function () {
+  const token = window.LA_TOKEN;
+  const api = (path, opts) => fetch('api/' + path, Object.assign({headers:{'X-Lead-Agent-Token': token}}, opts)).then(r => r.json());
+
+  document.getElementById('btnSendTestEmail').addEventListener('click', async function () {
+    const btn    = this;
+    const status = document.getElementById('testEmailStatus');
+    const to      = document.getElementById('testTo').value.trim();
+    const subject = document.getElementById('testSubject').value.trim();
+    const message = document.getElementById('testMessage').value.trim();
+    if (!to || !subject || !message) { status.innerHTML = '<span style="color:var(--danger)">Fyll inn alle felt.</span>'; return; }
+    btn.disabled = true; btn.textContent = 'Sender…'; status.textContent = '';
+    try {
+      const res = await api('send-test-email.php', {method:'POST', headers:{'Content-Type':'application/json','X-Lead-Agent-Token':token}, body: JSON.stringify({to_email:to, subject, message})});
+      status.innerHTML = res.ok
+        ? `<span style="color:var(--success)">Testmail sendt til ${to}. ${res.response_ms}ms via ${res.smtp_host||'SMTP'}</span>`
+        : `<span style="color:var(--danger)">Feil: ${res.error} (${res.response_ms}ms)</span>`;
+    } catch(err) {
+      status.innerHTML = `<span style="color:var(--danger)">Feil: ${err.message}</span>`;
+    } finally {
+      btn.disabled = false; btn.textContent = 'Send testmail';
+    }
+  });
+});
+</script>
+</body>
+</html>

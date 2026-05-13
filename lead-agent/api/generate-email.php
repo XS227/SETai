@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/_db.php';
 header('Content-Type: application/json');
+require_admin_token();
 $pdo  = db();
 $input = json_input();
 $id   = (int)($input['lead_id'] ?? 0);
@@ -16,6 +17,11 @@ $cms    = strtolower($lead['website_cms'] ?? '');
 $no_web = empty($lead['has_website']) || !(int)$lead['has_website'];
 $bad_ssl = !$no_web && isset($lead['website_has_ssl']) && !(int)$lead['website_has_ssl'];
 $old_cms = in_array($cms, ['wordpress', 'wix']);
+
+$r_notes    = json_decode($lead['research_notes'] ?? '{}', true) ?: [];
+$site_status = $r_notes['site_status'] ?? 'active';
+$parked      = ($site_status === 'parked');
+$under_const = ($site_status === 'under_construction');
 
 // Industry → landing page + USP
 if (preg_match('/bilvask|bilpleie|bilstell|bilrens/', $ind)) {
@@ -48,6 +54,10 @@ if (preg_match('/bilvask|bilpleie|bilstell|bilrens/', $ind)) {
 // Personalized opening hook
 if ($no_web) {
     $hook = "Vi la merke til at {$co} ikke har en nettside ennå.";
+} elseif ($parked) {
+    $hook = "Vi la merke til at {$co} sitt domene ser ut til å være parkert — ingen aktiv nettside ennå.";
+} elseif ($under_const) {
+    $hook = "Vi la merke til at {$co} sin nettside er under utbygging — vi kan hjelpe dere å komme raskt i mål.";
 } elseif ($old_cms && $bad_ssl) {
     $hook = "Vi la merke til at {$co} bruker " . ucfirst($cms) . " uten SSL — Google straffer slike sider med lavere rangering.";
 } elseif ($old_cms) {
@@ -80,4 +90,5 @@ $pdo->prepare('INSERT INTO email_drafts (lead_id,subject,body,offer_type,tone,st
 $pdo->prepare('UPDATE leads SET lead_status=?,updated_at=CURRENT_TIMESTAMP WHERE id=?')
     ->execute(['draft_ready', $id]);
 
-echo json_encode(['ok'=>true, 'subject'=>$subject, 'body'=>$body, 'cta_url'=>$cta_url, 'offer_type'=>$type, 'auto_send'=>false]);
+$sales_argument = $hook . ' ' . $pitch;
+echo json_encode(['ok'=>true, 'subject'=>$subject, 'body'=>$body, 'cta_url'=>$cta_url, 'offer_type'=>$type, 'auto_send'=>false, 'sales_argument'=>$sales_argument]);

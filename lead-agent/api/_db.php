@@ -1,5 +1,5 @@
 <?php
-const LEAD_AGENT_ADMIN_TOKEN = 'change-me-in-production';
+const LEAD_AGENT_ADMIN_TOKEN = '0227';
 
 function db(): PDO {
   static $pdo = null;

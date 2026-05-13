@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SETAEI — Sendte tilbud</title>
+  <link rel="stylesheet" href="assets/css/lead-agent.css" />
+  <script src="assets/js/access.js"></script>
+</head>
+<body>
+<nav class="topnav">
+  <span class="brand">SETAEI</span>
+  <a href="admin.html">Leads</a>
+  <a href="drafts.html">Drafts</a>
+  <a class="active" href="sent.html">Sendte tilbud</a>
+  <a href="settings.html">Settings</a>
+  <a href="logs.html">Logs</a>
+</nav>
+<main class="main">
+  <section class="card">
+    <div class="section-header">
+      <h3>Sendte tilbud</h3>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr>
+          <th>Selskap</th><th>E-post</th><th>Emne</th><th>Sendt</th><th>Åpnet</th><th>Klikket</th><th>Status</th>
+        </tr></thead>
+        <tbody id="sentRows"><tr><td colspan="7" style="color:var(--muted)">Laster…</td></tr></tbody>
+      </table>
+    </div>
+  </section>
+</main>
+<script>
+window.LA_READY.then(function () {
+  const token = window.LA_TOKEN;
+  fetch('api/list-sent-offers.php', {headers:{'X-Lead-Agent-Token': token}})
+    .then(r => r.json())
+    .then(function (res) {
+      const rows = res.rows || [];
+      const tbody = document.getElementById('sentRows');
+      if (!rows.length) {
+        tbody.innerHTML = '<tr><td colspan="7" style="color:var(--muted)">Ingen sendte tilbud ennå.</td></tr>';
+        return;
+      }
+      tbody.innerHTML = rows.map(function (r) {
+        let status = r.send_status;
+        if (r.clicked_at)     status = 'clicked';
+        else if (r.opened_at) status = 'opened';
+        const cls = {sent:'del-sent', opened:'del-opened', clicked:'del-clicked', failed:'del-failed', skipped:'del-skipped'}[status] || 'del-sent';
+        const errDetail = r.last_error ? `<br><small style="color:var(--danger);font-size:11px">${r.last_error}</small>` : '';
+        return `<tr>
+          <td>${r.company_name || '—'}</td>
+          <td>${r.email || '—'}</td>
+          <td>${r.subject || ''}</td>
+          <td>${r.sent_at || ''}</td>
+          <td>${r.opened_at || '—'}</td>
+          <td>${r.clicked_at || '—'}</td>
+          <td><span class="badge ${cls}">${status}</span>${errDetail}</td>
+        </tr>`;
+      }).join('');
+    }).catch(function (e) {
+      document.getElementById('sentRows').innerHTML = `<tr><td colspan="7" style="color:var(--danger)">Feil: ${e.message}</td></tr>`;
+    });
+});
+</script>
+</body>
+</html>
