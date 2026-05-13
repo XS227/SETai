@@ -7,16 +7,15 @@
   <link rel="stylesheet" href="assets/css/lead-agent.css" />
 </head>
 <body>
-<div class="layout">
-  <aside class="sidebar">
-    <h2>SETAEI</h2>
-    <a class="active" href="#leads">Leads</a>
-    <a href="#drafts">Drafts</a>
-    <a href="#sent-offers" id="tabSentOffers">Sendte tilbud</a>
-    <a href="#settings">Settings</a>
-    <a href="#logs">Logs</a>
-  </aside>
-  <main class="main" id="app">
+<nav class="topnav">
+  <span class="brand">SETAEI</span>
+  <a class="active" href="#leads">Leads</a>
+  <a href="#drafts">Drafts</a>
+  <a href="#sent-offers" id="tabSentOffers">Sendte tilbud</a>
+  <a href="#settings">Settings</a>
+  <a href="#logs">Logs</a>
+</nav>
+<main class="main" id="app">
     <div class="notice">Kontroller lovlighet og relevans før utsending. MVP lager kun e-postutkast (ingen auto-send).</div>
 
     <section class="card" id="settings">
@@ -85,7 +84,7 @@
         <table>
           <thead><tr>
             <th><input type="checkbox" id="selectAll" /></th>
-            <th>Selskap</th><th>Org.nr</th><th>Bransje</th><th>By</th><th>Registrert</th><th>Nettside</th><th>E-post</th><th>Score</th><th>Status</th><th>Actions</th>
+            <th>Selskap</th><th>Org.nr</th><th>Bransje</th><th>By</th><th>Registrert</th><th>Nettside</th><th>E-post</th><th>Tlf</th><th>Score</th><th>Status</th><th>Actions</th>
           </tr></thead>
           <tbody id="leadRows"></tbody>
         </table>
@@ -109,7 +108,6 @@
       </div>
     </section>
   </main>
-</div>
 
 <!-- Send tilbud modal -->
 <div class="modal-overlay" id="modalOverlay" style="display:none">

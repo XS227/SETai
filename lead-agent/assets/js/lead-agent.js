@@ -25,14 +25,15 @@ const api = (path, options={}) => {
 
 function statusBadge(status='new'){ return `<span class="badge status-${status}">${status}</span>`; }
 function websiteText(row) {
-  if (!row.has_website) return 'Ingen';
+  if (!row.has_website && !row.website_url) return '<span class="muted-text">Ingen nettside</span>';
+  const url = row.website_url || '#';
   const cms = (row.website_cms || '').toLowerCase();
   let badges = '';
   if      (cms === 'wordpress') badges += ' <span class="badge cms-wp">WP</span>';
   else if (cms === 'wix')       badges += ' <span class="badge cms-wix">Wix</span>';
   else if (cms === 'shopify')   badges += ' <span class="badge cms-shopify">Shopify</span>';
   if (row.website_has_ssl === 0 || row.website_has_ssl === '0') badges += ' <span class="badge no-ssl">No SSL</span>';
-  return 'Ja' + badges;
+  return `<a href="${row.website_url}" target="_blank" rel="noopener" class="btn-link">Se nettside</a>${badges}`;
 }
 function emailBadge(row) {
   if (row.contact_email) return `<span class="badge email-yes" title="${row.contact_email}">${row.contact_email}</span>`;
@@ -72,15 +73,20 @@ async function loadLeads(filters={}) {
     <tr>
       <td><input type="checkbox" class="lead-check" data-id="${row.id}" ${selectedIds.has(row.id) ? 'checked' : ''} /></td>
       <td>${row.company_name||''}</td><td>${row.org_number||''}</td><td>${row.industry_name||''}</td>
-      <td>${row.city||''}</td><td>${row.registration_date||''}</td><td>${websiteText(row)}</td>
+      <td>${row.city||''}</td><td>${row.registration_date||''}</td>
+      <td>${websiteText(row)}</td>
       <td>${emailBadge(row)}</td>
+      <td>${row.contact_phone ? row.contact_phone : '<span class="muted-text">Ingen tlf</span>'}</td>
       <td>${row.lead_score ?? '-'}</td><td>${statusBadge(row.lead_status)}</td>
-      <td class="actions">
-        <button class="secondary" onclick="researchLead(${row.id})">Research</button>
-        <button class="primary" onclick="genEmail(${row.id})">Generate draft</button>
-        <button class="warn" onclick="updateStatus(${row.id},'approved')">Approve</button>
-        <button class="danger" onclick="updateStatus(${row.id},'rejected')">Reject</button>
-        <button class="secondary" onclick="updateStatus(${row.id},'contacted')">Mark contacted</button>
+      <td class="row-actions">
+        <button class="secondary btn-sm" onclick="researchLead(${row.id})">Research</button>
+        <button class="primary btn-sm" onclick="genEmail(${row.id})">Draft</button>
+        <select class="status-select" onchange="updateStatus(${row.id},this.value);this.value=''">
+          <option value="">Status…</option>
+          <option value="approved">Godkjenn</option>
+          <option value="rejected">Avvis</option>
+          <option value="contacted">Kontaktet</option>
+        </select>
       </td>
     </tr>
   `).join('');
@@ -181,7 +187,16 @@ async function researchLead(id) {
 }
 
 async function genEmail(id){ const res = await api('generate-email.php', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({lead_id:id, tone:'vennlig'})}); document.getElementById('leadDetail').innerHTML = `<h4>${res.subject||''}</h4><pre>${res.body||''}</pre>`; loadLeads(getFilters()); }
-async function updateStatus(id,status){ const res = await api('update-lead-status.php', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({lead_id:id,status})}); document.getElementById('leadDetail').innerHTML = `<pre>${JSON.stringify(res, null, 2)}</pre>`; loadLeads(getFilters()); }
+async function updateStatus(id,status) {
+  if (!status) return;
+  try {
+    await api('update-lead-status.php', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({lead_id:id,status})});
+    document.getElementById('leadDetail').innerHTML = `<div class="notice">Status oppdatert til <strong>${status}</strong>.</div>`;
+    loadLeads(getFilters());
+  } catch(err) {
+    document.getElementById('leadDetail').innerHTML = `<div class="notice">Feil: ${err.message}</div>`;
+  }
+}
 
 async function fetchBrreg(){
   const btn = document.getElementById('fetchBrreg');
@@ -192,7 +207,18 @@ async function fetchBrreg(){
   try {
     const payload={from_date:document.getElementById('fromDate').value,to_date:document.getElementById('toDate').value};
     const res=await api('brreg-fetch.php',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
-    detail.innerHTML = `<div class="notice">Importert ${res.imported||0} nye leads. ${res.existing||0} fantes fra før.${res.used_fallback_filtering ? ' (Fallback-filtrering aktiv)' : ''}</div><pre>${JSON.stringify(res.new_leads||[],null,2)}</pre>`;
+    const leads = res.new_leads || [];
+    const withWebsite = leads.filter(l => l.has_website || l.website_url).length;
+    const withoutWebsite = leads.length - withWebsite;
+    const needResearch = leads.filter(l => !l.contact_email && (l.has_website || l.website_url)).length;
+    detail.innerHTML = `<div class="notice">
+      <strong>Brreg-import fullfort</strong>${res.used_fallback_filtering ? ' (Fallback-filtrering aktiv)' : ''}<br>
+      Importert: <strong>${res.imported||0}</strong> nye leads &nbsp;&bull;&nbsp;
+      Fantes fra for: <strong>${res.existing||0}</strong><br>
+      Med nettside: <strong>${withWebsite}</strong> &nbsp;&bull;&nbsp;
+      Uten nettside: <strong>${withoutWebsite}</strong> &nbsp;&bull;&nbsp;
+      Trenger research: <strong>${needResearch}</strong>
+    </div>`;
     await loadLeads(getFilters());
   } catch (err) {
     detail.innerHTML = `<div class="notice">Feil ved Brreg-import: ${err.message || err}</div>`;
