@@ -78,3 +78,67 @@ pre { white-space: pre-wrap; background: #f8fafe; padding: 10px; border-radius: 
 .modal-confirm-row input { width: auto; flex: none; margin-top: 2px; }
 .modal-footer { display: flex; gap: 10px; margin-top: 16px; justify-content: flex-end; }
 #modalStatus { margin-top: 10px; font-size: 13px; }
+
+/* ── Stats bar ── */
+.stats-bar { display: flex; background: var(--card); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; margin-bottom: 16px; }
+.stat { flex: 1; padding: 12px 8px; text-align: center; border-right: 1px solid var(--line); min-width: 0; }
+.stat:last-child { border-right: none; }
+.stat-n { display: block; font-size: 21px; font-weight: 700; color: var(--text); line-height: 1.1; }
+.stat-l { display: block; font-size: 10px; color: var(--muted); margin-top: 3px; white-space: nowrap; letter-spacing: 0.02em; }
+.stat-blue   .stat-n { color: var(--primary); }
+.stat-teal   .stat-n { color: #0d9488; }
+.stat-orange .stat-n { color: var(--warning); }
+.stat-green  .stat-n { color: var(--success); }
+.stat-purple .stat-n { color: #7c3aed; }
+.stat-amber  .stat-n { color: #d97706; }
+.stat-success .stat-n { color: #059669; }
+
+/* ── Section header (h3 + action button) ── */
+.section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+.section-header h3 { margin: 0; flex: 1; }
+
+/* ── Clickable company name ── */
+.lead-name { font-weight: 600; cursor: pointer; color: var(--primary); }
+.lead-name:hover { text-decoration: underline; }
+
+/* ── Preview panel ── */
+.preview-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.2); z-index: 499; }
+.preview-overlay.open { display: block; }
+.preview-panel { position: fixed; top: 0; right: -420px; width: 400px; height: 100vh; background: var(--card); box-shadow: -6px 0 32px rgba(0,0,0,0.12); z-index: 500; overflow-y: auto; transition: right 0.25s cubic-bezier(0.4,0,0.2,1); display: flex; flex-direction: column; }
+.preview-panel.open { right: 0; }
+.preview-header { display: flex; align-items: center; justify-content: space-between; padding: 14px 18px; border-bottom: 1px solid var(--line); position: sticky; top: 0; background: var(--card); z-index: 1; }
+.preview-title { font-weight: 700; font-size: 14px; }
+.preview-close { background: none; border: none; font-size: 22px; color: var(--muted); cursor: pointer; padding: 2px 8px; line-height: 1; border-radius: 6px; }
+.preview-close:hover { background: var(--bg); }
+.preview-body { padding: 16px 18px; flex: 1; }
+.preview-section { margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid var(--line); }
+.preview-section:last-child { border-bottom: none; }
+.preview-section h4 { margin: 0 0 8px; font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+.preview-field { margin-bottom: 5px; font-size: 13px; line-height: 1.5; }
+.preview-field a { color: var(--primary); text-decoration: none; }
+.preview-field a:hover { text-decoration: underline; }
+.preview-draft { background: #f8fafe; border: 1px solid var(--line); border-radius: 8px; padding: 12px; font-size: 12px; white-space: pre-wrap; max-height: 220px; overflow-y: auto; margin-top: 8px; line-height: 1.6; }
+
+/* ── CMS badge additions ── */
+.cms-squarespace { background: #fce7f3; color: #9d174d; font-size: 11px; }
+.cms-webflow     { background: #eff6ff; color: #1d4ed8; font-size: 11px; }
+.cms-other       { background: #f0ebff; color: #5b21b6; font-size: 11px; }
+
+/* ── Delivery status badges (sent offers table) ── */
+.del-sent    { background: #e7efff; color: #2754b7; }
+.del-opened  { background: #e2f8ec; color: #10613a; }
+.del-clicked { background: #d1fae5; color: #065f46; font-weight: 700; }
+.del-failed  { background: #ffe4e4; color: #972f2f; }
+.del-skipped { background: #f0f2f5; color: #66758f; }
+
+/* ── Progress bar ── */
+.progress-bar-wrap { background: #e4e9f2; border-radius: 999px; height: 6px; overflow: hidden; margin: 10px 0 2px; }
+.progress-bar { height: 100%; background: var(--primary); border-radius: 999px; transition: width 0.4s ease; width: 0%; }
+
+/* ── Responsive: collapse stats on small screens ── */
+@media (max-width: 768px) {
+  .stats-bar { flex-wrap: wrap; }
+  .stat { flex: 0 0 25%; border-right: 1px solid var(--line); }
+  .preview-panel { width: 100%; right: -100%; }
+  .topnav a { padding: 12px 10px; font-size: 13px; }
+}

@@ -16,6 +16,16 @@
   <a href="#logs">Logs</a>
 </nav>
 <main class="main" id="app">
+  <div class="stats-bar" id="statsBar">
+    <div class="stat"><span class="stat-n" id="sTotal">—</span><span class="stat-l">Totalt</span></div>
+    <div class="stat stat-blue"><span class="stat-n" id="sEmail">—</span><span class="stat-l">E-post</span></div>
+    <div class="stat stat-teal"><span class="stat-n" id="sWebsite">—</span><span class="stat-l">Nettside</span></div>
+    <div class="stat stat-orange"><span class="stat-n" id="sResearched">—</span><span class="stat-l">Researched</span></div>
+    <div class="stat stat-green"><span class="stat-n" id="sReady">—</span><span class="stat-l">Klar</span></div>
+    <div class="stat stat-purple"><span class="stat-n" id="sSent">—</span><span class="stat-l">Sendt</span></div>
+    <div class="stat stat-amber"><span class="stat-n" id="sOpened">—</span><span class="stat-l">Åpnet</span></div>
+    <div class="stat stat-success"><span class="stat-n" id="sClicked">—</span><span class="stat-l">Klikket</span></div>
+  </div>
     <div class="notice">Kontroller lovlighet og relevans før utsending. MVP lager kun e-postutkast (ingen auto-send).</div>
 
     <section class="card" id="settings">
@@ -59,7 +69,10 @@
     </section>
 
     <section class="card" id="leads">
-      <h3>Leads</h3>
+      <div class="section-header">
+        <h3>Leads</h3>
+        <button class="secondary btn-sm" id="btnExport">Eksporter CSV</button>
+      </div>
       <div class="filter-bar">
         <select id="filterIndustry"><option value="">Alle bransjer</option></select>
         <select id="filterCity"><option value="">Alle byer</option></select>
@@ -128,6 +141,11 @@
     <label style="margin-top:10px">CTA-lenke (valgfri)</label>
     <input id="offerCta" type="url" placeholder="https://setai.no/tilbud" />
     <div class="modal-recipients" id="modalRecipients"></div>
+    <p style="margin:8px 0 0;font-size:12px;color:var(--muted)">Safe mode: maks 10 e-poster per batch &middot; 3 s pause mellom batcher.</p>
+    <div id="sendProgress" style="display:none">
+      <div class="progress-bar-wrap"><div class="progress-bar" id="sendProgressBar"></div></div>
+      <div id="sendProgressText" style="font-size:12px;color:var(--muted);margin-top:2px"></div>
+    </div>
     <label class="modal-confirm-row">
       <input type="checkbox" id="offerConfirm" />
       Jeg bekrefter at utvalget er gjennomgått og utsending er lovlig.
@@ -139,6 +157,18 @@
     <div id="modalStatus"></div>
   </div>
 </div>
+
+<!-- Preview panel -->
+<div class="preview-overlay" id="previewOverlay"></div>
+<aside class="preview-panel" id="previewPanel">
+  <div class="preview-header">
+    <span class="preview-title" id="previewTitle">Lead-detaljer</span>
+    <button class="preview-close" id="previewClose">&times;</button>
+  </div>
+  <div class="preview-body" id="previewBody">
+    <p style="color:var(--muted)">Klikk på et selskap for å se detaljer.</p>
+  </div>
+</aside>
 
 <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
 <script src="assets/js/lead-agent.js"></script>

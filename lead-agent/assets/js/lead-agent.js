@@ -24,16 +24,26 @@ const api = (path, options={}) => {
 };
 
 function statusBadge(status='new'){ return `<span class="badge status-${status}">${status}</span>`; }
+const CMS_BADGES = {
+  wordpress:   ['cms-wp',          'WordPress'],
+  wix:         ['cms-wix',         'Wix'],
+  shopify:     ['cms-shopify',     'Shopify'],
+  squarespace: ['cms-squarespace', 'Squarespace'],
+  webflow:     ['cms-webflow',     'Webflow'],
+  other:       ['cms-other',       'Custom CMS'],
+};
+
+function cmsBadge(cms) {
+  const [cls, label] = CMS_BADGES[cms] || [];
+  return cls ? `<span class="badge ${cls}">${label}</span>` : '';
+}
+
 function websiteText(row) {
   if (!row.has_website && !row.website_url) return '<span class="muted-text">Ingen nettside</span>';
-  const url = row.website_url || '#';
   const cms = (row.website_cms || '').toLowerCase();
-  let badges = '';
-  if      (cms === 'wordpress') badges += ' <span class="badge cms-wp">WP</span>';
-  else if (cms === 'wix')       badges += ' <span class="badge cms-wix">Wix</span>';
-  else if (cms === 'shopify')   badges += ' <span class="badge cms-shopify">Shopify</span>';
+  let badges = cmsBadge(cms);
   if (row.website_has_ssl === 0 || row.website_has_ssl === '0') badges += ' <span class="badge no-ssl">No SSL</span>';
-  return `<a href="${row.website_url}" target="_blank" rel="noopener" class="btn-link">Se nettside</a>${badges}`;
+  return `<a href="${row.website_url}" target="_blank" rel="noopener" class="btn-link">Se nettside</a> ${badges}`;
 }
 function emailBadge(row) {
   if (row.contact_email) return `<span class="badge email-yes" title="${row.contact_email}">${row.contact_email}</span>`;
@@ -72,7 +82,7 @@ async function loadLeads(filters={}) {
   tbody.innerHTML = leadsData.map(row => `
     <tr>
       <td><input type="checkbox" class="lead-check" data-id="${row.id}" ${selectedIds.has(row.id) ? 'checked' : ''} /></td>
-      <td>${row.company_name||''}</td><td>${row.org_number||''}</td><td>${row.industry_name||''}</td>
+      <td><span class="lead-name" onclick="openPreview(${row.id})">${row.company_name||''}</span></td><td>${row.org_number||''}</td><td>${row.industry_name||''}</td>
       <td>${row.city||''}</td><td>${row.registration_date||''}</td>
       <td>${websiteText(row)}</td>
       <td>${emailBadge(row)}</td>
@@ -80,7 +90,7 @@ async function loadLeads(filters={}) {
       <td>${row.lead_score ?? '-'}</td><td>${statusBadge(row.lead_status)}</td>
       <td class="row-actions">
         <button class="secondary btn-sm" onclick="researchLead(${row.id})">Research</button>
-        <button class="primary btn-sm" onclick="genEmail(${row.id})">Draft</button>
+        <button class="primary btn-sm" onclick="genEmail(${row.id})">AI Offer</button>
         <select class="status-select" onchange="updateStatus(${row.id},this.value);this.value=''">
           <option value="">Status…</option>
           <option value="approved">Godkjenn</option>
@@ -181,18 +191,23 @@ async function researchLead(id) {
       </div>`;
     }
     loadLeads(getFilters());
+    loadStats();
   } catch(err) {
     detail.innerHTML = `<div class="notice">Research feilet: ${err.message}</div>`;
   }
 }
 
-async function genEmail(id){ const res = await api('generate-email.php', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({lead_id:id, tone:'vennlig'})}); document.getElementById('leadDetail').innerHTML = `<h4>${res.subject||''}</h4><pre>${res.body||''}</pre>`; loadLeads(getFilters()); }
-async function updateStatus(id,status) {
+async function genEmail(id) {
+  openPreview(id);
+  await previewGenDraft(id);
+}
+async function updateStatus(id, status) {
   if (!status) return;
   try {
     await api('update-lead-status.php', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({lead_id:id,status})});
     document.getElementById('leadDetail').innerHTML = `<div class="notice">Status oppdatert til <strong>${status}</strong>.</div>`;
     loadLeads(getFilters());
+    loadStats();
   } catch(err) {
     document.getElementById('leadDetail').innerHTML = `<div class="notice">Feil: ${err.message}</div>`;
   }
@@ -285,6 +300,7 @@ async function bulkResearch() {
   }
 
   loadLeads(getFilters());
+  loadStats();
   btn.disabled = false;
   detail.innerHTML = `<div class="notice">
     <strong>Bulk research fullført — ${ids.length} leads</strong><br>
@@ -315,11 +331,15 @@ function openSendModal() {
   sendBtn.disabled = withEmail.length === 0;
 
   document.getElementById('offerTemplate').value   = '';
-  document.getElementById('offerSubject').value    = '';
-  document.getElementById('offerMessage').value    = '';
-  document.getElementById('offerCta').value        = '';
   document.getElementById('offerConfirm').checked  = false;
   document.getElementById('modalStatus').textContent = '';
+  document.getElementById('sendProgress').style.display = 'none';
+  document.getElementById('sendProgressBar').style.width = '0%';
+  // Pre-fill from last generated draft if available
+  const draft = window._lastDraft || {};
+  document.getElementById('offerSubject').value = draft.subject || '';
+  document.getElementById('offerMessage').value = draft.body    || '';
+  document.getElementById('offerCta').value     = draft.cta_url || '';
   document.getElementById('modalOverlay').style.display = 'flex';
 }
 
@@ -333,6 +353,9 @@ async function sendOffer() {
   const cta_link  = document.getElementById('offerCta').value.trim();
   const confirmed = document.getElementById('offerConfirm').checked;
   const statusEl  = document.getElementById('modalStatus');
+  const progressEl = document.getElementById('sendProgress');
+  const progressBar = document.getElementById('sendProgressBar');
+  const progressText = document.getElementById('sendProgressText');
 
   if (!subject || !message) { statusEl.textContent = 'Emne og melding er påkrevd.'; return; }
   if (!confirmed)           { statusEl.textContent = 'Bekreft at utsendingen er gjennomgått.'; return; }
@@ -341,21 +364,48 @@ async function sendOffer() {
   btn.disabled = true; btn.textContent = 'Sender…';
   statusEl.textContent = '';
 
-  try {
-    const res = await api('send-offers.php', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({subject, message, cta_link, lead_ids: [...selectedIds]})
-    });
-    statusEl.innerHTML = `<span style="color:var(--success)">Sendt til ${res.sent} mottaker(e).${res.skipped ? ` ${res.skipped} hoppet over.` : ''}${res.failed ? ` ${res.failed} feilet.` : ''}</span>`;
-    selectedIds.clear();
-    updateBulkBar();
-    loadLeads(getFilters());
-  } catch (err) {
-    statusEl.innerHTML = `<span style="color:var(--danger)">Feil: ${err.message}</span>`;
-  } finally {
-    btn.disabled = false; btn.textContent = 'Send';
+  const MAX_BATCH = 10;
+  const DELAY_MS  = 3000;
+  const allIds    = [...selectedIds];
+
+  // Split into batches of MAX_BATCH
+  const batches = [];
+  for (let i = 0; i < allIds.length; i += MAX_BATCH) batches.push(allIds.slice(i, i + MAX_BATCH));
+
+  progressEl.style.display = 'block';
+  progressBar.style.width  = '0%';
+
+  const totals = { sent: 0, skipped: 0, failed: 0 };
+
+  for (let b = 0; b < batches.length; b++) {
+    progressText.textContent = `Sender batch ${b + 1} / ${batches.length}…`;
+    progressBar.style.width  = Math.round((b / batches.length) * 100) + '%';
+    try {
+      const res = await api('send-offers.php', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({subject, message, cta_link, lead_ids: batches[b]})
+      });
+      totals.sent    += res.sent    || 0;
+      totals.skipped += res.skipped || 0;
+      totals.failed  += res.failed  || 0;
+    } catch(err) {
+      statusEl.innerHTML += `<br><span style="color:var(--danger)">Batch ${b + 1} feilet: ${err.message}</span>`;
+    }
+    if (b < batches.length - 1) {
+      progressText.textContent = `Venter 3 s før neste batch…`;
+      await new Promise(r => setTimeout(r, DELAY_MS));
+    }
   }
+
+  progressBar.style.width  = '100%';
+  progressText.textContent = 'Ferdig.';
+  statusEl.innerHTML = `<span style="color:var(--success)">Sendt til <strong>${totals.sent}</strong> mottaker(e).${totals.skipped ? ` ${totals.skipped} hoppet over.` : ''}${totals.failed ? ` <span style="color:var(--danger)">${totals.failed} feilet.</span>` : ''}</span>`;
+  btn.disabled = false; btn.textContent = 'Send';
+  selectedIds.clear();
+  updateBulkBar();
+  loadLeads(getFilters());
+  loadStats();
 }
 
 document.getElementById('btnResearchSelected').addEventListener('click', bulkResearch);
@@ -379,10 +429,10 @@ async function loadSentOffers() {
     const rows = res.rows || [];
     document.getElementById('sentOffersRows').innerHTML = rows.length ? rows.map(r => {
       let status = r.send_status;
-      if (r.clicked_at) status = 'clicked';
+      if (r.clicked_at)     status = 'clicked';
       else if (r.opened_at) status = 'opened';
-      const statusColor = status === 'clicked' ? 'var(--success)' : status === 'opened' ? 'var(--primary)' : status === 'failed' ? 'var(--danger)' : 'var(--muted)';
-      const smtpDetail = r.last_error ? `<br><small style="color:var(--danger)">${r.last_error}</small>` : (r.smtp_response === 'OK' ? '' : '');
+      const delClass = { sent:'del-sent', opened:'del-opened', clicked:'del-clicked', failed:'del-failed', skipped:'del-skipped' }[status] || 'del-sent';
+      const errDetail = r.last_error ? `<br><small style="color:var(--danger);font-size:11px">${r.last_error}</small>` : '';
       return `<tr>
         <td>${r.company_name || '—'}</td>
         <td>${r.email || '—'}</td>
@@ -390,7 +440,7 @@ async function loadSentOffers() {
         <td>${r.sent_at || ''}</td>
         <td>${r.opened_at || '—'}</td>
         <td>${r.clicked_at || '—'}</td>
-        <td><span style="font-weight:600;color:${statusColor}">${status}</span>${smtpDetail}</td>
+        <td><span class="badge ${delClass}">${status}</span>${errDetail}</td>
       </tr>`;
     }).join('') : '<tr><td colspan="7" style="color:var(--muted)">Ingen sendte tilbud ennå.</td></tr>';
   } catch (err) {
@@ -425,14 +475,181 @@ document.getElementById('btnSendTestEmail').addEventListener('click', async () =
   }
 });
 
+// --- Stats bar ---
+async function loadStats() {
+  try {
+    const res = await api('stats.php');
+    const s = res.stats || {};
+    document.getElementById('sTotal').textContent      = s.total        ?? '—';
+    document.getElementById('sEmail').textContent      = s.with_email   ?? '—';
+    document.getElementById('sWebsite').textContent    = s.with_website ?? '—';
+    document.getElementById('sResearched').textContent = s.researched   ?? '—';
+    document.getElementById('sReady').textContent      = s.ready        ?? '—';
+    document.getElementById('sSent').textContent       = s.sent         ?? '—';
+    document.getElementById('sOpened').textContent     = s.opened       ?? '—';
+    document.getElementById('sClicked').textContent    = s.clicked      ?? '—';
+  } catch(e) { /* non-critical */ }
+}
+
+// --- Preview panel ---
+function openPreview(id) {
+  const lead = leadsData.find(l => l.id === id);
+  if (!lead) return;
+
+  const flags = (() => { try { return JSON.parse(lead.website_flags || '{}'); } catch(e) { return {}; } })();
+  const cms   = (lead.website_cms || '').toLowerCase();
+
+  const sslBadge = lead.website_url
+    ? (lead.website_has_ssl == 1
+        ? '<span class="badge" style="background:#e2f8ec;color:#10613a">SSL</span>'
+        : '<span class="badge no-ssl">No SSL</span>')
+    : '';
+  const mobileBadge  = flags.mobile_friendly ? '<span class="badge" style="background:#e7efff;color:#2754b7">Mobil</span>' : '';
+  const bookingBadge = flags.has_booking     ? '<span class="badge" style="background:#f0ebff;color:#5b21b6">Booking</span>' : '';
+
+  let html = `
+    <div class="preview-section">
+      <h4>Selskap</h4>
+      <div class="preview-field" style="font-size:16px;font-weight:700">${lead.company_name || '—'}</div>
+      <div class="preview-field" style="color:var(--muted);font-size:12px">
+        ${lead.org_number ? 'Org.nr ' + lead.org_number : ''} ${lead.organization_form ? '· ' + lead.organization_form : ''}
+      </div>
+      <div class="preview-field">${lead.industry_name || '—'} ${lead.city ? '· ' + lead.city : ''}</div>
+      <div class="preview-field">Registrert: ${lead.registration_date || '—'} &nbsp; Score: <strong>${lead.lead_score ?? '—'}</strong></div>
+      <div class="preview-field" style="margin-top:6px">${statusBadge(lead.lead_status)}</div>
+    </div>
+
+    <div class="preview-section">
+      <h4>Kontakt</h4>
+      <div class="preview-field">
+        ${lead.contact_email
+          ? `<a href="mailto:${lead.contact_email}">${lead.contact_email}</a>`
+          : '<span style="color:var(--muted)">Ingen e-post funnet</span>'}
+      </div>
+      <div class="preview-field">
+        ${lead.contact_phone
+          ? `<a href="tel:${lead.contact_phone}">${lead.contact_phone}</a>`
+          : '<span style="color:var(--muted)">Ingen telefon funnet</span>'}
+      </div>
+    </div>
+
+    <div class="preview-section">
+      <h4>Nettside</h4>
+      <div class="preview-field">
+        ${lead.website_url
+          ? `<a href="${lead.website_url}" target="_blank" rel="noopener">${lead.website_url}</a>`
+          : '<span style="color:var(--muted)">Ingen nettside registrert</span>'}
+      </div>
+      <div style="display:flex;gap:5px;flex-wrap:wrap;margin-top:6px">
+        ${cmsBadge(cms)} ${sslBadge} ${mobileBadge} ${bookingBadge}
+      </div>
+    </div>`;
+
+  if (lead.facebook_url || lead.instagram_url) {
+    html += `<div class="preview-section">
+      <h4>Sosiale medier</h4>
+      ${lead.facebook_url  ? `<div class="preview-field"><a href="${lead.facebook_url}"  target="_blank" rel="noopener">Facebook</a></div>`  : ''}
+      ${lead.instagram_url ? `<div class="preview-field"><a href="${lead.instagram_url}" target="_blank" rel="noopener">Instagram</a></div>` : ''}
+    </div>`;
+  }
+
+  if (lead.research_status) {
+    html += `<div class="preview-section">
+      <h4>Research</h4>
+      <div class="preview-field">Status: <strong>${lead.research_status}</strong></div>
+    </div>`;
+  }
+
+  html += `<div class="preview-section">
+    <h4>Handlinger</h4>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="secondary btn-sm" onclick="researchLead(${id})">Research</button>
+      <button class="primary btn-sm" id="btnPreviewDraft" onclick="previewGenDraft(${id})">Generer AI Offer</button>
+    </div>
+  </div>
+
+  <div class="preview-section" id="previewDraftSection" style="display:none">
+    <h4>E-postutkast</h4>
+    <div class="preview-draft" id="previewDraftBody"></div>
+  </div>`;
+
+  document.getElementById('previewTitle').textContent = lead.company_name || 'Lead';
+  document.getElementById('previewBody').innerHTML = html;
+  document.getElementById('previewPanel').classList.add('open');
+  document.getElementById('previewOverlay').classList.add('open');
+}
+
+function closePreview() {
+  document.getElementById('previewPanel').classList.remove('open');
+  document.getElementById('previewOverlay').classList.remove('open');
+}
+
+async function previewGenDraft(id) {
+  const btn       = document.getElementById('btnPreviewDraft');
+  const draftSec  = document.getElementById('previewDraftSection');
+  const draftBody = document.getElementById('previewDraftBody');
+  if (btn) { btn.disabled = true; btn.textContent = 'Genererer…'; }
+  try {
+    const res = await api('generate-email.php', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({lead_id:id, tone:'vennlig'})});
+    if (draftBody) draftBody.textContent = `Emne: ${res.subject || ''}\n\n${res.body || ''}`;
+    if (draftSec)  draftSec.style.display = 'block';
+    // Pre-fill send modal fields for convenience
+    window._lastDraft = { subject: res.subject, body: res.body, cta_url: res.cta_url };
+    loadLeads(getFilters());
+    loadStats();
+  } catch(err) {
+    if (draftBody) draftBody.textContent = `Feil: ${err.message}`;
+    if (draftSec)  draftSec.style.display = 'block';
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = 'Regenerer AI Offer'; }
+  }
+}
+
+// --- Export leads CSV ---
+async function exportLeads() {
+  const filters = getFilters();
+  const params  = new URLSearchParams();
+  if (filters.industry)    params.set('industry',    filters.industry);
+  if (filters.city)        params.set('city',        filters.city);
+  if (filters.min_score)   params.set('min_score',   filters.min_score);
+  if (filters.has_email)   params.set('has_email',   filters.has_email);
+  if (filters.has_website) params.set('has_website', filters.has_website);
+
+  try {
+    const response = await fetch('api/export-leads.php?' + params.toString(), {
+      headers: { 'X-Lead-Agent-Token': LEAD_AGENT_ADMIN_TOKEN }
+    });
+    if (!response.ok) throw new Error('Export feilet');
+    const blob = await response.blob();
+    const url  = URL.createObjectURL(blob);
+    const a    = document.createElement('a');
+    a.href = url;
+    a.download = 'setaei-leads-' + new Date().toISOString().slice(0, 10) + '.csv';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  } catch(err) {
+    alert('Export feilet: ' + err.message);
+  }
+}
+
 // --- Init ---
 document.getElementById('fetchBrreg').addEventListener('click', fetchBrreg);
 document.getElementById('importCsv').addEventListener('click', importCsv);
+document.getElementById('btnExport').addEventListener('click', exportLeads);
+document.getElementById('previewClose').addEventListener('click', closePreview);
+document.getElementById('previewOverlay').addEventListener('click', closePreview);
+
 setDefaultDates();
 populateFilterOptions();
 loadLeads();
+loadStats();
 
-window.researchLead  = researchLead;
-window.genEmail      = genEmail;
-window.updateStatus  = updateStatus;
-window.bulkResearch  = bulkResearch;
+window.researchLead   = researchLead;
+window.genEmail       = genEmail;
+window.updateStatus   = updateStatus;
+window.bulkResearch   = bulkResearch;
+window.openPreview    = openPreview;
+window.closePreview   = closePreview;
+window.previewGenDraft = previewGenDraft;
