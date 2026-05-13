@@ -1,4 +1,6 @@
 <?php
+const LEAD_AGENT_ADMIN_TOKEN = 'change-me-in-production';
+
 function db(): PDO {
   static $pdo = null;
   if ($pdo) return $pdo;
@@ -9,10 +11,22 @@ function db(): PDO {
   $pdo->exec($sql);
   return $pdo;
 }
+
 function json_input(): array {
   $raw = file_get_contents('php://input');
   return $raw ? (json_decode($raw, true) ?: []) : [];
 }
+
+function require_admin_token(): void {
+  $token = $_SERVER['HTTP_X_LEAD_AGENT_TOKEN'] ?? '';
+  if ($token !== LEAD_AGENT_ADMIN_TOKEN) {
+    http_response_code(403);
+    header('Content-Type: application/json');
+    echo json_encode(['ok' => false, 'error' => 'Ugyldig eller manglende admin-token']);
+    exit;
+  }
+}
+
 function score_lead(array $lead): int {
   $score = 0;
   $industry = strtolower($lead['industry_name'] ?? '');
