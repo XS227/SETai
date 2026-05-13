@@ -108,6 +108,9 @@ function renderDraftPanel(draft) {
       <div style="display:flex;gap:8px;flex-wrap:wrap">
         <button class="secondary btn-sm" onclick="saveDraft(${draft.id})">Lagre endringer</button>
         <button class="secondary btn-sm" onclick="copyDraft()">Kopier tekst</button>
+        ${hasEmail
+          ? `<button class="secondary btn-sm" onclick="mailtoDraft()">Åpne i e-post</button>`
+          : ''}
         ${hasEmail && draft.status !== 'sent'
           ? `<button class="primary btn-sm" id="btnSendDraft" onclick="sendDraft(${draft.id})">Send til ${escHtml(draft.contact_email)}</button>`
           : (draft.status === 'sent' ? '<span class="badge status-contacted">Allerede sendt</span>' : '<span style="color:var(--muted);font-size:12px">Ingen e-post</span>')}
@@ -129,6 +132,14 @@ function copyDraft() {
   if (navigator.clipboard) {
     navigator.clipboard.writeText(text).then(() => { showDpStatus('Kopiert!', 'var(--success)'); }).catch(() => {});
   }
+}
+
+function mailtoDraft() {
+  if (!currentDraft || !currentDraft.contact_email) return;
+  const subject = document.getElementById('dpSubject')?.value || currentDraft.subject || '';
+  const body    = document.getElementById('dpBody')?.value    || currentDraft.body    || '';
+  const href = `mailto:${encodeURIComponent(currentDraft.contact_email)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  window.location.href = href;
 }
 
 function showDpStatus(msg, color) {
@@ -229,6 +240,11 @@ window.LA_READY.then(function() {
 
 window.openDraftPanel = openDraftPanel;
 window.allDrafts = allDrafts;
+window.mailtoDraft = mailtoDraft;
+window.saveDraft = saveDraft;
+window.sendDraft = sendDraft;
+window.deleteDraft = deleteDraft;
+window.copyDraft = copyDraft;
 </script>
 </body>
 </html>

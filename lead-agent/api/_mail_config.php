@@ -9,3 +9,9 @@ define('MAIL_PASS', getenv('MAIL_PASS') ?: 'Trust@No1_227');
 
 define('MAIL_FROM', getenv('MAIL_FROM') ?: 'ks@setai.no');
 define('MAIL_FROM_NAME', getenv('MAIL_FROM_NAME') ?: 'SETAEI');
+
+// SETAEI branding (used in email footer, landing pages, etc.)
+define('MAIL_ORG_NUMBER',   getenv('SETAEI_ORG_NUMBER') ?: '');
+define('MAIL_BRAND_TAGLINE', 'Nettside, booking og digital vekst for norske bedrifter');
+define('MAIL_SIGNATORY',    'Khabat Setaei');
+define('MAIL_BRAND_URL',    'https://setai.no');

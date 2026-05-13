@@ -168,32 +168,40 @@ document.getElementById('clearFilters').addEventListener('click', () => {
 
 // --- Lead actions ---
 async function researchLead(id) {
+  const previewOpen = document.getElementById('previewPanel').classList.contains('open');
   const detail = document.getElementById('leadDetail');
-  detail.innerHTML = '<div class="notice">Henter data fra nettside…</div>';
+  if (!previewOpen) detail.innerHTML = '<div class="notice">Henter data fra nettside…</div>';
+  // If preview is open, show inline progress at top of preview body
+  if (previewOpen) {
+    const body = document.getElementById('previewBody');
+    if (body && !document.getElementById('previewResearching')) {
+      const banner = document.createElement('div');
+      banner.id = 'previewResearching';
+      banner.className = 'notice';
+      banner.style.marginBottom = '12px';
+      banner.textContent = 'Henter data fra nettside…';
+      body.prepend(banner);
+    }
+  }
   try {
     const res = await api('research-lead.php', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({lead_id:id})});
-    if (res.cached) {
-      detail.innerHTML = `<div class="notice">Allerede researched nylig. E-post: ${res.email||'—'}</div>`;
+    await loadLeads(getFilters());
+    loadStats();
+    if (previewOpen) {
+      openPreview(id);
     } else {
       const f = res.found || {};
       const w = res.website || {};
-      const flags = w.flags || {};
-      const hints = (res.search_hints || []).map(h =>
-        `<a href="https://www.google.com/search?q=${encodeURIComponent(h)}" target="_blank" rel="noopener">${h}</a>`
-      ).join(' &nbsp;|&nbsp; ');
       detail.innerHTML = `<div class="notice">
         <strong>Research fullført</strong> (score: ${res.score ?? '—'}) — status: ${res.status || '—'}<br>
-        E-post: ${f.contact_email||'—'} &nbsp;|&nbsp; Tlf: ${f.contact_phone||'—'}<br>
-        CMS: ${w.cms||'—'} &nbsp;|&nbsp; SSL: ${w.has_ssl ? '✓' : '✗'} &nbsp;|&nbsp;
-        Mobiloptimert: ${flags.mobile_friendly ? '✓' : '✗'} &nbsp;|&nbsp; Booking: ${flags.has_booking ? '✓' : '✗'}
-        ${hints ? `<br>Google: ${hints}` : ''}
+        E-post: ${f.contact_email||'—'} &nbsp;|&nbsp; Tlf: ${f.contact_phone||'—'} &nbsp;|&nbsp; CMS: ${w.cms||'—'}
       </div>`;
+      openPreview(id);
     }
-    await loadLeads(getFilters());
-    loadStats();
-    if (document.getElementById('previewPanel').classList.contains('open')) openPreview(id);
   } catch(err) {
-    detail.innerHTML = `<div class="notice">Research feilet: ${err.message}</div>`;
+    const banner = document.getElementById('previewResearching');
+    if (banner) banner.textContent = `Research feilet: ${err.message}`;
+    else detail.innerHTML = `<div class="notice">Research feilet: ${err.message}</div>`;
   }
 }
 
@@ -254,7 +262,18 @@ async function importCsv(){
     if (!leads.length) { document.getElementById('leadDetail').innerHTML = '<div class="notice">Kunne ikke tolke kolonner. Sjekk at filen inneholder Brreg-felter.</div>'; return; }
     const source = file.name.toLowerCase().endsWith('.xlsx') ? 'xlsx_upload' : 'csv_upload';
     const res=await api('save-lead.php',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({bulk:leads,source})});
-    if (res.ok) { document.getElementById('leadDetail').innerHTML = `<div class="notice">Import fullført: lagret ${res.saved||0} leads fra ${file.name}.</div>`; loadLeads(getFilters()); return; }
+    if (res.ok) {
+      const newLeads = res.new_leads || [];
+      const skipped  = res.existing || 0;
+      const needResearch = newLeads.filter(l => !l.contact_email && (l.has_website || l.website_url)).length;
+      document.getElementById('leadDetail').innerHTML = `<div class="notice">
+        <strong>Import fullført</strong> fra ${file.name}<br>
+        Nye leads: <strong>${res.saved||0}</strong>${skipped ? ` &nbsp;·&nbsp; allerede fantes: <strong>${skipped}</strong>` : ''}${needResearch ? ` &nbsp;·&nbsp; trenger research: <strong>${needResearch}</strong>` : ''}
+      </div>`;
+      await loadLeads(getFilters());
+      autoResearchLeads(newLeads);
+      return;
+    }
     document.getElementById('leadDetail').innerHTML = `<div class="notice">Import feilet: ${res.error || 'ukjent feil'}</div><pre>${JSON.stringify(res,null,2)}</pre>`;
   } catch (err) {
     document.getElementById('leadDetail').innerHTML = `<div class="notice">Import feilet: ${err.message || err}</div>`;
@@ -610,35 +629,109 @@ function closePreview() {
 async function previewGenDraft(id) {
   const btn       = document.getElementById('btnPreviewDraft');
   const draftSec  = document.getElementById('previewDraftSection');
-  const draftBody = document.getElementById('previewDraftBody');
-  const draftActs = document.getElementById('previewDraftActions');
   if (btn) { btn.disabled = true; btn.textContent = 'Genererer…'; }
   try {
     const res = await api('generate-email.php', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({lead_id:id, tone:'vennlig'})});
-    const bodyText = `Emne: ${res.subject || ''}\n\n${res.body || ''}`;
-    if (draftBody) draftBody.textContent = bodyText;
+    window._lastDraft = { subject: res.subject, body: res.body, cta_url: res.cta_url, draft_id: res.draft_id, ai_used: !!res.ai_used };
+    renderDraftEditor(id, {
+      draft_id: res.draft_id, subject: res.subject || '', body: res.body || '',
+      cta_url: res.cta_url || '', ai_used: !!res.ai_used,
+      sales_argument: res.sales_argument || ''
+    });
     if (draftSec)  draftSec.style.display = 'block';
-    window._lastDraft = { subject: res.subject, body: res.body, cta_url: res.cta_url, draft_id: res.draft_id };
-
-    // Action buttons
-    const lead = leadsData.find(l => l.id === id);
-    const hasEmail = !!(lead?.contact_email);
-    if (draftActs) {
-      draftActs.innerHTML = `
-        <button class="secondary btn-sm" onclick="copyText(${JSON.stringify(bodyText)}, this)">Kopier tekst</button>
-        <a class="btn-link" href="drafts.html" target="_blank">Åpne utkast</a>
-        ${hasEmail
-          ? `<button class="primary btn-sm" id="btnSendDraftNow" onclick="sendDraftNow(${res.draft_id}, ${id})">Send til ${lead.contact_email}</button>`
-          : '<span style="color:var(--muted);font-size:12px">Ingen e-post — kan ikke sende</span>'}
-      `;
-    }
     loadLeads(getFilters());
     loadStats();
   } catch(err) {
+    const draftBody = document.getElementById('previewDraftBody');
     if (draftBody) draftBody.textContent = `Feil: ${err.message}`;
     if (draftSec)  draftSec.style.display = 'block';
   } finally {
     if (btn) { btn.disabled = false; btn.textContent = 'Regenerer AI Offer'; }
+  }
+}
+
+function renderDraftEditor(leadId, d) {
+  const draftBody = document.getElementById('previewDraftBody');
+  const draftActs = document.getElementById('previewDraftActions');
+  if (!draftBody || !draftActs) return;
+  const lead = leadsData.find(l => l.id === leadId);
+  const hasEmail = !!(lead?.contact_email);
+  const bodyText = `Emne: ${d.subject}\n\n${d.body}`;
+  const aiBadge = d.ai_used
+    ? '<span class="badge" style="background:#e7efff;color:#2754b7;font-size:10px">AI</span>'
+    : '<span class="badge" style="background:#f3f3f3;color:#666;font-size:10px">Mal</span>';
+  const salesBlock = d.sales_argument
+    ? `<div style="background:#fffaf0;border-left:3px solid #f0b020;padding:8px 12px;margin-bottom:10px;font-size:12px;color:#705100"><strong>Salgsargument:</strong> ${escapeHtml(d.sales_argument)}</div>`
+    : '';
+  draftBody.innerHTML = `
+    ${salesBlock}
+    <div style="margin-bottom:6px;display:flex;justify-content:space-between;align-items:center;gap:8px">
+      <span style="font-size:11px;color:var(--muted)">Utkast #${d.draft_id} ${aiBadge}</span>
+      <button class="btn-link" id="btnDraftEditToggle" onclick="toggleDraftEdit(${leadId}, ${d.draft_id})">Rediger</button>
+    </div>
+    <div id="draftReadView" style="white-space:pre-wrap;font-family:ui-monospace,Menlo,Consolas,monospace;background:#fafafa;border:1px solid #eee;padding:10px;border-radius:6px;font-size:13px">${escapeHtml(bodyText)}</div>
+    <div id="draftEditView" style="display:none">
+      <label style="font-size:11px;color:var(--muted);margin-top:6px;display:block">Emne</label>
+      <input id="draftEditSubject" type="text" value="${escapeAttr(d.subject)}" style="width:100%;padding:6px;border:1px solid #ddd;border-radius:4px;font-size:13px" />
+      <label style="font-size:11px;color:var(--muted);margin-top:8px;display:block">Melding</label>
+      <textarea id="draftEditBody" rows="14" style="width:100%;padding:8px;border:1px solid #ddd;border-radius:4px;font-size:13px;font-family:ui-monospace,Menlo,Consolas,monospace">${escapeHtml(d.body)}</textarea>
+      <label style="font-size:11px;color:var(--muted);margin-top:8px;display:block">CTA-lenke</label>
+      <input id="draftEditCta" type="url" value="${escapeAttr(d.cta_url)}" style="width:100%;padding:6px;border:1px solid #ddd;border-radius:4px;font-size:13px" />
+    </div>
+  `;
+  const mailtoLink = hasEmail
+    ? `mailto:${encodeURIComponent(lead.contact_email)}?subject=${encodeURIComponent(d.subject)}&body=${encodeURIComponent(d.body)}`
+    : '';
+  draftActs.innerHTML = `
+    <button class="secondary btn-sm" id="btnCopyDraft" onclick='copyText(${JSON.stringify(bodyText)}, this)'>Kopier</button>
+    ${hasEmail ? `<a class="secondary btn-sm" id="btnMailto" href="${mailtoLink}" target="_blank">Åpne i e-post</a>` : ''}
+    <button class="secondary btn-sm" id="btnSaveDraft" onclick="saveDraftEdits(${leadId}, ${d.draft_id})" style="display:none">Lagre endringer</button>
+    <a class="btn-link" href="drafts.html" target="_blank">Alle utkast</a>
+    ${hasEmail
+      ? `<button class="primary btn-sm" id="btnSendDraftNow" onclick="sendDraftNow(${d.draft_id}, ${leadId})">Send til ${lead.contact_email}</button>`
+      : '<span style="color:var(--muted);font-size:12px">Ingen e-post — kan ikke sende</span>'}
+  `;
+}
+
+function escapeHtml(s){ return String(s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function escapeAttr(s){ return escapeHtml(s).replace(/\n/g,'&#10;'); }
+
+function toggleDraftEdit(leadId, draftId) {
+  const readView = document.getElementById('draftReadView');
+  const editView = document.getElementById('draftEditView');
+  const toggleBtn = document.getElementById('btnDraftEditToggle');
+  const saveBtn   = document.getElementById('btnSaveDraft');
+  if (!readView || !editView) return;
+  const editing = editView.style.display !== 'none';
+  if (editing) {
+    editView.style.display = 'none';
+    readView.style.display = 'block';
+    if (toggleBtn) toggleBtn.textContent = 'Rediger';
+    if (saveBtn)   saveBtn.style.display = 'none';
+  } else {
+    editView.style.display = 'block';
+    readView.style.display = 'none';
+    if (toggleBtn) toggleBtn.textContent = 'Avbryt';
+    if (saveBtn)   saveBtn.style.display = 'inline-block';
+  }
+}
+
+async function saveDraftEdits(leadId, draftId) {
+  const subject = document.getElementById('draftEditSubject').value.trim();
+  const body    = document.getElementById('draftEditBody').value.trim();
+  const cta_url = document.getElementById('draftEditCta').value.trim();
+  const saveBtn = document.getElementById('btnSaveDraft');
+  if (!subject || !body) { alert('Emne og melding er påkrevd.'); return; }
+  if (saveBtn) { saveBtn.disabled = true; saveBtn.textContent = 'Lagrer…'; }
+  try {
+    await api('update-draft.php', {method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({draft_id: draftId, subject, body, cta_link: cta_url})});
+    window._lastDraft = { subject, body, cta_url, draft_id: draftId };
+    renderDraftEditor(leadId, {draft_id: draftId, subject, body, cta_url, ai_used: !!(window._lastDraft?.ai_used), sales_argument: ''});
+  } catch(e) {
+    alert('Lagring feilet: ' + e.message);
+  } finally {
+    if (saveBtn) { saveBtn.disabled = false; saveBtn.textContent = 'Lagre endringer'; }
   }
 }
 
@@ -742,3 +835,5 @@ window.previewGenDraft = previewGenDraft;
 window.copyText        = copyText;
 window.sendDraftNow    = sendDraftNow;
 window.quickSend       = quickSend;
+window.toggleDraftEdit = toggleDraftEdit;
+window.saveDraftEdits  = saveDraftEdits;

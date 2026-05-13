@@ -1,10 +1,14 @@
 <?php
 require_once __DIR__ . '/_db.php';
 header('Content-Type: application/json');
+require_admin_token();
 $pdo = db();
 $input = json_input();
 $leads = $input['bulk'] ?? [$input];
-$count = 0;
+$saved = 0;
+$existing = 0;
+$newLeads = [];
+
 foreach ($leads as $row) {
   $lead = [
     'org_number' => $row['org_number'] ?? $row['organisasjonsnummer'] ?? '',
@@ -25,6 +29,20 @@ foreach ($leads as $row) {
   $lead['lead_score'] = score_lead($lead);
   $stmt = $pdo->prepare('INSERT OR IGNORE INTO leads (org_number,company_name,organization_form,industry_code,industry_name,city,municipality,county,address,registration_date,website_url,has_website,contact_email,contact_phone,lead_score,lead_status,notes,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP)');
   $stmt->execute([$lead['org_number'],$lead['company_name'],$lead['organization_form'],$lead['industry_code'],$lead['industry_name'],$lead['city'],$lead['municipality'],$lead['county'],$lead['address'],$lead['registration_date'],$lead['website_url'],$lead['has_website'],$lead['contact_email'],$lead['contact_phone'],$lead['lead_score'],'new','Imported from '.($input['source'] ?? 'manual')]);
-  $count += $stmt->rowCount();
+
+  if ($stmt->rowCount() > 0) {
+    $saved++;
+    $lead['id'] = (int)$pdo->lastInsertId();
+    $newLeads[] = $lead;
+  } else {
+    $existing++;
+  }
 }
-echo json_encode(['ok'=>true,'saved'=>$count]);
+
+echo json_encode([
+  'ok' => true,
+  'saved' => $saved,
+  'existing' => $existing,
+  'imported' => $saved,
+  'new_leads' => $newLeads,
+]);

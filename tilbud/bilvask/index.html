@@ -3,83 +3,124 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nettside for din bilvask — SETAEI</title>
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: Inter, Arial, sans-serif; background: #f5f7fb; color: #13223a; }
-    .hero { background: #246bff; color: #fff; padding: 60px 20px; text-align: center; }
-    .hero h1 { font-size: 2rem; margin-bottom: 12px; }
-    .hero p  { font-size: 1.1rem; opacity: .9; max-width: 520px; margin: 0 auto 28px; }
-    .cta-btn { display: inline-block; background: #fff; color: #246bff; font-weight: 700; padding: 14px 32px; border-radius: 10px; text-decoration: none; font-size: 1rem; }
-    .cta-btn:hover { background: #eef3ff; }
-    .section { max-width: 680px; margin: 40px auto; padding: 0 20px; }
-    .card { background: #fff; border: 1px solid #e4e9f2; border-radius: 14px; padding: 28px; margin-bottom: 20px; }
-    .card h2 { font-size: 1.2rem; margin-bottom: 10px; }
-    .card p, .card li { font-size: .95rem; color: #44556f; line-height: 1.6; }
-    .card ul { padding-left: 18px; }
-    form { display: flex; flex-direction: column; gap: 12px; }
-    form input, form textarea { padding: 11px; border: 1px solid #e4e9f2; border-radius: 8px; font-size: .95rem; width: 100%; }
-    form textarea { resize: vertical; min-height: 90px; }
-    form button { background: #246bff; color: #fff; border: 0; border-radius: 8px; padding: 13px; font-size: 1rem; cursor: pointer; font-weight: 600; }
-    form button:hover { background: #1a55d4; }
-    #formStatus { font-size: .9rem; margin-top: 6px; }
-    footer { text-align: center; padding: 30px 20px; font-size: .85rem; color: #66758f; }
-  </style>
+  <meta name="description" content="Nettside og online booking for bilvask-bedrifter. Vipps-betaling, Google Maps-synlighet, klar på 5 dager. Ingen binding." />
+  <title>Nettside for bilvask — SETAEI</title>
+  <link rel="stylesheet" href="/tilbud/landing.css" />
 </head>
 <body>
 
-<div class="hero">
-  <h1>Få flere kunder til din bilvask</h1>
-  <p>Vi bygger enkle, raske nettsider for bilvask-bedrifter. Åpningstider, priser og booking — alt på ett sted.</p>
-  <a class="cta-btn" href="#kontakt" id="ctaBtn">Få et gratis tilbud</a>
-</div>
+<nav class="nav">
+  <span class="brand">SETAEI<span class="tag">— Nettside & booking</span></span>
+  <a class="nav-cta" href="#kontakt" id="navCta">Få et tilbud</a>
+</nav>
 
-<div class="section">
-  <div class="card">
-    <h2>Hva du får</h2>
-    <ul>
-      <li>Profesjonell nettside klar på 5 dager</li>
-      <li>Mobiloptimalisert og rask</li>
-      <li>Online booking og kontaktskjema</li>
-      <li>Synlighet på Google Maps og søk</li>
-      <li>Ingen bindingstid</li>
-    </ul>
+<section class="hero">
+  <div class="hero-inner">
+    <span class="eyebrow">For bilvask-bedrifter</span>
+    <h1>Booking direkte fra nettsiden — fyll kalenderen uten å ta telefonen</h1>
+    <p class="subhead">Kundene booker bilvask, betaler med Vipps, og du får varsling. Profesjonell nettside på 5 dager.</p>
+    <div class="cta-row">
+      <a class="cta-btn" href="#kontakt" id="ctaBtn">Få et gratis tilbud</a>
+      <a class="cta-btn ghost" href="#hva">Se hva du får</a>
+    </div>
+    <div class="trust-row">
+      <span>Klar på 5 dager</span><span>Vipps-integrert</span><span>Ingen bindingstid</span>
+    </div>
   </div>
+</section>
 
-  <div class="card" id="kontakt">
-    <h2>Kontakt oss</h2>
+<section class="section section-center" id="hva">
+  <h2>Alt du trenger for å vinne lokale kunder</h2>
+  <p class="lede">Norske bilvask-bedrifter taper kunder på grunn av glemte telefonsamtaler og dårlig synlighet på Google. Vi fikser begge deler.</p>
+  <div class="grid-3" style="margin-top:8px">
+    <div class="benefit-card">
+      <div class="icon">📅</div>
+      <h3>Online booking 24/7</h3>
+      <p>Kunden velger tjeneste, biltype og tid. Du får varsling på e-post eller SMS — uten å løfte en finger.</p>
+    </div>
+    <div class="benefit-card">
+      <div class="icon">💳</div>
+      <h3>Vipps-betaling</h3>
+      <p>Betaling før kunden kjører inn — ingen kø ved kassen, ingen ubetalte vask.</p>
+    </div>
+    <div class="benefit-card">
+      <div class="icon">📍</div>
+      <h3>Google Maps-synlighet</h3>
+      <p>Vi optimerer Google-profilen din slik at kunder som søker «bilvask i [byen din]» faktisk finner deg.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line);max-width:none">
+  <div style="max-width:1000px;margin:0 auto;padding:0 24px">
+    <h2 style="text-align:center">Slik kommer du i gang</h2>
+    <p class="lede" style="text-align:center;margin:0 auto 36px">Ferdig oppsatt nettside med booking, betaling og kontaktskjema — på 5 virkedager.</p>
+    <div class="process-list">
+      <div class="process-step"><h4>Vi tar en kort prat</h4><p>15 minutter på telefon eller video — vi går gjennom bedriften, prisliste og hva som er viktig for deg.</p></div>
+      <div class="process-step"><h4>Vi bygger nettsiden</h4><p>Design, booking, Vipps-integrasjon, Google Maps og kontaktskjema — alt klart på 5 virkedager.</p></div>
+      <div class="process-step"><h4>Vi publiserer og overleverer</h4><p>Vi setter opp domenet, lærer deg å oppdatere priser og tider, og er tilgjengelig hvis du trenger hjelp.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-center">
+  <h2>Tydelig pris — ingen overraskelser</h2>
+  <p class="lede">Alt inkludert. Ingen månedlige skjulte avgifter. Hosting og support i 12 måneder følger med.</p>
+  <div class="pricing-card">
+    <div class="from">Komplett pakke</div>
+    <div class="price">fra 9 900 kr <small>+ mva</small></div>
+    <ul>
+      <li>Profesjonell nettside (3–5 sider)</li>
+      <li>Online booking-system</li>
+      <li>Vipps-integrasjon</li>
+      <li>Google Maps og SEO-oppsett</li>
+      <li>Mobil og rask</li>
+      <li>12 mnd. hosting og support</li>
+    </ul>
+    <a class="cta-btn" href="#kontakt" style="margin-top:8px;display:inline-block;background:var(--primary);color:#fff">Få et tilbud</a>
+  </div>
+</section>
+
+<section class="section section-center" id="kontakt">
+  <h2>Få et gratis tilbud</h2>
+  <p class="lede">Fyll ut skjemaet — vi tar kontakt innen 24 timer med konkret pris og leveringstid.</p>
+  <div class="form-wrap">
     <form id="contactForm">
-      <input type="text"  name="name"    placeholder="Navn / firmanavn" required />
-      <input type="tel"   name="phone"   placeholder="Telefon" />
-      <input type="email" name="email"   placeholder="E-post" required />
-      <textarea           name="message" placeholder="Kort beskrivelse av bedriften…"></textarea>
+      <div><label for="f-name">Navn / firmanavn</label>
+        <input id="f-name" name="name" type="text" required /></div>
+      <div><label for="f-phone">Telefon</label>
+        <input id="f-phone" name="phone" type="tel" /></div>
+      <div><label for="f-email">E-post</label>
+        <input id="f-email" name="email" type="email" required /></div>
+      <div><label for="f-message">Kort om bedriften (valgfritt)</label>
+        <textarea id="f-message" name="message" placeholder="Hva slags vask tilbyr dere? Har dere allerede nettside?"></textarea></div>
       <button type="submit">Send forespørsel</button>
       <div id="formStatus"></div>
     </form>
   </div>
-</div>
+</section>
 
-<footer>SETAEI &mdash; ks@setai.no</footer>
+<footer class="footer">
+  <div><strong>SETAEI</strong> &mdash; Nettside, booking og digital vekst</div>
+  <div style="margin-top:6px">
+    <a href="https://setai.no">setai.no</a> &middot;
+    <a href="mailto:khabat@setai.no">khabat@setai.no</a>
+  </div>
+  <div class="footer-org">© SETAEI</div>
+</footer>
 
 <script>
   const TRACK = '/lead-agent/api/landing-track.php';
   const PAGE  = 'bilvask';
+  const track = (event) => fetch(TRACK, {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({page:PAGE, event})}).catch(() => {});
 
-  function track(event) {
-    fetch(TRACK, { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ page: PAGE, event }) }).catch(() => {});
-  }
-
-  // Track visit
   track('visit');
-
-  // Track CTA click
   document.getElementById('ctaBtn').addEventListener('click', () => track('cta_click'));
-
-  // Track form submit
+  document.getElementById('navCta').addEventListener('click', () => track('cta_click'));
   document.getElementById('contactForm').addEventListener('submit', function(e) {
     e.preventDefault();
     track('form_submit');
-    document.getElementById('formStatus').innerHTML = '<span style="color:#1e9b62">Takk! Vi tar kontakt innen 24 timer.</span>';
+    document.getElementById('formStatus').innerHTML = '<span style="color:var(--success);font-weight:600">Takk! Vi tar kontakt innen 24 timer.</span>';
     this.querySelectorAll('input,textarea,button').forEach(el => el.disabled = true);
   });
 </script>

@@ -4,6 +4,7 @@ __pycache__/
 db.sqlite3
 .env
 .env.local
+lead-agent/api/_ai_config.php
 .venv
 venv/
 .idea/

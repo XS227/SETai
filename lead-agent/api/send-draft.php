@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/_db.php';
 require_once __DIR__ . '/_mail_config.php';
+require_once __DIR__ . '/_email_template.php';
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
@@ -55,37 +56,15 @@ $offer_id = (int)$pdo->lastInsertId();
 $tok        = bin2hex(random_bytes(16));
 $open_url   = $track_base . '?t=o&tok=' . $tok;
 $click_url  = $track_base . '?t=c&tok=' . $tok . '&url=' . urlencode($cta_link);
-$pixel      = '<img src="' . $open_url . '" width="1" height="1" alt="" style="display:none" />';
-$cta_table  = '<table border="0" cellpadding="0" cellspacing="0" style="margin:24px 0"><tr><td bgcolor="#246bff" style="border-radius:8px;padding:12px 28px"><a href="' . $click_url . '" style="color:#ffffff;text-decoration:none;font-weight:600;font-size:15px;font-family:Arial,sans-serif">Se tilbudet &#8594;</a></td></tr></table>';
-$co_name    = htmlspecialchars($draft['company_name'] ?? '');
-$msg_html   = '<p style="margin:0 0 14px">' . implode('</p><p style="margin:0 0 14px">', array_map('htmlspecialchars', explode("\n\n", $message))) . '</p>';
 
-$html = '<!DOCTYPE html>
-<html lang="no">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>' . htmlspecialchars($subject) . '</title></head>
-<body style="margin:0;padding:0;background:#f5f7fb;font-family:Arial,Helvetica,sans-serif">
-<table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="background:#f5f7fb">
-<tr><td align="center" style="padding:24px 12px">
-  <table role="presentation" width="600" border="0" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background:#ffffff;border-radius:12px;overflow:hidden;border:1px solid #e4e9f2">
-    <tr><td style="background:#246bff;padding:18px 32px">
-      <span style="color:#ffffff;font-size:20px;font-weight:700;font-family:Arial,sans-serif">SETAEI</span>
-      <span style="color:rgba(255,255,255,0.7);font-size:12px;margin-left:10px;font-family:Arial,sans-serif">Nettside &amp; Digital Vekst</span>
-    </td></tr>
-    <tr><td style="padding:32px;color:#13223a;font-size:15px;line-height:1.75;font-family:Arial,sans-serif">
-      ' . $msg_html . $cta_table . '
-    </td></tr>
-    <tr><td style="background:#f5f7fb;padding:20px 32px;border-top:1px solid #e4e9f2;font-size:12px;color:#66758f;font-family:Arial,sans-serif">
-      <strong style="color:#13223a">SETAEI</strong> &mdash; Nettside og digital vekst for norske bedrifter<br>
-      <a href="https://setai.no" style="color:#246bff;text-decoration:none">setai.no</a> &middot;
-      <a href="mailto:khabat@setai.no" style="color:#246bff;text-decoration:none">khabat@setai.no</a>
-      <br><br>
-      <span style="color:#aab0bb;font-size:11px">Du mottar denne e-posten fordi ' . $co_name . ' nylig ble registrert i Br&oslash;nn&oslash;ysundregistrene. Svar &laquo;avmeld&raquo; for &aring; bli fjernet.</span>
-    </td></tr>
-  </table>
-</td></tr>
-</table>
-' . $pixel . '</body></html>';
+$html = render_outreach_email_html([
+    'subject'            => $subject,
+    'message_text'       => $message,
+    'company_name'       => $draft['company_name'] ?? '',
+    'cta_url'            => $click_url,
+    'cta_label'          => 'Se tilbudet',
+    'tracking_pixel_url' => $open_url,
+]);
 
 $status = 'sent'; $smtp_response = null; $last_error = null;
 try {
