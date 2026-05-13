@@ -7,8 +7,8 @@ function db(): PDO {
   $path = __DIR__ . '/../lead_agent.sqlite';
   $pdo = new PDO('sqlite:' . $path);
   $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-  $sql = file_get_contents(__DIR__ . '/../sql/001_lead_agent.sql');
-  $pdo->exec($sql);
+  $pdo->exec(file_get_contents(__DIR__ . '/../sql/001_lead_agent.sql'));
+  $pdo->exec(file_get_contents(__DIR__ . '/../sql/002_sent_offers.sql'));
   return $pdo;
 }
 

@@ -12,6 +12,7 @@
     <h2>SETAEI</h2>
     <a class="active" href="#leads">Leads</a>
     <a href="#drafts">Drafts</a>
+    <a href="#sent-offers" id="tabSentOffers">Sendte tilbud</a>
     <a href="#settings">Settings</a>
     <a href="#logs">Logs</a>
   </aside>
@@ -40,9 +41,28 @@
 
     <section class="card" id="leads">
       <h3>Leads</h3>
+      <div class="filter-bar">
+        <input id="filterIndustry" type="text" placeholder="Bransje…" />
+        <input id="filterCity" type="text" placeholder="By…" />
+        <input id="filterMinScore" type="number" min="0" max="100" placeholder="Min score" />
+        <select id="filterWebsite">
+          <option value="">Nettside (alle)</option>
+          <option value="yes">Har nettside</option>
+          <option value="no">Ingen nettside</option>
+        </select>
+        <button class="secondary" id="applyFilters">Filtrer</button>
+        <button class="secondary" id="clearFilters">Nullstill</button>
+      </div>
+      <div class="bulk-bar" id="bulkBar" style="display:none">
+        <span id="selectedCount">0 valgt</span>
+        <button class="primary" id="btnSendTilbud">Send tilbud</button>
+      </div>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>Selskap</th><th>Org.nr</th><th>Bransje</th><th>By</th><th>Registrert</th><th>Nettside</th><th>Score</th><th>Status</th><th>Actions</th></tr></thead>
+          <thead><tr>
+            <th><input type="checkbox" id="selectAll" /></th>
+            <th>Selskap</th><th>Org.nr</th><th>Bransje</th><th>By</th><th>Registrert</th><th>Nettside</th><th>Score</th><th>Status</th><th>Actions</th>
+          </tr></thead>
           <tbody id="leadRows"></tbody>
         </table>
       </div>
@@ -52,8 +72,44 @@
       <h3>Lead-detaljer</h3>
       <div id="leadDetail">Velg en handling for å se detaljer.</div>
     </section>
+
+    <section class="card" id="sent-offers" style="display:none">
+      <h3>Sendte tilbud</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr>
+            <th>Sendt</th><th>Emne</th><th>Mottakere</th><th>Åpnet</th><th>Klikket</th>
+          </tr></thead>
+          <tbody id="sentOffersRows"></tbody>
+        </table>
+      </div>
+    </section>
   </main>
 </div>
+
+<!-- Send tilbud modal -->
+<div class="modal-overlay" id="modalOverlay" style="display:none">
+  <div class="modal-box">
+    <h3>Send tilbud</h3>
+    <label>Emne</label>
+    <input id="offerSubject" type="text" placeholder="E.g. Vi kan hjelpe deg med nettside" />
+    <label style="margin-top:10px">Melding</label>
+    <textarea id="offerMessage" rows="6" placeholder="Skriv meldingen her…"></textarea>
+    <label style="margin-top:10px">CTA-lenke (valgfri)</label>
+    <input id="offerCta" type="url" placeholder="https://setai.no/tilbud" />
+    <div class="modal-recipients" id="modalRecipients"></div>
+    <label class="modal-confirm-row">
+      <input type="checkbox" id="offerConfirm" />
+      Jeg bekrefter at utvalget er gjennomgått og utsending er lovlig.
+    </label>
+    <div class="modal-footer">
+      <button class="secondary" id="modalCancel">Avbryt</button>
+      <button class="primary" id="modalSend">Send</button>
+    </div>
+    <div id="modalStatus"></div>
+  </div>
+</div>
+
 <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
 <script src="assets/js/lead-agent.js"></script>
 </body>

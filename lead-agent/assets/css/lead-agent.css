@@ -37,3 +37,24 @@ button.danger { background: #ffe4e4; color: #a52b2b; }
 .grid-2 { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 14px; }
 textarea, input, select { width: 100%; padding: 9px; border: 1px solid var(--line); border-radius: 8px; }
 pre { white-space: pre-wrap; background: #f8fafe; padding: 10px; border-radius: 8px; border: 1px solid var(--line); }
+
+/* Filter bar */
+.filter-bar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+.filter-bar input, .filter-bar select { width: auto; flex: 1; min-width: 120px; }
+
+/* Bulk action bar */
+.bulk-bar { display: flex; align-items: center; gap: 12px; background: #eef3ff; border: 1px solid #c5d4ff; border-radius: 8px; padding: 8px 14px; margin-bottom: 10px; }
+.bulk-bar span { font-weight: 600; color: var(--primary); }
+
+/* Modal */
+.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.45); display: flex; align-items: center; justify-content: center; z-index: 999; }
+.modal-box { background: var(--card); border-radius: 14px; padding: 24px; width: 100%; max-width: 540px; max-height: 90vh; overflow-y: auto; box-shadow: 0 8px 32px rgba(0,0,0,.18); }
+.modal-box h3 { margin-top: 0; }
+.modal-box label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 4px; margin-top: 10px; }
+.modal-box input, .modal-box textarea, .modal-box select { margin-bottom: 2px; }
+.modal-recipients { background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 10px; margin-top: 12px; font-size: 13px; max-height: 140px; overflow-y: auto; }
+.modal-recipients p { margin: 0 0 4px; color: var(--muted); font-size: 12px; }
+.modal-confirm-row { display: flex; align-items: flex-start; gap: 8px; margin-top: 14px; font-size: 13px; width: auto; }
+.modal-confirm-row input { width: auto; flex: none; margin-top: 2px; }
+.modal-footer { display: flex; gap: 10px; margin-top: 16px; justify-content: flex-end; }
+#modalStatus { margin-top: 10px; font-size: 13px; }
