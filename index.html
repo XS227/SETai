@@ -1,293 +1,783 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PhD Research Proposal | Multi-Agent AI Systems | Khabat Setaei</title>
-  <meta name="description" content="A modern one-page PhD research proposal presentation for autonomous multi-agent AI systems, real-time decision-making, and scalable AI deployment." />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SETAEI — AI Architect · CTO · Founder · Researcher</title>
+
+  <meta name="description" content="SETAEI is the personal technology house of Khabat Setaei — combining CTO-level execution, creative digital design, SaaS architecture, blockchain systems and applied AI research. Based in Oslo.">
+  <meta name="keywords" content="Khabat Setaei, AI architect, CTO as a service, SaaS, blockchain, Oslo, AI systems, multi-agent AI, founder">
+  <meta name="author" content="Khabat Setaei">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#f47c20">
+
+  <meta property="og:title" content="SETAEI — AI Architect · CTO · Founder · Researcher">
+  <meta property="og:description" content="Private AI & technology agency from Oslo. Building AI systems that actually work in the real world.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.setaei.com">
+  <meta property="og:site_name" content="SETAEI">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="SETAEI — AI Architect · CTO · Founder · Researcher">
+  <meta name="twitter:description" content="Private AI & technology agency from Oslo. Building AI systems that actually work.">
+
+  <link rel="canonical" href="https://www.setaei.com/">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Khabat Setaei",
+    "url": "https://www.setaei.com",
+    "jobTitle": "AI Architect, CTO, Founder, Researcher",
+    "description": "Building AI systems that actually work in the real world. Based in Oslo.",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Oslo",
+      "addressCountry": "NO"
+    },
+    "knowsAbout": ["Artificial Intelligence","Multi-Agent Systems","SaaS Architecture","Blockchain","Infrastructure Security"]
+  }
+  </script>
+
   <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
     :root {
-      --bg: #f2f4f8;
-      --panel: #ffffff;
-      --line: #dbe0ea;
-      --text: #071128;
-      --muted: #5e6b82;
-      --blue: #2554d6;
-      --blue-dark: #0c2f9a;
-      --shadow: 0 14px 34px rgba(13, 30, 73, 0.12);
-      --radius: 20px;
+      --bg:           #07080e;
+      --bg-card:      #0e1018;
+      --bg-card-h:    #131720;
+      --border:       #1a1f30;
+      --border-h:     #252d45;
+      --text:         #e6e8f2;
+      --muted:        #606880;
+      --dim:          #333a50;
+      --accent:       #f47c20;
+      --accent-glow:  rgba(244,124,32,.12);
+      --accent-h:     #ff9040;
+      --blue:         #4f6fff;
+      --teal:         #3ac9b2;
+      --sans:         'Inter', system-ui, sans-serif;
+      --display:      'Space Grotesk', 'Inter', sans-serif;
+      --r:            12px;
+      --r-sm:         8px;
+      --gap:          clamp(72px, 9vw, 128px);
     }
 
-    * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
+
     body {
-      margin: 0;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      color: var(--text);
+      font-family: var(--sans);
       background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
     }
 
-    .topbar {
-      background: var(--blue);
-      color: #fff;
-      text-align: center;
-      padding: 12px 18px;
-      font-size: 17px;
-      font-weight: 500;
-      letter-spacing: .01em;
+    h1,h2,h3,h4 { font-family: var(--display); line-height: 1.12; letter-spacing: -.02em; }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    .container { max-width: 1080px; margin: 0 auto; padding: 0 clamp(20px,5vw,56px); }
+    section { padding: var(--gap) 0; }
+    hr.div { border: none; border-top: 1px solid var(--border); }
+
+    /* ── NAV ─────────────────────────────────────── */
+    #nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      padding: 18px 0;
+      background: rgba(7,8,14,.88);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      transition: padding .3s;
+    }
+    #nav.scrolled { padding: 12px 0; }
+
+    .nav-row { display: flex; align-items: center; justify-content: space-between; }
+
+    .logo {
+      font-family: var(--display); font-size: 17px; font-weight: 700;
+      letter-spacing: .1em; color: var(--text);
+    }
+    .logo em { font-style: normal; color: var(--accent); }
+
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a {
+      font-size: 13px; font-weight: 500; color: var(--muted);
+      letter-spacing: .04em; transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    .nav-btn {
+      font-size: 13px; font-weight: 600; color: var(--accent);
+      padding: 7px 17px; border-radius: 6px;
+      border: 1px solid rgba(244,124,32,.3);
+      transition: all .2s;
+    }
+    .nav-btn:hover { background: var(--accent-glow); border-color: var(--accent); }
+
+    .burger {
+      display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px;
+    }
+    .burger span { display: block; width: 22px; height: 2px; background: var(--muted); border-radius: 2px; transition: all .3s; }
+
+    /* mobile nav overlay */
+    .mobile-nav {
+      display: none; position: fixed; inset: 0; z-index: 190;
+      background: rgba(7,8,14,.97); flex-direction: column;
+      align-items: center; justify-content: center; gap: 36px;
+    }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a { font-family: var(--display); font-size: 28px; font-weight: 600; color: var(--muted); transition: color .2s; }
+    .mobile-nav a:hover { color: var(--text); }
+    .mobile-nav .close-btn {
+      position: absolute; top: 22px; right: 24px;
+      font-size: 28px; color: var(--muted); cursor: pointer; background: none; border: none;
     }
 
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 80;
-      background: rgba(255,255,255,.95);
-      backdrop-filter: blur(8px);
-      border-bottom: 1px solid var(--line);
-    }
-    .nav {
-      max-width: 1220px;
-      margin: auto;
-      padding: 18px 28px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-    }
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-weight: 900;
-      letter-spacing: -.02em;
-      font-size: 18px;
-    }
-    .mark {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      border: 3px solid #111;
-      display: grid;
-      place-items: center;
-      font-size: 19px;
-      font-weight: 800;
+    /* ── HERO ────────────────────────────────────── */
+    #hero {
+      min-height: 100vh; display: flex; align-items: center;
+      padding: 120px 0 80px; position: relative; overflow: hidden;
     }
 
-    nav {
-      display: flex;
-      align-items: center;
-      gap: 28px;
+    /* background glow orbs */
+    #hero::before {
+      content: ''; position: absolute; top: -160px; right: -160px;
+      width: 640px; height: 640px;
+      background: radial-gradient(circle, rgba(244,124,32,.06) 0%, transparent 68%);
+      pointer-events: none;
     }
-    nav a {
-      color: #1f2937;
-      text-decoration: none;
-      font-size: 17px;
-      font-weight: 500;
+    #hero::after {
+      content: ''; position: absolute; bottom: -200px; left: -100px;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(79,111,255,.04) 0%, transparent 68%);
+      pointer-events: none;
     }
-    nav a:hover { color: var(--blue); }
 
-    .btn {
-      text-decoration: none;
-      border-radius: 999px;
-      padding: 11px 26px;
-      font-weight: 700;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      border: 2px solid var(--blue);
-      transition: .2s ease;
+    .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 11px; font-weight: 700; letter-spacing: .14em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 22px;
+    }
+    .hero-eyebrow::before { content: ''; width: 22px; height: 1px; background: var(--accent); }
+
+    .hero h1 {
+      font-size: clamp(40px,5.5vw,76px); font-weight: 700; margin-bottom: 22px;
+    }
+    .hero h1 .hl { color: var(--accent); }
+
+    .hero-sub {
+      font-size: 15px; color: var(--muted); max-width: 460px;
+      line-height: 1.75; margin-bottom: 36px;
+    }
+
+    .role-pills { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 40px; }
+    .pill {
+      font-size: 12px; font-weight: 500; letter-spacing: .04em;
+      padding: 5px 13px; border-radius: 100px;
+      border: 1px solid var(--border); color: var(--muted);
+    }
+
+    .cta-row { display: flex; gap: 14px; flex-wrap: wrap; }
+
+    .btn-solid {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: var(--accent); color: #fff;
+      font-size: 14px; font-weight: 600; padding: 13px 26px;
+      border-radius: var(--r-sm); transition: all .2s;
+    }
+    .btn-solid:hover { background: var(--accent-h); transform: translateY(-1px); }
+
+    .btn-outline {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: transparent; color: var(--muted);
+      font-size: 14px; font-weight: 500; padding: 13px 26px;
+      border-radius: var(--r-sm); border: 1px solid var(--border);
+      transition: all .2s;
+    }
+    .btn-outline:hover { color: var(--text); border-color: var(--border-h); }
+
+    /* stats panel */
+    .stats-panel {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
+      background: var(--border); border: 1px solid var(--border);
+      border-radius: var(--r); overflow: hidden;
+    }
+    .stat {
+      background: var(--bg-card); padding: 26px 22px; transition: background .2s;
+    }
+    .stat:hover { background: var(--bg-card-h); }
+    .stat-val {
+      font-family: var(--display); font-size: clamp(26px,3.5vw,40px);
+      font-weight: 700; margin-bottom: 4px;
+    }
+    .stat-val em { font-style: normal; color: var(--accent); }
+    .stat-lbl { font-size: 12px; color: var(--muted); }
+
+    .location-badge {
+      margin-top: 16px; display: flex; align-items: center; gap: 10px;
+      font-size: 13px; color: var(--muted);
+      padding: 9px 15px; background: var(--bg-card);
+      border: 1px solid var(--border); border-radius: var(--r-sm);
+    }
+    .pulse {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--teal); box-shadow: 0 0 6px var(--teal);
+      flex-shrink: 0;
+      animation: blink 2.2s ease-in-out infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(1.3)} }
+
+    /* ── SECTION HEADER ─────────────────────────── */
+    .s-head { margin-bottom: clamp(40px,6vw,72px); }
+    .s-label {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 11px; font-weight: 700; letter-spacing: .14em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 14px;
+    }
+    .s-label::before { content: ''; width: 18px; height: 1px; background: var(--accent); }
+    .s-title { font-size: clamp(26px,3.8vw,42px); font-weight: 700; }
+    .s-desc {
+      margin-top: 14px; font-size: 15px; color: var(--muted);
+      max-width: 540px; line-height: 1.72;
+    }
+
+    /* ── ABOUT ──────────────────────────────────── */
+    .about-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 52px; align-items: start; }
+
+    .about-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--r); padding: 28px;
+    }
+    .card-label {
+      font-size: 11px; font-weight: 700; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 16px;
+    }
+    .about-text { font-size: 14px; color: var(--muted); line-height: 1.8; }
+    .about-text strong { color: var(--text); }
+
+    .roles-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .role-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--r); padding: 22px;
+      transition: all .25s;
+    }
+    .role-card:hover { background: var(--bg-card-h); border-color: var(--border-h); transform: translateY(-2px); }
+    .role-ico { font-size: 22px; margin-bottom: 10px; }
+    .role-name { font-family: var(--display); font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+    .role-org { font-size: 12px; color: var(--accent); font-weight: 500; margin-bottom: 8px; }
+    .role-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+    /* ── PROJECTS ───────────────────────────────── */
+    .projects-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+
+    .project-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--r); padding: 26px;
+      display: flex; flex-direction: column; gap: 14px;
+      position: relative; overflow: hidden; transition: all .25s;
+    }
+    .project-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0;
+      height: 2px; background: linear-gradient(90deg, var(--accent), transparent);
+      opacity: 0; transition: opacity .25s;
+    }
+    .project-card:hover { background: var(--bg-card-h); border-color: var(--border-h); transform: translateY(-3px); }
+    .project-card:hover::before { opacity: 1; }
+
+    .p-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+    .p-emoji { font-size: 26px; line-height: 1; }
+    .p-type {
+      font-size: 11px; font-weight: 600; letter-spacing: .08em;
+      text-transform: uppercase; color: var(--dim);
+      padding: 4px 10px; background: var(--bg);
+      border: 1px solid var(--border); border-radius: 100px;
       white-space: nowrap;
-      font-size: 17px;
     }
-    .btn.outline { color: var(--blue-dark); background: #fff; }
-    .btn.primary { color: #fff; background: var(--blue); }
-    .btn:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(37,84,214,.2); }
+    .p-name { font-family: var(--display); font-size: 19px; font-weight: 600; }
+    .p-desc { font-size: 13px; color: var(--muted); line-height: 1.65; flex: 1; }
 
-    .wrap { max-width: 1220px; margin: auto; padding: 0 28px; }
-    .hero {
-      min-height: calc(100vh - 150px);
-      display: grid;
-      align-items: center;
-      padding: 52px 0 80px;
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .tag {
+      font-size: 11px; font-weight: 500; padding: 4px 9px; border-radius: 4px;
+      background: var(--accent-glow); color: var(--accent);
+      border: 1px solid rgba(244,124,32,.18);
     }
-    .hero-grid {
-      display: grid;
-      grid-template-columns: .9fr 1.1fr;
-      gap: 32px;
-      align-items: center;
-    }
+    .tag.b { background: rgba(79,111,255,.08); color: var(--blue); border-color: rgba(79,111,255,.18); }
+    .tag.t { background: rgba(58,201,178,.08); color: var(--teal); border-color: rgba(58,201,178,.18); }
 
-    .kicker {
-      color: #2f4f91;
-      text-transform: uppercase;
-      font-size: 20px;
-      letter-spacing: .06em;
-      margin-bottom: 16px;
-      font-weight: 700;
+    .p-link {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 13px; font-weight: 600; color: var(--accent); transition: gap .2s;
     }
-    h1 {
-      font-size: clamp(58px, 5.8vw, 102px);
-      line-height: .95;
-      letter-spacing: -.04em;
-      margin: 0 0 18px;
-      color: #030b1f;
+    .p-link:hover { gap: 9px; }
+
+    /* ── SERVICES ───────────────────────────────── */
+    .services-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
+    .svc-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--r); padding: 26px; transition: all .25s;
     }
-    .lead {
-      font-size: clamp(24px, 1.8vw, 34px);
-      line-height: 1.55;
-      color: var(--muted);
-      margin: 0 0 28px;
-      max-width: 670px;
+    .svc-card:hover { background: var(--bg-card-h); border-color: var(--border-h); }
+    .svc-ico { font-size: 26px; margin-bottom: 14px; display: block; }
+    .svc-name { font-family: var(--display); font-size: 15px; font-weight: 600; margin-bottom: 9px; }
+    .svc-desc { font-size: 13px; color: var(--muted); line-height: 1.65; margin-bottom: 14px; }
+
+    /* ── RESEARCH ───────────────────────────────── */
+    .research-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 56px; align-items: start; }
+
+    .phd-name { font-size: 17px; font-weight: 600; margin-bottom: 14px; line-height: 1.45; }
+    .phd-desc { font-size: 14px; color: var(--muted); line-height: 1.75; }
+
+    .books-block {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--r); padding: 24px; margin-top: 28px;
     }
 
-    .visual {
-      position: relative;
-      border-radius: 26px;
-      background: linear-gradient(180deg, #dce6e7 0%, #d4dce0 100%);
-      min-height: 650px;
-      padding: 28px;
-      box-shadow: var(--shadow);
-      border: 1px solid #d6dde8;
-      overflow: hidden;
+    .pipeline {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--r); padding: 22px;
     }
-    .hero-image {
-      position: absolute;
-      left: 6%;
-      bottom: 6%;
-      width: 88%;
-      height: 57%;
-      object-fit: cover;
-      border-radius: 18px;
-      border: 1px solid #d0d8e6;
-      box-shadow: 0 18px 38px rgba(0,0,0,.16);
+    .pipe-label {
+      font-size: 11px; font-weight: 700; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 18px;
     }
-    .widget {
-      position: absolute;
-      background: #fff;
-      border: 1px solid #d9deeb;
-      border-radius: 20px;
-      box-shadow: 0 18px 36px rgba(13, 30, 73, 0.15);
+    .agent {
+      display: flex; align-items: center; gap: 11px;
+      padding: 10px 14px; background: var(--bg);
+      border: 1px solid var(--border); border-radius: var(--r-sm); margin-bottom: 6px;
     }
-    .widget.top {
-      right: -2%;
-      top: 7%;
-      width: 270px;
-      padding: 14px;
+    .agent:last-child { margin-bottom: 0; }
+    .agent-n {
+      width: 22px; height: 22px; border-radius: 50%; flex-shrink: 0;
+      background: var(--accent-glow); border: 1px solid rgba(244,124,32,.3);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 10px; font-weight: 700; color: var(--accent);
     }
-    .widget.bottom {
-      left: -2%;
-      bottom: -3%;
-      width: 320px;
-      padding: 14px;
-    }
-    .chart {
-      height: 120px;
-      border-radius: 12px;
-      background: linear-gradient(155deg, #9ab3ff 0%, #436be0 60%, #1f44bd 100%);
-      margin-top: 8px;
-    }
-    .line {
-      height: 18px;
-      border-radius: 999px;
-      background: #2f54d3;
-      margin: 8px 0;
-      opacity: .95;
-    }
-    .line.sm { height: 14px; width: 65%; background: #9ab3ff; }
-    .line.md { width: 85%; }
-    .line.lg { width: 94%; }
-
-    .section { padding: 44px 0 88px; }
-    .glass {
-      background: #fff;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 28px;
-    }
-    .name-check {
-      font-size: 23px;
-      color: var(--muted);
-      margin-top: 12px;
+    .agent-lbl { font-size: 13px; font-weight: 500; }
+    .pipe-arrow {
+      text-align: center; font-size: 11px; color: var(--dim);
+      padding: 2px 0; margin-bottom: 6px;
     }
 
-    @media (max-width: 980px) {
-      nav { display: none; }
-      .hero-grid { grid-template-columns: 1fr; }
-      .visual { min-height: 460px; }
-      .widget.top { right: 10px; width: 210px; }
-      .widget.bottom { left: 10px; width: 240px; }
-      .topbar { font-size: 14px; }
+    /* ── CTA ─────────────────────────────────────── */
+    #contact {
+      text-align: center; position: relative; overflow: hidden;
+    }
+    #contact::before {
+      content: ''; position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      width: 560px; height: 360px;
+      background: radial-gradient(ellipse, rgba(244,124,32,.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .cta-title { font-size: clamp(30px,5vw,54px); font-weight: 700; margin-bottom: 18px; }
+    .cta-desc { font-size: 15px; color: var(--muted); max-width: 520px; margin: 0 auto 36px; line-height: 1.72; }
+    .cta-note { font-size: 13px; color: var(--muted); margin-top: 22px; }
+
+    /* ── FOOTER ─────────────────────────────────── */
+    footer { border-top: 1px solid var(--border); padding: 36px 0; }
+    .foot-row { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; }
+    .foot-logo { font-family: var(--display); font-size: 15px; font-weight: 700; letter-spacing: .1em; color: var(--muted); }
+    .foot-logo em { font-style: normal; color: var(--accent); }
+    .foot-copy { font-size: 13px; color: var(--dim); }
+    .foot-loc  { font-size: 13px; color: var(--muted); }
+
+    /* ── ANIMATIONS ─────────────────────────────── */
+    .fu { opacity: 0; transform: translateY(22px); transition: opacity .6s ease, transform .6s ease; }
+    .fu.on { opacity: 1; transform: none; }
+
+    /* ── RESPONSIVE ─────────────────────────────── */
+    @media (max-width: 880px) {
+      .hero-grid      { grid-template-columns: 1fr; }
+      .stats-panel    { display: none; }
+      .location-badge { display: none; }
+      .about-grid     { grid-template-columns: 1fr; }
+      .research-grid  { grid-template-columns: 1fr; }
+      .nav-links, .nav-btn { display: none; }
+      .burger { display: flex; }
+      .projects-grid  { grid-template-columns: 1fr; }
+      .services-grid  { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 540px) {
+      .roles-grid    { grid-template-columns: 1fr; }
+      .services-grid { grid-template-columns: 1fr; }
+      .foot-row      { flex-direction: column; text-align: center; }
     }
   </style>
 </head>
 <body>
-  <div class="topbar">Sign Up Today to Take Your Vacation Rental to the Next Level</div>
 
-  <header>
-    <div class="nav">
-      <div class="brand"><div class="mark">S</div><span>SETai</span></div>
-      <nav>
-        <a href="#overview">Overview</a>
-        <a href="#features">Features</a>
-        <a href="#about">About</a>
-        <a href="#resources">Resources</a>
-        <a class="btn outline" href="tel:+19417467228">(941) 746-7228</a>
-        <a class="btn primary" href="#contact">Get A Demo</a>
-      </nav>
+<!-- ── NAVIGATION ──────────────────────────────────────── -->
+<nav id="nav">
+  <div class="container">
+    <div class="nav-row">
+      <a href="#" class="logo">SET<em>AEI</em></a>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#research">Research</a></li>
+      </ul>
+      <a href="#contact" class="nav-btn">Get in touch</a>
+      <div class="burger" id="burger" aria-label="Open menu" role="button" tabindex="0">
+        <span></span><span></span><span></span>
+      </div>
     </div>
-  </header>
+  </div>
+</nav>
 
-  <main class="wrap">
-    <section class="hero" id="overview">
-      <div class="hero-grid">
-        <div>
-          <div class="kicker">Vacation Rental Software</div>
-          <h1>Vacation rental management made easy</h1>
-          <p class="lead">A polished presentation layout inspired by your reference design, adapted for the SETai proposal page with clear CTA actions and modern hero visuals.</p>
-          <a class="btn primary" href="#contact">Get A Demo</a>
+<!-- mobile nav -->
+<div class="mobile-nav" id="mobileNav">
+  <button class="close-btn" id="closeNav" aria-label="Close menu">✕</button>
+  <a href="#about"    onclick="closeMobileNav()">About</a>
+  <a href="#projects" onclick="closeMobileNav()">Projects</a>
+  <a href="#services" onclick="closeMobileNav()">Services</a>
+  <a href="#research" onclick="closeMobileNav()">Research</a>
+  <a href="#contact"  onclick="closeMobileNav()">Get in touch</a>
+</div>
+
+<!-- ── HERO ────────────────────────────────────────────── -->
+<section id="hero">
+  <div class="container">
+    <div class="hero-grid">
+
+      <div class="fu">
+        <div class="hero-eyebrow">Private AI &amp; technology agency · Oslo</div>
+        <h1>
+          Building AI systems<br>
+          that <span class="hl">actually work</span><br>
+          in the real world.
+        </h1>
+        <p class="hero-sub">
+          SETAEI is the personal technology house of Khabat Setaei — combining CTO-level execution, creative digital design, SaaS architecture, blockchain systems and applied AI research.
+        </p>
+        <div class="role-pills">
+          <span class="pill">AI Architect</span>
+          <span class="pill">CTO</span>
+          <span class="pill">Founder</span>
+          <span class="pill">Researcher</span>
+          <span class="pill">Author</span>
         </div>
-
-        <div class="visual" aria-label="Dashboard preview card">
-          <img class="hero-image" src="https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?auto=format&fit=crop&w=1400&q=80" alt="Vacation rental home" />
-          <div class="widget top">
-            <strong>Dashboard</strong>
-            <div class="line sm"></div>
-            <div class="chart"></div>
-          </div>
-          <div class="widget bottom">
-            <strong>Availability</strong>
-            <div class="line lg"></div>
-            <div class="line md"></div>
-            <div class="line sm"></div>
-            <div class="line lg"></div>
-          </div>
+        <div class="cta-row">
+          <a href="#projects" class="btn-solid">View projects →</a>
+          <a href="#contact"  class="btn-outline">Work together</a>
         </div>
       </div>
-    </section>
 
-    <section class="section" id="about">
-      <div class="glass">
-        <h2>Candidate Name Check</h2>
-        <p class="name-check">Correct name is: <strong>Khabat Setaei</strong> (updated).</p>
+      <div class="fu" style="transition-delay:.14s">
+        <div class="stats-panel">
+          <div class="stat">
+            <div class="stat-val">15<em>+</em></div>
+            <div class="stat-lbl">Years IT · Security · Infrastructure</div>
+          </div>
+          <div class="stat">
+            <div class="stat-val">AI<em>·</em>SaaS</div>
+            <div class="stat-lbl">Blockchain · Research</div>
+          </div>
+          <div class="stat">
+            <div class="stat-val">EU<em>↔</em>ME</div>
+            <div class="stat-lbl">Europe · Middle East</div>
+          </div>
+          <div class="stat">
+            <div class="stat-val">4<em>+</em></div>
+            <div class="stat-lbl">Active ventures &amp; products</div>
+          </div>
+        </div>
+        <div class="location-badge">
+          <span class="pulse"></span>
+          Oslo, Norway · Available for partnerships
+        </div>
       </div>
-    </section>
 
-    <section class="section" id="contact">
-      <div class="glass">
-        <h2>Contact</h2>
-        <p class="name-check">PhD Research Proposal · Multi-Agent AI Systems · Khabat Setaei</p>
-        <a class="btn primary" href="mailto:khabat@setai.no?subject=PhD%20Research%20Proposal">Contact by Email</a>
+    </div>
+  </div>
+</section>
+
+<hr class="div">
+
+<!-- ── ABOUT ───────────────────────────────────────────── -->
+<section id="about">
+  <div class="container">
+    <div class="s-head fu">
+      <div class="s-label">Founder profile</div>
+      <h2 class="s-title">Not a traditional agency.<br>A founder-led technology lab.</h2>
+      <p class="s-desc">SETAEI operates between product strategy, system architecture, creative direction and research. The goal: build digital systems that are beautiful, useful, scalable and commercially relevant.</p>
+    </div>
+
+    <div class="about-grid">
+      <div class="about-card fu">
+        <div class="card-label">About SETAEI</div>
+        <p class="about-text">
+          <strong>Khabat Setaei</strong> is a technology builder with 15+ years across IT, security and infrastructure. Operating between Oslo and the Middle East, he combines deep technical execution with creative product thinking.<br><br>
+          SETAEI is not an agency with departments — it is a single founder who thinks from business strategy all the way down to code, infrastructure and go-to-market.
+        </p>
       </div>
-    </section>
-  </main>
 
-  <script>
-    // Disable right-click context menu
-    document.addEventListener('contextmenu', function (event) {
-      event.preventDefault();
-    });
-  </script>
+      <div class="roles-grid fu" style="transition-delay:.1s">
+        <div class="role-card">
+          <div class="role-ico">⚙️</div>
+          <div class="role-name">CTO</div>
+          <div class="role-org">Technology leadership</div>
+          <p class="role-desc">Experience across infrastructure, security, SaaS architecture and product development.</p>
+        </div>
+        <div class="role-card">
+          <div class="role-ico">🚀</div>
+          <div class="role-name">Founder</div>
+          <div class="role-org">SETAEI / XS22 STAEE</div>
+          <p class="role-desc">Independent creative technology agency helping businesses build, automate and scale online.</p>
+        </div>
+        <div class="role-card">
+          <div class="role-ico">📖</div>
+          <div class="role-name">Author</div>
+          <div class="role-org">Blockchain · AI · Finance</div>
+          <p class="role-desc">Published work connecting token economies, AI models and financial market prediction.</p>
+        </div>
+        <div class="role-card">
+          <div class="role-ico">🔬</div>
+          <div class="role-name">Research</div>
+          <div class="role-org">PhD direction</div>
+          <p class="role-desc">Multi-agent frameworks for automated sales, lead processing and decision systems.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="div">
+
+<!-- ── PROJECTS ────────────────────────────────────────── -->
+<section id="projects">
+  <div class="container">
+    <div class="s-head fu">
+      <div class="s-label">Selected systems and ventures</div>
+      <h2 class="s-title">Proof of execution.</h2>
+      <p class="s-desc">From idea and UX to backend, integrations, launch and commercial direction.</p>
+    </div>
+
+    <div class="projects-grid">
+
+      <article class="project-card fu">
+        <div class="p-head">
+          <span class="p-emoji">🤖</span>
+          <span class="p-type">AI SaaS</span>
+        </div>
+        <div class="p-name">TrustAI</div>
+        <p class="p-desc">AI-powered referral and growth engine for merchants, ambassadors and performance-based sales. Built for Shopify-first adoption, later extendable to WooCommerce, Wix and beyond.</p>
+        <div class="tags">
+          <span class="tag">Referral engine</span>
+          <span class="tag">Multi-tenant SaaS</span>
+          <span class="tag b">Shopify</span>
+          <span class="tag t">Firebase</span>
+        </div>
+        <a href="https://trustai.no" class="p-link" target="_blank" rel="noopener">Open trustai.no →</a>
+      </article>
+
+      <article class="project-card fu" style="transition-delay:.08s">
+        <div class="p-head">
+          <span class="p-emoji">🥤</span>
+          <span class="p-type">Product innovation</span>
+        </div>
+        <div class="p-name">AirlockCap</div>
+        <p class="p-desc">Consumer product concept focused on preserving carbonation and improving opened beverage storage. Positioned for investor storytelling, prototyping and beverage-industry outreach.</p>
+        <div class="tags">
+          <span class="tag">Physical product</span>
+          <span class="tag">Investor page</span>
+          <span class="tag b">Prototype</span>
+          <span class="tag">Patent path</span>
+        </div>
+        <a href="#" class="p-link">Open AirlockCap →</a>
+      </article>
+
+      <article class="project-card fu" style="transition-delay:.16s">
+        <div class="p-head">
+          <span class="p-emoji">⚔️</span>
+          <span class="p-type">Blockchain · Gaming</span>
+        </div>
+        <div class="p-name">REAL Token &amp; Shahnameh Game</div>
+        <p class="p-desc">Blockchain token economy and tap-to-earn game inspired by Shahnameh, combining cultural IP, token mechanics and experimental Web3 game design.</p>
+        <div class="tags">
+          <span class="tag">Token economy</span>
+          <span class="tag t">TON ecosystem</span>
+          <span class="tag b">Web3</span>
+          <span class="tag">Game</span>
+        </div>
+        <a href="#" class="p-link">Open game →</a>
+      </article>
+
+      <article class="project-card fu" style="transition-delay:.24s">
+        <div class="p-head">
+          <span class="p-emoji">🔮</span>
+          <span class="p-type">AI experiment</span>
+        </div>
+        <div class="p-name">Numerologist AI</div>
+        <p class="p-desc">Experimental AI-driven pattern and interpretation platform exploring user input, symbolic systems, personalization and digital product packaging.</p>
+        <div class="tags">
+          <span class="tag">AI interface</span>
+          <span class="tag">Personalization</span>
+          <span class="tag b">Digital product</span>
+          <span class="tag t">SEO</span>
+        </div>
+        <a href="https://tall.setaei.com" class="p-link" target="_blank" rel="noopener">Open Numerologist →</a>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<hr class="div">
+
+<!-- ── SERVICES ────────────────────────────────────────── -->
+<section id="services">
+  <div class="container">
+    <div class="s-head fu">
+      <div class="s-label">What SETAEI builds</div>
+      <h2 class="s-title">Strategy and execution<br>from the same brain.</h2>
+      <p class="s-desc">Services designed for founders, SMEs and organizations that need strategy and execution without the overhead.</p>
+    </div>
+
+    <div class="services-grid">
+      <div class="svc-card fu">
+        <span class="svc-ico">🧠</span>
+        <div class="svc-name">AI Systems</div>
+        <p class="svc-desc">AI assistants, automation flows, multi-agent concepts, prompt systems and business-specific decision tools.</p>
+        <div class="tags"><span class="tag">AI strategy</span><span class="tag b">Agents</span><span class="tag t">Automation</span></div>
+      </div>
+      <div class="svc-card fu" style="transition-delay:.06s">
+        <span class="svc-ico">🚀</span>
+        <div class="svc-name">SaaS &amp; MVP</div>
+        <p class="svc-desc">From business idea to working product: architecture, dashboards, Firebase, APIs, payments, integrations and launch pages.</p>
+        <div class="tags"><span class="tag">MVP</span><span class="tag t">Firebase</span><span class="tag b">Dashboards</span></div>
+      </div>
+      <div class="svc-card fu" style="transition-delay:.12s">
+        <span class="svc-ico">🎨</span>
+        <div class="svc-name">Web &amp; Brand</div>
+        <p class="svc-desc">Premium websites for clinics, creators and local businesses that need credibility, SEO structure and conversion-focused design.</p>
+        <div class="tags"><span class="tag t">SEO</span><span class="tag">Design</span><span class="tag b">Conversion</span></div>
+      </div>
+      <div class="svc-card fu" style="transition-delay:.18s">
+        <span class="svc-ico">🧩</span>
+        <div class="svc-name">CTO-as-a-Service</div>
+        <p class="svc-desc">Technical leadership for startups that need someone to translate business ambition into practical architecture and execution.</p>
+        <div class="tags"><span class="tag">Architecture</span><span class="tag b">Leadership</span><span class="tag">Roadmaps</span></div>
+      </div>
+      <div class="svc-card fu" style="transition-delay:.24s">
+        <span class="svc-ico">🔐</span>
+        <div class="svc-name">Security &amp; Infrastructure</div>
+        <p class="svc-desc">Practical security thinking, hosting setup, deployment pipelines, access control, monitoring and high-availability fundamentals.</p>
+        <div class="tags"><span class="tag">Security</span><span class="tag t">Cloud</span><span class="tag b">Ops</span></div>
+      </div>
+      <div class="svc-card fu" style="transition-delay:.30s">
+        <span class="svc-ico">📈</span>
+        <div class="svc-name">Growth Systems</div>
+        <p class="svc-desc">Referral engines, SEO infrastructure, sales workflows, lead capture, tracking and data-driven customer acquisition systems.</p>
+        <div class="tags"><span class="tag">TrustAI</span><span class="tag b">CRM</span><span class="tag t">Tracking</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="div">
+
+<!-- ── RESEARCH ────────────────────────────────────────── -->
+<section id="research">
+  <div class="container">
+    <div class="s-head fu">
+      <div class="s-label">Research-ready profile</div>
+      <h2 class="s-title">Academic work connected<br>to real commercial products.</h2>
+    </div>
+
+    <div class="research-grid">
+      <div class="fu">
+        <p class="phd-name">A Multi-Agent Framework for Automated Sales and Lead Processing</p>
+        <p class="phd-desc">Connecting agentic AI, CRM workflows, referral systems, scoring, decision support and measurable business outcomes. Research grounded in systems already in production — not hypothetical scenarios.</p>
+        <div class="books-block">
+          <div class="card-label">Books &amp; knowledge work</div>
+          <p class="about-text">Published work connecting token economies, AI models and financial systems — strengthening the profile as a research-oriented founder working at the intersection of technology and commerce.</p>
+        </div>
+      </div>
+
+      <div class="pipeline fu" style="transition-delay:.12s">
+        <div class="pipe-label">Multi-agent architecture</div>
+        <div class="agent"><div class="agent-n">1</div><div class="agent-lbl">Data Layer</div></div>
+        <div class="pipe-arrow">↓</div>
+        <div class="agent"><div class="agent-n">2</div><div class="agent-lbl">Lead Agent</div></div>
+        <div class="pipe-arrow">↓</div>
+        <div class="agent"><div class="agent-n">3</div><div class="agent-lbl">Scoring Agent</div></div>
+        <div class="pipe-arrow">↓</div>
+        <div class="agent"><div class="agent-n">4</div><div class="agent-lbl">Coordinator Agent</div></div>
+        <div class="pipe-arrow">↓</div>
+        <div class="agent"><div class="agent-n">5</div><div class="agent-lbl">Outreach Agent</div></div>
+        <div class="pipe-arrow">↓</div>
+        <div class="agent"><div class="agent-n">6</div><div class="agent-lbl">Payout / Decision Agent</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="div">
+
+<!-- ── CTA ─────────────────────────────────────────────── -->
+<section id="contact">
+  <div class="container">
+    <div class="fu">
+      <div class="s-label" style="justify-content:center">Oslo · Europe · Middle East</div>
+      <h2 class="cta-title">Let's build something<br>that actually scales.</h2>
+      <p class="cta-desc">For AI systems, SaaS MVPs, premium websites, technical partnerships, research collaboration or investor conversations.</p>
+      <div class="cta-row" style="justify-content:center">
+        <a href="mailto:khabat@setaei.com" class="btn-solid">Get in touch →</a>
+        <a href="#projects" class="btn-outline">View work</a>
+      </div>
+      <p class="cta-note">Founder · CTO · Author · Researcher · Oslo, Norway</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ──────────────────────────────────────────── -->
+<footer>
+  <div class="container">
+    <div class="foot-row">
+      <div class="foot-logo">SET<em>AEI</em></div>
+      <div class="foot-copy">© 2025 SETAEI · Khabat Setaei</div>
+      <div class="foot-loc">Oslo, Norway</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // scroll-in animations
+  const obs = new IntersectionObserver(
+    es => es.forEach(e => { if (e.isIntersecting) e.target.classList.add('on'); }),
+    { threshold: 0.08, rootMargin: '0px 0px -30px 0px' }
+  );
+  document.querySelectorAll('.fu').forEach(el => obs.observe(el));
+
+  // nav compact on scroll
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  }, { passive: true });
+
+  // mobile nav
+  const mobileNav = document.getElementById('mobileNav');
+  document.getElementById('burger').addEventListener('click', () => mobileNav.classList.add('open'));
+  document.getElementById('closeNav').addEventListener('click', () => mobileNav.classList.remove('open'));
+  function closeMobileNav() { mobileNav.classList.remove('open'); }
+
+  // keyboard burger
+  document.getElementById('burger').addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') mobileNav.classList.add('open');
+  });
+</script>
+
 </body>
 </html>
