@@ -13,35 +13,69 @@ $lead = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if (!$lead) { echo json_encode(['ok' => false, 'error' => 'Lead not found']); exit; }
 
+// 24 h cache
 if (!empty($lead['researched_at']) && (time() - strtotime($lead['researched_at'])) < 86400) {
-    echo json_encode(['ok' => true, 'cached' => true, 'message' => 'Already researched within 24h', 'email' => $lead['contact_email'], 'phone' => $lead['contact_phone']]);
+    echo json_encode(['ok' => true, 'cached' => true, 'status' => $lead['research_status'] ?? 'cached',
+        'email' => $lead['contact_email'], 'phone' => $lead['contact_phone']]);
     exit;
 }
 
+$GLOBALS['deadline'] = microtime(true) + 8.0;
+
+function remaining_secs(): int {
+    return max(1, (int)ceil($GLOBALS['deadline'] - microtime(true)));
+}
+
 function fetch_page(string $url, bool $verify_ssl = false): array {
+    $t = remaining_secs();
+    if ($t <= 0) return ['html' => '', 'code' => 0, 'ssl_err' => 99, 'url' => $url];
+    $t = min(6, $t);
     $ch = curl_init();
     curl_setopt_array($ch, [
         CURLOPT_URL            => $url,
         CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_TIMEOUT        => 10,
-        CURLOPT_CONNECTTIMEOUT => 5,
+        CURLOPT_TIMEOUT        => $t,
+        CURLOPT_CONNECTTIMEOUT => min(3, $t),
         CURLOPT_FOLLOWLOCATION => true,
         CURLOPT_MAXREDIRS      => 3,
         CURLOPT_USERAGENT      => 'Mozilla/5.0 (compatible; SETAEI-Research/1.0)',
         CURLOPT_SSL_VERIFYPEER => $verify_ssl,
         CURLOPT_HTTPHEADER     => ['Accept: text/html,application/xhtml+xml'],
     ]);
-    $html    = curl_exec($ch);
-    $code    = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    $ssl_err = curl_errno($ch);
+    $html = curl_exec($ch);
+    $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $serr = curl_errno($ch);
+    $eurl = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL);
     curl_close($ch);
-    return ['html' => is_string($html) ? $html : '', 'code' => $code, 'ssl_err' => $ssl_err];
+    return ['html' => is_string($html) ? $html : '', 'code' => $code, 'ssl_err' => $serr, 'url' => $eurl ?: $url];
+}
+
+function probe_url(string $url): string {
+    if (microtime(true) >= $GLOBALS['deadline'] - 1) return '';
+    $t = min(4, remaining_secs());
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL            => $url,
+        CURLOPT_RETURNTRANSFER => false,
+        CURLOPT_NOBODY         => true,
+        CURLOPT_TIMEOUT        => $t,
+        CURLOPT_CONNECTTIMEOUT => min(3, $t),
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_MAXREDIRS      => 2,
+        CURLOPT_USERAGENT      => 'Mozilla/5.0 (compatible; SETAEI-Research/1.0)',
+        CURLOPT_SSL_VERIFYPEER => false,
+    ]);
+    curl_exec($ch);
+    $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $eurl = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL);
+    curl_close($ch);
+    return ($code >= 200 && $code < 400) ? ($eurl ?: $url) : '';
 }
 
 function extract_emails(string $html): array {
     $text = html_entity_decode($html, ENT_QUOTES | ENT_HTML5);
     preg_match_all('/[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,6}/', $text, $m);
-    $skip = ['noreply','no-reply','sentry','wix.com','wordpress','schema','example','@2x','@3x'];
+    $skip = ['noreply','no-reply','sentry','wix.com','wordpress','schema','example','@2x','@3x','.png','.jpg','.gif','.svg'];
     $out = [];
     foreach (array_unique($m[0]) as $e) {
         $low = strtolower($e); $ok = true;
@@ -68,109 +102,209 @@ function extract_social(string $html): array {
 }
 
 function detect_cms(string $html, string $url): string {
-    if (str_contains($url, 'wixsite.com') || str_contains($html, 'static.wixstatic.com') || str_contains($html, 'wix.com/static')) return 'wix';
+    if (str_contains($url, 'wixsite.com') || str_contains($html, 'static.wixstatic.com')) return 'wix';
     if (str_contains($url, 'myshopify.com') || str_contains($html, 'cdn.shopify.com')) return 'shopify';
     if (str_contains($html, 'wp-content/') || str_contains($html, 'wp-includes/')) return 'wordpress';
     if (str_contains($html, '.squarespace.com') || str_contains($html, 'squarespace-cdn.com')) return 'squarespace';
     if (str_contains($html, 'webflow.io') || str_contains($html, 'assets.website-files.com')) return 'webflow';
-    if (strlen($html) > 200) return 'other';
-    return 'unknown';
+    return strlen($html) > 200 ? 'other' : 'unknown';
 }
 
-function check_ssl(string $base_url): bool {
-    $https = preg_replace('#^https?://#', 'https://', $base_url);
+function check_ssl(string $url): bool {
+    $https = preg_replace('#^https?://#', 'https://', $url);
     $r = fetch_page($https, true);
     return $r['code'] >= 200 && $r['code'] < 400 && $r['ssl_err'] === 0;
 }
 
 function analyze_site(string $html): array {
-    $low = strtolower($html);
     return [
         'mobile_friendly' => (bool)preg_match('/name=["\']viewport["\']/i', $html),
         'has_booking'     => (bool)preg_match('/calendly|timely|bookingkit|bestill[\s\-]?time|book[\s\-]?en[\s\-]?time|online[\s\-]?booking/i', $html),
     ];
 }
 
-// --- Gather existing contact data ---
+function guess_domains(string $company_name): array {
+    // Strip common Norwegian legal suffixes
+    $legal = ['konkursbo','under avvikling','avvikling','holding','invest','asa','ans','enk','nuf','iks','kf','sf','fil','da','ba','sa','as'];
+    $name  = mb_strtolower(trim($company_name), 'UTF-8');
+    do {
+        $prev = $name;
+        foreach ($legal as $s) {
+            $name = preg_replace('/\s+' . preg_quote($s, '/') . '\s*$/u', '', $name);
+            $name = trim($name);
+        }
+    } while ($name !== $prev);
+
+    // Norwegian → ASCII
+    $name = str_replace(['æ','ø','å','é','è','ê','ü','ö','ä','ó','ú','í','ñ'],
+                        ['ae','o','aa','e','e','e','u','o','a','o','u','i','n'], $name);
+
+    $words = preg_split('/[\s\-_\/\.]+/', $name);
+    $words = array_values(array_filter($words, fn($w) => strlen($w) >= 2));
+    if (!$words) return [];
+
+    $candidates = [];
+
+    // All words joined (no separators)
+    $all = preg_replace('/[^a-z0-9]/', '', implode('', $words));
+    if (strlen($all) >= 3 && strlen($all) <= 28) $candidates[] = $all . '.no';
+
+    // Hyphen-separated
+    $hyph = implode('-', array_map(fn($w) => preg_replace('/[^a-z0-9]/', '', $w), $words));
+    $hyph = trim($hyph, '-');
+    if (strlen($hyph) >= 3 && $hyph . '.no' !== ($candidates[0] ?? '')) $candidates[] = $hyph . '.no';
+
+    // First two words joined
+    if (count($words) >= 2) {
+        $two = preg_replace('/[^a-z0-9]/', '', $words[0] . $words[1]);
+        if (strlen($two) >= 3 && !in_array($two . '.no', $candidates)) $candidates[] = $two . '.no';
+    }
+
+    // First word only
+    $first = preg_replace('/[^a-z0-9]/', '', $words[0]);
+    if (strlen($first) >= 4 && !in_array($first . '.no', $candidates)) $candidates[] = $first . '.no';
+
+    return array_slice($candidates, 0, 4);
+}
+
+function crawl_site(string $base): array {
+    $r    = fetch_page($base);
+    $html = ($r['code'] >= 200 && $r['code'] < 400) ? $r['html'] : '';
+    $all  = $html;
+    $eurl = $r['url'] ?: $base;
+
+    $contact_paths = ['/kontakt', '/kontakt-oss', '/contact', '/om-oss', '/about'];
+    foreach ($contact_paths as $path) {
+        if (microtime(true) >= $GLOBALS['deadline'] - 1.5) break;
+        $rc = fetch_page(rtrim($base, '/') . $path);
+        if ($rc['code'] >= 200 && $rc['code'] < 400 && strlen($rc['html']) > 300) {
+            $all .= $rc['html'];
+        }
+    }
+    return ['html' => $html, 'all' => $all, 'url' => $eurl];
+}
+
+// -------------------------
+// Main enrichment logic
+// -------------------------
 $found = [
     'contact_email' => $lead['contact_email'] ?? '',
     'contact_phone' => $lead['contact_phone'] ?? '',
     'facebook_url'  => $lead['facebook_url']  ?? '',
     'instagram_url' => $lead['instagram_url'] ?? '',
+    'website_url'   => $lead['website_url']   ?? '',
 ];
 $website_cms     = $lead['website_cms']      ?? '';
 $website_has_ssl = (int)($lead['website_has_ssl'] ?? 0);
 $website_flags   = json_decode($lead['website_flags'] ?? '{}', true) ?: [];
+$research_status = 'no_contact';
+$research_notes  = [];
 
 if (!empty($lead['website_url'])) {
-    $base = $lead['website_url'];
+    // --- Path A: website known ---
+    $base  = $lead['website_url'];
     if (!str_starts_with($base, 'http')) $base = 'https://' . $base;
-    $base = rtrim($base, '/');
+    $base  = rtrim($base, '/');
+    $crawl = crawl_site($base);
+    $all   = $crawl['all'];
 
-    $r    = fetch_page($base);
-    $html = $r['html'];
-
-    $contact_html = '';
-    foreach (['/kontakt', '/contact', '/om-oss', '/about'] as $path) {
-        $rc = fetch_page($base . $path);
-        if (strlen($rc['html']) > 300) { $contact_html = $rc['html']; break; }
+    if (empty($found['contact_email'])) { $em = extract_emails($all); if ($em) $found['contact_email'] = $em[0]; }
+    if (empty($found['contact_phone'])) { $ph = extract_phone($all);  if ($ph) $found['contact_phone'] = $ph; }
+    $soc = extract_social($all);
+    if (empty($found['facebook_url']))  $found['facebook_url']  = $soc['facebook_url'];
+    if (empty($found['instagram_url'])) $found['instagram_url'] = $soc['instagram_url'];
+    if ($crawl['html']) {
+        $website_cms     = detect_cms($crawl['html'], $base);
+        $website_has_ssl = check_ssl($base) ? 1 : 0;
+        $website_flags   = analyze_site($crawl['html']);
     }
-    $all = $html . $contact_html;
+    $research_status = $found['contact_email'] ? 'found_email' : 'found_website';
 
-    if (empty($found['contact_email'])) {
-        $emails = extract_emails($all);
-        if ($emails) $found['contact_email'] = $emails[0];
-    }
-    if (empty($found['contact_phone'])) {
-        $phone = extract_phone($all);
-        if ($phone) $found['contact_phone'] = $phone;
-    }
-    $social = extract_social($all);
-    if (empty($found['facebook_url']))  $found['facebook_url']  = $social['facebook_url'];
-    if (empty($found['instagram_url'])) $found['instagram_url'] = $social['instagram_url'];
+} else {
+    // --- Path B: no website — guess domain ---
+    $candidates = guess_domains($lead['company_name'] ?? '');
+    $research_notes['guessed_domains'] = $candidates;
 
-    $website_cms     = detect_cms($html, $base);
-    $website_has_ssl = check_ssl($base) ? 1 : 0;
-    $website_flags   = analyze_site($html);
+    foreach ($candidates as $domain) {
+        if (microtime(true) >= $GLOBALS['deadline'] - 2) break;
+
+        $live = probe_url('https://' . $domain) ?: probe_url('http://' . $domain);
+        if (!$live) continue;
+
+        $found['website_url'] = $live;
+        $research_notes['found_domain'] = $domain;
+        $crawl = crawl_site($live);
+        $all   = $crawl['all'];
+
+        if (empty($found['contact_email'])) { $em = extract_emails($all); if ($em) $found['contact_email'] = $em[0]; }
+        if (empty($found['contact_phone'])) { $ph = extract_phone($all);  if ($ph) $found['contact_phone'] = $ph; }
+        $soc = extract_social($all);
+        if (empty($found['facebook_url']))  $found['facebook_url']  = $soc['facebook_url'];
+        if (empty($found['instagram_url'])) $found['instagram_url'] = $soc['instagram_url'];
+        if ($crawl['html']) {
+            $website_cms     = detect_cms($crawl['html'], $live);
+            $website_has_ssl = check_ssl($live) ? 1 : 0;
+            $website_flags   = analyze_site($crawl['html']);
+        }
+        $research_status = $found['contact_email'] ? 'found_email' : 'found_website';
+        break;
+    }
 }
 
-// Update lead with all enriched data
+// --- Search hints when no email found ---
+$search_hints = [];
+if (empty($found['contact_email'])) {
+    $co   = trim($lead['company_name'] ?? '');
+    $city = trim($lead['city'] ?? '');
+    $search_hints = [trim("$co $city epost"), trim("$co $city kontakt")];
+    $research_notes['search_hints'] = $search_hints;
+}
+
+// --- Persist ---
+$new_website_url = $found['website_url'] ?: ($lead['website_url'] ?? '');
+$new_has_website = !empty($new_website_url) ? 1 : (int)($lead['has_website'] ?? 0);
+
 $pdo->prepare('UPDATE leads SET
     contact_email=?, contact_phone=?, facebook_url=?, instagram_url=?,
+    website_url=?, has_website=?,
     website_cms=?, website_has_ssl=?, website_flags=?,
+    research_status=?, research_notes=?,
     researched_at=CURRENT_TIMESTAMP, updated_at=CURRENT_TIMESTAMP
     WHERE id=?'
 )->execute([
     $found['contact_email'], $found['contact_phone'],
     $found['facebook_url'],  $found['instagram_url'],
+    $new_website_url, $new_has_website,
     $website_cms, $website_has_ssl, json_encode($website_flags),
-    $id
+    $research_status, json_encode($research_notes),
+    $id,
 ]);
 
-// Recalculate score with enriched data
 $updated_lead = array_merge($lead, $found, [
+    'website_url' => $new_website_url, 'has_website' => $new_has_website,
     'website_cms' => $website_cms, 'website_has_ssl' => $website_has_ssl,
-    'website_flags' => json_encode($website_flags)
+    'website_flags' => json_encode($website_flags),
 ]);
 $new_score = score_lead($updated_lead);
 $pdo->prepare('UPDATE leads SET lead_score=? WHERE id=?')->execute([$new_score, $id]);
-
 $pdo->prepare("UPDATE leads SET lead_status='researched', updated_at=CURRENT_TIMESTAMP WHERE id=? AND lead_status='new'")->execute([$id]);
 
-$summary = sprintf('email=%s phone=%s fb=%s ig=%s cms=%s ssl=%d mobile=%d booking=%d score=%d',
+$summary = sprintf('status=%s email=%s phone=%s website=%s cms=%s score=%d',
+    $research_status,
     $found['contact_email'] ?: 'none', $found['contact_phone'] ?: 'none',
-    $found['facebook_url']  ?: 'none', $found['instagram_url'] ?: 'none',
-    $website_cms ?: 'none', $website_has_ssl,
-    (int)($website_flags['mobile_friendly'] ?? 0), (int)($website_flags['has_booking'] ?? 0),
-    $new_score
+    $new_website_url ?: 'none', $website_cms ?: 'none', $new_score
 );
 $pdo->prepare('INSERT INTO lead_research (lead_id,source,data_json,summary,created_at) VALUES (?,?,?,?,CURRENT_TIMESTAMP)')
-    ->execute([$id, 'web_scrape', json_encode(array_merge($found, compact('website_cms','website_has_ssl','website_flags'))), $summary]);
+    ->execute([$id, 'web_scrape',
+        json_encode(array_merge($found, ['research_status' => $research_status, 'notes' => $research_notes])),
+        $summary]);
 
 echo json_encode([
-    'ok'      => true,
-    'found'   => $found,
-    'website' => ['cms' => $website_cms, 'has_ssl' => (bool)$website_has_ssl, 'flags' => $website_flags],
-    'score'   => $new_score,
-    'summary' => $summary
+    'ok'           => true,
+    'found'        => $found,
+    'website'      => ['cms' => $website_cms, 'has_ssl' => (bool)$website_has_ssl, 'flags' => $website_flags, 'url' => $new_website_url],
+    'score'        => $new_score,
+    'status'       => $research_status,
+    'search_hints' => $search_hints,
+    'summary'      => $summary,
 ]);

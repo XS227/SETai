@@ -35,9 +35,9 @@ function websiteText(row) {
   return 'Ja' + badges;
 }
 function emailBadge(row) {
-  return row.contact_email
-    ? `<span class="badge email-yes" title="${row.contact_email}">${row.contact_email}</span>`
-    : '<span class="badge email-no">No email</span>';
+  if (row.contact_email) return `<span class="badge email-yes" title="${row.contact_email}">${row.contact_email}</span>`;
+  if (!row.website_url && row.research_status === 'no_contact') return '<span class="badge needs-manual">Needs manual</span>';
+  return '<span class="badge email-no">No email</span>';
 }
 
 // --- Selection state ---
@@ -163,11 +163,15 @@ async function researchLead(id) {
       const f = res.found || {};
       const w = res.website || {};
       const flags = w.flags || {};
+      const hints = (res.search_hints || []).map(h =>
+        `<a href="https://www.google.com/search?q=${encodeURIComponent(h)}" target="_blank" rel="noopener">${h}</a>`
+      ).join(' &nbsp;|&nbsp; ');
       detail.innerHTML = `<div class="notice">
-        <strong>Research fullført</strong> (score: ${res.score ?? '—'})<br>
+        <strong>Research fullført</strong> (score: ${res.score ?? '—'}) — status: ${res.status || '—'}<br>
         E-post: ${f.contact_email||'—'} &nbsp;|&nbsp; Tlf: ${f.contact_phone||'—'}<br>
         CMS: ${w.cms||'—'} &nbsp;|&nbsp; SSL: ${w.has_ssl ? '✓' : '✗'} &nbsp;|&nbsp;
         Mobiloptimert: ${flags.mobile_friendly ? '✓' : '✗'} &nbsp;|&nbsp; Booking: ${flags.has_booking ? '✓' : '✗'}
+        ${hints ? `<br>Google: ${hints}` : ''}
       </div>`;
     }
     loadLeads(getFilters());
@@ -226,6 +230,43 @@ function setDefaultDates(){
   monthAgo.setDate(today.getDate() - 30);
   to.value   = today.toISOString().slice(0,10);
   from.value = monthAgo.toISOString().slice(0,10);
+}
+
+// --- Bulk research ---
+async function bulkResearch() {
+  const ids = [...selectedIds];
+  if (!ids.length) return;
+  const detail = document.getElementById('leadDetail');
+  const btn    = document.getElementById('btnResearchSelected');
+  btn.disabled = true;
+
+  const results = { found_email: 0, found_website: 0, no_contact: 0, errors: 0 };
+
+  for (let i = 0; i < ids.length; i++) {
+    const id = ids[i];
+    const lead = leadsData.find(l => l.id === id);
+    const name = lead ? lead.company_name : `#${id}`;
+    detail.innerHTML = `<div class="notice">Research ${i + 1}/${ids.length}: ${name}…</div>`;
+    try {
+      const res = await api('research-lead.php', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({lead_id:id})});
+      const status = res.cached ? (res.status || 'cached') : (res.status || 'no_contact');
+      if (status === 'found_email')   results.found_email++;
+      else if (status === 'found_website') results.found_website++;
+      else results.no_contact++;
+    } catch(e) {
+      results.errors++;
+    }
+  }
+
+  loadLeads(getFilters());
+  btn.disabled = false;
+  detail.innerHTML = `<div class="notice">
+    <strong>Bulk research fullført — ${ids.length} leads</strong><br>
+    E-post funnet: ${results.found_email} &nbsp;|&nbsp;
+    Nettside funnet: ${results.found_website} &nbsp;|&nbsp;
+    Ingen kontakt: ${results.no_contact}
+    ${results.errors ? ` &nbsp;|&nbsp; Feil: ${results.errors}` : ''}
+  </div>`;
 }
 
 // --- Send tilbud modal ---
@@ -291,6 +332,7 @@ async function sendOffer() {
   }
 }
 
+document.getElementById('btnResearchSelected').addEventListener('click', bulkResearch);
 document.getElementById('btnSendTilbud').addEventListener('click', openSendModal);
 document.getElementById('modalCancel').addEventListener('click', closeSendModal);
 document.getElementById('modalSend').addEventListener('click', sendOffer);
@@ -364,6 +406,7 @@ setDefaultDates();
 populateFilterOptions();
 loadLeads();
 
-window.researchLead = researchLead;
-window.genEmail     = genEmail;
-window.updateStatus = updateStatus;
+window.researchLead  = researchLead;
+window.genEmail      = genEmail;
+window.updateStatus  = updateStatus;
+window.bulkResearch  = bulkResearch;
