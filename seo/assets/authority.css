@@ -1,0 +1,41 @@
+:root {
+  --bg: #07080e;
+  --bg-card: #0e1018;
+  --bg-soft: #131827;
+  --border: #1a1f30;
+  --text: #e6e8f2;
+  --muted: #8b93a8;
+  --accent: #f47c20;
+  --accent-h: #ff9040;
+  --display: 'Space Grotesk', 'Inter', sans-serif;
+  --sans: 'Inter', system-ui, sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.65}
+a{color:inherit}
+.container{width:min(1120px,92vw);margin:0 auto}
+.site-header{position:sticky;top:0;z-index:30;background:rgba(7,8,14,.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+.site-header .inner{display:flex;justify-content:space-between;align-items:center;padding:14px 0;gap:18px}
+.brand{font-family:var(--display);font-weight:700;text-decoration:none}
+.brand span{color:var(--accent)}
+.nav{display:flex;gap:10px;flex-wrap:wrap}
+.nav a{padding:7px 10px;border:1px solid var(--border);border-radius:999px;text-decoration:none;font-size:.88rem;color:var(--muted)}
+.nav a:hover,.nav a.active{color:var(--text);border-color:var(--accent)}
+.hero{padding:88px 0 48px}
+.eyebrow{color:var(--accent);letter-spacing:.12em;text-transform:uppercase;font-size:.78rem;font-weight:700}
+h1,h2,h3{font-family:var(--display);line-height:1.2;letter-spacing:-.02em}
+h1{font-size:clamp(2rem,5vw,3.5rem);margin:14px 0}
+.lead{max-width:760px;color:var(--muted)}
+.grid{display:grid;gap:16px}
+.cols-3{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:20px}
+.card h3{margin:0 0 8px}
+.card p{margin:0;color:var(--muted)}
+section{padding:28px 0}
+.btn{display:inline-block;background:var(--accent);color:#fff;padding:11px 18px;border-radius:8px;font-weight:600;text-decoration:none}
+.btn:hover{background:var(--accent-h)}
+.cluster{padding:36px 0}
+.cluster ul{list-style:none;padding:0;margin:0;display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.cluster a{text-decoration:none;border:1px solid var(--border);display:block;padding:14px;border-radius:10px;background:var(--bg-soft)}
+.cluster a:hover{border-color:var(--accent)}
+footer{border-top:1px solid var(--border);padding:32px 0;color:var(--muted)}
