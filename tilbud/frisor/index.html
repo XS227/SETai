@@ -10,7 +10,9 @@
 <body>
 
 <nav class="nav">
-  <span class="brand">SETAEI<span class="tag">— Nettside & booking</span></span>
+  <a href="https://setai.no" class="brand-link" aria-label="SETAEI">
+    <img src="/assets/brand/setaei-logo-minimal.png" alt="SETAEI" class="brand-logo" />
+  </a>
   <a class="nav-cta" href="#kontakt" id="navCta">Få et tilbud</a>
 </nav>
 
@@ -49,6 +51,44 @@
       <p>Kjøp og innløsning rett fra nettsiden — perfekt for jul, fødselsdager og morsdag.</p>
     </div>
   </div>
+</section>
+
+<section class="section section-center">
+  <h2>Mer enn bare en nettside — en komplett bookingplattform</h2>
+  <p class="lede">Vi gir salonger og skjønnhetspleie alt de trenger for å håndtere bookinger, kunder og påminnelser på ett sted. Færre telefoner, færre no-shows, bedre flyt.</p>
+  <div class="grid-3" style="margin-top:8px">
+    <div class="benefit-card">
+      <div class="icon">📋</div>
+      <h3>Booking-kalender per stylist</h3>
+      <p>Hver stylist sin egen kolonne, full oversikt over uka — pauser, behandlingstid og dobbeltbooking unngås automatisk.</p>
+    </div>
+    <div class="benefit-card">
+      <div class="icon">👥</div>
+      <h3>Kundekartotek</h3>
+      <p>Historikk på hver kunde — farge, klipp, preferanser og siste besøk. Bedre service, lojale kunder.</p>
+    </div>
+    <div class="benefit-card">
+      <div class="icon">🔔</div>
+      <h3>SMS- og e-postpåminnelser</h3>
+      <p>Påminnelse 24 timer før timen — dramatisk færre no-shows og forsinkede avtaler.</p>
+    </div>
+    <div class="benefit-card">
+      <div class="icon">📊</div>
+      <h3>Kapasitet i sanntid</h3>
+      <p>Se ledig tid per stylist og per tjeneste — kundene booker bare det dere har plass til.</p>
+    </div>
+    <div class="benefit-card">
+      <div class="icon">🤖</div>
+      <h3>AI-assistent (valgfritt)</h3>
+      <p>La en AI svare 24/7 på spørsmål om priser, ventetid og behandlinger — frigjør telefon-tiden.</p>
+    </div>
+    <div class="benefit-card">
+      <div class="icon">📈</div>
+      <h3>Skaler enkelt</h3>
+      <p>Fra én salong til flere lokasjoner — samme plattform, samme rapportering. Klart for vekst.</p>
+    </div>
+  </div>
+  <p style="font-size:13px;color:var(--muted);margin-top:24px">Booking-kostnaden er fleksibel og brukstilpasset — du betaler i takt med faktisk volum.</p>
 </section>
 
 <section class="section" style="background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line);max-width:none">
@@ -94,8 +134,9 @@
         <input id="f-email" name="email" type="email" required /></div>
       <div><label for="f-message">Kort om salongen (valgfritt)</label>
         <textarea id="f-message" name="message" placeholder="Hvor mange stylister? Har dere allerede booking-system?"></textarea></div>
+      <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp" />
       <button type="submit">Send forespørsel</button>
-      <div id="formStatus"></div>
+      <div id="formStatus" role="status" aria-live="polite"></div>
     </form>
   </div>
 </section>
@@ -109,20 +150,7 @@
   <div class="footer-org">© SETAEI</div>
 </footer>
 
-<script>
-  const TRACK = '/lead-agent/api/landing-track.php';
-  const PAGE  = 'frisor';
-  const track = (event) => fetch(TRACK, {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({page:PAGE, event})}).catch(() => {});
-
-  track('visit');
-  document.getElementById('ctaBtn').addEventListener('click', () => track('cta_click'));
-  document.getElementById('navCta').addEventListener('click', () => track('cta_click'));
-  document.getElementById('contactForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    track('form_submit');
-    document.getElementById('formStatus').innerHTML = '<span style="color:var(--success);font-weight:600">Takk! Vi tar kontakt innen 24 timer.</span>';
-    this.querySelectorAll('input,textarea,button').forEach(el => el.disabled = true);
-  });
-</script>
+<script>window.LANDING_PAGE='frisor';</script>
+<script src="/tilbud/landing.js" defer></script>
 </body>
 </html>

@@ -35,6 +35,11 @@
       <h3>E-postutkast</h3>
       <button class="secondary btn-sm" onclick="loadDrafts()">Oppdater</button>
     </div>
+    <div class="filter-bar" id="draftsFilterBar" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:12px">
+      <button class="primary btn-sm" id="btnFilterReady" onclick="setDraftFilter('ready')">Vis kun researched + e-post</button>
+      <button class="secondary btn-sm" id="btnFilterAll" onclick="setDraftFilter('all')">Vis alle</button>
+      <span id="draftFilterStatus" style="color:var(--muted);font-size:13px"></span>
+    </div>
     <div class="table-wrap">
       <table>
         <thead><tr>
@@ -59,6 +64,39 @@ const STATUS_CLASS  = { draft: 'status-new', approved: 'status-approved', sent: 
 
 let allDrafts = [];
 let currentDraft = null;
+let draftFilter = 'all'; // 'all' | 'ready' (researched AND has email)
+
+function isResearched(r) {
+  if (!r) return false;
+  if (r.researched_at && String(r.researched_at).trim() !== '') return true;
+  var rs = (r.research_status || '').toString();
+  // Anything non-empty other than 'no_contact' counts as researched.
+  return rs !== '' && rs !== 'no_contact';
+}
+function hasEmail(r) {
+  return !!(r && r.contact_email && r.contact_email.includes('@'));
+}
+function visibleDrafts() {
+  if (draftFilter === 'ready') return allDrafts.filter(r => isResearched(r) && hasEmail(r));
+  return allDrafts;
+}
+function updateFilterStatus() {
+  var n = visibleDrafts().length;
+  var total = allDrafts.length;
+  var label = draftFilter === 'ready'
+    ? `${n} av ${total} utkast (researched + e-post)`
+    : `${total} utkast`;
+  var el = document.getElementById('draftFilterStatus');
+  if (el) el.textContent = label;
+  var rdy = document.getElementById('btnFilterReady');
+  var all = document.getElementById('btnFilterAll');
+  if (rdy) { rdy.className = draftFilter === 'ready' ? 'primary btn-sm' : 'secondary btn-sm'; }
+  if (all) { all.className = draftFilter === 'all'   ? 'primary btn-sm' : 'secondary btn-sm'; }
+}
+function setDraftFilter(mode) {
+  draftFilter = (mode === 'ready') ? 'ready' : 'all';
+  renderDraftRows();
+}
 
 function closeDraftPanel() {
   document.getElementById('draftPanel').classList.remove('open');
@@ -207,11 +245,17 @@ async function deleteDraft(id) {
 
 function renderDraftRows() {
   const tbody = document.getElementById('draftRows');
+  const list = visibleDrafts();
+  updateFilterStatus();
   if (!allDrafts.length) {
     tbody.innerHTML = '<tr><td colspan="7" style="color:var(--muted)">Ingen utkast ennå.</td></tr>';
     return;
   }
-  tbody.innerHTML = allDrafts.map(r => `<tr style="cursor:pointer" onclick="openDraftPanel(allDrafts.find(d=>d.id===${r.id}))">
+  if (!list.length) {
+    tbody.innerHTML = '<tr><td colspan="7" style="color:var(--muted)">Ingen utkast matcher filteret. <a href="#" onclick="setDraftFilter(\'all\');return false">Vis alle</a></td></tr>';
+    return;
+  }
+  tbody.innerHTML = list.map(r => `<tr style="cursor:pointer" onclick="openDraftPanel(allDrafts.find(d=>d.id===${r.id}))">
     <td style="font-weight:600">${escHtml(r.company_name || '—')}</td>
     <td>${escHtml(r.city || '—')}</td>
     <td>${r.contact_email ? `<span class="badge email-yes">${escHtml(r.contact_email)}</span>` : '<span class="badge email-no">Ingen e-post</span>'}</td>
@@ -245,6 +289,8 @@ window.saveDraft = saveDraft;
 window.sendDraft = sendDraft;
 window.deleteDraft = deleteDraft;
 window.copyDraft = copyDraft;
+window.setDraftFilter = setDraftFilter;
+window.loadDrafts = loadDrafts;
 </script>
 </body>
 </html>

@@ -36,6 +36,20 @@ function db(): PDO {
     created_at TEXT DEFAULT CURRENT_TIMESTAMP
   )");
 
+  $pdo->exec("CREATE TABLE IF NOT EXISTS landing_contacts (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    page TEXT NOT NULL,
+    name TEXT,
+    email TEXT NOT NULL,
+    phone TEXT,
+    message TEXT,
+    ip TEXT,
+    user_agent TEXT,
+    send_status TEXT NOT NULL DEFAULT 'pending',
+    last_error TEXT,
+    created_at TEXT DEFAULT CURRENT_TIMESTAMP
+  )");
+
   return $pdo;
 }
 

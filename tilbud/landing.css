@@ -30,9 +30,13 @@ a { color: var(--primary); text-decoration: none; }
   backdrop-filter: blur(10px); border-bottom: 1px solid var(--line);
   position: sticky; top: 0; z-index: 50;
 }
+.nav .brand-link { display: inline-flex; align-items: center; text-decoration: none; }
+.nav .brand-logo { height: 30px; width: auto; display: block; border: 0; }
 .nav .brand { font-weight: 800; font-size: 20px; letter-spacing: -0.4px; color: var(--ink); }
 .nav .brand .tag { color: var(--muted); font-weight: 500; font-size: 13px; margin-left: 6px; }
 .nav .nav-cta { font-weight: 600; font-size: 14px; padding: 9px 18px; background: var(--ink); color: #fff; border-radius: 8px; }
+/* Honeypot — hidden field bots fill in, real users don't see it */
+.form-wrap .hp { position: absolute; left: -9999px; top: -9999px; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
 
 /* Hero */
 .hero {

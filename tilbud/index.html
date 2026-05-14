@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Nettside, booking og digital vekst for små og mellomstore norske bedrifter — bilvask, frisør, restaurant og klinikk." />
+  <title>SETAEI Tilbud — Nettside, booking og digital vekst</title>
+  <link rel="stylesheet" href="/tilbud/landing.css" />
+</head>
+<body>
+
+<nav class="nav">
+  <a href="https://setai.no" class="brand-link" aria-label="SETAEI">
+    <img src="/assets/brand/setaei-logo-minimal.png" alt="SETAEI" class="brand-logo" />
+  </a>
+  <a class="nav-cta" href="#kontakt" id="navCta">Få et tilbud</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <span class="eyebrow">For små og mellomstore bedrifter</span>
+    <h1>Nettside, booking og digital vekst — bygget for din bransje</h1>
+    <p class="subhead">Vi lager moderne nettsider med online booking, automatiske påminnelser og kundekartotek — ferdig på 5 virkedager. Velg bransjen din under, eller send en forespørsel direkte.</p>
+    <div class="cta-row">
+      <a class="cta-btn" href="#bransjer" id="ctaBtn">Velg bransje</a>
+      <a class="cta-btn ghost" href="#kontakt">Generell forespørsel</a>
+    </div>
+    <div class="trust-row">
+      <span>Online booking</span><span>SMS-påminnelser</span><span>Klar på 5 dager</span><span>Ingen binding</span>
+    </div>
+  </div>
+</section>
+
+<section class="section section-center" id="bransjer">
+  <h2>Tilpasset din bransje</h2>
+  <p class="lede">Velg bransjen som passer best — vi har optimerte pakker, eksempler og priser for hver.</p>
+  <div class="grid-3" style="margin-top:8px">
+    <a class="benefit-card" href="/tilbud/bilvask" style="text-decoration:none;color:inherit;display:block">
+      <div class="icon">🚗</div>
+      <h3>Bilvask</h3>
+      <p>Online booking, Vipps-betaling, kapasitetsplanlegging per vaskeplass og automatiske påminnelser.</p>
+      <span style="color:var(--primary);font-weight:600;font-size:13px">Se pakken →</span>
+    </a>
+    <a class="benefit-card" href="/tilbud/frisor" style="text-decoration:none;color:inherit;display:block">
+      <div class="icon">💇</div>
+      <h3>Frisør &amp; salong</h3>
+      <p>Booking per stylist, SMS-påminnelser, digitale gavekort og kundekartotek.</p>
+      <span style="color:var(--primary);font-weight:600;font-size:13px">Se pakken →</span>
+    </a>
+    <a class="benefit-card" href="/tilbud/restaurant" style="text-decoration:none;color:inherit;display:block">
+      <div class="icon">🍽️</div>
+      <h3>Restaurant</h3>
+      <p>Digital meny, bordreservasjon, event- og cateringforespørsler og Google Maps-synlighet.</p>
+      <span style="color:var(--primary);font-weight:600;font-size:13px">Se pakken →</span>
+    </a>
+    <a class="benefit-card" href="/tilbud/klinikk" style="text-decoration:none;color:inherit;display:block">
+      <div class="icon">🩺</div>
+      <h3>Klinikk &amp; helse</h3>
+      <p>GDPR-sikker timebestilling, strukturert intake-skjema og automatiske påminnelser.</p>
+      <span style="color:var(--primary);font-weight:600;font-size:13px">Se pakken →</span>
+    </a>
+  </div>
+</section>
+
+<section class="section section-center" id="kontakt">
+  <h2>Generell forespørsel</h2>
+  <p class="lede">Driver du en annen bransje, eller vil du bare ha en uforpliktende prat? Fyll inn skjemaet — vi tar kontakt innen 24 timer.</p>
+  <div class="form-wrap">
+    <form id="contactForm">
+      <div><label for="f-name">Navn / firmanavn</label>
+        <input id="f-name" name="name" type="text" required /></div>
+      <div><label for="f-phone">Telefon</label>
+        <input id="f-phone" name="phone" type="tel" /></div>
+      <div><label for="f-email">E-post</label>
+        <input id="f-email" name="email" type="email" required /></div>
+      <div><label for="f-message">Hva trenger dere? (valgfritt)</label>
+        <textarea id="f-message" name="message" placeholder="Kort om bedriften og hva dere ser etter…"></textarea></div>
+      <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp" />
+      <button type="submit">Send forespørsel</button>
+      <div id="formStatus" role="status" aria-live="polite"></div>
+    </form>
+  </div>
+</section>
+
+<footer class="footer">
+  <div><strong>SETAEI</strong> &mdash; Nettside, booking og digital vekst</div>
+  <div style="margin-top:6px">
+    <a href="https://setai.no">setai.no</a> &middot;
+    <a href="mailto:khabat@setai.no">khabat@setai.no</a>
+  </div>
+  <div class="footer-org">© SETAEI</div>
+</footer>
+
+<script>window.LANDING_PAGE='tilbud';</script>
+<script src="/tilbud/landing.js" defer></script>
+</body>
+</html>

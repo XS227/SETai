@@ -8,6 +8,8 @@
  * - ai_industry_match($industry): returns [offer_type, cta_url, industry_pitch] — used by both AI and template paths
  */
 
+require_once __DIR__ . '/_mail_config.php';
+require_once __DIR__ . '/_public_url.php';
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use Anthropic\Client;
@@ -47,18 +49,18 @@ function ai_client(): ?Client {
 function ai_industry_match(string $industry): array {
     $ind = mb_strtolower($industry, 'UTF-8');
     if (preg_match('/bilvask|bilpleie|bilstell|bilrens/u', $ind)) {
-        return ['bilvask', 'https://setai.no/tilbud/bilvask', 'online timebestilling, Vipps-betaling og prisliste på nett'];
+        return ['bilvask', public_url('/tilbud/bilvask'), 'online timebestilling, Vipps-betaling og prisliste på nett'];
     }
     if (preg_match('/frisør|frisering|barbering|salong|skjønnhetspleie|hudpleie|negl|vippe/u', $ind)) {
-        return ['frisor', 'https://setai.no/tilbud/frisor', 'online booking, SMS-påminnelser til kunder og digitalt gavekort'];
+        return ['frisor', public_url('/tilbud/frisor'), 'online booking, SMS-påminnelser til kunder og digitalt gavekort'];
     }
     if (preg_match('/klinikk|lege|tannlege|tannhelse|fysioter|kiroprak|optiker|psykolog|terapeut|rehabili|helsesent/u', $ind)) {
-        return ['klinikk', 'https://setai.no/tilbud/klinikk', 'digital timebestilling 24/7, automatiske påminnelser og GDPR-sikker drift'];
+        return ['klinikk', public_url('/tilbud/klinikk'), 'digital timebestilling 24/7, automatiske påminnelser og GDPR-sikker drift'];
     }
     if (preg_match('/restaurant|kafé|kafe|bar\b|pub|pizza|sushi|thai|takeaway|matservering|serveringssted|spiserest/u', $ind)) {
-        return ['restaurant', 'https://setai.no/tilbud/restaurant', 'digital meny, bordreservasjon og Google Maps-integrasjon'];
+        return ['restaurant', public_url('/tilbud/restaurant'), 'digital meny, bordreservasjon og Google Maps-integrasjon'];
     }
-    return ['general', 'https://setai.no/tilbud', 'profesjonell nettside, Vipps-login, booking, SEO og mobiloptimalisering'];
+    return ['general', public_url('/tilbud'), 'profesjonell nettside, Vipps-login, booking, SEO og mobiloptimalisering'];
 }
 
 function ai_offer_system_prompt(): string {

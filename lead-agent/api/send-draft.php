@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/_db.php';
 require_once __DIR__ . '/_mail_config.php';
+require_once __DIR__ . '/_public_url.php';
 require_once __DIR__ . '/_email_template.php';
 require_once __DIR__ . '/../vendor/autoload.php';
 
@@ -45,9 +46,9 @@ $cta_link = $draft['cta_link'] ?: ($cta_map[$draft['offer_type']] ?? 'https://se
 $subject  = $draft['subject'];
 $message  = $draft['body'];
 
-$proto      = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
-$host       = $_SERVER['HTTP_HOST'] ?? 'localhost';
-$track_base = $proto . '://' . $host . '/lead-agent/api/track.php';
+$track_base = public_track_base();
+// Sanitize any CTA link that may have leaked the internal :8447 port.
+$cta_link = public_url($cta_link);
 
 // Create sent offer record
 $pdo->prepare('INSERT INTO sent_offers (subject, message, cta_link, recipient_count, sent_at) VALUES (?, ?, ?, 1, CURRENT_TIMESTAMP)')->execute([$subject, $message, $cta_link]);

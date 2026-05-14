@@ -10,7 +10,9 @@
 <body>
 
 <nav class="nav">
-  <span class="brand">SETAEI<span class="tag">— Nettside & booking</span></span>
+  <a href="https://setai.no" class="brand-link" aria-label="SETAEI">
+    <img src="/assets/brand/setaei-logo-minimal.png" alt="SETAEI" class="brand-logo" />
+  </a>
   <a class="nav-cta" href="#kontakt" id="navCta">Få et tilbud</a>
 </nav>
 
@@ -49,6 +51,44 @@
       <p>SMS og e-post 24 timer før timen — kraftig reduksjon i no-shows og avbestillinger på siste minutt.</p>
     </div>
   </div>
+</section>
+
+<section class="section section-center">
+  <h2>Mer enn bare en nettside — en komplett bookingplattform</h2>
+  <p class="lede">Vi gir klinikker alt de trenger for å håndtere timer, intake og kundekontakt på ett sted — GDPR-sikker fra dag én.</p>
+  <div class="grid-3" style="margin-top:8px">
+    <div class="benefit-card">
+      <div class="icon">📋</div>
+      <h3>Time-kalender per behandler</h3>
+      <p>Hver behandler sin egen rute, full oversikt over uka. Pauser, behandlingstid og dobbeltbooking unngås automatisk.</p>
+    </div>
+    <div class="benefit-card">
+      <div class="icon">📝</div>
+      <h3>Strukturert intake/forespørselsskjema</h3>
+      <p>Pasienten fyller ut relevante opplysninger på forhånd — dere stiller forberedt, sparer tid i konsultasjonen.</p>
+    </div>
+    <div class="benefit-card">
+      <div class="icon">🔔</div>
+      <h3>Automatiske påminnelser</h3>
+      <p>SMS og e-post 24 timer før timen — kraftig reduksjon i no-shows og avbestillinger på siste minutt.</p>
+    </div>
+    <div class="benefit-card">
+      <div class="icon">📊</div>
+      <h3>Kapasitet og ressurser</h3>
+      <p>Se ledig tid per behandler, rom og tjeneste — kundene booker bare det dere har plass til.</p>
+    </div>
+    <div class="benefit-card">
+      <div class="icon">🤖</div>
+      <h3>AI-assistent (valgfritt)</h3>
+      <p>AI svarer 24/7 på vanlige spørsmål: priser, ventetid, åpningstider, prosedyrer — frigjør resepsjonen.</p>
+    </div>
+    <div class="benefit-card">
+      <div class="icon">📈</div>
+      <h3>Skaler enkelt</h3>
+      <p>Fra én klinikk til flere lokasjoner — samme plattform, samme GDPR-oppsett, samme rapportering.</p>
+    </div>
+  </div>
+  <p style="font-size:13px;color:var(--muted);margin-top:24px">Booking-kostnaden er fleksibel og brukstilpasset — du betaler i takt med faktisk volum.</p>
 </section>
 
 <section class="section" style="background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line);max-width:none">
@@ -94,8 +134,9 @@
         <input id="f-email" name="email" type="email" required /></div>
       <div><label for="f-message">Kort om klinikken (valgfritt)</label>
         <textarea id="f-message" name="message" placeholder="Hva slags klinikk? Hvor mange behandlere? Har dere booking-system i dag?"></textarea></div>
+      <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp" />
       <button type="submit">Send forespørsel</button>
-      <div id="formStatus"></div>
+      <div id="formStatus" role="status" aria-live="polite"></div>
     </form>
   </div>
 </section>
@@ -109,20 +150,7 @@
   <div class="footer-org">© SETAEI</div>
 </footer>
 
-<script>
-  const TRACK = '/lead-agent/api/landing-track.php';
-  const PAGE  = 'klinikk';
-  const track = (event) => fetch(TRACK, {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({page:PAGE, event})}).catch(() => {});
-
-  track('visit');
-  document.getElementById('ctaBtn').addEventListener('click', () => track('cta_click'));
-  document.getElementById('navCta').addEventListener('click', () => track('cta_click'));
-  document.getElementById('contactForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    track('form_submit');
-    document.getElementById('formStatus').innerHTML = '<span style="color:var(--success);font-weight:600">Takk! Vi tar kontakt innen 24 timer.</span>';
-    this.querySelectorAll('input,textarea,button').forEach(el => el.disabled = true);
-  });
-</script>
+<script>window.LANDING_PAGE='klinikk';</script>
+<script src="/tilbud/landing.js" defer></script>
 </body>
 </html>

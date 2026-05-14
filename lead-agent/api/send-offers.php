@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/_db.php';
 require_once __DIR__ . '/_mail_config.php';
+require_once __DIR__ . '/_public_url.php';
 require_once __DIR__ . '/_email_template.php';
 require_once __DIR__ . '/../vendor/autoload.php';
 
@@ -49,9 +50,8 @@ if ($per_hour >= 100) {
     exit;
 }
 
-$proto      = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
-$host       = $_SERVER['HTTP_HOST'] ?? 'localhost';
-$track_base = $proto . '://' . $host . '/lead-agent/api/track.php';
+$track_base = public_track_base();
+$cta_link   = $cta_link ? public_url($cta_link) : $cta_link;
 
 $pdo->prepare('INSERT INTO sent_offers (subject, message, cta_link, recipient_count, sent_at) VALUES (?, ?, ?, 0, CURRENT_TIMESTAMP)')->execute([$subject, $message, $cta_link]);
 $offer_id = (int)$pdo->lastInsertId();

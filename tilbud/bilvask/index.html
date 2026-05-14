@@ -10,7 +10,9 @@
 <body>
 
 <nav class="nav">
-  <span class="brand">SETAEI<span class="tag">— Nettside & booking</span></span>
+  <a href="https://setai.no" class="brand-link" aria-label="SETAEI">
+    <img src="/assets/brand/setaei-logo-minimal.png" alt="SETAEI" class="brand-logo" />
+  </a>
   <a class="nav-cta" href="#kontakt" id="navCta">Få et tilbud</a>
 </nav>
 
@@ -49,6 +51,44 @@
       <p>Vi optimerer Google-profilen din slik at kunder som søker «bilvask i [byen din]» faktisk finner deg.</p>
     </div>
   </div>
+</section>
+
+<section class="section section-center">
+  <h2>Mer enn bare en nettside — en komplett bookingplattform</h2>
+  <p class="lede">Vi gir bilvask-bedrifter alt de trenger for å håndtere bestillinger, kapasitet og kunder på ett sted. Færre telefoner, færre dobbeltbookinger, bedre flyt.</p>
+  <div class="grid-3" style="margin-top:8px">
+    <div class="benefit-card">
+      <div class="icon">📋</div>
+      <h3>Booking-kalender for boks/vaskeplass</h3>
+      <p>Full oversikt over hver vaskeplass og hver dag — vask, polish og detailing planlagt uten konflikter.</p>
+    </div>
+    <div class="benefit-card">
+      <div class="icon">👥</div>
+      <h3>Kundekartotek</h3>
+      <p>Historikk på hver bil og kunde — fast-kunder, abonnement og oppfølging samlet ett sted.</p>
+    </div>
+    <div class="benefit-card">
+      <div class="icon">🔔</div>
+      <h3>Automatiske SMS-påminnelser</h3>
+      <p>Påminnelse 24 timer og 1 time før timen — kraftig reduksjon i no-shows og glemte avtaler.</p>
+    </div>
+    <div class="benefit-card">
+      <div class="icon">📊</div>
+      <h3>Kapasitet i sanntid</h3>
+      <p>Se ledige plasser per dag, time og tjeneste — kundene booker bare det dere faktisk har kapasitet til.</p>
+    </div>
+    <div class="benefit-card">
+      <div class="icon">🤖</div>
+      <h3>AI-assistent (valgfritt)</h3>
+      <p>La en AI svare 24/7 på spørsmål om priser, åpningstider, pakker — frigjør telefon-tiden.</p>
+    </div>
+    <div class="benefit-card">
+      <div class="icon">📈</div>
+      <h3>Skaler enkelt</h3>
+      <p>Fra ett anlegg til flere — samme plattform, samme rapportering. Klart for vekst uten reinstallasjon.</p>
+    </div>
+  </div>
+  <p style="font-size:13px;color:var(--muted);margin-top:24px">Booking-kostnaden er fleksibel og brukstilpasset — du betaler i takt med faktisk volum.</p>
 </section>
 
 <section class="section" style="background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line);max-width:none">
@@ -94,8 +134,9 @@
         <input id="f-email" name="email" type="email" required /></div>
       <div><label for="f-message">Kort om bedriften (valgfritt)</label>
         <textarea id="f-message" name="message" placeholder="Hva slags vask tilbyr dere? Har dere allerede nettside?"></textarea></div>
+      <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp" />
       <button type="submit">Send forespørsel</button>
-      <div id="formStatus"></div>
+      <div id="formStatus" role="status" aria-live="polite"></div>
     </form>
   </div>
 </section>
@@ -109,20 +150,7 @@
   <div class="footer-org">© SETAEI</div>
 </footer>
 
-<script>
-  const TRACK = '/lead-agent/api/landing-track.php';
-  const PAGE  = 'bilvask';
-  const track = (event) => fetch(TRACK, {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({page:PAGE, event})}).catch(() => {});
-
-  track('visit');
-  document.getElementById('ctaBtn').addEventListener('click', () => track('cta_click'));
-  document.getElementById('navCta').addEventListener('click', () => track('cta_click'));
-  document.getElementById('contactForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    track('form_submit');
-    document.getElementById('formStatus').innerHTML = '<span style="color:var(--success);font-weight:600">Takk! Vi tar kontakt innen 24 timer.</span>';
-    this.querySelectorAll('input,textarea,button').forEach(el => el.disabled = true);
-  });
-</script>
+<script>window.LANDING_PAGE='bilvask';</script>
+<script src="/tilbud/landing.js" defer></script>
 </body>
 </html>
