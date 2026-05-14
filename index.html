@@ -106,8 +106,14 @@
     .logo {
       font-family: var(--display); font-size: 17px; font-weight: 700;
       letter-spacing: .1em; color: var(--text);
+      display: inline-flex; align-items: center;
     }
     .logo em { font-style: normal; color: var(--accent); }
+    .logo img {
+      display: block; border: 0;
+      height: 44px; width: auto; max-height: 44px;
+    }
+    #nav.scrolled .logo img { height: 36px; max-height: 36px; }
 
     .nav-links { display: flex; gap: 28px; list-style: none; }
     .nav-links a {
@@ -391,12 +397,94 @@
     .foot-row { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; }
     .foot-logo { font-family: var(--display); font-size: 15px; font-weight: 700; letter-spacing: .1em; color: var(--muted); }
     .foot-logo em { font-style: normal; color: var(--accent); }
+    .foot-logo img { display: block; border: 0; height: 36px; width: auto; max-height: 36px; opacity: .75; }
     .foot-copy { font-size: 13px; color: var(--dim); }
     .foot-loc  { font-size: 13px; color: var(--muted); }
 
     /* ── ANIMATIONS ─────────────────────────────── */
     .fu { opacity: 0; transform: translateY(22px); transition: opacity .6s ease, transform .6s ease; }
     .fu.on { opacity: 1; transform: none; }
+
+    /* ── CONTACT MODAL (slide-up) ─────────────────────────────── */
+    .contact-overlay {
+      position: fixed; inset: 0; z-index: 220;
+      background: rgba(0,0,0,0.55);
+      backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+      opacity: 0; visibility: hidden; transition: opacity .25s ease;
+    }
+    .contact-overlay.open { opacity: 1; visibility: visible; }
+    .contact-sheet {
+      position: fixed; left: 50%; bottom: 0; z-index: 230;
+      width: 100%; max-width: 560px;
+      transform: translate(-50%, 100%);
+      transition: transform .35s cubic-bezier(.2,.85,.3,1);
+      background: #0e1018;
+      border: 1px solid var(--border);
+      border-bottom: none;
+      border-radius: 18px 18px 0 0;
+      box-shadow: 0 -20px 60px rgba(0,0,0,.45);
+      padding: 26px 28px 30px;
+      max-height: 92vh; overflow: auto;
+    }
+    .contact-sheet.open { transform: translate(-50%, 0); }
+    .contact-sheet h3 {
+      font-family: var(--display); font-size: 22px; font-weight: 700;
+      letter-spacing: -0.4px; color: var(--text); margin-bottom: 6px;
+    }
+    .contact-sheet .sub { color: var(--muted); font-size: 14px; margin-bottom: 22px; }
+    .contact-close {
+      position: absolute; top: 16px; right: 16px;
+      background: transparent; border: 1px solid var(--border);
+      color: var(--muted); width: 32px; height: 32px; border-radius: 8px;
+      cursor: pointer; font-size: 18px; line-height: 1;
+      transition: border-color .2s, color .2s;
+    }
+    .contact-close:hover { border-color: var(--accent); color: var(--accent); }
+    .contact-sheet .grab {
+      width: 40px; height: 4px; background: var(--border); border-radius: 2px;
+      margin: -10px auto 18px;
+    }
+    .contact-form { display: grid; gap: 12px; }
+    .contact-form label {
+      font-size: 12px; color: var(--muted); font-weight: 500;
+      letter-spacing: 0.02em;
+    }
+    .contact-form input, .contact-form textarea {
+      width: 100%;
+      background: #07080e;
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 14px;
+      font-size: 14px; font-family: inherit;
+      transition: border-color .2s, box-shadow .2s, background .2s;
+    }
+    .contact-form input:focus, .contact-form textarea:focus {
+      outline: 0; border-color: var(--accent); background: #0c0e16;
+      box-shadow: 0 0 0 3px rgba(244,124,32,0.12);
+    }
+    .contact-form textarea { resize: vertical; min-height: 110px; }
+    .contact-form .hp {
+      position: absolute; left: -9999px; top: -9999px;
+      width: 1px; height: 1px; opacity: 0; pointer-events: none;
+    }
+    .contact-form .submit {
+      background: var(--accent); color: #fff;
+      border: 0; border-radius: 10px; padding: 14px;
+      font-size: 14px; font-weight: 600; cursor: pointer;
+      transition: background .2s, transform .15s;
+      margin-top: 6px;
+    }
+    .contact-form .submit:hover { background: var(--accent-h); transform: translateY(-1px); }
+    .contact-form .submit:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
+    .contact-form .status { font-size: 13px; margin-top: 4px; min-height: 18px; }
+    .contact-form .status.ok    { color: var(--teal); }
+    .contact-form .status.err   { color: #ff7a7a; }
+    .contact-form .note { font-size: 11px; color: var(--dim); margin-top: 8px; }
+    @media (max-width: 540px) {
+      .contact-sheet { max-width: 100%; padding: 22px 20px 26px; }
+      .contact-sheet h3 { font-size: 19px; }
+    }
 
     /* ── RESPONSIVE ─────────────────────────────── */
     @media (max-width: 880px) {
@@ -411,6 +499,9 @@
       .services-grid  { grid-template-columns: 1fr 1fr; }
     }
     @media (max-width: 540px) {
+      .logo img      { height: 36px; max-height: 36px; }
+      #nav.scrolled .logo img { height: 30px; max-height: 30px; }
+      .foot-logo img { height: 30px; max-height: 30px; }
       .roles-grid    { grid-template-columns: 1fr; }
       .services-grid { grid-template-columns: 1fr; }
       .foot-row      { flex-direction: column; text-align: center; }
@@ -423,14 +514,14 @@
 <nav id="nav">
   <div class="container">
     <div class="nav-row">
-      <a href="#" class="logo" aria-label="SETAEI"><img src="/assets/brand/setaei-logo.png" alt="SETAEI" width="100" height="22" style="display:block;height:22px;width:auto;border:0" /></a>
+      <a href="#" class="logo" aria-label="SETAEI"><img src="/assets/brand/setaei-logo.png" alt="SETAEI" width="200" height="44" /></a>
       <ul class="nav-links">
         <li><a href="#about">About</a></li>
         <li><a href="#projects">Projects</a></li>
         <li><a href="#services">Services</a></li>
         <li><a href="#research">Research</a></li>
       </ul>
-      <a href="#contact" class="nav-btn">Get in touch</a>
+      <a href="#contact" class="nav-btn js-open-contact">Get in touch</a>
       <div class="burger" id="burger" aria-label="Open menu" role="button" tabindex="0">
         <span></span><span></span><span></span>
       </div>
@@ -445,7 +536,7 @@
   <a href="#projects" onclick="closeMobileNav()">Projects</a>
   <a href="#services" onclick="closeMobileNav()">Services</a>
   <a href="#research" onclick="closeMobileNav()">Research</a>
-  <a href="#contact"  onclick="closeMobileNav()">Get in touch</a>
+  <a href="#contact" class="js-open-contact" onclick="closeMobileNav()">Get in touch</a>
 </div>
 
 <!-- ── HERO ────────────────────────────────────────────── -->
@@ -472,7 +563,7 @@
         </div>
         <div class="cta-row">
           <a href="#projects" class="btn-solid">View projects →</a>
-          <a href="#contact"  class="btn-outline">Work together</a>
+          <a href="#contact" class="btn-outline js-open-contact">Work together</a>
         </div>
       </div>
 
@@ -535,7 +626,7 @@
         <div class="role-card">
           <div class="role-ico">🚀</div>
           <div class="role-name">Founder</div>
-          <div class="role-org">SETAEI / XS22 STAEE</div>
+          <div class="role-org">SETAEI</div>
           <p class="role-desc">Independent creative technology agency helping businesses build, automate and scale online.</p>
         </div>
         <div class="role-card">
@@ -597,7 +688,7 @@
           <span class="tag b">Prototype</span>
           <span class="tag">Patent path</span>
         </div>
-        <a href="#" class="p-link">Open AirlockCap →</a>
+        <a href="https://airlockcap.setaei.com/" class="p-link" target="_blank" rel="noopener">Open AirlockCap →</a>
       </article>
 
       <article class="project-card fu" style="transition-delay:.16s">
@@ -613,7 +704,7 @@
           <span class="tag b">Web3</span>
           <span class="tag">Game</span>
         </div>
-        <a href="#" class="p-link">Open game →</a>
+        <a href="https://shahnameh.setaei.com/" class="p-link" target="_blank" rel="noopener">Open Shahnameh →</a>
       </article>
 
       <article class="project-card fu" style="transition-delay:.24s">
@@ -629,7 +720,7 @@
           <span class="tag b">Digital product</span>
           <span class="tag t">SEO</span>
         </div>
-        <a href="https://tall.setaei.com" class="p-link" target="_blank" rel="noopener">Open Numerologist →</a>
+        <a href="https://numerologist.setai.no/P/" class="p-link" target="_blank" rel="noopener">Open Numerologist →</a>
       </article>
 
     </div>
@@ -736,7 +827,7 @@
       <h2 class="cta-title">Let's build something<br>that actually scales.</h2>
       <p class="cta-desc">For AI systems, SaaS MVPs, premium websites, technical partnerships, research collaboration or investor conversations.</p>
       <div class="cta-row" style="justify-content:center">
-        <a href="mailto:khabat@setaei.com" class="btn-solid">Get in touch →</a>
+        <a href="#" class="btn-solid js-open-contact">Get in touch →</a>
         <a href="#projects" class="btn-outline">View work</a>
       </div>
       <p class="cta-note">Founder · CTO · Author · Researcher · Oslo, Norway</p>
@@ -744,11 +835,47 @@
   </div>
 </section>
 
+<!-- ── CONTACT MODAL (slide-up) ──────────────────────── -->
+<div class="contact-overlay" id="contactOverlay" aria-hidden="true"></div>
+<aside class="contact-sheet" id="contactSheet" role="dialog" aria-modal="true" aria-labelledby="contactTitle" aria-hidden="true">
+  <span class="grab" aria-hidden="true"></span>
+  <button class="contact-close" id="contactClose" aria-label="Close">&times;</button>
+  <h3 id="contactTitle">Get in touch</h3>
+  <p class="sub">Tell us what you're building — we'll get back to you within 24 hours.</p>
+  <form class="contact-form" id="contactForm" novalidate>
+    <input type="hidden" name="source" value="setai.no homepage" />
+    <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp" />
+    <div>
+      <label for="cf-name">Name *</label>
+      <input id="cf-name" name="name" type="text" required autocomplete="name" />
+    </div>
+    <div>
+      <label for="cf-company">Company</label>
+      <input id="cf-company" name="company" type="text" autocomplete="organization" />
+    </div>
+    <div>
+      <label for="cf-email">Email *</label>
+      <input id="cf-email" name="email" type="email" required autocomplete="email" />
+    </div>
+    <div>
+      <label for="cf-phone">Phone (optional)</label>
+      <input id="cf-phone" name="phone" type="tel" autocomplete="tel" />
+    </div>
+    <div>
+      <label for="cf-message">What do you need? *</label>
+      <textarea id="cf-message" name="message" required rows="4" placeholder="A few sentences about the project, timing, and how we can help."></textarea>
+    </div>
+    <button type="submit" class="submit" id="contactSubmit">Send message</button>
+    <div class="status" id="contactStatus" role="status" aria-live="polite"></div>
+    <p class="note">By submitting, you confirm we may contact you about your inquiry.</p>
+  </form>
+</aside>
+
 <!-- ── FOOTER ──────────────────────────────────────────── -->
 <footer>
   <div class="container">
     <div class="foot-row">
-      <div class="foot-logo"><img src="/assets/brand/setaei-logo.png" alt="SETAEI" width="80" height="18" style="display:block;height:18px;width:auto;border:0;opacity:.7" /></div>
+      <div class="foot-logo"><img src="/assets/brand/setaei-logo.png" alt="SETAEI" width="160" height="36" /></div>
       <div class="foot-copy">© 2025 SETAEI · Khabat Setaei</div>
       <div class="foot-loc">Oslo, Norway</div>
     </div>
@@ -778,6 +905,91 @@
   // keyboard burger
   document.getElementById('burger').addEventListener('keydown', e => {
     if (e.key === 'Enter' || e.key === ' ') mobileNav.classList.add('open');
+  });
+
+  // ── contact modal ──────────────────────────────────────────
+  const contactOverlay = document.getElementById('contactOverlay');
+  const contactSheet   = document.getElementById('contactSheet');
+  const contactForm    = document.getElementById('contactForm');
+  const contactStatus  = document.getElementById('contactStatus');
+  const contactSubmit  = document.getElementById('contactSubmit');
+
+  function openContact() {
+    contactOverlay.classList.add('open');
+    contactSheet.classList.add('open');
+    contactOverlay.setAttribute('aria-hidden', 'false');
+    contactSheet.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    setTimeout(() => { const f = document.getElementById('cf-name'); if (f) f.focus(); }, 350);
+  }
+  function closeContact() {
+    contactOverlay.classList.remove('open');
+    contactSheet.classList.remove('open');
+    contactOverlay.setAttribute('aria-hidden', 'true');
+    contactSheet.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+  document.querySelectorAll('.js-open-contact').forEach(el => {
+    el.addEventListener('click', e => {
+      e.preventDefault();
+      if (mobileNav.classList.contains('open')) mobileNav.classList.remove('open');
+      openContact();
+    });
+  });
+  document.getElementById('contactClose').addEventListener('click', closeContact);
+  contactOverlay.addEventListener('click', closeContact);
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && contactSheet.classList.contains('open')) closeContact();
+  });
+
+  function setContactStatus(msg, kind) {
+    contactStatus.textContent = msg;
+    contactStatus.className = 'status ' + (kind || '');
+  }
+
+  contactForm.addEventListener('submit', async e => {
+    e.preventDefault();
+    setContactStatus('', '');
+    contactSubmit.disabled = true;
+    const origLabel = contactSubmit.textContent;
+    contactSubmit.textContent = 'Sending…';
+    const fd = new FormData(contactForm);
+    const payload = {
+      name:    (fd.get('name')    || '').toString().trim(),
+      company: (fd.get('company') || '').toString().trim(),
+      email:   (fd.get('email')   || '').toString().trim(),
+      phone:   (fd.get('phone')   || '').toString().trim(),
+      message: (fd.get('message') || '').toString().trim(),
+      source:  (fd.get('source')  || 'homepage').toString().trim(),
+      website: (fd.get('website') || '').toString().trim()
+    };
+    try {
+      const r = await fetch('/api/homepage-contact.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const d = await r.json().catch(() => ({}));
+      if (d.ok) {
+        setContactStatus(d.message || "Thanks — we'll get back to you within 24 hours.", 'ok');
+        contactForm.querySelectorAll('input, textarea, button').forEach(el => el.disabled = true);
+      } else {
+        setContactStatus(d.error || 'Could not send the message. Please email khabat@setai.no directly.', 'err');
+        contactSubmit.disabled = false;
+        contactSubmit.textContent = origLabel;
+      }
+    } catch (err) {
+      setContactStatus('Network error. Please try again, or email khabat@setai.no directly.', 'err');
+      contactSubmit.disabled = false;
+      contactSubmit.textContent = origLabel;
+    }
+  });
+
+  // ── disable right-click on homepage (except inside inputs) ───
+  document.addEventListener('contextmenu', e => {
+    const t = e.target;
+    if (t && t.closest && t.closest('input, textarea, select, [contenteditable="true"], [contenteditable=""]')) return;
+    e.preventDefault();
   });
 </script>
 
