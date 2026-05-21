@@ -113,7 +113,7 @@ $insert = $pdo->prepare('INSERT INTO landing_contacts (page, name, email, phone,
 $insert->execute([$source, $name, $email, $phone, $stored_message, substr($ip, 0, 45), substr($ua, 0, 250), 'pending']);
 $contact_id = (int)$pdo->lastInsertId();
 
-$inbox    = 'khabat@setai.no';
+$inbox    = 'khabat.setaei@gmail.com';
 $site_url = public_url('/');
 $subject  = 'New inquiry from setai.no: ' . ($company ?: $name);
 
