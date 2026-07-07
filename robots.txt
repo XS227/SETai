@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /
+Disallow: /demo/
+Disallow: /lead-agent/
+Disallow: /tools/
 
 Sitemap: https://setai.no/sitemap.xml

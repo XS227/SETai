@@ -1,0 +1,540 @@
+#!/usr/bin/env node
+'use strict';
+
+const fs   = require('fs');
+const path = require('path');
+
+// ── CLI args ──────────────────────────────────────────────────────────────────
+const [,, businessName, industry, city, style, language = 'no'] = process.argv;
+
+if (!businessName || !industry || !city || !style) {
+  console.error(`
+Usage:
+  node generate-demo.js "<Business Name>" "<industry>" "<city>" "<style>" [language]
+
+Example:
+  node generate-demo.js "Bella Frisør" "hair salon" "Oslo" "premium black and gold" "no"
+`);
+  process.exit(1);
+}
+
+// ── Slug helper ───────────────────────────────────────────────────────────────
+function toSlug(str) {
+  return str
+    .toLowerCase()
+    .replace(/æ/g, 'ae').replace(/ø/g, 'o').replace(/å/g, 'a')
+    .replace(/ä/g, 'ae').replace(/ö/g, 'o').replace(/ü/g, 'u')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '');
+}
+
+// ── Output path ───────────────────────────────────────────────────────────────
+const slug      = toSlug(businessName);
+const demoRoot  = path.resolve(__dirname, '../../demo');
+const outDir    = path.join(demoRoot, slug);
+const outFile   = path.join(outDir, 'index.html');
+const publicUrl = `https://setai.no/demo/${slug}/`;
+
+fs.mkdirSync(outDir, { recursive: true });
+
+// ── Industry config ───────────────────────────────────────────────────────────
+const industryConfig = {
+  // key: industry keywords → config
+  'hair': {
+    heroImg:  'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=1600&q=80&auto=format&fit=crop',
+    aboutImg: 'https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?w=800&q=80&auto=format&fit=crop',
+    services: [
+      { name: 'Klipp & Styling',      desc: 'Profesjonell klipp tilpasset ditt ansikt og livsstil.',       price: 'Fra 490 kr' },
+      { name: 'Farging & Highlights', desc: 'Balayage, ombre og klassisk farging med premium produkter.',  price: 'Fra 890 kr' },
+      { name: 'Behandling',           desc: 'Dyppleie og keratin-behandling for sunt, skinnende hår.',      price: 'Fra 350 kr' },
+    ],
+    ctaText:    'Book time',
+    heroEyebrow: 'Hår & Velvære',
+    heroTag:    'Skjønnhet på dine premisser',
+  },
+  'restaurant': {
+    heroImg:  'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1600&q=80&auto=format&fit=crop',
+    aboutImg: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&q=80&auto=format&fit=crop',
+    services: [
+      { name: 'Forrett',      desc: 'Sesongens beste råvarer, håndplukket lokalt.',            price: 'Fra 145 kr' },
+      { name: 'Hovedrett',    desc: 'Moderne tolkning av klassiske norske tradisjoner.',        price: 'Fra 295 kr' },
+      { name: 'Dessert',      desc: 'Søte avslutninger som setter prikken over i-en.',          price: 'Fra 115 kr' },
+    ],
+    ctaText:    'Reserver bord',
+    heroEyebrow: 'Restaurant & Bar',
+    heroTag:    'En smak du husker',
+  },
+  'cafe': {
+    heroImg:  'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=1600&q=80&auto=format&fit=crop',
+    aboutImg: 'https://images.unsplash.com/photo-1521017432531-fbd92d768814?w=800&q=80&auto=format&fit=crop',
+    services: [
+      { name: 'Spesialkafé',  desc: 'Single-origin espresso, filtre og cold brew.',             price: 'Fra 55 kr' },
+      { name: 'Bakst',        desc: 'Hjembakte croissanter, boller og kaker hver morgen.',       price: 'Fra 45 kr' },
+      { name: 'Brunch',       desc: 'Helgebrunch med lokale råvarer, 10:00 – 14:00.',           price: 'Fra 195 kr' },
+    ],
+    ctaText:    'Se menyen',
+    heroEyebrow: 'Kafé & Bakeri',
+    heroTag:    'Ditt andre hjem',
+  },
+  'fitness': {
+    heroImg:  'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1600&q=80&auto=format&fit=crop',
+    aboutImg: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&q=80&auto=format&fit=crop',
+    services: [
+      { name: 'Personlig trener',  desc: 'Skreddersydde programmer for dine mål.',              price: 'Fra 650 kr/t' },
+      { name: 'Gruppetimer',       desc: 'Yoga, HIIT, spinning og mye mer.',                    price: 'Fra 150 kr' },
+      { name: 'Ernæringsveiledning', desc: 'Kostholdsplan tilpasset ditt treningsnivå.',        price: 'Fra 890 kr' },
+    ],
+    ctaText:    'Book prøvetime',
+    heroEyebrow: 'Helse & Trening',
+    heroTag:    'Sterkere. Hver dag.',
+  },
+  'cleaning': {
+    heroImg:  'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=1600&q=80&auto=format&fit=crop',
+    aboutImg: 'https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?w=800&q=80&auto=format&fit=crop',
+    services: [
+      { name: 'Hjemvask',      desc: 'Grundig rengjøring av hele boligen, ukentlig eller månedlig.', price: 'Fra 990 kr' },
+      { name: 'Kontorrenhold', desc: 'Profesjonell rengjøring tilpasset bedrifter.',                 price: 'Pris på forespørsel' },
+      { name: 'Flyttevask',    desc: 'Grundig slutt- eller innflyttingsvask med garanti.',           price: 'Fra 2 490 kr' },
+    ],
+    ctaText:    'Få tilbud',
+    heroEyebrow: 'Rengjøring & Vask',
+    heroTag:    'Rent hjem. Rolig sinn.',
+  },
+  'law': {
+    heroImg:  'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=1600&q=80&auto=format&fit=crop',
+    aboutImg: 'https://images.unsplash.com/photo-1521791136064-7986c2920216?w=800&q=80&auto=format&fit=crop',
+    services: [
+      { name: 'Eiendomsrett',   desc: 'Kjøp, salg, husleie og tvister knyttet til fast eiendom.',  price: 'Konsultasjon: 1 800 kr/t' },
+      { name: 'Arbeidsrett',    desc: 'Ansettelse, oppsigelse, diskriminering og tariffavtaler.',   price: 'Konsultasjon: 1 800 kr/t' },
+      { name: 'Familierett',    desc: 'Skilsmisse, arv, testamente og barnefordeling.',             price: 'Konsultasjon: 1 800 kr/t' },
+    ],
+    ctaText:    'Book konsultasjon',
+    heroEyebrow: 'Advokatfirma',
+    heroTag:    'Din rett. Vår sak.',
+  },
+  'dental': {
+    heroImg:  'https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=1600&q=80&auto=format&fit=crop',
+    aboutImg: 'https://images.unsplash.com/photo-1588776814546-1ffbb172fbb6?w=800&q=80&auto=format&fit=crop',
+    services: [
+      { name: 'Tannrens',       desc: 'Profesjonell rens og undersøkelse hvert halvår.',           price: 'Fra 690 kr' },
+      { name: 'Tannbleking',    desc: 'Klinisk bleking for et strålende smil.',                    price: 'Fra 2 490 kr' },
+      { name: 'Tannregulering', desc: 'Usynlig regulering med Invisalign.',                        price: 'Fra 18 900 kr' },
+    ],
+    ctaText:    'Book time',
+    heroEyebrow: 'Tannklinikk',
+    heroTag:    'Smil du er stolt av',
+  },
+  // default fallback
+  'default': {
+    heroImg:  'https://images.unsplash.com/photo-1497366216548-37526070297c?w=1600&q=80&auto=format&fit=crop',
+    aboutImg: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&q=80&auto=format&fit=crop',
+    services: [
+      { name: 'Tjeneste 1', desc: 'En beskrivelse av hva dere tilbyr kundene.',  price: 'Pris på forespørsel' },
+      { name: 'Tjeneste 2', desc: 'En annen tjeneste dere er spesialister på.',  price: 'Pris på forespørsel' },
+      { name: 'Tjeneste 3', desc: 'Tilpasset løsning for dine behov.',            price: 'Pris på forespørsel' },
+    ],
+    ctaText:    'Ta kontakt',
+    heroEyebrow: 'Profesjonelle tjenester',
+    heroTag:    'Kvalitet du kan stole på',
+  },
+};
+
+function getIndustryConf(ind) {
+  const key = ind.toLowerCase();
+  for (const [k, v] of Object.entries(industryConfig)) {
+    if (k !== 'default' && key.includes(k)) return v;
+  }
+  return industryConfig['default'];
+}
+
+const conf = getIndustryConf(industry);
+
+// ── Style → CSS variables ─────────────────────────────────────────────────────
+function parseStyle(styleStr) {
+  const s = styleStr.toLowerCase();
+  if (s.includes('black') && s.includes('gold')) {
+    return { bg: '#0e0e0e', accent: '#c9a44e', text: '#f5f0e8', mid: '#1c1c1c', muted: '#7a7060', cream: '#1a1a14' };
+  }
+  if (s.includes('white') && (s.includes('gold') || s.includes('luxury'))) {
+    return { bg: '#fdfcf9', accent: '#c9a44e', text: '#1a1610', mid: '#f5f0e8', muted: '#7a6e60', cream: '#f5f0e8' };
+  }
+  if (s.includes('blue') || s.includes('navy') || s.includes('ocean')) {
+    return { bg: '#0b1f3a', accent: '#4fa3d4', text: '#e8f0f8', mid: '#152d50', muted: '#6b8a9e', cream: '#0f2847' };
+  }
+  if (s.includes('green') || s.includes('nature') || s.includes('organic')) {
+    return { bg: '#f4f7f2', accent: '#4a7c59', text: '#1c2b1e', mid: '#e6ede4', muted: '#5a7060', cream: '#eaf0e7' };
+  }
+  if (s.includes('pink') || s.includes('rose') || s.includes('feminine')) {
+    return { bg: '#fdf6f0', accent: '#c97070', text: '#2a1a1a', mid: '#f5e6e0', muted: '#8a6060', cream: '#f5ebe4' };
+  }
+  if (s.includes('minimal') || s.includes('clean') || s.includes('white')) {
+    return { bg: '#ffffff', accent: '#2a2a2a', text: '#1a1a1a', mid: '#f8f8f8', muted: '#888888', cream: '#f4f4f4' };
+  }
+  // default warm premium
+  return { bg: '#1a1610', accent: '#c9a96e', text: '#f5f0e8', mid: '#2e2720', muted: '#7a6e60', cream: '#241f18' };
+}
+
+const palette = parseStyle(style);
+const isDark  = isColorDark(palette.bg);
+
+function isColorDark(hex) {
+  const h = hex.replace('#','');
+  const r = parseInt(h.slice(0,2),16), g = parseInt(h.slice(2,4),16), b = parseInt(h.slice(4,6),16);
+  return (r*299 + g*587 + b*114) / 1000 < 128;
+}
+
+const navTextColor    = isDark ? 'rgba(255,255,255,0.85)' : 'rgba(0,0,0,0.75)';
+const heroTextColor   = '#ffffff';
+const sectionBgAlt    = isDark ? palette.cream : palette.mid;
+const bodyTextOnDark  = isDark ? `rgba(255,255,255,.65)` : `rgba(0,0,0,.65)`;
+
+// ── Build service cards HTML ──────────────────────────────────────────────────
+function serviceCards(services) {
+  return services.map(s => `
+        <div class="service-card">
+          <h3 class="service-name">${s.name}</h3>
+          <p class="service-desc">${s.desc}</p>
+          <span class="service-price">${s.price}</span>
+        </div>`).join('');
+}
+
+// ── Reviews (static placeholders) ────────────────────────────────────────────
+const reviews = [
+  { stars: 5, text: `Fantastisk opplevelse! ${businessName} er rett og slett de beste i ${city}. Vil absolutt anbefale til alle.`, author: 'Maria S.' },
+  { stars: 5, text: `Utrolig profesjonelt team. Resultatet overgikk forventningene mine fullstendig. Kommer definitivt tilbake!`, author: 'Jonas B.' },
+  { stars: 5, text: `Har vært kunde i over 2 år og er alltid fornøyd. Kvaliteten er konsistent og servicen er alltid topp.`, author: 'Kristine L.' },
+];
+
+function reviewCards(revs) {
+  return revs.map(r => `
+        <div class="review-card">
+          <div class="stars">${'★'.repeat(r.stars)}</div>
+          <p class="review-text">"${r.text}"</p>
+          <p class="review-author">— ${r.author}, ${city}</p>
+        </div>`).join('');
+}
+
+// ── Full HTML ─────────────────────────────────────────────────────────────────
+const html = `<!DOCTYPE html>
+<html lang="${language}">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>${businessName} – ${city}</title>
+  <meta name="description" content="${businessName} i ${city}. ${conf.heroTag}" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:     ${palette.bg};
+      --accent: ${palette.accent};
+      --text:   ${palette.text};
+      --mid:    ${palette.mid};
+      --muted:  ${palette.muted};
+      --cream:  ${palette.cream};
+      --radius: 4px;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); font-weight: 300; line-height: 1.7; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.2rem 2rem; background: transparent; transition: background .4s;
+    }
+    nav.scrolled { background: rgba(0,0,0,.88); backdrop-filter: blur(14px); }
+    .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.45rem; font-weight: 600; color: #fff; letter-spacing: .06em; text-decoration: none; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { color: ${navTextColor}; text-decoration: none; font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; transition: color .2s; }
+    .nav-links a:hover, .nav-cta:hover { color: var(--accent) !important; }
+    .nav-cta { border: 1px solid var(--accent); padding: .45rem 1.1rem; border-radius: var(--radius); color: var(--accent) !important; }
+    @media (max-width: 640px) { .nav-links { display: none; } }
+
+    /* HERO */
+    #hero {
+      position: relative; height: 100svh; min-height: 580px;
+      display: flex; align-items: center; justify-content: center; text-align: center; overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,.4) 0%, rgba(0,0,0,.6) 100%),
+        url('${conf.heroImg}') center/cover no-repeat;
+    }
+    .hero-content { position: relative; z-index: 2; padding: 0 1.5rem; max-width: 760px; }
+    .hero-eyebrow { display: inline-block; font-size: .7rem; letter-spacing: .22em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.2rem; }
+    .hero-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.8rem, 8vw, 6rem); font-weight: 300; color: ${heroTextColor}; line-height: 1.08; margin-bottom: 1.2rem; }
+    .hero-title em { font-style: italic; color: var(--accent); }
+    .hero-sub { font-size: .92rem; color: rgba(255,255,255,.72); margin-bottom: 2.5rem; max-width: 440px; margin-left: auto; margin-right: auto; }
+    .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn { display: inline-block; padding: .82rem 2rem; border-radius: var(--radius); font-size: .8rem; letter-spacing: .1em; text-transform: uppercase; text-decoration: none; font-weight: 500; transition: all .25s; }
+    .btn-primary { background: var(--accent); color: var(--bg); }
+    .btn-primary:hover { filter: brightness(1.1); transform: translateY(-1px); }
+    .btn-ghost { border: 1px solid rgba(255,255,255,.45); color: #fff; }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+    .scroll-line { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); width: 1px; height: 50px; background: linear-gradient(to bottom, var(--accent), transparent); animation: pulse 2s ease-in-out infinite; }
+    @keyframes pulse { 0%,100%{opacity:.5} 50%{opacity:1} }
+
+    /* SHARED */
+    section { padding: 5.5rem 1.5rem; }
+    .container { max-width: 1060px; margin: 0 auto; }
+    .section-label { font-size: .68rem; letter-spacing: .22em; text-transform: uppercase; color: var(--accent); margin-bottom: .8rem; }
+    .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.9rem, 4.5vw, 3.2rem); font-weight: 300; line-height: 1.15; margin-bottom: 1.1rem; }
+    .section-title em { font-style: italic; color: var(--accent); }
+    .divider { width: 44px; height: 1px; background: var(--accent); margin: 1.4rem 0; }
+    .divider-c { margin: 1.4rem auto; }
+    .text-center { text-align: center; }
+
+    /* ABOUT */
+    #about { background: var(--cream); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+    @media (max-width: 640px) { .about-grid { grid-template-columns: 1fr; gap: 2.5rem; } }
+    .about-img { width: 100%; aspect-ratio: 4/5; object-fit: cover; border-radius: var(--radius); display: block; }
+    .about-body p { color: ${bodyTextOnDark}; max-width: 520px; }
+    .about-body p + p { margin-top: 1rem; }
+    .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-top: 2.5rem; }
+    .stat { border-top: 1px solid ${isDark ? 'rgba(255,255,255,.12)' : 'rgba(0,0,0,.1)'}; padding-top: .9rem; }
+    .stat-n { font-family: 'Cormorant Garamond', serif; font-size: 2.3rem; font-weight: 300; color: var(--accent); line-height: 1; }
+    .stat-l { font-size: .72rem; color: var(--muted); margin-top: .25rem; letter-spacing: .05em; }
+
+    /* SERVICES */
+    #services { background: var(--bg); }
+    .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.8rem; margin-top: 3rem; }
+    .service-card { background: var(--cream); border-radius: var(--radius); padding: 2rem; transition: transform .3s, box-shadow .3s; }
+    .service-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,.2); }
+    .service-name { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 400; margin-bottom: .5rem; }
+    .service-desc { font-size: .84rem; color: var(--muted); margin-bottom: 1.2rem; line-height: 1.6; }
+    .service-price { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 600; color: var(--accent); }
+
+    /* REVIEWS */
+    #reviews { background: var(--cream); }
+    .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
+    .review-card { background: var(--bg); border-radius: var(--radius); padding: 1.7rem; }
+    .stars { color: #f4b400; font-size: .95rem; letter-spacing: .1em; margin-bottom: .9rem; }
+    .review-text { font-size: .86rem; color: ${bodyTextOnDark}; font-style: italic; margin-bottom: 1rem; line-height: 1.65; }
+    .review-author { font-size: .73rem; font-weight: 500; color: var(--muted); letter-spacing: .06em; }
+    .reviews-notice { margin-top: 1.8rem; padding: .9rem 1.2rem; background: ${isDark ? 'rgba(201,164,78,.08)' : '#fff8e6'}; border-left: 3px solid var(--accent); border-radius: var(--radius); font-size: .76rem; color: var(--muted); }
+
+    /* BOOKING / CTA */
+    #booking {
+      background: linear-gradient(rgba(0,0,0,.68), rgba(0,0,0,.68)),
+        url('${conf.heroImg}') center/cover no-repeat fixed;
+      text-align: center;
+    }
+    #booking .section-title { color: #fff; }
+    #booking p { color: rgba(255,255,255,.68); margin-bottom: 2.2rem; max-width: 480px; margin-left: auto; margin-right: auto; }
+    .booking-form { display: flex; flex-wrap: wrap; gap: .9rem; justify-content: center; margin-bottom: 1.2rem; }
+    .booking-form input, .booking-form select {
+      padding: .82rem 1.15rem; border: 1px solid rgba(255,255,255,.2); border-radius: var(--radius);
+      background: rgba(255,255,255,.08); backdrop-filter: blur(6px); color: #fff;
+      font-size: .86rem; font-family: inherit; min-width: 170px; outline: none; transition: border-color .2s;
+    }
+    .booking-form input::placeholder { color: rgba(255,255,255,.45); }
+    .booking-form input:focus, .booking-form select:focus { border-color: var(--accent); }
+    .booking-form select option { background: #1c1c1c; }
+    .booking-note { font-size: .73rem; color: rgba(255,255,255,.38); }
+
+    /* CONTACT */
+    #contact { background: var(--bg); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+    @media (max-width: 640px) { .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; } }
+    .contact-info dt { font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-top: 1.6rem; margin-bottom: .25rem; }
+    .contact-info dd { font-size: .92rem; color: var(--text); }
+    .contact-info dd a { color: var(--text); text-decoration: underline; text-underline-offset: 3px; }
+    .map-box { width: 100%; aspect-ratio: 1; background: var(--cream); border-radius: var(--radius); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .6rem; color: var(--muted); font-size: .78rem; text-align: center; }
+    .map-box svg { opacity: .35; }
+
+    /* FOOTER */
+    footer { background: #000; padding: 3rem 1.5rem; text-align: center; }
+    .footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.7rem; font-weight: 300; color: #fff; margin-bottom: .4rem; }
+    .footer-sub { font-size: .72rem; letter-spacing: .18em; text-transform: uppercase; color: rgba(255,255,255,.3); margin-bottom: 2rem; }
+    .footer-links { display: flex; justify-content: center; gap: 2rem; list-style: none; margin-bottom: 1.8rem; flex-wrap: wrap; }
+    .footer-links a { font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.35); text-decoration: none; transition: color .2s; }
+    .footer-links a:hover { color: var(--accent); }
+    .footer-hr { width: 40px; height: 1px; background: rgba(255,255,255,.1); margin: 0 auto 1.4rem; }
+    .footer-credit { font-size: .7rem; letter-spacing: .08em; color: rgba(255,255,255,.18); }
+    .footer-credit a { color: var(--accent); text-decoration: none; }
+    .footer-credit a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+  <nav id="navbar">
+    <a href="#hero" class="nav-logo">${businessName}</a>
+    <ul class="nav-links">
+      <li><a href="#about">Om oss</a></li>
+      <li><a href="#services">Tjenester</a></li>
+      <li><a href="#reviews">Anmeldelser</a></li>
+      <li><a href="#contact">Kontakt</a></li>
+      <li><a href="#booking" class="nav-cta">${conf.ctaText}</a></li>
+    </ul>
+  </nav>
+
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <span class="hero-eyebrow">${conf.heroEyebrow} · ${city}</span>
+      <h1 class="hero-title">${businessName.split(' ').map((w,i) => i === Math.floor(businessName.split(' ').length/2) ? `<em>${w}</em>` : w).join(' ')}</h1>
+      <p class="hero-sub">${conf.heroTag} – i hjertet av ${city}.</p>
+      <div class="hero-btns">
+        <a href="#booking" class="btn btn-primary">${conf.ctaText}</a>
+        <a href="#services" class="btn btn-ghost">Se tjenester</a>
+      </div>
+    </div>
+    <div class="scroll-line"></div>
+  </section>
+
+  <section id="about">
+    <div class="container">
+      <div class="about-grid">
+        <img class="about-img" src="${conf.aboutImg}" alt="${businessName}" loading="lazy" />
+        <div class="about-body">
+          <p class="section-label">Vår historie</p>
+          <h2 class="section-title">Lidenskap for <em>kvalitet</em></h2>
+          <div class="divider"></div>
+          <p>${businessName} er en av ${city}s mest betrodde aktører innen ${industry}. Vi kombinerer solid fagkunnskap med et genuint ønske om å levere det beste til hver enkelt kunde.</p>
+          <p>Teamet vårt består av erfarne spesialister som er lidenskapelig opptatt av faget sitt. Vi bruker kun de beste produktene og metodene for å sikre resultater du vil elske.</p>
+          <div class="stats">
+            <div class="stat"><div class="stat-n">5+</div><div class="stat-l">Års erfaring</div></div>
+            <div class="stat"><div class="stat-n">4.9</div><div class="stat-l">Google-vurdering</div></div>
+            <div class="stat"><div class="stat-n">500+</div><div class="stat-l">Fornøyde kunder</div></div>
+            <div class="stat"><div class="stat-n">100%</div><div class="stat-l">Kundetilfredshet</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="services">
+    <div class="container">
+      <div class="text-center">
+        <p class="section-label">Tjenester</p>
+        <h2 class="section-title">Det vi <em>tilbyr</em></h2>
+        <div class="divider divider-c"></div>
+      </div>
+      <div class="services-grid">${serviceCards(conf.services)}
+      </div>
+    </div>
+  </section>
+
+  <section id="reviews">
+    <div class="container">
+      <div class="text-center">
+        <p class="section-label">Google-anmeldelser</p>
+        <h2 class="section-title">Hva kundene <em>sier</em></h2>
+        <div class="divider divider-c"></div>
+      </div>
+      <div class="reviews-grid">${reviewCards(reviews)}
+      </div>
+      <div class="reviews-notice"><strong>Merk:</strong> Demo-side. Google Reviews-integrasjon aktiveres ved lansering av ekte nettside.</div>
+    </div>
+  </section>
+
+  <section id="booking">
+    <div class="container">
+      <p class="section-label" style="color:var(--accent)">${conf.ctaText}</p>
+      <h2 class="section-title">${conf.ctaText} <em>i dag</em></h2>
+      <div class="divider divider-c"></div>
+      <p>Ta kontakt eller bruk skjemaet nedenfor – vi svarer innen kort tid.</p>
+      <form class="booking-form" onsubmit="handleSubmit(event)">
+        <input type="text" placeholder="Ditt navn" required />
+        <input type="tel" placeholder="Telefonnummer" required />
+        <input type="date" required />
+        <select required>
+          <option value="" disabled selected>Velg tid</option>
+          <option>09:00</option><option>10:00</option><option>11:00</option>
+          <option>12:00</option><option>13:00</option><option>14:00</option>
+          <option>15:00</option><option>16:00</option><option>17:00</option>
+          <option>18:00</option><option>19:00</option>
+        </select>
+        <button type="submit" class="btn btn-primary">${conf.ctaText}</button>
+      </form>
+      <p class="booking-note">Eller ring oss direkte – vi er tilgjengelige man–lør 09:00–18:00</p>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="container">
+      <div class="contact-grid">
+        <div>
+          <p class="section-label">Kontakt</p>
+          <h2 class="section-title">Ta <em>kontakt</em></h2>
+          <div class="divider"></div>
+          <dl class="contact-info">
+            <dt>Adresse</dt><dd>${city} sentrum</dd>
+            <dt>Telefon</dt><dd><a href="tel:+4700000000">+47 000 00 000</a></dd>
+            <dt>E-post</dt><dd><a href="mailto:post@${slug}.no">post@${slug}.no</a></dd>
+            <dt>Åpningstider</dt>
+            <dd>Mandag – fredag: 09:00 – 18:00<br />Lørdag: 10:00 – 16:00<br />Søndag: Stengt</dd>
+          </dl>
+        </div>
+        <div class="map-box">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+            <circle cx="12" cy="9" r="2.5"/>
+          </svg>
+          <span>${city} sentrum</span>
+          <span style="font-size:.68rem;opacity:.5">Kart-integrasjon aktiveres ved lansering</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-logo">${businessName}</div>
+    <p class="footer-sub">${city} &middot; ${industry}</p>
+    <ul class="footer-links">
+      <li><a href="#about">Om oss</a></li>
+      <li><a href="#services">Tjenester</a></li>
+      <li><a href="#reviews">Anmeldelser</a></li>
+      <li><a href="#booking">${conf.ctaText}</a></li>
+      <li><a href="#contact">Kontakt</a></li>
+    </ul>
+    <div class="footer-hr"></div>
+    <p class="footer-credit">Demo laget av <a href="https://setai.no" target="_blank" rel="noopener">SETAEI</a></p>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('navbar');
+    window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 60), { passive: true });
+
+    function handleSubmit(e) {
+      e.preventDefault();
+      const btn = e.target.querySelector('button');
+      btn.textContent = '✓ Sendt!';
+      btn.style.background = '#4caf50';
+      btn.disabled = true;
+      setTimeout(() => { btn.textContent = '${conf.ctaText}'; btn.style.background = ''; btn.disabled = false; e.target.reset(); }, 3000);
+    }
+
+    const obs = new IntersectionObserver(entries => entries.forEach(e => {
+      if (e.isIntersecting) { e.target.style.opacity = '1'; e.target.style.transform = 'translateY(0)'; }
+    }), { threshold: 0.08 });
+    document.querySelectorAll('.service-card, .review-card, .stat').forEach(el => {
+      el.style.opacity = '0'; el.style.transform = 'translateY(20px)';
+      el.style.transition = 'opacity .5s ease, transform .5s ease';
+      obs.observe(el);
+    });
+  </script>
+</body>
+</html>`;
+
+// ── Write file ────────────────────────────────────────────────────────────────
+fs.writeFileSync(outFile, html, 'utf8');
+
+// ── Done ──────────────────────────────────────────────────────────────────────
+console.log(`
+✓ Demo generated successfully!
+
+  Business : ${businessName}
+  Industry : ${industry}
+  City     : ${city}
+  Style    : ${style}
+  Slug     : ${slug}
+  File     : ${outFile}
+
+  Public URL:
+  ${publicUrl}
+`);

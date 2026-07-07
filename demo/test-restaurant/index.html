@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fjord Bistro – Moderne norsk kjøkken</title>
+  <meta name="description" content="Fjord Bistro – et premium norsk restaurant-opplevelse i hjertet av Bergen. Reserver bord i dag." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream:   #f5f0e8;
+      --warm:    #c9a96e;
+      --dark:    #1a1610;
+      --mid:     #2e2720;
+      --muted:   #7a6e60;
+      --white:   #fdfcf9;
+      --radius:  4px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--white);
+      color: var(--dark);
+      font-weight: 300;
+      line-height: 1.7;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.2rem 2rem;
+      background: transparent;
+      transition: background .4s, backdrop-filter .4s;
+    }
+    nav.scrolled {
+      background: rgba(26, 22, 16, 0.92);
+      backdrop-filter: blur(12px);
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--white);
+      letter-spacing: .06em;
+      text-decoration: none;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    .nav-links a {
+      color: rgba(255,255,255,.8);
+      text-decoration: none;
+      font-size: .8rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--warm); }
+    .nav-cta {
+      background: var(--warm);
+      color: var(--dark) !important;
+      padding: .5rem 1.2rem;
+      border-radius: var(--radius);
+      font-weight: 500 !important;
+    }
+    .nav-cta:hover { background: #e0ba7e; color: var(--dark) !important; }
+
+    @media (max-width: 680px) {
+      .nav-links { display: none; }
+    }
+
+    /* ── HERO ── */
+    #hero {
+      position: relative;
+      height: 100svh;
+      min-height: 600px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to bottom, rgba(0,0,0,.35) 0%, rgba(0,0,0,.55) 60%, rgba(0,0,0,.75) 100%),
+        url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1600&q=80&auto=format&fit=crop') center/cover no-repeat;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 0 1.5rem;
+      max-width: 720px;
+    }
+    .hero-eyebrow {
+      display: inline-block;
+      font-size: .72rem;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--warm);
+      margin-bottom: 1.4rem;
+    }
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 9vw, 6.5rem);
+      font-weight: 300;
+      color: var(--white);
+      line-height: 1.05;
+      margin-bottom: 1.4rem;
+    }
+    .hero-title em { font-style: italic; color: var(--warm); }
+    .hero-sub {
+      font-size: .95rem;
+      color: rgba(255,255,255,.75);
+      margin-bottom: 2.5rem;
+      max-width: 460px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .hero-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      display: inline-block;
+      padding: .85rem 2rem;
+      border-radius: var(--radius);
+      font-size: .82rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all .25s;
+    }
+    .btn-primary { background: var(--warm); color: var(--dark); }
+    .btn-primary:hover { background: #e0ba7e; transform: translateY(-1px); }
+    .btn-ghost {
+      border: 1px solid rgba(255,255,255,.5);
+      color: var(--white);
+    }
+    .btn-ghost:hover { border-color: var(--warm); color: var(--warm); }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .4rem;
+      color: rgba(255,255,255,.45);
+      font-size: .68rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+    }
+    .scroll-hint span {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, rgba(255,255,255,.4), transparent);
+      animation: scrollLine 1.8s ease-in-out infinite;
+    }
+    @keyframes scrollLine {
+      0%,100% { opacity: .4; transform: scaleY(1); }
+      50%      { opacity: .9; transform: scaleY(.6); }
+    }
+
+    /* ── SECTIONS SHARED ── */
+    section { padding: 6rem 1.5rem; }
+    .container { max-width: 1080px; margin: 0 auto; }
+    .section-label {
+      font-size: .7rem;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--warm);
+      margin-bottom: .9rem;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      font-weight: 300;
+      line-height: 1.15;
+      color: var(--dark);
+      margin-bottom: 1.2rem;
+    }
+    .section-title em { font-style: italic; color: var(--warm); }
+    .divider {
+      width: 48px; height: 1px;
+      background: var(--warm);
+      margin: 1.6rem 0;
+    }
+
+    /* ── ABOUT ── */
+    #about { background: var(--dark); }
+    #about .section-title { color: var(--white); }
+    #about p { color: rgba(255,255,255,.65); max-width: 600px; }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    @media (max-width: 680px) {
+      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    }
+    .about-image {
+      position: relative;
+      border-radius: var(--radius);
+      overflow: hidden;
+      aspect-ratio: 4/5;
+    }
+    .about-image img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .about-image::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border: 1px solid rgba(201,169,110,.25);
+      border-radius: var(--radius);
+      pointer-events: none;
+    }
+    .about-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 2.5rem;
+    }
+    .stat-item { border-top: 1px solid rgba(255,255,255,.1); padding-top: 1rem; }
+    .stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.4rem;
+      font-weight: 300;
+      color: var(--warm);
+      line-height: 1;
+    }
+    .stat-label { font-size: .75rem; color: rgba(255,255,255,.45); margin-top: .3rem; letter-spacing: .06em; }
+
+    /* ── MENU ── */
+    #menu { background: var(--cream); }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+    .menu-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: 0 2px 24px rgba(0,0,0,.06);
+      transition: transform .3s, box-shadow .3s;
+    }
+    .menu-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 40px rgba(0,0,0,.12);
+    }
+    .menu-img {
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      display: block;
+    }
+    .menu-body { padding: 1.4rem 1.6rem; }
+    .menu-course {
+      font-size: .65rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--warm);
+      margin-bottom: .4rem;
+    }
+    .menu-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.45rem;
+      font-weight: 400;
+      margin-bottom: .5rem;
+    }
+    .menu-desc { font-size: .82rem; color: var(--muted); margin-bottom: 1rem; }
+    .menu-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--warm);
+    }
+    .menu-footer {
+      margin-top: 3.5rem;
+      text-align: center;
+    }
+    .menu-footer p { font-size: .85rem; color: var(--muted); margin-bottom: 1.2rem; }
+
+    /* ── REVIEWS ── */
+    #reviews { background: var(--white); }
+
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.6rem;
+      margin-top: 3rem;
+    }
+    .review-card {
+      background: var(--cream);
+      border-radius: var(--radius);
+      padding: 1.8rem;
+      position: relative;
+    }
+    .stars { color: #f4b400; font-size: 1rem; letter-spacing: .1em; margin-bottom: 1rem; }
+    .review-text { font-size: .88rem; color: var(--mid); font-style: italic; margin-bottom: 1.2rem; line-height: 1.65; }
+    .review-author { font-size: .75rem; font-weight: 500; letter-spacing: .06em; color: var(--muted); }
+    .google-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+      font-size: .7rem;
+      color: var(--muted);
+      margin-top: 2.5rem;
+    }
+    .google-badge svg { width: 16px; height: 16px; }
+    .reviews-notice {
+      margin-top: 2rem;
+      padding: 1rem 1.4rem;
+      background: #fff8e6;
+      border-left: 3px solid var(--warm);
+      border-radius: var(--radius);
+      font-size: .78rem;
+      color: var(--muted);
+    }
+
+    /* ── BOOKING ── */
+    #booking {
+      background:
+        linear-gradient(rgba(0,0,0,.65), rgba(0,0,0,.65)),
+        url('https://images.unsplash.com/photo-1544148103-0773bf10d330?w=1400&q=80&auto=format&fit=crop') center/cover no-repeat fixed;
+      text-align: center;
+    }
+    #booking .section-title { color: var(--white); }
+    #booking p { color: rgba(255,255,255,.7); margin-bottom: 2.5rem; max-width: 500px; margin-left: auto; margin-right: auto; }
+    .booking-form {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+    .booking-form input,
+    .booking-form select {
+      padding: .85rem 1.2rem;
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.1);
+      backdrop-filter: blur(6px);
+      color: var(--white);
+      font-size: .88rem;
+      font-family: inherit;
+      min-width: 180px;
+      outline: none;
+      transition: border-color .2s;
+    }
+    .booking-form input::placeholder { color: rgba(255,255,255,.5); }
+    .booking-form input:focus,
+    .booking-form select:focus { border-color: var(--warm); }
+    .booking-form select option { background: var(--mid); }
+    .booking-note { font-size: .75rem; color: rgba(255,255,255,.4); }
+
+    /* ── CONTACT ── */
+    #contact { background: var(--cream); }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+    @media (max-width: 680px) {
+      .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    }
+    .contact-info dt {
+      font-size: .7rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 1.8rem;
+      margin-bottom: .3rem;
+    }
+    .contact-info dd {
+      font-size: .95rem;
+      color: var(--dark);
+    }
+    .contact-info dd a { color: var(--dark); text-decoration: underline; text-underline-offset: 3px; }
+    .map-placeholder {
+      width: 100%;
+      aspect-ratio: 1/1;
+      background: #e0d9cf;
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: .6rem;
+      color: var(--muted);
+      font-size: .8rem;
+      text-align: center;
+    }
+    .map-placeholder svg { opacity: .4; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--dark);
+      padding: 3rem 1.5rem;
+      text-align: center;
+    }
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      font-weight: 300;
+      color: var(--white);
+      margin-bottom: .4rem;
+    }
+    .footer-tagline {
+      font-size: .75rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.3);
+      margin-bottom: 2rem;
+    }
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      list-style: none;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+    .footer-links a {
+      font-size: .75rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.4);
+      text-decoration: none;
+      transition: color .2s;
+    }
+    .footer-links a:hover { color: var(--warm); }
+    .footer-divider {
+      width: 40px; height: 1px;
+      background: rgba(255,255,255,.1);
+      margin: 0 auto 1.5rem;
+    }
+    .footer-credit {
+      font-size: .72rem;
+      letter-spacing: .1em;
+      color: rgba(255,255,255,.2);
+    }
+    .footer-credit a {
+      color: var(--warm);
+      text-decoration: none;
+    }
+    .footer-credit a:hover { text-decoration: underline; }
+
+    /* ── UTILITIES ── */
+    .text-center { text-align: center; }
+    .divider-center { margin-left: auto; margin-right: auto; }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="navbar">
+    <a href="#hero" class="nav-logo">Fjord Bistro</a>
+    <ul class="nav-links">
+      <li><a href="#about">Om oss</a></li>
+      <li><a href="#menu">Meny</a></li>
+      <li><a href="#reviews">Anmeldelser</a></li>
+      <li><a href="#contact">Kontakt</a></li>
+      <li><a href="#booking" class="nav-cta">Reserver bord</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <span class="hero-eyebrow">Bergen, siden 2018</span>
+      <h1 class="hero-title">Smaken av<br /><em>fjordene</em></h1>
+      <p class="hero-sub">Moderne norsk kjøkken inspirert av årstidene, havet og fjellene. Håndplukkede råvarer fra lokale produsenter.</p>
+      <div class="hero-buttons">
+        <a href="#booking" class="btn btn-primary">Reserver bord</a>
+        <a href="#menu" class="btn btn-ghost">Se menyen</a>
+      </div>
+    </div>
+    <div class="scroll-hint">
+      <span></span>
+      Scroll
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-image">
+          <img
+            src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&q=80&auto=format&fit=crop"
+            alt="Kokken lager mat på Fjord Bistro"
+            loading="lazy"
+          />
+        </div>
+        <div>
+          <p class="section-label">Vår historie</p>
+          <h2 class="section-title">Kjøkken med<br /><em>sjel og røtter</em></h2>
+          <div class="divider"></div>
+          <p>Fjord Bistro ble grunnlagt av kjøkkensjef Ingrid Solberg med én visjon: å løfte det norske kjøkkenet til nye høyder uten å miste forbindelsen til det autentiske.</p>
+          <p style="margin-top:1rem">Vi samarbeider tett med fiskere fra Hardangerfjorden, bønder fra Voss og urtedyrkere fra Hordaland. Hvert element på tallerkenen forteller en historie om dette landet.</p>
+          <div class="about-stats">
+            <div class="stat-item">
+              <div class="stat-num">7</div>
+              <div class="stat-label">Års erfaring</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-num">100%</div>
+              <div class="stat-label">Norske råvarer</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-num">4.9</div>
+              <div class="stat-label">Google-vurdering</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-num">3</div>
+              <div class="stat-label">Bib Gourmand</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MENU -->
+  <section id="menu">
+    <div class="container">
+      <div class="text-center">
+        <p class="section-label">Meny</p>
+        <h2 class="section-title">Sesongens <em>høydepunkter</em></h2>
+        <div class="divider divider-center"></div>
+        <p style="color:var(--muted);max-width:520px;margin:0 auto;font-size:.9rem">Menyen vår skifter med årstidene. Her er noen av favorittretter denne måneden.</p>
+      </div>
+
+      <div class="menu-grid">
+
+        <div class="menu-card">
+          <img class="menu-img"
+            src="https://images.unsplash.com/photo-1612927601601-6638404737ce?w=600&q=80&auto=format&fit=crop"
+            alt="Rakfisk tatar" loading="lazy" />
+          <div class="menu-body">
+            <p class="menu-course">Forrett</p>
+            <h3 class="menu-name">Rakfisk tatar</h3>
+            <p class="menu-desc">Tradisjonell rakfisk fra Valdres, syltet agurk, rømme med dill, rugbrød-krutonger og kaviar.</p>
+            <span class="menu-price">185 kr</span>
+          </div>
+        </div>
+
+        <div class="menu-card">
+          <img class="menu-img"
+            src="https://images.unsplash.com/photo-1519984388953-d2406bc725e1?w=600&q=80&auto=format&fit=crop"
+            alt="Hel bakt laks" loading="lazy" />
+          <div class="menu-body">
+            <p class="menu-course">Hovedrett</p>
+            <h3 class="menu-name">Fjordlaks, beurre blanc</h3>
+            <p class="menu-desc">Hel bakt laks fra Hardangerfjorden, smørsaus med estragon, asparges og ny potet.</p>
+            <span class="menu-price">375 kr</span>
+          </div>
+        </div>
+
+        <div class="menu-card">
+          <img class="menu-img"
+            src="https://images.unsplash.com/photo-1544025162-d76694265947?w=600&q=80&auto=format&fit=crop"
+            alt="Hjort med rotsaker" loading="lazy" />
+          <div class="menu-body">
+            <p class="menu-course">Hovedrett</p>
+            <h3 class="menu-name">Hjortefilet, viltkraft</h3>
+            <p class="menu-desc">Mørt hjortekjøtt fra Telemark, intens viltkraft, sellerirot-puré, kantareller og tranebærsaus.</p>
+            <span class="menu-price">425 kr</span>
+          </div>
+        </div>
+
+        <div class="menu-card">
+          <img class="menu-img"
+            src="https://images.unsplash.com/photo-1551024506-0bccd828d307?w=600&q=80&auto=format&fit=crop"
+            alt="Multekrem dessert" loading="lazy" />
+          <div class="menu-body">
+            <p class="menu-course">Dessert</p>
+            <h3 class="menu-name">Multekrem med karve</h3>
+            <p class="menu-desc">Klassisk multekrem med lett karve-karamell, knust Kvikk Lunsj og friske multebær.</p>
+            <span class="menu-price">145 kr</span>
+          </div>
+        </div>
+
+        <div class="menu-card">
+          <img class="menu-img"
+            src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=600&q=80&auto=format&fit=crop"
+            alt="Norsk ostebrett" loading="lazy" />
+          <div class="menu-body">
+            <p class="menu-course">Ost</p>
+            <h3 class="menu-name">Norsk ostebrett</h3>
+            <p class="menu-desc">Utvalg av Norvegia, Jarlsberg, Gamalost og Kvit Geitost med honning og valnøtter.</p>
+            <span class="menu-price">195 kr</span>
+          </div>
+        </div>
+
+        <div class="menu-card">
+          <img class="menu-img"
+            src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=600&q=80&auto=format&fit=crop"
+            alt="Kokossorbet" loading="lazy" />
+          <div class="menu-body">
+            <p class="menu-course">Smaking</p>
+            <h3 class="menu-name">Chefens 5-retters meny</h3>
+            <p class="menu-desc">La kjøkkensjef Ingrid sette sammen en komplett opplevelse basert på dagens råvarer.</p>
+            <span class="menu-price">895 kr</span>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="menu-footer">
+        <p>Fullstendig meny, allergener og vinmeny er tilgjengelig ved bordet.</p>
+        <a href="#booking" class="btn btn-primary">Reserver et bord</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section id="reviews">
+    <div class="container">
+      <div class="text-center">
+        <p class="section-label">Google-anmeldelser</p>
+        <h2 class="section-title">Hva gjestene <em>sier</em></h2>
+        <div class="divider divider-center"></div>
+      </div>
+
+      <div class="reviews-grid">
+
+        <div class="review-card">
+          <div class="stars">★★★★★</div>
+          <p class="review-text">"En av de beste restaurantopplevelsene jeg har hatt i Bergen. Maten var utrolig, servicen var varm og interiøret er nydelig. Hjortefileten er et must!"</p>
+          <p class="review-author">— Marte K., Bergen</p>
+        </div>
+
+        <div class="review-card">
+          <div class="stars">★★★★★</div>
+          <p class="review-text">"Vi feiret bryllupsdagen vår her og det oversteg alle forventninger. Chefens 5-rettersmeny er rett og slett magisk. Vi kommer tilbake!"</p>
+          <p class="review-author">— Thomas &amp; Linn, Oslo</p>
+        </div>
+
+        <div class="review-card">
+          <div class="stars">★★★★★</div>
+          <p class="review-text">"Fjordlaksen er den beste jeg noen gang har smakt. Lokale råvarer, lidenskapelig kjøkken og en atmosfære som er vanskelig å finne maken til."</p>
+          <p class="review-author">— Andreas H., Stavanger</p>
+        </div>
+
+      </div>
+
+      <div class="reviews-notice">
+        <strong>Merk:</strong> Dette er en demo-side. Google Reviews-integrasjon vil kobles til ved lansering av ekte nettside.
+      </div>
+
+      <div class="google-badge">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+          <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+          <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+          <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+        </svg>
+        Drevet av Google Reviews
+      </div>
+    </div>
+  </section>
+
+  <!-- BOOKING -->
+  <section id="booking">
+    <div class="container">
+      <p class="section-label" style="color:var(--warm)">Reservasjon</p>
+      <h2 class="section-title" style="color:var(--white)">Reserver ditt <em>bord</em></h2>
+      <div class="divider divider-center"></div>
+      <p>Vi gleder oss til å ta imot deg. Velg dato, tid og antall gjester nedenfor.</p>
+
+      <form class="booking-form" onsubmit="handleBooking(event)">
+        <input type="text" placeholder="Ditt navn" required />
+        <input type="tel" placeholder="Telefon" required />
+        <input type="date" required />
+        <select required>
+          <option value="" disabled selected>Velg tid</option>
+          <option>17:00</option>
+          <option>17:30</option>
+          <option>18:00</option>
+          <option>18:30</option>
+          <option>19:00</option>
+          <option>19:30</option>
+          <option>20:00</option>
+          <option>20:30</option>
+          <option>21:00</option>
+        </select>
+        <select required>
+          <option value="" disabled selected>Antall gjester</option>
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+          <option>5</option>
+          <option>6</option>
+          <option>7–10</option>
+          <option>10+</option>
+        </select>
+        <button type="submit" class="btn btn-primary">Send forespørsel</button>
+      </form>
+
+      <p class="booking-note">Eller ring oss på <a href="tel:+4755112233" style="color:rgba(255,255,255,.5)">+47 55 11 22 33</a> — vi svarer man–lør 10:00–22:00</p>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="container">
+      <div class="contact-grid">
+        <div>
+          <p class="section-label">Finn oss</p>
+          <h2 class="section-title">Kontakt &amp;<br /><em>åpningstider</em></h2>
+          <div class="divider"></div>
+          <dl class="contact-info">
+            <dt>Adresse</dt>
+            <dd>Bryggen 12, 5003 Bergen</dd>
+
+            <dt>Telefon</dt>
+            <dd><a href="tel:+4755112233">+47 55 11 22 33</a></dd>
+
+            <dt>E-post</dt>
+            <dd><a href="mailto:bord@fjordbistro.no">bord@fjordbistro.no</a></dd>
+
+            <dt>Åpningstider</dt>
+            <dd>
+              Tirsdag – torsdag: 17:00 – 22:00<br />
+              Fredag – lørdag: 16:00 – 23:00<br />
+              Søndag: 15:00 – 21:00<br />
+              Mandag: Stengt
+            </dd>
+
+            <dt>Parkering</dt>
+            <dd>Gratis parkering i Bryggen P-hus, 5 min gange.</dd>
+          </dl>
+        </div>
+
+        <div class="map-placeholder">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+            <circle cx="12" cy="9" r="2.5"/>
+          </svg>
+          <span>Bryggen 12, Bergen</span>
+          <span style="font-size:.7rem;opacity:.6">Kart-integrasjon aktiveres ved lansering</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Fjord Bistro</div>
+    <p class="footer-tagline">Bergen &middot; Siden 2018</p>
+    <ul class="footer-links">
+      <li><a href="#about">Om oss</a></li>
+      <li><a href="#menu">Meny</a></li>
+      <li><a href="#reviews">Anmeldelser</a></li>
+      <li><a href="#booking">Reservasjon</a></li>
+      <li><a href="#contact">Kontakt</a></li>
+    </ul>
+    <div class="footer-divider"></div>
+    <p class="footer-credit">
+      Demo laget av <a href="https://setai.no" target="_blank" rel="noopener">SETAEI</a>
+      &nbsp;&middot;&nbsp; &copy; 2026 Fjord Bistro
+    </p>
+  </footer>
+
+  <script>
+    // Navbar scroll effect
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+
+    // Booking form demo handler
+    function handleBooking(e) {
+      e.preventDefault();
+      const btn = e.target.querySelector('button[type=submit]');
+      btn.textContent = 'Forespørsel sendt!';
+      btn.style.background = '#4caf50';
+      btn.disabled = true;
+      setTimeout(() => {
+        btn.textContent = 'Send forespørsel';
+        btn.style.background = '';
+        btn.disabled = false;
+        e.target.reset();
+      }, 3000);
+    }
+
+    // Scroll reveal (lightweight)
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.style.opacity = '1';
+          e.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.menu-card, .review-card, .stat-item').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(24px)';
+      el.style.transition = 'opacity .5s ease, transform .5s ease';
+      observer.observe(el);
+    });
+  </script>
+
+</body>
+</html>
