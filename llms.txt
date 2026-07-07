@@ -1,0 +1,27 @@
+# SETAEI
+
+> SETAEI is the personal technology house of Khabat Setaei, based in Oslo, Norway. Khabat works as a CTO, AI developer, SaaS developer, full-stack developer and SEO expert, and SETAEI also delivers professional websites, e-commerce, landing pages and AI automation to Norwegian businesses.
+
+This file is a plain-language index for AI assistants and crawlers. It does not affect Google rankings — it is a courtesy index, not an SEO mechanism.
+
+## Services
+- [Tjenesteoversikt](https://setai.no/services/): all services
+- [CTO Oslo](https://setai.no/services/cto-oslo/): fractional CTO / CTO-as-a-Service
+- [AI-ekspert Oslo](https://setai.no/services/ai-ekspert-oslo/): AI development and AI strategy
+- [AI automasjon](https://setai.no/services/ai-automation/): business process automation
+- [SaaS-utvikler Oslo](https://setai.no/services/saas-utvikler-oslo/): SaaS and MVP development
+- [Fullstack-utvikler Oslo](https://setai.no/services/fullstack-utvikler-oslo/): full-stack development
+- [Webdesign Oslo](https://setai.no/services/web-design-oslo/): business websites
+- [SEO Oslo](https://setai.no/services/seo-oslo/): search engine optimization
+- [Nettbutikk](https://setai.no/services/ecommerce/): Shopify / WooCommerce e-commerce
+- [Landing pages](https://setai.no/services/landing-pages/): campaign landing pages
+
+## Industries
+- [Bransjeløsninger](https://setai.no/industries/): restaurant, car wash, beauty clinic, law firm
+
+## About
+- [Prosjekter](https://setai.no/projects/): TrustAI, Realink, Shahnameh, Numerologist AI
+- [Blogg](https://setai.no/blog/): articles on AI, websites, SEO and automation for Norwegian businesses
+
+## Contact
+- Oslo, Norway — khabat.setaei@gmail.com — https://setai.no/#contact
