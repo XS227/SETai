@@ -20,7 +20,7 @@ This file is a plain-language index for AI assistants and crawlers. It does not 
 - [Bransjeløsninger](https://setai.no/industries/): restaurant, car wash, beauty clinic, law firm
 
 ## About
-- [Prosjekter](https://setai.no/projects/): TrustAI, Realink, Shahnameh, Numerologist AI
+- [Prosjekter](https://setai.no/projects/): [REALGRAM](https://setai.no/projects/realgram/) (VPN + game + token economy + messaging ecosystem — ReaLink, Shahnameh, REAL/ZAR), Numerologist AI
 - [Blogg](https://setai.no/blog/): articles on AI, websites, SEO and automation for Norwegian businesses
 
 ## Contact
