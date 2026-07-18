@@ -1,4 +1,31 @@
 <!doctype html><html lang='no'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>REALGRAM — VPN, spill, token og meldingstjeneste i ett økosystem | SETAEI</title><meta name='description' content='Case study: REALGRAM er et helt økosystem — gratis VPN (ReaLink), et tap-to-earn-spill bygget på Shahnameh, en egen token-økonomi (REAL/ZAR) og en meldingstjeneste, bundet sammen av ett prinsipp: jo flere som kobler til, jo sterkere blir nettet for alle.'><meta name='keywords' content='REALGRAM, ReaLink VPN, Shahnameh spill, REAL token, TrustAI, Khabat Setaei prosjekt'><link rel='canonical' href='https://setai.no/projects/realgram/'><meta property='og:type' content='article'><meta property='og:title' content='REALGRAM — VPN, spill, token og meldingstjeneste i ett økosystem'><meta property='og:description' content='Et helt økosystem, ikke en enkelt app: gratis VPN, et tap-to-earn-spill, en token-økonomi og en meldingstjeneste — bundet sammen av at jo flere som kobler til, jo sterkere blir nettet for alle.'><meta property='og:url' content='https://setai.no/projects/realgram/'><meta name='twitter:card' content='summary_large_image'><meta name='google-site-verification' content='WRUluLzpLR0S0ly8fGmWj9uAyz2d6l1rYXXvK7YBfRg'><script async src='https://www.googletagmanager.com/gtag/js?id=G-28EZMGVX60'></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config','G-28EZMGVX60');</script><link rel='stylesheet' href='/seo-expansion.css'><link rel='preconnect' href='https://fonts.googleapis.com'><link rel='preconnect' href='https://fonts.gstatic.com' crossorigin><link href='https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap' rel='stylesheet'>
+<style>
+  :root{--c-vpn:#3987e5;--c-game:#c98500;--c-token:#008300;--c-msg:#d55181}
+  .rg-tabs{display:flex;gap:22px;margin:30px 0 0;border-bottom:1px solid var(--border);flex-wrap:wrap}
+  .rg-tab{background:none;border:none;color:var(--muted);font:600 14px var(--sans);padding:0 0 12px;cursor:pointer;border-bottom:2px solid transparent;transition:color .15s,border-color .15s}
+  .rg-tab:hover{color:var(--text)}
+  .rg-tab[aria-selected="true"]{color:var(--text);border-bottom-color:var(--accent)}
+  .rg-panel{padding-top:6px}
+  .rg-panel[hidden]{display:none}
+  .rg-diagram{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px 20px 14px;margin:22px 0}
+  .rg-diagram svg{width:100%;height:auto;display:block}
+  .rg-diagram figcaption{font-size:12px;color:var(--muted);text-align:center;margin-top:8px}
+  .rg-portals{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin:20px 0}
+  .rg-portal{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+  .rg-portal .rg-dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:7px}
+  .rg-portal h4{margin:0 0 6px;font-family:var(--display);font-size:15px;display:flex;align-items:center}
+  .rg-portal p{margin:0 0 10px;font-size:13px;color:var(--muted);line-height:1.55}
+  .rg-checklist{list-style:none;margin:14px 0 22px;padding:0;display:grid;gap:10px}
+  .rg-checklist li{display:flex;gap:10px;align-items:flex-start;font-size:14px}
+  .rg-checklist .rg-check{color:var(--c-token);flex-shrink:0;margin-top:1px;font-weight:700}
+  .rg-kw-table{width:100%;border-collapse:collapse;margin:14px 0 22px;font-size:13px}
+  .rg-kw-table th,.rg-kw-table td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--border)}
+  .rg-kw-table th{color:var(--muted);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.04em}
+  .tag-row span.c-vpn{border-color:var(--c-vpn);color:#bcd6f8}
+  .tag-row span.c-game{border-color:var(--c-game);color:#f0cb8a}
+  .tag-row span.c-token{border-color:var(--c-token);color:#8fd48f}
+  .tag-row span.c-msg{border-color:var(--c-msg);color:#f0b7cb}
+</style>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -8,7 +35,7 @@
   "author": { "@type": "Person", "name": "Khabat Setaei", "url": "https://www.setai.no" },
   "publisher": { "@type": "Organization", "name": "SETAEI", "logo": { "@type": "ImageObject", "url": "https://www.setai.no/assets/brand/favicon.png" } },
   "datePublished": "2026-07-16",
-  "dateModified": "2026-07-16",
+  "dateModified": "2026-07-18",
   "mainEntityOfPage": { "@type": "WebPage", "@id": "https://setai.no/projects/realgram/" }
 }
 </script>
@@ -37,9 +64,46 @@
   ]
 }
 </script>
-</head><body><header><div class='container nav'><strong>SETAEI</strong><nav class='links'><a href='/'>Hjem</a><a href='/services/'>Tjenester</a><a href='/industries/'>Bransjer</a><a href='/blog/'>Blogg</a><a href='/projects/'>Prosjekter</a><a href='/#contact'>Kontakt</a></nav></div></header><main class='container'><div class='breadcrumb'><a href='/'>Hjem</a> / <a href='/projects/'>projects</a> / REALGRAM</div><div class='hero'><h1>REALGRAM</h1><p>Et helt økosystem, ikke en enkelt app — gratis VPN, et spill, en token-økonomi og en meldingstjeneste, bygget som ett sammenhengende produkt under ett prinsipp: jo flere som kobler til, jo sterkere og billigere blir nettet for alle.</p></div><section class='article-body'><p class='article-meta'>Case study av Khabat Setaei · løpende utvikling, sist oppdatert 16. juli 2026</p>
+</head><body><header><div class='container nav'><strong>SETAEI</strong><nav class='links'><a href='/'>Hjem</a><a href='/services/'>Tjenester</a><a href='/industries/'>Bransjer</a><a href='/blog/'>Blogg</a><a href='/projects/'>Prosjekter</a><a href='/#contact'>Kontakt</a></nav></div></header><main class='container'><div class='breadcrumb'><a href='/'>Hjem</a> / <a href='/projects/'>projects</a> / REALGRAM</div><div class='hero'><h1>REALGRAM</h1><p>Et helt økosystem, ikke en enkelt app — gratis VPN, et spill, en token-økonomi og en meldingstjeneste, bygget som ett sammenhengende produkt under ett prinsipp: jo flere som kobler til, jo sterkere og billigere blir nettet for alle.</p></div>
 
-<p>De fleste prosjekter har én bruker-flate og ett svar på «hva gjør det». REALGRAM har fire — en VPN-app, et spill, en token-økonomi og en meldingstjeneste — men bare ett svar på hvorfor: å gjøre gratis, robust internettilgang til noe som blir <em>bedre</em> jo flere som bruker det, i stedet for noe som blir dårligere. Det er den ideen hele arkitekturen er bygget rundt, og denne siden går gjennom hvordan.</p>
+<div class="rg-tabs" role="tablist" aria-label="REALGRAM case study-seksjoner">
+  <button class="rg-tab" role="tab" id="rg-tabbtn-oversikt" aria-controls="rg-tab-oversikt" aria-selected="true">Oversikt</button>
+  <button class="rg-tab" role="tab" id="rg-tabbtn-utvikling" aria-controls="rg-tab-utvikling" aria-selected="false" tabindex="-1">Utvikling</button>
+  <button class="rg-tab" role="tab" id="rg-tabbtn-seo" aria-controls="rg-tab-seo" aria-selected="false" tabindex="-1">SEO</button>
+</div>
+
+<section class='article-body'><p class='article-meta'>Case study av Khabat Setaei · løpende utvikling, sist oppdatert 18. juli 2026</p>
+
+<div id="rg-tab-oversikt" class="rg-panel" role="tabpanel" aria-labelledby="rg-tabbtn-oversikt">
+
+<p>De fleste prosjekter har én bruker-flate og ett svar på «hva gjør det». REALGRAM har fire — en VPN-app, et spill, en token-økonomi og en meldingstjeneste — men bare ett svar på hvorfor: å gjøre gratis, robust internettilgang til noe som blir <em>bedre</em> jo flere som bruker det, i stedet for noe som blir dårligere. Det er den ideen hele arkitekturen er bygget rundt.</p>
+
+<figure class="rg-diagram">
+<svg viewBox="0 0 640 390" role="img" aria-labelledby="rgEcoTitle rgEcoDesc">
+<title id="rgEcoTitle">REALGRAM-økosystemet</title>
+<desc id="rgEcoDesc">Fire produkter — VPN, spill, token og meldingstjeneste — koblet til en delt identitet i midten.</desc>
+<line x1="320" y1="185" x2="110" y2="185" stroke="#3987e5" stroke-width="2" opacity=".55"/>
+<line x1="320" y1="185" x2="320" y2="55" stroke="#c98500" stroke-width="2" opacity=".55"/>
+<line x1="320" y1="185" x2="530" y2="185" stroke="#008300" stroke-width="2" opacity=".55"/>
+<line x1="320" y1="185" x2="320" y2="315" stroke="#d55181" stroke-width="2" opacity=".55"/>
+<circle cx="320" cy="185" r="52" fill="#0e1018" stroke="#f47c20" stroke-width="2"/>
+<text x="320" y="181" text-anchor="middle" font-size="13" font-weight="700" fill="#e6e8f2">REALGRAM</text>
+<text x="320" y="197" text-anchor="middle" font-size="9" fill="#8b93ab">SSO · RS256 JWT</text>
+<circle cx="110" cy="185" r="40" fill="#3987e5" fill-opacity=".16" stroke="#3987e5" stroke-width="2"/>
+<text x="110" y="189" text-anchor="middle" font-size="12" font-weight="700" fill="#e6e8f2">VPN</text>
+<text x="110" y="241" text-anchor="middle" font-size="10" fill="#8b93ab">ReaLink</text>
+<circle cx="320" cy="55" r="40" fill="#c98500" fill-opacity=".16" stroke="#c98500" stroke-width="2"/>
+<text x="320" y="59" text-anchor="middle" font-size="12" font-weight="700" fill="#e6e8f2">Spill</text>
+<text x="320" y="111" text-anchor="middle" font-size="10" fill="#8b93ab">Shahnameh</text>
+<circle cx="530" cy="185" r="40" fill="#008300" fill-opacity=".16" stroke="#008300" stroke-width="2"/>
+<text x="530" y="189" text-anchor="middle" font-size="12" font-weight="700" fill="#e6e8f2">Token</text>
+<text x="530" y="241" text-anchor="middle" font-size="10" fill="#8b93ab">REAL / ZAR</text>
+<circle cx="320" cy="315" r="40" fill="#d55181" fill-opacity=".16" stroke="#d55181" stroke-width="2"/>
+<text x="320" y="319" text-anchor="middle" font-size="12" font-weight="700" fill="#e6e8f2">Meldinger</text>
+<text x="320" y="371" text-anchor="middle" font-size="10" fill="#8b93ab">Klan-chat</text>
+</svg>
+<figcaption>Ett produkt, fire flater — samme bruker-ID og SSO i midten binder dem sammen.</figcaption>
+</figure>
 
 <h2>Helheten: fire deler, én identitet</h2>
 <p>REALGRAM er navet. Under det ligger fire komponenter som alle deler samme bruker-ID og samme SSO (single sign-on), slik at det som skjer i ett hjørne av økosystemet umiddelbart teller i et annet:</p>
@@ -55,7 +119,7 @@
 <p>Den første sesongen av spillet er bevisst et eksperiment, ikke et ferdig produkt: kan et tap-to-earn-spill bygget på ekte kulturell IP — det persiske eposet Shahnameh, «Kongenes bok» — faktisk lære spillere noe om historien det er bygget på, samtidig som det driver en fungerende token-økonomi? Spillmekanikken (helter, kapitler, en AI-drevet fortellerfigur kalt Hakim) er designet slik at fremgang i spillet henger sammen med at spilleren faktisk møter innholdet, ikke bare klikker seg gjennom det. Læringen er ikke et pålagt sidespor — den er bakt inn i det spilleren uansett må gjøre for å komme videre.</p>
 
 <h2>Klan-systemet — referral som bygger fellesskap, ikke bare vekst</h2>
-<p>Standard referral-programmer gir én engangsbonus og glemmer deg. REALGRAMs system er bygget annerledes: inviterer du noen, får du en løpende prosentandel av det de bruker — ikke bare når de blir med, men <em>for alltid</em>, så lenge de er aktive. Rangstigen (Warrior → Pahlavan → Champion → King, ved 3, 6 og 10 verifiserte invitasjoner) gjør det synlig og sosialt, med en «klan»-identitet avledet direkte fra bruker-ID-en, slik at folk du har invitert leser som et fellesskap du er en del av, ikke en liste med tall.</p>
+<p>Standard referral-programmer gir én engangsbonus og glemmer deg. REALGRAMs system er bygget annerledes: inviterer du noen, får du en løpende prosentandel av det de bruker — ikke bare når de blir med, men <em>for alltid</em>, så lenge de er aktive. Rangstigen (Warrior → Pahlavan → Champion → King, ved 3, 6 og 10 verifiserte invitasjoner) gjør det synlig og sosialt, med en «klan»-identitet avledet direkte fra bruker-ID-en, slik at folk du har invitert leser som et fellesskap du er en del av, ikke en liste med tall. <a href="#rg-tab-utvikling" data-rg-goto="rg-tabbtn-utvikling">Se rangstigen visualisert i Utvikling-fanen →</a></p>
 
 <h2>Rettferdig økonomi: reklame og gratis kvote som bærebjelke</h2>
 <p>Prosjektet er humanitært motivert — gratis, sensurresistent internett til folk som trenger det mest — men gratis må fortsatt finansieres. Løsningen er en bevisst, gjennomsiktig byttehandel: se en kort reklame, få ekstra gratis VPN-data med en gang. Ingen skjulte abonnementer, ingen data solgt bak kulissene — annonseinntekten er selve mekanismen som holder den gratis kvoten bærekraftig, synlig for brukeren som nettopp det. Denne reklame- og kvote-modellen er selve den økonomiske bunnplaten alt det andre (spillet, token-økonomien, referral) bygger videre på.</p>
@@ -71,27 +135,152 @@
 <li><strong>Testere og tidlige brukere</strong> — en dedikert beta-gruppe (inkludert premium-testkontoer) som får tidlig tilgang til nye noder og funksjoner, som den kommende Starlink-satellittnoden, før bred utrulling.</li>
 </ul>
 
-<h2>Teknisk arkitektur</h2>
-<p>REALGRAM er ikke én kodebase — det er flere systemer som snakker sammen over definerte kontrakter:</p>
+</div>
+
+<div id="rg-tab-utvikling" class="rg-panel" role="tabpanel" aria-labelledby="rg-tabbtn-utvikling" hidden>
+
+<p>REALGRAM er ikke én kodebase — det er flere systemer som snakker sammen over definerte kontrakter. To uavhengige team/agenter drifter og bygger videre på hver sin del parallelt, koordinert gjennom delte API-kontrakter — samme type arkitekturdisiplin som beskrives i <a href='/services/saas-utvikler-oslo/'>SaaS-utvikling</a> hos SETAEI, bare anvendt på et eget produkt i stedet for et kundeoppdrag.</p>
+
+<h2>De fire portalene</h2>
+<div class="rg-portals">
+<div class="rg-portal">
+<h4><span class="rg-dot" style="background:#f47c20"></span>Mobilapp</h4>
+<p>React Native-appen for ReaLink, med en egen tab for Shahnameh-spillet lastet i WebView, autentisert via samme SSO-token som resten av økosystemet.</p>
+<div class="tag-row"><span class="c-vpn">React Native</span><span>WebView</span><span>Delt SSO</span></div>
+</div>
+<div class="rg-portal">
+<h4><span class="rg-dot" style="background:#3987e5"></span>VPN-panelet</h4>
+<p>PHP-basert. Håndterer noder, kvoter, referral-regnskap og annonseintegrasjon (AdMob), og eier enhetens identitet.</p>
+<div class="tag-row"><span class="c-vpn">PHP</span><span class="c-vpn">Noder &amp; kvoter</span><span>AdMob</span></div>
+</div>
+<div class="rg-portal">
+<h4><span class="rg-dot" style="background:#c98500"></span>Shahnameh-backenden</h4>
+<p>Node.js/MongoDB. Eier spillstaten og ZAR-økonomien, og er identitetsutstederen (RS256 JWT) hele økosystemet stoler på.</p>
+<div class="tag-row"><span class="c-game">Node.js</span><span class="c-game">MongoDB</span><span>JWT-utsteder</span></div>
+</div>
+<div class="rg-portal">
+<h4><span class="rg-dot" style="background:#3987e5"></span>VPN-transporten</h4>
+<p>VLESS+Reality som primærprotokoll (ser ut som vanlig TLS 1.3 for dyp pakkeinspeksjon), med et eget WireGuard-basert eksperiment for en Starlink-satellitt-utgangsnode.</p>
+<div class="tag-row"><span class="c-vpn">VLESS+Reality</span><span>WireGuard (eksperiment)</span><span>Starlink-node</span></div>
+</div>
+</div>
+
+<h2>Klan-rangstigen i tall</h2>
+<p>Referral-systemet er ordinært, ikke tilfeldig: fire nivåer, hver med en eksplisitt terskel i verifiserte invitasjoner, og en løpende (ikke engangs-) prosentandel som følger med hvert nivå.</p>
+<figure class="rg-diagram">
+<svg viewBox="0 0 640 220" role="img" aria-labelledby="rgTierTitle rgTierDesc">
+<title id="rgTierTitle">Klan-rangstige</title>
+<desc id="rgTierDesc">Fire rangnivåer basert på antall verifiserte invitasjoner: 0, 3, 6 og 10.</desc>
+<line x1="20" y1="180" x2="620" y2="180" stroke="#1a1f30" stroke-width="1"/>
+<rect x="40" y="130" width="110" height="50" rx="4" fill="#6da7ec"/>
+<rect x="190" y="95" width="110" height="85" rx="4" fill="#3987e5"/>
+<rect x="340" y="60" width="110" height="120" rx="4" fill="#256abf"/>
+<rect x="490" y="25" width="110" height="155" rx="4" fill="#184f95"/>
+<text x="95" y="120" text-anchor="middle" font-size="12" font-weight="700" fill="#e6e8f2">Warrior</text>
+<text x="95" y="200" text-anchor="middle" font-size="10" fill="#8b93ab">0 invitasjoner</text>
+<text x="245" y="85" text-anchor="middle" font-size="12" font-weight="700" fill="#e6e8f2">Pahlavan</text>
+<text x="245" y="200" text-anchor="middle" font-size="10" fill="#8b93ab">3+ invitasjoner</text>
+<text x="395" y="50" text-anchor="middle" font-size="12" font-weight="700" fill="#e6e8f2">Champion</text>
+<text x="395" y="200" text-anchor="middle" font-size="10" fill="#8b93ab">6+ invitasjoner</text>
+<text x="545" y="15" text-anchor="middle" font-size="12" font-weight="700" fill="#e6e8f2">King</text>
+<text x="545" y="200" text-anchor="middle" font-size="10" fill="#8b93ab">10+ invitasjoner</text>
+</svg>
+<figcaption>Rangen er synlig og sosial — men fordelen (løpende andel av det de inviterte bruker) følger med på alle fire nivåer, ikke bare toppen.</figcaption>
+</figure>
+
+<h2>Hvordan en krone/ZAR faktisk beveger seg</h2>
+<p>To uavhengige inntektsveier mater samme økonomi, og møtes i REAL-tokenet:</p>
+<figure class="rg-diagram">
+<svg viewBox="0 0 700 210" role="img" aria-labelledby="rgFlowTitle rgFlowDesc">
+<title id="rgFlowTitle">Verdiflyt i REALGRAM</title>
+<desc id="rgFlowDesc">Å se reklame gir direkte VPN-kvote. Å spille Shahnameh gir ZAR, som konverteres til REAL, som kan løses inn mot VPN-kvote eller andre goder.</desc>
+<rect x="20" y="30" width="160" height="50" rx="8" fill="#0e1018" stroke="#8b93ab" stroke-width="1.5"/>
+<text x="100" y="60" text-anchor="middle" font-size="12" fill="#e6e8f2">Se reklame</text>
+<line x1="185" y1="55" x2="235" y2="55" stroke="#8b93ab" stroke-width="1.5"/>
+<polygon points="235,55 226,50 226,60" fill="#8b93ab"/>
+<rect x="240" y="30" width="200" height="50" rx="8" fill="#3987e5" fill-opacity=".14" stroke="#3987e5" stroke-width="1.5"/>
+<text x="340" y="60" text-anchor="middle" font-size="12" fill="#e6e8f2">+ Gratis VPN-kvote</text>
+<rect x="20" y="140" width="160" height="50" rx="8" fill="#c98500" fill-opacity=".14" stroke="#c98500" stroke-width="1.5"/>
+<text x="100" y="170" text-anchor="middle" font-size="12" fill="#e6e8f2">Spill Shahnameh</text>
+<line x1="185" y1="165" x2="215" y2="165" stroke="#8b93ab" stroke-width="1.5"/>
+<polygon points="215,165 206,160 206,170" fill="#8b93ab"/>
+<rect x="220" y="140" width="80" height="50" rx="8" fill="#c98500" fill-opacity=".18" stroke="#c98500" stroke-width="1.5"/>
+<text x="260" y="170" text-anchor="middle" font-size="12" font-weight="700" fill="#e6e8f2">ZAR</text>
+<line x1="305" y1="165" x2="335" y2="165" stroke="#8b93ab" stroke-width="1.5"/>
+<polygon points="335,165 326,160 326,170" fill="#8b93ab"/>
+<rect x="340" y="140" width="80" height="50" rx="8" fill="#008300" fill-opacity=".18" stroke="#008300" stroke-width="1.5"/>
+<text x="380" y="170" text-anchor="middle" font-size="12" font-weight="700" fill="#e6e8f2">REAL</text>
+<line x1="425" y1="165" x2="455" y2="165" stroke="#8b93ab" stroke-width="1.5"/>
+<polygon points="455,165 446,160 446,170" fill="#8b93ab"/>
+<rect x="460" y="140" width="220" height="50" rx="8" fill="#3987e5" fill-opacity=".14" stroke="#3987e5" stroke-width="1.5"/>
+<text x="570" y="163" text-anchor="middle" font-size="12" fill="#e6e8f2">Løs inn: VPN-kvote</text>
+<text x="570" y="178" text-anchor="middle" font-size="10" fill="#8b93ab">eller andre økosystemgoder</text>
+</svg>
+<figcaption>ZAR → REAL er et bevisst, eget steg — ikke automatisk ved hver handling. Det holder spillets tempo adskilt fra token-økonomien.</figcaption>
+</figure>
+
+<h2>Status og neste steg</h2>
 <ul>
-<li><strong>Mobilapp</strong> (React Native) for ReaLink, med en egen tab for Shahnameh-spillet lastet i WebView, autentisert via samme SSO-token.</li>
-<li><strong>VPN-panelet</strong> (PHP) håndterer noder, kvoter, referral-regnskap og annonseintegrasjon (AdMob), og eier enhetens identitet.</li>
-<li><strong>Shahnameh-backenden</strong> (Node.js/MongoDB) eier spillstaten, ZAR-økonomien, og er identitetsutstederen (RS256 JWT) hele økosystemet stoler på.</li>
-<li><strong>VPN-transporten</strong> er VLESS+Reality som primærprotokoll (ser ut som vanlig TLS 1.3-trafikk for dyp pakkeinspeksjon), med et eget WireGuard-basert eksperiment for å legge til en Starlink-satellitt-utgangsnode for brukere utenfor rekkevidde av vanlig infrastruktur.</li>
+<li><strong>Starlink-noden</strong> (WireGuard-basert eksperiment) er nær ferdigstillelse, for brukere utenfor rekkevidde av vanlig infrastruktur.</li>
+<li><strong>Onboarding og spillbalanse</strong> justeres løpende basert på faktisk brukerdata fra Season 1.</li>
+<li><strong>Klan-systemet og annonseflatene</strong> finjusteres iterativt — dette er et system i aktiv drift, ikke et avsluttet leveranseprosjekt.</li>
 </ul>
-<p>To uavhengige team/agenter drifter og bygger videre på hver sin del av dette parallelt, koordinert gjennom delte API-kontrakter — samme type arkitekturdisiplin som beskrives i <a href='/services/saas-utvikler-oslo/'>SaaS-utvikling</a> hos SETAEI, bare anvendt på et eget produkt i stedet for et kundeoppdrag.</p>
 
-<h2>Neste steg</h2>
-<p>Økosystemet er i aktiv utvikling — onboarding, spillbalanse, klan-systemet og annonseflatene justeres løpende basert på faktisk brukerdata, og Starlink-noden er nær ferdigstillelse. Vil du se hvordan et system som dette faktisk henger sammen, fra idé til noe som kjører i produksjon?</p>
+</div>
 
-<dl class='faq'>
-<dt>Hva er REALGRAM?</dt>
-<dd>Et samlet økosystem av fire deler som deler én identitet og én økonomi: ReaLink (gratis VPN), Shahnameh (tap-to-earn-spill), REAL/ZAR (token-økonomien) og en meldingstjeneste. Ikke fire separate produkter — ett produkt med fire flater.</dd>
-<dt>Hvordan tjener brukere penger eller kvote?</dt>
-<dd>Ved å spille Shahnameh (ZAR), se en kort reklame for ekstra gratis VPN-kvote, eller invitere venner gjennom klan-/referral-systemet for en løpende andel av det de bruker.</dd>
-<dt>Hva er forskjellen på ZAR og REAL?</dt>
-<dd>ZAR er Shahnamehs egen spillvaluta. REAL er økosystemets overordnede token. ZAR konverteres til REAL som et eget, bevisst steg.</dd>
-</dl>
+<div id="rg-tab-seo" class="rg-panel" role="tabpanel" aria-labelledby="rg-tabbtn-seo" hidden>
+
+<p>Denne siden er selv et lite SEO-case: samme tekniske grunnarbeid som resten av setai.no ligger under den, og innholdet er strukturert for å bli forstått av søkemotorer så vel som mennesker — ikke bare markedsføringstekst med et par nøkkelord dyttet inn.</p>
+
+<h2>Teknisk fundament</h2>
+<ul class="rg-checklist">
+<li><span class="rg-check">✓</span><span><strong>Unik kanonisk URL</strong> — <code>https://setai.no/projects/realgram/</code>, ingen www/non-www-duplikat (fikset sitewide i den tekniske indekseringsrevisjonen).</span></li>
+<li><span class="rg-check">✓</span><span><strong>Strukturert data</strong> — Article, FAQPage og BreadcrumbList (schema.org) ligger i sidens <code>&lt;head&gt;</code>, verifiserbart i kildekoden.</span></li>
+<li><span class="rg-check">✓</span><span><strong>Ekte 404, ikke soft-404</strong> — ugyldige URL-er på setai.no gir nå ekte <code>404</code> i stedet for en falsk <code>200</code> med forsideinnhold, sitewide nginx-fiks.</span></li>
+<li><span class="rg-check">✓</span><span><strong>I sitemap.xml</strong> — del av de 25 URL-ene på setai.no som alle er verifisert <code>200 OK</code>.</span></li>
+<li><span class="rg-check">✓</span><span><strong>robots.txt tillater indeksering</strong> — ingen <code>Disallow</code>-regel treffer <code>/projects/*</code>.</span></li>
+<li><span class="rg-check">✓</span><span><strong>Intern lenking</strong> — lenket fra forsidens prosjektgrid, fra <code>/projects/</code>-oversikten, og lenker selv videre til <code>/services/saas-utvikler-oslo/</code>.</span></li>
+</ul>
+
+<h2>Intern lenkestruktur</h2>
+<figure class="rg-diagram">
+<svg viewBox="0 0 640 140" role="img" aria-labelledby="rgLinkTitle rgLinkDesc">
+<title id="rgLinkTitle">Intern lenkevei til REALGRAM</title>
+<desc id="rgLinkDesc">Forsiden lenker til prosjektoversikten, som lenker til REALGRAM case-studien, som lenker videre til SaaS-utvikling-tjenesten.</desc>
+<rect x="15" y="45" width="135" height="50" rx="8" fill="#0e1018" stroke="#8b93ab" stroke-width="1.5"/>
+<text x="82" y="75" text-anchor="middle" font-size="12" fill="#e6e8f2">Forside</text>
+<line x1="150" y1="70" x2="175" y2="70" stroke="#8b93ab" stroke-width="1.5"/>
+<polygon points="175,70 166,65 166,75" fill="#8b93ab"/>
+<rect x="180" y="45" width="135" height="50" rx="8" fill="#0e1018" stroke="#8b93ab" stroke-width="1.5"/>
+<text x="247" y="75" text-anchor="middle" font-size="12" fill="#e6e8f2">/projects/</text>
+<line x1="315" y1="70" x2="335" y2="70" stroke="#8b93ab" stroke-width="1.5"/>
+<polygon points="335,70 326,65 326,75" fill="#8b93ab"/>
+<rect x="340" y="45" width="135" height="50" rx="8" fill="#0e1018" stroke="#f47c20" stroke-width="2"/>
+<text x="407" y="75" text-anchor="middle" font-size="12" font-weight="700" fill="#e6e8f2">REALGRAM</text>
+<line x1="475" y1="70" x2="495" y2="70" stroke="#8b93ab" stroke-width="1.5"/>
+<polygon points="495,70 486,65 486,75" fill="#8b93ab"/>
+<rect x="500" y="45" width="135" height="50" rx="8" fill="#0e1018" stroke="#8b93ab" stroke-width="1.5"/>
+<text x="567" y="68" text-anchor="middle" font-size="11" fill="#e6e8f2">SaaS-utvikling</text>
+<text x="567" y="82" text-anchor="middle" font-size="9" fill="#8b93ab">/services/</text>
+</svg>
+<figcaption>Én sti ned fra forsiden, og videre til en relevant tjenesteside — ikke en blindvei.</figcaption>
+</figure>
+
+<h2>Nøkkelord og hensikt</h2>
+<table class="rg-kw-table">
+<thead><tr><th>Fokusord</th><th>Målside</th><th>Søkeintensjon</th></tr></thead>
+<tbody>
+<tr><td>REALGRAM</td><td>/projects/realgram/</td><td>Merkevare / case-search</td></tr>
+<tr><td>ReaLink VPN</td><td>/projects/realgram/</td><td>Produkt-/funksjonssøk</td></tr>
+<tr><td>Shahnameh spill</td><td>/projects/realgram/</td><td>Produkt-/funksjonssøk</td></tr>
+<tr><td>REAL token</td><td>/projects/realgram/</td><td>Produkt-/funksjonssøk</td></tr>
+<tr><td>SaaS-arkitektur / multi-system</td><td>/services/saas-utvikler-oslo/</td><td>Tjenestesøk (via intern lenke)</td></tr>
+</tbody>
+</table>
+
+<div class="callout"><strong>Om grunnarbeidet:</strong> setai.no gikk gjennom en full teknisk indekseringsrevisjon (www/non-www-duplikater fjernet, soft-404 erstattet med ekte 404, sitemap regenerert og verifisert 25/25 <code>200 OK</code>). Prosjektsidene, inkludert denne, arver dette fundamentet — SEO-arbeidet på REALGRAM handler derfor om innholdsstruktur og intern lenking oppå et allerede sunt teknisk grunnlag, ikke om å fikse grunnleggende indekseringsproblemer.</div>
+
+</div>
 
 <div class='tag-row'><span>VPN</span><span>Web3-spill</span><span>Token-økonomi</span><span>SaaS-arkitektur</span><span>Humanitær teknologi</span></div>
 
@@ -106,10 +295,44 @@
 <h3>Relatert</h3>
 <ul>
 <li><a href='/projects/'>Alle prosjekter</a></li>
+<li><a href='/blog/realgram-okosystem-vpn-spill-token/'>Bloggartikkel: REALGRAM — hva det er og hvorfor det er bygget slik</a></li>
 <li><a href='/services/saas-utvikler-oslo/'>SaaS-utvikling hos SETAEI</a></li>
 </ul>
+
+<dl class='faq'>
+<dt>Hva er REALGRAM?</dt>
+<dd>Et samlet økosystem av fire deler som deler én identitet og én økonomi: ReaLink (gratis VPN), Shahnameh (tap-to-earn-spill), REAL/ZAR (token-økonomien) og en meldingstjeneste. Ikke fire separate produkter — ett produkt med fire flater.</dd>
+<dt>Hvordan tjener brukere penger eller kvote?</dt>
+<dd>Ved å spille Shahnameh (ZAR), se en kort reklame for ekstra gratis VPN-kvote, eller invitere venner gjennom klan-/referral-systemet for en løpende andel av det de bruker.</dd>
+<dt>Hva er forskjellen på ZAR og REAL?</dt>
+<dd>ZAR er Shahnamehs egen spillvaluta. REAL er økosystemets overordnede token. ZAR konverteres til REAL som et eget, bevisst steg.</dd>
+</dl>
 
 <h3>Ta kontakt</h3>
 <p><a class='cta' href='/#contact'>Snakk med SETAEI</a> &nbsp; <a class='cta' href='/services/saas-utvikler-oslo/'>Se SaaS-utvikling →</a></p>
 
-</section></main><footer><div class='container'>© SETAEI · Oslo</div></footer></body></html>
+</section></main><footer><div class='container'>© SETAEI · Oslo</div></footer>
+<script>
+(function(){
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('.rg-tab'));
+  var panels = Array.prototype.slice.call(document.querySelectorAll('.rg-panel'));
+  function activate(tab){
+    tabs.forEach(function(t){ t.setAttribute('aria-selected','false'); t.tabIndex = -1; });
+    panels.forEach(function(p){ p.hidden = true; });
+    tab.setAttribute('aria-selected','true');
+    tab.tabIndex = 0;
+    document.getElementById(tab.getAttribute('aria-controls')).hidden = false;
+  }
+  tabs.forEach(function(tab){
+    tab.addEventListener('click', function(){ activate(tab); });
+  });
+  document.querySelectorAll('[data-rg-goto]').forEach(function(link){
+    link.addEventListener('click', function(e){
+      e.preventDefault();
+      var btn = document.getElementById(link.getAttribute('data-rg-goto'));
+      if (btn) { activate(btn); btn.focus(); btn.scrollIntoView({behavior:'smooth', block:'start'}); }
+    });
+  });
+})();
+</script>
+</body></html>
