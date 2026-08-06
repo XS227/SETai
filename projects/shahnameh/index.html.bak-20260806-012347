@@ -1,0 +1,1348 @@
+<!doctype html><html lang='no'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>Shahnameh — hvordan vi bygger et spill fra Ferdowsis Boken om kongene | SETAEI</title><meta name='description' content='Case study: hvordan SETAEI bygger Shahnameh-spillet i RealGram — fra Ferdowsis egen historie og en kildegransket kunnskapsbase, via AI-genererte karakterer og en Rostam &amp; Sohrab-kortfilm, til et live tap-to-earn-spill.'><meta name='keywords' content='Shahnameh, Ferdowsi, RealGram, Rostam og Sohrab, Higgsfield, AI-film, Khabat Setaei prosjekt'><link rel='canonical' href='https://setai.no/projects/shahnameh/'><meta property='og:type' content='article'><meta property='og:title' content='Shahnameh — hvordan vi bygger et spill fra Boken om kongene'><meta property='og:description' content='Fra Ferdowsis egen historie til AI-genererte karakterer, en Rostam &amp; Sohrab-kortfilm og et live spill i RealGram.'><meta property='og:url' content='https://setai.no/projects/shahnameh/'><meta name='twitter:card' content='summary_large_image'><meta name='google-site-verification' content='WRUluLzpLR0S0ly8fGmWj9uAyz2d6l1rYXXvK7YBfRg'><script async src='https://www.googletagmanager.com/gtag/js?id=G-28EZMGVX60'></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config','G-28EZMGVX60');</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Hjem", "item": "https://setai.no/" },
+    { "@type": "ListItem", "position": 2, "name": "Prosjekter", "item": "https://setai.no/projects/" },
+    { "@type": "ListItem", "position": 3, "name": "Shahnameh", "item": "https://setai.no/projects/shahnameh/" }
+  ]
+}
+</script>
+<style>
+  @font-face { font-family:'Fraunces'; font-style:italic; font-weight:500; src:url(fonts/fraunces-italic-500.woff2) format('woff2'); font-display:swap; }
+  @font-face { font-family:'Fraunces'; font-style:normal; font-weight:700; src:url(fonts/fraunces-bold-700.woff2) format('woff2'); font-display:swap; }
+  @font-face { font-family:'Source Serif 4'; font-style:normal; font-weight:400; src:url(fonts/source-serif-400.woff2) format('woff2'); font-display:swap; }
+  @font-face { font-family:'Source Serif 4'; font-style:italic; font-weight:400; src:url(fonts/source-serif-400italic.woff2) format('woff2'); font-display:swap; }
+
+  :root{
+    /* ---- illuminated-manuscript light system ---- */
+    --vellum:#f4ecd8; --vellum-deep:#e8dcc0; --vellum-card:#faf4e6;
+    --ink:#2b2016; --ink-soft:#6b5c48; --ink-faint:#a3937a;
+    --gold:#a97a2f; --gold-bright:#c99a45; --gold-dim:#8a6626;
+    --lapis:#1e4a7a; --lapis-bright:#3d74ac; --lapis-dim:#153355;
+    --ember:#9c3f26; --ember-bright:#b85a3c;
+    --line: rgba(169,122,47,.32);
+    --shadow: 0 24px 50px -30px rgba(43,32,22,.35);
+    --serif-display:'Fraunces', Georgia, 'Times New Roman', serif;
+    --serif-body:'Source Serif 4', Georgia, 'Times New Roman', serif;
+    --sans:'Inter',system-ui,sans-serif;
+    --persian:'Vazirmatn','Noto Naskh Arabic','Noto Sans Arabic',Tahoma,serif;
+    color-scheme: light;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  html.no-smooth{scroll-behavior:auto;}
+  body{
+    margin:0; background:var(--vellum); color:var(--ink);
+    font-family:var(--serif-body); font-size:1.06rem; line-height:1.7;
+    overflow-x:hidden; -webkit-font-smoothing:antialiased;
+  }
+  /* paper-grain texture, same signature device as the rest of setai.no */
+  body::before{content:'';position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.045;mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size:140px 140px}
+  img{max-width:100%; display:block;}
+  a{color:inherit;}
+  ::selection{background:var(--gold); color:var(--vellum);}
+
+  h1,h2,h3{font-family:var(--serif-display); font-weight:700; text-wrap:balance; margin:0; color:var(--ink);}
+  .eyebrow{
+    font-family:var(--serif-display); font-style:italic; font-weight:500;
+    letter-spacing:.14em; text-transform:uppercase; font-size:.78rem;
+    color:var(--ember); margin:0 0 .9rem;
+  }
+  .eyebrow.gold{color:var(--gold-dim);}
+  .eyebrow.lapis{color:var(--lapis);}
+
+  .wrap{max-width:1180px; margin:0 auto; padding:0 clamp(1.25rem,4vw,3rem); position:relative; z-index:2;}
+  .prose{max-width:640px;}
+  .prose p{margin:0 0 1.15em;}
+  .prose p:last-child{margin-bottom:0;}
+
+  /* ---------- kicker note-boxes, color-coded by meaning ---------- */
+  .note-box{ margin-top:1.4rem; padding:1rem 1.2rem; border-left:2.5px solid var(--lapis); background:rgba(30,74,122,.06);
+    font-size:.9rem; color:var(--ink-soft); border-radius:0 8px 8px 0; }
+  .note-box b{ color:var(--lapis); font-weight:600; }
+  .note-box.process{ border-left-color:var(--ember); background:rgba(156,63,38,.06); }
+  .note-box.process b{ color:var(--ember); }
+  .note-box.canon{ border-left-color:var(--gold); background:rgba(169,122,47,.08); }
+  .note-box.canon b{ color:var(--gold-dim); }
+
+  /* ---------- setai.no site shell — light, matches homepage ---------- */
+  .setai-shell{ --s-bg:#faf8f4; --s-card:#fff; --s-border:#e6e1d6; --s-text:#211e19; --s-muted:#756e62; --s-accent:#a54a24;
+    font-family:var(--sans); }
+  header.setai-header{ position:fixed; top:0; left:0; right:0; z-index:200; background:rgba(250,248,244,.92); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--s-border); opacity:0; transform:translateY(-100%); transition:opacity .5s ease, transform .5s ease; pointer-events:none; }
+  header.setai-header.show{ opacity:1; transform:translateY(0); pointer-events:auto; }
+  .setai-header .setai-nav{ max-width:1080px; margin:0 auto; padding:16px 24px; display:flex; justify-content:space-between; align-items:center; }
+  .setai-header strong{ font-family:'Space Grotesk','Inter',sans-serif; font-size:18px; font-weight:700; letter-spacing:.14em; color:var(--s-text); }
+  .setai-links{ display:flex; align-items:center; gap:28px; flex-wrap:wrap; }
+  .setai-links a{ color:var(--s-muted); font-size:13px; font-weight:500; letter-spacing:.04em; text-decoration:none; transition:color .2s; }
+  .setai-links a:hover{ color:var(--s-text); }
+  .setai-links a:last-child{ color:var(--s-accent); padding:7px 17px; border-radius:6px; border:1px solid rgba(165,74,36,.3); transition:all .2s; }
+  .setai-links a:last-child:hover{ background:rgba(165,74,36,.07); border-color:var(--s-accent); color:var(--s-accent); }
+  .setai-toggle{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+  .setai-burger, .setai-close{ display:none; }
+  @media (max-width:680px){
+    .setai-burger{ display:flex; flex-direction:column; gap:5px; cursor:pointer; padding:6px; margin:-6px; }
+    .setai-burger span{ display:block; width:22px; height:2px; background:var(--s-text); border-radius:2px; }
+    .setai-links{ position:fixed; inset:0; z-index:250; background:rgba(250,248,244,.98); backdrop-filter:blur(14px);
+      flex-direction:column; align-items:center; justify-content:center; gap:28px;
+      opacity:0; visibility:hidden; transform:translateY(-10px); transition:opacity .25s ease,transform .25s ease,visibility .25s; }
+    .setai-links a{ font-family:'Space Grotesk','Inter',sans-serif; font-size:22px; font-weight:600; color:var(--s-text); }
+    .setai-links a:last-child{ border:none; padding:0; border-radius:0; color:var(--s-accent); }
+    .setai-toggle:checked ~ .setai-links{ opacity:1; visibility:visible; transform:translateY(0); }
+    .setai-close{ display:block; position:fixed; top:18px; right:24px; z-index:251; font-size:26px; line-height:1; color:var(--s-text); cursor:pointer; opacity:0; pointer-events:none; transition:opacity .2s; }
+    .setai-toggle:checked ~ .setai-close{ opacity:1; pointer-events:auto; }
+  }
+  .setai-breadcrumb{ max-width:1080px; margin:0 auto; padding:8px 24px 0; font-size:13px; color:var(--s-muted); position:relative; z-index:2; }
+  .setai-breadcrumb a{ color:var(--s-muted); text-decoration:none; }
+  .setai-breadcrumb a:hover{ color:var(--s-accent); }
+  .setai-footer{ border-top:1px solid var(--s-border); padding:22px 24px; text-align:center; font-size:13px; color:var(--s-muted); position:relative; z-index:2; background:var(--s-bg); }
+  .setai-footer a{ color:var(--s-accent); text-decoration:none; }
+
+  /* ---------- hero — pure video + text, no chrome ---------- */
+  #hero{
+    position:relative; min-height:100svh; display:flex; flex-direction:column;
+    align-items:center; justify-content:center; text-align:center; overflow:hidden;
+    padding:6rem 1.5rem 4rem; background:#141009;
+  }
+  .hero-video{ position:absolute; inset:0; z-index:0; width:100%; height:100%; object-fit:cover; }
+  .hero-vignette{ position:absolute; inset:0; z-index:1; pointer-events:none;
+    background:
+      linear-gradient(180deg, rgba(20,16,9,.58) 0%, rgba(20,16,9,.22) 30%, rgba(20,16,9,.4) 68%, rgba(244,236,216,.96) 100%),
+      radial-gradient(ellipse at 50% 40%, rgba(20,16,9,.04) 0%, rgba(20,16,9,.36) 60%, rgba(20,16,9,.66) 100%);
+  }
+  .hero-inner{ position:relative; z-index:2; display:flex; flex-direction:column; align-items:center; }
+  .hero-eyebrow{ font-family:var(--serif-display); font-style:italic; font-weight:500; letter-spacing:.22em;
+    text-transform:uppercase; font-size:.8rem; color:var(--gold-bright); margin-bottom:1.6rem; opacity:0;
+    text-shadow:0 1px 10px rgba(20,16,9,.9);
+    animation:riseIn .9s ease .15s forwards; }
+  h1.hero-title{
+    font-size:clamp(3.6rem,11vw,8.2rem); letter-spacing:.02em; line-height:.95;
+    background:linear-gradient(180deg, #f3e3bd 0%, var(--gold-bright) 55%, var(--gold-dim) 100%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    filter:drop-shadow(0 0 34px rgba(201,154,69,.3)) drop-shadow(0 2px 26px rgba(20,16,9,.7));
+    opacity:0; animation:materialize 1.4s cubic-bezier(.2,.7,.2,1) .35s forwards;
+  }
+  .hero-sub{ font-family:var(--serif-display); font-style:italic; font-weight:500; font-size:clamp(1.15rem,2.6vw,1.6rem);
+    color:#f4ecd8; margin-top:.6rem; opacity:0; text-shadow:0 2px 18px rgba(20,16,9,.9);
+    animation:riseIn .9s ease .8s forwards; }
+  .hero-byline{ margin-top:1.1rem; font-size:.95rem; color:#d8cba9; letter-spacing:.02em;
+    opacity:0; text-shadow:0 1px 12px rgba(20,16,9,.95);
+    animation:riseIn .9s ease 1.05s forwards; }
+  .hero-byline b{ color:#f4ecd8; font-weight:600; }
+
+  .hero-watch-link{
+    margin-top:2.4rem; display:inline-flex; align-items:center; gap:.5rem;
+    text-decoration:none; font-size:.85rem; letter-spacing:.03em; color:var(--gold-bright);
+    border-bottom:1px solid var(--gold-dim); padding-bottom:.15rem;
+    opacity:0; animation:riseIn 1s ease 1.3s forwards; transition:color .25s, border-color .25s;
+    text-shadow:0 1px 10px rgba(20,16,9,.9);
+  }
+  .hero-watch-link:hover{ color:#fff; border-color:var(--gold-bright); }
+  .hero-watch-link svg{ width:13px; height:13px; }
+
+  .scrolldown{ position:absolute; bottom:2.2rem; left:50%; transform:translateX(-50%); z-index:2;
+    display:flex; flex-direction:column; align-items:center; gap:.5rem; opacity:0;
+    animation:riseIn 1s ease 1.7s forwards; }
+  .scrolldown span{ font-size:.66rem; letter-spacing:.16em; text-transform:uppercase; color:#d8cba9;
+    text-shadow:0 1px 10px rgba(20,16,9,.95); }
+  .scrolldown .chevron{ width:11px; height:11px; border-right:1.5px solid var(--gold-bright); border-bottom:1.5px solid var(--gold-bright);
+    transform:rotate(45deg); animation:bob 1.8s ease-in-out infinite; }
+
+  @keyframes riseIn{ from{opacity:0; transform:translateY(14px);} to{opacity:1; transform:translateY(0);} }
+  @keyframes materialize{ from{opacity:0; letter-spacing:.28em; filter:blur(6px) drop-shadow(0 0 0 rgba(201,154,69,0));}
+    to{opacity:1; letter-spacing:.02em; filter:blur(0) drop-shadow(0 0 34px rgba(201,154,69,.3));} }
+  @keyframes bob{ 0%,100%{transform:rotate(45deg) translate(0,0);} 50%{transform:rotate(45deg) translate(4px,4px);} }
+
+  /* ---------- generic section rhythm ---------- */
+  section{ position:relative; padding:clamp(4.5rem,9vw,7rem) 0; }
+  .divider{ display:flex; align-items:center; justify-content:center; gap:1rem; margin:0 auto clamp(3rem,6vw,5rem); }
+  .divider::before,.divider::after{ content:''; height:1px; width:60px; background:linear-gradient(90deg, transparent, var(--gold-dim)); }
+  .divider::after{ background:linear-gradient(90deg, var(--gold-dim), transparent); }
+  .divider-mark{ color:var(--gold); font-size:1.1rem; }
+
+  .reveal{ opacity:0; transform:translateY(28px); transition:opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1); }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+  .reveal-delay1.in{ transition-delay:.12s; } .reveal-delay2.in{ transition-delay:.24s; } .reveal-delay3.in{ transition-delay:.36s; }
+  @media (prefers-reduced-motion:reduce){
+    .reveal, h1.hero-title, .hero-eyebrow, .hero-sub, .hero-byline, .hero-watch-link, .scrolldown{ animation:none !important; opacity:1 !important; transform:none !important; transition:none !important; }
+  }
+
+  h2.h2{ font-size:clamp(1.9rem,4vw,2.7rem); margin-bottom:1.1rem; }
+
+  .split{ display:grid; grid-template-columns:1.05fr .95fr; gap:clamp(2.5rem,6vw,5rem); align-items:center; }
+  .split.rev{ grid-template-columns:.95fr 1.05fr; }
+  .split.rev .split-media{ order:2; }
+  @media (max-width:860px){ .split, .split.rev{ grid-template-columns:1fr; } .split.rev .split-media{ order:0; } }
+
+  .media-card{ position:relative; border-radius:6px; overflow:hidden; border:1px solid var(--line); box-shadow:var(--shadow); background:var(--vellum-card); }
+  .media-card img{ width:100%; }
+  .media-cap{ font-size:.74rem; color:var(--ink-soft); margin-top:.7rem; letter-spacing:.02em; font-style:italic; font-family:var(--serif-display); }
+
+  .fullbleed{ position:relative; margin:4rem calc(50% - 50vw); width:100vw; overflow:hidden; height:56vw; max-height:560px; min-height:280px; }
+  .fullbleed img{ width:100%; height:100%; object-fit:cover; will-change:transform; }
+  .fullbleed-overlay{ position:absolute; inset:0; background:linear-gradient(180deg, rgba(20,16,9,.1) 0%, rgba(20,16,9,.8) 100%); }
+  .fullbleed-cap{ position:absolute; left:0; right:0; bottom:0; padding:2rem clamp(1.25rem,4vw,3rem); max-width:1180px; margin:0 auto; }
+  .fullbleed-cap .eyebrow{ margin-bottom:.5rem; color:var(--gold-bright); }
+  .fullbleed-cap p{ max-width:56ch; color:#f0e6cf; font-size:.98rem; margin:0; }
+  .fullbleed-cap h3{ color:#fbf3de; font-size:clamp(1.3rem,3vw,1.9rem); margin-bottom:.4rem; }
+
+  .center{ text-align:center; margin-left:auto; margin-right:auto; }
+
+  /* ---------- Ferdowsi / Why / opening-line / timeline / craft ---------- */
+  #ferdowsi{ background:linear-gradient(180deg, var(--vellum) 0%, var(--vellum-deep) 100%); }
+  #why{ background:var(--vellum-deep); }
+
+  #line{
+    position:relative; background:var(--vellum); text-align:center; overflow:hidden;
+    padding:clamp(5rem,12vw,8rem) 1.5rem;
+  }
+  #line::before{ content:''; position:absolute; inset:0;
+    background: radial-gradient(ellipse at 50% 100%, rgba(169,122,47,.14), transparent 60%); }
+  .line-persian{ position:relative; z-index:1; font-family:var(--persian); direction:rtl; unicode-bidi:isolate;
+    font-size:clamp(2.1rem,6vw,4.2rem); color:var(--lapis); line-height:1.6;
+    text-shadow:0 0 40px rgba(30,74,122,.12); }
+  .line-translit{ position:relative; z-index:1; margin-top:1.6rem; font-family:var(--serif-display); font-style:italic;
+    font-weight:500; font-size:clamp(1.1rem,2.4vw,1.5rem); color:var(--ink); }
+  .line-note{ position:relative; z-index:1; margin-top:1rem; font-size:.82rem; color:var(--ink-soft); letter-spacing:.03em; }
+
+  #timeline{ background:linear-gradient(180deg, var(--vellum-deep) 0%, var(--vellum) 100%); }
+  .tl{ position:relative; max-width:900px; margin:0 auto; }
+  .tl::before{ content:''; position:absolute; left:20px; top:6px; bottom:6px; width:1px;
+    background:linear-gradient(180deg, transparent, var(--gold-dim) 6%, var(--gold-dim) 94%, transparent); }
+  @media(min-width:720px){ .tl::before{ left:50%; margin-left:-.5px; } }
+  .tl-item{ position:relative; padding-left:56px; margin-bottom:2.6rem; }
+  .tl-item:last-child{ margin-bottom:0; }
+  .tl-dot{ position:absolute; left:12px; top:.35rem; width:17px; height:17px; border-radius:50%;
+    background:var(--vellum); border:2px solid var(--gold); box-shadow:0 0 0 4px var(--vellum), 0 0 14px rgba(169,122,47,.35); }
+  .tl-era{ font-size:.68rem; letter-spacing:.14em; text-transform:uppercase; color:var(--lapis); margin-bottom:.3rem; }
+  .tl-title{ font-family:var(--serif-display); font-weight:700; font-size:1.28rem; color:var(--ink); margin-bottom:.4rem; }
+  .tl-body{ font-size:.96rem; color:var(--ink-soft); max-width:56ch; }
+  @media(min-width:720px){
+    .tl-item{ width:calc(50% - 34px); padding-left:0; padding-right:40px; text-align:right; }
+    .tl-item .tl-dot{ left:auto; right:-40px; }
+    .tl-item .tl-body{ margin-left:auto; }
+    .tl-item:nth-child(even){ margin-left:calc(50% + 34px); padding-right:0; padding-left:40px; text-align:left; }
+    .tl-item:nth-child(even) .tl-dot{ right:auto; left:-40px; }
+    .tl-item:nth-child(even) .tl-body{ margin-left:0; }
+  }
+  .tl-close{ text-align:center; margin-top:4rem; font-family:var(--serif-display); font-style:italic; font-size:1.2rem; color:var(--ember); }
+
+  /* ---------- life-phase scrubber (signature element) ---------- */
+  #phases{ background:var(--vellum); }
+  .phase-stage{ position:relative; border-radius:10px; overflow:hidden; box-shadow:var(--shadow); border:1px solid var(--line);
+    background:var(--vellum-card); aspect-ratio:16/10; max-height:560px; }
+  .phase-panel{ position:absolute; inset:0; opacity:0; transition:opacity .55s ease; display:grid; grid-template-columns:1.1fr .9fr; }
+  .phase-panel.active{ opacity:1; z-index:1; }
+  @media(max-width:760px){ .phase-panel{ grid-template-columns:1fr; grid-template-rows:auto 1fr; } }
+  .phase-panel .pp-img{ position:relative; overflow:hidden; background:#1b140c; }
+  .phase-panel .pp-img img{ width:100%; height:100%; object-fit:cover; object-position:top center; }
+  .phase-panel .pp-text{ padding:clamp(1.4rem,3vw,2.4rem); display:flex; flex-direction:column; justify-content:center; gap:.7rem; overflow-y:auto; }
+  .phase-panel .pp-years{ font-family:var(--serif-display); font-style:italic; color:var(--gold-dim); font-size:.85rem; letter-spacing:.05em; }
+  .phase-panel .pp-title{ font-family:var(--serif-display); font-weight:700; font-size:clamp(1.3rem,2.4vw,1.7rem); color:var(--ink); }
+  .phase-panel .pp-row{ font-size:.86rem; color:var(--ink-soft); }
+  .phase-panel .pp-row b{ color:var(--ink); font-weight:600; }
+  .phase-panel .pp-thumb{ margin-top:.4rem; display:flex; gap:.5rem; align-items:center; }
+  .phase-panel .pp-thumb img{ width:64px; height:44px; object-fit:cover; border-radius:4px; border:1px solid var(--line); }
+  .phase-panel .pp-thumb span{ font-size:.72rem; color:var(--ink-faint); font-style:italic; font-family:var(--serif-display); }
+
+  .phase-scrubber{ margin-top:2.5rem; }
+  .phase-track-wrap{ margin:2.6rem auto 0; max-width:720px; padding:0 .5rem; }
+  .phase-track{ position:relative; height:6px; border-radius:4px; background:var(--vellum-deep); border:1px solid var(--line); cursor:pointer; touch-action:none; }
+  .phase-fill{ position:absolute; left:0; top:0; bottom:0; border-radius:4px; background:linear-gradient(90deg, var(--gold-dim), var(--gold-bright)); width:0%; pointer-events:none; }
+  .phase-pin{ position:absolute; top:50%; width:13px; height:13px; border-radius:50%; background:var(--vellum-card); border:2px solid var(--gold-dim);
+    transform:translate(-50%,-50%); cursor:pointer; padding:0; }
+  .phase-pin.active{ border-color:var(--ember); background:var(--gold-bright); }
+  .phase-handle{ position:absolute; top:50%; width:26px; height:26px; border-radius:50%; background:var(--vellum-card);
+    border:2.5px solid var(--ember); transform:translate(-50%,-50%); cursor:grab; box-shadow:0 6px 16px -6px rgba(43,32,22,.5);
+    display:flex; align-items:center; justify-content:center; }
+  .phase-handle::after{ content:''; width:6px; height:6px; border-radius:50%; background:var(--ember); }
+  .phase-handle:active{ cursor:grabbing; }
+  .phase-handle:focus-visible{ outline:2px solid var(--lapis); outline-offset:3px; }
+  .phase-labels{ display:flex; justify-content:space-between; margin-top:1rem; font-size:.72rem; letter-spacing:.05em; text-transform:uppercase; color:var(--ink-faint); }
+  .phase-labels span{ transition:color .3s; cursor:pointer; }
+  .phase-labels span.active{ color:var(--ember); font-weight:600; }
+  .phase-hint{ text-align:center; margin-top:1.2rem; font-size:.78rem; color:var(--ink-faint); font-style:italic; font-family:var(--serif-display); }
+
+  /* ---------- characters ---------- */
+  #characters{ background:var(--vellum); }
+  .char-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:1.4rem; margin-top:3rem; }
+  @media(max-width:920px){ .char-grid{ grid-template-columns:repeat(2,1fr); } }
+  @media(max-width:600px){ .char-grid{ grid-template-columns:1fr; } }
+  .char-card{ background:var(--vellum-card); border:1px solid var(--line); border-radius:8px; overflow:hidden; box-shadow:var(--shadow); display:flex; flex-direction:column; }
+  .char-card img{ width:100%; aspect-ratio:4/3; object-fit:cover; object-position:top center; }
+  .char-body{ padding:1.1rem 1.2rem 1.3rem; display:flex; flex-direction:column; gap:.45rem; flex:1; }
+  .char-tier{ font-size:.64rem; letter-spacing:.1em; text-transform:uppercase; font-weight:600; }
+  .char-tier.t1{ color:var(--lapis); } .char-tier.t23{ color:var(--ember); } .char-tier.tp{ color:var(--gold-dim); }
+  .char-name{ font-family:var(--serif-display); font-weight:700; font-size:1.18rem; color:var(--ink); }
+  .char-role{ font-size:.76rem; color:var(--ink-faint); letter-spacing:.03em; margin-top:-.3rem; }
+  .char-desc{ font-size:.86rem; color:var(--ink-soft); }
+  .char-note{ margin-top:.3rem; padding:.6rem .7rem; background:rgba(156,63,38,.07); border-left:2px solid var(--ember); border-radius:0 6px 6px 0; font-size:.78rem; color:var(--ink-soft); }
+  .char-note b{ color:var(--ember); }
+
+  .naming-spotlight{ margin-top:4.5rem; background:var(--vellum-card); border:1px solid var(--line); border-radius:10px;
+    padding:clamp(1.6rem,4vw,2.8rem); box-shadow:var(--shadow); max-width:820px; margin-inline:auto; position:relative; }
+  .naming-spotlight::before{ content:'✎'; position:absolute; top:-16px; left:clamp(1.6rem,4vw,2.8rem); background:var(--ember); color:var(--vellum);
+    width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:.95rem; box-shadow:0 6px 14px -6px rgba(43,32,22,.5); }
+  .naming-quotes{ display:flex; flex-direction:column; gap:1rem; margin:1.4rem 0; }
+  .naming-quote{ padding:.9rem 1.1rem; background:rgba(30,74,122,.05); border-radius:6px; border-left:2px solid var(--lapis); }
+  .naming-quote .persian{ font-family:var(--persian); direction:rtl; color:var(--lapis); font-size:1.15rem; margin-bottom:.35rem; }
+  .naming-quote .gloss{ font-size:.84rem; color:var(--ink-soft); font-style:italic; }
+  .naming-verdict{ margin-top:1.2rem; padding-top:1.2rem; border-top:1px solid var(--line); font-size:.92rem; color:var(--ink); }
+  .naming-verdict b{ color:var(--gold-dim); }
+
+  /* ---------- weapons — museum specimen board, deliberately darker than the manuscript cards ---------- */
+  #weapons{ background:#211a11; color:#e9dcc0; }
+  #weapons .eyebrow{ color:var(--gold-bright); }
+  #weapons h2{ color:#f4ecd8; }
+  #weapons .lede{ color:#c9b998; }
+  .weapon-grid{ display:grid; grid-template-columns:repeat(5,1fr); gap:1.1rem; margin-top:3rem; }
+  @media(max-width:980px){ .weapon-grid{ grid-template-columns:repeat(3,1fr); } }
+  @media(max-width:620px){ .weapon-grid{ grid-template-columns:repeat(2,1fr); } }
+  .weapon-card{ background:#2a2116; border:1px solid rgba(201,154,69,.22); border-radius:8px; overflow:hidden; }
+  .weapon-card img{ width:100%; aspect-ratio:1/1; object-fit:cover; background:#1a140d; }
+  .weapon-body{ padding:.9rem 1rem 1.1rem; }
+  .weapon-name{ font-family:var(--serif-display); font-weight:700; font-size:1rem; color:#f4ecd8; }
+  .weapon-tag{ font-size:.66rem; letter-spacing:.08em; text-transform:uppercase; color:var(--gold-bright); margin-bottom:.3rem; }
+  .weapon-desc{ font-size:.8rem; color:#bfae8c; margin-top:.4rem; }
+  .weapon-story{ margin-top:4rem; max-width:820px; margin-inline:auto; background:#2a2116; border:1px solid rgba(201,154,69,.22); border-radius:10px; padding:clamp(1.5rem,4vw,2.4rem); }
+  .weapon-story h3{ color:#f4ecd8; font-size:1.2rem; margin-bottom:.8rem; }
+  .weapon-story p{ color:#c9b998; font-size:.94rem; margin:0 0 1em; }
+  .weapon-story p:last-child{ margin-bottom:0; }
+  .weapon-story b{ color:var(--gold-bright); }
+
+  /* ---------- other items ---------- */
+  #items{ background:var(--vellum); }
+  .item-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:1.2rem; margin-top:3rem; }
+  @media(max-width:860px){ .item-grid{ grid-template-columns:repeat(2,1fr); } }
+  .item-card{ background:var(--vellum-card); border:1px solid var(--line); border-radius:8px; overflow:hidden; box-shadow:var(--shadow); }
+  .item-card img{ width:100%; aspect-ratio:1/1; object-fit:cover; }
+  .item-card .ic-body{ padding:.8rem .95rem 1rem; }
+  .item-card .ic-name{ font-family:var(--serif-display); font-weight:700; font-size:.95rem; color:var(--ink); }
+  .item-card .ic-desc{ font-size:.78rem; color:var(--ink-soft); margin-top:.3rem; }
+  .item-story{ margin-top:3.5rem; max-width:820px; margin-inline:auto; background:rgba(30,74,122,.06); border:1px solid var(--line);
+    border-radius:10px; padding:clamp(1.5rem,4vw,2.4rem); }
+  .item-story h3{ font-size:1.2rem; margin-bottom:.8rem; color:var(--ink); }
+  .item-story p{ color:var(--ink-soft); font-size:.94rem; margin:0 0 1em; }
+  .item-story p:last-child{ margin-bottom:0; }
+  .item-story b{ color:var(--lapis); }
+  .item-story-imgs{ display:flex; gap:1rem; margin:1.2rem 0; }
+  .item-story-imgs figure{ margin:0; flex:1; }
+  .item-story-imgs img{ width:100%; border-radius:6px; border:1px solid var(--line); aspect-ratio:4/3; object-fit:cover; }
+  .item-story-imgs figcaption{ font-size:.72rem; color:var(--ink-faint); margin-top:.4rem; font-style:italic; font-family:var(--serif-display); text-align:center; }
+  @media(max-width:560px){ .item-story-imgs{ flex-direction:column; } }
+
+  /* ---------- places journey ---------- */
+  #places{ background:var(--vellum); }
+  .journey-step{ margin-bottom:0; }
+  .journey-num{ font-family:var(--serif-display); font-weight:700; font-size:.72rem; letter-spacing:.1em; color:var(--gold-bright); }
+
+  /* ---------- mythology & animals ---------- */
+  #myth{ background:var(--vellum-deep); }
+  .myth-grid{ display:grid; grid-template-columns:1.3fr 1fr; gap:2rem; margin-top:3rem; align-items:stretch; }
+  @media(max-width:820px){ .myth-grid{ grid-template-columns:1fr; } }
+  .myth-card{ background:var(--vellum-card); border:1px solid var(--line); border-radius:8px; overflow:hidden; box-shadow:var(--shadow); }
+  .myth-card img{ width:100%; aspect-ratio:16/10; object-fit:cover; }
+  .myth-card .mc-body{ padding:1.2rem 1.3rem; }
+  .myth-card .mc-name{ font-family:var(--serif-display); font-weight:700; font-size:1.15rem; color:var(--ink); }
+  .myth-card .mc-desc{ font-size:.88rem; color:var(--ink-soft); margin-top:.4rem; }
+  .myth-text{ background:var(--vellum-card); border:1px solid var(--line); border-radius:8px; padding:1.3rem 1.4rem; display:flex; flex-direction:column; justify-content:center; }
+  .myth-text h3{ font-size:1.1rem; margin-bottom:.5rem; color:var(--lapis); }
+  .myth-text p{ font-size:.88rem; color:var(--ink-soft); margin:0; }
+
+  /* ---------- Rostam & Sohrab — deliberately its own register: night-sky epic,
+     not the manuscript system used everywhere else on the page. This is the
+     one section allowed to break from --vellum/--ink, on purpose. ---------- */
+  #rostam{ --rv:#0c0906; --rv2:#161009; --rgold:#c69a4a; --rgoldb:#e6c07c; --rember:#c96b46; --rbone:#d8cba9; --rbonedim:#8f8368; --rline:rgba(198,154,74,.28);
+    background:linear-gradient(180deg, var(--rv) 0%, var(--rv2) 55%, var(--rv) 100%); color:var(--rbone); }
+  #rostam .eyebrow{ color:var(--rgoldb); }
+  #rostam h2, #rostam h3{ color:#f0e6cc; }
+  #rostam .prose p{ color:var(--rbone); }
+  #rostam .divider::before,#rostam .divider::after{ background:linear-gradient(90deg, transparent, var(--rgold)); }
+  #rostam .divider::after{ background:linear-gradient(90deg, var(--rgold), transparent); }
+  #rostam .divider-mark{ color:var(--rgold); }
+  .rostam-badge{ display:inline-flex; align-items:center; gap:.5rem; font-size:.7rem; letter-spacing:.16em; text-transform:uppercase; color:var(--rember);
+    border:1px solid rgba(201,107,70,.4); padding:.4rem .9rem; border-radius:100px; margin-bottom:1.4rem; }
+  .rostam-hero{ display:grid; grid-template-columns:1fr 1fr; gap:clamp(2rem,5vw,3.5rem); align-items:center; margin-bottom:clamp(3.5rem,7vw,5.5rem); }
+  @media(max-width:860px){ .rostam-hero{ grid-template-columns:1fr; } }
+  .r-tag-row{ display:flex; flex-wrap:wrap; gap:.5rem; margin-top:1.4rem; }
+  .r-tag{ font-size:.72rem; letter-spacing:.05em; padding:.32rem .7rem; border:1px solid var(--rember); color:var(--rember); border-radius:100px; }
+  .r-media{ border-radius:4px; overflow:hidden; border:1px solid var(--rline); box-shadow:0 30px 60px -25px rgba(0,0,0,.7); }
+  .r-media img{ width:100%; }
+  .r-cap{ font-size:.74rem; color:var(--rbonedim); margin-top:.7rem; font-style:italic; font-family:var(--serif-display); }
+
+  .r-cast-row{ display:grid; grid-template-columns:repeat(4,1fr); gap:1.5rem; margin-top:3rem; }
+  @media(max-width:920px){ .r-cast-row{ grid-template-columns:repeat(2,1fr); max-width:520px; margin-inline:auto; } }
+  @media(max-width:480px){ .r-cast-row{ grid-template-columns:1fr; max-width:360px; } }
+  .r-cast-card img{ border-radius:4px; border:1px solid var(--rline); aspect-ratio:3/4; object-fit:cover; }
+  .r-cast-name{ font-family:var(--serif-display); font-weight:700; color:#f0e6cc; margin-top:.8rem; font-size:1.02rem; }
+  .r-cast-role{ font-size:.72rem; color:var(--rgoldb); letter-spacing:.06em; text-transform:uppercase; margin-top:.15rem; }
+  .r-cast-desc{ font-size:.82rem; color:var(--rbonedim); margin-top:.5rem; }
+
+  .r-script{ margin-top:3.5rem; background:var(--rv); border:1px solid var(--rline); border-radius:8px; padding:clamp(1.5rem,4vw,2.5rem); max-width:680px; margin-inline:auto; }
+  .r-script-line{ font-family:'Courier New',monospace; font-size:.9rem; line-height:1.9; color:var(--rbone); margin:0 0 .9rem; }
+  .r-script-char{ text-align:center; color:var(--rgoldb); letter-spacing:.06em; margin-top:1rem; }
+  .r-script-dir{ text-align:center; font-style:italic; color:var(--rbonedim); font-size:.8rem; }
+  .r-script-dial{ max-width:420px; margin:0 auto 1rem; text-align:center; }
+  .r-synopsis{ max-width:660px; margin:3.5rem auto 0; }
+
+  /* ---------- roadmap ---------- */
+  #roadmap{ background:var(--vellum-deep); }
+  .road{ display:flex; flex-direction:column; gap:0; max-width:820px; margin:0 auto; }
+  .road-group{ margin-bottom:3rem; }
+  .road-group:last-child{ margin-bottom:0; }
+  .road-label{ display:flex; align-items:center; gap:.6rem; font-size:.72rem; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--ink-soft); margin-bottom:1.1rem; }
+  .road-label .dot{ width:8px; height:8px; border-radius:50%; }
+  .dot-done{ background:var(--gold); box-shadow:0 0 8px rgba(169,122,47,.5); }
+  .dot-live{ background:var(--lapis-bright); box-shadow:0 0 8px rgba(61,116,172,.5); }
+  .dot-next{ background:var(--ink-faint); }
+  .road-items{ display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+  @media(max-width:640px){ .road-items{ grid-template-columns:1fr; } }
+  .road-item{ padding:1.1rem 1.25rem; border:1px solid var(--line); border-radius:8px; background:var(--vellum-card); }
+  .road-item h3{ font-size:.98rem; color:var(--ink); margin-bottom:.3rem; }
+  .road-item p{ margin:0; font-size:.84rem; color:var(--ink-soft); }
+
+  /* ---------- realgram ---------- */
+  #realgram{ background:var(--vellum); text-align:center; }
+  .rg-badges{ display:flex; justify-content:center; gap:1.5rem; margin:2.5rem 0; }
+  .rg-badge{ width:96px; height:96px; border-radius:50%; overflow:hidden; border:1px solid var(--line); box-shadow:var(--shadow); }
+  .rg-badge img{ width:100%; height:100%; object-fit:cover; }
+  .rg-cta{ display:inline-flex; align-items:center; gap:.6rem; margin-top:1.8rem; padding:.85rem 1.7rem;
+    background:var(--ember); color:var(--vellum); text-decoration:none; border-radius:100px; font-weight:600;
+    font-family:var(--sans); letter-spacing:.02em; transition:transform .25s, box-shadow .25s; }
+  .rg-cta:hover{ transform:translateY(-2px); box-shadow:0 14px 30px -12px rgba(156,63,38,.4); }
+  .rg-line{ max-width:560px; margin:1.2rem auto 0; color:var(--ink-soft); font-size:.95rem; }
+
+  #craft{ background:var(--vellum-deep); }
+  .contact-frame{ border:1px solid var(--line); border-radius:6px; overflow:hidden; box-shadow:var(--shadow); }
+  .craft-grid{ display:grid; grid-template-columns:1.15fr .85fr; gap:clamp(2rem,5vw,3.5rem); align-items:start; margin-top:3rem; }
+  @media(max-width:860px){ .craft-grid{ grid-template-columns:1fr; } }
+  .craft-list{ display:flex; flex-direction:column; gap:1.4rem; }
+  .craft-list-item{ padding:1.1rem 1.3rem; background:var(--vellum-card); border:1px solid var(--line); border-radius:8px; }
+  .craft-list-item h3{ font-size:1rem; color:var(--ember); margin-bottom:.4rem; }
+  .craft-list-item p{ margin:0; font-size:.88rem; color:var(--ink-soft); }
+
+  footer.credits{ padding:3.5rem 0 3rem; border-top:1px solid var(--line); text-align:center; }
+  footer.credits .brand-mark{ font-size:.95rem; font-family:var(--serif-display); font-weight:700; letter-spacing:.06em; }
+  .foot-meta{ margin-top:.8rem; font-size:.78rem; color:var(--ink-soft); }
+  .foot-links{ margin-top:1rem; display:flex; justify-content:center; gap:1.5rem; font-size:.82rem; }
+  .foot-links a{ text-decoration:none; color:var(--ink-soft); }
+  .foot-links a:hover{ color:var(--ember); }
+</style>
+</head>
+<body class="setai-shell">
+<header class="setai-header" id="siteHeader">
+  <div class="setai-nav">
+    <strong>SETAEI</strong>
+    <input type="checkbox" id="setaiNavToggle" class="setai-toggle">
+    <label for="setaiNavToggle" class="setai-burger" aria-label="Åpne meny"><span></span><span></span><span></span></label>
+    <label for="setaiNavToggle" class="setai-close" aria-label="Lukk meny">&times;</label>
+    <nav class="setai-links">
+      <a href="https://setai.no/">Hjem</a>
+      <a href="https://setai.no/services/">Tjenester</a>
+      <a href="https://setai.no/projects/">Prosjekter</a>
+      <a href="https://setai.no/#contact">Kontakt</a>
+    </nav>
+  </div>
+</header>
+
+<section id="hero">
+  <video class="hero-video" autoplay muted loop playsinline preload="auto" poster="poster-hero.jpg" aria-hidden="true">
+    <source src="intro-hero.mp4" type="video/mp4">
+  </video>
+  <div class="hero-vignette"></div>
+  <div class="hero-inner">
+    <div class="hero-eyebrow">RealGram presenterer</div>
+    <h1 class="hero-title">SHAHNAMEH</h1>
+    <div class="hero-sub">Boken om kongene</div>
+    <div class="hero-byline">av <b>Hakim Abu'l-Qasem Ferdowsi</b> · fullført ca. 1010 e.Kr.</div>
+
+    <a class="hero-watch-link" href="https://higgsfield.ai/s/ZXpuLvoBERI" target="_blank" rel="noopener">
+      Se introfilmen i full 4K-kvalitet
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H9M17 7V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+  <div class="scrolldown"><span>Bla ned</span><span class="chevron"></span></div>
+</section>
+
+<div class="setai-breadcrumb"><a href="https://setai.no/">Hjem</a> / <a href="https://setai.no/projects/">Prosjekter</a> / Shahnameh</div>
+
+<section id="ferdowsi">
+  <div class="wrap">
+    <div class="split reveal">
+      <div class="split-text">
+        <div class="eyebrow">Dikteren</div>
+        <h2 class="h2">Mannen som skrev sitt folk tilbake til live</h2>
+        <div class="prose">
+          <p>Hakim Abu'l-Qasem Ferdowsi ble født rundt år 940 e.Kr. i landsbyen Paj utenfor Tus, i Khorasan — det nordøstlige Persia. Han kom fra <em>dehqan</em>-klassen: jordeiende persisk lavadel, sett på som bærere av en «ekte», før-islamsk persisk identitet i en tid da den identiteten var under press.</p>
+          <p>Han var ikke geistlig, ikke hoffmann. Et beskjedent, uprangent liv — og et arbeid han begynte som 37-åring og ikke la fra seg før han var rundt 70. Da hadde han skrevet omtrent 50 000 verselinjer: <b>Shahnameh</b>, «Boken om kongene» — trolig det lengste episke diktverket noen enkeltperson noensinne har fullført.</p>
+        </div>
+        <div class="note-box process"><b>Ærlig sagt:</b> det finnes ingen bevart samtidig portrett av Ferdowsi. Ansiktet du ser her — og i introfilmen — er vår tolkning, bygget med AI fra det kildene faktisk beskriver om klasse, klesdrakt og alder. Ikke en påstått likhet, men et forsøk på å gi et virkelig menneske et ansikt.</div>
+      </div>
+      <div class="split-media">
+        <div class="media-card"><img src="img/ferdowsi-sixangle-sheet.webp" alt="Seks vinkler av Ferdowsi-karakteren, generert for produksjonen" loading="lazy"/></div>
+        <div class="media-cap">Karakterark — seks vinkler, én identitet gjennom hele filmen</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="why">
+  <div class="wrap">
+    <div class="split rev reveal">
+      <div class="split-media">
+        <div class="media-card"><img src="img/ferdowsis-blekkhus-v2.webp" alt="Nærbilde av pennen mot pergamentet" loading="lazy"/></div>
+        <div class="media-cap">Rørpenn og pergament — objektene som er hans signatur, slik klubben er Rostams</div>
+      </div>
+      <div class="split-text">
+        <div class="eyebrow lapis">Hvorfor han begynte</div>
+        <h2 class="h2">Et språk som holdt på å forsvinne</h2>
+        <div class="prose">
+          <p>Da araberne erobret Persia i 651 e.Kr., kom mer enn et nytt styre — arabisk overtok som administrasjons- og litteraturspråk. I generasjonene som fulgte var persisk skriftkultur og den før-islamske historien i ferd med å falme.</p>
+          <p>På 900-tallet ledet Samanid-dynastiet i Khorasan en bevisst gjenreisning av persisk som skriftspråk. En dikter ved navn <b>Daqiqi</b> hadde begynt å gjøre den gamle sassanidiske kongekrøniken — <em>Khwaday-Namag</em>, «Boken om herrene» — om til vers, men ble drept før han kom lenger enn Zahhak-kapittelet, rundt 1000 linjer.</p>
+          <p>Ferdowsi tok opp der Daqiqi slapp, i år 977. Ikke for et hoff, ikke for betaling som noen gang kom som lovet — men fordi noen måtte fullføre det: å gi et folk sin egen historie tilbake, på sitt eget språk, før den ble borte for godt.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="line">
+  <div class="line-persian">به نام خداوند جان و خرد</div>
+  <div class="line-translit">«I navnet til Herren over sjel og visdom»</div>
+  <div class="line-note">— åpningslinjen. Den første av rundt 50 000 verselinjer.</div>
+</section>
+
+<section id="timeline">
+  <div class="wrap">
+    <div class="divider"><span class="divider-mark">✦</span></div>
+    <div class="center prose" style="max-width:640px; text-align:center; margin-bottom:4.5rem;">
+      <div class="eyebrow center lapis">Verdens eldste sammenhengende historie</div>
+      <h2 class="h2">Fra skapelsen til historiens begynnelse</h2>
+      <p style="color:var(--ink-soft);">Shahnameh åpner ikke med historie, men med myte — verdens første menneske, og hver konge som fulgte, helt til fortellingen selv glir over i dokumentert historie. Fire tidsaldre. Én sammenhengende linje.</p>
+    </div>
+
+    <div class="tl">
+      <div class="tl-item reveal"><span class="tl-dot"></span>
+        <div class="tl-era">Pishdadian-tiden</div>
+        <div class="tl-title">Keyumars — det første mennesket, den første kongen</div>
+        <div class="tl-body">Ren myte, ikke historisk påstand: sivilisasjonens begynnelse. Hans etterkommere Hushang og Tahmures gir menneskeheten ild og redskaper.</div>
+      </div>
+      <div class="tl-item reveal"><span class="tl-dot"></span>
+        <div class="tl-era">Pishdadian-tiden</div>
+        <div class="tl-title">Jamshid — en gullalder, og fallet</div>
+        <div class="tl-body">En lang, strålende regjeringstid som grunnlegger håndverk, medisin og kongedømmets kunster — inntil egen stolthet river bort hans <em>farr</em>, den guddommelige retten til å herske.</div>
+      </div>
+      <div class="tl-item reveal"><span class="tl-dot"></span>
+        <div class="tl-era">Pishdadian-tiden</div>
+        <div class="tl-title">Zahhak — tyrannen med slanger på skuldrene</div>
+        <div class="tl-body">Manipulert av det onde selv, må han fø to slanger med menneskehjerner hver dag. Smeden Kaveh reiser sitt lærforkle på et spyd som opprørsbanner — det blir senere Irans kongelige merke.</div>
+      </div>
+      <div class="tl-item reveal"><span class="tl-dot"></span>
+        <div class="tl-era">Pishdadian-tiden</div>
+        <div class="tl-title">Fereydun deler verden — og sønnene ødelegger den</div>
+        <div class="tl-body">Fereydun lenker Zahhak inne i fjellet Damavand, og deler verden mellom sine tre sønner. De to eldste myrder den yngste, Iraj — den grunnleggende uretten hele Iran–Turan-konflikten stammer fra.</div>
+      </div>
+      <div class="tl-item reveal"><span class="tl-dot"></span>
+        <div class="tl-era">Kayanian-dynastiet — heltealderen</div>
+        <div class="tl-title">Manuchehr, Kay Kavus, Kay Khosrow</div>
+        <div class="tl-body">Generasjoner før Kyros den store — en heltealder eldre enn perserriket de fleste kjenner fra historiebøkene. Her hører Rostam og Sohrab hjemme.</div>
+      </div>
+      <div class="tl-item reveal"><span class="tl-dot"></span>
+        <div class="tl-era">Ashkanian &amp; Sasanian</div>
+        <div class="tl-title">Fra legende til dokumentert historie</div>
+        <div class="tl-body">Fortellingen glir over i partisk og sasanidisk historie — godt dokumentert, frem til den arabiske erobringen i 651 e.Kr., der Ferdowsis eget prosjekt begynner.</div>
+      </div>
+    </div>
+
+    <div class="tl-close reveal">Én mann. Rundt 30 år. Én ubrutt linje fra verdens skapelse til hans egen samtid.</div>
+  </div>
+</section>
+
+<section id="craft">
+  <div class="wrap">
+    <div class="divider"><span class="divider-mark">✦</span></div>
+    <div class="reveal" style="max-width:680px;">
+      <div class="eyebrow process">Prosessen</div>
+      <h2 class="h2">Hvordan SETAEI bygget karakteren hans med AI</h2>
+      <div class="prose">
+        <p>Før noe blir generert, bygger vi en karakterbibel: fysikk, klesdrakt, personlighet — alt hentet fra faktiske kilder, ikke oppdiktet. Den blir til en fast «Soul Cast»-prompt vi bruker om og om igjen, slik at Ferdowsi er gjenkjennelig i hver eneste scene.</p>
+      </div>
+    </div>
+
+    <div class="craft-grid">
+      <div class="reveal reveal-delay1">
+        <div class="contact-frame"><img src="img/ferdowsi-sixangle-sheet.webp" alt="Kontaktark fra produksjonen: Ferdowsi seks vinkler" loading="lazy"/></div>
+        <div class="media-cap">Et ekte utdrag fra vår egen produksjonsprosess — ikke et ferdig utvalg, et arbeidsark.</div>
+      </div>
+      <div class="craft-list reveal reveal-delay2">
+        <div class="craft-list-item">
+          <h3>Vi jukser ikke til et «godt nok» førsteutkast</h3>
+          <p>Første generering hadde et ekte problem: løse hårstrå brøt gjennom turbanen i profil, selv om prompten uttrykkelig forbød det. Notert, ikke skjult — og rettet i neste runde.</p>
+        </div>
+        <div class="craft-list-item">
+          <h3>Ekte film, ikke et glatt AI-ansikt</h3>
+          <p>Vår egen tilbakemelding etter første versjon: «jeg ser fortsatt ikke et ekte menneske». Neste iterasjon presser hardt mot ekte hudtekstur, filmkorn og dokumentarisk lys — praktisk filmarbeid, ikke et polert render.</p>
+        </div>
+        <div class="craft-list-item">
+          <h3>Regi, ikke bare bildegenerering</h3>
+          <p>Vi ba om et bestemt spill: nøl, les på nytt, forkast, begynn igjen — en perfeksjonist ved arbeidet, ikke en som skriver flytende. Det er regi, ikke prompting.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="fullbleed reveal" data-parallax>
+      <img src="img/paj-landsby-dawn.webp" alt="Landsbyen Paj ved daggry, Ferdowsis fødested utenfor Tus" loading="lazy"/>
+      <div class="fullbleed-overlay"></div>
+      <div class="fullbleed-cap">
+        <div class="eyebrow">Ekte geografi</div>
+        <p>Paj, ved foten av fjellene utenfor Tus — et virkelig sted, ikke et oppdiktet fantasilandskap. Koordinatene er kjent (36.4767917, 59.6715842); huset som vises turister der i dag er faktisk bygget rundt 1920, ikke Ferdowsis eget — men landskapet, vingårdene og frukthagene rundt er ekte og udiskutable. Samme prinsipp gjelder hele verden vi bygger: Sistan, Rostams hjemland, ligger fortsatt der i dag, delt mellom Iran og Afghanistan.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="phases">
+  <div class="wrap">
+    <div class="divider"><span class="divider-mark">✦</span></div>
+    <div class="center prose reveal" style="max-width:640px; text-align:center;">
+      <div class="eyebrow center gold">Fire faser, ett menneske</div>
+      <h2 class="h2">Dra i linjen. Se ham eldes.</h2>
+      <p style="color:var(--ink-soft);">I stedet for et enkelt før/etter: dra glidebryteren gjennom Ferdowsis fire livsfaser, fra den unge dehqan-mannen i 970 til den utslitte, ferdige dikteren i 1020. Samme hus, samme familie, én lang nedgang — ikke et sent rikdomstopp, men en gradvis vei mot fattigdom, dokumentert i kontinuitetsarket vi bygde produksjonen på.</p>
+    </div>
+
+    <div class="phase-scrubber reveal reveal-delay1">
+      <div class="phase-stage" id="phaseStage">
+        <div class="phase-panel active" data-phase="1">
+          <div class="pp-img"><img src="img/ferdowsi-35.webp" alt="Ferdowsi, Fase 1, ca. 30 år" loading="lazy"/></div>
+          <div class="pp-text">
+            <div class="pp-years">Fase 1 · ca. 968–978 · alder 28–38</div>
+            <div class="pp-title">Det unge hjemmet</div>
+            <div class="pp-row"><b>Familie:</b> nygift, Mehrak 0–8 år, Roshanak født mot slutten av fasen.</div>
+            <div class="pp-row"><b>Formue:</b> komfortabel dehqan-velstand — ikke fattig, ikke rik. Fontenen i gårdsrommet går for fullt, frukthagen er ung.</div>
+            <div class="pp-row"><b>Ham selv:</b> ambisiøs og nysgjerrig, fortsatt lett til sinns. Shahnameh er ennå ikke begynt — det starter først i 977, han er 37.</div>
+          </div>
+        </div>
+        <div class="phase-panel" data-phase="2">
+          <div class="pp-img"><img src="img/ferdowsi-45.webp" alt="Ferdowsi, Fase 2, ca. 47 år" loading="lazy"/></div>
+          <div class="pp-text">
+            <div class="pp-years">Fase 2 · 979–995 · alder 39–55</div>
+            <div class="pp-title">Husets kulturelle høydepunkt</div>
+            <div class="pp-row"><b>Familie:</b> år 987 — Ferdowsi 47, Mehrnaz 42, Mehrak 17, Roshanak 11. Det mest levende hjemmet i hele historien.</div>
+            <div class="pp-row"><b>Formue:</b> det rikeste og mest kulturelt utviklede punktet i familiens liv — mange gjester, mange manuskripter, fortsatt god økonomi.</div>
+            <div class="pp-row"><b>Ham selv:</b> den mest produktive og målrettede Ferdowsi. Sterk tro på oppdraget, krevende mot seg selv, varm men ofte fraværende far.</div>
+            <div class="pp-thumb"><img src="img/ferdowsi-bosted-rik.webp" alt="Familiens hjem i Fase 2" loading="lazy"/><span>huset på sitt rikeste</span></div>
+          </div>
+        </div>
+        <div class="phase-panel" data-phase="3">
+          <div class="pp-img"><img src="img/ferdowsi-fase3-nestengraaskjegg.webp" alt="Ferdowsi, Fase 3, nesten grått skjegg" loading="lazy"/></div>
+          <div class="pp-text">
+            <div class="pp-years">Fase 3 · 996–1008 · alder 56–68</div>
+            <div class="pp-title">Nedgangen begynner</div>
+            <div class="pp-row"><b>Familie:</b> Mehrak dør ca. 1006–07, 37 år gammel — dokumentert av Ferdowsi selv i en egen sørgestrofe i Shahnameh, ikke legende.</div>
+            <div class="pp-row"><b>Formue:</b> tidlig forfall. Lavere vann i fontenen, gjengroing i hagen, dimmere lys i rommene — samme arkitektur, mindre vedlikehold.</div>
+            <div class="pp-row"><b>Ham selv:</b> klaget selv over dårlig syn og smerter i beina, men fortsatte å skrive. Sorg og selvbebreidelse etter sønnens død farger resten av arbeidet.</div>
+          </div>
+        </div>
+        <div class="phase-panel" data-phase="4">
+          <div class="pp-img"><img src="img/ferdowsi-ferdig-shahnameh.webp" alt="Ferdowsi, Fase 4, ferdig med Shahnameh" loading="lazy"/></div>
+          <div class="pp-text">
+            <div class="pp-years">Fase 4 · 1009–1020+ · alder 69–80+</div>
+            <div class="pp-title">Det ferdige verket</div>
+            <div class="pp-row"><b>Familie:</b> Roshanak eneste gjenlevende barn, bærer nå husholdningen og senere manuskriptet selv.</div>
+            <div class="pp-row"><b>Formue:</b> sterkt slitt — nesten tørr fontene, tyngste forfall av alle fire faser. Ingen sen rikdom, bare et ferdig verk.</div>
+            <div class="pp-row"><b>Ham selv:</b> verdig men utmattet, redd for at teksten skal forsvinne eller ødelegges — likevel klar i stemmen når han resiterer. Rundt 50 000 verselinjer, ca. 30 år.</div>
+            <div class="pp-thumb"><img src="img/ferdowsi-hus-3faser.webp" alt="Samme hus, tre faser av forfall" loading="lazy"/><span>samme hus — tre faser</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="phase-track-wrap">
+        <div class="phase-track" id="phaseTrack" role="slider" tabindex="0" aria-label="Ferdowsis livsfaser" aria-valuemin="1" aria-valuemax="4" aria-valuenow="1">
+          <div class="phase-fill" id="phaseFill"></div>
+          <button class="phase-pin" type="button" data-phase="1" style="left:0%" aria-label="Fase 1"></button>
+          <button class="phase-pin" type="button" data-phase="2" style="left:33.333%" aria-label="Fase 2"></button>
+          <button class="phase-pin" type="button" data-phase="3" style="left:66.667%" aria-label="Fase 3"></button>
+          <button class="phase-pin" type="button" data-phase="4" style="left:100%" aria-label="Fase 4"></button>
+          <div class="phase-handle" id="phaseHandle" style="left:0%"></div>
+        </div>
+        <div class="phase-labels">
+          <span data-phase="1" class="active">Fase 1 · 28–38</span>
+          <span data-phase="2">Fase 2 · 39–55</span>
+          <span data-phase="3">Fase 3 · 56–68</span>
+          <span data-phase="4">Fase 4 · 69–80+</span>
+        </div>
+      </div>
+      <div class="phase-hint">Dra håndtaket, eller trykk på et punkt — piltastene virker også</div>
+    </div>
+  </div>
+</section>
+
+<section id="characters">
+  <div class="wrap">
+    <div class="divider"><span class="divider-mark">✦</span></div>
+    <div class="center prose reveal" style="max-width:680px; text-align:center;">
+      <div class="eyebrow center lapis">Karakterene</div>
+      <h2 class="h2">Ekte historie, kildegransket — ikke oppdiktet fantasy</h2>
+      <p style="color:var(--ink-soft);">Hvert kort under er bygget fra én kunnskapsbase med tre nivåer: <b style="color:var(--lapis)">historisk dokumentert</b>, <b style="color:var(--ember)">populær legende</b>, og der kildene tier — et <b style="color:var(--gold-dim)">bevisst prosjektvalg</b>, alltid merket som nettopp det.</p>
+    </div>
+
+    <div class="char-grid reveal reveal-delay1">
+      <div class="char-card">
+        <img src="img/ferdowsi-sixangle-sheet.webp" alt="Ferdowsi" loading="lazy"/>
+        <div class="char-body">
+          <div class="char-tier t1">Historisk dokumentert</div>
+          <div class="char-name">Ferdowsi</div>
+          <div class="char-role">Dikteren · ca. 940–1020</div>
+          <div class="char-desc">Dehqan-klasse fra Tus. Skrev i ca. 30 år. Intet bevart samtidsportrett finnes — ansiktet er vår tolkning fra klasse, klesdrakt og alder, ikke en påstått likhet.</div>
+        </div>
+      </div>
+      <div class="char-card">
+        <img src="img/mehrnaz-riktig-instrument.webp" alt="Mehrnaz" loading="lazy"/>
+        <div class="char-body">
+          <div class="char-tier tp">Prosjektnavn</div>
+          <div class="char-name">Mehrnaz</div>
+          <div class="char-role">Kona · ca. 945–</div>
+          <div class="char-desc">Ferdowsis kone er ikke kjent ved navn. Kildene antyder hun kunne lese og spille chang — en tolkning av kvinnen i innledningen til Bijan og Manijeh, usikker men plausibel.</div>
+          <div class="char-note"><b>Navnegransking:</b> se egen boks under — ingen navn er bevart i Ferdowsis egne vers.</div>
+        </div>
+      </div>
+      <div class="char-card">
+        <img src="img/mehrak-lastdays-reference.webp" alt="Mehrak" loading="lazy"/>
+        <div class="char-body">
+          <div class="char-tier t1">Historisk dokumentert</div>
+          <div class="char-name">Mehrak</div>
+          <div class="char-role">Sønnen · født 970, død ca. 1006–07</div>
+          <div class="char-desc">Sønnens fødselsår og dødsalder — 37 år — er dokumentert. Ferdowsi sørget over ham i en egen strofe skrevet direkte inn i Shahnameh. Navnet er prosjektets eget.</div>
+        </div>
+      </div>
+      <div class="char-card">
+        <img src="img/roshanak-nekter-belonningen.webp" alt="Roshanak" loading="lazy"/>
+        <div class="char-body">
+          <div class="char-tier t23">Populær legende</div>
+          <div class="char-name">Roshanak</div>
+          <div class="char-role">Datteren · ca. 976–</div>
+          <div class="char-desc">Historien om at hun avviste sultan Mahmuds sene gullbelønning tilhører den senere biografiske tradisjonen — behandlet som legende, ikke bekreftet hendelse, men for god til å utelate.</div>
+        </div>
+      </div>
+      <div class="char-card">
+        <img src="img/daqiqi-reference.webp" alt="Daqiqi" loading="lazy"/>
+        <div class="char-body">
+          <div class="char-tier t1">Historisk dokumentert</div>
+          <div class="char-name">Daqiqi</div>
+          <div class="char-role">Forgjengeren · d. ca. 977</div>
+          <div class="char-desc">Begynte å gjøre Khwaday-Namag om til vers, men ble drept etter bare ca. 1000 linjer — Zahhak-kapittelet. Ferdowsi tok opp arbeidet samme år.</div>
+        </div>
+      </div>
+      <div class="char-card">
+        <img src="img/zarathustra-reference.webp" alt="Zarathustra" loading="lazy"/>
+        <div class="char-body">
+          <div class="char-tier t23">Religionshistorisk tradisjon</div>
+          <div class="char-name">Zarathustra</div>
+          <div class="char-role">Profeten</div>
+          <div class="char-desc">Ildalteret og det strålende lyset er hentet fra faktisk zoroastrisk ikonografi, ikke fra Ferdowsis tekst selv — teksten beskriver konflikten rundt ham, ikke hans ansikt.</div>
+          <div class="char-note"><b>Rettet én gang:</b> første utkast var illuminert manuskript-stil; byttet til samme fotorealistiske register som resten av rollebesetningen.</div>
+        </div>
+      </div>
+      <div class="char-card">
+        <img src="img/gashtasp-reference.webp" alt="Gashtasp" loading="lazy"/>
+        <div class="char-body">
+          <div class="char-tier t1">I Ferdowsis tekst</div>
+          <div class="char-name">Gashtasp</div>
+          <div class="char-role">Kongen som antok troen</div>
+          <div class="char-desc">Kongen hvis omvendelse til zoroastrismen — og krig med Arjasp av Turan — er selve innholdet i Daqiqis ca. 1000 gjenværende verselinjer.</div>
+          <div class="char-note"><b>Rettet samme dag:</b> første bilde var malerisk/tronende; byttet til fotorealistisk seks-vinkel-portrett samme dag det ble flagget.</div>
+        </div>
+      </div>
+      <div class="char-card">
+        <img src="img/arjasp-reference.webp" alt="Arjasp" loading="lazy"/>
+        <div class="char-body">
+          <div class="char-tier t1">I Ferdowsis tekst</div>
+          <div class="char-name">Arjasp av Turan</div>
+          <div class="char-role">Motstanderen</div>
+          <div class="char-desc">Krigen mot Gashtasp og troen er den politiske kjernen i Daqiqis fragment. Fotorealistisk seks-vinkel-portrett, låst samme økt som Gashtasp for visuell konsistens.</div>
+        </div>
+      </div>
+      <div class="char-card">
+        <img src="img/rostam-sixview-portrait.webp" alt="Rostam" loading="lazy"/>
+        <div class="char-body">
+          <div class="char-tier t1">I Ferdowsis tekst</div>
+          <div class="char-name">Rostam</div>
+          <div class="char-role">Jahan Pahlavan — «Verdens mester»</div>
+          <div class="char-desc">Overmenneskelig styrke fra fødselen, babr-e bayan (leopardkappen) som eget kampplagg, den bull-hodede klubben — alt tekstlig forankret, ansiktet selv er manuskript-konvensjon.</div>
+        </div>
+      </div>
+      <div class="char-card">
+        <img src="img/tahmineh.webp" alt="Tahmineh" loading="lazy"/>
+        <div class="char-body">
+          <div class="char-tier t1">I Ferdowsis tekst</div>
+          <div class="char-name">Tahmineh</div>
+          <div class="char-role">Prinsessen av Samangan</div>
+          <div class="char-desc">Oppsøker Rostam selv — uvanlig initiativ for en Shahnameh-kvinne. Oppdrar Sohrab alene i 20 år og forteller ham selv hvem faren er.</div>
+        </div>
+      </div>
+      <div class="char-card">
+        <img src="img/sohrab-armor.webp" alt="Sohrab" loading="lazy"/>
+        <div class="char-body">
+          <div class="char-tier t1">I Ferdowsis tekst</div>
+          <div class="char-name">Sohrab</div>
+          <div class="char-role">Sønnen som aldri møtte sin far</div>
+          <div class="char-desc">Like sterk som Rostam til tross for sin ungdom. Bærer armbåndet fra moren — beviset på hvem faren er, ingen av dem tenker på det før det er for sent.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="naming-spotlight reveal reveal-delay2">
+      <div class="eyebrow process" style="margin-bottom:.6rem;">Prosessnotat — navnegransking</div>
+      <h3 style="font-size:1.3rem; margin-bottom:.8rem;">Hvorfor «Mehrnaz»? Vi lette etter et ekte navn først.</h3>
+      <div class="prose">
+        <p>Under produksjonen fikk vi et innspill om å bytte konas navn til <span style="direction:rtl; unicode-bidi:isolate; font-family:var(--persian);">منیژه</span> (Manijeh). Vi sjekket først om det kolliderte internt — det gjør det ikke, Rostams kone heter Tahmineh i dette prosjektet — men fant noe viktigere: Manijeh er allerede en stor, etablert Shahnameh-karakter (Bijans elskede i fortellingen om Bijan og Manijeh), og gjenbruk av navnet hennes ville vært en verre kollisjon enn den vi prøvde å unngå.</p>
+        <p>Så gjorde vi det egentlige arbeidet: lette gjennom Ferdowsis egne vers etter et navn som faktisk kunne gjenopprettes. To passasjer er tolket av forskere som å handle om henne — ingen av dem navngir henne.</p>
+      </div>
+      <div class="naming-quotes">
+        <div class="naming-quote">
+          <div class="persian">یکی مهربان بودم اندر سرای</div>
+          <div class="gloss">«Jeg hadde en <b>mehraban</b> [kjær/elsket] i mitt hus» — fra innledningen til Bijan og Manijeh.</div>
+        </div>
+        <div class="naming-quote">
+          <div class="persian">نگارا بهارا کجا رفته‌ای / که آرایش باغ بنهفته‌ای</div>
+          <div class="gloss">«Å <b>negar</b> [elskede/muse], å <b>bahar</b> [vår], hvor har du blitt av, du som pyntet hagen og nå har skjult den» — fra innledningen til «Padshahi-e Hormozd», lest av forsker Mousa-al-Reza Nazari som en symbolsk sørgesang over hennes død.</div>
+        </div>
+      </div>
+      <div class="naming-verdict">Konklusjon: <b>ingen egennavn er bevart</b> — bare tre kjæleord, mehraban, negar og bahar. «Mehrnaz» deler rot (مهر, mehr = kjærlighet/varme) med det tekstlig sterkeste av de tre. Khabats endelige avgjørelse: <b>Mehrnaz beholdes.</b></div>
+    </div>
+  </div>
+</section>
+
+<section id="weapons">
+  <div class="wrap">
+    <div class="divider"><span class="divider-mark">✦</span></div>
+    <div class="center reveal" style="max-width:640px; text-align:center;">
+      <div class="eyebrow center">Rostams våpenkammer</div>
+      <h2 class="h2">Fem gjenstander, samme mann, gjennom hver kamp</h2>
+      <p class="lede">Et helt kampplagg må se ut som samme gjenstand i hver scene den dukker opp i — ikke redesignet fra bunnen hver gang. Under ligger både referansen og prosessnotatet for hver del.</p>
+    </div>
+
+    <div class="weapon-grid reveal reveal-delay1">
+      <div class="weapon-card">
+        <img src="img/rostams-gorz.webp" alt="Gorz-e gav-sar, Rostams klubbe" loading="lazy"/>
+        <div class="weapon-body"><div class="weapon-tag">Låst 06.08</div><div class="weapon-name">Gorz-e gāv-sar</div><div class="weapon-desc">Bull-hodet stridsklubbe. Tekstlig forankret — navngitt etter formen i Ferdowsis egen tekst.</div></div>
+      </div>
+      <div class="weapon-card">
+        <img src="img/rostams-bue-pilkogger.webp" alt="Bue og pilkogger" loading="lazy"/>
+        <div class="weapon-body"><div class="weapon-tag">To generasjoner</div><div class="weapon-name">Bue &amp; pilkogger</div><div class="weapon-desc">Fem-vinkel bue-turnaround, egen kogger-turnaround, detaljer på grep og fjærbekledning.</div></div>
+      </div>
+      <div class="weapon-card">
+        <img src="img/rostams-kniv.webp" alt="Rostams kniv" loading="lazy"/>
+        <div class="weapon-body"><div class="weapon-tag">Låst 06.08</div><div class="weapon-name">Kniven</div><div class="weapon-desc">Gull og lær, gravert — samme materialspråk som resten av settet.</div></div>
+      </div>
+      <div class="weapon-card">
+        <img src="img/rostams-skjold.webp" alt="Rostams skjold" loading="lazy"/>
+        <div class="weapon-body"><div class="weapon-tag">Låst 06.08</div><div class="weapon-name">Skjoldet</div><div class="weapon-desc">Jern/bronse, opphøyet buleboss, nagler langs kanten — forfra, bakfra og gripedetalj.</div></div>
+      </div>
+      <div class="weapon-card">
+        <img src="img/rostams-sverd.webp" alt="Rostams sverd" loading="lazy"/>
+        <div class="weapon-body"><div class="weapon-tag">Settet komplett</div><div class="weapon-name">Sverdet</div><div class="weapon-desc">Rett klinge, kors-hjalt, gullbeslag — det siste stykket. Kampplagget er nå genuint komplett.</div></div>
+      </div>
+    </div>
+
+    <div class="weapon-story reveal reveal-delay2">
+      <div class="eyebrow process">Prosessnotat</div>
+      <h3>Buen som ble bedt om som spyd</h3>
+      <p>Beskjeden vi fikk var «legg til denne spyd/lanse i Rostam våpen collection» med en lenke vedlagt. Da vi åpnet filen viste den seg å være noe helt annet: en fem-vinkel bue-turnaround med kogger og pilfjær-detaljer — ingen spyd eller lanse noe sted i bildet.</p>
+      <p>Samme mønster hadde dukket opp flere ganger tidligere i produksjonen — lenker som pekte på feil fil, trolig sammenblandet ved kopiering. Løsningen er alltid den samme: vi katalogiserer det bildet <b>faktisk viser</b>, ikke det meldingen sa det skulle være, og flagger avviket åpent i produksjonsloggen i stedet for å late som ingenting skjedde. Buen ble en ekte og verdifull del av samlingen likevel — bare ikke spydet som ble bedt om.</p>
+    </div>
+  </div>
+</section>
+
+<section id="items">
+  <div class="wrap">
+    <div class="divider"><span class="divider-mark">✦</span></div>
+    <div class="center reveal" style="max-width:640px; text-align:center;">
+      <div class="eyebrow center lapis">Andre gjenstander</div>
+      <h2 class="h2">Objektene som bærer historien videre</h2>
+      <p style="color:var(--ink-soft);">Ikke våpen, ikke ansikter — men de tingene som følger familien gjennom fasene og gjør sorgen og kontinuiteten synlig uten et eneste ord.</p>
+    </div>
+
+    <div class="item-grid reveal reveal-delay1">
+      <div class="item-card">
+        <img src="img/mehrnaz-riktig-instrument.webp" alt="Chang, korrekt instrument" loading="lazy"/>
+        <div class="ic-body"><div class="ic-name">Changen</div><div class="ic-desc">Trekantet rammeharpe. Se prosessnotatet under — dette er den rettede versjonen.</div></div>
+      </div>
+      <div class="item-card">
+        <img src="img/mehraks-trehest.webp" alt="Mehraks trehest" loading="lazy"/>
+        <div class="ic-body"><div class="ic-name">Trehesten</div><div class="ic-desc">Mehraks leke som barn — blir en minnegjenstand i dokumentkisten etter hans død.</div></div>
+      </div>
+      <div class="item-card">
+        <img src="img/roshanaks-skrivebrett.webp" alt="Roshanaks skrivebrett" loading="lazy"/>
+        <div class="ic-body"><div class="ic-name">Skrivebrettet</div><div class="ic-desc">Roshanaks eget, fra barneårene — hun sorterer og bevarer farens manuskript med det samme brettet som voksen.</div></div>
+      </div>
+      <div class="item-card">
+        <img src="img/dokumentkisten.webp" alt="Dokumentkisten" loading="lazy"/>
+        <div class="ic-body"><div class="ic-name">Dokumentkisten</div><div class="ic-desc">Familiens arkiv gjennom alle fire faser — færre og mer kostbare gjenstander med årene.</div></div>
+      </div>
+      <div class="item-card">
+        <img src="img/ferdig-shahnameh-manus.webp" alt="Det ferdige manuskriptet" loading="lazy"/>
+        <div class="ic-body"><div class="ic-name">Manuskriptet</div><div class="ic-desc">Ca. 50 000 verselinjer, bundet sammen — arbeidets fysiske sluttprodukt etter 30 år.</div></div>
+      </div>
+      <div class="item-card">
+        <img src="img/rostam-armband.webp" alt="Armbåndet" loading="lazy"/>
+        <div class="ic-body"><div class="ic-name">Armbåndet</div><div class="ic-desc">Rostam binder det rundt Tahminehs arm; det samme båndet gjenkjenner han på Sohrabs arm i duellen.</div></div>
+      </div>
+      <div class="item-card">
+        <img src="img/ferdowsis-blekkhus-v2.webp" alt="Blekkhus og penn" loading="lazy"/>
+        <div class="ic-body"><div class="ic-name">Blekkhus og sivpenn</div><div class="ic-desc">Ferdowsis signaturobjekt gjennom alle faser, slik klubben er Rostams.</div></div>
+      </div>
+      <div class="item-card">
+        <img src="img/faravahar-relieff.webp" alt="Faravahar-relieff" loading="lazy"/>
+        <div class="ic-body"><div class="ic-name">Faravahar</div><div class="ic-desc">Det zoroastriske symbolet, hentet fra ekte relieffikonografi — ikke fra Ferdowsis tekst selv.</div></div>
+      </div>
+    </div>
+
+    <div class="item-story reveal reveal-delay2">
+      <div class="eyebrow process">Prosessnotat</div>
+      <h3>Da changen så ut som feil instrument</h3>
+      <p>Kontinuitetsarket var eksplisitt: «Chang var en persisk harpe og skulle vises som en trekantet eller vinklet ramme... Den skal ikke ligne santur, qanun, oud eller tanbur.» Den første scenen vi låste av Mehrnaz som spiller, viste henne likevel med hammere over et flatt trapesformet instrument — nettopp santur-lesningen regelen advarte mot.</p>
+      <div class="item-story-imgs">
+        <figure><img src="img/mehrnaz-plays-chang.webp" alt="Første versjon — leser som santur" loading="lazy"><figcaption>Første versjon — beholdt for historikken, ikke i bruk</figcaption></figure>
+        <figure><img src="img/mehrnaz-riktig-instrument.webp" alt="Rettet versjon — korrekt trekantet chang" loading="lazy"><figcaption>Rettet samme dag — korrekt vinklet rammeharpe</figcaption></figure>
+      </div>
+      <p>Løst samme dag: en ny generering viste Mehrnaz i samme positur og drakt, men nå med den korrekte oppreiste vinklede harpen. Det første bildet er ikke slettet — det ligger i produksjonsarkivet som dokumentasjon på at feilen faktisk ble fanget opp, ikke bare unngått ved flaks.</p>
+    </div>
+  </div>
+</section>
+
+<section id="places">
+  <div class="wrap">
+    <div class="divider"><span class="divider-mark">✦</span></div>
+    <div class="center reveal" style="max-width:640px; text-align:center;">
+      <div class="eyebrow center">Reisen</div>
+      <h2 class="h2">Ti virkelige steder, én sammenhengende fortelling</h2>
+      <p style="color:var(--ink-soft);">Fra Daqiqis avbrutte vers i Bukhara til Roshanak som avviser gullet ved Tus' porter — samme prinsipp som resten av produksjonen: ekte geografi der den finnes, tydelig merket når den ikke gjør det.</p>
+    </div>
+  </div>
+
+  <div class="journey-step fullbleed reveal" data-parallax>
+    <img src="img/samanid-hoff-bukhara.webp" alt="Samanid-hoffet i Bukhara" loading="lazy"/>
+    <div class="fullbleed-overlay"></div>
+    <div class="fullbleed-cap"><div class="journey-num">STOPP 1 · BUKHARA</div><h3>Samanid-hoffet</h3><p>Der den bevisste gjenreisningen av persisk skriftspråk starter på 900-tallet — og der Daqiqi begynner å gjøre kongekrøniken om til vers.</p></div>
+  </div>
+  <div class="journey-step fullbleed reveal" data-parallax>
+    <img src="img/paj-landsby-dawn.webp" alt="Paj landsby ved daggry" loading="lazy"/>
+    <div class="fullbleed-overlay"></div>
+    <div class="fullbleed-cap"><div class="journey-num">STOPP 2 · PAJ, VED TUS</div><h3>Fødestedet</h3><p>Ferdowsi fødes her rundt år 940 — et virkelig sted med kjente koordinater, fortsatt bebodd i dag.</p></div>
+  </div>
+  <div class="journey-step fullbleed reveal" data-parallax>
+    <img src="img/ildtempel-balkh.webp" alt="Ildtempel i Balkh" loading="lazy"/>
+    <div class="fullbleed-overlay"></div>
+    <div class="fullbleed-cap"><div class="journey-num">STOPP 3 · BALKH</div><h3>Ildtempelet</h3><p>Der Daqiqis fragment tar oss — Zarathustras lære, Gashtasps omvendelse, glimtet av myten inne i historien.</p></div>
+  </div>
+  <div class="journey-step fullbleed reveal" data-parallax>
+    <img src="img/arjasp-festning-royindez.webp" alt="Royin Dez på steppen" loading="lazy"/>
+    <div class="fullbleed-overlay"></div>
+    <div class="fullbleed-cap"><div class="journey-num">STOPP 4 · ROYIN DEZ</div><h3>Festningen på steppen</h3><p>Arjasp av Turans base i krigen mot den nye troen — den politiske kjernen i Daqiqis etterlatte vers.</p></div>
+  </div>
+  <div class="journey-step fullbleed reveal" data-parallax>
+    <img src="img/samangan-palass.webp" alt="Samangans festningspalass" loading="lazy"/>
+    <div class="fullbleed-overlay"></div>
+    <div class="fullbleed-cap"><div class="journey-num">STOPP 5 · SAMANGAN</div><h3>Én natt, mange konsekvenser</h3><p>Der Rostam møter Tahmineh — og Sohrab blir unnfanget, uten at faren noensinne får vite det før det er for sent.</p></div>
+  </div>
+  <div class="journey-step fullbleed reveal" data-parallax>
+    <img src="img/sohrabs-militaerleir.webp" alt="Krigsleirene, Iran mot Turan" loading="lazy"/>
+    <div class="fullbleed-overlay"></div>
+    <div class="fullbleed-cap"><div class="journey-num">STOPP 6 · SLAGMARKEN</div><h3>To hærer, én familie</h3><p>Iran mot Turan på en støvete slette. Verken far eller sønn vet hvem den andre virkelig er.</p></div>
+  </div>
+  <div class="journey-step fullbleed reveal" data-parallax>
+    <img src="img/ferdowsi-vei-ghazni.webp" alt="Veien til Ghazni" loading="lazy"/>
+    <div class="fullbleed-overlay"></div>
+    <div class="fullbleed-cap"><div class="journey-num">STOPP 7 · VEIEN TIL GHAZNI</div><h3>Det ferdige verket, på vei</h3><p>Ferdowsi, gammel nå, med rundt 50 000 verselinjer ferdigskrevet — på vei mot et hoff som aldri betalte som lovet.</p></div>
+  </div>
+  <div class="journey-step fullbleed reveal" data-parallax>
+    <img src="img/mahmud-hoff-ghazni.webp" alt="Sultan Mahmuds hoff i Ghazni" loading="lazy"/>
+    <div class="fullbleed-overlay"></div>
+    <div class="fullbleed-cap"><div class="journey-num">STOPP 8 · GHAZNI</div><h3>Sultan Mahmuds hoff</h3><p>Historien om underbetaling og fornærmelse hører til den senere, omstridte legende-tradisjonen — flagget som nettopp det.</p></div>
+  </div>
+  <div class="journey-step fullbleed reveal" data-parallax>
+    <img src="img/ferdowsi-grav-frukthage.webp" alt="Ferdowsis gravsted i frukthagen ved Tus" loading="lazy"/>
+    <div class="fullbleed-overlay"></div>
+    <div class="fullbleed-cap"><div class="journey-num">STOPP 9 · TUS</div><h3>Frukthagen, graven</h3><p>Der reisen slutter for ham selv — i landskapet han skrev fra, ikke et fjernt palass.</p></div>
+  </div>
+  <div class="journey-step fullbleed reveal" data-parallax style="max-height:640px;">
+    <img src="img/roshanak-nekter-belonningen.webp" alt="Roshanak avviser belønningen" loading="lazy"/>
+    <div class="fullbleed-overlay"></div>
+    <div class="fullbleed-cap"><div class="journey-num">STOPP 10 · TUS' PORTER</div><h3>Gullet kommer for sent</h3><p>Sultanens belønning ankommer i det begravelsesfølget forlater byen gjennom en annen port. Roshanak avviser den — legende, ikke bekreftet historie, men reisens naturlige slutt.</p></div>
+  </div>
+</section>
+
+<section id="myth">
+  <div class="wrap">
+    <div class="divider"><span class="divider-mark">✦</span></div>
+    <div class="center reveal" style="max-width:640px; text-align:center;">
+      <div class="eyebrow center lapis">Mytologi og dyr</div>
+      <h2 class="h2">Ikke bare mennesker bærer historien</h2>
+    </div>
+
+    <div class="myth-grid reveal reveal-delay1">
+      <div class="myth-card">
+        <img src="img/rostam-rakhsh-sixposes.webp" alt="Rakhsh, Rostams hest, seks positurer" loading="lazy"/>
+        <div class="mc-body">
+          <div class="mc-name">Rakhsh</div>
+          <div class="mc-desc">Rostams hest — den eneste som holdt stand da han presset hånden mot ryggen deres ved utvelgelsen i Kabul. Ferdowsi beskriver pelsen som «rosenblader strødd på safrangul bunn». I andre fortellinger kjemper Rakhsh alene mot en løve for å beskytte en sovende Rostam, og sanser fellen som dreper dem begge før Rostam selv gjør det. Egen Soul ID, egen turnaround — like konsistent gjennom filmen som Rostam selv.</div>
+        </div>
+      </div>
+      <div class="myth-text">
+        <h3>Simorgh</h3>
+        <p>Den mytiske fuglen som redder og oppfostrer Zal — Rostams far — etter at han blir forlatt som spedbarn på grunn av sitt hvite hår. Simorgh gir senere en av sine fjær til Zal, som brennes for å tilkalle henne i krise. Rent tekstlig etablert, ingen visuell referanse generert ennå — en av de gjenværende hullene i mytologi-samlingen.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="rostam">
+  <div class="wrap">
+    <div class="center reveal" style="margin-bottom:2.5rem;"><span class="rostam-badge">✦ En egen historie, en egen stil</span></div>
+    <div class="rostam-hero">
+      <div class="reveal">
+        <div class="eyebrow">En parallell historie</div>
+        <h2 class="h2">Rostam &amp; Sohrab — Jahan Pahlavan, «Verdens mester»</h2>
+        <div class="prose">
+          <p>Vi bryter bevisst med resten av sidens manuskript-palett her. Ferdowsis eget liv fortelles i gull og pergament — Rostam og Sohrabs tragedie får sin egen natthimmel-registrering, mørkere og mer episk, fordi det er nettopp slik den føles i teksten: en historie inne i historien, med sin egen tone.</p>
+          <p>Irans største helt, fra Sistan/Zabulistan. Legendarisk kjempestor, kjent på kappen av leopardskinn — <em>babr-e bayan</em> — sagt å være ugjennomtrengelig for ild, vann og våpen.</p>
+        </div>
+        <div class="r-tag-row">
+          <span class="r-tag">Sistan / Zabulistan</span>
+          <span class="r-tag">Kayanian-tiden</span>
+          <span class="r-tag">Kong Kay Kavus</span>
+        </div>
+      </div>
+      <div class="reveal reveal-delay1">
+        <div class="r-media"><img src="img/rostam-rakhsh-sixposes.webp" alt="Rostam på Rakhsh, seks positurer" loading="lazy"/></div>
+      </div>
+    </div>
+
+    <div class="rostam-hero" style="margin-bottom:clamp(3.5rem,7vw,5.5rem);">
+      <div class="reveal">
+        <div class="r-media"><img src="img/rostam-familie.webp" alt="Rostam gir Tahmineh armbåndet" loading="lazy"/></div>
+        <div class="r-cap">Overleveringen — scenen som setter i gang hele tragedien</div>
+      </div>
+      <div class="reveal reveal-delay1">
+        <div class="eyebrow">Opptakten</div>
+        <h2 class="h2">Tahmineh — prinsessen av Samangan</h2>
+        <div class="prose">
+          <p>Én natt, mange år før slagmarken. Rostam er på vei hjem da Rakhsh blir stjålet i Samangan. Kongen der tilbyr datteren Tahmineh i ekteskap for én natt — og av den natten blir Sohrab unnfanget.</p>
+          <p>Før Rostam drar videre neste morgen, knytter han et armbånd rundt overarmen hennes: «Hvis du får en sønn, bind det rundt armen hans — så jeg kan kjenne ham igjen, den dagen skjebnen fører oss sammen.»</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="r-cast-row reveal">
+      <div class="r-cast-card">
+        <img src="img/rostam-sixview-portrait.webp" alt="Rostam" loading="lazy"/>
+        <div class="r-cast-name">Rostam</div>
+        <div class="r-cast-role">Tahamtan — «den mektige kroppen»</div>
+        <div class="r-cast-desc">Stolt, kort lunte, urokkelig lojal. Taler kongene midt imot uten frykt — og redder dem alltid likevel.</div>
+      </div>
+      <div class="r-cast-card">
+        <img src="img/rakhsh-solo.webp" alt="Rakhsh" loading="lazy"/>
+        <div class="r-cast-name">Rakhsh</div>
+        <div class="r-cast-role">Rostams hest</div>
+        <div class="r-cast-desc">Ekstremt lojal og uvanlig intelligent — ikke bare et kjøretøy, en egen karakter med egen Soul ID.</div>
+      </div>
+      <div class="r-cast-card">
+        <img src="img/sohrab-turnaround.webp" alt="Sohrab" loading="lazy"/>
+        <div class="r-cast-name">Sohrab</div>
+        <div class="r-cast-role">Sønnen som aldri møtte sin far</div>
+        <div class="r-cast-desc">Like sterk som faren til tross for sin ungdom. Drevet av kjærlighet til en mann han bare kjenner fra sin mors historier.</div>
+      </div>
+      <div class="r-cast-card">
+        <img src="img/tahmineh.webp" alt="Tahmineh" loading="lazy"/>
+        <div class="r-cast-name">Tahmineh</div>
+        <div class="r-cast-role">Prinsessen av Samangan</div>
+        <div class="r-cast-desc">Oppdrar sønnen alene i tjue år. Binder armbåndet rundt armen hans selv, den dagen hun sender ham ut for å finne sin far.</div>
+      </div>
+    </div>
+
+    <div class="r-synopsis reveal">
+      <div class="prose">
+        <p>To hærer møtes på en støvete slette. En ung kriger rir ut alene og roper til den fremmede som møter ham: <em>er du Rostam, sønn av Zal?</em> Den fremmede nøler et øyeblikk for lenge, og nekter. De kjemper. Ingen av dem vet at de kjemper mot sin egen.</p>
+        <p>Det er en av de mest siterte scenene i persisk litteratur — og den vi bygger først, som vår egen korte film.</p>
+      </div>
+    </div>
+
+    <div class="r-script reveal">
+      <div class="eyebrow">Manus-utdrag — Rostam &amp; Sohrab</div>
+      <div class="r-script-dial">
+        <div class="r-script-char">SOHRAB</div>
+        <p class="r-script-line">Fortell meg navnet ditt. Er du Rostam, sønn av Zal?</p>
+      </div>
+      <div class="r-script-dir">(et øyeblikk for lenge før han svarer)</div>
+      <div class="r-script-dial">
+        <div class="r-script-char">ROSTAM</div>
+        <p class="r-script-line">Jeg er ingen du kjenner.</p>
+      </div>
+      <div class="r-script-dir">Sohrab studerer ham et øyeblikk lenger — søkende, håpefull — så senker han spydet.</div>
+      <div class="r-script-dial">
+        <div class="r-script-char">SOHRAB</div>
+        <p class="r-script-line">Da får vi se hva «ingen» er laget av.</p>
+      </div>
+    </div>
+
+    <div class="fullbleed reveal" data-parallax style="margin-top:4rem;">
+      <img src="img/sohrabs-dod.webp" alt="Rostam holder den døende Sohrab" loading="lazy"/>
+      <div class="fullbleed-overlay"></div>
+      <div class="fullbleed-cap">
+        <div class="eyebrow" style="color:#e6c07c;">Klimakset</div>
+        <p>Armbåndet er synlig på Sohrabs overarm — samme klemme, samme sorte onyks-stein som i overleveringsscenen. Gjenkjennelsen skjer i bildet, ikke bare i teksten.</p>
+      </div>
+    </div>
+
+    <div class="center reveal" style="margin-top:3.5rem; max-width:560px; color:var(--rbonedim); font-size:.92rem;">
+      Manuset er ferdig utviklet ned til skuddliste og shot-for-shot video-prompter. Målet: <b style="color:#f0e6cc">Higgsfields globale filmfestival</b>, innsendingsfrist 31. august 2026.
+    </div>
+  </div>
+</section>
+
+<section id="roadmap">
+  <div class="wrap">
+    <div class="divider"><span class="divider-mark">✦</span></div>
+    <div class="center prose" style="max-width:600px; text-align:center; margin-bottom:4rem;">
+      <div class="eyebrow center">Hvor vi er nå</div>
+      <h2 class="h2">Fra manuskript til spill</h2>
+    </div>
+
+    <div class="road reveal">
+      <div class="road-group">
+        <div class="road-label"><span class="dot dot-done"></span>Bygget</div>
+        <div class="road-items">
+          <div class="road-item"><h3>50 kapitler, ett aldrende ansikt</h3><p>Ferdowsis egen kronikk følger ham fra 37 til 77 år gjennom hele spillet — hver epoke med sin egen fargepalett.</p></div>
+          <div class="road-item"><h3>Tap-to-earn Zar-økonomi</h3><p>Ekte, server-synkronisert opptjening knyttet direkte til spillingen — ikke et pyntetall.</p></div>
+          <div class="road-item"><h3>REAL-token og lommebok</h3><p>Egen token-økonomi koblet til RealGram-kontoen din.</p></div>
+          <div class="road-item"><h3>Kildegransket kunnskapsbase</h3><p>18 dokumenter, tre kildenivåer (dokumentert/legende/prosjektvalg) bak hver eneste karakter og scene.</p></div>
+        </div>
+      </div>
+      <div class="road-group">
+        <div class="road-label"><span class="dot dot-live"></span>Pågår</div>
+        <div class="road-items">
+          <div class="road-item"><h3>Ferdowsi-introfilmen</h3><p>Realisme-iterasjon pågår — fra «AI-glatt» til praktisk filmfølelse.</p></div>
+          <div class="road-item"><h3>Rostam &amp; Sohrab-kortfilmen</h3><p>Fullt manus og skuddliste klar. Produksjon mot filmfestival-fristen 31. august 2026.</p></div>
+        </div>
+      </div>
+      <div class="road-group">
+        <div class="road-label"><span class="dot dot-next"></span>Neste</div>
+        <div class="road-items">
+          <div class="road-item"><h3>Flere kapitler</h3><p>Kunnskapsbasen er skrevet for enkel utvidelse — flere av Shahnamehs ~50 kongeregjeringer venter.</p></div>
+          <div class="road-item"><h3>Flere karakterer, samme rigor</h3><p>Samme kildegranskede prosess som Ferdowsi og Rostam har fått.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="realgram">
+  <div class="wrap">
+    <div class="divider"><span class="divider-mark">✦</span></div>
+    <div class="reveal">
+      <div class="eyebrow center">Spillet lever i RealGram</div>
+      <h2 class="h2 center" style="max-width:640px;">Ett nettverk. VPN, spill, token og meldinger.</h2>
+      <div class="rg-line">Shahnameh er ikke en frittstående app — det er ett av flere lag i RealGram: gratis VPN, en egen token-økonomi og en meldingstjeneste, bundet sammen av ett prinsipp — jo flere som kobler til, jo sterkere blir nettet for alle. Vil du se ekte spillerrangering eller REAL-tokenets pris — begge lever i appen selv, ikke som statiske tall her.</div>
+    </div>
+    <div class="rg-badges reveal reveal-delay1">
+      <span class="rg-badge"><img src="img/ferdowsi-sixangle-sheet.webp" alt="Ferdowsi, slik han vises i appen" loading="lazy"/></span>
+      <span class="rg-badge"><img src="img/roshanak-reference.webp" alt="Roshanak, slik hun vises i appen" loading="lazy"/></span>
+    </div>
+    <div class="center reveal reveal-delay2">
+      <a class="rg-cta" href="https://realgram.no" target="_blank" rel="noopener">
+        Utforsk RealGram
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H9M17 7V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer class="credits">
+  <div class="brand-mark">SHAHNAMEH × REALGRAM</div>
+  <div class="foot-meta">Karakterer og verden bygget av SETAEI · historisk grunnarbeid fra en egen kildegransket kunnskapsbase</div>
+  <div class="foot-links">
+    <a href="https://realgram.no" target="_blank" rel="noopener">realgram.no</a>
+    <a href="https://higgsfield.ai/s/ZXpuLvoBERI" target="_blank" rel="noopener">Introfilmen</a>
+  </div>
+</footer>
+
+<footer class="setai-footer">© SETAEI · Oslo — <a href="https://setai.no/projects/">flere prosjekter</a></footer>
+
+<script>
+(function(){
+  "use strict";
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduced){ document.documentElement.classList.add('no-smooth'); }
+
+  // reveal on scroll
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, {threshold:.14, rootMargin:'0px 0px -8% 0px'});
+    document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+  } else {
+    document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in'); });
+  }
+
+  // subtle parallax on full-bleed images
+  if(!reduced){
+    var pEls = Array.prototype.slice.call(document.querySelectorAll('[data-parallax] img'));
+    function parallax(){
+      var vh = window.innerHeight;
+      pEls.forEach(function(img){
+        var r = img.parentElement.getBoundingClientRect();
+        var mid = r.top + r.height/2;
+        var offset = (mid - vh/2) * 0.08;
+        img.style.transform = 'translateY(' + offset.toFixed(1) + 'px) scale(1.08)';
+      });
+    }
+    document.addEventListener('scroll', function(){ requestAnimationFrame(parallax); }, {passive:true});
+    parallax();
+  }
+
+  // hero intro video
+  var heroVideo = document.querySelector('.hero-video');
+  var heroSection = document.getElementById('hero');
+  if(heroVideo){
+    if(reduced){
+      heroVideo.removeAttribute('autoplay');
+      heroVideo.pause();
+    } else {
+      var playPromise = heroVideo.play();
+      if(playPromise && playPromise.catch){ playPromise.catch(function(){}); }
+      var vis = new IntersectionObserver(function(entries){
+        if(entries[0].isIntersecting){ heroVideo.play().catch(function(){}); }
+        else { heroVideo.pause(); }
+      });
+      vis.observe(heroSection);
+    }
+  }
+
+  // header stays invisible until the hero has scrolled mostly out of view —
+  // intro is pure video+text on first glance, per brief
+  var siteHeader = document.getElementById('siteHeader');
+  if(siteHeader && heroSection){
+    if('IntersectionObserver' in window){
+      var headerIO = new IntersectionObserver(function(entries){
+        var e = entries[0];
+        if(e.intersectionRatio < 0.35){ siteHeader.classList.add('show'); }
+        else { siteHeader.classList.remove('show'); }
+      }, {threshold:[0,.35,1]});
+      headerIO.observe(heroSection);
+    } else {
+      siteHeader.classList.add('show');
+    }
+  }
+
+  // ---------------- life-phase drag scrubber ----------------
+  var track = document.getElementById('phaseTrack');
+  var handle = document.getElementById('phaseHandle');
+  var fill = document.getElementById('phaseFill');
+  var stage = document.getElementById('phaseStage');
+  if(track && handle && fill && stage){
+    var stops = [0, 33.3333, 66.6667, 100];
+    var panels = stage.querySelectorAll('.phase-panel');
+    var pins = track.querySelectorAll('.phase-pin');
+    var labels = document.querySelectorAll('.phase-labels span');
+    var current = 1;
+
+    function setPhase(n){
+      current = n;
+      var pct = stops[n-1];
+      handle.style.left = pct + '%';
+      fill.style.width = pct + '%';
+      panels.forEach(function(p){ p.classList.toggle('active', parseInt(p.getAttribute('data-phase'),10) === n); });
+      pins.forEach(function(p){ p.classList.toggle('active', parseInt(p.getAttribute('data-phase'),10) === n); });
+      labels.forEach(function(l){ l.classList.toggle('active', parseInt(l.getAttribute('data-phase'),10) === n); });
+      track.setAttribute('aria-valuenow', String(n));
+    }
+
+    function nearestPhase(pct){
+      var best = 1, bestDist = Infinity;
+      stops.forEach(function(s, i){
+        var d = Math.abs(s - pct);
+        if(d < bestDist){ bestDist = d; best = i+1; }
+      });
+      return best;
+    }
+
+    function pctFromClientX(clientX){
+      var rect = track.getBoundingClientRect();
+      var pct = ((clientX - rect.left) / rect.width) * 100;
+      return Math.max(0, Math.min(100, pct));
+    }
+
+    var dragging = false;
+    function onPointerDown(e){
+      dragging = true;
+      handle.setPointerCapture && e.pointerId != null && handle.setPointerCapture(e.pointerId);
+      moveTo(e.clientX != null ? e.clientX : (e.touches && e.touches[0].clientX));
+    }
+    function onPointerMove(e){
+      if(!dragging) return;
+      var x = e.clientX != null ? e.clientX : (e.touches && e.touches[0] && e.touches[0].clientX);
+      if(x == null) return;
+      moveTo(x, true);
+    }
+    function onPointerUp(){
+      if(!dragging) return;
+      dragging = false;
+      setPhase(current);
+    }
+    function moveTo(clientX, live){
+      var pct = pctFromClientX(clientX);
+      if(live){
+        handle.style.left = pct + '%';
+        fill.style.width = pct + '%';
+      }
+      current = nearestPhase(pct);
+      if(!live){ setPhase(current); }
+      else {
+        panels.forEach(function(p){ p.classList.toggle('active', parseInt(p.getAttribute('data-phase'),10) === current); });
+        pins.forEach(function(p){ p.classList.toggle('active', parseInt(p.getAttribute('data-phase'),10) === current); });
+        labels.forEach(function(l){ l.classList.toggle('active', parseInt(l.getAttribute('data-phase'),10) === current); });
+      }
+    }
+
+    handle.addEventListener('pointerdown', onPointerDown);
+    window.addEventListener('pointermove', onPointerMove);
+    window.addEventListener('pointerup', onPointerUp);
+
+    track.addEventListener('click', function(e){
+      if(e.target === handle) return;
+      moveTo(e.clientX);
+      setPhase(current);
+    });
+
+    pins.forEach(function(p){
+      p.addEventListener('click', function(e){
+        e.stopPropagation();
+        setPhase(parseInt(p.getAttribute('data-phase'),10));
+      });
+    });
+
+    labels.forEach(function(l){
+      l.addEventListener('click', function(){ setPhase(parseInt(l.getAttribute('data-phase'),10)); });
+    });
+
+    track.addEventListener('keydown', function(e){
+      if(e.key === 'ArrowRight' || e.key === 'ArrowUp'){ setPhase(Math.min(4, current+1)); e.preventDefault(); }
+      if(e.key === 'ArrowLeft' || e.key === 'ArrowDown'){ setPhase(Math.max(1, current-1)); e.preventDefault(); }
+    });
+
+    setPhase(1);
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,172 @@
+<!doctype html><html lang='en'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>Process notes — Shahnameh | SETAEI</title><meta name='description' content='Production process notes for the Shahnameh case study: naming research, corrections, and creative-direction reasoning kept out of the main narrative.'><meta name='robots' content='index,follow'><link rel='canonical' href='https://setai.no/projects/shahnameh/process-notes/'>
+<style>
+  @font-face { font-family:'Fraunces'; font-style:italic; font-weight:500; src:url(../fonts/fraunces-italic-500.woff2) format('woff2'); font-display:swap; }
+  @font-face { font-family:'Fraunces'; font-style:normal; font-weight:700; src:url(../fonts/fraunces-bold-700.woff2) format('woff2'); font-display:swap; }
+  @font-face { font-family:'Source Serif 4'; font-style:normal; font-weight:400; src:url(../fonts/source-serif-400.woff2) format('woff2'); font-display:swap; }
+  @font-face { font-family:'Source Serif 4'; font-style:italic; font-weight:400; src:url(../fonts/source-serif-400italic.woff2) format('woff2'); font-display:swap; }
+  :root{
+    --vellum:#f4ecd8; --vellum-deep:#e8dcc0; --vellum-card:#faf4e6;
+    --ink:#2b2016; --ink-soft:#6b5c48; --ink-faint:#a3937a;
+    --gold:#a97a2f; --gold-bright:#c99a45; --gold-dim:#8a6626;
+    --lapis:#1e4a7a; --lapis-bright:#3d74ac;
+    --ember:#9c3f26; --ember-bright:#b85a3c;
+    --line: rgba(169,122,47,.32);
+    --shadow: 0 24px 50px -30px rgba(43,32,22,.35);
+    --serif-display:'Fraunces', Georgia, 'Times New Roman', serif;
+    --serif-body:'Source Serif 4', Georgia, 'Times New Roman', serif;
+    --sans:'Inter',system-ui,sans-serif;
+    --persian:'Vazirmatn','Noto Naskh Arabic','Noto Sans Arabic',Tahoma,serif;
+    --s-bg:#faf8f4; --s-card:#fff; --s-border:#e6e1d6; --s-text:#211e19; --s-muted:#756e62; --s-accent:#a54a24;
+    color-scheme: light;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{ margin:0; background:var(--vellum); color:var(--ink); font-family:var(--serif-body); font-size:1.06rem; line-height:1.7; -webkit-font-smoothing:antialiased; }
+  img{max-width:100%; display:block;}
+  a{color:inherit;}
+  ::selection{background:var(--gold); color:var(--vellum);}
+  h1,h2,h3{font-family:var(--serif-display); font-weight:700; text-wrap:balance; margin:0; color:var(--ink);}
+  .wrap{max-width:760px; margin:0 auto; padding:0 clamp(1.25rem,4vw,3rem); position:relative; z-index:2;}
+  .prose p{margin:0 0 1.15em;}
+  .prose p:last-child{margin-bottom:0;}
+
+  header.setai-header{ background:var(--s-bg); border-bottom:1px solid var(--s-border); }
+  .setai-nav{ max-width:1080px; margin:0 auto; padding:16px 24px; display:flex; justify-content:space-between; align-items:center; font-family:var(--sans); }
+  .setai-nav strong{ font-family:'Space Grotesk','Inter',sans-serif; font-size:18px; font-weight:700; letter-spacing:.14em; color:var(--s-text); }
+  .setai-nav a{ color:var(--s-muted); font-size:13px; font-weight:500; letter-spacing:.04em; text-decoration:none; }
+  .setai-nav a:hover{ color:var(--s-text); }
+  .setai-breadcrumb{ max-width:1080px; margin:0 auto; padding:14px 24px 0; font-size:13px; color:var(--s-muted); font-family:var(--sans); }
+  .setai-breadcrumb a{ color:var(--s-muted); text-decoration:none; }
+  .setai-breadcrumb a:hover{ color:var(--s-accent); }
+
+  .pn-hero{ max-width:760px; margin:0 auto; padding:3rem clamp(1.25rem,4vw,3rem) 1rem; text-align:center; }
+  .eyebrow{ font-family:var(--serif-display); font-style:italic; font-weight:500; letter-spacing:.14em; text-transform:uppercase; font-size:.78rem; color:var(--ember); margin:0 0 .9rem; }
+  .pn-hero h1{ font-size:clamp(1.9rem,4.5vw,2.6rem); }
+  .pn-hero p{ color:var(--ink-soft); margin-top:1rem; }
+
+  .pn-toc{ display:flex; flex-wrap:wrap; gap:.6rem; justify-content:center; margin:2rem auto 3.5rem; max-width:760px; padding:0 clamp(1.25rem,4vw,3rem); }
+  .pn-toc a{ font-size:.82rem; padding:.5rem 1rem; border:1px solid var(--line); border-radius:100px; text-decoration:none; color:var(--ink-soft); transition:all .2s; }
+  .pn-toc a:hover{ border-color:var(--ember); color:var(--ember); }
+
+  .pn-note{ max-width:760px; margin:0 auto 3.5rem; padding:0 clamp(1.25rem,4vw,3rem); scroll-margin-top:2rem; }
+  .naming-spotlight{ background:var(--vellum-card); border:1px solid var(--line); border-radius:10px; padding:clamp(1.6rem,4vw,2.8rem); box-shadow:var(--shadow); position:relative; }
+  .naming-spotlight::before{ content:'✎'; position:absolute; top:-16px; left:clamp(1.6rem,4vw,2.8rem); background:var(--ember); color:var(--vellum);
+    width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:.95rem; box-shadow:0 6px 14px -6px rgba(43,32,22,.5); }
+  .naming-quotes{ display:flex; flex-direction:column; gap:1rem; margin:1.4rem 0; }
+  .naming-quote{ padding:.9rem 1.1rem; background:rgba(30,74,122,.05); border-radius:6px; border-left:2px solid var(--lapis); }
+  .naming-quote .persian{ font-family:var(--persian); direction:rtl; color:var(--lapis); font-size:1.15rem; margin-bottom:.35rem; }
+  .naming-quote .gloss{ font-size:.84rem; color:var(--ink-soft); font-style:italic; }
+  .naming-verdict{ margin-top:1.2rem; padding-top:1.2rem; border-top:1px solid var(--line); font-size:.92rem; color:var(--ink); }
+  .naming-verdict b{ color:var(--gold-dim); }
+  .eyebrow.process{ color:var(--ember); }
+
+  .weapon-story{ background:var(--vellum-card); border:1px solid var(--line); border-radius:10px; padding:clamp(1.6rem,4vw,2.8rem); box-shadow:var(--shadow); }
+  .weapon-story h3{ font-size:1.3rem; margin-bottom:.8rem; }
+  .weapon-story p{ color:var(--ink-soft); font-size:.96rem; margin:0 0 1em; }
+  .weapon-story p:last-child{ margin-bottom:0; }
+  .weapon-story b{ color:var(--gold-dim); }
+
+  .direction-note{ background:#161009; color:#d8cba9; border:1px solid rgba(198,154,74,.28); border-radius:10px; padding:clamp(1.6rem,4vw,2.8rem); box-shadow:var(--shadow); }
+  .direction-note h3{ color:#f0e6cc; font-size:1.3rem; margin-bottom:.6rem; }
+  .direction-note .eyebrow.process{ color:#c69a4a; }
+  .direction-note p{ color:#d8cba9; font-size:.96rem; margin:0 0 1em; }
+  .direction-note p:last-child{ margin-bottom:0; }
+  .direction-note b{ color:#e6c07c; }
+  .tier-row{ display:flex; flex-wrap:wrap; gap:.5rem; margin:1.2rem 0 1.6rem; }
+  .tier-pill{ font-size:.68rem; letter-spacing:.06em; text-transform:uppercase; padding:.32rem .8rem; border-radius:100px; border:1px solid rgba(198,154,74,.35); color:#c69a4a; }
+  .shot-list{ margin-top:1.6rem; background:#0c0906; border:1px solid rgba(198,154,74,.22); border-radius:8px; padding:clamp(1.3rem,3vw,2rem); }
+  .shot{ display:flex; gap:1rem; padding:.9rem 0; border-bottom:1px solid rgba(198,154,74,.14); }
+  .shot:last-child{ border-bottom:none; padding-bottom:0; }
+  .shot:first-child{ padding-top:0; }
+  .shot-num{ font-family:var(--serif-display); font-style:italic; color:#c69a4a; font-size:.85rem; flex:none; width:2.4rem; }
+  .shot-body{ font-size:.9rem; color:#d8cba9; line-height:1.75; }
+  .shot-body b{ color:#f0e6cc; }
+
+  .pn-back{ text-align:center; margin:1rem auto 4rem; }
+  .pn-back a{ font-family:var(--serif-display); font-style:italic; color:var(--lapis); text-decoration:none; font-size:.95rem; }
+  .pn-back a:hover{ color:var(--ember); }
+
+  .setai-footer{ border-top:1px solid var(--s-border); padding:22px 24px; text-align:center; font-size:13px; color:var(--s-muted); background:var(--s-bg); font-family:var(--sans); }
+  .setai-footer a{ color:var(--s-accent); text-decoration:none; }
+</style>
+</head>
+<body>
+<header class="setai-header">
+  <div class="setai-nav">
+    <strong>SETAEI</strong>
+    <nav><a href="https://setai.no/projects/shahnameh/">← Back to the case study</a></nav>
+  </div>
+</header>
+<div class="setai-breadcrumb"><a href="https://setai.no/">Home</a> / <a href="https://setai.no/projects/">Projects</a> / <a href="https://setai.no/projects/shahnameh/">Shahnameh</a> / Process notes</div>
+
+<div class="pn-hero">
+  <div class="eyebrow center" style="text-align:center;">Process notes</div>
+  <h1>The research, corrections, and reasoning behind the case study</h1>
+  <p>The main page tells the story. This page is where the digressions live — naming research, mistakes we caught and fixed in the open, and the reasoning behind creative choices that needed more room than a caption allows.</p>
+</div>
+
+<div class="pn-toc">
+  <a href="#mehrnaz-naming">Why "Mehrnaz"?</a>
+  <a href="#bow-spear">The bow requested as a spear</a>
+  <a href="#death-scene-direction">Directing the death of Sohrab</a>
+</div>
+
+<div class="pn-note" id="mehrnaz-naming">
+  <div class="naming-spotlight">
+    <div class="eyebrow process" style="margin-bottom:.6rem;">Process note — naming research</div>
+    <h3 style="font-size:1.3rem; margin-bottom:.8rem;">Why "Mehrnaz"? We looked for a real name first.</h3>
+    <div class="prose">
+      <p>During production we got a suggestion to change the wife's name to <span style="direction:rtl; unicode-bidi:isolate; font-family:var(--persian);">منیژه</span> (Manijeh). We first checked whether that would collide internally — it doesn't, Rostam's wife is Tahmineh in this project — but found something more important: Manijeh is already a major, established Shahnameh character (Bijan's beloved in the tale of Bijan and Manijeh), and reusing her name would be a worse collision than the one we were trying to avoid.</p>
+      <p>So we did the actual work: searched Ferdowsi's own verses for a name that could genuinely be recovered. Two passages are read by scholars as being about her — neither names her.</p>
+    </div>
+    <div class="naming-quotes">
+      <div class="naming-quote">
+        <div class="persian">یکی مهربان بودم اندر سرای</div>
+        <div class="gloss">"I had a <b>mehraban</b> [kind/beloved one] in my house" — from the introduction to Bijan and Manijeh.</div>
+      </div>
+      <div class="naming-quote">
+        <div class="persian">نگارا بهارا کجا رفته‌ای / که آرایش باغ بنهفته‌ای</div>
+        <div class="gloss">"O <b>negar</b> [beloved/muse], O <b>bahar</b> [spring], where have you gone, you who adorned the garden and now have hidden it away" — from the introduction to "Padshahi-e Hormozd," read by scholar Mousa-al-Reza Nazari as a symbolic elegy for her death.</div>
+      </div>
+    </div>
+    <div class="naming-verdict">Verdict: <b>no proper name survives</b> — only three terms of endearment: mehraban, negar, and bahar. "Mehrnaz" shares a root (مهر, mehr = love/warmth) with the textually strongest of the three. Khabat's final call: <b>Mehrnaz stays.</b></div>
+  </div>
+</div>
+
+<div class="pn-note" id="bow-spear">
+  <div class="weapon-story">
+    <div class="eyebrow process">Process note</div>
+    <h3>The bow that was requested as a spear</h3>
+    <p>The message we got said "add this spear/lance to the Rostam weapon collection," with a link attached. When we opened the file, it turned out to be something else entirely: a five-angle bow turnaround with quiver and fletching details — no spear or lance anywhere in the image.</p>
+    <p>The same pattern had shown up more than once earlier in production — links pointing at the wrong file, likely mixed up while copying. The fix is always the same: we catalog what the image <b>actually shows</b>, not what the message said it would be, and flag the mismatch openly in the production log instead of pretending nothing happened. The bow became a real and valuable part of the collection anyway — just not the spear that was asked for.</p>
+  </div>
+</div>
+
+<div class="pn-note" id="death-scene-direction">
+  <div class="direction-note">
+    <div class="eyebrow process">Process note — creative direction</div>
+    <h3>Directing the death of Sohrab: two griefs, one shot</h3>
+    <div class="tier-row">
+      <span class="tier-pill">Documented: the elegy's placement</span>
+      <span class="tier-pill">Literary tradition: the reason why</span>
+      <span class="tier-pill">Project choice: the cross-cut</span>
+    </div>
+    <p><b>What's actually documented:</b> Ferdowsi's son — this project calls him Mehrak — died in his late 30s, an event Ferdowsi records himself, grieving, directly inside the Shahnameh. That elegy sits at essentially the same point in the text as the Rostam &amp; Sohrab tragedy — a father losing a son, right next to a poet who had just lost his own. Shahnameh scholars and translators have long noted this juxtaposition as one of the most affecting moments in the whole work; it's a documented feature of the text's structure, not a theory we invented.</p>
+    <p><b>What's interpretation, not fact:</b> whether Ferdowsi was actually composing or revising the Sohrab episode itself around the time of his son's death is not something anyone can date verse-by-verse across a 30-year project — that's a widely repeated, resonant literary reading of the placement, not a documented compositional fact. We're treating it the way the rest of this page treats "popular legend": real, worth building on, honestly labeled as an inference rather than a certainty.</p>
+    <p><b>The project's own choice:</b> building the scene as a deliberate cross-cut between the two griefs — Ferdowsi's biography and his own text — is ours. Khabat's direction, shot by shot:</p>
+    <div class="shot-list">
+      <div class="shot"><div class="shot-num">01</div><div class="shot-body">Close on <b>Sohrab's</b> eyes. All he can see, reflected there, is his father — Rostam.</div></div>
+      <div class="shot"><div class="shot-num">02</div><div class="shot-body">Cut to <b>Rostam's</b> face — reflected in the black onyx stone of the armband. He recognizes it. His eyes are already full of sorrow before he understands why.</div></div>
+      <div class="shot"><div class="shot-num">03</div><div class="shot-body">Not a fast cutting rhythm from here — <b>slow, quiet, and deliberate.</b> A single tear slides down Rostam's face in slow motion, silent, before the grief breaks.</div></div>
+      <div class="shot"><div class="shot-num">04</div><div class="shot-body">Rostam looks up at the sky and screams — the first time in the whole film he's shown crying. Both armies, the entire battlefield, hear it.</div></div>
+      <div class="shot"><div class="shot-num">05</div><div class="shot-body">Cut to <b>Ferdowsi's</b> eyes, decades later, welling with tears as he writes this exact chapter — remembering the real grief of losing Mehrak.</div></div>
+    </div>
+    <p style="margin-top:1.4rem;">The armband's new studio reference (see the main page) already proves the second shot is buildable as-is — the onyx cabochon photographs like a real mirror, a face genuinely visible in it. That wasn't originally shot for this purpose; it just turned out to double as the exact reference this scene needed.</p>
+  </div>
+</div>
+
+<div class="pn-back"><a href="https://setai.no/projects/shahnameh/">← Back to the Shahnameh case study</a></div>
+
+<footer class="setai-footer">© SETAEI · Oslo — <a href="https://setai.no/projects/">more projects</a></footer>
+</body>
+</html>
