@@ -1,0 +1,1089 @@
+<!doctype html><html lang='en'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'>
+<title>Rostam & Sohrab — manus | Shahnameh | SETAEI</title>
+<meta name='description' content="Full manus for Rostam &amp; Sohrab: historisk/geografisk forankring, karakterbibel, skjermspill, 30 klar-til-lim-inn video-prompts og skotliste (4:23) — Master Film v1, bygget for Higgsfield Global Film Festival.">
+<meta name='robots' content='index,follow'>
+<link rel='canonical' href='https://setai.no/projects/shahnameh/manus/'>
+<style>
+  :root{
+    --ink:#151109; --ink-2:#1f1a10;
+    --parchment:#f6efdd; --parchment-2:#ece0c2;
+    --gold:#c9a227; --gold-bright:#e6c25c;
+    --vermillion:#b0432c; --lapis:#2c4a6e;
+    --line: rgba(201,162,39,0.28);
+    --text:#efe6cf; --text-dim:#c9bd9c; --text-faint:#96896a;
+    --card:#1c1710; --card-2:#211b12;
+    --radius:14px;
+    --serif: "Iowan Old Style","Palatino Linotype","Book Antiqua",Georgia,"Noto Serif",serif;
+    --sans: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    --mono: "SF Mono","Cascadia Code",Consolas,monospace;
+  }
+  :root[data-theme="light"]{
+    --ink:#f6efdd; --ink-2:#ece0c2;
+    --text:#2a2314; --text-dim:#5c5138; --text-faint:#8a7d5c;
+    --card:#fffdf6; --card-2:#faf3de;
+    --line: rgba(160,120,20,0.25);
+  }
+  @media (prefers-color-scheme: light){
+    :root:not([data-theme="dark"]){
+      --ink:#f6efdd; --ink-2:#ece0c2;
+      --text:#2a2314; --text-dim:#5c5138; --text-faint:#8a7d5c;
+      --card:#fffdf6; --card-2:#faf3de;
+      --line: rgba(160,120,20,0.25);
+    }
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(1200px 600px at 15% -10%, rgba(201,162,39,0.10), transparent 60%),
+      radial-gradient(900px 500px at 100% 0%, rgba(176,67,44,0.08), transparent 55%),
+      var(--ink);
+    color:var(--text);
+    font-family:var(--sans);
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:760px;margin:0 auto;padding:56px 22px 120px;}
+  .eyebrow{
+    font-size:11.5px;letter-spacing:0.16em;text-transform:uppercase;
+    color:var(--gold);font-weight:700;display:flex;align-items:center;gap:10px;
+  }
+  .eyebrow::before{content:"";width:22px;height:1px;background:var(--gold);display:inline-block;}
+  h1{
+    font-family:var(--serif);font-weight:600;font-size:clamp(30px,5.6vw,44px);
+    line-height:1.1;margin:14px 0 6px;text-wrap:balance;color:var(--text);
+  }
+  h1 em{font-style:italic;color:var(--gold-bright);}
+  .lede{font-size:16px;color:var(--text-dim);max-width:58ch;margin:0 0 8px;}
+  .badges{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0 30px;}
+  .badge{
+    font-family:var(--mono);font-size:11.5px;color:var(--gold-bright);
+    background:rgba(201,162,39,0.12);border:1px solid rgba(201,162,39,0.35);
+    padding:5px 11px;border-radius:100px;
+  }
+  section{margin-top:52px;}
+  h2{
+    font-family:var(--serif);font-size:21px;font-weight:600;color:var(--gold-bright);
+    margin:0 0 4px;display:flex;align-items:baseline;gap:10px;
+  }
+  h2 .idx{font-family:var(--mono);font-size:12.5px;color:var(--text-faint);font-weight:400;}
+  .sec-lede{color:var(--text-faint);font-size:13.5px;margin:0 0 18px;max-width:62ch;}
+  .card{
+    background:linear-gradient(180deg,var(--card),var(--card-2));
+    border:1px solid var(--line);border-radius:var(--radius);
+    padding:18px 20px;margin-bottom:12px;
+  }
+  .card.new{border-color:rgba(201,162,39,0.5);}
+  .card .tag{
+    font-size:10px;letter-spacing:0.06em;text-transform:uppercase;font-weight:700;
+    color:var(--gold-bright);background:rgba(201,162,39,0.14);
+    border:1px solid rgba(201,162,39,0.4);padding:3px 8px;border-radius:100px;
+    display:inline-block;margin-bottom:8px;
+  }
+  .card p{color:var(--text-dim);font-size:14px;margin:0;}
+  .card p + p{margin-top:8px;}
+  .card b{color:var(--text);}
+
+  /* Screenplay block */
+  .script{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:8px 0;overflow:hidden;
+  }
+  .slug{
+    font-family:var(--mono);font-size:12px;letter-spacing:0.03em;
+    color:var(--gold-bright);text-transform:uppercase;font-weight:700;
+    padding:18px 24px 6px;
+  }
+  .action{
+    font-family:var(--serif);font-size:15px;color:var(--text-dim);
+    padding:4px 24px;max-width:64ch;
+  }
+  .char{
+    font-family:var(--mono);font-size:12px;letter-spacing:0.05em;
+    color:var(--text);text-transform:uppercase;font-weight:700;
+    padding:14px 24px 0 90px;
+  }
+  .paren{
+    font-family:var(--mono);font-size:11.5px;color:var(--text-faint);font-style:italic;
+    padding:0 24px 0 100px;
+  }
+  .dial{
+    font-family:var(--serif);font-size:15px;color:var(--gold-bright);
+    padding:2px 60px 8px 90px;max-width:52ch;
+  }
+  .flash{
+    margin:14px 24px;padding:12px 16px;
+    border-left:2px solid var(--vermillion);
+    background:rgba(176,67,44,0.08);
+    font-family:var(--serif);font-size:14px;color:var(--text-dim);font-style:italic;
+  }
+  .flash b{color:#e08a6f;font-style:normal;font-family:var(--sans);font-size:11px;letter-spacing:0.05em;text-transform:uppercase;display:block;margin-bottom:4px;}
+  .titlecard{
+    margin:20px 24px 18px;padding:20px;text-align:center;
+    border:1px solid var(--line);border-radius:10px;background:var(--card-2);
+  }
+  .titlecard .p1{font-family:var(--serif);font-style:italic;font-size:16px;color:var(--gold-bright);}
+  .titlecard .p2{font-family:var(--serif);font-size:14px;color:var(--text-dim);margin-top:4px;}
+  .fadeinout{
+    font-family:var(--mono);font-size:11px;letter-spacing:0.08em;
+    color:var(--text-faint);text-transform:uppercase;padding:16px 24px;
+  }
+  .cut{
+    font-family:var(--mono);font-size:11px;letter-spacing:0.08em;
+    color:var(--text-faint);text-transform:uppercase;text-align:right;
+    padding:10px 24px 0;
+  }
+
+  /* Table */
+  table{width:100%;border-collapse:collapse;font-size:13px;margin-top:4px;}
+  th{
+    text-align:left;font-size:10.5px;letter-spacing:0.05em;text-transform:uppercase;
+    color:var(--text-faint);font-weight:600;padding:0 10px 8px;
+    border-bottom:1px solid var(--line);
+  }
+  td{padding:10px 10px;border-bottom:1px solid var(--line);color:var(--text-dim);vertical-align:top;}
+  tr:last-child td{border-bottom:none;}
+  td.num{font-variant-numeric:tabular-nums;text-align:right;color:var(--gold-bright);font-weight:600;white-space:nowrap;}
+  td.k{color:var(--text);font-weight:600;white-space:nowrap;}
+  tr.crit td{background:rgba(201,162,39,0.06);}
+  .foot-note{font-size:11.5px;color:var(--text-faint);margin-top:10px;}
+
+  .must{
+    background:rgba(201,162,39,0.08);border:1px solid rgba(201,162,39,0.3);
+    border-radius:var(--radius);padding:16px 18px;font-size:13.5px;color:var(--text-dim);margin-top:16px;
+  }
+  .must-title{font-weight:700;color:var(--gold-bright);font-size:12px;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:8px;}
+  .must ul{margin:0;padding-left:18px;}
+  .must li{margin:5px 0;}
+
+  .charcard{
+    background:linear-gradient(180deg,var(--card),var(--card-2));
+    border:1px solid var(--line);border-radius:var(--radius);
+    padding:22px 22px 20px;margin-bottom:16px;
+  }
+  .cc-head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:2px;}
+  .cc-name{font-family:var(--serif);font-size:21px;font-weight:600;color:var(--text);}
+  .cc-epithet{font-family:var(--serif);font-style:italic;font-size:13.5px;color:var(--gold-bright);}
+  .cc-role{font-size:11px;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-faint);margin-bottom:14px;}
+  .cc-row{display:grid;grid-template-columns:88px 1fr;gap:14px;padding:9px 0;border-top:1px solid var(--line);}
+  .cc-row:first-of-type{border-top:none;}
+  .cc-label{font-size:10.5px;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-faint);font-weight:700;padding-top:2px;}
+  .cc-val{font-size:13.5px;color:var(--text-dim);line-height:1.55;}
+  .cc-val b{color:var(--text);}
+  .cc-prompt{
+    margin-top:14px;padding:12px 14px;border-radius:9px;
+    background:rgba(44,74,110,0.14);border:1px solid rgba(44,74,110,0.4);
+    font-family:var(--mono);font-size:11.5px;color:#a8c6e6;line-height:1.6;
+  }
+  .cc-prompt-label{
+    font-family:var(--sans);font-size:10px;letter-spacing:0.06em;text-transform:uppercase;
+    color:#8fb3d9;font-weight:700;margin-bottom:6px;display:block;
+  }
+
+  .promptcard{
+    background:linear-gradient(180deg,var(--card),var(--card-2));
+    border:1px solid var(--line);border-radius:var(--radius);
+    padding:16px 18px;margin-bottom:12px;
+  }
+  .promptcard.crit{border-color:rgba(201,162,39,0.5);}
+  .pc-head{display:flex;align-items:baseline;gap:10px;margin-bottom:8px;}
+  .pc-num{font-family:var(--serif);color:var(--gold-bright);font-size:16px;font-weight:600;}
+  .pc-title{font-size:13px;color:var(--text-faint);}
+  .pc-body{
+    font-family:var(--mono);font-size:12px;line-height:1.65;color:#a8c6e6;
+    background:rgba(44,74,110,0.14);border:1px solid rgba(44,74,110,0.4);
+    border-radius:9px;padding:12px 14px;
+  }
+  .pc-settings{margin-top:8px;font-size:11.5px;color:var(--text-faint);}
+  .pc-settings b{color:var(--text-dim);}
+  .newflow{
+    background:rgba(201,162,39,0.1);border:1px solid rgba(201,162,39,0.4);
+    border-radius:var(--radius);padding:14px 18px;margin-bottom:18px;font-size:13.5px;color:var(--text-dim);
+  }
+  .fieldprompt{
+    font-family:var(--mono);font-size:11.5px;line-height:1.7;color:#a8c6e6;
+    background:rgba(44,74,110,0.14);border:1px solid rgba(44,74,110,0.4);
+    border-radius:9px;padding:14px 16px;white-space:pre-wrap;word-break:break-word;
+  }
+  .fieldprompt .fk{color:var(--gold-bright);font-weight:700;}
+  .fieldprompt .fneg{color:#e08a6f;}
+  .identcard{
+    background:linear-gradient(180deg,#0c0a06,#151109);
+    border:1px solid var(--gold);border-radius:var(--radius);
+    padding:28px 22px;text-align:center;margin-bottom:16px;
+  }
+  .identcard .iw{
+    font-family:var(--serif);font-size:34px;letter-spacing:0.12em;
+    color:var(--gold-bright);text-transform:uppercase;font-weight:600;
+    text-shadow:0 0 18px rgba(230,194,92,0.35);
+  }
+  .identcard .is{
+    font-family:var(--serif);font-style:italic;font-size:14px;color:var(--text-dim);
+    margin-top:10px;letter-spacing:0.02em;
+  }
+
+  footer{margin-top:64px;padding-top:22px;border-top:1px solid var(--line);font-size:12px;color:var(--text-faint);}
+  @media (max-width:560px){
+    .char{padding-left:24px;}
+    .paren{padding-left:24px;}
+    .dial{padding-left:24px;padding-right:24px;}
+  }
+
+  .manus-nav{ border-bottom:1px solid var(--line); background:rgba(0,0,0,0.15); }
+  .manus-nav-inner{ max-width:760px; margin:0 auto; padding:16px 22px; display:flex; justify-content:space-between; align-items:center; gap:1rem; flex-wrap:wrap; font-family:var(--sans); }
+  .manus-nav-inner strong{ font-size:13px; letter-spacing:0.14em; color:var(--gold-bright); font-weight:700; }
+  .manus-nav-inner a{ color:var(--text-faint); font-size:13px; text-decoration:none; transition:color .2s; }
+  .manus-nav-inner a:hover{ color:var(--gold-bright); }
+  .manus-breadcrumb{ max-width:760px; margin:0 auto; padding:10px 22px 0; font-size:12.5px; color:var(--text-faint); font-family:var(--sans); }
+  .manus-breadcrumb a{ color:var(--text-faint); text-decoration:none; }
+  .manus-breadcrumb a:hover{ color:var(--gold-bright); }
+</style>
+</head>
+<body>
+
+<div class="manus-nav"><div class="manus-nav-inner"><strong>SETAEI</strong><div style="display:flex;gap:16px;"><a href="https://setai.no/projects/shahnameh/kamera/">Kamera &amp; visuelt språk</a><a href="https://setai.no/projects/shahnameh/">← Case-studien</a></div></div></div>
+<div class="manus-breadcrumb"><a href="https://setai.no/">Home</a> / <a href="https://setai.no/projects/">Projects</a> / <a href="https://setai.no/projects/shahnameh/">Shahnameh</a> / Manus</div>
+
+<div class="wrap">
+
+  <div class="eyebrow">RealGram × Shahnameh — v5 · Master Film v1</div>
+  <h1>Rostam & Sohrab.<br><em>Nushdaru ba'd az marg-e Sohrab.</em></h1>
+  <p class="lede">Higgsfield Global Film Festival ($1M, åpnet 10. aug, stenger 3. sep). Fullt manus + full feltstrukturerte video-prompts, testet og strammet inn mot ekte genereringer. Kildegransket mot to uavhengige oversettelser og forankret i Shahnamehs egen kronologi/geografi — se seksjon 1–3.</p>
+  <div class="badges">
+    <span class="badge">4:23 sum, verifisert</span>
+    <span class="badge">30 shots</span>
+    <span class="badge">Kayanian-æraen</span>
+    <span class="badge">Sistan · Turan</span>
+    <span class="badge">Låst produksjonsversjon · v5</span>
+  </div>
+  <div class="card new" style="margin-top:16px;">
+    <span class="tag">Timing løst</span>
+    <p style="font-size:12.5px;"><b>Den tidligere uoverensstemmelsen mellom badge (~2:51) og skotliste (3:33) er fjernet.</b> Master Film v1 (seksjon 05) bygger en ny, fullstendig 30-shots skotliste fra bunnen av — hvert shots varighet i seksjon 08 er summert direkte, ikke anslått. Total: <b>4:23 (263 sek)</b>, godt innenfor konkurransens anbefalte 3–5 minutter.</p>
+  </div>
+
+  <section>
+    <h2><span class="idx">01</span> Historisk og geografisk forankring</h2>
+    <p class="sec-lede">Du ba meg finne ut nøyaktig når i Shahnamehs egen tidsregning dette skjer, og hvilken konge som regjerte — for å forankre filmen i ekte historie/geografi og løfte frem Persia som sivilisasjon, ikke bare som eventyr-kulisse.</p>
+
+    <div class="card new">
+      <span class="tag">Tidsperiode</span>
+      <p><b>Shahnameh deler Irans legendariske historie i fire "dynastier":</b> Pishdadian (mytisk skapelsestid), <b>Kayanian</b> (heltealderen), Ashkanian/partisk, og Sasanian (den historisk godt dokumenterte perioden frem til 651 e.Kr., da araberne erobret riket).</p>
+      <p>Rostam & Sohrab hører til <b>Kayanian-dynastiet</b>, under <b>kong Kay Kavus</b> — andre kongen i denne slekten, bestefar til Kay Khosrow. Dette er heltealderen i Ferdowsis egen kronologi, plassert generasjoner <b>før Kyros den store</b> og det Achaemenid-riket de fleste vestlige seere forbinder med "Persia" (fra filmer som «300»). Shahnameh selv gir ingen presist kalenderår for denne perioden — den er legendarisk, ikke historisk datert som Sasanid-æraen er — men poenget er nettopp dette: <b>persisk sivilisasjon strekker seg lenger tilbake enn det de fleste vet</b>, til en heltealder eldre enn selve det klassiske perserriket.</p>
+    </div>
+
+    <div class="card new">
+      <span class="tag">Geografi — ekte, ikke oppdiktet</span>
+      <p><b>Sistan (også kalt Zabulistan), Rostams hjemland,</b> er et reelt område som i dag ligger delt mellom Irans Sistan-Baluchestan-provins og Sør-Afghanistan (Zabul, Nimruz, Helmand, Kandahar). Navnet kommer fra "Sakastan" — hjemlandet til sakerne, en ekte skytisk/øst-iransk stamme fra antikken.</p>
+      <p><b>Turan</b>, riket Sohrab kommer fra, er <b>ikke tyrkisk</b> — en vanlig misforståelse. Tyrkiske folk kom til Sentral-Asia først mange hundre år senere. I Shahnameh (og i Avesta, den zoroastriske hellige teksten den bygger på) er turanerne øst-iranske nomadefolk, nære slektninger av perserne selv — beslektet med de historiske skyterne/sakerne. Konflikten mellom Iran og Turan er dermed egentlig <b>en konflikt mellom to grener av samme folk</b>, ikke perser mot fremmed erobrer. Det gjør Rostam & Sohrab enda mer presist symbolsk: en far og sønn fra to "fiendtlige" riker som i virkeligheten er kjøtt av samme kjøtt — akkurat som historien selv handler om.</p>
+    </div>
+
+    <div class="card">
+      <p style="font-size:13px;"><b>Brukt i filmen:</b> åpningstekstkortet nevner nå Kay Kavus og "før Kyros den store" eksplisitt (seksjon 3, shot 1). Sistan/Turan-detaljen er bevisst holdt utenfor selve dialogen — for mye eksposisjon ville brutt sjangertonen (GoT/LotR bruker sjelden forklarende tekst midt i en scene) — men ligger som undertekst i sluttkortet og bør absolut være med i den skriftlige synopsisen dere sender inn sammen med filmen, siden mange filmfestivaler krever det og dette er nøyaktig den typen forskningsdybde en jury legger merke til.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="idx">02</span> Hva tidligere vinnere hadde til felles</h2>
+    <p class="sec-lede">Higgsfield offentliggjorde vinnerne av sin hittil største konkurranse (Action Contest, mars 2026 — 8 752 bidrag fra 139 land, $500k-pott) med navn, filmtitler og eksplisitte jury-uttalelser om hva som ble vektlagt. Dette er den mest relevante presedensen som finnes for hvordan denne jurykulturen dømmer.</p>
+
+    <div class="card new">
+      <span class="tag">Juryens eget svar</span>
+      <p>Panelet — en blanding av tradisjonelle Hollywood-folk og AI-native studioer (Jason Zada, Emmy-vinnende regissør bak Secret Level; Buralqy, VFX-studio bak musikkvideoer for The Weeknd/Bad Bunny/Kanye West; Jama Jurabaev, konseptkunstner bak Beauty and the Beast/Kong: Skull Island/Ready Player One; PJ Ace, CEO Genre.ai; Rourke, GenHQ) — <b>prioriterte historiefortelling og regissørens intensjon over teknisk polish</b>. De så spesielt etter: om scener flyter naturlig, om karakteroppførsel føles konsistent gjennom hele filmen, og om lyssetting støtter historiens tone.</p>
+    </div>
+
+    <table>
+      <tr><th>Plass</th><th>Film / skaper</th><th>Premie</th><th>Hvorfor den vant</th></tr>
+      <tr class="crit"><td class="k">1.</td><td>«GRANDMA vs WASP» — Muhannad Nassar & Simon Meyer (aldri møtt hverandre, samarbeidet eksternt)</td><td class="num">$150 000</td><td>Absurd, universelt gjenkjennelig konsept («bestemor blir ninja-kriger mot en veps») utført med ekte actionfilm-kameraspråk: ekstrem sakte film (1000FPS-stil), lave heltevinkler, rask klipping. Konseptet ER vitsen; håndverket er å ta det på alvor.</td></tr>
+      <tr><td class="k">2.</td><td>«CUPID» — Nikolay Shestak</td><td class="num">$100 000</td><td>Mørkt, tematisk ambisiøst premiss («aggresjon er blitt normen»), utført med profesjonell skuespiller-/regikvalitet — skaperen er etablert skuespiller/filmskaper som brukte AI til å realisere noe som ellers ville krevd et umulig budsjett.</td></tr>
+      <tr><td class="k">3.</td><td>«SCRATCH» — Ash & Aram Gevorkyan (laget på 5 dager)</td><td class="num">$50 000</td><td>Vant hovedsakelig på ren produksjonsverdi — publikum trodde det var en ekte studiotrailer. Regissør+VFX-artist-duo med track record fra musikkvideoer som ble tatt for ekte studioarbeid.</td></tr>
+    </table>
+
+    <div class="card">
+      <p><b>Mønsteret på tvers av alle tre:</b> konseptet er det som faktisk skiller vinnerne fra mengden — alle har tilgang til de samme AI-verktøyene, så et enkelt, klart, følelsesmessig lesbart konsept er det som vinner over spektakulær men uklar historiefortelling. Teknisk utførelse (konsistente karakterer, ingen «uncanny valley»-følelse, lyssetting som støtter tonen) er et nødvendig gulv, ikke selve differensiatoren.</p>
+    </div>
+
+    <div class="card new">
+      <span class="tag">Anvendt på vårt manus</span>
+      <p><b>Konsept:</b> vårt utgangspunkt (far dreper sønn uvitende, pga. en løgn han selv finner opp) er allerede av samme type som alle tre vinnerne — enkelt, universelt, følelsesmessig umiddelbart lesbart selv uten forkunnskap om Shahnameh. Ingen endring nødvendig her.</p>
+      <p><b>Karakterkonsistens</b> er eksplisitt noe juryen vurderer — dette er nøyaktig grunnen til at karakterbibelen under (seksjon 3) med faste Soul Cast-prompts per karakter ikke er et nice-to-have, men direkte rettet mot et uttalt bedømmelseskriterium.</p>
+      <p><b>Lagt til i skotlisten (seksjon 6):</b> shot 4/5 (Sohrab og Rostam rir ut) er nå merket som lave heltevinkler — direkte inspirert av GRANDMA vs WASPs vinnende kameraspråk. Shot 13 (dolkstøtet) har fått en eksplisitt sakte film-note på det avgjørende slaget, samme prinsipp som vinnerfilmens bruk av ekstrem slow-motion på det actionfylte høydepunktet.</p>
+      <p><b>Ny risiko å styre etter:</b> «menneskelig ytelse som ikke leser som AI-generert» er et eget, eksplisitt kriterium. De mest følelsesmessig krevende bildene i manuset vårt — gjenkjenningen (shot 16) og sorgscenen (shot 17–18) — er der mikro-uttrykk i ansiktet må sitte, siden det er nøyaktig der AI-generert skuespill vanligvis avslører seg selv. Sett av mest re-genereringsbudsjett her, ikke på actionsekvensene.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="idx">03</span> Karakterbibel</h2>
+    <p class="sec-lede">Fire hovedkarakterer: Ferdowsi, Rostam, Sohrab — og Rakhsh, Rostams hest, som i kildeteksten er langt mer enn et transportmiddel. Alt under er hentet fra faktiske beskrivelser i Shahnameh/sekundærlitteratur, ikke oppdiktet. «Soul Cast-prompt» er en klar-til-bruk visuell oppsummering for Cinema Studio.</p>
+
+    <div class="charcard">
+      <div class="cc-head"><span class="cc-name">Ferdowsi</span><span class="cc-epithet">Hakim — «Vismannen»</span></div>
+      <div class="cc-role">Rammefortelleren · dikteren selv, 940–1025 e.Kr.</div>
+      <div class="cc-row"><div class="cc-label">Fysikk</div><div class="cc-val">Eldre mann, ca. 70 år på det tidspunktet han fullfører verket (1010 e.Kr., etter 25–30 års arbeid). Fra dehqan-klassen — jordeiende persisk lavadel, sett som bærere av «ekte» pre-islamsk persisk identitet.</div></div>
+      <div class="cc-row"><div class="cc-label">Antrekk</div><div class="cc-val">Enkel, uprangen turban og kappe i dehqan-stil — ikke geistlig, ikke hoffklær. Blekkflekkede fingre. Han døde nær fattig etter at sultan Mahmud av Ghazni aldri betalte den lovede summen — antrekket bør reflektere beskjedenhet, ikke prakt.</div></div>
+      <div class="cc-row"><div class="cc-label">Personlighet</div><div class="cc-val">Stolt, stille bitter over manglende kongelig anerkjennelse, men urokkelig sikker på at verket ville vare. Skrev i relativ isolasjon, ikke ved et strålende hoff.</div></div>
+      <div class="cc-row"><div class="cc-label">Skriving</div><div class="cc-val"><b>Persisk skrives høyre til venstre, ikke venstre til høyre</b> — pennehånden hans beveger seg konsekvent RTL i alle shots der han skriver (1B, 2, 21). Tempoet er en gammel manns: rolig, voksen, klok — ikke en ung skrivers fart. Han skriver omhyggelig, med pauser mellom ordene, ikke i en jevn rask strøm.</div></div>
+      <div class="cc-prompt"><span class="cc-prompt-label">Soul Cast-prompt</span>Elderly Persian dehqan-class scholar, ~70 years old, long grey-white beard, plain wound turban, simple undyed robes, ink-stained fingers, seated in a modest candlelit study — not royal or opulent. Writes right-to-left in the Persian manner, with slow, calm, deliberate strokes — an old man's careful pace, not a young scribe's speed.</div>
+    </div>
+
+    <div class="card new">
+      <span class="tag">Khabats rettelse</span>
+      <p><b>Persisk skrives høyre til venstre, ikke venstre til høyre</b> — en lett feil å gå glipp av siden nesten alle video-AI-modeller er trent overveiende på venstre-til-høyre skrift (latinsk, kyrillisk osv.), og default-genereringer har en tendens til å la pennehånden bevege seg feil vei uten at man ber eksplisitt om det motsatte. Rettet i shot 1B, 2 og 21 (alle steder Ferdowsi skriver) — både i [ACTION ARC] og som en eksplisitt [RULES / AVOID]-linje, pluss i Soul Cast-prompten selv slik at det arves inn i enhver generering som bruker den referansen.</p>
+      <p>Samtidig lagt til: <b>skrivetempoet hans skal være en gammel manns</b> — rolig, voksen, klok, omhyggelig — ikke en ung skrivers fart. Dette står nå eksplisitt i alle tre shots, i tillegg til en ny «Skriving»-rad i Ferdowsi-kortet over.</p>
+    </div>
+
+    <div class="charcard">
+      <div class="cc-head"><span class="cc-name">Rostam</span><span class="cc-epithet">Tahamtan · Jahan Pahlavan</span></div>
+      <div class="cc-role">«Den mektige kroppen» · «Verdens mester» — Irans største helt, fra Sistan/Zabulistan</div>
+      <div class="cc-row"><div class="cc-label">Fysikk</div><div class="cc-val">Legendarisk kjempestor — kildene sier han var så stor ved fødselen at moren trengte hjelp fra den mytiske fuglen Simorgh for å føde ham. Skal fremstå synlig større enn alle andre menn i bildet.</div></div>
+      <div class="cc-row"><div class="cc-label">Rustning</div><div class="cc-val">Tre lag før kamp: <b>zereh</b> (lett ringbrynje) → <b>jowšan</b> (tykk platerustning) → <b>babr-e bayan</b>, den magiske tiger/leopard-skinn-kappen — hans mest ikoniske kjennetegn, sies å være ugjennomtrengelig for ild, vann og våpen. Spisst hjelmhode i tiger-mønster. Signaturvåpen: en tung stridsklubbe med okse-hode (<b>gorz-e gāvsar</b>).</div></div>
+      <div class="cc-row"><div class="cc-label">Personlighet</div><div class="cc-val">Definert av lojalitet og mot. Stolt, kort lunte, iblant hovmodig. Kronisk oppgitt over kong Kay Kavus' forfengelighet og dumhet — men redder ham alltid likevel. Taler kongene midt imot uten frykt.</div></div>
+      <div class="cc-prompt"><span class="cc-prompt-label">Soul Cast-prompt</span>Massive, towering warrior — visibly larger-framed than any other man in frame. Layered armor topped with a spotted tiger/leopard-pelt garment (babr-e bayan), pointed tiger-striped helmet, heavy ox-head war mace at his side. Weathered, battle-worn, veteran face — not young.</div>
+    </div>
+
+    <div class="charcard">
+      <div class="cc-head"><span class="cc-name">Sohrab</span></div>
+      <div class="cc-role">Rostams sønn, oppvokst i Turan, har aldri møtt faren</div>
+      <div class="cc-row"><div class="cc-label">Fysikk</div><div class="cc-val">Like høy og sterk som sin far til tross for ungdommen — et fysisk sidestykke til Rostam selv, men med et tydelig yngre, uslitt ansikt. Alder holdes bevisst upresis i manuset («umulig ung for sin styrke») — kildene varierer, ikke fest et eksakt tall.</div></div>
+      <div class="cc-row"><div class="cc-label">Rustning</div><div class="cc-val">Egen stridsklubbe, en slankere/mindre slitt ekko av farens okse-hode-design — antyder en arv han selv ikke vet han bærer videre. Lettere rustning enn faren, mindre kamperfaring synlig i utstyret.</div></div>
+      <div class="cc-row"><div class="cc-label">Personlighet</div><div class="cc-val">Idealistisk, håpefull, drevet av kjærlighet til en far han aldri har møtt. Ærefull av instinkt — skåner mannen som dreper ham fordi han stoler på en oppdiktet æreskodeks. Ambisiøs på en konstruktiv måte: vil forene Iran og Turan under seg og faren, ikke erobre for erobringens skyld.</div></div>
+      <div class="cc-prompt"><span class="cc-prompt-label">Soul Cast-prompt</span>Young warrior with the same towering build and proportions as Rostam, but a visibly younger, unweathered face — eager rather than grim. Lighter, less battle-worn armor. Carries his own war mace, a leaner echo of the ox-head design.</div>
+    </div>
+
+    <div class="charcard new">
+      <div class="cc-head"><span class="cc-name">Tahmineh</span><span class="cc-epithet">Samangans prinsesse</span></div>
+      <div class="cc-role">Sohrabs mor · den eneste som fra første stund vet nøyaktig hvem faren er</div>
+      <div class="cc-row"><div class="cc-label">Fysikk</div><div class="cc-val">Ung Samangan-adelskvinne. Opptrer i to alderslag i filmen: ung (natten Sohrab ble unnfanget) og eldre, voksen mor (idet Sohrab drar). Samme ansikt, ikke to castinger — kun alder/holdning endres, se Master Film v1 seksjon 05.</div></div>
+      <div class="cc-row"><div class="cc-label">Rolle i historien</div><div class="cc-val">Tar selv initiativ til Rostam natten de møtes — kildenes egen detalj, ikke filmens oppdiktning. Oppdrar Sohrab alene i Turan, forteller ham om faren, binder farens armbånd rundt hans arm idet han drar for å lete etter Rostam.</div></div>
+      <div class="cc-row"><div class="cc-label">Funksjon i manuset</div><div class="cc-val">Armbåndet går gjennom henne to ganger — hun mottar det (shot 5), hun gir det videre (shot 6). Hun er dermed den fysiske broen mellom filmens to tragiske løgner: Rostams skjulte identitet og Sohrabs uvitende jakt.</div></div>
+      <div class="cc-prompt"><span class="cc-prompt-label">Soul Cast-prompt</span>Young Persian noblewoman from Samangan, dark hair loosely braided with simple gold ornaments, richly patterned but not royal-opulent fabric, warm candlelit skin tones. Composed, deliberate expression — not passive or decorative. Older variant (departure scene): same face, hair fully covered, plainer travel dress, harder/steadier eyes — a mother sending her son to war, not a young bride.</div>
+    </div>
+
+    <div class="charcard">
+      <div class="cc-head"><span class="cc-name">Rakhsh</span></div>
+      <div class="cc-role">Rostams hest — ikke bare et transportmiddel, en egen karakter i kildeteksten</div>
+      <div class="cc-row"><div class="cc-label">Utseende</div><div class="cc-val">Ferdowsis egen beskrivelse: pelsen som <b>«rosenblader strødd på safrangul bunn»</b> — altså rødrosa flekker/dapples på en gyllen-beige grunnfarge, ikke ensfarget. Bryst og skuldre som en løve, hover av stål, styrke som en elefant.</div></div>
+      <div class="cc-row"><div class="cc-label">Opprinnelse</div><div class="cc-val">Rostam valgte ham selv fra hestehjorder fra Zabulistan/Kabul — han presset hånden mot ryggen på hver hest; alle andre bøyde seg under trykket, kun denne folen holdt stand. Fanget med lasso etter en heftig jakt. Han er den eneste hesten i riket sterk nok til å bære Rostam i full rustning.</div></div>
+      <div class="cc-row"><div class="cc-label">Personlighet</div><div class="cc-val">Ekstremt lojal, uvanlig intelligent, adlyder ingen andre enn Rostam. I andre episoder kjemper han alene mot en løve for å beskytte en sovende Rostam — en aktiv helt i egen rett, ikke bare et kjøretøy.</div></div>
+      <div class="cc-prompt"><span class="cc-prompt-label">Soul Cast-prompt</span>Powerful war-horse with a dappled roan coat — rose-red/pink dapples scattered over a golden-tan base, not a solid color. Heavily muscled chest and shoulders, dark mane and tail, alert intelligent eyes. Built to carry a rider in full plate and pelt armor without strain.</div>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="idx">04</span> Nytt i v2</h2>
+    <p class="sec-lede">Andre research-pass ga mer autentisk materiale enn v1 — spesielt sorgscenen, som jeg først kuttet for tid og har hentet tilbake.</p>
+    <div class="card new">
+      <span class="tag">Din idé</span>
+      <p><b>Ferdowsi-rammefortellingen.</b> Filmen åpner på dikteren selv ved lys, kamera dykker inn i siden han skriver — historien blir levende. Gir en internasjonal jury umiddelbar kontekst («dette er Persia, dette er Boken om kongene») uten en eneste forklarende replikk i selve historien.</p>
+    </div>
+    <div class="card new">
+      <span class="tag">Mitt forslag</span>
+      <p><b>Et lukkende speilbilde.</b> Filmen vender tilbake til Ferdowsi helt til slutt, som lukker boken idet han fullfører ordtaket. Rent estetisk — fjern trygt uten at noe annet i manuset må endres, se seksjon 5.</p>
+    </div>
+    <div class="card">
+      <p><b>Sohrab prøver aktivt gjennom hele duellen</b> å få motstanderen til å avsløre seg — ikke bare ett spørsmål ved starten. Kildene beskriver ham som å nevne sin mors historier om Rostam midt i kampen, håpende. Gjør «nesten gjenkjenning»-spenningen mye sterkere gjennom hele duellen.</p>
+    </div>
+    <div class="card">
+      <p><b>Sohrabs siste ord er rettet forbi drapsmannen, ikke til ham</b> — han ber om at budskapet bæres videre TIL Rostam, uvitende om at han snakker direkte til ham. Sterkere dramatisk ironi enn v1.</p>
+    </div>
+    <div class="card">
+      <p><b>Sorgscenen (hentet tilbake fra v1-kuttet):</b> Rostam river i sin egen rustning, strør støv over hodet (dokumentert sørgeskikk), prøver å ta sitt eget liv — og blir fysisk stoppet av egne soldater. Flere uavhengige kilder trekker frem nettopp dette som den mest siterte scenen i hele episoden.</p>
+    </div>
+    <p class="foot-note">Dialogen i manuset er original engelsk tekst skrevet for å fange samme hendelser/følelser som kildene — ikke direkte sitat fra Warner- eller Davis-oversettelsen.</p>
+  </section>
+
+  <section>
+    <h2><span class="idx">05</span> Nytt i v5 — Master Film v1</h2>
+    <p class="sec-lede">Konkurransen åpnet offisielt 10. aug og krever at filmen bygges i festivalprosjektet i Cinema Studio, fra første forsøk til final cut — det endrer hvor mye film vi faktisk lager, ikke bare polish på et 90-sekunders klipp. Dette er de seks konkrete endringene fra v4, hver rettet mot et navngitt hull.</p>
+
+    <div class="card new">
+      <span class="tag">1 — Sluttbildet</span>
+      <p>Filmen manglet et definitivt svar på sitt eget spørsmål: <i>kan et menneske kjenne igjen det som står ham nærmest før det er for sent?</i> Den gamle sluttscenen (Ferdowsi fullfører linjen, lukker boken) er nå utvidet til en full sirkel: Rostam holder Sohrab → armbånd → tåre → match cut til blekkdråpe → Ferdowsi hviler hånden over linjen → kamera trekker seg tilbake gjennom manuskript, rom, hus, Tus, jorden — samme bevegelse som åpningens fall, i revers. Se shot 26–30.</p>
+    </div>
+    <div class="card new">
+      <span class="tag">2 — Dramaturgisk ryggrad</span>
+      <p>21 shots var gode enkeltbilder uten en uttalt aktstruktur. Skotliste (seksjon 08) er nå bygget i åtte navngitte blokker — Dikteren → Sønnen som leter → Gjenkjennelse nektet → Duellen → Andre fall → Gjenkjennelse → Sorg → Dikteren kjenner igjen sitt eget vers — og summerer til 4:23, ikke et anslag.</p>
+    </div>
+    <div class="card new">
+      <span class="tag">3 — Ferdowsis funksjon</span>
+      <p>Rammefortelleren var ren innpakning: skriver → vi ser historien → skriver ferdig. Nå har han én egen handling midt i eposet, ikke bare i start/slutt — pennen hans stopper midt i en strøk idet Rostam ser armbåndet (shot 21), uten noen forklarende replikk. Det er filmens tredje og siste hjerteslag, se seksjon 05 på kamera-siden.</p>
+    </div>
+    <div class="card new">
+      <span class="tag">4 — Ferdowsis metakommentar</span>
+      <p>Kildeteksten selv observerer at dyr kjenner sitt eget avkom mens menneskelig stolthet gjør en far blind for sin sønn. Lagt inn som eget tekstkort/VO ved armbånd-avsløringen (shot 19) — egen adapsjon, ikke sitat fra en beskyttet oversettelse: <i>«Dyret kjenner sitt eget avkom. Mennesket, i sin stolthet, kan se sin sønn — og likevel ikke kjenne ham.»</i></p>
+    </div>
+    <div class="card new">
+      <span class="tag">5 — Lyduniverset</span>
+      <p>Lyd var udokumentert utover enkeltnotater i [RULES/AVOID]. Full motivkjede og tre navngitte hjerteslagpunkter er nå lagt til på <a href="https://setai.no/projects/shahnameh/kamera/" style="color:var(--gold-bright);">kamera-siden</a>, seksjon 08.</p>
+    </div>
+    <div class="card new">
+      <span class="tag">6 — Continuity bible fryses</span>
+      <p>Nesten hele karakter-/location-/rekvisitt-rosteret filmen trenger er allerede generert og låst i produksjonsarkivet — Rostam, Sohrab, Rakhsh, Tahmineh (ung), armbåndet, alle våpen, Samangan, begge leirene, slagmarken, Ferdowsi i fire faser, huset i tre faser. Ingen flere karakterredesign herfra — skotlisten (seksjon 08) refererer nå eksakte filnavn fra arkivet per shot, ikke beskrivelser.</p>
+    </div>
+    <div class="card" style="border-color:rgba(176,67,44,0.35);background:rgba(176,67,44,0.08);">
+      <p style="font-size:12.5px;"><b>Samtidig løst:</b> shot 18s selvmordsforsøk (tidligere åpent spørsmål i seksjon 09) er byttet ut med sørgeritualet river klær/kaster jord — kildetro (dokumentert sørgeskikk) fremfor en dramatisk tilføyelse uten sikker tekstforankring, og fjerner en uavklart innholdsrisiko helt. Se nytt shot 23.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="idx">06</span> Manus</h2>
+    <div class="script">
+      <div class="fadeinout">Fade in</div>
+      <div class="slug">Int. Ferdowsi's Study — Night</div>
+      <div class="action">Candlelight. An old man — FERDOWSI — hunched over parchment, quill moving right to left in the Persian manner, slow and steady — a calm, careful old man's pace, not a young scribe's speed. Stacks of finished pages surround him, the work of a lifetime.</div>
+      <div class="titlecard">
+        <div class="p2">TEXT ON SCREEN: "In the Shahnameh's own chronology, this is the age of the Kayanian kings — under Kay Kavus, generations before Cyrus the Great, before the Persia most of the world remembers."</div>
+        <div class="p2" style="margin-top:8px;">"A poet named Ferdowsi spent thirty years of his life giving his people back this age — in their own language."</div>
+      </div>
+      <div class="action">He dips the quill, keeps writing. The camera pushes past his hand, into the page itself — ink strokes blur, dissolve into:</div>
+
+      <div class="slug">Ext. The Plain Between Two Armies — Dawn</div>
+      <div class="action">Dust hangs low over a wide steppe. Two armies face each other across the plain — Iranian banners on one ridge, Turanian on the other. Silence, except wind.</div>
+      <div class="action">A lone rider breaks from the Turanian line — SOHRAB, young, armored, unmistakably strong. He scans the Iranian ranks like he's searching for someone specific.</div>
+
+      <div class="flash"><b>Insert — Flashback (Samangan, years earlier)</b>By candlelight, a YOUNGER ROSTAM ties an old, engraved ARMBAND around TAHMINEH'S wrist. A private, tender moment. No dialogue.</div>
+      <div class="action">Match cut: the same armband — now on a grown man's arm. TAHMINEH, older, fastens it above SOHRAB'S elbow as he stands armored and ready to leave. She says nothing. Her eyes do.</div>
+      <div class="action">SOHRAB rides out through Samangan's gate at the head of his own army, dust rising behind him.</div>
+      <div class="titlecard">
+        <div class="p2">TEXT ON SCREEN: "He looked for his father in every man he met."</div>
+      </div>
+      <div class="action">Cut back to the present — the plain, dawn, the same searching look in his eyes.</div>
+
+      <div class="action">From the Iranian line, a second rider answers — ROSTAM, older, face half-hidden beneath a plain soldier's cloak over his armor. No banner. No name given.</div>
+      <div class="action">They meet at the center of the plain, horses circling.</div>
+
+      <div class="char">Sohrab</div>
+      <div class="dial">Tell me your name. Are you Rostam, son of Zal?</div>
+      <div class="char">Rostam</div>
+      <div class="paren">(a beat too long before answering)</div>
+      <div class="dial">I am no one you know.</div>
+      <div class="action">Sohrab studies him a moment longer — searching, hoping — then lowers his spear.</div>
+      <div class="char">Sohrab</div>
+      <div class="dial">Then let's see what no one is made of.</div>
+      <div class="action">They charge.</div>
+      <div class="cut">Cut to:</div>
+
+      <div class="slug">Ext. The Plain — Continuous</div>
+      <div class="action">Brutal, fast combat. Spears shatter. They're unhorsed within seconds — this isn't choreography, it's two exhausted men trying to survive. Swords give way to hands.</div>
+      <div class="action">Mid-exchange, breathing hard, circling —</div>
+      <div class="char">Sohrab</div>
+      <div class="dial">You fight like the man in my mother's stories. She spoke of one man like this, my whole life.</div>
+      <div class="char">Rostam</div>
+      <div class="paren">(guarded, not stopping)</div>
+      <div class="dial">Plenty of old men fight like the men in old songs. Doesn't make them the ones you're looking for.</div>
+      <div class="action">They grapple in the dirt. Sohrab is younger, stronger. He throws Rostam down, pins him, draws a dagger to finish it.</div>
+      <div class="char">Rostam</div>
+      <div class="paren">(gasping, fast)</div>
+      <div class="dial">Wait — it is not our custom. The first fall spares a man's life. Only the second earns his death.</div>
+      <div class="action">Sohrab hesitates. Some part of him may know it's a lie — but he lets the dagger fall to his side. He steps back. Honor, not weakness.</div>
+      <div class="char">Sohrab</div>
+      <div class="dial">Then we finish this the right way.</div>
+      <div class="action">He walks off to recover. Alone a moment, he looks back at the stranger — something unguarded in his face, almost hopeful, like he WANTS this man to be who he's been looking for his whole life.</div>
+      <div class="cut">Cut to:</div>
+
+      <div class="slug">Ext. The Plain — Moments Later</div>
+      <div class="action">They circle again. This time Rostam finds something — a last reserve, desperate and ugly, not noble. He throws Sohrab down HARD.</div>
+      <div class="action">Before Sohrab can rise, Rostam drives the dagger home.</div>
+      <div class="action">No music. Just breath.</div>
+      <div class="action">Sohrab goes still beneath him. Rostam holds the position, breathing hard — a win that doesn't feel like one.</div>
+      <div class="char">Sohrab</div>
+      <div class="paren">(weak, urgent — not looking at Rostam, but past him, to the watching soldiers)</div>
+      <div class="dial">Find Rostam. Tell him a son went looking for him... his whole life. Tell him I died still looking.</div>
+      <div class="action">Rostam goes very still.</div>
+      <div class="char">Rostam</div>
+      <div class="dial">Looking for what.</div>
+      <div class="action">Sohrab, fading, pulls back his sleeve with the last of his strength — an old, engraved ARMBAND tied above his elbow.</div>
+      <div class="char">Sohrab</div>
+      <div class="dial">My mother gave me this. Tahmineh, of Samangan. She said... he'd know it on sight.</div>
+
+      <div class="titlecard">
+        <div class="p2">TEXT ON SCREEN: "The animal knows its own young. Only man, in his pride, can look at his son — and not know him."</div>
+      </div>
+
+      <div class="action">Rostam looks at the armband. His hands start to shake. He knows it. He gave it to her himself, a lifetime ago.</div>
+      <div class="action">He pulls off his own cloak — revealing the armor beneath, the armor of Iran's greatest champion.</div>
+      <div class="char">Rostam</div>
+      <div class="paren">(barely audible)</div>
+      <div class="dial">I am Rostam.</div>
+      <div class="action">Sohrab's eyes find his father's face for the first — and last — time. A faint, terrible smile. Not anger. Relief.</div>
+      <div class="action">Sohrab goes limp in his arms.</div>
+
+      <div class="cut">Cut to:</div>
+      <div class="slug">Int. Ferdowsi's Study — Night (Insert)</div>
+      <div class="action">The quill stops mid-stroke. FERDOWSI's hand trembles, faintly. He does not look down at the page.</div>
+      <div class="cut">Back to:</div>
+      <div class="slug">Ext. The Plain — Continuous</div>
+
+      <div class="action">A beat of total stillness. Then Rostam breaks.</div>
+      <div class="action">He tears the straps of his own armor loose. Throws fistful after fistful of dust over his own head — the old rite of mourning. Cries out, a wordless, animal sound.</div>
+      <div class="char">Rostam</div>
+      <div class="dial">Every man on this field sang of your courage before the sun was even up. And it was my own hand that silenced it.</div>
+      <div class="action">Two SOLDIERS step in — not to disarm him. Only to hold him upright. He has no strength left to stand on his own.</div>
+      <div class="action">WIDE SHOT — both armies, frozen on the ridgelines, watching in silence. Rostam finally stops fighting the men holding him. He sinks down and simply holds his son.</div>
+      <div class="action">In the distance, far too late, a single RIDER crests the hill at a gallop — carrying a small vial that catches the light. The cure. Sent by the king who delayed it.</div>
+      <div class="action">It will not arrive in time.</div>
+
+      <div class="cut">Cut to:</div>
+      <div class="slug">Ext. The Plain — Continuous</div>
+      <div class="action">ROSTAM, alone now, still holds SOHRAB across his lap. The armband catches the light on his son's still arm. One tear breaks and falls.</div>
+      <div class="cut">Match cut to:</div>
+
+      <div class="slug">Int. Ferdowsi's Study — Night</div>
+      <div class="action">A single drop of ink falls from the raised quill and lands on the page — in the exact same place, the exact same shape, as the tear.</div>
+      <div class="action">FERDOWSI sits motionless. He lays his open hand flat over the line he has just written — not to blot it out. Only to rest it there.</div>
+      <div class="action">The camera begins to pull back and up — the page shrinking in frame, then the room, then the house seen from outside, then the whole province of Tus, then the earth itself falling away below — the exact reverse of the film's opening descent.</div>
+      <div class="titlecard">
+        <div class="p1">"Nushdaru ba'd az marg-e Sohrab."</div>
+        <div class="p2">"The cure — after Sohrab's death."</div>
+        <div class="p2" style="margin-top:8px;opacity:0.7;font-size:12px;letter-spacing:0.04em;">SISTAN · TURAN — the Kayanian Age</div>
+        <div class="p2" style="margin-top:10px;font-style:italic;opacity:0.85;">"Some stories are written in ink. Others are written in loss."</div>
+      </div>
+      <div class="fadeinout" style="text-align:right;padding-top:0;padding-bottom:24px;">Fade out</div>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="idx">07</span> Klar-til-lim-inn video-prompts</h2>
+    <p class="sec-lede">Én fullstendig, selvstendig prompt per shot — lim inn én og én på higgsfield.ai (Seedance 2.0). Hver prompt inneholder full karakterbeskrivelse, siden hver generering er uavhengig av de andre. Skrevet på engelsk siden video-modellene fungerer klart best på engelske prompts selv for persisk-språklig innhold — se språknotat under.</p>
+
+    <div class="newflow">
+      <b>v3 — full feltstruktur + splittet reveal.</b> Test nr. 2 (samlet 9s-prompt) var et stort steg riktig: korrekt geografi, korrekt turban/antrekk, beskjedent leirhus, ingen glødende linje. To ting gjenstår: (1) det gikk for fort — scene 1 splittes nå i to genereringer, først ryggen til Ferdowsi, så et bevisst, langsomt reveal av ansiktet hans; (2) prompten er nå bygget med samme feltstruktur som Higgsfields egen Seedance/Cinema Studio-dokumentasjon bruker (Duration/Aspect ratio/Frame rate/Environment/Characters/Action arc/Shot-for-shot/Style/Technical/Rules) i stedet for løs tekst — samme format du så i andres resultater.
+    </div>
+
+    <div class="identcard">
+      <div class="iw">Shahnameh</div>
+      <div class="is">"In the name of the Lord of Soul and Wisdom"</div>
+    </div>
+    <div class="card new">
+      <span class="tag">Gjenbrukbar — bygges i etterarbeid, ikke i Seedance</span>
+      <p><b>Din idé om en fast studio-ident (som Warner Bros-logoen før hver film) er riktig løsning</b> — men bør bygges som en egen, kort tittelgrafikk i etterarbeid (CapCut/Premiere/After Effects), ikke genereres på nytt hver gang i Seedance. Grunnen: AI-videomodeller kan foreløpig ikke skrive presis, lesbar tekst pålitelig — verken persisk kalligrafi eller latinske bokstaver (se testfunn under). En ordentlig tittelgrafikk garanterer at ordene faktisk står riktig, og kan gjenbrukes identisk foran ethvert fremtidig Shahnameh-kapittel dere lager.</p>
+      <p><b>Designnotat:</b> svart bakgrunn → gulltekst "SHAHNAMEH" materialiserer seg sakte (partikkel- eller blekk-effekt passer tematisk) → under, mindre kursiv serif: den engelske oversettelsen "In the name of the Lord of Soul and Wisdom" → hold 2 sek → ton ut til første shot. ~3–4 sek totalt, stille eller med en enkelt, dyp gongong/streng-tone.</p>
+    </div>
+
+    <div class="promptcard crit">
+      <div class="pc-head"><span class="pc-num">1A</span><span class="pc-title">Nedstigning → eksteriør, Ferdowsi sett bakfra</span></div>
+      <div class="fieldprompt"><span class="fk">[DURATION]</span> 9 seconds
+<span class="fk">[ASPECT RATIO]</span> 16:9
+<span class="fk">[FRAME RATE]</span> 24fps, cinematic motion (not soap-opera smooth)
+<span class="fk">[ENVIRONMENT]</span> Begins in orbital space around Earth, black starfield, visible stars. Descends through atmosphere toward Iran and the Middle East on the Iranian plateau — explicitly not North America, not Europe. Continues toward the historic Khorasan region near the city of Tus, ending over an arid, mountainous Persian night landscape.
+<span class="fk">[CHARACTERS]</span> A single small, modest mudbrick house, flat roof, no ornamentation. No palace, no courtyard, no towers, no domes, no minarets anywhere in frame.
+<span class="fk">[ACTION ARC]</span> Cold, silent space → fast atmospheric descent → deceleration as the house comes into view → camera glides low and slow toward one small lit window.
+<span class="fk">[CAMERA]</span> Continuous unbroken single take, no cuts. Begins as a slow orbital rotation, transitions into a steep dive, then a low glide toward the window.
+<span class="fk">[SPEED RAMP]</span> 100% through space and atmosphere → decelerating to 40% over the last two seconds as the house appears → settle to a slow, steady glide at the window, not an abrupt stop.
+<span class="fk">[LIGHTING]</span> Cool blue-black space tones and starlight, shifting to the warm amber glow of a single window as the only light source on an otherwise dark, moonlit-but-not-oversized landscape.
+<span class="fk">[STYLE]</span> Ultra-photorealistic, live-action nature-documentary-meets-narrative-film hybrid. Physically accurate satellite/aerial cinematography. Absolutely not cartoon, not 3D-render, not video-game engine look, not animated, not stylized illustration.
+<span class="fk">[TECHNICAL]</span> Sharp focus throughout the descent, natural atmospheric haze near the ground, subtle film grain, no lens flares, no artificial light rays.
+<span class="fk">[LAST FRAME]</span> Wide-to-medium shot through the window: an elderly man is visible seated at a low desk, seen from behind / in silhouette — his face is NOT visible in this shot. This exact frame is the starting reference for the next generation.
+<span class="fneg">[RULES / AVOID]</span> No glowing lines, light trails, neon paths, or CGI light streaks of any kind during the descent. No oversized, overly detailed, or glowing moon — if a moon is visible, it must be small and natural in scale. No visible human face in this shot. No modern buildings, roads, or vehicles. No text, no logos, no subtitles rendered by the model.</div>
+      <div class="pc-settings"><b>Modell:</b> seedance_2_0 · <b>Oppløsning:</b> 4k/std · <b>Sjanger:</b> epic · <b>Lyd:</b> av</div>
+    </div>
+
+    <div class="promptcard crit">
+      <div class="pc-head"><span class="pc-num">1B</span><span class="pc-title">Reveal: sakte sving fra rygg til ansikt</span></div>
+      <div class="fieldprompt"><span class="fk">[CONTINUATION]</span> Opens on the exact last frame of the previous clip: an elderly man seen from behind, seated at a low wooden desk inside a small, plain mudbrick room, lit by a single small oil lamp.
+<span class="fk">[DURATION]</span> 10 seconds
+<span class="fk">[ASPECT RATIO]</span> 16:9
+<span class="fk">[FRAME RATE]</span> 24fps
+<span class="fk">[ENVIRONMENT]</span> Interior of the same small, humble room — bare mudbrick walls, no decoration, a low wooden desk, a parchment scroll, a single small clay oil lamp as the only light source. Deep natural shadow everywhere else.
+<span class="fk">[CHARACTERS]</span> Ferdowsi: elderly Persian scholar, seventies, hair fully covered by a plain wound cream-colored turban — no loose or visible hair. Long grey-white beard. Simple undyed woolen robes. Ink-stained fingers. Seated cross-legged or kneeling at the desk.
+<span class="fk">[ACTION ARC]</span> Held on his back for a beat → camera begins a slow arc around him → his profile comes into view → continues arcing until his face is fully revealed, still writing, absorbed, not looking at camera → holds on his face → he dips the quill and resumes a stroke, moving right to left across the page in the Persian manner — slow, calm, deliberate, an old man's careful pace.
+<span class="fk">[CAMERA]</span> Slow arcing dolly move, moving from directly behind him around to a three-quarter front angle. Deliberate, unhurried — the reveal of his face should take at least 4-5 seconds of screen time, not a quick pass.
+<span class="fk">[SPEED RAMP]</span> Constant slow 35-40% speed throughout — noticeably slower and calmer than the descent in the previous clip. No acceleration.
+<span class="fk">[LIGHTING]</span> Warm amber oil-lamp light as the only source, soft shadow falloff, gentle highlight on his face as it comes into view.
+<span class="fk">[STYLE]</span> Ultra-photorealistic, live-action narrative film, painterly warm color grade, shallow depth of field, visible dust motes drifting through the lamp light. Absolutely not cartoon, not 3D-render, not video-game engine look, not animated.
+<span class="fk">[TECHNICAL]</span> 35mm-lens-equivalent look, subtle film grain, his face stays tack-sharp once revealed.
+<span class="fneg">[RULES / AVOID]</span> No loose or windblown hair at any point — turban stays on and fully covers his hair throughout. No grand architecture. No oversized or glowing moon. No magical glow effects on the quill or pen tip. No cartoon or 3D-render look. No modern elements. No left-to-right writing motion — Persian moves right to left. No fast or hurried pen movement — his hand is slow, calm, and deliberate, never a young scribe's speed.</div>
+      <div class="pc-settings"><b>Modell:</b> seedance_2_0 · <b>Oppløsning:</b> 4k/std · <b>Sjanger:</b> drama · <b>Lyd:</b> av</div>
+    </div>
+
+    <div class="promptcard">
+      <div class="pc-head"><span class="pc-num">2</span><span class="pc-title">Tidsmaskin-overgang via blekket</span></div>
+      <div class="fieldprompt"><span class="fk">[CONTINUATION]</span> Opens close on Ferdowsi's writing hand and the parchment beneath it, continuing directly from the previous clip.
+<span class="fk">[DURATION]</span> 6 seconds
+<span class="fk">[ASPECT RATIO]</span> 16:9
+<span class="fk">[ACTION ARC]</span> Camera pushes in from the hand to an extreme close-up filling the frame with flowing Persian Nastaliq calligraphy ink strokes on the parchment, the hand moving right to left across the page as Persian script does, slow and deliberate → the ink strokes blur and swirl, as if the page dissolves into motion → the dark ink transforms into streaks of golden dust blown across an open desert plain → match-cut to a wide desert landscape in Iran at dawn.
+<span class="fk">[CAMERA]</span> Continuous push-in, then a seamless match-cut transition — no hard edit.
+<span class="fk">[LIGHTING]</span> Warm amber lamplight shifting gradually into pale, cool dawn light as the transition completes.
+<span class="fk">[STYLE]</span> Ultra-photorealistic throughout, not cartoon, not 3D-render.
+<span class="fneg">[RULES / AVOID]</span> No glowing lines, light trails, or neon effects during the transition — it must read as dust and light dissolving, not as a magical special effect. No left-to-right hand motion — the writing direction must read right to left.</div>
+      <div class="pc-settings"><b>Modell:</b> seedance_2_0 · <b>Oppløsning:</b> 4k/std · <b>Sjanger:</b> drama · <b>Lyd:</b> av</div>
+    </div>
+
+    <div class="card" style="margin-top:6px;border-color:rgba(176,67,44,0.35);background:rgba(176,67,44,0.08);">
+      <p style="font-size:12.5px;"><b>Ærlig funn fra siste test:</b> selve kalligrafi-nærbildet i den nyeste genereringen ser overbevisende ut på avstand, men bokstavene som faktisk dannes er ikke en presis gjengivelse av «به نام خداوند جان و خرد» — de ligner persisk skrift, men er ikke lesbare/korrekte. Dette er en kjent, nåværende begrensning hos ALLE video-AI-modeller (inkludert Seedance) — de kan ikke skrive presis tekst i noe språk pålitelig, verken persisk eller latinsk. Det er grunnen til at selve ident-grafikken (over) og eventuelt sluttkortet bør bygges som ekte tekst i etterarbeid, ikke stole på at modellen skriver riktig i selve videoen. Kalligrafi-nærbildet fra Seedance fungerer fint som atmosfærisk bakgrunn/tekstur — bare ikke som lesbar tekst.</p>
+    </div>
+
+    <div class="promptcard">
+      <div class="pc-head"><span class="pc-num">3</span><span class="pc-title">To hærer på sletta</span></div>
+      <div class="fieldprompt"><span class="fk">[DURATION]</span> 9 seconds
+<span class="fk">[ASPECT RATIO]</span> 16:9
+<span class="fk">[ENVIRONMENT]</span> A vast, dusty steppe plain in ancient Iran/Turan at dawn, dust hanging low in golden morning light, low ridgelines on either side.
+<span class="fk">[CHARACTERS]</span> Two full armies, hundreds of men, one flying Iranian banners, the other Turanian banners — distinct banner colors/emblems on each side.
+<span class="fk">[ACTION ARC]</span> Total stillness and silence, only wind moving the dust and banners.
+<span class="fk">[CAMERA]</span> Extreme wide static establishing shot, no camera movement.
+<span class="fk">[LIGHTING]</span> Low golden dawn sun, long shadows, dust particles visible in the light.
+<span class="fk">[STYLE]</span> Ultra-photorealistic historical war-epic cinematography, live-action scale. Not cartoon, not 3D-render, not video-game engine look.
+<span class="fneg">[RULES / AVOID]</span> No modern equipment, no anachronistic weapons or armor, no text or logos.</div>
+      <div class="pc-settings"><b>Modell:</b> seedance_2_0 · <b>Oppløsning:</b> 4k/std · <b>Sjanger:</b> epic</div>
+    </div>
+
+    <div class="promptcard">
+      <div class="pc-head"><span class="pc-num">4</span><span class="pc-title">Sohrab rir ut — lav heltevinkel</span></div>
+      <div class="fieldprompt"><span class="fk">[DURATION]</span> 6 seconds
+<span class="fk">[ASPECT RATIO]</span> 16:9
+<span class="fk">[ENVIRONMENT]</span> Open dusty steppe plain in ancient Iran, golden dawn light.
+<span class="fk">[CHARACTERS]</span> Sohrab: young Persian warrior, tall and powerfully built despite his youth, ordinary human proportions — not a giant. Plain iron-plate armor, no fur or pelt. Carries a smaller, plainer bronze ox-head war mace than a veteran's weapon. Young, unweathered face, eager not grim, clean-shaven or light stubble.
+<span class="fk">[ACTION ARC]</span> Rides alone away from the army line, scanning the opposing ranks as if searching for someone specific.
+<span class="fk">[CAMERA]</span> Low-angle hero shot, tracking alongside at ground level looking up at him.
+<span class="fk">[SPEED RAMP]</span> Steady galloping pace, no ramp.
+<span class="fk">[LIGHTING]</span> Golden dawn light, dust kicked up by the horse's hooves catching the light.
+<span class="fk">[STYLE]</span> Ultra-photorealistic, historically-grounded ancient Persian aesthetic, not generic medieval European fantasy armor. Not cartoon, not 3D-render.
+<span class="fneg">[RULES / AVOID]</span> Generic Hollywood medieval-fantasy plate armor with no distinguishing features; a beard as heavy as an older man's; identical armor design to an older warrior in the same story.</div>
+      <div class="pc-settings"><b>Modell:</b> seedance_2_0 · <b>Oppløsning:</b> 4k/std · <b>Sjanger:</b> epic</div>
+    </div>
+
+    <div class="card new">
+      <span class="tag">Nytt i v5 — Master Film v1, blokk «Sønnen som leter»</span>
+      <p>Shot 4B–4E flytter armbånd-flashbacken (tidligere shot 15, sent i filmen) frem til rett etter Sohrab er introdusert — dramaturgisk grunn: la publikum vite <i>hvorfor</i> han leter før duellen starter, i stedet for å forklare det som et sent sidespor. Alle fire bruker allerede låste referanser (<code>rostam-familie.png</code>, <code>rostam-armband.png</code>, <code>tahmineh.png</code>, <code>sohrab-armor.png</code>) — ingen ny karaktergenerering kreves, kun video fra eksisterende stills.</p>
+    </div>
+
+    <div class="promptcard">
+      <div class="pc-head"><span class="pc-num">4B</span><span class="pc-title">Flashback — armbåndet gis (Samangan, år før)</span></div>
+      <div class="fieldprompt"><span class="fk">[DURATION]</span> 6 seconds
+<span class="fk">[ASPECT RATIO]</span> 16:9
+<span class="fk">[ENVIRONMENT]</span> A private chamber in Samangan, night, single oil lamp, warm intimate light. No armor, no battlefield.
+<span class="fk">[CHARACTERS]</span> A younger Rostam (same face, no grey in the beard yet) and Tahmineh — young Samangan noblewoman, dark hair loosely braided, simple gold ornaments, warm candlelit skin tones.
+<span class="fk">[ACTION ARC]</span> He ties an old, engraved armband onto her wrist by candlelight — a private, tender moment. No dialogue.
+<span class="fk">[CAMERA]</span> Close, soft focus, static.
+<span class="fk">[LIGHTING]</span> Warm intimate candlelight, no other source.
+<span class="fk">[STYLE]</span> Ultra-photorealistic, nostalgic warm color grade. Not cartoon, not 3D-render.
+<span class="fneg">[RULES / AVOID]</span> No battlefield elements, no armor on Rostam in this shot — this is years before the duel.</div>
+      <div class="pc-settings"><b>Modell:</b> seedance_2_0 · <b>Referanse:</b> rostam-familie.png, rostam-armband.png · <b>Sjanger:</b> drama</div>
+    </div>
+
+    <div class="promptcard">
+      <div class="pc-head"><span class="pc-num">4C</span><span class="pc-title">Match cut — armbåndet bindes på Sohrab</span></div>
+      <div class="fieldprompt"><span class="fk">[CONTINUATION]</span> Match cut on the armband itself — same object, same clasp and stone, now on a grown man's arm.
+<span class="fk">[DURATION]</span> 5 seconds
+<span class="fk">[ASPECT RATIO]</span> 16:9
+<span class="fk">[ENVIRONMENT]</span> Samangan, exterior courtyard, dawn light, years later. Sohrab already in armor, ready to leave.
+<span class="fk">[CHARACTERS]</span> Tahmineh, now older — same face, hair fully covered, plainer travel dress, steadier eyes. Sohrab: young warrior, armored, as established in shot 4.
+<span class="fk">[ACTION ARC]</span> She fastens the armband above his elbow. She says nothing. Her eyes do. He nods once and turns.
+<span class="fk">[CAMERA]</span> Close on hands and the armband first, then a brief pull to a two-shot of their faces.
+<span class="fk">[LIGHTING]</span> Cool dawn light, courtyard shadow.
+<span class="fk">[STYLE]</span> Ultra-photorealistic, restrained emotional beat. Not cartoon, not 3D-render.
+<span class="fneg">[RULES / AVOID]</span> No dialogue, no overacting — this is a quiet, resolved goodbye, not a tearful scene.</div>
+      <div class="pc-settings"><b>Modell:</b> seedance_2_0 · <b>Referanse:</b> tahmineh.png, sohrab-armor.png (armbånd-inset) · <b>Sjanger:</b> drama</div>
+    </div>
+
+    <div class="promptcard">
+      <div class="pc-head"><span class="pc-num">4D</span><span class="pc-title">Sohrab rir ut fra Samangan</span></div>
+      <div class="fieldprompt"><span class="fk">[DURATION]</span> 6 seconds
+<span class="fk">[ASPECT RATIO]</span> 16:9
+<span class="fk">[ENVIRONMENT]</span> Samangan's fortified gate, dawn, an army assembled behind the gate.
+<span class="fk">[CHARACTERS]</span> Sohrab at the head of a Turanian army, same armor as established.
+<span class="fk">[ACTION ARC]</span> He rides out through the gate at the head of his own army, dust rising behind the column.
+<span class="fk">[CAMERA]</span> Wide, low angle, rising slightly as the column passes.
+<span class="fk">[LIGHTING]</span> Cool dawn light warming as the sun clears the walls.
+<span class="fk">[STYLE]</span> Ultra-photorealistic historical epic scale. Not cartoon, not 3D-render.</div>
+      <div class="pc-settings"><b>Modell:</b> seedance_2_0 · <b>Referanse:</b> samangan-palass.png, sohrabs-militaerleir.png · <b>Sjanger:</b> epic</div>
+    </div>
+
+    <div class="card">
+      <span class="tag">4E — post-produksjon, ikke ny generering</span>
+      <p><b>Tekstkort:</b> "He looked for his father in every man he met." Holdes over siste frame av 4D eller som crossfade inn i shot 3/4-gjenbruk av sletta. Bygges som ekte typografi i etterarbeid, samme prinsipp som ident-kortet og sluttkortet — ikke modellgenerert tekst. ~3 sek, stille eller ett enkelt strengtone.</p>
+    </div>
+
+    <div class="promptcard">
+      <div class="pc-head"><span class="pc-num">5</span><span class="pc-title">Rostam rir ut — lav heltevinkel</span></div>
+      <div class="fieldprompt"><span class="fk">[DURATION]</span> 6 seconds
+<span class="fk">[ASPECT RATIO]</span> 16:9
+<span class="fk">[ENVIRONMENT]</span> Open dusty steppe plain in ancient Iran, golden dawn light.
+<span class="fk">[CHARACTERS]</span> Rostam: massive Persian warrior, noticeably bigger and broader than an ordinary man — wider shoulders, thicker build, clearly the largest man in the scene. Unmistakably wearing a spotted orange-and-black tiger-pelt garment draped over his shoulders and chest, worn OVER iron-plate armor — the single most visually distinctive thing about him. Pointed helmet, large bronze war mace with a carved ox-head striking end. Weathered, sun-worn face, deep lines, full grey-streaked beard, clearly decades older than Sohrab. A plain undyed cloak thrown loosely over his armor, hiding any banner. His horse: distinctive dappled roan coat, rose-red dapples over a golden-tan base, powerfully muscled chest, larger than an ordinary horse.
+<span class="fk">[ACTION ARC]</span> Rides alone from the army line to meet the younger rider approaching from the opposite side.
+<span class="fk">[CAMERA]</span> Low-angle hero shot, tracking alongside at ground level looking up.
+<span class="fk">[LIGHTING]</span> Golden dawn light, dust kicked up by hooves.
+<span class="fk">[STYLE]</span> Ultra-photorealistic, historically-grounded ancient Persian aesthetic. Not cartoon, not 3D-render.
+<span class="fneg">[RULES / AVOID]</span> Generic Hollywood medieval-fantasy armor with no fur or pelt visible; a build similar in size to the younger warrior; a young or clean-shaven face; missing or barely-visible tiger pelt; missing ox-head mace.</div>
+      <div class="pc-settings"><b>Modell:</b> seedance_2_0 · <b>Oppløsning:</b> 4k/std · <b>Sjanger:</b> epic</div>
+    </div>
+
+    <div class="promptcard">
+      <div class="pc-head"><span class="pc-num">6</span><span class="pc-title">Møtet — «Er du Rostam?»</span></div>
+      <div class="fieldprompt"><span class="fk">[DURATION]</span> 11 seconds
+<span class="fk">[ASPECT RATIO]</span> 16:9
+<span class="fk">[ENVIRONMENT]</span> Center of the open dusty plain, golden dawn light, no other figures nearby.
+<span class="fk">[CHARACTERS]</span> Sohrab (young, ordinary build, plain iron armor, no fur) and Rostam (much larger, broader, visible spotted tiger-pelt over armor, grey-streaked beard, decades older) — the size and armor contrast between the two must be obvious at a glance.
+<span class="fk">[ACTION ARC]</span> Their horses circle each other warily → Sohrab calls out, asking the stranger to reveal his name, asking directly if he is Rostam, son of Zal → Rostam hesitates a moment too long, then denies it → Sohrab studies him intently, searching, almost hopeful → lowers his spear → both riders charge toward each other.
+<span class="fk">[CAMERA]</span> Two-shot, horses circling, then a wider shot as they charge.
+<span class="fk">[LIGHTING]</span> Golden dawn light.
+<span class="fk">[STYLE]</span> Ultra-photorealistic historical epic, historically-grounded ancient Persian aesthetic. Not cartoon, not 3D-render.
+<span class="fneg">[RULES / AVOID]</span> Both men appearing similar in age, build, or armor; generic fantasy armor with no tiger pelt; duplicate or mirrored background figures.</div>
+      <div class="pc-settings"><b>Modell:</b> seedance_2_0 · <b>Oppløsning:</b> 4k/std · <b>Sjanger:</b> drama</div>
+    </div>
+
+    <div class="promptcard">
+      <div class="pc-head"><span class="pc-num">7</span><span class="pc-title">Lanser, avmontert, nærkamp</span></div>
+      <div class="fieldprompt"><span class="fk">[DURATION]</span> 12 seconds
+<span class="fk">[ASPECT RATIO]</span> 16:9
+<span class="fk">[ENVIRONMENT]</span> Open dusty plain, golden dawn light.
+<span class="fk">[CHARACTERS]</span> Same Rostam and Sohrab as established in shots 4-6, same armor/build contrast maintained.
+<span class="fk">[ACTION ARC]</span> Spears shatter on impact, both riders unhorsed within seconds → swords drawn → abandoned for hand-to-hand grappling in the dust. Not clean choreography — two exhausted men fighting to survive.
+<span class="fk">[CAMERA]</span> Handheld energy, rapid cuts between close and medium shots.
+<span class="fk">[LIGHTING]</span> Golden dawn light, dust and chaos.
+<span class="fk">[STYLE]</span> Ultra-photorealistic action cinematography. Not cartoon, not 3D-render, not video-game combat animation.
+<span class="fneg">[RULES / AVOID]</span> No dialogue in this shot; no choreographed/clean martial-arts movement — must feel desperate and exhausting.</div>
+      <div class="pc-settings"><b>Modell:</b> seedance_2_0 · <b>Oppløsning:</b> 4k/std · <b>Sjanger:</b> action</div>
+    </div>
+
+    <div class="promptcard">
+      <div class="pc-head"><span class="pc-num">8</span><span class="pc-title">«You fight like the man in my mother's stories»</span></div>
+      <div class="fieldprompt"><span class="fk">[DURATION]</span> 7 seconds
+<span class="fk">[ASPECT RATIO]</span> 16:9
+<span class="fk">[ENVIRONMENT]</span> Same dusty plain, mid-fight.
+<span class="fk">[CHARACTERS]</span> Rostam and Sohrab, same as before, breathing hard, circling each other.
+<span class="fk">[ACTION ARC]</span> Sohrab speaks between breaths, saying the stranger fights like the man from his mother's old stories, that she spoke of one man like this his whole life. Rostam deflects without stopping, saying plenty of old men fight like the men in old songs — it doesn't make them the one he's looking for.
+<span class="fk">[CAMERA]</span> Close, alternating between both faces.
+<span class="fk">[LIGHTING]</span> Golden dawn light, dust settling around them.
+<span class="fk">[STYLE]</span> Ultra-photorealistic, tense emotional dialogue beat. Not cartoon, not 3D-render.
+<span class="fneg">[RULES / AVOID]</span> No exaggerated facial expressions — restrained, naturalistic performance.</div>
+      <div class="pc-settings"><b>Modell:</b> seedance_2_0 · <b>Oppløsning:</b> 4k/std · <b>Sjanger:</b> drama</div>
+    </div>
+
+    <div class="promptcard">
+      <div class="pc-head"><span class="pc-num">9</span><span class="pc-title">Sohrab pinner Rostam</span></div>
+      <div class="fieldprompt"><span class="fk">[DURATION]</span> 5 seconds
+<span class="fk">[ASPECT RATIO]</span> 16:9
+<span class="fk">[ENVIRONMENT]</span> Dusty ground, golden dawn light.
+<span class="fk">[CHARACTERS]</span> Sohrab and Rostam, same as established.
+<span class="fk">[ACTION ARC]</span> In the grapple, Sohrab throws Rostam down into the dirt, pins him, and draws a dagger to finish the fight.
+<span class="fk">[CAMERA]</span> Close, low angle looking up at Sohrab from Rostam's pinned position.
+<span class="fk">[LIGHTING]</span> Golden dawn light, dust in the air.
+<span class="fk">[STYLE]</span> Ultra-photorealistic tense combat close-up. Not cartoon, not 3D-render.</div>
+      <div class="pc-settings"><b>Modell:</b> seedance_2_0 · <b>Oppløsning:</b> 4k/std · <b>Sjanger:</b> action</div>
+    </div>
+
+    <div class="promptcard crit">
+      <div class="pc-head"><span class="pc-num">10</span><span class="pc-title">Det falske regel-trikset — filmens tematiske kjerne</span></div>
+      <div class="fieldprompt"><span class="fk">[DURATION]</span> 9 seconds
+<span class="fk">[ASPECT RATIO]</span> 16:9
+<span class="fk">[ENVIRONMENT]</span> Same dusty ground, golden dawn light.
+<span class="fk">[CHARACTERS]</span> Sohrab pinning Rostam, dagger at his throat.
+<span class="fk">[ACTION ARC]</span> Rostam gasps out a claim — that it is not their custom to kill a man on the first fall, only the second. Sohrab hesitates, some instinct suggesting it might be untrue, but lets the dagger fall to his side and steps back, honoring what he believes is a rule of combat rather than showing weakness.
+<span class="fk">[CAMERA]</span> Close on both faces alternately, no music.
+<span class="fk">[LIGHTING]</span> Golden dawn light, dust settling.
+<span class="fk">[STYLE]</span> Ultra-photorealistic, tense restrained emotional beat. Not cartoon, not 3D-render.
+<span class="fneg">[RULES / AVOID]</span> No music, no exaggerated performance — this is a quiet, tense beat, not an action climax.</div>
+      <div class="pc-settings"><b>Modell:</b> seedance_2_0 · <b>Oppløsning:</b> 4k/std · <b>Sjanger:</b> drama · tematisk kjerne, aldri kutt</div>
+    </div>
+
+    <div class="promptcard">
+      <div class="pc-head"><span class="pc-num">11</span><span class="pc-title">Sohrab alene, håpefullt blikk</span></div>
+      <div class="fieldprompt"><span class="fk">[DURATION]</span> 5 seconds
+<span class="fk">[ASPECT RATIO]</span> 16:9
+<span class="fk">[ENVIRONMENT]</span> Same plain, warm dawn light.
+<span class="fk">[CHARACTERS]</span> Sohrab, alone, recovering.
+<span class="fk">[ACTION ARC]</span> He stands for a moment and looks back toward Rostam with an unguarded, almost hopeful expression — as if some part of him wants this man to be the father he has been searching for his whole life.
+<span class="fk">[CAMERA]</span> Close-up, lingering, no camera movement.
+<span class="fk">[LIGHTING]</span> Warm dawn light.
+<span class="fk">[STYLE]</span> Ultra-photorealistic, quiet emotional beat, no dialogue. Not cartoon, not 3D-render.</div>
+      <div class="pc-settings"><b>Modell:</b> seedance_2_0 · <b>Oppløsning:</b> 4k/std · <b>Sjanger:</b> drama</div>
+    </div>
+
+    <div class="promptcard">
+      <div class="pc-head"><span class="pc-num">12</span><span class="pc-title">Andre basketak</span></div>
+      <div class="fieldprompt"><span class="fk">[DURATION]</span> 7 seconds
+<span class="fk">[ASPECT RATIO]</span> 16:9
+<span class="fk">[ENVIRONMENT]</span> Same ground, light shifting to harsher midday.
+<span class="fk">[CHARACTERS]</span> Rostam and Sohrab grappling again.
+<span class="fk">[ACTION ARC]</span> Rostam finds a last desperate reserve of strength — not noble, but raw and ugly — and throws Sohrab down hard onto the ground.
+<span class="fk">[CAMERA]</span> High angle looking down at the fall.
+<span class="fk">[LIGHTING]</span> Harsher midday light now, shift from the golden dawn tone of earlier shots.
+<span class="fk">[STYLE]</span> Ultra-photorealistic action beat, dust exploding outward. Not cartoon, not 3D-render.</div>
+      <div class="pc-settings"><b>Modell:</b> seedance_2_0 · <b>Oppløsning:</b> 4k/std · <b>Sjanger:</b> action</div>
+    </div>
+
+    <div class="promptcard crit">
+      <div class="pc-head"><span class="pc-num">13</span><span class="pc-title">Dolkstøtet — ramp inn i slow-motion</span></div>
+      <div class="fieldprompt"><span class="fk">[DURATION]</span> 5 seconds
+<span class="fk">[ASPECT RATIO]</span> 16:9
+<span class="fk">[ENVIRONMENT]</span> Same ground, harsh direct midday light.
+<span class="fk">[CHARACTERS]</span> Rostam over Sohrab, who cannot rise in time.
+<span class="fk">[ACTION ARC]</span> Rostam drives his dagger down in a single decisive strike before Sohrab can rise.
+<span class="fk">[CAMERA]</span> Close-up, static, no camera movement.
+<span class="fk">[SPEED RAMP]</span> Normal speed until the instant of contact, then ramps into extreme slow motion exactly as the dagger connects, holding the slow motion for the remainder of the shot.
+<span class="fk">[LIGHTING]</span> Harsh direct light, no softness.
+<span class="fk">[STYLE]</span> Ultra-photorealistic, no music, only breath and impact sound design. Not cartoon, not 3D-render.
+<span class="fneg">[RULES / AVOID]</span> No music. No camera movement. This must read as heavy and silent, not stylized or glorified.</div>
+      <div class="pc-settings"><b>Modell:</b> seedance_2_0 · <b>Oppløsning:</b> 4k/std · <b>Sjanger:</b> drama · filmens viktigste enkeltbilde</div>
+    </div>
+
+    <div class="promptcard">
+      <div class="pc-head"><span class="pc-num">14</span><span class="pc-title">«Find Rostam... I died still looking» + armbånd</span></div>
+      <div class="fieldprompt"><span class="fk">[DURATION]</span> 8 seconds
+<span class="fk">[ASPECT RATIO]</span> 16:9
+<span class="fk">[ENVIRONMENT]</span> Same ground, harsh light beginning to fade/soften.
+<span class="fk">[CHARACTERS]</span> Sohrab, wounded, fading, beneath Rostam. An old, engraved armband tied above his elbow.
+<span class="fk">[ACTION ARC]</span> Sohrab speaks weakly — not to Rostam, but past him, toward watching soldiers — asking that word be carried to the great warrior Rostam, that a son went looking for his father his whole life and died still looking. With his last strength he pulls back his sleeve to reveal the armband, saying his mother gave it to him and that the man he sought would know it on sight.
+<span class="fk">[CAMERA]</span> Close-up on his face and the trembling hand revealing the armband.
+<span class="fk">[LIGHTING]</span> Warm fading light.
+<span class="fk">[STYLE]</span> Ultra-photorealistic, quiet devastating emotional beat. Not cartoon, not 3D-render.
+<span class="fneg">[RULES / AVOID]</span> No overacting — weak, fading delivery, not a dramatic monologue.</div>
+      <div class="pc-settings"><b>Modell:</b> seedance_2_0 · <b>Oppløsning:</b> 4k/std · <b>Sjanger:</b> drama</div>
+    </div>
+
+    <div class="card" style="border-color:rgba(176,67,44,0.35);background:rgba(176,67,44,0.08);">
+      <p style="font-size:12.5px;"><b>Shot 15 (v4) fjernet — ikke bare kuttet, flyttet.</b> Armbånd-flashbacken bor nå tidlig i filmen som 4B/4C (blokk «Sønnen som leter»). Her, der den gamle flashbacken lå, kommer i stedet et nytt tekstkort — se 14B under.</p>
+    </div>
+
+    <div class="card">
+      <span class="tag">14B — post-produksjon, ikke ny generering</span>
+      <p><b>Tekstkort/VO — Ferdowsis metakommentar (hjerteslag #2):</b> "The animal knows its own young. Only man, in his pride, can look at his son — and not know him." Holdt over Rostams ansikt/armbåndet ved overgangen mellom shot 14 og 16 — egen adapsjon, ikke sitat fra en beskyttet oversettelse (se Master Film v1, punkt 4). Bygges som ekte typografi i etterarbeid. ~5 sek, ingen musikk — et av filmens tre hjerteslagpunkter, se kamera-siden.</p>
+    </div>
+
+    <div class="promptcard crit">
+      <div class="pc-head"><span class="pc-num">16</span><span class="pc-title">Gjenkjenning — «I am Rostam»</span></div>
+      <div class="fieldprompt"><span class="fk">[DURATION]</span> 8 seconds
+<span class="fk">[ASPECT RATIO]</span> 16:9
+<span class="fk">[ENVIRONMENT]</span> Same battlefield ground, warm fading light.
+<span class="fk">[CHARACTERS]</span> Rostam, staring at the armband on the dying Sohrab's arm.
+<span class="fk">[ACTION ARC]</span> Rostam's hands begin to shake as he recognizes the armband — he gave this exact one to a woman named Tahmineh a lifetime ago. He pulls off his own cloak, revealing the full armor of Iran's greatest champion beneath, and says quietly that he is Rostam. Sohrab's eyes find his father's face for the first and only time — a faint, terrible smile, not anger, but relief.
+<span class="fk">[CAMERA]</span> Close-up, transforming from confusion to horror to grief on Rostam's face.
+<span class="fk">[LIGHTING]</span> Warm fading light.
+<span class="fk">[STYLE]</span> Ultra-photorealistic intimate emotional close-up. Not cartoon, not 3D-render.
+<span class="fneg">[RULES / AVOID]</span> No overacting — this is internal, quiet devastation, not a shouted revelation.</div>
+      <div class="pc-settings"><b>Modell:</b> seedance_2_0 · <b>Oppløsning:</b> 4k/std · <b>Sjanger:</b> drama</div>
+    </div>
+
+    <div class="promptcard crit">
+      <div class="pc-head"><span class="pc-num">16B</span><span class="pc-title">Insert — Ferdowsis penn stopper (hjerteslag #3)</span></div>
+      <div class="fieldprompt"><span class="fk">[CONTINUATION]</span> Cutaway to the same elderly Ferdowsi and the same candlelit study established in shots 1B/2.
+<span class="fk">[DURATION]</span> 4 seconds
+<span class="fk">[ASPECT RATIO]</span> 16:9
+<span class="fk">[ENVIRONMENT]</span> The same small mudbrick study, single oil lamp, night.
+<span class="fk">[CHARACTERS]</span> Ferdowsi — same turban, beard, robes as shots 1B/2/21. No loose hair.
+<span class="fk">[ACTION ARC]</span> His quill stops mid-stroke, still touching the page. His hand trembles, faintly — not dramatically. He does not look down at the page. Holds.
+<span class="fk">[CAMERA]</span> Close on the hand and quill, no camera movement.
+<span class="fk">[LIGHTING]</span> Warm, dim lamplight, same as established.
+<span class="fk">[STYLE]</span> Ultra-photorealistic, quiet internal beat. Not cartoon, not 3D-render.
+<span class="fneg">[RULES / AVOID]</span> No dialogue, no music. The tremble must be barely visible, not exaggerated — this is a man privately struck, not performing grief.</div>
+      <div class="pc-settings"><b>Modell:</b> seedance_2_0 · <b>Referanse:</b> ferdowsi-composes-shahnameh.png (Fase 4) · <b>Sjanger:</b> drama · filmens tredje hjerteslag, aldri kutt</div>
+    </div>
+
+    <div class="promptcard crit">
+      <div class="pc-head"><span class="pc-num">17</span><span class="pc-title">Sorgscene: river rustning, støv på hodet</span></div>
+      <div class="fieldprompt"><span class="fk">[DURATION]</span> 11 seconds
+<span class="fk">[ASPECT RATIO]</span> 16:9
+<span class="fk">[ENVIRONMENT]</span> Same battlefield ground.
+<span class="fk">[CHARACTERS]</span> Rostam, over the body of the son he has just killed.
+<span class="fk">[ACTION ARC]</span> He breaks down. Tears at the straps of his own armor. Grabs a fistful of dust from the ground and drags it across his own head in an ancient rite of mourning. Cries out that every man on the field sang of his son's courage before the sun was even up, and that it was his own hand that silenced it.
+<span class="fk">[CAMERA]</span> Handheld, tight, raw.
+<span class="fk">[LIGHTING]</span> Dramatic, harsh grief lighting.
+<span class="fk">[STYLE]</span> Ultra-photorealistic raw emotional performance, dust and tears. Not cartoon, not 3D-render.
+<span class="fneg">[RULES / AVOID]</span> No restrained/subtle performance here — this is the one shot that should be raw and unguarded, in contrast to the quiet close-ups around it.</div>
+      <div class="pc-settings"><b>Modell:</b> seedance_2_0 · <b>Oppløsning:</b> 4k/std · <b>Sjanger:</b> drama</div>
+    </div>
+
+    <div class="promptcard">
+      <div class="pc-head"><span class="pc-num">18</span><span class="pc-title">Sørgeritual — remmer, jord, skrik (endret i v5)</span></div>
+      <div class="card" style="margin:0 0 10px;">
+        <p style="font-size:12px;"><b>Erstatter det tidligere selvmordsforsøket</b> — ingen bekreftet regel brutt, men heller ingen sikker tekstforankring for det heller, og det sto som åpent spørsmål i v4 (seksjon 09). River klær/kaster jord er derimot et dokumentert sørgeritual i kildene. Samme emosjonelle vekt, ingen uavklart innholdsrisiko.</p>
+      </div>
+      <div class="fieldprompt"><span class="fk">[DURATION]</span> 9 seconds
+<span class="fk">[ASPECT RATIO]</span> 16:9
+<span class="fk">[ENVIRONMENT]</span> Same battlefield ground.
+<span class="fk">[CHARACTERS]</span> Rostam and two soldiers.
+<span class="fk">[ACTION ARC]</span> Rostam tears the straps of his own armor loose, throws fistful after fistful of dust over his own head, and cries out — a wordless, animal sound, face turned to the sky. Two soldiers step in, not to restrain a weapon, but to hold him upright by the shoulders — he has no strength left to stand alone.
+<span class="fk">[CAMERA]</span> Wide enough to show all three figures.
+<span class="fk">[LIGHTING]</span> Harsh dramatic lighting.
+<span class="fk">[STYLE]</span> Ultra-photorealistic, raw grief. Not cartoon, not 3D-render.
+<span class="fneg">[RULES / AVOID]</span> No weapon visible in this shot at all — the soldiers' hands are on his shoulders/arms, supporting, not disarming.</div>
+      <div class="pc-settings"><b>Modell:</b> seedance_2_0 · <b>Referanse:</b> rostam-armor-turnaround.png · <b>Sjanger:</b> drama</div>
+    </div>
+
+    <div class="promptcard">
+      <div class="pc-head"><span class="pc-num">19</span><span class="pc-title">Vidt bilde, begge hærer i stillhet</span></div>
+      <div class="fieldprompt"><span class="fk">[DURATION]</span> 9 seconds
+<span class="fk">[ASPECT RATIO]</span> 16:9
+<span class="fk">[ENVIRONMENT]</span> Vast steppe landscape, both armies on opposite ridgelines, harsh midday light.
+<span class="fk">[CHARACTERS]</span> Both full armies, frozen and silent. Rostam, cradling his dead son.
+<span class="fk">[ACTION ARC]</span> Rostam finally stops fighting the men holding him back and simply sinks down, cradling his dead son in his arms, watched by both armies in absolute silence.
+<span class="fk">[CAMERA]</span> Extreme wide, static, no movement.
+<span class="fk">[LIGHTING]</span> Harsh midday light.
+<span class="fk">[STYLE]</span> Ultra-photorealistic, overwhelming silence and scale. Not cartoon, not 3D-render.</div>
+      <div class="pc-settings"><b>Modell:</b> seedance_2_0 · <b>Oppløsning:</b> 4k/std · <b>Sjanger:</b> epic</div>
+    </div>
+
+    <div class="promptcard">
+      <div class="pc-head"><span class="pc-num">20</span><span class="pc-title">Rytteren ankommer for sent</span></div>
+      <div class="fieldprompt"><span class="fk">[DURATION]</span> 7 seconds
+<span class="fk">[ASPECT RATIO]</span> 16:9
+<span class="fk">[ENVIRONMENT]</span> Same wide steppe landscape, harsh light, a distant hill.
+<span class="fk">[CHARACTERS]</span> A single rider in the far distance, carrying a small vial.
+<span class="fk">[ACTION ARC]</span> The rider crests a hill at a gallop, arriving too late, carrying a cure sent by a king who delayed it out of jealousy and fear — visualized purely through distance and timing, without dialogue.
+<span class="fk">[CAMERA]</span> Wide shot, rider clearly too far and too late.
+<span class="fk">[LIGHTING]</span> Harsh light, the vial catching a glint.
+<span class="fk">[STYLE]</span> Ultra-photorealistic, tragic irony visualized without dialogue. Not cartoon, not 3D-render.</div>
+      <div class="pc-settings"><b>Modell:</b> seedance_2_0 · <b>Oppløsning:</b> 4k/std · <b>Sjanger:</b> drama</div>
+    </div>
+
+    <div class="card new">
+      <span class="tag">Nytt i v5 — Master Film v1, blokk «Dikteren kjenner igjen sitt eget vers»</span>
+      <p>Det gamle shot 21 («Ferdowsi fullfører linjen») er erstattet av en fem-delt lukkende sirkel — filmens svar på sitt eget spørsmål (se seksjon 05, punkt 1). 21A bruker et bilde som allerede finnes ferdig komponert i arkivet (<code>sohrabs-dod.png</code>) — ingen ny stillbilde-generering, kun animasjon av en allerede godkjent komposisjon.</p>
+    </div>
+
+    <div class="promptcard crit">
+      <div class="pc-head"><span class="pc-num">21A</span><span class="pc-title">Rostam holder Sohrab — tåren</span></div>
+      <div class="fieldprompt"><span class="fk">[DURATION]</span> 6 seconds
+<span class="fk">[ASPECT RATIO]</span> 16:9
+<span class="fk">[ENVIRONMENT]</span> Same battlefield ground, overcast fading light, distant army banners.
+<span class="fk">[CHARACTERS]</span> Rostam, alone now, cradling the dead Sohrab across his lap. The armband clearly visible on Sohrab's still arm.
+<span class="fk">[ACTION ARC]</span> Rostam sits motionless, holding his son. The armband catches the fading light. One tear breaks and falls down his face.
+<span class="fk">[CAMERA]</span> Close on Rostam's face and the armband, static, no movement.
+<span class="fk">[LIGHTING]</span> Overcast, fading dusk light.
+<span class="fk">[STYLE]</span> Ultra-photorealistic, quiet devastation. Not cartoon, not 3D-render.
+<span class="fneg">[RULES / AVOID]</span> No music, no camera movement — this holds completely still until the tear falls.</div>
+      <div class="pc-settings"><b>Modell:</b> seedance_2_0 · <b>Referanse:</b> sohrabs-dod.png (allerede komponert), rostam-armband.png · <b>Sjanger:</b> drama · aldri kutt</div>
+    </div>
+
+    <div class="promptcard crit">
+      <div class="pc-head"><span class="pc-num">21B</span><span class="pc-title">Match cut — tåre til blekkdråpe</span></div>
+      <div class="fieldprompt"><span class="fk">[CONTINUATION]</span> Match cut on the falling tear from 21A — same trajectory, same shape.
+<span class="fk">[DURATION]</span> 3 seconds
+<span class="fk">[ASPECT RATIO]</span> 16:9
+<span class="fk">[ENVIRONMENT]</span> Extreme macro — Ferdowsi's manuscript page, the same candlelit study.
+<span class="fk">[CHARACTERS]</span> None visible — only the page, the quill's tip, an inkwell nearby.
+<span class="fk">[ACTION ARC]</span> A single drop of ink falls from the raised quill and lands on the page in the exact same place and shape as the tear that just fell.
+<span class="fk">[CAMERA]</span> Static macro, no movement — a pure match cut, not a dissolve.
+<span class="fk">[LIGHTING]</span> Warm lamplight.
+<span class="fk">[STYLE]</span> Ultra-photorealistic macro cinematography. Not cartoon, not 3D-render.
+<span class="fneg">[RULES / AVOID]</span> No glowing/magical ink effect — this is a literal drop of ink, gravity only.</div>
+      <div class="pc-settings"><b>Modell:</b> seedance_2_0 · <b>Referanse:</b> ferdowsi-blekkhus-penn.png · <b>Sjanger:</b> drama</div>
+    </div>
+
+    <div class="promptcard">
+      <div class="pc-head"><span class="pc-num">21C</span><span class="pc-title">Ferdowsi hviler hånden over linjen</span></div>
+      <div class="fieldprompt"><span class="fk">[CONTINUATION]</span> Same page and study as 21B, camera pulls back from macro to a medium shot.
+<span class="fk">[DURATION]</span> 6 seconds
+<span class="fk">[ASPECT RATIO]</span> 16:9
+<span class="fk">[ENVIRONMENT]</span> The same small mudbrick study, single oil lamp, night.
+<span class="fk">[CHARACTERS]</span> Ferdowsi — same turban, beard, robes as established. No loose hair.
+<span class="fk">[ACTION ARC]</span> He sits motionless. He lays his open hand flat over the line he has just written — not to blot it out, only to rest it there. He does not write again.
+<span class="fk">[CAMERA]</span> Medium shot, static.
+<span class="fk">[LIGHTING]</span> Warm, dimming lamplight.
+<span class="fk">[STYLE]</span> Ultra-photorealistic, intimate stillness. Not cartoon, not 3D-render.
+<span class="fneg">[RULES / AVOID]</span> No loose hair, no grand architecture — same constraints as shots 1B/2/16B.</div>
+      <div class="pc-settings"><b>Modell:</b> seedance_2_0 · <b>Referanse:</b> ferdowsi-composes-shahnameh.png (Fase 4) · <b>Sjanger:</b> drama</div>
+    </div>
+
+    <div class="promptcard crit">
+      <div class="pc-head"><span class="pc-num">21D</span><span class="pc-title">Sirkelen lukkes — kamera trekker seg tilbake gjennom manuskript, hus, Tus, jorden</span></div>
+      <div class="fieldprompt"><span class="fk">[CONTINUATION]</span> Begins on the same medium shot as 21C, then pulls back and up — the exact reverse of shot 1A's descent.
+<span class="fk">[DURATION]</span> 18 seconds
+<span class="fk">[ASPECT RATIO]</span> 16:9
+<span class="fk">[ENVIRONMENT]</span> Interior study → exterior of the same small mudbrick house → the orchard and walled estate around it → the village and the wider Tus landscape at dusk → rising into the night sky → Earth seen from orbit, the reverse of the opening descent.
+<span class="fk">[CHARACTERS]</span> Ferdowsi, visible small and still at his desk through the window as the camera first pulls back, then no longer visible as the pull-back continues.
+<span class="fk">[ACTION ARC]</span> One continuous ascent: room shrinks in frame → house seen from outside, same modest mudbrick compound as the opening → orchard and estate walls → the village near Tus → the landscape falls away → rises through atmosphere → Earth from orbit, black starfield, same framing as the film's opening shot in reverse.
+<span class="fk">[CAMERA]</span> Continuous unbroken single take, reverse of shot 1A's path exactly — same speed curve inverted.
+<span class="fk">[SPEED RAMP]</span> Slow glide away from the window (40%) accelerating smoothly to 100% through atmosphere and into orbital space.
+<span class="fk">[LIGHTING]</span> Warm amber window light shrinking to a single point, then the cool blue-black of dusk and space, mirroring shot 1A's palette in reverse.
+<span class="fk">[STYLE]</span> Ultra-photorealistic, physically accurate aerial/orbital cinematography, same register as shot 1A. Not cartoon, not 3D-render, not video-game engine look.
+<span class="fneg">[RULES / AVOID]</span> No glowing lines, light trails, or CGI streaks. No oversized/glowing moon. No modern buildings, roads, or vehicles anywhere in the pull-back.</div>
+      <div class="pc-settings"><b>Modell:</b> seedance_2_5 · <b>Referanse:</b> ferdowsi-hus-3faser.png (Fase 4), ferdowsi-frukthage-tus.png, paj-landsby-dawn.png · <b>Sjanger:</b> epic · bruker Seedance 2.5s 30-sek sammenhengende opptak, filmens dyreste/viktigste enkeltshot å få riktig</div>
+    </div>
+
+    <div class="card">
+      <span class="tag">21E — post-produksjon, ikke ny generering</span>
+      <p><b>Sluttkort:</b> "Nushdaru ba'd az marg-e Sohrab" / "The cure — after Sohrab's death" / SISTAN · TURAN — the Kayanian Age / <i>"Some stories are written in ink. Others are written in loss."</i> Bygges som ekte typografi i etterarbeid, samme prinsipp som ident-kortet (seksjon 07, øverst) — ikke modellgenerert tekst. ~8 sek.</p>
+    </div>
+
+    <div class="card">
+      <p><b>Om persisk språk:</b> prompts til selve video-modellen er skrevet på engelsk — det er det Seedance og lignende modeller er trent best på, uansett hvilket språk/kultur scenen skal skildre. Persisk kommer inn på to steder: (1) kalligrafien på Ferdowsis manuskript (shot 1b/2, allerede spesifisert som "flowing Persian calligraphy" i prompten), og (2) eventuell tale/dialog. Jeg anbefaler å generere shotene <b>stille</b> (lyd av, som satt i innstillingene) og legge på ekte persisk tale/VO i etterarbeid — AI-generert leppesynkronisert tale på et spesifikt historisk persisk register er upålitelig kvalitetsmessig akkurat nå, mens en ekte stemme (eller en god persisk TTS) gir dere full kontroll over uttale og periodekorrekt språkdrakt.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="idx">08</span> Skotliste — Master Film v1, 4:23 (263 sek)</h2>
+    <p class="sec-lede">Åtte blokker, 30 shots, hver varighet reell summert (ikke anslått). Blokk-navn i venstre rad viser hvor 8-akts-strukturen fra Master Film v1 (seksjon 05) begynner.</p>
+    <table>
+      <tr><th>#</th><th>Blokk / Shot</th><th>Sek</th><th>Studio-notat</th></tr>
+      <tr><td class="k">1</td><td><b>DIKTEREN.</b> Ferdowsi skriver, tekstplakat: Kayanian-æraen/Kay Kavus/før Kyros</td><td class="num">18</td><td>Ferdowsi Fase 4 — ferdowsi-sixangle-sheet.png, ferdowsi-composes-shahnameh.png</td></tr>
+      <tr><td class="k">2</td><td>Push inn i siden, blekk → bilde</td><td class="num">7</td><td>Overgangs-VFX, ren post</td></tr>
+      <tr><td class="k">3</td><td><b>SØNNEN SOM LETER.</b> To hærer over sletta, dawn</td><td class="num">13</td><td>Location bank — sohrab-rostam-motes.png, gjenbrukes shot 24</td></tr>
+      <tr><td class="k">4</td><td>Sohrab rir ut, speider — <b>lav heltevinkel</b></td><td class="num">7</td><td>sohrab-armor.png, sohrab-turnaround.png</td></tr>
+      <tr><td class="k">5</td><td>Flashback: ung Rostam knytter armbånd på Tahmineh (prompt 4B)</td><td class="num">6</td><td>rostam-familie.png, rostam-armband.png — flyttet fra gammel shot 15</td></tr>
+      <tr><td class="k">6</td><td>Match cut: eldre Tahmineh binder armbånd på voksen Sohrab (4C)</td><td class="num">5</td><td>tahmineh.png, sohrab-armor.png — bevisst hender/stoff-fokus, unngår ny alderslås</td></tr>
+      <tr><td class="k">7</td><td>Sohrab rir ut fra Samangan med hæren (4D)</td><td class="num">6</td><td>samangan-palass.png, sohrabs-militaerleir.png</td></tr>
+      <tr><td class="k">8</td><td>Tekstkort: «He looked for his father in every man he met.» (4E)</td><td class="num">3</td><td>Post-produksjon, ikke generert</td></tr>
+      <tr><td class="k">9</td><td><b>GJENKJENNELSE NEKTET.</b> Rostam rir ut, uten banner — <b>lav heltevinkel</b></td><td class="num">6</td><td>rostam-armor-turnaround.png, rakhsh-solo.png</td></tr>
+      <tr class="crit"><td class="k">10</td><td>«Are you Rostam?» / «I am no one» — <b>hjerteslag #1</b></td><td class="num">15</td><td>rostam-rakhsh-sixposes.png</td></tr>
+      <tr><td class="k">11</td><td><b>DUELLEN.</b> Lanser, avmontert, nærkamp</td><td class="num">13</td><td>Høyest genereringskost</td></tr>
+      <tr><td class="k">12</td><td>«You fight like the man in my mother's stories»</td><td class="num">7</td><td>Dialogscene 2</td></tr>
+      <tr><td class="k">13</td><td>Sohrab pinner Rostam, dolk trukket</td><td class="num">6</td><td>Hero frame 2 (bakke)</td></tr>
+      <tr class="crit"><td class="k">14</td><td>Rostams løgn om «regelen»</td><td class="num">14</td><td>Tematisk kjerne — aldri kutt</td></tr>
+      <tr><td class="k">15</td><td>Sohrab alene, håpefullt blikk</td><td class="num">6</td><td>Emosjonelt ankerpunkt</td></tr>
+      <tr><td class="k">16</td><td><b>ANDRE FALL.</b> Andre basketak, Sohrab kastes ned</td><td class="num">8</td><td>Reuse rig fra shot 13</td></tr>
+      <tr class="crit"><td class="k">17</td><td>Dolkstøtet — stille, <b>ramp inn i slow-motion</b> idet dolken treffer</td><td class="num">6</td><td>Filmens viktigste actionbilde</td></tr>
+      <tr><td class="k">18</td><td><b>GJENKJENNELSE.</b> «Find Rostam... I died still looking» + armbånd</td><td class="num">8</td><td>Rekvisitt-bank: rostam-armband.png</td></tr>
+      <tr class="crit"><td class="k">19</td><td>Tekstkort: Ferdowsis metakommentar (14B) — <b>hjerteslag #2</b></td><td class="num">5</td><td>Post-produksjon, holdt over armbåndet</td></tr>
+      <tr class="crit"><td class="k">20</td><td>Gjenkjenning — «I am Rostam»</td><td class="num">8</td><td>Emosjonelt vendepunkt</td></tr>
+      <tr class="crit"><td class="k">21</td><td>Insert: Ferdowsis penn stopper (16B) — <b>hjerteslag #3</b></td><td class="num">4</td><td>ferdowsi-composes-shahnameh.png</td></tr>
+      <tr class="crit"><td class="k">22</td><td><b>SORG.</b> Sorgscene: river rustning, støv på hodet</td><td class="num">17</td><td>sohrabs-dod.png</td></tr>
+      <tr><td class="k">23</td><td>Sørgeritual — remmer, jord, skrik (endret i v5, se prompt 18)</td><td class="num">9</td><td>rostam-armor-turnaround.png — løser tidligere åpent spørsmål</td></tr>
+      <tr><td class="k">24</td><td>Vidt bilde, begge hærer i stillhet</td><td class="num">14</td><td>Reuse shot 3-plate</td></tr>
+      <tr><td class="k">25</td><td>Rytteren ankommer for sent</td><td class="num">11</td><td>Location bank reuse</td></tr>
+      <tr class="crit"><td class="k">26</td><td><b>DIKTEREN KJENNER IGJEN SITT EGET VERS.</b> Rostam holder Sohrab, tåren (21A)</td><td class="num">6</td><td>sohrabs-dod.png — allerede ferdig komponert</td></tr>
+      <tr><td class="k">27</td><td>Match cut: tåre → blekkdråpe (21B)</td><td class="num">3</td><td>ferdowsi-blekkhus-penn.png, ren makro</td></tr>
+      <tr><td class="k">28</td><td>Ferdowsi hviler hånden over linjen (21C)</td><td class="num">6</td><td>ferdowsi-composes-shahnameh.png</td></tr>
+      <tr class="crit"><td class="k">29</td><td>Sirkelen lukkes — pull-back manuskript→hus→Tus→jorden (21D)</td><td class="num">18</td><td><b>Seedance 2.5, 30-sek sammenhengende opptak</b> — bruk mest av re-genereringsbudsjettet her</td></tr>
+      <tr><td class="k">30</td><td>Sluttkort (21E)</td><td class="num">8</td><td>Post-produksjon, ikke generert</td></tr>
+    </table>
+    <p class="foot-note">Sum: 263 sek = 4:23 nøyaktig, verifisert rad for rad — ikke anslått som v4s «~2:51».</p>
+
+    <div class="must">
+      <div class="must-title">Aldri kutt</div>
+      <ul>
+        <li><b>Shot 17, 18, 20</b> — dolkstøtet + armbånd + gjenkjenning. Dette ER Rostam & Sohrab.</li>
+        <li><b>Shot 14</b> — det falske regel-trikset. Skiller en tro gjengivelse fra en generisk tragisk duell.</li>
+        <li><b>Shot 22–23</b> — sorgscenen. Kildene selv fremhever nettopp denne som den mest siterte i episoden.</li>
+        <li><b>Shot 10, 19, 21</b> — filmens tre hjerteslagpunkter (se kamera-siden, seksjon 08). Uten disse mister rammefortellingen sin funksjon.</li>
+        <li><b>Shot 26–29</b> — den lukkende sirkelen. Dette er filmens svar på sitt eget spørsmål, se seksjon 05.</li>
+      </ul>
+    </div>
+    <div class="must" style="margin-top:10px;border-color:var(--line);background:var(--card);">
+      <div class="must-title" style="color:var(--text-faint);">Trygt å korte ned</div>
+      <ul>
+        <li>Shot 2 kan komprimeres til 3–4 sek ren VFX om nødvendig.</li>
+        <li>Shot 6/7 kan slås sammen til én generering hvis Samangan-blokken (5–8) må kuttes ned — men ikke fjern shot 5 helt, den er filmens eneste etablering av at Rostam faktisk har en sønn han aldri har møtt, som gir dramatisk ironi til hele duellen som følger.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="idx">09</span> Åpne punkter</h2>
+    <div class="must" style="border-color:var(--line);background:var(--card);">
+      <div class="must-title" style="color:var(--text-faint);">Løst i v5</div>
+      <ul>
+        <li><s>Selvmordsforsøket i shot 18</s> — byttet ut med sørgeritualet (river remmer, kaster jord). Ingen tekstforankring fantes for selvmordsforsøket uansett; nå kildetro og uten uavklart innholdsrisiko. Se shot 23.</li>
+        <li><s>Det lukkende Ferdowsi-speilbildet</s> — ikke bare bekreftet, utvidet til hele sirkelen (shot 26–30). Filmens definitive sluttbilde, se seksjon 05 punkt 1.</li>
+      </ul>
+    </div>
+    <div class="must" style="border-color:rgba(176,67,44,0.35);background:rgba(176,67,44,0.08);margin-top:12px;">
+      <div class="must-title" style="color:#e08a6f;">Sjekk før produksjon</div>
+      <ul>
+        <li>Sluttkort-språk (shot 30/21E): engelsk alene, eller engelsk + persisk (anbefalt).</li>
+        <li>Lens-/fokallengde-valg er kun eksplisitt spesifisert for shot 1B/16B/21C så langt — vurder 85mm-portrett-komprimering på flere nærbilder for konsistens (samme punkt som kamera-siden seksjon 09).</li>
+        <li>Shot 6 (Tahmineh eldre binder armbånd på Sohrab) er bevisst komponert som hender/stoff-nærbilde for å unngå en ny «eldre Tahmineh»-karakterlås — bekreft at dette er greit, eller be om en fullverdig ansikts-Soul Cast for henne i den alderen.</li>
+        <li>Roster nå fryst per Master Film v1 (seksjon 05, punkt 6) — enhver ny karakter-/location-endring herfra bør gå via en eksplisitt v6-runde, ikke ad hoc.</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    Fullstendig kildegransking og v1-versjon: se <code>docs/realgram/HIGGSFIELD_ROSTAM_SOHRAB_SCRIPT.md</code> i repoet. Kilder: Warner &amp; Warner (1905–1925, komplett versoversettelse), Dick Davis (Penguin Classics, moderne standardutgave) — begge samstemte om handlingskjeden brukt her.
+    <div style="margin-top:14px;"><a href="https://setai.no/projects/shahnameh/" style="color:var(--gold-bright);">← Tilbake til Shahnameh-case-studien</a></div>
+  </footer>
+
+</div>
+</body>
+</html>
+
