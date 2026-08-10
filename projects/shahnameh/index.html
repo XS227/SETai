@@ -458,6 +458,21 @@
   .r-cast-role{ font-size:.72rem; color:var(--rgoldb); letter-spacing:.06em; text-transform:uppercase; margin-top:.15rem; }
   .r-cast-desc{ font-size:.82rem; color:var(--rbonedim); margin-top:.5rem; }
 
+  /* dark-theme override for the shared .mini-gallery component (built for the
+     light char-cards) so it also works inside #rostam's night-sky register */
+  .r-cast-card .mini-gallery .mg-thumb img{ width:100%; aspect-ratio:1/1; object-fit:cover; border-radius:4px; display:block; }
+  .r-mini-gallery .mg-thumbs{ background:var(--rv2); border-top:1px solid var(--rline); }
+  .r-mini-gallery .mg-thumb{ border-color:transparent; }
+  .r-mini-gallery .mg-thumb.active{ border-color:var(--rember); }
+
+  /* Sohrab's own kit — small item row, same visual language as r-cast-card */
+  .r-kit-row{ display:grid; grid-template-columns:repeat(3,1fr); gap:1.2rem; margin-top:2.5rem; max-width:640px; margin-inline:auto; }
+  @media(max-width:600px){ .r-kit-row{ grid-template-columns:1fr; max-width:340px; } }
+  .r-kit-card{ background:var(--rv2); border:1px solid var(--rline); border-radius:8px; overflow:hidden; text-align:center; }
+  .r-kit-card img{ width:100%; aspect-ratio:1/1; object-fit:contain; background:var(--rv2); padding:.5rem; }
+  .r-kit-name{ font-family:var(--serif-display); font-weight:700; color:#f0e6cc; font-size:.92rem; padding:0 .8rem; }
+  .r-kit-desc{ font-size:.76rem; color:var(--rbonedim); padding:.3rem .8rem .9rem; }
+
   .r-script{ margin-top:3.5rem; background:var(--rv); border:1px solid var(--rline); border-radius:8px; padding:clamp(1.5rem,4vw,2.5rem); max-width:680px; margin-inline:auto; }
   .r-script-line{ font-family:'Courier New',monospace; font-size:.9rem; line-height:1.9; color:var(--rbone); margin:0 0 .9rem; }
   .r-script-char{ text-align:center; color:var(--rgoldb); letter-spacing:.06em; margin-top:1rem; }
@@ -1199,6 +1214,11 @@
 <section id="rostam">
   <div class="wrap">
     <div class="center reveal" style="margin-bottom:2.5rem;"><span class="rostam-badge">✦ A separate story, a separate style</span></div>
+    <div class="center reveal" style="margin-bottom:2.5rem; max-width:620px; margin-left:auto; margin-right:auto;">
+      <div class="note-box process" style="background:rgba(230,192,124,.08); border-left-color:#e6c07c; color:var(--rbonedim); text-align:left;">
+        <b style="color:#e6c07c;">An open production — same principle as Higgsfield's own reference films.</b> Higgsfield built the Global Film Festival around films like <i>Hell Grind</i> and <i>Zephyr</i> being fully open-sourced — every prompt, every asset, the whole pipeline, public. We're building this the same way: full shot list, every shot-for-shot prompt, the complete character/location/prop reference library, and the production methodology below are all public before the film itself is finished, not after.
+      </div>
+    </div>
     <div class="rostam-hero">
       <div class="reveal-left">
         <div class="eyebrow">A parallel story</div>
@@ -1242,13 +1262,27 @@
 
     <div class="r-cast-row" data-alt-reveal>
       <div class="r-cast-card">
-        <img src="img/rostam-sixview-portrait.webp" alt="Rostam" loading="lazy"/>
+        <div class="mini-gallery r-mini-gallery" data-gallery>
+          <img class="mg-main" src="img/rostam-sixview-portrait.webp" alt="Rostam" loading="lazy"/>
+          <div class="mg-thumbs">
+            <button type="button" class="mg-thumb active" data-full="img/rostam-sixview-portrait.webp" data-alt="Rostam" aria-pressed="true"><img src="img/thumb/rostam-sixview-portrait.webp" alt="" loading="lazy"/></button>
+            <button type="button" class="mg-thumb" data-full="img/rostam-kamp-sverd.webp" data-alt="Rostam, full armor, sword in hand, six combat stances" aria-pressed="false"><img src="img/thumb/rostam-kamp-sverd.webp" alt="" loading="lazy"/></button>
+            <button type="button" class="mg-thumb" data-full="img/rostam-forkledning.webp" data-alt="Rostam disguised as an ordinary soldier, armor hidden beneath a plain cloak" aria-pressed="false"><img src="img/thumb/rostam-forkledning.webp" alt="" loading="lazy"/></button>
+          </div>
+        </div>
         <div class="r-cast-name">Rostam</div>
         <div class="r-cast-role">Tahamtan — "the mighty-bodied"</div>
         <div class="r-cast-desc">Proud, short-tempered, unshakably loyal. Speaks back to kings without fear — and saves them anyway, every time.</div>
       </div>
       <div class="r-cast-card">
-        <img src="img/sohrab-turnaround.webp" alt="Sohrab" loading="lazy"/>
+        <div class="mini-gallery r-mini-gallery" data-gallery>
+          <img class="mg-main" src="img/sohrab-turnaround.webp" alt="Sohrab" loading="lazy"/>
+          <div class="mg-thumbs">
+            <button type="button" class="mg-thumb active" data-full="img/sohrab-turnaround.webp" data-alt="Sohrab" aria-pressed="true"><img src="img/thumb/sohrab-turnaround.webp" alt="" loading="lazy"/></button>
+            <button type="button" class="mg-thumb" data-full="img/sohrab-posering.webp" data-alt="Sohrab, armed and armored, six battle stances" aria-pressed="false"><img src="img/thumb/sohrab-posering.webp" alt="" loading="lazy"/></button>
+            <button type="button" class="mg-thumb" data-full="img/sohrab-spyd-kamp.webp" data-alt="Sohrab with his spear, six fighting stances" aria-pressed="false"><img src="img/thumb/sohrab-spyd-kamp.webp" alt="" loading="lazy"/></button>
+          </div>
+        </div>
         <div class="r-cast-name">Sohrab</div>
         <div class="r-cast-role">The son who never met his father</div>
         <div class="r-cast-desc">Just as strong as his father despite his youth. Driven by love for a man he knows only from his mother's stories.</div>
@@ -1258,6 +1292,27 @@
         <div class="r-cast-name">Tahmineh</div>
         <div class="r-cast-role">The princess of Samangan</div>
         <div class="r-cast-desc">Raises her son alone for twenty years. Ties the armband to his arm herself, the day she sends him out to find his father.</div>
+      </div>
+    </div>
+
+    <div class="center reveal" style="margin-top:3rem;">
+      <p style="font-size:.82rem; color:var(--rbonedim); font-style:italic; font-family:var(--serif-display);">His own kit — a leaner echo of his father's, not yet battle-worn</p>
+    </div>
+    <div class="r-kit-row" data-alt-reveal>
+      <div class="r-kit-card">
+        <img src="img/sohrabs-sverd.webp" alt="Sohrab's sword" loading="lazy"/>
+        <div class="r-kit-name">The sword</div>
+        <div class="r-kit-desc">Straight blade, engraved bronze fittings, scabbard slung at the hip.</div>
+      </div>
+      <div class="r-kit-card">
+        <img src="img/sohrabs-spyd.webp" alt="Sohrab's spear" loading="lazy"/>
+        <div class="r-kit-name">The spear</div>
+        <div class="r-kit-desc">Damascus-patterned head, leather-wrapped shaft — his reach weapon before the grapple.</div>
+      </div>
+      <div class="r-kit-card">
+        <img src="img/sohrabs-hjelm.webp" alt="Sohrab's helmet" loading="lazy"/>
+        <div class="r-kit-name">The helmet</div>
+        <div class="r-kit-desc">Open-faced, horsehair crest — built for a young warrior, not yet a veteran's full-face guard.</div>
       </div>
     </div>
 
@@ -1271,6 +1326,9 @@
       <div class="prose">
         <p>Two armies meet on a dusty plain. A young warrior rides out alone and calls to the stranger who meets him: <em>are you Rostam, son of Zal?</em> The stranger hesitates a moment too long, and denies it. They fight. Neither knows they are fighting their own blood.</p>
         <p>It's one of the most-quoted scenes in Persian literature — and the one we're building first, as our own short film.</p>
+      </div>
+      <div class="note-box process" style="max-width:520px; margin:1.6rem auto 0; background:rgba(201,107,70,.08); border-left-color:var(--rember); color:var(--rbonedim);">
+        <b style="color:var(--rember);">Why "the stranger" is unrecognizable:</b> Rostam rides out hiding his identity — armor and the tiger-pelt cloak both covered by a plain, dirty soldier's cloak, no banner. See his gallery above for the reference: full armor for the fight itself, this disguise for the ride out and the "I am no one you know" beat, before the cloak comes off at the recognition.
       </div>
     </div>
 
@@ -1302,7 +1360,51 @@
     </div>
 
     <div class="center reveal" style="margin-top:3.5rem; max-width:560px; color:var(--rbonedim); font-size:.92rem;">
-      The script is fully developed down to the shot list and shot-for-shot video prompts. The goal: the <b style="color:#f0e6cc">Higgsfield Global Film Festival</b>, submission deadline August 31, 2026.
+      The script is fully developed down to the shot list and shot-for-shot video prompts — <a href="https://setai.no/projects/shahnameh/manus/" style="color:#e6c07c; text-decoration:underline;">read the full manuscript</a> (30 shots, 4:23, every prompt) or the <a href="https://setai.no/projects/shahnameh/kamera/" style="color:#e6c07c; text-decoration:underline;">camera &amp; visual language notes</a>. The goal: the <b style="color:#f0e6cc">Higgsfield Global Film Festival</b> — opened August 10, submission deadline September 3, 2026.
+    </div>
+  </div>
+</section>
+
+<section id="pipeline">
+  <div class="wrap">
+    <div class="center reveal" style="margin-bottom:2.5rem;"><span class="rostam-badge">✦ How this actually gets built</span></div>
+    <div class="center reveal" style="max-width:640px; margin:0 auto 3rem;">
+      <h2 class="h2 center">The pipeline, not just the pitch</h2>
+      <div class="prose"><p style="color:var(--rbonedim);">Higgsfield's own open-sourced films — <i>Hell Grind</i>, <i>Zephyr</i>, <i>Mork</i> — ship with the reasoning behind each technique, not just the finished cut. Here's ours, in the same spirit: what actually keeps a character's face, a location's light, and a prop's identity consistent across dozens of separate AI generations.</p></div>
+    </div>
+
+    <div class="r-cast-row" data-alt-reveal>
+      <div class="r-cast-card" style="text-align:left; border:1px solid var(--rline); border-radius:8px; padding:1.1rem 1.2rem; background:rgba(255,255,255,.02);">
+        <div class="r-cast-name">Locked reference sheets, not re-described characters</div>
+        <div class="r-cast-desc">Every character (Rostam, Sohrab, Tahmineh, Ferdowsi across four life phases) has a fixed turnaround/pose sheet generated once and referenced by every later shot — never re-described from scratch. This is the single biggest lever against the "AI face drift" a jury notices instantly.</div>
+      </div>
+      <div class="r-cast-card" style="text-align:left; border:1px solid var(--rline); border-radius:8px; padding:1.1rem 1.2rem; background:rgba(255,255,255,.02);">
+        <div class="r-cast-name">One through-line prop, tracked across every appearance</div>
+        <div class="r-cast-desc">The armband exists as its own isolated reference sheet (clasp, stone, worn-on-arm scale) and appears identically in the gifting scene, the departure scene, and the death scene — the recognition has to work as an actual visual match, not just as a line of dialogue.</div>
+      </div>
+      <div class="r-cast-card" style="text-align:left; border:1px solid var(--rline); border-radius:8px; padding:1.1rem 1.2rem; background:rgba(255,255,255,.02);">
+        <div class="r-cast-name">Location sheets before character sheets enter them</div>
+        <div class="r-cast-desc">Samangan, the two war camps, and the battlefield itself are generated as clean environment plates first — then characters are placed into them, and the same plate is deliberately reused across shots (e.g. the wide battlefield shot opens and closes the duel) instead of regenerating similar-but-different terrain each time.</div>
+      </div>
+    </div>
+
+    <div class="r-cast-row" data-alt-reveal style="margin-top:1.5rem;">
+      <div class="r-cast-card" style="text-align:left; border:1px solid var(--rline); border-radius:8px; padding:1.1rem 1.2rem; background:rgba(255,255,255,.02);">
+        <div class="r-cast-name">A shared avoid-list, not per-shot guesswork</div>
+        <div class="r-cast-desc">Every shot's prompt carries the same negative-prompt discipline — no glowing/magical effects, no oversized moon, no readable on-screen text, no loose hair breaking Ferdowsi's turban. Collected once on the <a href="https://setai.no/projects/shahnameh/kamera/" style="color:#e6c07c;">camera page</a> so it's a system, not a memory test.</div>
+      </div>
+      <div class="r-cast-card" style="text-align:left; border:1px solid var(--rline); border-radius:8px; padding:1.1rem 1.2rem; background:rgba(255,255,255,.02);">
+        <div class="r-cast-name">Fact-tiered research before a single prompt is written</div>
+        <div class="r-cast-desc">Every character/location claim is tagged against what Ferdowsi's text actually says, what's later artistic tradition, and what's this production's own creative choice — so the film can say honestly which parts are Shahnameh and which parts are us.</div>
+      </div>
+      <div class="r-cast-card" style="text-align:left; border:1px solid var(--rline); border-radius:8px; padding:1.1rem 1.2rem; background:rgba(255,255,255,.02);">
+        <div class="r-cast-name">Budget re-generation by emotional weight, not by shot count</div>
+        <div class="r-cast-desc">The recognition, the dagger strike, and the closing pull-back are marked "never cut, spend the most re-generation budget here" — a jury forgives an imperfect crowd shot far faster than it forgives a hollow face in the one moment the whole film is built around.</div>
+      </div>
+    </div>
+
+    <div class="center reveal" style="margin-top:2.5rem; max-width:560px; color:var(--rbonedim); font-size:.85rem;">
+      None of this is claimed to match Hell Grind's own 95-minute, crowd-scale pipeline exactly — it's the same underlying discipline (locked references, tracked props, shared constraints) scaled to a 4:23 short. Full detail: <a href="https://setai.no/projects/shahnameh/manus/" style="color:#e6c07c; text-decoration:underline;">manuscript</a> · <a href="https://setai.no/projects/shahnameh/kamera/" style="color:#e6c07c; text-decoration:underline;">camera notes</a>.
     </div>
   </div>
 </section>
