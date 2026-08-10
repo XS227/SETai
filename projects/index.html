@@ -1,4 +1,17 @@
 <!doctype html><html lang='no'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>Prosjekter | SETAEI</title><meta name='description' content='Utvalgte prosjekter fra SETAEI.'><link rel='canonical' href='https://setai.no/projects/'><meta property='og:title' content='Prosjekter | SETAEI'><meta property='og:description' content='Utvalgte prosjekter fra SETAEI.'><meta property='og:url' content='https://setai.no/projects/'><meta name='twitter:card' content='summary_large_image'><meta name='google-site-verification' content='WRUluLzpLR0S0ly8fGmWj9uAyz2d6l1rYXXvK7YBfRg'><script async src='https://www.googletagmanager.com/gtag/js?id=G-28EZMGVX60'></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config','G-28EZMGVX60');</script><link rel='stylesheet' href='/seo-expansion.css'><link rel='preconnect' href='https://fonts.googleapis.com'><link rel='preconnect' href='https://fonts.gstatic.com' crossorigin><link href='https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap' rel='stylesheet'>
+<style>
+/* 2026-08-10: video-preview cards (film project, hobby reference) — scoped
+   to .has-video so the shared /seo-expansion.css .card rules elsewhere on
+   the site are untouched. */
+.card.has-video{position:relative;overflow:hidden;color:#fff;padding:0}
+.card.has-video .cv-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:.55}
+.card.has-video .cv-overlay{position:absolute;inset:0;z-index:0;background:linear-gradient(180deg,rgba(10,8,6,.5),rgba(10,8,6,.85) 75%)}
+.card.has-video .cv-body{position:relative;z-index:1;padding:16px}
+.card.has-video .cat{color:#f3d9a8}
+.card.has-video h3{color:#fff}
+.card.has-video p{color:rgba(255,255,255,.82)}
+.card.has-video a{color:#f3d9a8}
+</style>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -9,12 +22,36 @@
   ]
 }
 </script>
-</head><body><header><div class='container nav'><strong>SETAEI</strong><nav class='links'><a href='/'>Hjem</a><a href='/services/'>Tjenester</a><a href='/industries/'>Bransjer</a><a href='/blog/'>Blogg</a><a href='/projects/'>Prosjekter</a><a href='/#contact'>Kontakt</a></nav></div></header><main class='container'><div class='breadcrumb'><a href='/'>Hjem</a> / projects</div><div class='hero'><h1>Prosjekter</h1><p>Utvalgte systemer og satsinger fra SETAEI — bevis på gjennomføring, ikke bare tjenestebeskrivelser.</p></div><section class='article-body'>
+</head><body><header><div class='container nav'><strong>SETAEI</strong><input type='checkbox' id='navToggle' class='nav-toggle'><label for='navToggle' class='nav-burger' aria-label='Åpne meny'><span></span><span></span><span></span></label><label for='navToggle' class='nav-close' aria-label='Lukk meny'>&times;</label><nav class='links'><a href='/'>Hjem</a><a href='/services/'>Tjenester</a><a href='/industries/'>Bransjer</a><a href='/blog/'>Blogg</a><a href='/projects/'>Prosjekter</a><a href='/#contact'>Kontakt</a></nav></div></header><main class='container'><div class='breadcrumb'><a href='/'>Hjem</a> / projects</div><div class='hero'><h1>Prosjekter</h1><p>Utvalgte systemer og satsinger fra SETAEI — bevis på gjennomføring, ikke bare tjenestebeskrivelser.</p></div><section class='article-body'>
 <p>Under er egne produkter og satsinger Khabat Setaei har bygget og drifter gjennom SETAEI. De er tatt med fordi de viser den samme tekniske tilnærmingen som brukes i kundeprosjekter: fra idé og arkitektur til et system som faktisk kjører i produksjon, ikke bare en demo.</p>
 
 <div class='grid'>
 <div class='card'><span class='cat'>Case study</span><h3>REALGRAM</h3><p>Et helt økosystem, ikke en enkelt app: gratis VPN, et tap-to-earn-spill bygget på det persiske eposet Shahnameh, en egen token-økonomi og en meldingstjeneste — alt bundet sammen av ett prinsipp: jo flere som kobler til, jo sterkere og billigere blir nettet for alle. <a href='/projects/realgram/'>Les hele case-studien →</a></p></div>
+<div class='card'><span class='cat'>Case study</span><h3>Shahnameh</h3><p>Dypdykk i RealGrams spill: hvordan vi bygger Ferdowsis «Boken om kongene» — fra en kildegransket kunnskapsbase og AI-genererte karakterer til en Rostam &amp; Sohrab-kortfilm og et live tap-to-earn-spill. <a href='/projects/shahnameh/'>Se hele historien →</a></p></div>
+<div class='card has-video'>
+  <video class='cv-video' autoplay muted loop playsinline preload='metadata' poster='https://d2ol7oe51mr4n9.cloudfront.net/user_3GqVodiVsV7T5gGVNoTV4Q5Q3ZK/70e6cbaa-84b8-4290-8cc7-d52bb4571fa7.png' aria-hidden='true'>
+    <source src='https://d8j0ntlcm91z4.cloudfront.net/user_3GqVodiVsV7T5gGVNoTV4Q5Q3ZK/hf_20260804_034137_5d71b5c3-3bc1-4c60-b1d6-34c5d6eb3a24.mp4' type='video/mp4'>
+  </video>
+  <div class='cv-overlay' aria-hidden='true'></div>
+  <div class='cv-body'>
+    <span class='cat'>Higgsfield Global Film Festival</span>
+    <h3>Rostam &amp; Sohrab — kortfilmen</h3>
+    <p>Konkurransebidraget vi bygger til Higgsfields $1M-filmfestival: en 4:25-kortfilm om Rostam &amp; Sohrab, rammet inn av Ferdowsi selv som skriver historien. Fullt manus, kamerarettleding og shot-for-shot produksjonsplan er offentlig. <a href='/projects/shahnameh/#rostam'>Se filmprosjektet →</a></p>
+  </div>
+</div>
 <div class='card'><h3>Numerologist AI</h3><p>Eksperimentell AI-drevet mønster- og tolkningsplattform som utforsker brukerinput, symbolske systemer og personalisering — bygget med samme <a href='/services/ai-ekspert-oslo/'>AI-utviklingskompetanse</a> som brukes i kundeprosjekter. <a href='https://numerologist.setai.no/' target='_blank' rel='noopener'>Åpne Numerologist →</a></p></div>
+<div class='card'><span class='cat'>Design og visualisering</span><h3>چرخونه گردون (Gardoon)</h3><p>Teknisk visualisering og veikart for en mekanisk innretning med to messingplater på 76 cm, én stående aksel, 37 lommer oppe og 24 nede — tegning, mål, 3D-uttrykk og logoforslag. <a href='/projects/gardoon/'>Se prosjektforhåndsvisning →</a></p></div>
+<div class='card has-video'>
+  <video class='cv-video' autoplay muted loop playsinline preload='metadata' poster='https://d8j0ntlcm91z4.cloudfront.net/user_3GqVodiVsV7T5gGVNoTV4Q5Q3ZK/hf_20260802_220401_efc779ce-7fc9-4c4f-8085-5b54f6795b1f.png' aria-hidden='true'>
+    <source src='https://d8j0ntlcm91z4.cloudfront.net/user_3GqVodiVsV7T5gGVNoTV4Q5Q3ZK/hf_20260809_204325_06cada49-4c59-4bcc-804f-c3d519c51619.mp4' type='video/mp4'>
+  </video>
+  <div class='cv-overlay' aria-hidden='true'></div>
+  <div class='cv-body'>
+    <span class='cat'>Hobby / kreativ referanse</span>
+    <h3>Crown of My Heart</h3>
+    <p>En test-musikkvideo laget på Higgsfield — egen stemme, eget bilde, AI-synkronisert lyd og kamerabevegelse. Ikke et kundeprosjekt, bare et eksempel på samme verktøy brukt kreativt. <a href='https://d8j0ntlcm91z4.cloudfront.net/user_3GqVodiVsV7T5gGVNoTV4Q5Q3ZK/hf_20260809_204325_06cada49-4c59-4bcc-804f-c3d519c51619.mp4' target='_blank' rel='noopener'>Se hele klippet →</a></p>
+  </div>
+</div>
 </div>
 
 <h2>Fra egne produkter til kundeprosjekter</h2>

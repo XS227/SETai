@@ -9,7 +9,7 @@
   <meta name="keywords" content="CTO Oslo, CTO Norge, SaaS-utvikler Oslo, SaaS-utvikler Norge, AI-utvikler Oslo, AI-ekspert Oslo, AI-ekspert Norge, fullstack developer Oslo, fullstack developer Norge, fullstack-utvikler Norge, SEO-ekspert Oslo, SEO-ekspert Norge, Khabat Setaei">
   <meta name="author" content="Khabat Setaei">
   <meta name="robots" content="index, follow">
-  <meta name="theme-color" content="#f47c20">
+  <meta name="theme-color" content="#faf8f4">
   <meta name="google-site-verification" content="WRUluLzpLR0S0ly8fGmWj9uAyz2d6l1rYXXvK7YBfRg">
 
   <meta id="metaOgTitle" property="og:title" content="CTO, AI-ekspert &amp; SaaS-utvikler i Oslo, Norge | SETAEI">
@@ -96,19 +96,22 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:           #07080e;
-      --bg-card:      #0e1018;
-      --bg-card-h:    #131720;
-      --border:       #1a1f30;
-      --border-h:     #252d45;
-      --text:         #e6e8f2;
-      --muted:        #606880;
-      --dim:          #333a50;
-      --accent:       #f47c20;
-      --accent-glow:  rgba(244,124,32,.12);
-      --accent-h:     #ff9040;
-      --blue:         #4f6fff;
-      --teal:         #3ac9b2;
+      /* Scandinavian minimal re-skin (2026-07-27, Khabat: lysere, mer
+         skandinavisk, minimal men fortsatt proff — kun designtokens endret,
+         ikke innhold/markup, se historikk i git for forrige mørke versjon). */
+      --bg:           #faf8f4;
+      --bg-card:      #ffffff;
+      --bg-card-h:    #f4f1ea;
+      --border:       #e6e1d6;
+      --border-h:     #d3ccbb;
+      --text:         #211e19;
+      --muted:        #756e62;
+      --dim:          #a9a094;
+      --accent:       #a54a24;
+      --accent-glow:  rgba(165,74,36,.07);
+      --accent-h:     #8a3e1c;
+      --blue:         #4d6f82;
+      --teal:         #4d7359;
       --sans:         'Inter', system-ui, sans-serif;
       --display:      'Space Grotesk', 'Inter', sans-serif;
       --r:            12px;
@@ -125,6 +128,23 @@
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Signature texture: a whisper of paper grain over the whole site — pure
+       CSS/SVG, no image request. Scandinavian-warm rather than glossy-flat. */
+    body::before {
+      content: ''; position: fixed; inset: 0; z-index: 1; pointer-events: none;
+      opacity: .035; mix-blend-mode: multiply;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 140px 140px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .01ms !important; animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important; scroll-behavior: auto !important;
+      }
     }
 
     h1,h2,h3,h4 { font-family: var(--display); line-height: 1.12; letter-spacing: -.02em; }
@@ -139,7 +159,7 @@
     #nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 200;
       padding: 18px 0;
-      background: rgba(7,8,14,.88);
+      background: rgba(250,248,244,.85);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--border);
@@ -150,16 +170,10 @@
     .nav-row { display: flex; align-items: center; justify-content: space-between; }
 
     .logo {
-      font-family: var(--display); font-size: 17px; font-weight: 700;
-      letter-spacing: .1em; color: var(--text);
+      font-family: var(--display); font-size: 18px; font-weight: 700;
+      letter-spacing: .14em; color: var(--text);
       display: inline-flex; align-items: center;
     }
-    .logo em { font-style: normal; color: var(--accent); }
-    .logo img {
-      display: block; border: 0;
-      height: 44px; width: auto; max-height: 44px;
-    }
-    #nav.scrolled .logo img { height: 36px; max-height: 36px; }
 
     .nav-links { display: flex; gap: 28px; list-style: none; }
     .nav-links a {
@@ -171,7 +185,7 @@
     .nav-btn {
       font-size: 13px; font-weight: 600; color: var(--accent);
       padding: 7px 17px; border-radius: 6px;
-      border: 1px solid rgba(244,124,32,.3);
+      border: 1px solid rgba(165,74,36,.3);
       transition: all .2s;
     }
     .nav-btn:hover { background: var(--accent-glow); border-color: var(--accent); }
@@ -197,7 +211,7 @@
     /* mobile nav overlay */
     .mobile-nav {
       display: none; position: fixed; inset: 0; z-index: 190;
-      background: rgba(7,8,14,.97); flex-direction: column;
+      background: rgba(250,248,244,.97); flex-direction: column;
       align-items: center; justify-content: center; gap: 36px;
     }
     .mobile-nav.open { display: flex; }
@@ -214,21 +228,47 @@
       padding: 120px 0 80px; position: relative; overflow: hidden;
     }
 
-    /* background glow orbs */
+    /* Signature: a slow, quiet aurora — two warm blobs (terracotta + sand)
+       drifting behind the hero, closer to a Nordic sky than a SaaS glow-orb.
+       Contained by #hero's overflow:hidden; well below hero-grid's z-index. */
+    #hero::before, #hero::after {
+      content: ''; position: absolute; border-radius: 50%;
+      filter: blur(6px); pointer-events: none; z-index: 0;
+    }
     #hero::before {
-      content: ''; position: absolute; top: -160px; right: -160px;
-      width: 640px; height: 640px;
-      background: radial-gradient(circle, rgba(244,124,32,.06) 0%, transparent 68%);
-      pointer-events: none;
+      top: -200px; right: -240px; width: 680px; height: 680px;
+      background: radial-gradient(circle, rgba(165,74,36,.14) 0%, rgba(165,74,36,0) 70%);
+      animation: auroraDrift 28s ease-in-out infinite;
     }
     #hero::after {
-      content: ''; position: absolute; bottom: -200px; left: -100px;
-      width: 500px; height: 500px;
-      background: radial-gradient(circle, rgba(79,111,255,.04) 0%, transparent 68%);
-      pointer-events: none;
+      bottom: -220px; left: -160px; width: 560px; height: 560px;
+      background: radial-gradient(circle, rgba(214,168,86,.13) 0%, rgba(214,168,86,0) 70%);
+      animation: auroraDrift 36s ease-in-out infinite reverse; animation-delay: -6s;
+    }
+    @keyframes auroraDrift {
+      0%   { transform: translate(0,0) scale(1); }
+      33%  { transform: translate(-26px, 18px) scale(1.07); }
+      66%  { transform: translate(18px, -14px) scale(.95); }
+      100% { transform: translate(0,0) scale(1); }
     }
 
-    .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+    .hero-grid { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+
+    /* Kinetic entrance: hero content rises in on load, staggered — plays
+       once, not scroll-triggered (that's what .fu is for further down the
+       page). prefers-reduced-motion collapses these to instant via the
+       global override above. */
+    @keyframes heroRise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+    .hero-eyebrow, .hero h1, .hero-sub, .role-pills, .cta-row, .stats-panel, .location-badge {
+      animation: heroRise .8s cubic-bezier(.16,.8,.24,1) both;
+    }
+    .hero-eyebrow { animation-delay: .05s; }
+    .hero h1      { animation-delay: .12s; }
+    .hero-sub     { animation-delay: .22s; }
+    .role-pills   { animation-delay: .30s; }
+    .cta-row      { animation-delay: .38s; }
+    .stats-panel  { animation-delay: .30s; }
+    .location-badge { animation-delay: .42s; }
 
     .hero-eyebrow {
       display: inline-flex; align-items: center; gap: 10px;
@@ -361,6 +401,22 @@
     .project-card:hover { background: var(--bg-card-h); border-color: var(--border-h); transform: translateY(-3px); }
     .project-card:hover::before { opacity: 1; }
 
+    /* 2026-08-10: Ferdowsi test-clip as ambient background on the
+       Shahnameh/REALGRAM card — scoped via .has-video so it doesn't
+       affect the other project cards sharing .project-card. */
+    .project-card.has-video { color: #fff; }
+    .p-bgvideo {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; z-index: 0; opacity: .55;
+    }
+    .p-bgvideo-overlay {
+      position: absolute; inset: 0; z-index: 0;
+      background: linear-gradient(180deg, rgba(10,8,6,.55), rgba(10,8,6,.82) 70%);
+    }
+    .project-card.has-video > * { position: relative; z-index: 1; }
+    .project-card.has-video .p-type { background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.25); color: #fff; }
+    .project-card.has-video .p-desc { color: rgba(255,255,255,.78); }
+
     .p-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
     .p-emoji { font-size: 26px; line-height: 1; }
     .p-type {
@@ -377,10 +433,10 @@
     .tag {
       font-size: 11px; font-weight: 500; padding: 4px 9px; border-radius: 4px;
       background: var(--accent-glow); color: var(--accent);
-      border: 1px solid rgba(244,124,32,.18);
+      border: 1px solid rgba(165,74,36,.2);
     }
-    .tag.b { background: rgba(79,111,255,.08); color: var(--blue); border-color: rgba(79,111,255,.18); }
-    .tag.t { background: rgba(58,201,178,.08); color: var(--teal); border-color: rgba(58,201,178,.18); }
+    .tag.b { background: rgba(77,111,130,.08); color: var(--blue); border-color: rgba(77,111,130,.2); }
+    .tag.t { background: rgba(77,115,89,.08); color: var(--teal); border-color: rgba(77,115,89,.2); }
 
     .p-link {
       display: inline-flex; align-items: center; gap: 5px;
@@ -427,7 +483,7 @@
     .agent:last-child { margin-bottom: 0; }
     .agent-n {
       width: 22px; height: 22px; border-radius: 50%; flex-shrink: 0;
-      background: var(--accent-glow); border: 1px solid rgba(244,124,32,.3);
+      background: var(--accent-glow); border: 1px solid rgba(165,74,36,.3);
       display: flex; align-items: center; justify-content: center;
       font-size: 10px; font-weight: 700; color: var(--accent);
     }
@@ -447,7 +503,7 @@
     }
     .cert-card:hover { background: var(--bg-card-h); border-color: var(--border-h); transform: translateY(-3px); }
     .cert-logo-row { display: flex; align-items: center; height: 44px; }
-    .cert-logo-row img { height: 40px; width: auto; filter: brightness(0) invert(1); opacity: .95; }
+    .cert-logo-row img { height: 40px; width: auto; filter: brightness(0); opacity: .62; }
     .cert-logo-text {
       font-family: var(--display); font-size: 18px; font-weight: 700;
       letter-spacing: .06em; color: var(--text);
@@ -465,7 +521,7 @@
       content: ''; position: absolute; top: 50%; left: 50%;
       transform: translate(-50%,-50%);
       width: 560px; height: 360px;
-      background: radial-gradient(ellipse, rgba(244,124,32,.07) 0%, transparent 70%);
+      background: radial-gradient(ellipse, rgba(165,74,36,.05) 0%, transparent 70%);
       pointer-events: none;
     }
     .cta-title { font-size: clamp(30px,5vw,54px); font-weight: 700; margin-bottom: 18px; }
@@ -475,9 +531,7 @@
     /* ── FOOTER ─────────────────────────────────── */
     footer { border-top: 1px solid var(--border); padding: 36px 0; }
     .foot-row { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; }
-    .foot-logo { font-family: var(--display); font-size: 15px; font-weight: 700; letter-spacing: .1em; color: var(--muted); }
-    .foot-logo em { font-style: normal; color: var(--accent); }
-    .foot-logo img { display: block; border: 0; height: 36px; width: auto; max-height: 36px; opacity: .75; }
+    .foot-logo { font-family: var(--display); font-size: 15px; font-weight: 700; letter-spacing: .12em; color: var(--muted); }
     .foot-copy { font-size: 13px; color: var(--dim); }
     .foot-loc  { font-size: 13px; color: var(--muted); }
 
@@ -488,7 +542,7 @@
     /* ── CONTACT MODAL (slide-up) ─────────────────────────────── */
     .contact-overlay {
       position: fixed; inset: 0; z-index: 220;
-      background: rgba(0,0,0,0.55);
+      background: rgba(33,30,25,0.32);
       backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
       opacity: 0; visibility: hidden; transition: opacity .25s ease;
     }
@@ -498,11 +552,11 @@
       width: 100%; max-width: 560px;
       transform: translate(-50%, 100%);
       transition: transform .35s cubic-bezier(.2,.85,.3,1);
-      background: #0e1018;
+      background: var(--bg-card);
       border: 1px solid var(--border);
       border-bottom: none;
       border-radius: 18px 18px 0 0;
-      box-shadow: 0 -20px 60px rgba(0,0,0,.45);
+      box-shadow: 0 -20px 60px rgba(33,30,25,.14);
       padding: 26px 28px 30px;
       max-height: 92vh; overflow: auto;
     }
@@ -524,6 +578,24 @@
       width: 40px; height: 4px; background: var(--border); border-radius: 2px;
       margin: -10px auto 18px;
     }
+
+    /* ── success state — replaces the form in-place on a confirmed send ── */
+    .contact-success { text-align: center; padding: 12px 4px 4px; }
+    .contact-success[hidden] { display: none; }
+    .success-check {
+      display: flex; align-items: center; justify-content: center;
+      width: 56px; height: 56px; margin: 0 auto 18px;
+      border-radius: 50%; background: rgba(165,74,36,.1); color: var(--accent);
+      animation: successPop .45s cubic-bezier(.2,1.4,.4,1) both;
+    }
+    .success-check svg path { stroke-dasharray: 30; stroke-dashoffset: 30; animation: successDraw .45s .15s ease forwards; }
+    @keyframes successPop { from { opacity: 0; transform: scale(.6); } to { opacity: 1; transform: scale(1); } }
+    @keyframes successDraw { to { stroke-dashoffset: 0; } }
+    .contact-success h3 { margin-bottom: 8px; }
+    .contact-success .sub { max-width: 360px; margin-left: auto; margin-right: auto; margin-bottom: 24px; }
+    .contact-success .submit { width: auto; min-width: 140px; margin: 0 auto; background: transparent; color: var(--text); border: 1px solid var(--border); }
+    .contact-success .submit:hover { background: var(--bg); border-color: var(--border-h); transform: none; }
+
     .contact-form { display: grid; gap: 12px; }
     .contact-form label {
       font-size: 12px; color: var(--muted); font-weight: 500;
@@ -531,7 +603,7 @@
     }
     .contact-form input, .contact-form textarea {
       width: 100%;
-      background: #07080e;
+      background: var(--bg);
       color: var(--text);
       border: 1px solid var(--border);
       border-radius: 10px;
@@ -540,8 +612,8 @@
       transition: border-color .2s, box-shadow .2s, background .2s;
     }
     .contact-form input:focus, .contact-form textarea:focus {
-      outline: 0; border-color: var(--accent); background: #0c0e16;
-      box-shadow: 0 0 0 3px rgba(244,124,32,0.12);
+      outline: 0; border-color: var(--accent); background: var(--bg-card);
+      box-shadow: 0 0 0 3px rgba(165,74,36,0.12);
     }
     .contact-form textarea { resize: vertical; min-height: 110px; }
     .contact-form .hp {
@@ -559,7 +631,7 @@
     .contact-form .submit:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
     .contact-form .status { font-size: 13px; margin-top: 4px; min-height: 18px; }
     .contact-form .status.ok    { color: var(--teal); }
-    .contact-form .status.err   { color: #ff7a7a; }
+    .contact-form .status.err   { color: #b3453f; }
     .contact-form .note { font-size: 11px; color: var(--dim); margin-top: 8px; }
     @media (max-width: 540px) {
       .contact-sheet { max-width: 100%; padding: 22px 20px 26px; }
@@ -598,7 +670,7 @@
 <nav id="nav">
   <div class="container">
     <div class="nav-row">
-      <a href="#" class="logo" aria-label="SETAEI"><img src="/assets/brand/setaei-logo.png" alt="SETAEI" width="200" height="44" /></a>
+      <a href="#" class="logo" aria-label="SETAEI">SETAEI</a>
       <ul class="nav-links">
         <li><a href="#about" data-i18n="nav.about">Om meg</a></li>
         <li><a href="#projects" data-i18n="nav.projects">Prosjekter</a></li>
@@ -710,7 +782,7 @@
         <p class="about-text" data-i18n="about.text">
           <strong>Khabat Setaei</strong> er CTO, AI-ekspert og SaaS-utvikler med 15+ års erfaring innen IT, sikkerhet og infrastruktur. Som fullstack-utvikler og SEO-ekspert i Oslo hjelper han virksomheter i hele Norge med å bygge og skalere digitale produkter.<br><br>
           SETAEI er ikke et byrå med avdelinger — det er én gründer som tenker fra forretningsstrategi helt ned til kode, infrastruktur og lansering.<br><br>
-          Konkret betyr det at SETAEI leverer <a href="/services/web-design-oslo/">profesjonelle nettsider</a>, <a href="/services/seo-oslo/">SEO</a> og <a href="/services/ai-automation/">AI-automatisering</a> til norske bedrifter som vil bli funnet i Google og bruke mindre tid på repetitivt arbeid — ved siden av de mer tekniske rollene som <a href="/services/cto-oslo/">CTO</a> og <a href="/services/saas-utvikler-oslo/">SaaS-utvikler</a>. Se hele <a href="/services/">tjenesteoversikten</a> for detaljer.
+          Konkret betyr det at SETAEI leverer <a href="/services/web-design-oslo/">profesjonelle nettsider</a>, <a href="/services/seo-oslo/">SEO</a> og <a href="/services/ai-automation/">AI-automatisering</a> til norske bedrifter som vil bli funnet i Google og bruke mindre tid på repetitivt arbeid — ved siden av de mer tekniske rollene som <a href="/services/cto-oslo/">CTO</a> og <a href="/services/saas-utvikler-oslo/">SaaS-utvikler</a>. Se hele <a href="/services/">tjenesteoversikten</a>, eller <a href="/seo/">AI-drevet SEO-strategi</a>, for detaljer.
         </p>
       </div>
 
@@ -757,7 +829,11 @@
 
     <div class="projects-grid">
 
-      <article class="project-card fu">
+      <article class="project-card fu has-video">
+        <video class="p-bgvideo" autoplay muted loop playsinline preload="metadata" poster="https://d2ol7oe51mr4n9.cloudfront.net/user_3GqVodiVsV7T5gGVNoTV4Q5Q3ZK/70e6cbaa-84b8-4290-8cc7-d52bb4571fa7.png" aria-hidden="true">
+          <source src="https://d8j0ntlcm91z4.cloudfront.net/user_3GqVodiVsV7T5gGVNoTV4Q5Q3ZK/hf_20260804_034137_5d71b5c3-3bc1-4c60-b1d6-34c5d6eb3a24.mp4" type="video/mp4">
+        </video>
+        <div class="p-bgvideo-overlay" aria-hidden="true"></div>
         <div class="p-head">
           <span class="p-emoji">🌐</span>
           <span class="p-type" data-i18n="proj.realgram.type">Økosystem</span>
@@ -991,13 +1067,22 @@
     <div class="status" id="contactStatus" role="status" aria-live="polite"></div>
     <p class="note" data-i18n="modal.note">Ved å sende inn bekrefter du at vi kan kontakte deg angående din henvendelse.</p>
   </form>
+
+  <div class="contact-success" id="contactSuccess" role="status" aria-live="polite" hidden>
+    <span class="success-check" aria-hidden="true">
+      <svg viewBox="0 0 24 24" width="26" height="26"><path d="M4 12.5l5 5L20 6.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </span>
+    <h3 data-i18n="modal.okTitle">Meldingen er sendt</h3>
+    <p class="sub" data-i18n="modal.okSub">Takk for at du tok kontakt — vi har mottatt henvendelsen din og svarer innen 24 timer.</p>
+    <button type="button" class="submit" id="contactSuccessClose" data-i18n="modal.okClose">Lukk</button>
+  </div>
 </aside>
 
 <!-- ── FOOTER ──────────────────────────────────────────── -->
 <footer>
   <div class="container">
     <div class="foot-row">
-      <div class="foot-logo"><img src="/assets/brand/setaei-logo.png" alt="SETAEI" width="160" height="36" /></div>
+      <div class="foot-logo">SETAEI</div>
       <div class="foot-copy">© 2025 SETAEI · Khabat Setaei</div>
       <div class="foot-loc" data-i18n="foot.loc">Oslo, Norge</div>
     </div>
@@ -1011,6 +1096,20 @@
     { threshold: 0.08, rootMargin: '0px 0px -30px 0px' }
   );
   document.querySelectorAll('.fu').forEach(el => obs.observe(el));
+
+  // magnetic hover on primary buttons — quiet, skipped on touch devices and
+  // when the visitor has asked for reduced motion
+  if (matchMedia('(hover: hover)').matches && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.querySelectorAll('.btn-solid').forEach(btn => {
+      btn.addEventListener('mousemove', e => {
+        const r = btn.getBoundingClientRect();
+        const x = e.clientX - r.left - r.width / 2;
+        const y = e.clientY - r.top - r.height / 2;
+        btn.style.transform = `translate(${x * 0.16}px, ${y * 0.28}px)`;
+      });
+      btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
+    });
+  }
 
   // nav compact on scroll
   const nav = document.getElementById('nav');
@@ -1035,6 +1134,7 @@
   const contactForm    = document.getElementById('contactForm');
   const contactStatus  = document.getElementById('contactStatus');
   const contactSubmit  = document.getElementById('contactSubmit');
+  const contactSuccess = document.getElementById('contactSuccess');
 
   function openContact() {
     contactOverlay.classList.add('open');
@@ -1050,7 +1150,26 @@
     contactOverlay.setAttribute('aria-hidden', 'true');
     contactSheet.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
+    // Reset back to the form for next time, after the close transition ends —
+    // avoids a visible flash of the form underneath the success state.
+    setTimeout(() => {
+      if (!contactSheet.classList.contains('open')) showContactForm();
+    }, 400);
   }
+  function showContactSuccess() {
+    contactForm.hidden = true;
+    contactSuccess.hidden = false;
+    const closeBtn = document.getElementById('contactSuccessClose');
+    if (closeBtn) closeBtn.focus();
+  }
+  function showContactForm() {
+    contactSuccess.hidden = true;
+    contactForm.hidden = false;
+    contactForm.reset();
+    contactForm.querySelectorAll('input, textarea, button').forEach(el => el.disabled = false);
+    setContactStatus('', '');
+  }
+  document.getElementById('contactSuccessClose').addEventListener('click', closeContact);
   document.querySelectorAll('.js-open-contact').forEach(el => {
     el.addEventListener('click', e => {
       e.preventDefault();
@@ -1071,10 +1190,9 @@
 
   contactForm.addEventListener('submit', async e => {
     e.preventDefault();
-    setContactStatus('', '');
+    const lang = document.documentElement.lang === 'en' ? 'en' : 'no';
+    setContactStatus(lang === 'en' ? 'Sending…' : 'Sender…', '');
     contactSubmit.disabled = true;
-    const origLabel = contactSubmit.textContent;
-    contactSubmit.textContent = 'Sending…';
     const fd = new FormData(contactForm);
     const payload = {
       name:    (fd.get('name')    || '').toString().trim(),
@@ -1093,17 +1211,14 @@
       });
       const d = await r.json().catch(() => ({}));
       if (d.ok) {
-        setContactStatus(d.message || "Thanks — we'll get back to you within 24 hours.", 'ok');
-        contactForm.querySelectorAll('input, textarea, button').forEach(el => el.disabled = true);
+        showContactSuccess();
       } else {
-        setContactStatus(d.error || 'Could not send the message. Please email khabat@setai.no directly.', 'err');
+        setContactStatus(d.error || (lang === 'en' ? 'Could not send the message. Please email khabat@setai.no directly.' : 'Klarte ikke å sende meldingen. Send gjerne en e-post til khabat@setai.no i mellomtiden.'), 'err');
         contactSubmit.disabled = false;
-        contactSubmit.textContent = origLabel;
       }
     } catch (err) {
-      setContactStatus('Network error. Please try again, or email khabat@setai.no directly.', 'err');
+      setContactStatus(lang === 'en' ? 'Network error. Please try again, or email khabat@setai.no directly.' : 'Nettverksfeil. Prøv igjen, eller send en e-post til khabat@setai.no i mellomtiden.', 'err');
       contactSubmit.disabled = false;
-      contactSubmit.textContent = origLabel;
     }
   });
 
@@ -1149,7 +1264,7 @@
     'about.title': `Not a traditional agency.<br>A founder-led technology lab.`,
     'about.desc': `SETAEI operates between product strategy, system architecture, creative direction and research. The goal: build digital systems that are beautiful, useful, scalable and commercially relevant.`,
     'about.cardLabel': `About SETAEI`,
-    'about.text': `<strong>Khabat Setaei</strong> is a CTO, AI expert and SaaS developer with 15+ years across IT, security and infrastructure. As a full-stack developer and SEO expert in Oslo, he helps businesses across Norway build and scale digital products.<br><br>SETAEI is not an agency with departments — it is a single founder who thinks from business strategy all the way down to code, infrastructure and go-to-market.<br><br>Concretely, that means SETAEI delivers <a href="/services/web-design-oslo/">professional websites</a>, <a href="/services/seo-oslo/">SEO</a> and <a href="/services/ai-automation/">AI automation</a> to Norwegian businesses that want to be found on Google and spend less time on repetitive work — alongside the more technical CTO and SaaS-development roles. See the full <a href="/services/">services overview</a> for details.`,
+    'about.text': `<strong>Khabat Setaei</strong> is a CTO, AI expert and SaaS developer with 15+ years across IT, security and infrastructure. As a full-stack developer and SEO expert in Oslo, he helps businesses across Norway build and scale digital products.<br><br>SETAEI is not an agency with departments — it is a single founder who thinks from business strategy all the way down to code, infrastructure and go-to-market.<br><br>Concretely, that means SETAEI delivers <a href="/services/web-design-oslo/">professional websites</a>, <a href="/services/seo-oslo/">SEO</a> and <a href="/services/ai-automation/">AI automation</a> to Norwegian businesses that want to be found on Google and spend less time on repetitive work — alongside the more technical CTO and SaaS-development roles. See the full <a href="/services/">services overview</a>, or the <a href="/seo/">AI-driven SEO strategy</a>, for details.`,
     'about.role1.org': `Technology leadership`,
     'about.role1.desc': `Experience across infrastructure, security, SaaS architecture and product development.`,
     'about.role2.name': `Founder`,
@@ -1253,6 +1368,9 @@
     'modal.message': `What do you need? *`,
     'modal.submit': `Send message`,
     'modal.note': `By submitting, you confirm we may contact you about your inquiry.`,
+    'modal.okTitle': `Message sent`,
+    'modal.okSub': `Thanks for reaching out — we've received your message and will get back to you within 24 hours.`,
+    'modal.okClose': `Close`,
 
     'foot.loc': `Oslo, Norway`
   };
