@@ -110,13 +110,23 @@
 .scene-screen{flex-direction:column;gap:26px}
 .gallery-head{position:relative;z-index:2;text-align:center;max-width:720px}
 .gallery-head .eyebrow{justify-content:center}
-.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:110px;gap:1px;background:#ffffff20;width:100%}
-.gallery-tile{background:#171717;padding:18px;display:flex;flex-direction:column;justify-content:flex-end;gap:4px;position:relative;overflow:hidden;transition:background .2s}
-.gallery-tile:hover{background:#1f2023}
-.gallery-tile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.4;z-index:-1}
-.gallery-tile.gallery-featured{grid-row:span 2}
-.gallery-name{font-family:var(--display);font-size:15px;position:relative;z-index:1}
-.gallery-type{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--dim);position:relative;z-index:1}
+/* Grouped project gallery: three labelled rows (mobile apps / AI film /
+   client sites) instead of one flat grid -- fixes the earlier bug where a
+   taller "featured" tile on mobile overflowed its fixed-height grid track
+   and visually overlapped the tile below it. Every tile now gets the same
+   fixed-size badge (a real logo/photo where one exists, an emoji glyph
+   where it doesn't) so nothing reads as "missing" next to the ones that do. */
+.gallery-groups{width:100%;display:flex;flex-direction:column}
+.gallery-group{padding:18px 22px;border-top:1px solid #ffffff15}
+.gallery-group:first-child{border-top:0}
+.gallery-group-label{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--dim);margin-bottom:12px}
+.gallery-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px}
+.gallery-tile{display:flex;flex-direction:column;align-items:center;gap:8px;padding:12px 6px;border-radius:10px;text-align:center;transition:background .2s}
+.gallery-tile:hover{background:#ffffff0c}
+.gallery-badge{display:flex;align-items:center;justify-content:center;flex-shrink:0;width:44px;height:44px;border-radius:12px;background:#ffffff12;font-size:20px;overflow:hidden}
+.gallery-badge img{width:100%;height:100%;object-fit:cover}
+.gallery-badge-photo{background:#000}
+.gallery-name{font-family:var(--display);font-size:12px;line-height:1.3}
 
 /* Scenes 7-9: text-forward chapters (services, research, certifications) —
    no photography, same dark stage, same eyebrow/h2 rhythm as every other
@@ -145,8 +155,10 @@
 .scene-screen{padding-top:90px;padding-bottom:50px;overflow-y:auto}
 .gallery-head h2{display:none}
 .gallery-head{margin-bottom:4px}
-.gallery-grid{grid-template-columns:1fr;grid-auto-rows:56px}
-.gallery-tile.gallery-featured{grid-row:auto;height:96px}
+.gallery-group{padding:14px 16px}
+.gallery-grid{grid-template-columns:repeat(auto-fit,minmax(84px,1fr));gap:6px}
+.gallery-badge{width:38px;height:38px;font-size:17px}
+.gallery-name{font-size:11px}
 .scene-services,.scene-research,.scene-certifications{padding-top:90px;padding-bottom:130px;overflow-y:auto}
 .scene-services h2,.scene-research h2,.scene-certifications h2{font-size:clamp(1.5rem,7vw,2rem);margin-bottom:4px}
 .scene-services .eyebrow,.scene-research .eyebrow,.scene-certifications .eyebrow{margin-bottom:10px}
