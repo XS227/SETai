@@ -18,14 +18,19 @@
   <meta property="og:url" content="https://setai.no">
   <meta property="og:locale" content="nb_NO">
   <meta property="og:site_name" content="SETAEI">
+  <meta property="og:image" content="https://setai.no/assets/brand/cover-home.png">
 
   <meta name="twitter:card" content="summary_large_image">
   <meta id="metaTwTitle" name="twitter:title" content="CTO, AI-ekspert &amp; SaaS-utvikler i Oslo, Norge | SETAEI">
   <meta id="metaTwDesc" name="twitter:description" content="Khabat Setaei er CTO, AI-ekspert, SaaS-utvikler, fullstack-utvikler og SEO-ekspert i Oslo, Norge.">
+  <meta name="twitter:image" content="https://setai.no/assets/brand/cover-home.png">
   <meta name="geo.placename" content="Oslo">
   <meta name="geo.region" content="NO-03">
 
   <link rel="canonical" href="https://setai.no/">
+  <link rel="alternate" hreflang="no" href="https://setai.no/">
+  <link rel="alternate" hreflang="en" href="https://setai.no/en/">
+  <link rel="alternate" hreflang="x-default" href="https://setai.no/">
   <link rel="icon" type="image/png" href="/assets/brand/favicon.png">
   <link rel="apple-touch-icon" href="/assets/brand/setaei-icon-monochrome.png">
 
@@ -195,7 +200,7 @@
       background: transparent; border: 1px solid var(--border);
       color: var(--muted); font-size: 12px; font-weight: 600;
       padding: 6px 11px; border-radius: 100px; cursor: pointer;
-      margin-left: 14px; transition: all .2s;
+      margin-left: 14px; transition: all .2s; text-decoration: none;
     }
     .lang-toggle:hover { border-color: var(--border-h); color: var(--text); }
     .lang-toggle .lang-flag { font-size: 14px; line-height: 1; }
@@ -754,7 +759,104 @@
         @keyframes film-drift { from { transform: scale(1.12) translateY(-2%); } to { transform: scale(1.12) translateY(2%); } }
       }
     }
+
+    /* ── MOBILE: 3D SWIPE NAVIGATION (2026-08-26, fixed 2026-08-26) ──
+       On phones, section-to-section scrolling becomes a deliberate swipe-
+       between-panels feel: each major section snaps into place and lifts
+       into view with a paper-off-a-stack tilt — the same paper-grain +
+       aurora language as the hero, not a generic glossy 3D card flip.
+
+       v1 used `animation-timeline: view()`, which silently does nothing on
+       iOS/Safari (no support) and — even where supported — the rotateX had
+       no visible depth because `perspective` was set on #hero, a *sibling*
+       of the animated sections, not an ancestor. Rewritten to reuse this
+       page's own proven `.fu`/`.on` IntersectionObserver pattern (already
+       running the hero's reveal below) so it works identically on every
+       phone, plus `perspective` moved onto body — the actual shared parent
+       of every top-level <section> — so rotateX now has real geometry to
+       tilt through. */
+    /* ── MOBILE: "AI world" hero — a living node network ────
+       Signature element for the mobile landing: a slow-drifting network of
+       nodes/connections behind the hero copy, in the site's own terracotta/
+       sand tokens (not a generic cyan tech-glow) — reads as "AI" without
+       fighting the existing Nordic-warm identity. Canvas, not SVG/DOM, so
+       ~26 animated nodes cost nothing. Paused via IntersectionObserver
+       when the hero scrolls off-screen, and never started at all under
+       prefers-reduced-motion (see js at the bottom of body). */
+    #aiNet { display: none; }
+    @media (max-width: 780px) {
+      #aiNet {
+        display: block; position: absolute; inset: 0; z-index: 0;
+        opacity: .6; pointer-events: none;
+      }
+    }
+
+    /* Menu trigger reimagined as a floating action button (2026-08-26):
+       on a page that now swipes between full panels, a hamburger buried in
+       a top bar you may have scrolled past is the wrong shape — so on
+       mobile it becomes a thumb-reachable circular button, fixed bottom-
+       right, always present regardless of which panel you're on. z-index
+       sits just under .mobile-nav's overlay (190) so opening the menu
+       naturally covers the button instead of it floating on top.
+       Breakpoint matches the existing `.burger{display:flex}` rule further
+       down (max-width:880px) exactly — using a narrower one here left a
+       780–880px gap where .burger showed unstyled in normal document flow.
+       `env(safe-area-inset-bottom)` keeps it clear of the iOS home-
+       indicator bar instead of sitting partly behind it. */
+    @media (max-width: 880px) {
+      .burger {
+        position: fixed; right: 18px; bottom: calc(22px + env(safe-area-inset-bottom, 0px)); z-index: 180;
+        width: 54px; height: 54px; border-radius: 50%;
+        background: var(--accent); box-shadow: 0 10px 26px rgba(165,74,36,.35);
+        align-items: center; justify-content: center; gap: 4px; padding: 0;
+        transition: transform .2s ease, box-shadow .2s ease;
+      }
+      .burger:active { transform: scale(.93); }
+      .burger span { background: #fff; width: 20px; }
+    }
+
+    @media (max-width: 780px) {
+      /* FIX (2026-08-26): `perspective` was on <body> here. Any transform/
+         perspective/filter on an ancestor makes that ancestor the
+         containing block for ALL its `position:fixed` descendants — which
+         is #nav, .mobile-nav, and the contact overlay/sheet, all children
+         of body. That's what caused the burger menu's white full-page
+         overlay and #nav only being reachable at the very top: they were
+         no longer fixed to the viewport, but to the (much taller) body box.
+         Fix: no `perspective` on any ancestor of fixed elements — instead
+         `perspective(...)` is inlined into .fu3d's own `transform` below,
+         which is self-contained to that element and touches nothing else. */
+      html { scroll-snap-type: y proximity; scroll-padding-top: 72px; }
+      #hero, #about, #projects, #services, #research, #certifications, #contact {
+        scroll-snap-align: start;
+      }
+
+      .fu3d {
+        opacity: 0;
+        transform: perspective(1400px) translateY(64px) rotateX(18deg) scale(.92);
+        transition: opacity .75s cubic-bezier(.16,.8,.24,1), transform .75s cubic-bezier(.16,.8,.24,1);
+        transform-origin: 50% 100%;
+      }
+      .fu3d.on { opacity: 1; transform: none; }
+
+      .swipe-hint {
+        position: absolute; left: 50%; bottom: 22px; transform: translateX(-50%);
+        display: flex; flex-direction: column; align-items: center; gap: 4px;
+        color: var(--muted); font-size: 11px; letter-spacing: .08em; text-transform: uppercase;
+        z-index: 2; pointer-events: none; animation: swipeHintBob 2.2s ease-in-out infinite;
+      }
+      .swipe-hint svg { width: 16px; height: 16px; }
+    }
+    @media (max-width: 780px) and (prefers-reduced-motion: reduce) {
+      .swipe-hint { animation: none; }
+      .fu3d { opacity: 1 !important; transform: none !important; transition: none !important; }
+    }
+    @keyframes swipeHintBob {
+      0%, 100% { transform: translateX(-50%) translateY(0); opacity: .55; }
+      50%      { transform: translateX(-50%) translateY(6px); opacity: 1; }
+    }
   </style>
+  <noscript><style>.fu, .fu3d { opacity: 1 !important; transform: none !important; }</style></noscript>
 </head>
 <body>
 
@@ -772,15 +874,24 @@
         <li><a href="/blog/" data-i18n="nav.blog">Blogg</a></li>
       </ul>
       <a href="#contact" class="nav-btn js-open-contact" data-i18n="nav.contact">Ta kontakt</a>
-      <button class="lang-toggle" id="langToggle" type="button" aria-label="Switch language / Bytt språk">
+      <a class="lang-toggle" href="/en/" aria-label="Switch to English">
         <span class="lang-flag">🇬🇧</span><span class="lang-code">EN</span>
-      </button>
-      <div class="burger" id="burger" aria-label="Open menu" role="button" tabindex="0">
-        <span></span><span></span><span></span>
-      </div>
+      </a>
     </div>
   </div>
 </nav>
+
+<!-- Menu trigger lives OUTSIDE #nav on purpose (fixed 2026-08-26): #nav has
+     backdrop-filter, which — exactly like the perspective/body bug earlier
+     today — makes #nav the containing block for any position:fixed
+     DESCENDANT. With .burger nested inside #nav, its "fixed bottom-right"
+     was actually fixed relative to #nav's own ~70px-tall box, landing it
+     near the top of the screen instead of the bottom, and off-screen/
+     unclickable in places. Moving it to a sibling of #nav removes it from
+     any transform/filter/backdrop-filter ancestor entirely. -->
+<div class="burger" id="burger" aria-label="Open menu" role="button" tabindex="0">
+  <span></span><span></span><span></span>
+</div>
 
 <!-- mobile nav -->
 <div class="mobile-nav" id="mobileNav">
@@ -792,13 +903,14 @@
   <a href="#certifications" data-i18n="nav.certifications" onclick="closeMobileNav()">Sertifiseringer</a>
   <a href="/blog/" data-i18n="nav.blog" onclick="closeMobileNav()">Blogg</a>
   <a href="#contact" class="js-open-contact" data-i18n="nav.contact" onclick="closeMobileNav()">Ta kontakt</a>
-  <button class="lang-toggle mobile" id="langToggleMobile" type="button" aria-label="Switch language / Bytt språk">
+  <a class="lang-toggle mobile" href="/en/" aria-label="Switch to English">
     <span class="lang-flag">🇬🇧</span><span class="lang-code">EN</span>
-  </button>
+  </a>
 </div>
 
 <!-- ── HERO ────────────────────────────────────────────── -->
 <section id="hero">
+  <canvas id="aiNet" aria-hidden="true" role="presentation"></canvas>
   <div class="container">
     <div class="hero-grid">
 
@@ -855,12 +967,16 @@
 
     </div>
   </div>
+  <div class="swipe-hint" aria-hidden="true">
+    <span data-i18n="hero.swipe">Bla videre</span>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+  </div>
 </section>
 
 <hr class="div">
 
 <!-- ── ABOUT ───────────────────────────────────────────── -->
-<section id="about">
+<section id="about" class="fu3d">
   <div class="container">
     <div class="s-head fu">
       <div class="s-label" data-i18n="about.label">Gründerprofil</div>
@@ -911,7 +1027,7 @@
 <hr class="div">
 
 <!-- ── PROJECTS ────────────────────────────────────────── -->
-<section id="projects">
+<section id="projects" class="fu3d">
   <div class="container">
     <div class="s-head fu">
       <div class="s-label" data-i18n="proj.label">Utvalgte systemer og satsinger</div>
@@ -921,7 +1037,55 @@
 
     <div class="projects-grid">
 
-      <article class="project-card fu has-video">
+      <article class="project-card fu">
+        <div class="p-head">
+          <span class="p-emoji">💼</span>
+          <span class="p-type" data-i18n="proj.styrk.type">Klientprosjekt</span>
+        </div>
+        <div class="p-name">Styrk Karriere</div>
+        <p class="p-desc" data-i18n="proj.styrk.desc">100 % digital karriererådgivning for ledere og fagspesialister i hele Norge. Nettside, konverteringsflyt og SEO bygget fra bunnen — fra gratis kartleggingssamtale til betalte rådgivningspakker.</p>
+        <div class="tags">
+          <span class="tag" data-i18n="proj.styrk.tag1">Nettside</span>
+          <span class="tag b" data-i18n="proj.styrk.tag2">SEO</span>
+          <span class="tag t" data-i18n="proj.styrk.tag3">Konvertering</span>
+          <span class="tag" data-i18n="proj.styrk.tag4">Innhold</span>
+        </div>
+        <a href="/projects/styrk-karriere/" class="p-link" data-i18n="proj.styrk.link">Les hele case-studien →</a>
+      </article>
+
+      <article class="project-card fu" style="transition-delay:.12s">
+        <div class="p-head">
+          <span class="p-emoji">✨</span>
+          <span class="p-type" data-i18n="proj.somi.type">Klientprosjekt</span>
+        </div>
+        <div class="p-name">Somiklinikken</div>
+        <p class="p-desc" data-i18n="proj.somi.desc">Somiklinikken i Sandnes — microblading, permanent makeup, hud og laser. Nettside, lokal SEO og innhold til sosiale medier bygget for å fylle bookingkalenderen.</p>
+        <div class="tags">
+          <span class="tag" data-i18n="proj.somi.tag1">Nettside</span>
+          <span class="tag b" data-i18n="proj.somi.tag2">Lokal SEO</span>
+          <span class="tag t" data-i18n="proj.somi.tag3">Sosiale medier</span>
+          <span class="tag" data-i18n="proj.somi.tag4">Booking</span>
+        </div>
+        <a href="/projects/somiklinikken/" class="p-link" data-i18n="proj.somi.link">Les hele case-studien →</a>
+      </article>
+
+      <article class="project-card fu" style="transition-delay:.24s">
+        <div class="p-head">
+          <span class="p-emoji">🏗️</span>
+          <span class="p-type" data-i18n="proj.volla.type">Klientprosjekt</span>
+        </div>
+        <div class="p-name">Volla Byggmester</div>
+        <p class="p-desc" data-i18n="proj.volla.desc">Nybygg, renovering og tømrertjenester i Oslo og Akershus. Ny nettside og lokal SEO bygget for å vinne søk på håndverkertjenester i regionen.</p>
+        <div class="tags">
+          <span class="tag" data-i18n="proj.volla.tag1">Nettside</span>
+          <span class="tag b" data-i18n="proj.volla.tag2">Lokal SEO</span>
+          <span class="tag t" data-i18n="proj.volla.tag3">Leadgenerering</span>
+          <span class="tag" data-i18n="proj.volla.tag4">Håndverk</span>
+        </div>
+        <a href="https://vollabyggmester.no/" class="p-link" target="_blank" rel="noopener" data-i18n="proj.volla.link">Åpne Volla Byggmester →</a>
+      </article>
+
+      <article class="project-card fu has-video" style="transition-delay:.36s">
         <video class="p-bgvideo" autoplay muted loop playsinline preload="metadata" poster="https://d2ol7oe51mr4n9.cloudfront.net/user_3GqVodiVsV7T5gGVNoTV4Q5Q3ZK/70e6cbaa-84b8-4290-8cc7-d52bb4571fa7.png" aria-hidden="true">
           <source src="https://d8j0ntlcm91z4.cloudfront.net/user_3GqVodiVsV7T5gGVNoTV4Q5Q3ZK/hf_20260804_034137_5d71b5c3-3bc1-4c60-b1d6-34c5d6eb3a24.mp4" type="video/mp4">
         </video>
@@ -941,7 +1105,8 @@
         <a href="/projects/realgram/" class="p-link" data-i18n="proj.realgram.link">Les hele case-studien →</a>
       </article>
 
-      <article class="project-card fu" style="transition-delay:.24s">
+      <!-- Numerologist AI — tatt ut av visningen 26/8 på Khabats instruks, la stå i markup for enkel gjeninnsetting.
+      <article class="project-card fu">
         <div class="p-head">
           <span class="p-emoji">🔮</span>
           <span class="p-type" data-i18n="proj.numerologist.type">AI-eksperiment</span>
@@ -956,6 +1121,7 @@
         </div>
         <a href="https://numerologist.setai.no/" class="p-link" target="_blank" rel="noopener" data-i18n="proj.numerologist.link">Åpne Numerologist →</a>
       </article>
+      -->
 
       <article class="project-card fu">
         <div class="p-head"><span class="p-name">BIAP</span><span class="p-type" data-i18n="proj.biap.type">Samarbeidsprosjekt</span></div>
@@ -977,7 +1143,7 @@
 <hr class="div">
 
 <!-- ── SERVICES ────────────────────────────────────────── -->
-<section id="services">
+<section id="services" class="fu3d">
   <div class="container">
     <div class="s-head fu">
       <div class="s-label" data-i18n="svc.label">CTO · AI-utvikler · SaaS-utvikler · Fullstack-utvikler · SEO-ekspert</div>
@@ -1035,7 +1201,7 @@
 <hr class="div">
 
 <!-- ── RESEARCH ────────────────────────────────────────── -->
-<section id="research">
+<section id="research" class="fu3d">
   <div class="container">
     <div class="s-head fu">
       <div class="s-label" data-i18n="research.label">Forskningsklar profil</div>
@@ -1073,7 +1239,7 @@
 <hr class="div">
 
 <!-- ── CERTIFICATIONS ──────────────────────────────────── -->
-<section id="certifications">
+<section id="certifications" class="fu3d">
   <div class="container">
     <div class="s-head fu">
       <div class="s-label" data-i18n="cert.label">Kontinuerlig læring</div>
@@ -1123,7 +1289,7 @@
 <hr class="div">
 
 <!-- ── CTA ─────────────────────────────────────────────── -->
-<section id="contact">
+<section id="contact" class="fu3d">
   <div class="container">
     <div class="fu">
       <div class="s-label" style="justify-content:center" data-i18n="cta.label">Oslo · Europa · Midtøsten</div>
@@ -1197,7 +1363,7 @@
 <script>
   // Reveal once; keep off-screen work bounded and honor motion preferences.
   const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const revealElements = document.querySelectorAll('.fu');
+  const revealElements = document.querySelectorAll('.fu, .fu3d');
   let revealObserver;
   function configureReveals() {
     if (revealObserver) revealObserver.disconnect();
@@ -1220,6 +1386,18 @@
   }
   configureReveals();
   motionPreference.addEventListener('change', configureReveals);
+
+  // Safety net (2026-08-26): a renderer that lays out the whole page at
+  // once without dispatching real scroll/resize events (a crawler, a
+  // headless full-page screenshot, print-to-PDF) may never fire the
+  // IntersectionObserver above, leaving .fu/.fu3d content stuck at
+  // opacity:0 forever — confirmed happening in exactly that scenario while
+  // testing. Force-reveal anything not already revealed after 2.5s,
+  // regardless of scroll state, so content can never be permanently
+  // invisible to something that isn't a normally-scrolling human.
+  setTimeout(() => {
+    document.querySelectorAll('.fu:not(.on), .fu3d:not(.on)').forEach(el => el.classList.add('on'));
+  }, 2500);
 
   const hero = document.getElementById('hero');
   let motionFrame = 0;
@@ -1599,11 +1777,93 @@
     localStorage.setItem('setaei-lang', lang);
   }
 
-  document.querySelectorAll('.lang-toggle').forEach(btn => {
-    btn.addEventListener('click', () => applyLang(currentLang === 'no' ? 'en' : 'no'));
-  });
+  // Superseded 2026-08-24: language switching is now a real navigation
+  // to /en/ (see hreflang tags in <head>) instead of a client-side swap,
+  // so real crawlable URLs exist per language. Left the dictionaries above
+  // in place rather than deleting them; this IIFE no longer runs.
+})();
+</script>
 
-  applyLang(currentLang);
+<!-- Mobile "AI world" hero background: a drifting node network on <canvas>,
+     in the site's own terracotta/sand tokens. Mobile-only, reduced-motion-
+     safe, paused off-screen. See #aiNet + its media query in <head>. -->
+<script>
+(function(){
+  var canvas = document.getElementById('aiNet');
+  var hero = document.getElementById('hero');
+  if (!canvas || !hero) return;
+
+  var mq = window.matchMedia('(max-width: 780px)');
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduceMotion) return;
+
+  var ctx = canvas.getContext('2d');
+  var w, h, dpr, nodes, raf = null, running = false;
+  var NODE_COUNT = 24, LINK_DIST = 130;
+
+  function resize(){
+    w = hero.clientWidth; h = hero.clientHeight;
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = w * dpr; canvas.height = h * dpr;
+    canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  function seed(){
+    nodes = [];
+    for (var i = 0; i < NODE_COUNT; i++) {
+      nodes.push({
+        x: Math.random() * w, y: Math.random() * h,
+        vx: (Math.random() - .5) * .22, vy: (Math.random() - .5) * .22
+      });
+    }
+  }
+
+  function step(){
+    ctx.clearRect(0, 0, w, h);
+    for (var i = 0; i < nodes.length; i++) {
+      var n = nodes[i];
+      n.x += n.vx; n.y += n.vy;
+      if (n.x < 0 || n.x > w) n.vx *= -1;
+      if (n.y < 0 || n.y > h) n.vy *= -1;
+    }
+    for (var i = 0; i < nodes.length; i++) {
+      for (var j = i + 1; j < nodes.length; j++) {
+        var a = nodes[i], b = nodes[j];
+        var dx = a.x - b.x, dy = a.y - b.y;
+        var dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < LINK_DIST) {
+          ctx.strokeStyle = 'rgba(214,168,86,' + ((1 - dist / LINK_DIST) * .5) + ')';
+          ctx.lineWidth = 1;
+          ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+        }
+      }
+    }
+    for (var i = 0; i < nodes.length; i++) {
+      ctx.beginPath();
+      ctx.fillStyle = 'rgba(165,74,36,.6)';
+      ctx.arc(nodes[i].x, nodes[i].y, 2.2, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    raf = requestAnimationFrame(step);
+  }
+
+  function start(){
+    if (running || !mq.matches) return;
+    running = true; resize(); seed();
+    raf = requestAnimationFrame(step);
+  }
+  function stop(){
+    running = false;
+    if (raf) cancelAnimationFrame(raf);
+  }
+
+  mq.addEventListener('change', function(e){ if (e.matches) start(); else stop(); });
+  window.addEventListener('resize', function(){ if (running) resize(); });
+
+  new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if (e.isIntersecting) start(); else stop(); });
+  }, { threshold: 0.05 }).observe(hero);
 })();
 </script>
 
