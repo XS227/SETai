@@ -78,6 +78,7 @@ configure();
 const initial=scenes.findIndex(s=>'#'+s.id===location.hash);if(initial>=0)goTo(initial);
 function setLanguage(lang){language=lang;root.lang=lang==='en'?'en':'no';translations.forEach(t=>t.el.innerHTML=t[lang]);document.getElementById('language').textContent=lang==='en'?'NO':'EN';filmLabel();try{localStorage.setItem('setaei-lang',lang)}catch{}}
 document.getElementById('language').addEventListener('click',()=>setLanguage(language==='no'?'en':'no'));
+document.querySelectorAll('.js-email').forEach(el=>{el.href='mailto:'+el.dataset.u+'@'+el.dataset.d;});
 try{const saved=localStorage.getItem('setaei-lang');const wantEn=saved?saved==='en':location.pathname.startsWith('/en/');if(wantEn)setLanguage('en')}catch{}
   // ── contact modal ──────────────────────────────────────────
   const contactOverlay = document.getElementById('contactOverlay');
