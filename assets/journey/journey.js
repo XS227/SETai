@@ -82,6 +82,39 @@ function setLanguage(lang){language=lang;root.lang=lang==='en'?'en':'no';transla
 document.getElementById('language').addEventListener('click',()=>setLanguage(language==='no'?'en':'no'));
 document.querySelectorAll('.js-email').forEach(el=>{el.href='mailto:'+el.dataset.u+'@'+el.dataset.d;});
 try{const saved=localStorage.getItem('setaei-lang');const wantEn=saved?saved==='en':location.pathname.startsWith('/en/');if(wantEn)setLanguage('en')}catch{}
+  // ── video popup (gallery tiles with data-video) ─────────────
+  const videoOverlay = document.getElementById('videoOverlay');
+  const videoModal   = document.getElementById('videoModal');
+  const videoPlayer   = document.getElementById('videoModalPlayer');
+  function openVideo(src, poster) {
+    videoPlayer.poster = poster || '';
+    videoPlayer.src = src;
+    videoOverlay.classList.add('open');
+    videoModal.classList.add('open');
+    videoOverlay.setAttribute('aria-hidden', 'false');
+    videoModal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    videoPlayer.play().catch(() => {});
+  }
+  function closeVideo() {
+    videoOverlay.classList.remove('open');
+    videoModal.classList.remove('open');
+    videoOverlay.setAttribute('aria-hidden', 'true');
+    videoModal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    videoPlayer.pause();
+    videoPlayer.removeAttribute('src');
+    videoPlayer.load();
+  }
+  document.querySelectorAll('.js-video-tile').forEach(el => {
+    el.addEventListener('click', () => openVideo(el.dataset.video, el.dataset.poster));
+  });
+  document.getElementById('videoClose').addEventListener('click', closeVideo);
+  videoOverlay.addEventListener('click', closeVideo);
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && videoModal.classList.contains('open')) closeVideo();
+  });
+
   // ── contact modal ──────────────────────────────────────────
   const contactOverlay = document.getElementById('contactOverlay');
   const contactSheet   = document.getElementById('contactSheet');

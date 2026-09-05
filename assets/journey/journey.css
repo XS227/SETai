@@ -5,6 +5,29 @@
 @media(max-height:650px){.scene{padding-top:90px;padding-bottom:110px}h1,h2,.scene-shahnameh h2,.scene-office h2{font-size:clamp(2rem,6vh,3.5rem)}.intro{font-size:14px;margin-top:12px}.eyebrow{margin-bottom:12px}.text-link,.film-toggle{margin-top:12px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation:none!important;transition:none!important}.chapter-nav{display:none}.journey-footer #next-scene{display:none}}
 @media print{.site-nav,.journey-footer,.chapter-nav{display:none}.scene{break-after:page;min-height:95vh}html.journey-motion #journey{height:auto}.journey-motion .journey-stage{height:auto;position:static}.journey-motion .scene{position:relative;opacity:1!important;visibility:visible!important;height:95vh}}
+    .video-overlay {
+      position: fixed; inset: 0; z-index: 240;
+      background: rgba(8,8,7,0.85);
+      backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+      opacity: 0; visibility: hidden; transition: opacity .25s ease;
+    }
+    .video-overlay.open { opacity: 1; visibility: visible; }
+    .video-modal {
+      position: fixed; top: 50%; left: 50%; z-index: 241;
+      width: min(920px, 92vw);
+      transform: translate(-50%, -50%) scale(.96);
+      opacity: 0; visibility: hidden; pointer-events: none;
+      transition: opacity .25s ease, transform .25s ease, visibility .25s;
+    }
+    .video-modal.open { opacity: 1; visibility: visible; transform: translate(-50%, -50%) scale(1); pointer-events: auto; }
+    .video-modal video { width: 100%; max-height: 82vh; border-radius: 10px; display: block; background: #000; }
+    .video-close {
+      position: absolute; top: -44px; right: 0;
+      width: 34px; height: 34px; border-radius: 50%;
+      background: rgba(255,255,255,.12); color: #fff;
+      font-size: 20px; line-height: 1; cursor: pointer;
+    }
+    .video-close:hover { background: rgba(255,255,255,.22); }
     .contact-overlay {
       position: fixed; inset: 0; z-index: 220;
       background: rgba(33,30,25,0.32);
@@ -121,7 +144,7 @@
 .gallery-group:first-child{border-top:0}
 .gallery-group-label{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--dim);margin-bottom:12px}
 .gallery-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px}
-.gallery-tile{display:flex;flex-direction:column;align-items:center;gap:8px;padding:12px 6px;border-radius:10px;text-align:center;transition:background .2s}
+.gallery-tile{display:flex;flex-direction:column;align-items:center;gap:8px;padding:12px 6px;border-radius:10px;text-align:center;transition:background .2s;width:100%}
 .gallery-tile:hover{background:#ffffff0c}
 .gallery-badge{display:flex;align-items:center;justify-content:center;flex-shrink:0;width:44px;height:44px;border-radius:12px;background:#ffffff12;font-size:20px;overflow:hidden}
 .gallery-badge img{width:100%;height:100%;object-fit:cover}

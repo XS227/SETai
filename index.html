@@ -129,22 +129,22 @@
       <span class="gallery-group-label" data-en="Mobile apps">Mobilapper</span>
       <div class="gallery-grid">
        <a class="gallery-tile" href="https://biap.dadashi.no/" target="_blank" rel="noopener"><span class="gallery-badge"><img src="/biap/img/biap-logo.png" alt="" loading="lazy"></span><span class="gallery-name">BIAP</span></a>
-       <a class="gallery-tile" href="/projects/realgram/"><span class="gallery-badge" aria-hidden="true">🌐</span><span class="gallery-name">RealGram</span></a>
+       <a class="gallery-tile" href="/projects/realgram/"><span class="gallery-badge"><img src="/assets/work/realgram-logo.svg" alt="" loading="lazy"></span><span class="gallery-name">RealGram</span></a>
       </div>
      </div>
      <div class="gallery-group">
       <span class="gallery-group-label" data-en="AI film projects">AI-filmprosjekter</span>
       <div class="gallery-grid">
        <a class="gallery-tile" href="/projects/shahnameh/"><span class="gallery-badge gallery-badge-photo"><img src="/projects/shahnameh/poster-hero.jpg" alt="" loading="lazy"></span><span class="gallery-name">Shahnameh</span></a>
-       <a class="gallery-tile" href="#higgsfield"><span class="gallery-badge" aria-hidden="true">👑</span><span class="gallery-name">Crown of My Hero</span></a>
+       <button type="button" class="gallery-tile js-video-tile" data-video="https://d8j0ntlcm91z4.cloudfront.net/user_3GqVodiVsV7T5gGVNoTV4Q5Q3ZK/hf_20260809_204325_06cada49-4c59-4bcc-804f-c3d519c51619.mp4" data-poster="https://d8j0ntlcm91z4.cloudfront.net/user_3GqVodiVsV7T5gGVNoTV4Q5Q3ZK/hf_20260802_220401_efc779ce-7fc9-4c4f-8085-5b54f6795b1f.png"><span class="gallery-badge" aria-hidden="true">👑</span><span class="gallery-name">Crown of My Heart</span></button>
       </div>
      </div>
      <div class="gallery-group">
       <span class="gallery-group-label" data-en="Client websites">Kundenettsider</span>
       <div class="gallery-grid">
-       <a class="gallery-tile" href="/projects/styrk-karriere/"><span class="gallery-badge" aria-hidden="true">💼</span><span class="gallery-name">Styrk Karriere</span></a>
-       <a class="gallery-tile" href="/projects/somiklinikken/"><span class="gallery-badge" aria-hidden="true">✨</span><span class="gallery-name">Somiklinikken</span></a>
-       <a class="gallery-tile" href="https://vollabyggmester.no/" target="_blank" rel="noopener"><span class="gallery-badge" aria-hidden="true">🏗️</span><span class="gallery-name">Volla Byggmester</span></a>
+       <a class="gallery-tile" href="/projects/styrk-karriere/"><span class="gallery-badge"><img src="/assets/work/styrk-karriere-logo.png" alt="" loading="lazy"></span><span class="gallery-name">Styrk Karriere</span></a>
+       <a class="gallery-tile" href="/projects/somiklinikken/"><span class="gallery-badge"><img src="/assets/work/somiklinikken-logo.png" alt="" loading="lazy"></span><span class="gallery-name">Somiklinikken</span></a>
+       <a class="gallery-tile" href="https://vollabyggmester.no/" target="_blank" rel="noopener"><span class="gallery-badge"><img src="/assets/work/volla-logo.webp" alt="" loading="lazy"></span><span class="gallery-name">Volla Byggmester</span></a>
       </div>
      </div>
     </div>
@@ -203,6 +203,11 @@
 </main>
 <nav class="chapter-nav" aria-label="Kapitler"><a href="#scene-intro" aria-label="Intro">01</a><a href="#scene-studio" aria-label="Studio">02</a><a href="#scene-screen" aria-label="På skjermen">03</a><a href="#shahnameh" aria-label="Shahnameh">04</a><a href="#higgsfield" aria-label="Higgsfield AI Festival">05</a><a href="#biap" aria-label="BIAP">06</a><a href="#services" aria-label="Tjenester">07</a><a href="#research" aria-label="Forskning">08</a><a href="#certifications" aria-label="Sertifiseringer">09</a><a href="#contact" aria-label="Kontakt">10</a></nav>
 <div class="journey-footer"><span>KHABAT SETAEI <i>/</i> OSLO</span><button id="next-scene">Scroll for å utforske ↓</button><span id="chapter-label">01 / Intro</span></div>
+<div class="video-overlay" id="videoOverlay" aria-hidden="true"></div>
+<div class="video-modal" id="videoModal" role="dialog" aria-modal="true" aria-hidden="true">
+  <button type="button" class="video-close" id="videoClose" aria-label="Close">&times;</button>
+  <video id="videoModalPlayer" controls playsinline></video>
+</div>
 <div class="contact-overlay" id="contactOverlay" aria-hidden="true"></div>
 <aside class="contact-sheet" id="contactSheet" role="dialog" aria-modal="true" aria-labelledby="contactTitle" aria-hidden="true">
   <span class="grab" aria-hidden="true"></span>
