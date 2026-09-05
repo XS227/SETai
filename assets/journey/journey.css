@@ -120,23 +120,34 @@
 
 /* Scenes 7-9: text-forward chapters (services, research, certifications) —
    no photography, same dark stage, same eyebrow/h2 rhythm as every other
-   scene so the journey reads as one continuous piece all the way down. */
+   scene. Content-dense, so they get a much smaller heading than the
+   cinematic clamp(3rem,6.9vw,7rem) default -- that alone was pushing this
+   past one screen's height and clipping (scene has overflow:hidden). */
 .scene-copy.wide{max-width:1100px}
-.svc-list{display:grid;grid-template-columns:1fr 1fr;gap:24px 48px;margin:32px 0}
-.svc-item{display:flex;gap:14px;align-items:flex-start}
-.svc-ico{font-size:24px;line-height:1}
-.svc-item strong{display:block;font-family:var(--display);font-weight:500;font-size:18px;margin-bottom:6px}
-.svc-item p{font-size:14px;line-height:1.55;color:var(--muted);margin:0}
-.phd-name{font-family:var(--display);font-size:19px;margin-top:20px}
-.pipe-row{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:26px 0;font-size:13px;color:var(--muted)}
+.scene-services h2,.scene-research h2,.scene-certifications h2{font-size:clamp(1.7rem,3.4vw,2.6rem);line-height:1.15}
+.scene-services .intro,.scene-research .intro,.scene-certifications .eyebrow+p{max-width:640px}
+.svc-list{display:grid;grid-template-columns:repeat(3,1fr);gap:18px 28px;margin:24px 0}
+.svc-item{display:flex;gap:10px;align-items:flex-start}
+.svc-ico{font-size:20px;line-height:1.2}
+.svc-item strong{display:block;font-family:var(--display);font-weight:500;font-size:15px;margin-bottom:4px}
+.svc-item p{font-size:12px;line-height:1.4;color:var(--muted);margin:0}
+.phd-name{font-family:var(--display);font-size:17px;margin-top:16px}
+.pipe-row{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:18px 0;font-size:12px;color:var(--muted)}
 .pipe-row i{color:var(--accent);font-style:normal}
-.intro.small{font-size:13px;max-width:640px}
-.cert-row{display:flex;flex-wrap:wrap;gap:28px;margin-top:30px}
-.cert-item{display:flex;flex-direction:column;gap:10px;max-width:210px;font-size:13px;line-height:1.4;color:var(--muted)}
-.cert-item img{height:32px;width:auto;object-fit:contain;background:#fff;border-radius:8px;padding:6px 10px}
-.cert-logo-text{font:700 20px var(--display);letter-spacing:.08em;color:var(--accent)}
+.intro.small{font-size:12px;max-width:600px;margin-top:12px}
+.cert-grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px 20px;margin-top:20px}
+.cert-item{display:flex;flex-direction:column;gap:8px;font-size:11px;line-height:1.3;color:var(--muted)}
+.cert-badge{display:flex;align-items:center;justify-content:center;height:34px;background:#fff;border-radius:8px;padding:4px 8px}
+.cert-badge img{height:20px;width:auto;object-fit:contain}
+.cert-badge-text{font:700 14px var(--display);letter-spacing:.06em;color:#17120b}
+.cert-badge-apple svg{width:20px;height:20px;color:#17120b}
 @media(max-width:800px){
 .gallery-grid{grid-template-columns:repeat(2,1fr);grid-auto-rows:96px}
-.svc-list{grid-template-columns:1fr}
-.cert-row{gap:20px}
+.scene-services,.scene-research,.scene-certifications{padding-top:90px;padding-bottom:70px;overflow-y:auto}
+.scene-services h2,.scene-research h2,.scene-certifications h2{font-size:clamp(1.5rem,7vw,2rem);margin-bottom:4px}
+.scene-services .eyebrow,.scene-research .eyebrow,.scene-certifications .eyebrow{margin-bottom:10px}
+.svc-list{grid-template-columns:1fr 1fr;gap:14px 16px}
+.svc-item p{display:none}
+.cert-grid3{grid-template-columns:repeat(3,1fr);gap:12px 14px}
+.cert-item{font-size:10px}
 }
