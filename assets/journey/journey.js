@@ -19,14 +19,14 @@ film.addEventListener('pause',filmLabel);film.addEventListener('play',filmLabel)
 function update(){
  frame=0;
  const span=Math.max(1,journey.offsetHeight-innerHeight);
- const progress=clamp((scrollY-journey.offsetTop)/span)*5;
- const active=motion?Math.min(5,Math.floor(progress+.12)):scenes.reduce((a,s,i)=>s.getBoundingClientRect().top<innerHeight*.5?i:a,0);
+ const progress=clamp((scrollY-journey.offsetTop)/span)*6;
+ const active=motion?Math.min(6,Math.floor(progress+.12)):scenes.reduce((a,s,i)=>s.getBoundingClientRect().top<innerHeight*.5?i:a,0);
  current=active;
  scenes.forEach((scene,i)=>{
   if(!motion)return;
   const local=progress-i;
   const enter=i===0?1:smooth((local+.35)/.35);
-  const leave=i===5?1:1-smooth((local-.65)/.35);
+  const leave=i===6?1:1-smooth((local-.65)/.35);
   const alpha=enter*leave;
   scene.style.opacity=alpha;
   scene.classList.toggle('is-visible',alpha>.001);
@@ -55,7 +55,7 @@ function configure(){
  update();
 }
 function goTo(index){
- index=clamp(index,0,5);
+ index=clamp(index,0,6);
  if(motion){const span=journey.offsetHeight-innerHeight;scrollTo({top:journey.offsetTop+span*index/5,behavior:reduced.matches?'auto':'smooth'})}
  else scenes[index].scrollIntoView({behavior:reduced.matches?'auto':'smooth'});
 }
