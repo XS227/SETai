@@ -3,5 +3,6 @@ Allow: /
 Disallow: /demo/
 Disallow: /lead-agent/
 Disallow: /tools/
+Disallow: /vollabyggmester/
 
 Sitemap: https://setai.no/sitemap.xml

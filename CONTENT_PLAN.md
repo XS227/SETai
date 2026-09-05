@@ -46,7 +46,7 @@ Prioritet: **P0** = høy kommersiell intensjon / klar til å kjøpe, **P1** = be
 | hva koster AI-utvikling for bedrifter i Norge | Kommersiell undersøkelse (pris) | `/services/ai-ekspert-oslo/` | ai-automation, cto-oslo, blog: ai-ekspert-vs-ai-utvikler | "Få et konkret prisestimat" → #contact | **P0** ✅ skrevet |
 | chatbot for bedrift — hva bør du vite før du bestiller | Beslutningsstøtte | `/services/ai-ekspert-oslo/` | ai-automation | "Snakk med SETAEI" | P1 |
 | generativ AI i norske bedrifter — muligheter og fallgruver | Utdanning/awareness | `/services/ai-ekspert-oslo/` | ai-ekspert-vs-ai-utvikler | "Se AI-utvikling" | P2 |
-| slik kommer bedriften din i gang med AI (steg for steg) | Beslutningsstøtte | `/services/ai-ekspert-oslo/` | ai-automation, cto-oslo | "Book en samtale" | P1 |
+| slik kommer bedriften din i gang med AI (steg for steg) | Beslutningsstøtte | `/services/ai-ekspert-oslo/` | ai-automation, cto-oslo | "Book en samtale" | P1 ✅ skrevet |
 | AI-agenter for norske bedrifter — hva er det egentlig | Awareness | `/services/ai-ekspert-oslo/` | saas-utvikler-oslo | "Les om AI-utvikling" | P2 |
 | RAG og kunnskapsbaser — nyttig for hvilke bedrifter | Awareness/teknisk | `/services/ai-ekspert-oslo/` | ai-automation | "Snakk med SETAEI" | P2 |
 
@@ -57,8 +57,8 @@ Prioritet: **P0** = høy kommersiell intensjon / klar til å kjøpe, **P1** = be
 | hva bør en nettside for bedrift koste i Norge | Kommersiell undersøkelse (pris) | `/services/web-design-oslo/` | ecommerce, seo-oslo, industries | "Få et uforpliktende tilbud" → #contact | **P0** ✅ skrevet |
 | tegn på at nettsiden din taper kunder til konkurrentene | Problemerkjennelse | `/services/web-design-oslo/` | seo-oslo | "Få en gratis vurdering" | **P0** ✅ skrevet |
 | nettside-sjekkliste før lansering (for små bedrifter) | Beslutningsstøtte | `/services/web-design-oslo/` | landing-pages | "Snakk med SETAEI" | P1 |
-| hvor lang tid tar det å bygge en nettside for bedrift | Kommersiell undersøkelse | `/services/web-design-oslo/` | cto-oslo | "Start prosjektet" | P1 |
-| WordPress vs. skreddersydd nettside — hva bør du velge | Sammenligning | `/services/web-design-oslo/` | fullstack-utvikler-oslo | "Snakk med SETAEI" | P1 |
+| hvor lang tid tar det å bygge en nettside for bedrift | Kommersiell undersøkelse | `/services/web-design-oslo/` | cto-oslo | "Start prosjektet" | P1 ✅ skrevet |
+| WordPress vs. skreddersydd nettside — hva bør du velge | Sammenligning | `/services/web-design-oslo/` | fullstack-utvikler-oslo | "Snakk med SETAEI" | P1 ✅ skrevet |
 | hjemmeside eller nettbutikk — hva trenger bedriften din | Beslutningsstøtte | `/services/ecommerce/` | web-design-oslo | "Se nettbutikk-tjenester" | P2 |
 | booking-løsning for små bedrifter — hva finnes og hva koster det | Kommersiell undersøkelse | `/services/web-design-oslo/` | tilbud/* | "Se bransjeløsninger" | P1 |
 
@@ -68,7 +68,7 @@ Prioritet: **P0** = høy kommersiell intensjon / klar til å kjøpe, **P1** = be
 |---|---|---|---|---|---|
 | Google Business Profil — komplett guide for norske bedrifter | Beslutningsstøtte / høy verdi | `/services/seo-oslo/` | web-design-oslo | "Få hjelp med lokal SEO" → #contact | **P0** ✅ skrevet |
 | hvorfor dukker ikke bedriften min opp i Google | Problemerkjennelse | `/services/seo-oslo/` | web-design-oslo | "Få en SEO-gjennomgang" | **P0** ✅ skrevet |
-| hvor lang tid tar SEO å virke | Kommersiell undersøkelse | `/services/seo-oslo/` | ai-ekspert-oslo (AI-søk-vinkling) | "Snakk med SETAEI" | P1 |
+| hvor lang tid tar SEO å virke | Kommersiell undersøkelse | `/services/seo-oslo/` | ai-ekspert-oslo (AI-søk-vinkling) | "Snakk med SETAEI" | P1 ✅ skrevet |
 | lokal SEO sjekkliste for norske bedrifter | Beslutningsstøtte | `/services/seo-oslo/` | industries/* | "Se SEO-tjenester" | P1 |
 | SEO for nettbutikk — hva er forskjellen fra vanlig SEO | Beslutningsstøtte | `/services/ecommerce/` | seo-oslo | "Se nettbutikk-SEO" | P2 |
 | synlig i AI-søk (ChatGPT, Perplexity) — hva betyr det for norske bedrifter | Awareness (fremvoksende) | `/services/seo-oslo/` | ai-ekspert-oslo | "Snakk med SETAEI" | P2 |
@@ -123,14 +123,17 @@ Prioritet: **P0** = høy kommersiell intensjon / klar til å kjøpe, **P1** = be
 
 **Runde 2 (5 stk) — publisert:** hvorfor dukker ikke bedriften opp i Google, tegn på at nettsiden taper kunder, hva koster SaaS-produkt, hva koster automatisering (liten bedrift), tegn på at startupet trenger en CTO.
 
-Alle 10 P0-artikler i planen er nå skrevet og live. **Anbefalt neste runde (P1, i prioritert rekkefølge):**
+Alle 10 P0-artikler i planen er nå skrevet og live. **Runde 3 (P1) — påbegynt:**
 
-1. hvor lang tid tar det å bygge en nettside for bedrift (Klynge B)
-2. WordPress vs. skreddersydd nettside — hva bør du velge (Klynge B)
-3. slik kommer bedriften din i gang med AI, steg for steg (Klynge A)
-4. hvor lang tid tar SEO å virke (Klynge C)
+1. hvor lang tid tar det å bygge en nettside for bedrift (Klynge B) — ✅ skrevet 16. juli 2026
+2. WordPress vs. skreddersydd nettside — hva bør du velge (Klynge B) — ✅ skrevet 16. juli 2026
+3. slik kommer bedriften din i gang med AI, steg for steg (Klynge A) — ✅ skrevet 27. juli 2026
+4. hvor lang tid tar SEO å virke (Klynge C) — ✅ skrevet 27. juli 2026
+
+**Neste i rekkefølge:**
+
 5. SaaS-prismodeller — hva passer for produktet ditt (Klynge D)
 6. automatisere kundeservice uten å miste den personlige touchen (Klynge E)
 7. fractional CTO vs. teknisk co-founder — hva er forskjellen (Klynge F)
 
-Ca. 1–2 artikler/uke for jevn crawl-frekvens fremover, ikke en ny stor dump (Google foretrekker jevn utgivelsestakt).
+Ca. 1–2 artikler/uke for jevn crawl-frekvens fremover, ikke en ny stor dump (Google foretrekker jevn utgivelsestakt) — denne runden (27. juli) var 2 artikler, i tråd med det.

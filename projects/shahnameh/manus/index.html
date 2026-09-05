@@ -639,6 +639,14 @@
       <b>v3 — full feltstruktur + splittet reveal.</b> Test nr. 2 (samlet 9s-prompt) var et stort steg riktig: korrekt geografi, korrekt turban/antrekk, beskjedent leirhus, ingen glødende linje. To ting gjenstår: (1) det gikk for fort — scene 1 splittes nå i to genereringer, først ryggen til Ferdowsi, så et bevisst, langsomt reveal av ansiktet hans; (2) prompten er nå bygget med samme feltstruktur som Higgsfields egen Seedance/Cinema Studio-dokumentasjon bruker (Duration/Aspect ratio/Frame rate/Environment/Characters/Action arc/Shot-for-shot/Style/Technical/Rules) i stedet for løs tekst — samme format du så i andres resultater.
     </div>
 
+    <div class="newflow">
+      <b>v4 — 12/8: Simorgh introdusert, kamerabane følger nå husets faktiske kart.</b> Tre endringer, alle fra Khabats gjennomgang: (1) åpningen starter ikke lenger i verdensrommet — den åpner allerede i luften på Simorghs høyde, zoomer ut fra hans øye, viser ham som en mektig, bestemt, guddommelig fugl som lander på taket til Ferdowsis hus og dermed leder oss dit; (2) shot 1A er splittet i tre (1A/1A2/1B) fordi én sammenhengende tur fra tak → hage → gang → Ferdowsis rom er for mange beats for én enkelt generering — samme lærdom som armbånd/dolk-kjedene andre steder i dokumentet; (3) hele den interiøre reisen følger nå det faktiske romkartet (<code>ferdowsi-hus-kart-kamerabane.png</code>) og bruker kun måneskinn gjennom vinduer som lyskilde utenfor Ferdowsis eget rom — ingen gatelys, lyktestolper eller annen kunstig utebelysning i landsbyen, som ville vært historisk feil for denne perioden. Ny referanse: <code>simorgh-reference.png</code> (super-realistisk, genererer 12/8).
+    </div>
+
+    <div class="newflow">
+      <b>v5 — 12/8: riktig Simorgh-referanse + fjær-penn-idé, ikke lenger kamera-som-Simorgh.</b> Khabats egne Higgsfield-genereringer av Simorgh (karaktereark-stil, med det kjennetegnende trekket "peacock-eyed tail feathers over a raptor's build") viste seg å ligge mye nærmere fortellingen enn min egen versjon, som så ut som en ganske alminnelig ørn. <code>simorgh-reference.png</code> er byttet ut med Khabats stående vinge-spente versjon (gammel fil bevart som <code>.bak-mine-superseded</code>), pluss en ny <code>simorgh-reference-flying.png</code> for flukt-positurer. Større strukturendring: kameraet er ikke lenger "Simorghs blikk" som flyr helt inn i huset — i stedet mister Simorgh en fjær midt i flukten, og kameraet slipper fuglen og følger heller den enkeltstående fjæren, vindblåst, ned til landsbyen, forbi sønnens vindu (sett utenfra, kameraet går ikke inn i det rommet), og videre inn til Ferdowsi — som plukker den opp og skriver Shahnameh med den. Shot 1A er nå fire deler (1A/1A2/1A3/1B) i stedet for tre. Gjentatt presisering fra Khabat: kun oljelampe/stearinlys som lyskilde noe sted i huset — ingen lyskilder som kan lese som elektriske.
+    </div>
+
     <div class="identcard">
       <div class="iw">Shahnameh</div>
       <div class="is">"In the name of the Lord of Soul and Wisdom"</div>
@@ -650,38 +658,74 @@
     </div>
 
     <div class="promptcard crit">
-      <div class="pc-head"><span class="pc-num">1A</span><span class="pc-title">Nedstigning → eksteriør, Ferdowsi sett bakfra</span></div>
-      <div class="fieldprompt"><span class="fk">[DURATION]</span> 9 seconds
+      <div class="pc-head"><span class="pc-num">1A</span><span class="pc-title">Simorghs øye → på fjelltoppen → tar av</span></div>
+      <div class="fieldprompt"><span class="fk">[DURATION]</span> 8 seconds
 <span class="fk">[ASPECT RATIO]</span> 16:9
 <span class="fk">[FRAME RATE]</span> 24fps, cinematic motion (not soap-opera smooth)
-<span class="fk">[ENVIRONMENT]</span> Begins in orbital space around Earth, black starfield, visible stars. Descends through atmosphere toward Iran and the Middle East on the Iranian plateau — explicitly not North America, not Europe. Continues toward the historic Khorasan region near the city of Tus, ending over an arid, mountainous Persian night landscape.
-<span class="fk">[CHARACTERS]</span> A single small, modest mudbrick house, flat roof, no ornamentation. No palace, no courtyard, no towers, no domes, no minarets anywhere in frame.
-<span class="fk">[ACTION ARC]</span> Cold, silent space → fast atmospheric descent → deceleration as the house comes into view → camera glides low and slow toward one small lit window.
-<span class="fk">[CAMERA]</span> Continuous unbroken single take, no cuts. Begins as a slow orbital rotation, transitions into a steep dive, then a low glide toward the window.
-<span class="fk">[SPEED RAMP]</span> 100% through space and atmosphere → decelerating to 40% over the last two seconds as the house appears → settle to a slow, steady glide at the window, not an abrupt stop.
-<span class="fk">[LIGHTING]</span> Cool blue-black space tones and starlight, shifting to the warm amber glow of a single window as the only light source on an otherwise dark, moonlit-but-not-oversized landscape.
-<span class="fk">[STYLE]</span> Ultra-photorealistic, live-action nature-documentary-meets-narrative-film hybrid. Physically accurate satellite/aerial cinematography. Absolutely not cartoon, not 3D-render, not video-game engine look, not animated, not stylized illustration.
-<span class="fk">[TECHNICAL]</span> Sharp focus throughout the descent, natural atmospheric haze near the ground, subtle film grain, no lens flares, no artificial light rays.
-<span class="fk">[LAST FRAME]</span> Wide-to-medium shot through the window: an elderly man is visible seated at a low desk, seen from behind / in silhouette — his face is NOT visible in this shot. This exact frame is the starting reference for the next generation.
-<span class="fneg">[RULES / AVOID]</span> No glowing lines, light trails, neon paths, or CGI light streaks of any kind during the descent. No oversized, overly detailed, or glowing moon — if a moon is visible, it must be small and natural in scale. No visible human face in this shot. No modern buildings, roads, or vehicles. No text, no logos, no subtitles rendered by the model.</div>
+<span class="fk">[ENVIRONMENT]</span> Opens as an extreme close-up filling the whole screen with Simorgh's golden eye. Pulls back to reveal Simorgh perched on a high mountain peak in the historic Khorasan region near Tus, at dusk/early night, dramatic clouds and distant mountain ranges behind him.
+<span class="fk">[CHARACTERS]</span> Simorgh: the mythic bird, colossal, cream-and-gold plumage, a crest of spiked feathers on the head, sharp golden-eyed raptor face, long trailing tail feathers patterned with iridescent peacock-eye spots (blue-green with dark centers) — this exact plumage pattern is the character's defining, non-negotiable trait. Reference: <code>simorgh-reference.png</code> (canonical still) and <code>simorgh-reference-flying.png</code> (flight pose).
+<span class="fk">[ACTION ARC]</span> Extreme close on the eye → pulls back to a wide shot of Simorgh standing on the peak, wings still folded → he spreads his wings fully → rises off the peak into flight → banks and flies onward through low clouds, moving with clear purpose and intent, not aimless circling.
+<span class="fk">[CAMERA]</span> Continuous unbroken single take. Opens as a push-out from the eye, transitions into a wide shot of the standing bird, then a tracking shot following him into flight through the clouds.
+<span class="fk">[SPEED RAMP]</span> Slow and majestic through the perched/rising portion, settling into steady powerful wingbeats once airborne — a deliberate, purposeful launch, not a startled or sudden takeoff.
+<span class="fk">[LIGHTING]</span> Natural dusk-into-night light, warm on the peak turning cool and moonlit once airborne.
+<span class="fk">[STYLE]</span> Ultra-photorealistic wildlife-documentary-meets-narrative-epic hybrid, same treatment as the Simorgh reference stills. Absolutely not cartoon, not 3D-render, not video-game engine look, not animated, not stylized illustration.
+<span class="fk">[TECHNICAL]</span> Sharp focus throughout, natural atmospheric haze, subtle film grain, no lens flares, no glowing magical effects on Simorgh.
+<span class="fk">[LAST FRAME]</span> Simorgh in flight through clouds, wings fully extended, clear night sky ahead. This exact frame is the starting reference for the next generation.
+<span class="fneg">[RULES / AVOID]</span> No plain golden-eagle look — the peacock-eye tail pattern and head crest must be clearly visible. No modern buildings, roads, or vehicles. No text, no logos, no subtitles rendered by the model. No human face on Simorgh.</div>
       <div class="pc-settings"><b>Modell:</b> seedance_2_0 · <b>Oppløsning:</b> 4k/std · <b>Sjanger:</b> epic · <b>Lyd:</b> av</div>
     </div>
 
     <div class="promptcard crit">
-      <div class="pc-head"><span class="pc-num">1B</span><span class="pc-title">Reveal: sakte sving fra rygg til ansikt</span></div>
-      <div class="fieldprompt"><span class="fk">[CONTINUATION]</span> Opens on the exact last frame of the previous clip: an elderly man seen from behind, seated at a low wooden desk inside a small, plain mudbrick room, lit by a single small oil lamp.
-<span class="fk">[DURATION]</span> 10 seconds
+      <div class="pc-head"><span class="pc-num">1A2</span><span class="pc-title">Fjæren løsner — kamera slipper Simorgh og følger fjæren ned</span></div>
+      <div class="fieldprompt"><span class="fk">[CONTINUATION]</span> Opens on the exact last frame of the previous clip: Simorgh in flight through clouds, wings fully extended.
+<span class="fk">[DURATION]</span> 7 seconds
 <span class="fk">[ASPECT RATIO]</span> 16:9
 <span class="fk">[FRAME RATE]</span> 24fps
-<span class="fk">[ENVIRONMENT]</span> Interior of the same small, humble room — bare mudbrick walls, no decoration, a low wooden desk, a parchment scroll, a single small clay oil lamp as the only light source. Deep natural shadow everywhere else.
-<span class="fk">[CHARACTERS]</span> Ferdowsi: elderly Persian scholar, seventies, hair fully covered by a plain wound cream-colored turban — no loose or visible hair. Long grey-white beard. Simple undyed woolen robes. Ink-stained fingers. Seated cross-legged or kneeling at the desk.
-<span class="fk">[ACTION ARC]</span> Held on his back for a beat → camera begins a slow arc around him → his profile comes into view → continues arcing until his face is fully revealed, still writing, absorbed, not looking at camera → holds on his face → he dips the quill and resumes a stroke, moving right to left across the page in the Persian manner — slow, calm, deliberate, an old man's careful pace.
-<span class="fk">[CAMERA]</span> Slow arcing dolly move, moving from directly behind him around to a three-quarter front angle. Deliberate, unhurried — the reveal of his face should take at least 4-5 seconds of screen time, not a quick pass.
-<span class="fk">[SPEED RAMP]</span> Constant slow 35-40% speed throughout — noticeably slower and calmer than the descent in the previous clip. No acceleration.
-<span class="fk">[LIGHTING]</span> Warm amber oil-lamp light as the only source, soft shadow falloff, gentle highlight on his face as it comes into view.
+<span class="fk">[ENVIRONMENT]</span> Night sky above a sleeping Persian village of mudbrick houses, pre-electricity ancient historical setting — the sky between Simorgh and the rooftops below is completely empty and clear, nothing crosses it. Ground level unlit except pale moonlight on walls and one small warm window glow far below.
+<span class="fk">[CHARACTERS]</span> Simorgh flying onward, same design as established. One single tail feather with the distinctive peacock-eye pattern.
+<span class="fk">[ACTION ARC]</span> As Simorgh flies on, one tail feather comes loose and begins drifting free, caught by a calm wind → the camera lets Simorgh continue on and fly out of frame, instead staying with the single feather → the feather drifts and turns gently on the wind, slowly losing altitude, gliding down toward the sleeping village far below.
+<span class="fk">[CAMERA]</span> Continuous single take. Starts on Simorgh, then smoothly transfers focus to track only the falling feather as Simorgh exits frame, following it downward at a matching, unhurried pace.
+<span class="fk">[SPEED RAMP]</span> Slow, gentle, wind-carried drift — never a fast fall, the feather floats more than it falls.
+<span class="fk">[LIGHTING]</span> Cool moonlight and starlight only.
+<span class="fk">[STYLE]</span> Ultra-photorealistic, live-action narrative film. Not cartoon, not 3D-render, not video-game engine look.
+<span class="fk">[LAST FRAME]</span> The feather nearing rooftop level above the village, still drifting on the wind. This exact frame is the starting reference for the next generation.
+<span class="fneg">[RULES / AVOID]</span> No street lighting, poles, wires, or any modern infrastructure anywhere in the village. No oversized or glowing moon. No magical glow or sparkle on the feather — it is beautiful because of its natural pattern, not because it glows.</div>
+      <div class="pc-settings"><b>Modell:</b> seedance_2_0 · <b>Oppløsning:</b> 4k/std · <b>Sjanger:</b> drama · <b>Lyd:</b> av</div>
+    </div>
+
+    <div class="promptcard crit">
+      <div class="pc-head"><span class="pc-num">1A3</span><span class="pc-title">Fjæren driver forbi sønnens vindu (utenfra) og videre til Ferdowsis</span></div>
+      <div class="fieldprompt"><span class="fk">[CONTINUATION]</span> Opens on the exact last frame of the previous clip: the peacock-eyed feather drifting on the wind, nearing rooftop level above the village.
+<span class="fk">[DURATION]</span> 8 seconds
+<span class="fk">[ASPECT RATIO]</span> 16:9
+<span class="fk">[FRAME RATE]</span> 24fps
+<span class="fk">[ENVIRONMENT]</span> Following the house's actual layout (reference: <code>ferdowsi-hus-kart-kamerabane.png</code>): the feather drifts down over the roof, into the small walled garden, past a small closed window. The camera stays outside this window the entire time — it does not enter the room. Through the glass, a sleeping young boy (Mehrak, reference: <code>mehrak-child-reference.png</code>) is dimly visible in a plain bed, lit only by soft cool moonlight — absolutely no lamp, bulb, or any light source in that room, moonlight only. The wind carries the feather onward past this window, along the exterior wall, toward a second, warmly lit window further along.
+<span class="fk">[CHARACTERS]</span> The single peacock-eyed feather as the main subject. Mehrak visible only through glass, asleep, not interacted with.
+<span class="fk">[ACTION ARC]</span> Feather drifts down past the roofline, glides low through the garden among the fruit trees, pauses/slows briefly as it passes the son's window (framing him asleep inside, seen through the glass from outside), then the wind picks it up again and carries it onward along the wall toward the warm window glow ahead.
+<span class="fk">[CAMERA]</span> Continuous single unbroken take, low, slow, following only the feather, exterior throughout.
+<span class="fk">[SPEED RAMP]</span> Slow wind-drift throughout, a brief near-stillness at the son's window, then resuming its drift.
+<span class="fk">[LIGHTING]</span> Exterior: cool moonlight and starlight only. Son's window: cool moonlight only, no lamp. The second window ahead glows with a single warm, flickering oil-lamp light — not a steady electric-looking glow, visibly a flame.
+<span class="fk">[STYLE]</span> Ultra-photorealistic, live-action narrative film. Not cartoon, not 3D-render, not video-game engine look.
+<span class="fk">[LAST FRAME]</span> The feather approaching a small open or cracked window, warm lamplight spilling from within. This exact frame is the starting reference for the next generation.
+<span class="fneg">[RULES / AVOID]</span> No street lighting, poles, wires, or any modern infrastructure anywhere. No light source of any kind in the son's room other than moonlight. No light source anywhere in the film that reads as electric, fluorescent, or LED — every warm light must visibly be a flame (oil lamp or candle). Camera must not enter the son's room.</div>
+      <div class="pc-settings"><b>Modell:</b> seedance_2_0 · <b>Oppløsning:</b> 4k/std · <b>Sjanger:</b> drama · <b>Lyd:</b> av</div>
+    </div>
+
+    <div class="promptcard crit">
+      <div class="pc-head"><span class="pc-num">1B</span><span class="pc-title">Fjæren lander på bordet — Ferdowsi plukker den opp, ansikt avsløres, skriver med den</span></div>
+      <div class="fieldprompt"><span class="fk">[CONTINUATION]</span> Opens on the exact last frame of the previous clip: the peacock-eyed feather approaching a small open window, warm lamplight spilling out.
+<span class="fk">[DURATION]</span> 12 seconds
+<span class="fk">[ASPECT RATIO]</span> 16:9
+<span class="fk">[FRAME RATE]</span> 24fps
+<span class="fk">[ENVIRONMENT]</span> Interior of a small, humble room — bare mudbrick walls, no decoration, a low wooden desk, a parchment scroll, a single small clay oil lamp with a real visible flame as the ONLY light source anywhere in the room. Deep natural shadow everywhere else. It is very late at night; the rest of the household and the whole village is in deep sleep.
+<span class="fk">[CHARACTERS]</span> Ferdowsi: elderly Persian scholar, seventies, hair fully covered by a plain wound cream-colored turban — no loose or visible hair. Long grey-white beard. Simple undyed woolen robes. Ink-stained fingers. Seated cross-legged at the desk, seen from behind as the shot opens. The single peacock-eyed feather from Simorgh.
+<span class="fk">[ACTION ARC]</span> The feather drifts in through the window on the calm wind → glides gently down and settles on the desk beside his hand → Ferdowsi pauses his current writing tool, notices the feather → half-turns toward it, and as he turns the camera arcs with him, revealing his face for the first time, absorbed and curious, not looking at camera → he picks up the feather delicately, studies it a moment → dips it as if it were a quill and begins to write with it, right to left across the page in the Persian manner, slow and calm, an old man's careful pace.
+<span class="fk">[CAMERA]</span> Slow arcing dolly move that begins behind him and follows his turn toward the feather, arriving at a three-quarter front angle by the time his face is revealed. Deliberate, unhurried — the reveal should take at least 4-5 seconds of screen time.
+<span class="fk">[SPEED RAMP]</span> Constant slow 35-40% speed throughout. No acceleration.
+<span class="fk">[LIGHTING]</span> Warm amber oil-lamp light as the only source, a real flickering flame, soft shadow falloff, gentle highlight on his face as it comes into view.
 <span class="fk">[STYLE]</span> Ultra-photorealistic, live-action narrative film, painterly warm color grade, shallow depth of field, visible dust motes drifting through the lamp light. Absolutely not cartoon, not 3D-render, not video-game engine look, not animated.
 <span class="fk">[TECHNICAL]</span> 35mm-lens-equivalent look, subtle film grain, his face stays tack-sharp once revealed.
-<span class="fneg">[RULES / AVOID]</span> No loose or windblown hair at any point — turban stays on and fully covers his hair throughout. No grand architecture. No oversized or glowing moon. No magical glow effects on the quill or pen tip. No cartoon or 3D-render look. No modern elements. No left-to-right writing motion — Persian moves right to left. No fast or hurried pen movement — his hand is slow, calm, and deliberate, never a young scribe's speed.</div>
+<span class="fneg">[RULES / AVOID]</span> No loose or windblown hair at any point — turban stays on and fully covers his hair throughout. No grand architecture. No oversized or glowing moon. No magical glow, sparkle, or light-trail effects on the feather or its tip — its beauty is in the natural peacock-eye pattern, not a special effect. No cartoon or 3D-render look. No modern elements. No left-to-right writing motion — Persian moves right to left. No fast or hurried pen movement. Face must match the established Ferdowsi likeness exactly — no drift into a different face. No light source anywhere in the shot that reads as electric — only the one visible oil-lamp flame.</div>
       <div class="pc-settings"><b>Modell:</b> seedance_2_0 · <b>Oppløsning:</b> 4k/std · <b>Sjanger:</b> drama · <b>Lyd:</b> av</div>
     </div>
 
@@ -1280,6 +1324,167 @@
         <li>Sluttkort-språk (shot 31): engelsk alene, eller engelsk + persisk (anbefalt).</li>
         <li>Shot 6 (Tahmineh eldre binder armbånd på Sohrab) er bevisst komponert som hender/ansikt-nærbilde for å unngå en ny «eldre Tahmineh»-karakterlås — bekreft at dette er greit, eller be om en fullverdig ansikts-Soul Cast for henne i den alderen.</li>
         <li>Gordafarid bekreftet fortsatt utenfor denne versjonen (Khabats eksplisitte instruks, v6).</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="v7">
+    <h2><span class="idx">13</span> MASTER FILM v7 — 03:33 FESTIVAL CUT <span style="color:var(--gold-bright);font-weight:700;">— LÅST, AKTIV PRODUKSJONSMASTER</span></h2>
+    <p class="sec-lede">Låst 11. aug 2026. v6 over er <b>uendret og fryst</b> som forrige historiske versjon — v7 patcher den ikke, den står på egne ben og er nå aktiv produksjonsmaster. Full begrunnelse, sju-punkts sjekk mot manuset og full GO/NO-GO-produksjonsrapport: <a href="https://claude.ai/code/artifact/9a74e818-1f01-454d-b102-19c426ebd661" style="color:var(--gold-bright);">full audit + readiness-artifact →</a></p>
+
+    <div class="must" style="border-color:rgba(176,67,44,0.35);background:rgba(176,67,44,0.08);margin-bottom:16px;">
+      <div class="must-title" style="color:#e08a6f;">Revisjonsfunn — v6s egen «265 sek, verifisert rad for rad» stemmer ikke</div>
+      <ul>
+        <li>Skotlisten (seksjon 10) summerer faktisk til <b>267 sek (4:27)</b>, ikke 265 — en 2-sekunders regnefeil i selve dokumentet.</li>
+        <li>De faktiske Seedance-promptene (seksjon 09 — det som faktisk genereres) summerer til kun <b>257 sek (4:17)</b>. Ni shots har en tabell-varighet som er lengre enn det egen prompt beskriver — størst avvik shot 9 (tabell 15s / prompt 11s) og shot 13 (tabell 14s / prompt 9s).</li>
+        <li>v7 under bruker 267s som ærlig utgangspunkt (tabellens egen sum) og bygger hver ny varighet fra reelt innhold, slik at tabell og prompt stemmer overens igjen.</li>
+      </ul>
+    </div>
+
+    <div class="must" style="border-color:var(--gold);background:rgba(201,162,39,0.1);margin-bottom:18px;">
+      <div class="must-title" style="color:var(--gold-bright);">Hva som endret seg — kort</div>
+      <ul>
+        <li><b>Utvidet, ikke kuttet:</b> shot 18 (dolkstøtet, +2s) og shot 21 (Rostams kollaps, +4s) — de eneste to shotsene i filmen som vokser, finansiert av alt annet.</li>
+        <li><b>Slått sammen (MERGE):</b> shot 3+4 → én 9s orbit (armeer + Sohrab som speider); shot 5+6 → én 7s armbånd-match-cut; shot 12+13 → én 12s pin-til-løgn-bevegelse (samme fysiske handling, ingen innholdstap).</li>
+        <li><b>Fjernet (REMOVE):</b> shot 7 (Sohrab rir ut fra porten) — tredje gjentakelse av «han drar», allerede etablert av shot 4 og 6.</li>
+        <li><b>Uendret, beskyttet:</b> shot 9, 13(nå del av 12/13), 15–16, 19, 20, 22, 23–24, 26, 27 — v6s egen «aldri kutt»-liste er fulgt 100 %.</li>
+        <li>Resten er luft trimmet fra forbindende shots (1–2s hver) — ingen av dem mister funksjon.</li>
+      </ul>
+    </div>
+
+    <table>
+      <tr><th>#</th><th>TC</th><th>Sek</th><th>Scene / handling</th><th>Endring fra v6</th></tr>
+      <tr><td class="k">Ident</td><td class="num">00:00–00:03</td><td class="num">3.0</td><td>«SHAHNAMEH» gulltittelkort</td><td>Nå talt med i tiden</td></tr>
+      <tr><td class="k">1A</td><td class="num">00:03–00:09</td><td class="num">6.0</td><td>Orbital nedstigning mot Tus</td><td>Kortet 9→6s</td></tr>
+      <tr><td class="k">1B</td><td class="num">00:09–00:15</td><td class="num">6.0</td><td>Sakte reveal, Ferdowsis ansikt</td><td>Kortet 10→6s (4–5s-minimum beholdt)</td></tr>
+      <tr class="crit"><td class="k">2</td><td class="num">00:15–00:21</td><td class="num">6.0</td><td>Blekk → jord → sverd — <b>hero #5</b></td><td>Kortet 7→6s</td></tr>
+      <tr><td class="k">3</td><td class="num">00:21–00:30</td><td class="num">9.0</td><td>Én orbit: begge hærer → finner Sohrab som speider</td><td><b>MERGE</b> gamle 3+4 (15s→9s)</td></tr>
+      <tr><td class="k">5/6</td><td class="num">00:30–00:37</td><td class="num">7.0</td><td>Armbånd-match-cut: ung Rostam/Tahmineh → eldre Tahmineh/Sohrab</td><td><b>MERGE</b> gamle 5+6 (12s→7s)</td></tr>
+      <tr><td class="k">8</td><td class="num">00:37–00:41</td><td class="num">4.0</td><td>Rostam bryter ut fra linjen, kappe-skjult</td><td>Kortet 5→4s</td></tr>
+      <tr class="crit"><td class="k">9</td><td class="num">00:41–00:51</td><td class="num">10.0</td><td>«Are you Rostam?» / «I am no one» — <b>hjerteslag #1</b></td><td>Kortet til reelt innhold, 11→10s</td></tr>
+      <tr><td class="k">10</td><td class="num">00:51–00:59</td><td class="num">8.0</td><td>Lanser, avmontert, sverd, never</td><td>Kortet 10→8s</td></tr>
+      <tr><td class="k">11</td><td class="num">00:59–01:05</td><td class="num">6.0</td><td>«You fight like the man in my mother's stories»</td><td>Kortet 7→6s</td></tr>
+      <tr class="crit"><td class="k">12/13</td><td class="num">01:05–01:17</td><td class="num">12.0</td><td>Pin, dolk trukket → den falske regelen → Sohrab slipper — <b>hero #4</b></td><td><b>MERGE</b>, høyrestørrelse, ikke komprimert</td></tr>
+      <tr><td class="k">14</td><td class="num">01:17–01:21</td><td class="num">4.0</td><td>Sohrab alene, håpefullt blikk</td><td>Kortet 6→4s</td></tr>
+      <tr class="crit"><td class="k">15</td><td class="num">01:21–01:28</td><td class="num">7.0</td><td>Sohrabs leir, fortsatt håpefull</td><td>Uendret — beskyttet</td></tr>
+      <tr class="crit"><td class="k">16</td><td class="num">01:28–01:37</td><td class="num">9.0</td><td>Rostams leir, match cut, soloppgang</td><td>Uendret — beskyttet</td></tr>
+      <tr><td class="k">17</td><td class="num">01:37–01:42</td><td class="num">5.0</td><td>Andre basketak, Sohrab kastes ned hardt</td><td>Kortet 6→5s</td></tr>
+      <tr class="crit"><td class="k">18</td><td class="num">01:42–01:50</td><td class="num">8.0</td><td>Dolkstøtet, ramp inn i slow-motion — <b>hero #2</b></td><td><b>UTVIDET</b> 6→8s</td></tr>
+      <tr class="crit"><td class="k">19</td><td class="num">01:50–01:58</td><td class="num">8.0</td><td>«Find Rostam...» / «What sign do you have from him?»</td><td>Uendret — beskyttet</td></tr>
+      <tr class="crit"><td class="k">20</td><td class="num">01:58–02:06</td><td class="num">8.0</td><td>Armbånd avslørt, «I am Rostam», Sohrab dør</td><td>Uendret — beskyttet</td></tr>
+      <tr class="crit"><td class="k">21</td><td class="num">02:06–02:19</td><td class="num">13.0</td><td>Sjokk → sammenbrudd → gråt — <b>HERO #1</b></td><td><b>UTVIDET</b> 9→13s, størst i hele kuttet</td></tr>
+      <tr class="crit"><td class="k">22</td><td class="num">02:19–02:23</td><td class="num">4.0</td><td>Ferdowsis penn stopper — <b>hjerteslag #3</b></td><td>Uendret — beskyttet</td></tr>
+      <tr class="crit"><td class="k">23</td><td class="num">02:23–02:34</td><td class="num">11.0</td><td>Rostam river rustning, støv på hodet</td><td>Kun tabell-rettelse, 15→11s (=reelt innhold)</td></tr>
+      <tr class="crit"><td class="k">24</td><td class="num">02:34–02:43</td><td class="num">9.0</td><td>Remmer, skrik, soldater holder ham oppe</td><td>Uendret — beskyttet</td></tr>
+      <tr><td class="k">25</td><td class="num">02:43–02:51</td><td class="num">8.0</td><td>Begge hærer i stillhet; rytteren kommer for sent</td><td><b>MERGE</b>+kortet, 15–16s→8s</td></tr>
+      <tr class="crit"><td class="k">26</td><td class="num">02:51–02:56</td><td class="num">5.0</td><td>Rostam holder Sohrab, tåren</td><td>Uendret — beskyttet</td></tr>
+      <tr class="crit"><td class="k">27</td><td class="num">02:56–03:07</td><td class="num">11.0</td><td>CRITICAL HERO SHOT — Rostam-øye → Ferdowsi-øye — <b>hero #3</b></td><td>Uendret — ikke-forhandlbar</td></tr>
+      <tr><td class="k">28</td><td class="num">03:07–03:13</td><td class="num">6.0</td><td>4 minnefragmenter (var 5) — barn, bord, dødsleie, tomt rom</td><td>Kortet 9→6s, ett fragment fjernet</td></tr>
+      <tr><td class="k">29</td><td class="num">03:13–03:17</td><td class="num">4.0</td><td>Ferdowsi hviler hånden over linjen</td><td>Kortet 6→4s</td></tr>
+      <tr class="crit"><td class="k">30</td><td class="num">03:17–03:27</td><td class="num">10.0</td><td>Pull-back — hero #6</td><td>Kortet 13→10s, allerede flagget trygt i v6</td></tr>
+      <tr><td class="k">31</td><td class="num">03:27–03:33</td><td class="num">6.0</td><td>Sluttkort</td><td>Kortet 8→6s</td></tr>
+    </table>
+    <p class="foot-note">Sum: 213,0 sek = 03:33 nøyaktig, 29 beats (var 31 shots). Alle seks hero-shots og alle tre hjerteslagpunkter uendret eller utvidet.</p>
+
+    <div class="must" style="border-color:var(--gold);background:rgba(201,162,39,0.1);margin-top:16px;">
+      <div class="must-title" style="color:var(--gold-bright);">Besluttet 11. aug — alle seks punkter</div>
+      <ul>
+        <li><b>Ident inni 03:33, ikke pre-roll</b> — bekreftet, ingen endring i tidslinjen (den var allerede bygget slik).</li>
+        <li><b>Shot 7 fjernet</b> — bekreftet, sjekket på nytt mot manus: ingen sterk grunn i kildeteksten til å beholde den.</li>
+        <li><b>29 beats beholdes, 33 ikke tvunget frem.</b></li>
+        <li><b>Sammenslåtte shots kan produseres som flere Seedance-genereringer klippet sammen</b> hvis det gir bedre kontinuitet/kvalitet enn ett langt take.</li>
+        <li><b>v6 patches ikke</b> — står urørt som historisk forrige versjon.</li>
+        <li><b>v7 er aktiv produksjonsmaster</b> fra nå av.</li>
+      </ul>
+    </div>
+
+    <div class="must" style="border-color:rgba(176,67,44,0.35);background:rgba(176,67,44,0.08);margin-top:12px;">
+      <div class="must-title" style="color:#e08a6f;">GO / NO-GO produksjonsklarhet — NO-GO i dag, men kun på budsjett</div>
+      <ul>
+        <li><b>Historie/struktur: GO.</b> Alle seks hero-shots beskyttet eller utvidet, kvalitetstesten bestått, ryggraden urørt.</li>
+        <li><b>Referanser: BETINGET GO — full lås-revisjon kjørt 11. aug, ned til nøyaktig 2 gjenstående stillbilder.</b> Armbånd og Rostams forkledning var dokumentasjonshull, ikke manglende kunst — begge løst uten ny generering. Full 9-kategoris revisjon (Ferdowsi/Rostam/Sohrab/Rakhsh/våpen/armbånd/rustningstilstander/miljø) på tvers av alle 29 beats: <a href="https://claude.ai/code/artifact/9a74e818-1f01-454d-b102-19c426ebd661" style="color:var(--gold-bright);">se full revisjonstabell →</a></li>
+        <li><b>Budsjett: NO-GO i dag.</b> Kontosaldo er <b>1,59 credits</b> på Starter-plan (bekreftet live) — ikke nok til én realistisk Seedance-videogenerering, langt mindre de ~29–46 forsøkene de seks hero-shotsene alene er anslått å trenge. Toppfyll kreditter før noe genereres, inkludert Shot 1.</li>
+        <li><b>Anbefalt genereringsrekkefølge når kreditter tillater det (risiko først, ikke kronologisk):</b> 1) shot 3 (ny orbit-sammenslåing) → 2) shot 21 (hero #1, kollaps) → 3) shot 27 (hero #3, øye→øye, høyest teknisk risiko) → 4) shot 12/13 (ny pin/løgn-sammenslåing) → 5) shot 1A (etablerer filmens visuelle register).</li>
+        <li>Full risikorangering, referansehull, genereringsplan per beat og alle uløste kontinuitetspunkter: se <a href="https://claude.ai/code/artifact/9a74e818-1f01-454d-b102-19c426ebd661" style="color:var(--gold-bright);">full GO/NO-GO-rapport →</a></li>
+      </ul>
+    </div>
+
+    <div class="must" style="border-color:var(--line);background:var(--card);margin-top:12px;">
+      <div class="must-title" style="color:var(--text-faint);">Referanse-lås-revisjon 11. aug — resultat: nøyaktig 2 stillbilder gjenstår</div>
+      <ul>
+        <li><b>Armbånd — løst.</b> <code>rostam-armband-studio.webp</code> (dimensjonert, refleks-makro, plassering over albuen) bekreftet som samme objekt som gammel referanse, kun mer komplett. Kopiert inn i produksjonsarkivet; erstatter <code>rostam-armband.png</code> som primær referanse for shot 5/6, 19/20, 26/27.</li>
+        <li><b>Rostams forkledning — bonus-funn.</b> <code>rostam-forkledning.webp</code> fantes allerede i sidearkivet, ubrukt — treffer CONTINUITY-CRITICAL-regelen (kappe skjuler babr-e bayan) eksakt. Kopiert inn i produksjonsarkivet, anbefalt for shot 8, 9, 10, 11, 12/13, 17, 18, 19.</li>
+        <li><b>Rostam-spyd — bekreftet MISSING, ikke antatt.</b> Rotårsak funnet i <code>10-rostam-visual-bible.md</code>: et kjent «bue ble bedt om som spyd»-forbytte — filen som skulle være spyd viste seg å være en bue. Rostams våpensett er på papiret «komplett» uten spyd. Sohrabs eget spyd (<code>sohrabs-spyd.webp</code>) er derimot bekreftet korrekt.</li>
+        <li><b>Shot 26 (<code>sohrabs-dod.png</code>) — bekreftet NEEDS UPDATE, eksakt spec satt.</b> Sjekket alle andre Sohrab-bilder i arkivet (turnaround, rustningsark, to poseringsark) — ingen viser kampskade. Én regenerering må dekke to ting samtidig: Rostams støv/revne remmer videreført fra shot 23–24, og Sohrabs egen støv/utmattelse/troverdig kampskade — samme ansikt, samme rustning, ingen redesign.</li>
+        <li><b>Konklusjon:</b> alle andre kategorier (Ferdowsi, Rakhsh, miljø, resten av våpensettet) er LOCKED. Full 9-kategoris tabell: <a href="https://claude.ai/code/artifact/9a74e818-1f01-454d-b102-19c426ebd661" style="color:var(--gold-bright);">se referanse-lås-revisjonen →</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="v8">
+    <h2><span class="idx">14</span> MASTER FILM v8 — 03:48 KOMPRIMERT <span style="color:var(--gold-bright);font-weight:700;">— LÅST, AKTIV STRUKTUR</span></h2>
+    <p class="sec-lede">Låst 12. aug 2026. v7 over er <b>uendret og fryst</b> som backup-versjon — v8 patcher den ikke, den står på egne ben. Legger Ferdowsis egen sønn Mehrak inn som en parallell far-sønn-akse til Rostam/Sohrab. Full beat sheet, aldersjekk mot Fase 1–4, og full/komprimert-sammenligning med begrunnelse: <a href="https://claude.ai/code/artifact/6852de52-e447-4aea-bbe7-13c7a469883d" style="color:var(--gold-bright);">full v8-proposal-artifact →</a></p>
+
+    <div class="must" style="border-color:var(--gold);background:rgba(201,162,39,0.1);margin-bottom:16px;">
+      <div class="must-title" style="color:var(--gold-bright);">Hva som er nytt — kort</div>
+      <ul>
+        <li><b>Mehrak var allerede der.</b> Hele karakteren (barn / voksen-konflikt / dødsleie, blå kappe som fast kontinuitetsfarge) fantes ferdig fra en økt 5.–6. aug, aldri flettet inn i selve filmen. v7s shot 28 var allerede en komprimert 6-sekunders Mehrak-montasje bygget på de samme fire bildene.</li>
+        <li><b>v8 pakker ut denne montasjen til fulle scener</b> i stedet for å legge til noe fra bunnen: (I) 5s barndoms-innstikk før shot 2, (II) 7s konfrontasjon mellom shot 16/17, (III) shot 22 utvidet 4→10s (speilkutt til det virkelige dødsleiet). Shot 28 trimmes til kun siste fragment (6→3s) siden resten nå fortelles fullt ut andre steder.</li>
+        <li><b>16B kutter bevisst Ferdowsis muntlige svar</b> ("alt dette er også for deg") — Rostam svarer heller aldri Sohrab i ord, bare i sorgen etterpå. To replikker (anklage, så stillhet) holder samme replikk-fattige språk som resten av filmen.</li>
+        <li><b>Komprimert (228,0s) valgt over full (232,0s)</b> — se artifact seksjon 05 for full begrunnelse. Ingen hero-shots er endret i noen av versjonene.</li>
+      </ul>
+    </div>
+
+    <table>
+      <tr><th>#</th><th>TC</th><th>Sek</th><th>Scene / handling</th><th>Status v8</th></tr>
+      <tr><td class="k">Ident</td><td class="num">00:00–00:03</td><td class="num">3.0</td><td>«SHAHNAMEH» gulltittelkort</td><td>Uendret</td></tr>
+      <tr><td class="k">1A</td><td class="num">00:03–00:09</td><td class="num">6.0</td><td>Orbital nedstigning mot Tus</td><td>Uendret</td></tr>
+      <tr><td class="k">1B</td><td class="num">00:09–00:15</td><td class="num">6.0</td><td>Sakte reveal, Ferdowsis ansikt (Fase 4, "seventies")</td><td>Uendret</td></tr>
+      <tr class="crit"><td class="k">1C</td><td class="num">00:15–00:20</td><td class="num">5.0</td><td>NYTT — hardt kutt tilbake: liten Mehrak, trehesten: «Baba, hvem er sterkest i hele verden?» Ferdowsi (Fase 1/2) peker mot manuskriptet</td><td><b>NY — Stage I</b></td></tr>
+      <tr class="crit"><td class="k">2</td><td class="num">00:20–00:26</td><td class="num">6.0</td><td>Blekk → jord → sverd — <b>hero #5</b></td><td>Uendret</td></tr>
+      <tr><td class="k">3</td><td class="num">00:26–00:35</td><td class="num">9.0</td><td>Orbit: begge hærer, finner Sohrab som speider</td><td>Uendret</td></tr>
+      <tr><td class="k">5/6</td><td class="num">00:35–00:42</td><td class="num">7.0</td><td>Armbånd-match-cut</td><td>Uendret</td></tr>
+      <tr><td class="k">8</td><td class="num">00:42–00:46</td><td class="num">4.0</td><td>Rostam bryter ut fra linjen, kappe-skjult</td><td>Uendret</td></tr>
+      <tr class="crit"><td class="k">9</td><td class="num">00:46–00:56</td><td class="num">10.0</td><td>«Are you Rostam?» — <b>hjerteslag #1</b></td><td>Uendret</td></tr>
+      <tr><td class="k">10</td><td class="num">00:56–01:04</td><td class="num">8.0</td><td>Lanser, avmontert, sverd</td><td>Uendret</td></tr>
+      <tr><td class="k">11</td><td class="num">01:04–01:10</td><td class="num">6.0</td><td>«You fight like the man in my mother's stories»</td><td>Uendret</td></tr>
+      <tr class="crit"><td class="k">12/13</td><td class="num">01:10–01:22</td><td class="num">12.0</td><td>Pin, dolk, den falske regelen, slipper — <b>hero #4</b></td><td>Urørt</td></tr>
+      <tr><td class="k">14</td><td class="num">01:22–01:26</td><td class="num">4.0</td><td>Sohrab alene, håpefullt blikk</td><td>Uendret</td></tr>
+      <tr class="crit"><td class="k">15</td><td class="num">01:26–01:33</td><td class="num">7.0</td><td>Sohrabs leir, fortsatt håpefull</td><td>Beskyttet</td></tr>
+      <tr class="crit"><td class="k">16</td><td class="num">01:33–01:42</td><td class="num">9.0</td><td>Rostams leir, match cut, soloppgang</td><td>Beskyttet</td></tr>
+      <tr class="crit"><td class="k">16B</td><td class="num">01:42–01:49</td><td class="num">7.0</td><td>NYTT — Mehrak (Fase 3, blå kappe) konfronterer Ferdowsi: «Du kjenner alle fedrene og sønnene i boken din. Kjenner du meg?» / «Jeg trengte deg. Ikke kongene dine.» Markert som dramatisert, ikke historisk sitat.</td><td><b>NY — Stage II</b></td></tr>
+      <tr><td class="k">17</td><td class="num">01:49–01:54</td><td class="num">5.0</td><td>Andre basketak, Sohrab kastes ned hardt</td><td>Uendret</td></tr>
+      <tr class="crit"><td class="k">18</td><td class="num">01:54–02:02</td><td class="num">8.0</td><td>Dolkstøtet — <b>hero #2</b></td><td>Urørt</td></tr>
+      <tr class="crit"><td class="k">19</td><td class="num">02:02–02:10</td><td class="num">8.0</td><td>«Find Rostam...»</td><td>Beskyttet</td></tr>
+      <tr class="crit"><td class="k">20</td><td class="num">02:10–02:18</td><td class="num">8.0</td><td>Armbånd avslørt, «I am Rostam», Sohrab dør</td><td>Beskyttet</td></tr>
+      <tr class="crit"><td class="k">21</td><td class="num">02:18–02:31</td><td class="num">13.0</td><td>Sjokk → sammenbrudd → gråt — <b>HERO #1</b></td><td>Urørt</td></tr>
+      <tr class="crit"><td class="k">22</td><td class="num">02:31–02:41</td><td class="num">10.0</td><td>Pennen stopper (4s, som v7) → hardt kutt: Ferdowsi (Fase 3) ved Mehraks faktiske dødsleie, hele familien, samme kroppskomposisjon</td><td><b>UTVIDET — Stage III</b> 4→10s</td></tr>
+      <tr class="crit"><td class="k">23</td><td class="num">02:41–02:52</td><td class="num">11.0</td><td>Rostam river rustning, støv på hodet</td><td>Beskyttet</td></tr>
+      <tr class="crit"><td class="k">24</td><td class="num">02:52–03:01</td><td class="num">9.0</td><td>Remmer, skrik, soldater holder ham oppe</td><td>Beskyttet</td></tr>
+      <tr><td class="k">25</td><td class="num">03:01–03:09</td><td class="num">8.0</td><td>Begge hærer i stillhet; rytteren for sent</td><td>Uendret</td></tr>
+      <tr class="crit"><td class="k">26</td><td class="num">03:09–03:14</td><td class="num">5.0</td><td>Rostam holder Sohrab, tåren</td><td>Beskyttet</td></tr>
+      <tr class="crit"><td class="k">27</td><td class="num">03:14–03:25</td><td class="num">11.0</td><td>CRITICAL HERO SHOT — Rostam-øye → Ferdowsi-øye — <b>hero #3</b></td><td>Urørt</td></tr>
+      <tr class="crit"><td class="k">28</td><td class="num">03:25–03:28</td><td class="num">3.0</td><td>Ned til 1 fragment (av opprinnelig 4): rommet, tomt nå, teppet sammenlagt — de tre andre er kuttet, siden barndom/konflikt/dødsleie nå fortelles fullt ut andre steder</td><td><b>TRIMMET — dedup</b> 6→3s</td></tr>
+      <tr><td class="k">29</td><td class="num">03:28–03:32</td><td class="num">4.0</td><td>Ferdowsi (Fase 4, samme «nå») hviler hånden over linjen — [CONTINUATION]-linjen trenger liten redigering for å referere det kortede shot 28</td><td>Uendret varighet, prompt-fiks</td></tr>
+      <tr class="crit"><td class="k">30</td><td class="num">03:32–03:42</td><td class="num">10.0</td><td>Pull-back — <b>hero #6</b></td><td>Urørt</td></tr>
+      <tr><td class="k">31</td><td class="num">03:42–03:48</td><td class="num">6.0</td><td>Sluttkort</td><td>Uendret</td></tr>
+    </table>
+    <p class="foot-note">Sum: 228,0 sek = 03:48 nøyaktig, 31 beats (var 29 i v7). Alle seks hero-shots og begge gjenværende hjerteslagpunkter uendret eller beskyttet — ingen kuttet for å gi plass.</p>
+
+    <div class="must" style="border-color:rgba(176,67,44,0.35);background:rgba(176,67,44,0.08);margin-top:12px;">
+      <div class="must-title" style="color:#e08a6f;">NEW GENERATION ONLY — dette og bare dette trenger ny generering</div>
+      <ul>
+        <li><b>Ingen nye referansebilder kreves.</b> Alle tre Mehrak-fasene har allerede produksjonsklare stillbilder i arkivet — <code>ferdowsi-mehrak-barn-scene.png</code>, <code>ferdowsi-mehrak-voksen-konflikt.png</code>, <code>mehrak-lastdays-v2-family.png</code>, <code>ferdowsi-etter-sonnens-dod.png</code>. Ingen karaktergenerering, kun video fra eksisterende, godkjente referanser.</li>
+        <li><b>3 nye Seedance-videoprompts må skrives</b> (samme feltformat som resten av seksjon 09 — DURATION/ENVIRONMENT/CHARACTERS/ACTION ARC/CAMERA/osv.) — ingen av disse finnes i noen form ennå:
+          <ul>
+            <li>Shot 1C — 5 sekunder, referanse <code>ferdowsi-mehrak-barn-scene.png</code></li>
+            <li>Shot 16B — 7 sekunder, referanse <code>ferdowsi-mehrak-voksen-konflikt.png</code></li>
+            <li>Shot 22 (ny del) — 6 nye sekunder lagt til den eksisterende 4s «pennen stopper»-prompten, referanse <code>mehrak-lastdays-v2-family.png</code></li>
+          </ul>
+        </li>
+        <li><b>2 eksisterende prompts trenger en liten redigering, ikke ny generering:</b> shot 28 (kortes fra 4 fragmenter/6s til 1 fragment/3s) og shot 29 (<code>[CONTINUATION]</code>-linjen oppdateres til å referere det kortede shot 28).</li>
+        <li><b>Alt annet i v8 er 100 % identisk med v7</b> — samme 26 uendrede shots, samme prompts, samme referanser, ingen endring, ingen ny generering.</li>
+        <li><b>Ingen video er generert for noe shot i v7 eller v8 ennå</b> — budsjettsperren fra 11. aug er løst (2001,59 → 1997,59 credits etter de to siste referansebildene), men selve videogenereringen for hero-shots og alt annet gjenstår som egen, separat beslutning. Denne listen dekker kun v8s egen delta, ikke v7s allerede eksisterende, ugenererte 29 beats.</li>
       </ul>
     </div>
   </section>

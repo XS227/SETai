@@ -24,7 +24,7 @@
     var el = document.getElementById('formStatus');
     if (!el) return;
     el.innerHTML = html;
-    el.style.color = ok ? '#1e9b62' : '#c93f3f';
+    el.style.color = ok ? '#187d4f' : '#c93f3f';
     el.style.fontWeight = '600';
   }
 

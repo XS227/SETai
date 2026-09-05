@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://seo.setai.no/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
-  <url><loc>https://seo.setai.no/seo-agency-norway/</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://seo.setai.no/seo-byr%C3%A5-oslo/</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://seo.setai.no/ai-seo-norway/</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://seo.setai.no/shopify-seo-norway/</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://seo.setai.no/saas-seo/</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://setai.no/seo/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://setai.no/seo/seo-agency-norway/</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://setai.no/seo/seo-byr%C3%A5-oslo/</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://setai.no/seo/ai-seo-norway/</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://setai.no/seo/shopify-seo-norway/</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://setai.no/seo/saas-seo/</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
 </urlset>

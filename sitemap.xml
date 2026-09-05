@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://setai.no/</loc></url>
+  <url><loc>https://setai.no/en/</loc></url>
   <url><loc>https://setai.no/services/</loc></url>
   <url><loc>https://setai.no/services/cto-oslo/</loc></url>
   <url><loc>https://setai.no/services/ai-ekspert-oslo/</loc></url>
@@ -9,6 +10,12 @@
   <url><loc>https://setai.no/services/web-design-oslo/</loc></url>
   <url><loc>https://setai.no/services/seo-oslo/</loc></url>
   <url><loc>https://setai.no/services/ai-automation/</loc></url>
+  <url><loc>https://setai.no/seo/</loc></url>
+  <url><loc>https://setai.no/seo/seo-agency-norway/</loc></url>
+  <url><loc>https://setai.no/seo/seo-byr%C3%A5-oslo/</loc></url>
+  <url><loc>https://setai.no/seo/ai-seo-norway/</loc></url>
+  <url><loc>https://setai.no/seo/shopify-seo-norway/</loc></url>
+  <url><loc>https://setai.no/seo/saas-seo/</loc></url>
   <url><loc>https://setai.no/blog/</loc></url>
   <url><loc>https://setai.no/blog/hva-gjor-en-fractional-cto/</loc></url>
   <url><loc>https://setai.no/blog/ai-ekspert-vs-ai-utvikler-norge/</loc></url>
@@ -22,6 +29,8 @@
   <url><loc>https://setai.no/blog/hva-koster-saas-produkt-norge/</loc></url>
   <url><loc>https://setai.no/blog/hva-koster-automatisering-liten-bedrift/</loc></url>
   <url><loc>https://setai.no/blog/tegn-pa-at-startupet-trenger-cto/</loc></url>
+  <url><loc>https://setai.no/blog/hvor-lang-tid-tar-det-a-bygge-nettside-bedrift/</loc></url>
+  <url><loc>https://setai.no/blog/wordpress-vs-skreddersydd-nettside/</loc></url>
   <url><loc>https://setai.no/services/landing-pages/</loc></url>
   <url><loc>https://setai.no/services/ecommerce/</loc></url>
   <url><loc>https://setai.no/industries/</loc></url>
@@ -32,4 +41,6 @@
   <url><loc>https://setai.no/projects/</loc></url>
   <url><loc>https://setai.no/projects/realgram/</loc></url>
   <url><loc>https://setai.no/blog/realgram-okosystem-vpn-spill-token/</loc></url>
+  <url><loc>https://setai.no/blog/slik-kommer-bedriften-i-gang-med-ai/</loc></url>
+  <url><loc>https://setai.no/blog/hvor-lang-tid-tar-seo-a-virke/</loc></url>
 </urlset>
