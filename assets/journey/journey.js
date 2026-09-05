@@ -7,6 +7,7 @@ const chapters=[...document.querySelectorAll('.chapter-nav a')];
 const reduced=matchMedia('(prefers-reduced-motion: reduce)');
 const film=document.getElementById('world-film');
 const filmButton=document.getElementById('film-toggle');
+const nextBtn=document.getElementById('next-scene');
 const clamp=(v,a=0,b=1)=>Math.min(b,Math.max(a,v));
 const smooth=v=>{v=clamp(v);return v*v*(3-2*v)};
 let frame=0,current=0,motion=false,userPaused=false,language='no';
@@ -51,6 +52,7 @@ function update(){
  });
  chapters.forEach((a,i)=>a.setAttribute('aria-current',String(i===active)));
  document.getElementById('chapter-label').textContent=`0${active+1} / ${scenes[active].dataset.chapter}`;
+ nextBtn.textContent=active===last?(language==='en'?'Back to top ↑':'Tilbake til toppen ↑'):(language==='en'?'Scroll to explore ↓':'Scroll for å utforske ↓');
  if(active===filmSceneIndex&&!document.hidden&&!reduced.matches&&!userPaused&&!navigator.connection?.saveData){if(film.paused)playFilm()}else if(!film.paused){film.pause()}
 }
 function requestUpdate(){if(!frame)frame=requestAnimationFrame(update)}
@@ -68,7 +70,7 @@ function goTo(index){
  else scenes[index].scrollIntoView({behavior:reduced.matches?'auto':'smooth'});
 }
 document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{const index=scenes.findIndex(s=>'#'+s.id===a.getAttribute('href'));if(index<0)return;e.preventDefault();history.replaceState(null,'','#'+scenes[index].id);goTo(index)}));
-document.getElementById('next-scene').addEventListener('click',()=>goTo(current===scenes.length-1?0:current+1));
+nextBtn.addEventListener('click',()=>goTo(current===scenes.length-1?0:current+1));
 window.addEventListener('scroll',requestUpdate,{passive:true});
 let resizeTimer;
 window.addEventListener('resize',()=>{clearTimeout(resizeTimer);resizeTimer=setTimeout(configure,120)},{passive:true});
