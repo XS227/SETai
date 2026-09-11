@@ -22,6 +22,7 @@ This file is a plain-language index for AI assistants and crawlers. It does not 
 ## About
 - [Prosjekter](https://setai.no/projects/): [REALGRAM](https://setai.no/projects/realgram/) (VPN + game + token economy + messaging ecosystem — ReaLink, Shahnameh, REAL/ZAR), Numerologist AI
 - [Blogg](https://setai.no/blog/): articles on AI, websites, SEO and automation for Norwegian businesses
+- [Does the Sea Break?](https://setai.no/blog/aya-darya-mishekanad-molana-navier-stokes/): Persian essay connecting Rumi, the Navier–Stokes smoothness problem, and Black & White Universe
 
 ## Contact
 - Oslo, Norway — khabat.setaei@gmail.com — https://setai.no/#contact
