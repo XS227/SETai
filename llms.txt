@@ -22,7 +22,7 @@ This file is a plain-language index for AI assistants and crawlers. It does not 
 ## About
 - [Prosjekter](https://setai.no/projects/): [REALGRAM](https://setai.no/projects/realgram/) (VPN + game + token economy + messaging ecosystem — ReaLink, Shahnameh, REAL/ZAR), Numerologist AI
 - [Blogg](https://setai.no/blog/): articles on AI, websites, SEO and automation for Norwegian businesses
-- [What Is Still Unsolved About the Navier–Stokes Equation?](https://setai.no/blog/what-is-unsolved-about-navier-stokes-rumi/): English guide to existence, smoothness and blow-up, with Rumi’s Persian verses and English translations
+- [What Is Still Unsolved About the Navier–Stokes Equation?](https://setai.no/blog/what-is-unsolved-about-navier-stokes-rumi/): English guide separating the open mathematical problem from Rumi’s philosophical answer—no, the same form does not remain forever—with Persian verses and English translations
 
 ## Contact
 - Oslo, Norway — khabat.setaei@gmail.com — https://setai.no/#contact

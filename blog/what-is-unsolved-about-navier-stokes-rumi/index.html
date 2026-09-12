@@ -4,17 +4,22 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>What Is Unsolved About the Navier–Stokes Equation? | SETAEI</title>
-  <meta name="description" content="What remains unsolved in the 3D Navier–Stokes equations? A clear guide to existence, smoothness and blow-up, explored through Rumi’s poetry.">
+  <meta name="description" content="What remains unsolved in 3D Navier–Stokes—and why Rumi’s philosophical answer would be no: the form changes while the flow continues.">
   <meta name="keywords" content="what is unsolved about Navier Stokes, is Navier Stokes solved, Navier Stokes existence and smoothness explained, Navier Stokes Millennium Prize Problem, Rumi Navier Stokes, Molana poetry science, Black and White Universe">
   <link rel="canonical" href="https://setai.no/blog/what-is-unsolved-about-navier-stokes-rumi/">
   <meta property="og:type" content="article">
   <meta property="og:title" content="What Is Unsolved About the Navier–Stokes Equation?">
-  <meta property="og:description" content="The exact 3D existence-and-smoothness question—then a philosophical reading through Rumi’s Persian poetry and Black &amp; White Universe.">
+  <meta property="og:description" content="Mathematics says the question remains open. Rumi’s philosophical answer would be no: the same form does not remain forever.">
   <meta property="og:url" content="https://setai.no/blog/what-is-unsolved-about-navier-stokes-rumi/">
   <meta property="og:site_name" content="SETAEI">
-  <meta name="twitter:card" content="summary">
+  <meta property="og:image" content="https://setai.no/assets/blog/navier-stokes-rumi-answer-no-en.webp">
+  <meta property="og:image:width" content="1672">
+  <meta property="og:image:height" content="941">
+  <meta property="og:image:alt" content="Navier–Stokes infographic showing Rumi’s philosophical answer: no">
+  <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="What Is Unsolved About the Navier–Stokes Equation?">
-  <meta name="twitter:description" content="Existence, smoothness and possible blow-up—explained clearly, then read through Rumi’s poetry.">
+  <meta name="twitter:description" content="Rumi’s philosophical answer would be no: the same form changes, while the flow continues through renewal.">
+  <meta name="twitter:image" content="https://setai.no/assets/blog/navier-stokes-rumi-answer-no-en.webp">
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
   <meta name="google-site-verification" content="WRUluLzpLR0S0ly8fGmWj9uAyz2d6l1rYXXvK7YBfRg">
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-28EZMGVX60"></script>
@@ -34,8 +39,9 @@
     "author": { "@type": "Person", "name": "Khabat Setaei", "url": "https://setai.no" },
     "publisher": { "@type": "Organization", "name": "SETAEI", "logo": { "@type": "ImageObject", "url": "https://setai.no/assets/brand/favicon.png" } },
     "datePublished": "2026-09-11",
-    "dateModified": "2026-09-11",
+    "dateModified": "2026-09-12",
     "mainEntityOfPage": { "@type": "WebPage", "@id": "https://setai.no/blog/what-is-unsolved-about-navier-stokes-rumi/" },
+    "image": "https://setai.no/assets/blog/navier-stokes-rumi-answer-no-en.webp",
     "about": [
       { "@type": "Thing", "name": "Navier–Stokes existence and smoothness" },
       { "@type": "Person", "name": "Rumi" },
@@ -76,6 +82,11 @@
       },
       {
         "@type": "Question",
+        "name": "Would Rumi answer yes or no to whether a smooth flow remains smooth forever?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Rumi's philosophical answer would be no. The same form does not remain unchanged forever; it changes, dissolves and is renewed, while the underlying flow continues. This is an interpretation of his poetry, not a mathematical proof." }
+      },
+      {
+        "@type": "Question",
         "name": "Did Rumi solve or predict the Navier–Stokes problem?",
         "acceptedAnswer": { "@type": "Answer", "text": "No. Rumi did not formulate or solve the mathematical problem. His poetry offers a philosophical vocabulary for thinking about flow, continuity, form, change and the limits of representation." }
       }
@@ -108,11 +119,12 @@
       </div>
 
       <section class="article-body essay-body">
-        <p class="article-meta">By Khabat Setaei · 11 September 2026 · 12 min read</p>
+        <p class="article-meta">By Khabat Setaei · Published 11 September 2026 · Updated 12 September 2026 · 12 min read</p>
 
         <div class="answer-box">
-          <span>THE SHORT ANSWER</span>
-          <p><strong>The unsolved question is whether every smooth three-dimensional incompressible flow remains smooth for all time.</strong> Mathematicians know that suitable solutions begin to evolve, but they cannot yet prove that those solutions always avoid a finite-time singularity—or produce an example showing that a singularity must occur.</p>
+          <span>TWO ANSWERS · ONE IMPORTANT DISTINCTION</span>
+          <p><strong>Mathematics: still unknown.</strong> No accepted proof shows whether every smooth three-dimensional incompressible flow remains smooth for all time or whether a finite-time singularity can form.</p>
+          <p class="rumi-no-answer"><strong>Rumi’s philosophical answer: NO.</strong> The same form does not remain unchanged forever. It changes, dissolves and is renewed—while the underlying flow continues.</p>
         </div>
 
         <p class="lead">The Navier–Stokes equations describe how fluids such as water and air move. They work extraordinarily well in science and engineering. Yet in three dimensions, their deepest mathematical guarantee is missing: can a perfectly regular flow ever drive itself into infinite velocity or infinitely sharp variation in finite time?</p>
@@ -125,17 +137,14 @@
 
         <div class="callout boundary-note"><strong>An essential boundary:</strong> Rumi did not solve, formulate or predict the Navier–Stokes problem. The mathematical explanation below follows the formal problem. The Rumi connection is an interpretive philosophical lens—not a proof.</div>
 
-        <figure class="ns-map" aria-labelledby="ns-map-caption">
-          <div class="ns-start"><span>START</span><strong>Smooth 3D initial flow</strong><small>finite energy · incompressible</small></div>
-          <div class="ns-arrow" aria-hidden="true">↓</div>
-          <div class="ns-evolution"><span>THE EQUATIONS EVOLVE IT</span><strong>What happens for all future time?</strong></div>
-          <div class="ns-arrow split" aria-hidden="true">↙ &nbsp;&nbsp; ↘</div>
-          <div class="ns-outcomes">
-            <div class="ns-outcome smooth"><span>WHITE</span><strong>Global smoothness</strong><small>No singularity ever forms</small></div>
-            <div class="ns-outcome singular"><span>BLACK</span><strong>Finite-time blow-up</strong><small>A singularity can form</small></div>
-          </div>
-          <figcaption id="ns-map-caption">The Millennium Prize problem asks for a rigorous proof of one side: universal smoothness or a valid counterexample.</figcaption>
+        <figure class="essay-figure rumi-answer-figure">
+          <img src="/assets/blog/navier-stokes-rumi-answer-no-en.webp" alt="English Navier–Stokes infographic showing Rumi’s philosophical answer as no: the same form changes while the flow continues" width="1672" height="941" loading="eager" fetchpriority="high">
+          <figcaption>Rumi’s philosophical answer is <strong>no</strong>: a particular form does not remain forever. This does not settle the mathematical Millennium Prize Problem.</figcaption>
         </figure>
+
+        <h2 class="early-answer">So, would Rumi answer yes or no?</h2>
+
+        <p><strong>No.</strong> Read through Rumi’s poetry, a smooth form would not remain identical forever. It would transform, dissolve and reappear through continual renewal. What persists is not the fixed shape of the wave, but the movement of the sea. This is the philosophical conclusion explored in this essay; the mathematical existence-and-smoothness question remains open.</p>
 
         <h2>What exactly is the Navier–Stokes existence and smoothness problem?</h2>
 
@@ -280,6 +289,9 @@
 
           <dt>Why can’t computer simulations prove smoothness?</dt>
           <dd>A simulation samples finite resolution, finite time and particular initial data. The theorem must cover every admissible smooth initial condition and all future time, including scales a finite computation cannot exhaust.</dd>
+
+          <dt>Would Rumi answer yes or no?</dt>
+          <dd><strong>No.</strong> In this philosophical reading, the same smooth form does not remain unchanged forever; it changes and is renewed, while the underlying flow continues. This is not a mathematical proof.</dd>
 
           <dt>Did Rumi solve the Navier–Stokes equation?</dt>
           <dd>No. The connection is philosophical. Rumi’s images of streams, waves, foam, form and formlessness offer a vocabulary for contemplating the problem, but they are not mathematical evidence.</dd>

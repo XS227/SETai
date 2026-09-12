@@ -208,6 +208,9 @@ section{margin-top:clamp(48px,8vw,96px)}
 .answer-box{margin:34px 0;padding:24px 26px;border:1px solid rgba(var(--terracotta),.48);border-radius:14px;background:linear-gradient(135deg,rgba(var(--terracotta),.14),rgba(255,255,255,.02))}
 .answer-box>span{font-family:var(--display);font-size:10px;font-weight:700;letter-spacing:.16em;color:var(--accent)}
 .answer-box p{margin:10px 0 0;font-size:18px;line-height:1.7}
+.answer-box .rumi-no-answer{margin-top:18px;padding:18px 20px;border-left:4px solid #d64032;border-radius:9px;background:rgba(176,34,24,.13);font-size:20px}
+.rumi-no-answer strong{display:block;margin-bottom:4px;font-family:var(--display);font-size:clamp(22px,3.5vw,29px);line-height:1.25;color:#ff8b7f}
+.early-answer{color:var(--accent)!important}
 .equation-card p{margin:14px 0 0;color:var(--muted);font-size:13px;line-height:1.6}
 .ns-map{margin:44px -6vw 24px;padding:clamp(24px,5vw,44px);border:1px solid var(--border);border-radius:16px;background:linear-gradient(160deg,#171716,#090909);text-align:center;box-shadow:0 24px 60px rgba(0,0,0,.3)}
 .ns-map span{display:block;font-family:var(--display);font-size:10px;font-weight:700;letter-spacing:.15em;color:var(--accent)}
