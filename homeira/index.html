@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>HOMEIRA — Story Preview v1 | SETAEI</title>
+  <meta name="description" content="HOMEIRA story experience — private preview v1 by SETAEI." />
+  <style>
+    :root{
+      --cocoa:#160806;
+      --cocoa2:#32120c;
+      --rust:#9e3f1e;
+      --cream:#f4e6cf;
+      --cream2:#d9c3a1;
+      --gold:#c79b52;
+      --ink:#170d08;
+      --p:0;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth;background:var(--cocoa);color:var(--cream)}
+    body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--cocoa);color:var(--cream);overflow-x:hidden}
+    a{color:inherit;text-decoration:none}
+    .noise{position:fixed;inset:0;pointer-events:none;z-index:30;opacity:.05;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.6'/%3E%3C/svg%3E")}
+    .progress{position:fixed;left:0;top:0;height:2px;width:100%;z-index:60;background:rgba(255,255,255,.08)}
+    .progress i{display:block;height:100%;width:100%;background:var(--gold);transform:scaleX(0);transform-origin:left center}
+    .topbar{position:fixed;z-index:50;left:0;right:0;top:0;height:72px;padding:0 4vw;display:flex;align-items:center;justify-content:space-between;mix-blend-mode:difference;color:white;letter-spacing:.12em;text-transform:uppercase;font-size:11px}
+    .brand{font-weight:700}.review{opacity:.65}.navdot{display:inline-block;width:7px;height:7px;border:1px solid currentColor;border-radius:50%;margin-right:10px}
+    .scroll-cue{position:fixed;z-index:45;left:4vw;bottom:30px;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.62);mix-blend-mode:difference}
+    .scroll-cue:after{content:"";display:inline-block;width:42px;height:1px;background:currentColor;margin-left:12px;vertical-align:middle;animation:pulse 1.8s ease-in-out infinite}
+    @keyframes pulse{0%,100%{transform:scaleX(.35);transform-origin:left}50%{transform:scaleX(1);transform-origin:left}}
+
+    section{position:relative}
+    .sticky{position:sticky;top:0;height:100vh;overflow:hidden}
+    .eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:20px}
+    .display{font-family:Georgia,"Times New Roman",serif;font-weight:400;letter-spacing:-.045em;line-height:.91;margin:0}
+    .copy{font-size:clamp(16px,1.5vw,22px);line-height:1.5;color:rgba(244,230,207,.78);max-width:620px}
+
+    .hero{height:165vh;background:radial-gradient(circle at 74% 35%,#5d2415 0,#32120c 28%,#160806 69%)}
+    .hero .stage{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(340px,.92fr);align-items:center;padding:10vh 6vw 7vh;gap:5vw}
+    .hero-copy{position:relative;z-index:5;transform:translateY(calc(var(--heroP) * -42px));opacity:calc(1 - var(--heroP) * .35)}
+    .hero h1{font-size:clamp(78px,13vw,210px);color:var(--cream);text-transform:uppercase}
+    .hero h1 span{display:block;color:var(--gold);font-size:.27em;letter-spacing:.17em;margin:0 0 18px 7px;font-family:Inter,system-ui,sans-serif;font-weight:500}
+    .hero-sub{display:flex;gap:28px;align-items:flex-start;margin-top:34px}
+    .hero-sub .line{width:72px;height:1px;background:var(--gold);margin-top:14px;flex:none}
+    .hero-visual{position:relative;height:80vh;display:flex;align-items:center;justify-content:center;transform:translate3d(0,calc(var(--heroP) * -35px),0) scale(calc(1 + var(--heroP) * .17));filter:saturate(.92) contrast(1.03)}
+    .hero-img{width:min(74%,510px);height:76vh;object-fit:cover;border-radius:44% 44% 18px 18px;box-shadow:0 35px 100px rgba(0,0,0,.46);clip-path:inset(calc(var(--heroP) * 3%) 0 0 0 round 44% 44% 18px 18px)}
+    .hero-orbit{position:absolute;width:75%;aspect-ratio:1;border:1px solid rgba(199,155,82,.28);border-radius:50%;transform:rotate(calc(var(--heroP) * 24deg)) scale(calc(.8 + var(--heroP) * .18))}
+    .hero-orbit:before,.hero-orbit:after{content:"";position:absolute;width:9px;height:9px;border-radius:50%;background:var(--gold);box-shadow:0 0 25px rgba(199,155,82,.7)}
+    .hero-orbit:before{top:8%;left:23%}.hero-orbit:after{right:5%;bottom:27%}
+
+    .chapter{height:230vh;background:linear-gradient(180deg,#160806,#26100b 45%,#100706)}
+    .chapter .sticky{display:grid;grid-template-columns:42% 58%;align-items:center;padding:8vh 6vw}
+    .chapter-index{position:absolute;top:10vh;right:6vw;font-size:11px;letter-spacing:.15em;color:rgba(255,255,255,.35)}
+    .chapter-word{font-size:clamp(70px,10vw,168px);white-space:nowrap;color:rgba(244,230,207,.06);position:absolute;left:4vw;bottom:4vh;transform:translateX(calc(var(--storyP) * -18vw));text-transform:uppercase}
+    .portrait-frame{width:min(79%,470px);height:70vh;border:1px solid rgba(199,155,82,.24);border-radius:220px 220px 20px 20px;position:relative;overflow:hidden;background:linear-gradient(160deg,#4a1b10,#1a0907)}
+    .portrait-frame:after{content:"HOMEIRA";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-90deg);font-family:Georgia,serif;font-size:clamp(70px,9vw,145px);letter-spacing:.06em;color:rgba(244,230,207,.08);white-space:nowrap}
+    .portrait-glow{position:absolute;inset:12%;border-radius:50%;background:radial-gradient(circle,rgba(199,155,82,.24),transparent 65%);transform:translateY(calc(var(--storyP) * -90px)) scale(calc(.85 + var(--storyP)*.35))}
+    .story-copy{position:relative;max-width:680px}
+    .story-title{font-size:clamp(55px,7vw,120px)}
+    .story-title em{font-style:italic;color:var(--gold)}
+    .beats{position:relative;margin-top:42px;min-height:132px}
+    .beat{position:absolute;inset:0;opacity:0;transform:translateY(20px);transition:opacity .45s ease,transform .45s ease;pointer-events:none}
+    .beat.active{opacity:1;transform:none}
+    .beat strong{display:block;color:var(--cream);font-size:13px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:10px}
+
+    .discovery{height:260vh;background:#0c0504}
+    .discovery .sticky{display:flex;align-items:center;justify-content:center}
+    .chocolate{position:absolute;inset:-10%;background:radial-gradient(circle at 48% 30%,#71321d,#35130d 38%,#110605 73%);transform:scale(calc(1 + var(--discoverP) * .5));filter:brightness(calc(.82 + var(--discoverP)*.22))}
+    .chocolate:before{content:"";position:absolute;inset:18% 10%;border-radius:50%;background:radial-gradient(ellipse at center,rgba(255,190,120,.13),transparent 58%);filter:blur(18px)}
+    .ingredient{position:absolute;width:20px;height:20px;border-radius:50%;background:#c07b3a;box-shadow:inset -5px -6px 0 rgba(80,30,10,.45),0 15px 30px rgba(0,0,0,.25);transform:translate3d(var(--x),calc(-70vh + var(--discoverP)*150vh + var(--y)),0) rotate(calc(var(--discoverP)*540deg));opacity:calc(.15 + var(--discoverP)*1.2)}
+    .ingredient.berry{background:#a92c32;width:15px;height:17px;border-radius:45%}.ingredient.nut{background:#c99559;width:28px;height:14px;border-radius:55% 35%}.ingredient.seed{width:10px;height:16px;background:#e9d1a0}
+    .discovery-copy{position:relative;z-index:5;text-align:center;max-width:1050px;padding:0 6vw;transform:scale(calc(.88 + var(--discoverP)*.12))}
+    .discovery-copy .big{font-size:clamp(62px,9vw,150px)}
+    .discovery-copy .big span{display:block;color:var(--gold);font-style:italic}
+    .micro{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:rgba(244,230,207,.58);margin-top:30px}
+
+    .product{min-height:150vh;background:var(--cream);color:var(--ink)}
+    .product .sticky{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:7vw;padding:8vh 7vw}
+    .product-card{position:relative;height:72vh;display:flex;align-items:center;justify-content:center}
+    .product-card:before{content:"";position:absolute;width:70%;aspect-ratio:1;border-radius:50%;background:#8a2f22;transform:scale(calc(.7 + var(--productP)*.28));filter:blur(calc(var(--productP)*1px))}
+    .product-card img{position:relative;width:min(58%,390px);height:62vh;object-fit:cover;border-radius:16px;box-shadow:0 40px 70px rgba(45,16,8,.25);transform:rotate(calc(-5deg + var(--productP)*7deg)) translateY(calc(30px - var(--productP)*60px))}
+    .product-copy .display{font-size:clamp(65px,8vw,132px)}
+    .product-copy .copy{color:rgba(23,13,8,.68);margin-top:30px;max-width:540px}
+    .pill{display:inline-flex;border:1px solid rgba(23,13,8,.22);padding:10px 14px;border-radius:999px;font-size:10px;text-transform:uppercase;letter-spacing:.14em;margin-top:24px}
+
+    .sources{background:#160806;padding:18vh 6vw 14vh}
+    .sources-head{display:grid;grid-template-columns:1fr 1fr;gap:8vw;margin-bottom:8vh;align-items:end}
+    .sources h2{font-size:clamp(56px,7vw,118px)}
+    .source-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+    .source-card{position:relative;min-height:390px;border:1px solid rgba(244,230,207,.14);border-radius:24px;padding:34px;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;background:linear-gradient(145deg,rgba(255,255,255,.045),rgba(255,255,255,.015));transition:transform .35s ease,border-color .35s ease}
+    .source-card:hover{transform:translateY(-8px);border-color:rgba(199,155,82,.55)}
+    .source-card:before{content:"";position:absolute;width:240px;height:240px;border-radius:50%;background:rgba(158,63,30,.24);right:-80px;top:-80px;filter:blur(4px)}
+    .source-icon{position:relative;width:54px;height:54px;border:1px solid rgba(244,230,207,.24);border-radius:50%;display:grid;place-items:center;font-size:20px}
+    .source-card h3{font-family:Georgia,serif;font-size:clamp(36px,4vw,68px);font-weight:400;margin:25px 0 12px;letter-spacing:-.03em}
+    .source-card p{color:rgba(244,230,207,.6);max-width:480px;line-height:1.55}
+    .go{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold)}
+
+    .final{min-height:100vh;background:linear-gradient(180deg,#160806,#4b1b11);display:flex;align-items:center;justify-content:center;text-align:center;padding:12vh 6vw}
+    .final .inner{max-width:1100px}
+    .final h2{font-size:clamp(72px,11vw,180px);text-transform:uppercase}
+    .final h2 span{display:block;color:var(--gold);font-size:.24em;letter-spacing:.14em;font-family:Inter,system-ui,sans-serif;margin-bottom:18px}
+    .review-note{margin:40px auto 0;padding:18px 24px;border:1px solid rgba(244,230,207,.14);border-radius:999px;display:inline-block;color:rgba(244,230,207,.6);font-size:12px;letter-spacing:.06em}
+    footer{background:#0c0504;padding:26px 6vw;display:flex;justify-content:space-between;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.42)}
+
+    @media(max-width:820px){
+      .topbar{height:60px;padding:0 20px}.review{display:none}.scroll-cue{left:20px;bottom:20px}
+      .hero{height:155vh}.hero .stage{grid-template-columns:1fr;padding:11vh 20px 4vh;align-content:start}.hero h1{font-size:18vw}.hero-copy{z-index:8}.hero-sub{max-width:90%}.hero-visual{position:absolute;right:-9vw;bottom:-4vh;width:74vw;height:64vh;opacity:.88}.hero-img{height:60vh;width:100%;border-radius:38% 38% 12px 12px}.hero-orbit{width:110%}
+      .chapter{height:220vh}.chapter .sticky{grid-template-columns:1fr;padding:10vh 20px 7vh;align-content:center}.portrait-frame{position:absolute;width:50vw;height:48vh;right:-16vw;top:12vh;opacity:.42}.story-copy{z-index:3}.story-title{font-size:15vw}.chapter-word{font-size:23vw;bottom:10vh}.chapter-index{right:20px}
+      .discovery-copy .big{font-size:16vw}.ingredient{transform:translate3d(var(--x),calc(-60vh + var(--discoverP)*140vh + var(--y)),0) rotate(calc(var(--discoverP)*540deg))}
+      .product{min-height:145vh}.product .sticky{grid-template-columns:1fr;padding:8vh 20px;align-content:center}.product-card{height:46vh;order:2}.product-card img{height:42vh;width:min(58vw,320px)}.product-copy{order:1}.product-copy .display{font-size:15vw}
+      .sources{padding:14vh 20px 11vh}.sources-head{grid-template-columns:1fr;gap:20px}.source-grid{grid-template-columns:1fr}.source-card{min-height:330px;padding:26px}.final{padding:10vh 20px}.final h2{font-size:19vw}footer{padding:22px 20px;gap:18px;flex-direction:column}
+    }
+    @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation:none!important;transition:none!important}.hero-copy,.hero-visual,.chapter-word,.product-card img{transform:none!important}}
+  </style>
+</head>
+<body>
+  <div class="noise"></div>
+  <div class="progress"><i id="progress"></i></div>
+  <header class="topbar"><div class="brand">SETAEI × HOMEIRA</div><div class="review"><span class="navdot"></span>Private story preview · v1</div></header>
+  <div class="scroll-cue">Scroll the story</div>
+
+  <main>
+    <section class="hero" data-motion="hero">
+      <div class="sticky stage">
+        <div class="hero-copy">
+          <div class="eyebrow">A story of care, work & chocolate</div>
+          <h1 class="display"><span>Every flavor has a story</span>Homeira</h1>
+          <div class="hero-sub"><span class="line"></span><p class="copy">Not a catalogue. Not a traditional product page. This first preview treats HOMEIRA as a journey — where a person, a purpose and a flavor slowly become one story.</p></div>
+        </div>
+        <div class="hero-visual" aria-hidden="true">
+          <div class="hero-orbit"></div>
+          <img class="hero-img" src="assets/hero.svg" alt="HOMEIRA chocolate with dried fruit and nuts" />
+        </div>
+      </div>
+    </section>
+
+    <section class="chapter" data-motion="story">
+      <div class="sticky">
+        <div class="chapter-index">01 — BEFORE THE PRODUCT</div>
+        <div class="portrait-frame" aria-hidden="true"><div class="portrait-glow"></div></div>
+        <div class="story-copy">
+          <div class="eyebrow">The person before the brand</div>
+          <h2 class="display story-title">Care became <em>action.</em></h2>
+          <div class="beats">
+            <p class="copy beat active"><strong>01 / Responsibility</strong>Her story begins with a repeated instinct to step toward people who need help — not away from them.</p>
+            <p class="copy beat"><strong>02 / Dignity</strong>The idea grows from giving help into creating a way for people to stand on their own feet.</p>
+            <p class="copy beat"><strong>03 / Work</strong>A small workspace becomes more than production. It becomes a place where hands, skills and livelihoods can meet.</p>
+            <p class="copy beat"><strong>04 / Beginning again</strong>Setbacks do not disappear from the story. They become part of why starting again matters.</p>
+          </div>
+        </div>
+        <div class="display chapter-word">care → work → craft</div>
+      </div>
+    </section>
+
+    <section class="discovery" data-motion="discover">
+      <div class="sticky">
+        <div class="chocolate"></div>
+        <i class="ingredient berry" style="--x:-34vw;--y:2vh"></i><i class="ingredient nut" style="--x:-22vw;--y:-18vh"></i><i class="ingredient seed" style="--x:-10vw;--y:10vh"></i><i class="ingredient berry" style="--x:3vw;--y:-7vh"></i><i class="ingredient nut" style="--x:17vw;--y:17vh"></i><i class="ingredient seed" style="--x:29vw;--y:-16vh"></i><i class="ingredient berry" style="--x:38vw;--y:6vh"></i><i class="ingredient nut" style="--x:9vw;--y:-28vh"></i><i class="ingredient seed" style="--x:-30vw;--y:25vh"></i>
+        <div class="discovery-copy">
+          <div class="eyebrow">The flavor moment</div>
+          <h2 class="display big">It wasn't planned.<span>It tasted right.</span></h2>
+          <p class="copy" style="margin:28px auto 0">Melted chocolate. Dried fruit. Nuts. An accidental collision becomes the visual turning point of the page — and eventually, a signature product direction.</p>
+          <div class="micro">Scroll controls the fall · the zoom · the reveal</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="product" data-motion="product">
+      <div class="sticky">
+        <div class="product-card"><img src="assets/hero.svg" alt="HOMEIRA product preview" /></div>
+        <div class="product-copy">
+          <div class="eyebrow" style="color:#8a2f22">From moment to product</div>
+          <h2 class="display">A flavor with a memory.</h2>
+          <p class="copy">For v1, the product emerges from the same visual world as the story instead of appearing as a separate shop tile. In the next pass we can replace this frame with the exact hero packshot, founder imagery and final packaging system.</p>
+          <span class="pill">Chocolate · dried fruits · nuts</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="sources">
+      <div class="sources-head">
+        <div><div class="eyebrow">Her story, in her own voice</div><h2 class="display">Watch.<br/>Listen.</h2></div>
+        <p class="copy">These links stay connected to the story experience so visitors can move from our visual interpretation to longer-form material about Homeira. For the final version, claims and chronology should be matched to the original interviews.</p>
+      </div>
+      <div class="source-grid">
+        <a class="source-card" href="https://www.aparat.com/v/g646tl9" target="_blank" rel="noopener noreferrer">
+          <div><div class="source-icon">▶</div><h3>Watch her story</h3><p>Video feature about Homeira on Aparat. Opens the original source in a new tab.</p></div><div class="go">Open video ↗</div>
+        </a>
+        <a class="source-card" href="https://podcasts.apple.com/nl/podcast/42-%D8%AD%D9%85%DB%8C%D8%B1%D8%A7-%D8%A7%D8%AE%D9%84%D8%A7%D8%B5%DB%8C-%D8%A7%D8%AD%D8%B3%D8%A7%D8%B3-%D9%85%D8%A7%D8%AF%D8%B1%D8%A7%D9%86%D9%87-%D8%A8%D8%AE%D8%B4-%D8%B3%D9%88%D9%85/id1483337548?i=1000622326254" target="_blank" rel="noopener noreferrer">
+          <div><div class="source-icon">◉</div><h3>Listen to Homeira</h3><p>The podcast episode you shared, linked directly from the HOMEIRA journey.</p></div><div class="go">Open podcast ↗</div>
+        </a>
+      </div>
+    </section>
+
+    <section class="final">
+      <div class="inner">
+        <div class="eyebrow">Preview v1 · direction review</div>
+        <h2 class="display"><span>Chocolate with a story</span>Homeira</h2>
+        <p class="copy" style="margin:28px auto 0">For review: overall emotion, pacing, scroll language and story hierarchy. Next iteration can add founder photography, verified timeline beats, richer product stills, Persian details and more cinematic transitions.</p>
+        <div class="review-note">V1 / STORY + MOTION DIRECTION — NOT FINAL COPY</div>
+      </div>
+    </section>
+  </main>
+  <footer><span>HOMEIRA story preview</span><span>Designed as a scroll journey by SETAEI</span></footer>
+
+  <script>
+    const clamp=(n,min=0,max=1)=>Math.min(max,Math.max(min,n));
+    const sections=[...document.querySelectorAll('[data-motion]')];
+    const root=document.documentElement;
+    const progress=document.getElementById('progress');
+    const beats=[...document.querySelectorAll('.beat')];
+    let ticking=false;
+    function render(){
+      const max=document.documentElement.scrollHeight-innerHeight;
+      progress.style.transform=`scaleX(${max?scrollY/max:0})`;
+      sections.forEach(sec=>{
+        const r=sec.getBoundingClientRect();
+        const travel=Math.max(1,sec.offsetHeight-innerHeight);
+        const p=clamp((-r.top)/travel);
+        const key=sec.dataset.motion;
+        root.style.setProperty(`--${key}P`,p.toFixed(4));
+        if(key==='story'){
+          const idx=Math.min(beats.length-1,Math.floor(p*beats.length));
+          beats.forEach((b,i)=>b.classList.toggle('active',i===idx));
+        }
+      });
+      ticking=false;
+    }
+    addEventListener('scroll',()=>{if(!ticking){requestAnimationFrame(render);ticking=true;}},{passive:true});
+    addEventListener('resize',render,{passive:true});
+    render();
+  </script>
+</body>
+</html>
