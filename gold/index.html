@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#090806" />
+  <meta name="description" content="SETAEI Gold Agent — live XAU/USD price chart with daily and weekly technical BUY, SELL or NEUTRAL signals." />
+  <meta property="og:title" content="Gold Agent — SETAEI" />
+  <meta property="og:description" content="Live gold price, chart and daily/weekly market signals for XAU/USD." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://setai.no/gold/" />
+  <link rel="canonical" href="https://setai.no/gold/" />
+  <title>Gold Agent — Live XAU/USD Signals | SETAEI</title>
+  <style>
+    :root{--bg:#080704;--panel:rgba(20,17,10,.78);--panel-2:rgba(13,12,9,.92);--line:rgba(223,184,93,.18);--line-strong:rgba(223,184,93,.38);--gold:#dfb85d;--gold-2:#f5d98c;--text:#f7f4eb;--muted:#9e998c;--green:#4fd18b;--red:#ff7474;--shadow:0 24px 80px rgba(0,0,0,.4);--radius:22px}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-height:100vh;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--text);background:radial-gradient(circle at 76% 6%,rgba(223,184,93,.12),transparent 26rem),radial-gradient(circle at 8% 48%,rgba(223,184,93,.06),transparent 28rem),var(--bg)}
+    body::before{content:"";position:fixed;inset:0;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);background-size:38px 38px;mask-image:linear-gradient(to bottom,rgba(0,0,0,.5),transparent 78%)}
+    a{color:inherit;text-decoration:none}.wrap{width:min(1440px,calc(100% - 36px));margin:0 auto}
+    header{height:76px;display:flex;align-items:center;border-bottom:1px solid var(--line);backdrop-filter:blur(18px);position:sticky;top:0;z-index:50;background:rgba(8,7,4,.72)}
+    .nav{display:flex;align-items:center;justify-content:space-between;gap:20px}.brand{display:inline-flex;align-items:center;gap:12px;font-size:13px;letter-spacing:.18em;font-weight:800}.brand-mark{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;border:1px solid var(--line-strong);color:var(--gold-2);background:radial-gradient(circle at 35% 30%,rgba(245,217,140,.2),rgba(223,184,93,.04));box-shadow:inset 0 0 18px rgba(223,184,93,.08)}
+    .nav-right{display:flex;align-items:center;gap:10px}.live-pill,.back-link{border:1px solid var(--line);border-radius:999px;padding:9px 13px;font-size:12px;color:var(--muted);background:rgba(255,255,255,.025)}.live-pill{color:var(--gold-2)}.live-dot{width:7px;height:7px;background:var(--green);border-radius:50%;display:inline-block;margin-right:7px;box-shadow:0 0 0 5px rgba(79,209,139,.08)}
+    main{padding:56px 0 60px}.hero{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(300px,.6fr);gap:24px;align-items:end;margin-bottom:28px}.eyebrow{color:var(--gold);font-size:12px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;margin-bottom:16px}h1{margin:0;max-width:850px;font-size:clamp(48px,7vw,100px);letter-spacing:-.065em;line-height:.92;font-weight:680}h1 span{color:var(--gold-2)}.hero-copy{color:var(--muted);line-height:1.65;font-size:15px;margin:20px 0 0;max-width:670px}
+    .agent-state{border:1px solid var(--line);background:linear-gradient(150deg,rgba(223,184,93,.08),rgba(255,255,255,.018));border-radius:var(--radius);padding:22px;box-shadow:var(--shadow)}.agent-state-top{display:flex;justify-content:space-between;gap:14px;align-items:center;margin-bottom:22px}.agent-label{font-size:11px;color:var(--muted);letter-spacing:.14em;text-transform:uppercase}.agent-version{font-size:11px;color:var(--gold)}.agent-name{font-size:28px;letter-spacing:-.03em;margin:0 0 8px}.agent-desc{color:var(--muted);font-size:13px;line-height:1.5;margin:0}
+    .grid{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(320px,.7fr);gap:24px}.panel{border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:var(--panel);box-shadow:var(--shadow)}.panel-head{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:17px 19px;border-bottom:1px solid var(--line)}.panel-title{display:flex;align-items:center;gap:10px;font-weight:700;font-size:14px}.symbol{color:var(--gold-2);font-size:12px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}.chart-shell{height:640px;background:#0b0a07}
+    .signals{display:grid;gap:24px}.signal-card{min-height:308px}.signal-card .panel-head{padding-bottom:14px}.timeframe{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.12em}.tv-shell{height:258px;background:var(--panel-2)}
+    .lower{display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;margin-top:24px}.info{padding:22px;min-height:164px}.kicker{color:var(--muted);font-size:11px;letter-spacing:.13em;text-transform:uppercase;margin-bottom:20px}.value{font-size:26px;letter-spacing:-.035em;margin-bottom:8px}.small{color:var(--muted);font-size:13px;line-height:1.55}.gold{color:var(--gold-2)}.rule{height:1px;background:var(--line);margin:18px 0}.legend{display:flex;gap:16px;flex-wrap:wrap;color:var(--muted);font-size:12px}.legend i{width:7px;height:7px;border-radius:50%;display:inline-block;margin-right:6px}.legend .buy i{background:var(--green)}.legend .sell i{background:var(--red)}.legend .neutral i{background:#c4bdac}
+    footer{border-top:1px solid var(--line);color:var(--muted);font-size:12px;line-height:1.55;padding:26px 0 42px}footer .wrap{display:flex;justify-content:space-between;gap:24px;align-items:flex-start}footer p{margin:0;max-width:830px}.tradingview-widget-container,.tradingview-widget-container__widget{height:100%!important;width:100%!important}.tradingview-widget-copyright{display:none!important}
+    @media(max-width:980px){.hero,.grid{grid-template-columns:1fr}.hero{align-items:start}.signals{grid-template-columns:1fr 1fr}.lower{grid-template-columns:1fr}.chart-shell{height:560px}}
+    @media(max-width:680px){.wrap{width:min(100% - 22px,1440px)}header{height:64px}.back-link{display:none}main{padding-top:34px}h1{font-size:clamp(49px,16vw,72px)}.signals{grid-template-columns:1fr}.chart-shell{height:500px}.tv-shell{height:270px}footer .wrap{flex-direction:column}}
+  </style>
+</head>
+<body>
+<header><div class="wrap nav"><a class="brand" href="https://setai.no/" aria-label="SETAEI home"><span class="brand-mark">Au</span><span>SETAEI / GOLD</span></a><div class="nav-right"><span class="live-pill"><span class="live-dot"></span>LIVE MARKET</span><a class="back-link" href="https://setai.no/">SETAEI ↗</a></div></div></header>
+<main class="wrap">
+<section class="hero"><div><div class="eyebrow">Gold-only market intelligence</div><h1>Gold <span>Agent.</span></h1><p class="hero-copy">One market. One job. Track XAU/USD, read the trend, and surface a clear daily and weekly technical signal — BUY, SELL or NEUTRAL.</p></div><aside class="agent-state"><div class="agent-state-top"><span class="agent-label">Agent status</span><span class="agent-version">V0.1</span></div><h2 class="agent-name">XAU/USD Monitor</h2><p class="agent-desc">Signals refresh with the market. Daily and weekly ratings are kept separate so short-term noise does not hide the larger trend.</p></aside></section>
+<section class="grid">
+<article class="panel"><div class="panel-head"><div class="panel-title">Live gold chart <span class="symbol">OANDA:XAUUSD</span></div><div class="timeframe">Interactive</div></div><div class="chart-shell"><div class="tradingview-widget-container"><div class="tradingview-widget-container__widget"></div><script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+{"autosize":true,"symbol":"OANDA:XAUUSD","interval":"60","timezone":"Etc/UTC","theme":"dark","backgroundColor":"rgba(11, 10, 7, 1)","gridColor":"rgba(223, 184, 93, 0.06)","style":"1","locale":"en","allow_symbol_change":false,"calendar":false,"support_host":"https://www.tradingview.com","withdateranges":true,"hide_side_toolbar":false,"save_image":false,"studies":["MASimple@tv-basicstudies","RSI@tv-basicstudies"]}
+</script></div></div></article>
+<div class="signals">
+<article class="panel signal-card"><div class="panel-head"><div class="panel-title">Daily signal</div><div class="timeframe">1 day</div></div><div class="tv-shell"><div class="tradingview-widget-container"><div class="tradingview-widget-container__widget"></div><script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>
+{"interval":"1D","width":"100%","isTransparent":true,"height":"100%","symbol":"OANDA:XAUUSD","showIntervalTabs":false,"displayMode":"single","locale":"en","colorTheme":"dark"}
+</script></div></div></article>
+<article class="panel signal-card"><div class="panel-head"><div class="panel-title">Weekly signal</div><div class="timeframe">1 week</div></div><div class="tv-shell"><div class="tradingview-widget-container"><div class="tradingview-widget-container__widget"></div><script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>
+{"interval":"1W","width":"100%","isTransparent":true,"height":"100%","symbol":"OANDA:XAUUSD","showIntervalTabs":false,"displayMode":"single","locale":"en","colorTheme":"dark"}
+</script></div></div></article>
+</div></section>
+<section class="lower">
+<article class="panel info"><div class="kicker">What to watch</div><div class="value gold">Daily + Weekly</div><div class="small">When both timeframes point the same way, the market has stronger technical alignment. Mixed signals mean patience.</div></article>
+<article class="panel info"><div class="kicker">Signal engine · V0.1</div><div class="value">Technical ratings</div><div class="small">Current MVP uses TradingView technical ratings built from moving averages and oscillators. SETAEI macro scoring comes next.</div></article>
+<article class="panel info"><div class="kicker">Next layer</div><div class="value">Gold intelligence</div><div class="small">DXY, US real yields, volatility, positioning and macro events can be added to create our own probability-weighted Gold Agent signal.</div><div class="rule"></div><div class="legend"><span class="buy"><i></i>BUY</span><span class="neutral"><i></i>NEUTRAL</span><span class="sell"><i></i>SELL</span></div></article>
+</section>
+</main>
+<footer><div class="wrap"><p>Market data and technical ratings are provided by TradingView. Signals are informational market analysis, not a guarantee of profit or personalized financial advice. Gold prices and technical conditions can change rapidly.</p><span>© SETAEI · GOLD AGENT</span></div></footer>
+</body>
+</html>
