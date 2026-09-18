@@ -1,4 +1,4 @@
-<!doctype html><html lang='en'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>Shahnameh — building a game from Ferdowsi's Book of Kings | SETAEI</title><meta name='description' content='Case study: how SETAEI is building the Shahnameh game inside RealGram — from Ferdowsi's own life and a source-researched knowledge base, through AI-generated characters and a Rostam &amp; Sohrab short film, to a live tap-to-earn game.'><meta name='keywords' content='Shahnameh, Ferdowsi, RealGram, Rostam and Sohrab, Higgsfield, AI film, Khabat Setaei project'><link rel='canonical' href='https://setai.no/projects/shahnameh/'><meta property='og:type' content='article'><meta property='og:title' content='Shahnameh — building a game from the Book of Kings'><meta property='og:description' content='From Ferdowsi's own life to AI-generated characters, a Rostam &amp; Sohrab short film, and a live game inside RealGram.'><meta property='og:url' content='https://setai.no/projects/shahnameh/'><meta name='twitter:card' content='summary_large_image'><meta name='google-site-verification' content='WRUluLzpLR0S0ly8fGmWj9uAyz2d6l1rYXXvK7YBfRg'><script async src='https://www.googletagmanager.com/gtag/js?id=G-28EZMGVX60'></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config','G-28EZMGVX60');</script>
+<!doctype html><html lang='en'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>Shahnameh — building a game from Ferdowsi's Book of Kings | SETAEI</title><meta name='description' content='An immersive Shahnameh project by SETAEI: Ferdowsi's life, the RealGram game, production research and the finished 4:04 AI short film The Son He Did Not Know, submitted to the Higgsfield Global Film Festival.'><meta name='keywords' content='Shahnameh, Ferdowsi, RealGram, Rostam and Sohrab, Higgsfield, AI film, Khabat Setaei project'><link rel='canonical' href='https://setai.no/projects/shahnameh/'><meta property='og:type' content='article'><meta property='og:title' content='Shahnameh — building a game from the Book of Kings'><meta property='og:description' content='From Ferdowsi's own life to AI-generated characters, a Rostam &amp; Sohrab short film, and a live game inside RealGram.'><meta property='og:url' content='https://setai.no/projects/shahnameh/'><meta name='twitter:card' content='summary_large_image'><meta name='google-site-verification' content='WRUluLzpLR0S0ly8fGmWj9uAyz2d6l1rYXXvK7YBfRg'><script async src='https://www.googletagmanager.com/gtag/js?id=G-28EZMGVX60'></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config','G-28EZMGVX60');</script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -480,6 +480,48 @@
   .r-script-dial{ max-width:420px; margin:0 auto 1rem; text-align:center; }
   .r-synopsis{ max-width:660px; margin:3.5rem auto 0; }
 
+
+  /* finished-film journey — the research page resolves into the actual film */
+  .film-festival-shell{ margin:0 auto clamp(4rem,8vw,6.5rem); border:1px solid var(--rline); border-radius:14px; overflow:hidden;
+    background:linear-gradient(155deg,rgba(230,192,124,.08),rgba(255,255,255,.018) 44%,rgba(0,0,0,.22)); box-shadow:0 34px 80px -42px rgba(0,0,0,.95); }
+  .festival-visual{ position:relative; min-height:clamp(250px,38vw,430px); overflow:hidden; background:#060606; }
+  .festival-visual img{ width:100%; height:100%; min-height:inherit; object-fit:cover; display:block; filter:none; }
+  .festival-visual::after{ content:''; position:absolute; inset:0; background:linear-gradient(180deg,transparent 38%,rgba(12,9,6,.12) 56%,rgba(12,9,6,.96) 100%); }
+  .festival-mark{ position:absolute; z-index:2; left:clamp(1.2rem,4vw,2.5rem); right:clamp(1.2rem,4vw,2.5rem); bottom:1.55rem;
+    display:flex; justify-content:space-between; gap:1rem; align-items:end; }
+  .festival-wordmark{ font-family:var(--sans); font-weight:800; letter-spacing:.09em; text-transform:uppercase; color:#fff; font-size:clamp(.78rem,1.4vw,1rem); }
+  .festival-wordmark b{ display:block; font-family:var(--serif-display); letter-spacing:-.02em; text-transform:none; font-size:clamp(1.7rem,4vw,3rem); color:var(--rgoldb); margin-top:.15rem; }
+  .festival-state{ flex:none; border:1px solid rgba(230,192,124,.42); background:rgba(0,0,0,.42); backdrop-filter:blur(10px); color:#f0e6cc;
+    border-radius:999px; padding:.48rem .82rem; font-size:.68rem; letter-spacing:.1em; text-transform:uppercase; }
+  .film-intro{ display:grid; grid-template-columns:1.15fr .85fr; gap:clamp(1.5rem,5vw,4rem); padding:clamp(1.5rem,5vw,3.25rem); align-items:start; }
+  .film-intro h2{ font-size:clamp(2rem,5vw,4rem)!important; line-height:.96; margin:.35rem 0 1rem; }
+  .film-intro .film-lead{ color:var(--rbone); font-size:clamp(1rem,2vw,1.2rem); max-width:56ch; }
+  .film-facts{ display:grid; gap:.65rem; border-left:1px solid var(--rline); padding-left:1.4rem; }
+  .film-fact{ display:grid; grid-template-columns:92px 1fr; gap:.8rem; padding:.35rem 0; font-size:.82rem; }
+  .film-fact span{ color:var(--rbonedim); text-transform:uppercase; letter-spacing:.08em; font-size:.66rem; padding-top:.15rem; }
+  .film-fact b{ color:#f0e6cc; font-weight:500; }
+  .film-actions{ display:flex; gap:.7rem; flex-wrap:wrap; margin-top:1.4rem; }
+  .film-btn{ display:inline-flex; align-items:center; justify-content:center; gap:.45rem; text-decoration:none; border-radius:999px; padding:.72rem 1rem;
+    font-family:var(--sans); font-size:.78rem; font-weight:650; border:1px solid var(--rline); color:#f0e6cc; background:rgba(255,255,255,.025); transition:.2s ease; }
+  .film-btn.primary{ background:var(--rgoldb); border-color:var(--rgoldb); color:#171006; }
+  .film-btn:hover{ transform:translateY(-2px); border-color:var(--rgoldb); }
+  .social-note{ margin-top:1rem; color:var(--rbonedim); font-size:.75rem; }
+  .social-note a{ color:var(--rgoldb); text-decoration:underline; text-underline-offset:3px; }
+  .film-path{ padding:0 clamp(1.5rem,5vw,3.25rem) clamp(2rem,5vw,3.4rem); }
+  .film-path-head{ display:flex; align-items:end; justify-content:space-between; gap:1rem; margin:0 0 1.25rem; }
+  .film-path-head h3{ font-size:clamp(1.4rem,3vw,2rem); }
+  .film-path-head p{ margin:0; color:var(--rbonedim); font-size:.8rem; max-width:44ch; text-align:right; }
+  .film-clips{ display:grid; grid-template-columns:repeat(2,1fr); gap:1rem; }
+  .film-clip{ margin:0; background:rgba(255,255,255,.018); border:1px solid var(--rline); border-radius:10px; overflow:hidden; }
+  .film-clip video{ width:100%; aspect-ratio:16/9; object-fit:cover; display:block; background:#000; }
+  .film-clip figcaption{ padding:.85rem .95rem 1rem; color:var(--rbonedim); font-size:.78rem; line-height:1.5; }
+  .film-clip figcaption b{ display:block; color:#f0e6cc; font-family:var(--serif-display); font-size:1rem; margin-bottom:.15rem; }
+  .story-spine{ display:grid; grid-template-columns:repeat(5,1fr); gap:.65rem; margin-top:1rem; }
+  .story-beat{ border-top:1px solid var(--rline); padding:.8rem .3rem 0; color:var(--rbonedim); font-size:.72rem; line-height:1.45; }
+  .story-beat span{ display:block; color:var(--rgoldb); font-size:.62rem; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.25rem; }
+  @media(max-width:820px){ .film-intro{grid-template-columns:1fr}.film-facts{border-left:0;border-top:1px solid var(--rline);padding:1.2rem 0 0}.story-spine{grid-template-columns:1fr 1fr}.festival-mark{align-items:start;flex-direction:column}.film-path-head{align-items:start;flex-direction:column}.film-path-head p{text-align:left} }
+  @media(max-width:620px){ .film-clips{grid-template-columns:1fr}.story-spine{grid-template-columns:1fr}.film-fact{grid-template-columns:76px 1fr} }
+
   /* roadmap */
   #roadmap{ background:var(--vellum-deep); }
   .road{ display:flex; flex-direction:column; gap:0; max-width:820px; margin:0 auto; }
@@ -535,8 +577,8 @@
     <div class="hero-sub">The Book of Kings</div>
     <div class="hero-byline">by <b>Hakim Abu'l-Qasem Ferdowsi</b> · completed c. 1010 CE</div>
 
-    <a class="hero-watch-link" href="https://higgsfield.ai/s/ZXpuLvoBERI" target="_blank" rel="noopener">
-      Watch the intro film in full 4K
+    <a class="hero-watch-link" href="https://higgsfield.ai/s/zd8gg350A_Q" target="_blank" rel="noopener">
+      Watch THE SON HE DID NOT KNOW · final festival entry
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H9M17 7V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </a>
   </div>
@@ -1214,9 +1256,73 @@
 <section id="rostam">
   <div class="wrap">
     <div class="center reveal" style="margin-bottom:2.5rem;"><span class="rostam-badge">✦ A separate story, a separate style</span></div>
-    <div class="center reveal" style="margin-bottom:2.5rem; max-width:620px; margin-left:auto; margin-right:auto;">
+    <div class="center reveal" style="margin-bottom:2.5rem; max-width:700px; margin-left:auto; margin-right:auto;">
       <div class="note-box process" style="background:rgba(230,192,124,.08); border-left-color:#e6c07c; color:var(--rbonedim); text-align:left;">
-        <b style="color:#e6c07c;">An open production — same principle as Higgsfield's own reference films.</b> Higgsfield built the Global Film Festival around films like <i>Hell Grind</i> and <i>Zephyr</i> being fully open-sourced — every prompt, every asset, the whole pipeline, public. We're building this the same way: full shot list, every shot-for-shot prompt, the complete character/location/prop reference library, and the production methodology below are all public before the film itself is finished, not after.
+        <b style="color:#e6c07c;">The film is finished.</b> What began here as an open production became a 4:04 final cut: <i>The Son He Did Not Know</i>. It was submitted to the 2026 Higgsfield Global Film Festival and is now in the festival's screening / shortlist phase. The research, character sheets, props, locations, manuscript and camera notes remain here so the finished film can be read backwards — from screen to source.
+      </div>
+    </div>
+
+    <div class="film-festival-shell reveal">
+      <div class="festival-visual">
+        <img src="https://static.higgsfield.ai/contest/festival-hero/hero-film-20260803-v2.webp" alt="Higgsfield Global Film Festival official festival artwork" loading="lazy"/>
+        <div class="festival-mark">
+          <div class="festival-wordmark">Higgsfield · Global Film Festival 2026<b>The Son He Did Not Know</b></div>
+          <div class="festival-state">Submitted · screening</div>
+        </div>
+      </div>
+
+      <div class="film-intro">
+        <div>
+          <div class="eyebrow">The finished film</div>
+          <h2>The story leaves the manuscript.</h2>
+          <p class="film-lead">A cinematic dialogue between two father–son tragedies: Rostam and Sohrab inside the epic, and Ferdowsi writing through the memory of his own son outside it. The film moves between ink, memory and battlefield until both fathers arrive at the same unbearable recognition.</p>
+          <div class="film-actions">
+            <a class="film-btn primary" href="https://higgsfield.ai/s/zd8gg350A_Q" target="_blank" rel="noopener">Watch official festival entry ↗</a>
+            <a class="film-btn" href="https://setai.no/projects/the-son-he-did-not-know/">Film case study</a>
+            <a class="film-btn" href="https://setai.no/projects/shahnameh/manus/">Read the manuscript</a>
+            <a class="film-btn" href="https://setai.no/projects/shahnameh/kamera/">Camera &amp; visual language</a>
+          </div>
+          <div class="social-note">Creator / social hub: <a href="https://higgsfield.ai/@kiasha" target="_blank" rel="noopener">@kiasha on Higgsfield</a>. Instagram, TikTok and YouTube links are listed on the creator profile.</div>
+        </div>
+        <div class="film-facts">
+          <div class="film-fact"><span>Runtime</span><b>04:04 final cut</b></div>
+          <div class="film-fact"><span>Festival</span><b>Higgsfield Global Film Festival · 2026</b></div>
+          <div class="film-fact"><span>Status</span><b>Submitted · competition closed · screening underway</b></div>
+          <div class="film-fact"><span>Story</span><b>Ferdowsi · Mehrak · Rostam · Sohrab</b></div>
+          <div class="film-fact"><span>Production</span><b>Reference-driven generative video + editorial assembly</b></div>
+        </div>
+      </div>
+
+      <div class="film-path">
+        <div class="film-path-head">
+          <h3>Travel through the final film</h3>
+          <p>Not a gallery of random generations — four excerpts that show how the emotional line moves from writing, into myth, through grief, and back to the writer.</p>
+        </div>
+        <div class="film-clips">
+          <figure class="film-clip">
+            <video autoplay muted loop playsinline preload="metadata" poster="https://d8j0ntlcm91z4.cloudfront.net/user_3GqVodiVsV7T5gGVNoTV4Q5Q3ZK/hf_20260812_211817_e9a8cd99-ed76-405b-84a4-e9e11499c037.png"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_3GqVodiVsV7T5gGVNoTV4Q5Q3ZK/hf_20260814_223142_d4b54871-7d5d-4b8b-b84f-effc3b0b5943.mp4" type="video/mp4"></video>
+            <figcaption><b>01 · Ink becomes destiny</b>Ferdowsi's writing is not a frame around the film — it is the doorway into the battlefield.</figcaption>
+          </figure>
+          <figure class="film-clip">
+            <video autoplay muted loop playsinline preload="metadata" poster="https://d2ol7oe51mr4n9.cloudfront.net/user_3GqVodiVsV7T5gGVNoTV4Q5Q3ZK/f15c83ac-f266-49bf-9862-81d2bdacf9bb.png"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_3GqVodiVsV7T5gGVNoTV4Q5Q3ZK/hf_20260913_162329_c2f3473c-6c62-4503-82d6-63ce5bdc5024.mp4" type="video/mp4"></video>
+            <figcaption><b>02 · After the duel</b>The spectacle falls away until the war becomes one father holding one dying son.</figcaption>
+          </figure>
+          <figure class="film-clip">
+            <video autoplay muted loop playsinline preload="metadata" poster="https://d2ol7oe51mr4n9.cloudfront.net/user_3GqVodiVsV7T5gGVNoTV4Q5Q3ZK/3cc1f8d7-2da4-44d7-a397-f69093fdbceb_resize.jpg"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_3GqVodiVsV7T5gGVNoTV4Q5Q3ZK/hf_20260909_192817_2caca9fe-1c03-4038-a3ba-49a354d11d73.mp4" type="video/mp4"></video>
+            <figcaption><b>03 · One eye becomes another</b>Rostam's grief crosses the boundary of the manuscript and finds Ferdowsi.</figcaption>
+          </figure>
+          <figure class="film-clip">
+            <video autoplay muted loop playsinline preload="metadata" poster="https://d2ol7oe51mr4n9.cloudfront.net/user_3GqVodiVsV7T5gGVNoTV4Q5Q3ZK/bcda1dce-3010-490a-bbf5-4f4e27e1830a.png"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_3GqVodiVsV7T5gGVNoTV4Q5Q3ZK/hf_20260909_194743_90f50221-1370-45e7-9d2f-443863efa879.mp4" type="video/mp4"></video>
+            <figcaption><b>04 · Back to the writer</b>After armies, horses and motion, the ending earns its stillness at the desk.</figcaption>
+          </figure>
+        </div>
+        <div class="story-spine" aria-label="Film story spine">
+          <div class="story-beat"><span>Beat I</span>Simorgh, feather, manuscript — the world is summoned.</div>
+          <div class="story-beat"><span>Beat II</span>Ferdowsi and Mehrak — a second father–son story takes shape.</div>
+          <div class="story-beat"><span>Beat III</span>Ink becomes earth — the film enters Rostam and Sohrab.</div>
+          <div class="story-beat"><span>Beat IV</span>The duel, the dagger, the armband — recognition comes too late.</div>
+          <div class="story-beat"><span>Beat V</span>Rostam's eye becomes Ferdowsi's — myth returns to memory.</div>
+        </div>
       </div>
     </div>
     <div class="rostam-hero">
@@ -1404,7 +1510,7 @@
     </div>
 
     <div class="center reveal" style="margin-top:2.5rem; max-width:560px; color:var(--rbonedim); font-size:.85rem;">
-      None of this is claimed to match Hell Grind's own 95-minute, crowd-scale pipeline exactly — it's the same underlying discipline (locked references, tracked props, shared constraints) scaled to a 4:23 short. Full detail: <a href="https://setai.no/projects/shahnameh/manus/" style="color:#e6c07c; text-decoration:underline;">manuscript</a> · <a href="https://setai.no/projects/shahnameh/kamera/" style="color:#e6c07c; text-decoration:underline;">camera notes</a>.
+      None of this is claimed to match Hell Grind's own 95-minute, crowd-scale pipeline exactly — it's the same underlying discipline (locked references, tracked props, shared constraints) scaled to the finished 4:04 short. Full detail: <a href="https://setai.no/projects/shahnameh/manus/" style="color:#e6c07c; text-decoration:underline;">manuscript</a> · <a href="https://setai.no/projects/shahnameh/kamera/" style="color:#e6c07c; text-decoration:underline;">camera notes</a>.
     </div>
   </div>
 </section>
@@ -1425,13 +1531,14 @@
           <div class="road-item"><h3>Tap-to-earn Zar economy</h3><p>Real, server-synced earnings tied directly to play — not a decorative number.</p></div>
           <div class="road-item"><h3>REAL token &amp; wallet</h3><p>Its own token economy, connected to your RealGram account.</p></div>
           <div class="road-item"><h3>Source-researched knowledge base</h3><p>18 documents, three source tiers (documented/legend/project choice) behind every character and scene.</p></div>
+          <div class="road-item"><h3>4:04 festival film</h3><p><i>The Son He Did Not Know</i> is finished, published and submitted to the 2026 Higgsfield Global Film Festival.</p></div>
         </div>
       </div>
       <div class="road-group">
-        <div class="road-label"><span class="dot dot-live"></span>In progress</div>
+        <div class="road-label"><span class="dot dot-live"></span>Live now</div>
         <div class="road-items">
-          <div class="road-item"><h3>The Ferdowsi intro film</h3><p>Realism iteration underway — from "AI-smooth" to a practical film feel.</p></div>
-          <div class="road-item"><h3>The Rostam &amp; Sohrab short film</h3><p>Full script and shot list ready. In production against the film festival deadline of August 31, 2026.</p></div>
+          <div class="road-item"><h3>Festival screening &amp; shortlist phase</h3><p>The competition is closed. The submitted final cut is now outside the edit and in Higgsfield's screening / shortlist process.</p></div>
+          <div class="road-item"><h3>Production archive</h3><p>Manuscript, camera notes, character sheets, locations and selected generated clips remain public as the making-of layer behind the final film.</p></div>
         </div>
       </div>
       <div class="road-group">
@@ -1470,7 +1577,8 @@
   <div class="foot-meta">Characters and world built by SETAEI · historical groundwork from an in-house source-researched knowledge base</div>
   <div class="foot-links">
     <a href="https://realgram.no" target="_blank" rel="noopener">realgram.no</a>
-    <a href="https://higgsfield.ai/s/ZXpuLvoBERI" target="_blank" rel="noopener">Intro film</a>
+    <a href="https://higgsfield.ai/s/zd8gg350A_Q" target="_blank" rel="noopener">Final festival film</a>
+    <a href="https://setai.no/projects/the-son-he-did-not-know/">Film case study</a>
   </div>
 </footer>
 
