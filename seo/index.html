@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SEO bedrift i Norge | AI-drevet SEO for norske bedrifter | SETAI</title>
-  <meta name="description" content="SETAI hjelper norske bedrifter med teknisk SEO, innholdsstrategi, lokal SEO, Shopify SEO og AI-drevet synlighet i Google og AI-søk.">
+  <meta name="description" content="SETAI hjelper norske bedrifter med teknisk SEO, innholdsstrategi, lokal SEO, Shopify SEO og AI-drevet synlighet i Google og AI-søk. Få en gratis SEO-sjekk av nettsiden din.">
   <meta name="robots" content="index, follow">
   <meta name="author" content="SETAI">
   <meta name="theme-color" content="#f47c20">
@@ -12,7 +12,7 @@
   <link rel="canonical" href="https://setai.no/seo/">
 
   <meta property="og:title" content="SEO bedrift i Norge | AI-drevet SEO for norske bedrifter | SETAI">
-  <meta property="og:description" content="SETAI hjelper norske bedrifter med teknisk SEO, innholdsstrategi, lokal SEO, Shopify SEO og AI-drevet synlighet i Google og AI-søk.">
+  <meta property="og:description" content="AI-drevet SEO for norske bedrifter. Få en gratis SEO-sjekk og se hvor dere taper kunder i Google i dag.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://setai.no/seo/">
   <meta property="og:site_name" content="SETAI">
@@ -36,44 +36,113 @@
       --muted: #8b93a8;
       --accent: #f47c20;
       --accent-h: #ff9040;
-      --accent-glow: rgba(244,124,32,.12);
+      --good: #4cc38a;
       --display: 'Space Grotesk', 'Inter', sans-serif;
       --sans: 'Inter', system-ui, sans-serif;
     }
-    * { box-sizing: border-box; }
-    body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--sans); line-height: 1.65; }
+    * { box-sizing: border-box; min-width: 0; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--sans); line-height: 1.65; overflow-x: hidden; }
     h1,h2,h3 { font-family: var(--display); letter-spacing: -.02em; line-height: 1.2; }
     .container { width: min(1080px, 92vw); margin: 0 auto; }
-    section { padding: clamp(56px, 8vw, 100px) 0; }
-    .hero { padding-top: 110px; position: relative; overflow: hidden; }
-    .hero::before { content: ''; position: absolute; width: 480px; height: 480px; right: -160px; top: -120px; background: radial-gradient(circle, rgba(244,124,32,.13), transparent 70%); pointer-events: none; }
-    .eyebrow { color: var(--accent); text-transform: uppercase; letter-spacing: .12em; font-size: .78rem; font-weight: 700; }
-    h1 { font-size: clamp(2rem, 5vw, 4.2rem); margin: 14px 0 12px; }
-    .lead { max-width: 760px; color: var(--muted); font-size: 1.05rem; }
-    .cta-row { margin-top: 28px; display: flex; gap: 14px; flex-wrap: wrap; }
-    .btn { display: inline-block; padding: 12px 20px; border-radius: 8px; font-weight: 600; text-decoration: none; }
+    section { padding: clamp(52px, 7vw, 92px) 0; }
+    a { color: inherit; }
+    p { margin: 0; }
+
+    /* Topplinje */
+    .topbar { position: sticky; top: 0; z-index: 30; background: rgba(7,8,14,.86); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); }
+    .topbar .container { display: flex; align-items: center; justify-content: space-between; gap: 12px; height: 60px; }
+    .brand { font-family: var(--display); font-weight: 700; letter-spacing: .06em; text-decoration: none; }
+    .brand span { color: var(--accent); }
+    .topbar .btn { padding: 8px 14px; font-size: .9rem; }
+
+    /* Knapper */
+    .btn { display: inline-block; padding: 13px 22px; border-radius: 8px; font-weight: 600; text-decoration: none; border: 0; cursor: pointer; font: inherit; font-weight: 600; }
     .btn-primary { background: var(--accent); color: #fff; }
     .btn-primary:hover { background: var(--accent-h); }
-    .btn-secondary { border: 1px solid var(--border); color: var(--text); }
+    .btn-secondary { border: 1px solid var(--border); color: var(--text); background: transparent; }
+    .btn-secondary:hover { border-color: var(--muted); }
+
+    /* Hero */
+    .hero { padding-top: clamp(64px, 9vw, 110px); position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; width: 520px; height: 520px; right: -170px; top: -140px; background: radial-gradient(circle, rgba(244,124,32,.15), transparent 70%); pointer-events: none; }
+    .eyebrow { color: var(--accent); text-transform: uppercase; letter-spacing: .12em; font-size: .78rem; font-weight: 700; }
+    h1 { font-size: clamp(2.1rem, 5.4vw, 4.2rem); margin: 14px 0 14px; max-width: 16ch; }
+    .lead { max-width: 640px; color: var(--muted); font-size: 1.1rem; }
+    .cta-row { margin-top: 28px; display: flex; gap: 12px; flex-wrap: wrap; }
+    .trust { margin-top: 18px; display: flex; gap: 8px 20px; flex-wrap: wrap; color: var(--muted); font-size: .92rem; }
+    .trust span::before { content: '✓ '; color: var(--good); font-weight: 700; }
+
+    h2 { font-size: clamp(1.6rem, 3vw, 2.4rem); margin: 0 0 12px; }
+    h3 { margin: 0 0 8px; font-size: 1.1rem; }
+    .section-intro { margin-bottom: 26px; max-width: 700px; color: var(--muted); }
     .grid { display: grid; gap: 16px; }
-    .services { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
-    .process { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
-    .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
-    .card:hover { background: var(--bg-card-h); }
-    h2 { font-size: clamp(1.6rem, 3vw, 2.5rem); margin-bottom: 12px; }
-    h3 { margin: 0 0 8px; font-size: 1.12rem; }
-    p { margin: 0; }
-    .section-intro { margin-bottom: 24px; max-width: 760px; color: var(--muted); }
+    .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 22px; }
+    .card p { color: var(--muted); }
+
+    /* Smertepunkter */
+    .pains { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+    .pains .card h3 { font-size: 1.02rem; }
+
+    /* Resultater */
+    .results { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+    .result .who { font-size: .8rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); font-weight: 600; }
+    .result .kw { margin: 10px 0 6px; font-weight: 600; }
+    .result .move { font-family: var(--display); font-size: 2rem; font-weight: 700; display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+    .result .move .from { color: var(--muted); font-size: 1.2rem; text-decoration: line-through; text-decoration-thickness: 1px; }
+    .result .move .to { color: var(--good); }
+    .result .when { font-size: .88rem; color: var(--muted); margin-top: 4px; }
+    .fineprint { margin-top: 14px; font-size: .85rem; color: var(--muted); }
+
+    /* Tjenester */
+    .services { grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
+
+    /* Prosess */
+    .steps { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); counter-reset: step; }
+    .steps .card { position: relative; padding-top: 50px; }
+    .steps .card::before { counter-increment: step; content: counter(step); position: absolute; top: 18px; left: 22px; width: 24px; height: 24px; border-radius: 50%; background: rgba(244,124,32,.15); color: var(--accent); font-weight: 700; font-size: .85rem; display: flex; align-items: center; justify-content: center; }
+
+    /* Mellom-CTA */
+    .band { background: linear-gradient(140deg, rgba(244,124,32,.14), rgba(14,16,24,.95)); border: 1px solid rgba(244,124,32,.35); border-radius: 16px; padding: clamp(22px, 4vw, 38px); display: flex; align-items: center; justify-content: space-between; gap: 18px; flex-wrap: wrap; }
+    .band h2 { margin: 0 0 6px; font-size: clamp(1.3rem, 2.4vw, 1.8rem); }
+    .band p { color: var(--muted); }
+
+    /* FAQ */
     .faq details { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; }
     .faq details + details { margin-top: 12px; }
     .faq summary { cursor: pointer; font-weight: 600; }
-    .faq p { margin-top: 10px; color: var(--muted); }
-    .cta-panel { background: linear-gradient(140deg, rgba(244,124,32,.14), rgba(14,16,24,.95)); border: 1px solid rgba(244,124,32,.35); border-radius: 16px; padding: clamp(24px, 4vw, 44px); }
+    .faq details p { margin-top: 10px; color: var(--muted); }
+
+    /* Kontakt */
+    .contact-wrap { display: grid; grid-template-columns: 1fr 1.2fr; gap: clamp(20px, 4vw, 48px); align-items: start; }
+    .get-list { list-style: none; padding: 0; margin: 18px 0 24px; display: grid; gap: 10px; }
+    .get-list li { padding-left: 26px; position: relative; }
+    .get-list li::before { content: '✓'; position: absolute; left: 0; color: var(--good); font-weight: 700; }
+    .direct { display: grid; gap: 8px; color: var(--muted); font-size: .95rem; }
+    .direct a { color: var(--text); font-weight: 600; }
+    form.card { display: grid; gap: 14px; }
+    .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    label { display: grid; gap: 6px; font-size: .88rem; font-weight: 600; }
+    label .opt { color: var(--muted); font-weight: 400; }
+    input, textarea { width: 100%; padding: 12px 13px; border-radius: 8px; border: 1px solid var(--border); background: #0a0c13; color: var(--text); font: inherit; }
+    input:focus, textarea:focus { outline: 2px solid rgba(244,124,32,.5); outline-offset: 1px; border-color: var(--accent); }
+    textarea { min-height: 110px; resize: vertical; }
+    .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+    .form-status { font-size: .92rem; min-height: 1.3em; }
+    .form-status.err { color: #ff8a7a; }
+    .form-status.ok { color: var(--good); }
+    .form-note { font-size: .82rem; color: var(--muted); }
+
     footer { border-top: 1px solid var(--border); padding: 32px 0 52px; color: var(--muted); font-size: .95rem; }
-    a { color: inherit; }
-    .text-accent { color: var(--accent); }
+    footer .container { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    footer a { text-decoration: none; }
+
+    @media (max-width: 760px) {
+      .contact-wrap { grid-template-columns: 1fr; }
+      .row2 { grid-template-columns: 1fr; }
+    }
     @media (max-width: 640px) {
-      .btn { width: 100%; text-align: center; }
+      .cta-row .btn, .band .btn { width: 100%; text-align: center; }
     }
   </style>
 
@@ -87,6 +156,8 @@
         "url": "https://setai.no/seo/",
         "description": "AI-drevet SEO-tjeneste for norske bedrifter med fokus på teknisk SEO, innhold, lokal synlighet og AI-søk.",
         "areaServed": "Norge",
+        "email": "khabat@setai.no",
+        "telephone": "+4741227175",
         "address": {
           "@type": "PostalAddress",
           "addressLocality": "Oslo",
@@ -114,13 +185,23 @@
           },
           {
             "@type": "Question",
+            "name": "Hva koster det?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Det avhenger av hvor dere står i dag og hvor mye som må gjøres. Etter den gratis SEO-sjekken får dere et konkret forslag med pris, helt uforpliktende." }
+          },
+          {
+            "@type": "Question",
             "name": "Kan dere hjelpe med lokal SEO i Oslo og resten av Norge?",
-            "acceptedAnswer": { "@type": "Answer", "text": "Ja. Vi bygger lokal struktur, innhold og søkeintensjon for både byer som Oslo og nasjonale søk i hele Norge." }
+            "acceptedAnswer": { "@type": "Answer", "text": "Ja. Vi bygger lokal struktur, innhold og Google Business-profil for både byer som Oslo og nasjonale søk i hele Norge." }
           },
           {
             "@type": "Question",
             "name": "Hva betyr AI SEO i praksis?",
-            "acceptedAnswer": { "@type": "Answer", "text": "AI SEO betyr at vi kombinerer klassisk SEO med strukturert innhold, entitetsforståelse og teknisk arkitektur som gir bedre synlighet også i AI-baserte søkeopplevelser." }
+            "acceptedAnswer": { "@type": "Answer", "text": "AI SEO betyr at vi kombinerer klassisk SEO med strukturert innhold, entitetsforståelse og teknisk arkitektur som gir bedre synlighet også i AI-baserte søkeopplevelser som ChatGPT og Googles AI-svar." }
+          },
+          {
+            "@type": "Question",
+            "name": "Passer dette for små og mellomstore bedrifter?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Ja. Mange av kundene våre er lokale bedrifter med én eller få ansatte, så lenge målet er flere kunder fra Google over tid." }
           }
         ]
       }
@@ -129,106 +210,226 @@
   </script>
 </head>
 <body>
+  <header class="topbar">
+    <div class="container">
+      <a class="brand" href="https://setai.no/">SET<span>AI</span></a>
+      <a class="btn btn-primary" href="#kontakt">Gratis SEO-sjekk</a>
+    </div>
+  </header>
+
   <main>
     <section class="hero">
       <div class="container">
-        <p class="eyebrow">SEO BYRÅ · FOUNDER-LED · OSLO</p>
+        <p class="eyebrow">SEO-byrå · Founder-led · Oslo</p>
         <h1>AI-drevet SEO for norske bedrifter</h1>
-        <p class="lead">Vi hjelper ambisiøse selskaper i Norge med søkemotoroptimalisering som gir varig vekst: fra teknisk grunnmur og lokal synlighet til innholdssystemer som fungerer i både Google og AI-søk.</p>
+        <p class="lead">Kundene deres søker på Google hver dag. Vi sørger for at de finner dere — ikke konkurrenten. Teknisk SEO, innhold og lokal synlighet, målt med ekte tall fra Google.</p>
         <div class="cta-row">
-          <a class="btn btn-primary" href="https://setai.no/">Book strategisamtale</a>
-          <a class="btn btn-secondary" href="https://trustai.no/">Se våre AI-systemer</a>
+          <a class="btn btn-primary" href="#kontakt">Få gratis SEO-sjekk</a>
+          <a class="btn btn-secondary" href="https://wa.me/4741227175" rel="noopener">Send melding på WhatsApp</a>
+        </div>
+        <div class="trust">
+          <span>Gratis og uforpliktende</span>
+          <span>Du snakker direkte med gründeren</span>
+          <span>Resultater målt i Google Search Console</span>
         </div>
       </div>
     </section>
 
     <section>
       <div class="container">
-        <h2>Hvorfor SEO endrer seg nå</h2>
-        <p class="section-intro">Søkeatferd går fra enkle nøkkelord til mer komplekse spørsmål, sammenligninger og AI-assisterte svar. Bedrifter som bygger tydelig struktur, sterk tematisk autoritet og riktig teknisk fundament får et varig konkurransefortrinn.</p>
+        <h2>Kjenner du deg igjen?</h2>
+        <p class="section-intro">De fleste bedriftene vi snakker med har en fin nettside — men den gir ikke kunder.</p>
+        <div class="grid pains">
+          <article class="card"><h3>«Vi finnes ikke på Google»</h3><p>Dere dukker opp når noen søker på firmanavnet, men ikke når kunder søker etter det dere faktisk selger.</p></article>
+          <article class="card"><h3>«Konkurrenten ligger alltid øverst»</h3><p>Selv om dere er like gode eller bedre. De har bare jobbet mer systematisk med synlighet.</p></article>
+          <article class="card"><h3>«Vi vet ikke hva som virker»</h3><p>Dere har prøvd blogg, annonser eller et byrå, men har aldri sett tydelige tall på hva det ga.</p></article>
+        </div>
       </div>
     </section>
 
     <section>
       <div class="container">
-        <h2>Tjenester</h2>
-        <p class="section-intro">SETAI fungerer som et premium SEO-byrå for bedrifter som vil bygge langsiktig synlighet i Norge.</p>
+        <h2>Resultater fra kundene våre</h2>
+        <p class="section-intro">Ekte plasseringer i Google, hentet rett fra Search Console. Lavere tall er bedre — #1 er øverst.</p>
+        <div class="grid results">
+          <article class="card result">
+            <div class="who">Hudklinikk · Sandnes</div>
+            <p class="kw">«laserfjerning tatovering»</p>
+            <div class="move"><span class="from">#40</span><span class="to">#5</span></div>
+            <p class="when">Fra side 4 til side 1, juni → september 2026</p>
+          </article>
+          <article class="card result">
+            <div class="who">Hudklinikk · Sandnes</div>
+            <p class="kw">«botox sandnes»</p>
+            <div class="move"><span class="from">#37</span><span class="to">#7</span></div>
+            <p class="when">Fra side 4 til side 1, juni → september 2026</p>
+          </article>
+          <article class="card result">
+            <div class="who">Karriererådgiver · helt ny nettside</div>
+            <p class="kw">«karriere rådgivning»</p>
+            <div class="move"><span class="from">#31</span><span class="to">#19</span></div>
+            <p class="when">12 plasser opp på én måned, august → september 2026</p>
+          </article>
+          <article class="card result">
+            <div class="who">SETAI · vår egen side</div>
+            <p class="kw">«ai drevet seo»</p>
+            <div class="move"><span class="from">#17</span><span class="to">#7</span></div>
+            <p class="when">Inn på side 1 på én måned, august → september 2026</p>
+          </article>
+        </div>
+        <p class="fineprint">Snittplassering per måned fra Google Search Console. Kundenavn er utelatt av hensyn til kundene.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="band">
+          <div>
+            <h2>Hvor taper dere kunder i Google i dag?</h2>
+            <p>Vi sjekker nettsiden deres og viser dere svaret — gratis.</p>
+          </div>
+          <a class="btn btn-primary" href="#kontakt">Få gratis SEO-sjekk</a>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <h2>Hva vi gjør</h2>
+        <p class="section-intro">Alt som skal til for at dere blir funnet — i Google, i Google Maps og i AI-søk som ChatGPT.</p>
         <div class="grid services">
-          <article class="card"><h3>Teknisk SEO</h3><p>Crawlbarhet, indeksering, Core Web Vitals, informasjonshierarki og internlenking som gir søkemotorer riktig signal.</p></article>
-          <article class="card"><h3>Lokal SEO</h3><p>Lokale landingssider, kartsignal og innhold som matcher kjøpsnære søk i Oslo og andre norske markeder.</p></article>
-          <article class="card"><h3>Shopify SEO</h3><p>Optimalisering av kategorier, produkter, filterstruktur, metadata og tekniske elementer for skalerbar organisk vekst.</p></article>
-          <article class="card"><h3>SEO for SaaS</h3><p>Innholdsstrategi og sidearkitektur som støtter hele kundereisen fra problembevissthet til produktvurdering.</p></article>
-          <article class="card"><h3>AI-generert innholdsstruktur</h3><p>Redaksjonelle systemer med AI-assistanse for å produsere relevant, konsistent og søkeintensjonsdrevet innhold.</p></article>
-          <article class="card"><h3>GEO / synlighet i AI-søk</h3><p>Optimalisering for generative søkegrensesnitt gjennom tydelige entiteter, semantisk dekning og kildetroverdighet.</p></article>
+          <article class="card"><h3>Teknisk SEO</h3><p>Hastighet, indeksering og struktur, slik at Google forstår og prioriterer de viktigste sidene deres.</p></article>
+          <article class="card"><h3>Lokal SEO</h3><p>Google Business-profil, anmeldelser og lokale landingssider for kunder i nærheten — i Oslo og resten av Norge.</p></article>
+          <article class="card"><h3>Innhold som rangerer</h3><p>Sider og artikler skrevet rundt det kundene faktisk søker etter, med AI-assistanse og menneskelig kvalitetssikring.</p></article>
+          <article class="card"><h3>Synlighet i AI-søk (GEO)</h3><p>Strukturert innhold og tydelige entiteter, slik at ChatGPT og Googles AI-svar nevner dere som kilde.</p></article>
+          <article class="card"><h3>Nettbutikk og SaaS</h3><p>Kategori- og produktsider for Shopify, og innholdsarkitektur for programvareselskaper.</p></article>
+          <article class="card"><h3>Månedlig rapport</h3><p>Dere ser plasseringene deres i Google hver måned — start, nå og mål. Ingen synsing.</p></article>
         </div>
       </div>
     </section>
 
-
     <section>
       <div class="container">
-        <h2>SEO authority pages</h2>
-        <p class="section-intro">Utforsk våre spesialiserte SEO-landingssider for ulike behov og markeder i Norge.</p>
-        <div class="grid services">
-          <article class="card"><h3><a class="text-accent" href="/seo-agency-norway/">SEO Agency Norway</a></h3><p>Nasjonal SEO-strategi for selskaper som vil eie sin kategori.</p></article>
-          <article class="card"><h3><a class="text-accent" href="/seo-byrå-oslo/">SEO Byrå Oslo</a></h3><p>Lokal synlighet og lead-generering for Oslo-markedet.</p></article>
-          <article class="card"><h3><a class="text-accent" href="/ai-seo-norway/">AI SEO Norway</a></h3><p>Synlighet i AI-søk med strukturert innhold og entitetsfokus.</p></article>
-          <article class="card"><h3><a class="text-accent" href="/shopify-seo-norway/">Shopify SEO Norway</a></h3><p>Skalerbar organisk vekst for norske nettbutikker.</p></article>
-          <article class="card"><h3><a class="text-accent" href="/saas-seo/">SaaS SEO</a></h3><p>Pipeline-drevet SEO for B2B SaaS og produktvekst.</p></article>
-        </div>
-      </div>
-    </section>
-    <section>
-      <div class="container">
-        <h2>Hvorfor velge SETAI</h2>
-        <p class="section-intro">Founder-led leveranse betyr kort vei fra strategi til gjennomføring. Du jobber direkte med senior kompetanse innen AI, SaaS og SEO — ikke et tungt mellomledd.</p>
-      </div>
-    </section>
-
-    <section>
-      <div class="container">
-        <h2>Prosess</h2>
-        <div class="grid process">
-          <article class="card"><h3>Audit</h3><p>Full kartlegging av teknikk, innhold, konkurranse og søkeintensjon.</p></article>
-          <article class="card"><h3>Strategy</h3><p>Prioritert plan med tydelige mål, roadmap og KPI-er.</p></article>
-          <article class="card"><h3>Technical fixes</h3><p>Implementering av tiltak som forbedrer crawl, hastighet og indeksering.</p></article>
-          <article class="card"><h3>Content system</h3><p>Skalerbart rammeverk for innholdsproduksjon med kvalitetssikring.</p></article>
-          <article class="card"><h3>Tracking</h3><p>Kontinuerlig måling av rangering, trafikk, leads og forretningsverdi.</p></article>
+        <h2>Slik jobber vi</h2>
+        <p class="section-intro">Kort vei fra første samtale til synlige resultater. Dere jobber direkte med meg, ikke et mellomledd.</p>
+        <div class="grid steps">
+          <article class="card"><h3>Gratis SEO-sjekk</h3><p>Vi ser på nettsiden, konkurrentene og hvor dere står i Google i dag.</p></article>
+          <article class="card"><h3>Plan med mål</h3><p>Dere får en prioritert plan: hvilke søkeord, hvilke tiltak, og hvilken plassering vi sikter mot.</p></article>
+          <article class="card"><h3>Gjennomføring</h3><p>Vi fikser teknikken, skriver innholdet og setter opp Google-profilen.</p></article>
+          <article class="card"><h3>Måling hver måned</h3><p>Dere ser fremgangen i en egen oversikt — og vi justerer der det trengs.</p></article>
         </div>
       </div>
     </section>
 
     <section class="faq">
       <div class="container">
-        <h2>FAQ</h2>
+        <h2>Vanlige spørsmål</h2>
         <details>
-          <summary>Jobber dere kun med selskaper i Oslo?</summary>
-          <p>Nei. Vi leverer SEO for både lokale aktører i Oslo og nasjonale bedrifter i hele Norge.</p>
+          <summary>Hvor lang tid tar SEO før vi ser effekt?</summary>
+          <p>De fleste ser tidlige signaler i løpet av 4–8 uker, og tydeligere vekst i løpet av 3–6 måneder når teknikk, innhold og måling henger sammen.</p>
+        </details>
+        <details>
+          <summary>Hva koster det?</summary>
+          <p>Det avhenger av hvor dere står i dag og hvor mye som må gjøres. Etter den gratis SEO-sjekken får dere et konkret forslag med pris, helt uforpliktende.</p>
+        </details>
+        <details>
+          <summary>Kan dere hjelpe med lokal SEO i Oslo og resten av Norge?</summary>
+          <p>Ja. Vi bygger lokal struktur, innhold og Google Business-profil for både byer som Oslo og nasjonale søk i hele Norge.</p>
+        </details>
+        <details>
+          <summary>Hva betyr AI SEO i praksis?</summary>
+          <p>AI SEO betyr at vi kombinerer klassisk SEO med strukturert innhold, entitetsforståelse og teknisk arkitektur som gir bedre synlighet også i AI-baserte søkeopplevelser som ChatGPT og Googles AI-svar.</p>
         </details>
         <details>
           <summary>Passer dette for små og mellomstore bedrifter?</summary>
-          <p>Ja, så lenge målet er langsiktig vekst og dere ønsker en strukturert, datadrevet tilnærming.</p>
-        </details>
-        <details>
-          <summary>Kan dere samarbeide med eksisterende utvikler- eller markedsteam?</summary>
-          <p>Absolutt. Vi kan jobbe hands-on eller som strategisk sparringspartner, avhengig av kapasitet og behov.</p>
+          <p>Ja. Mange av kundene våre er lokale bedrifter med én eller få ansatte, så lenge målet er flere kunder fra Google over tid.</p>
         </details>
       </div>
     </section>
 
-    <section>
-      <div class="container">
-        <div class="cta-panel">
-          <h2>Klar for mer synlighet i Norge?</h2>
-          <p class="section-intro">Hvis dere vil bygge en SEO-motor som gir målbar vekst over tid, starter vi med en fokusert analyse av dagens situasjon og største muligheter.</p>
-          <a class="btn btn-primary" href="https://setai.no/">Ta kontakt med SETAI</a>
+    <section id="kontakt">
+      <div class="container contact-wrap">
+        <div>
+          <p class="eyebrow">Gratis SEO-sjekk</p>
+          <h2>Se hvor dere står — før konkurrenten gjør det</h2>
+          <p class="section-intro" style="margin-bottom:0">Fyll ut skjemaet, så ser jeg på nettsiden deres og tar kontakt.</p>
+          <ul class="get-list">
+            <li>Hvor dere rangerer i Google på de viktigste søkene</li>
+            <li>De største tekniske feilene som holder dere nede</li>
+            <li>Hva konkurrentene gjør som dere ikke gjør</li>
+            <li>De tre tiltakene som gir mest effekt først</li>
+          </ul>
+          <div class="direct">
+            <span>Heller snakke direkte?</span>
+            <span>WhatsApp: <a href="https://wa.me/4741227175" rel="noopener">412 27 175</a></span>
+            <span>E-post: <a href="mailto:khabat@setai.no">khabat@setai.no</a></span>
+          </div>
         </div>
+
+        <form class="card" id="seoForm" novalidate>
+          <div class="row2">
+            <label>Navn<input name="name" autocomplete="name" required></label>
+            <label>Bedrift <span class="opt">(valgfritt)</span><input name="company" autocomplete="organization"></label>
+          </div>
+          <div class="row2">
+            <label>E-post<input name="email" type="email" autocomplete="email" required></label>
+            <label>Telefon <span class="opt">(valgfritt)</span><input name="phone" type="tel" autocomplete="tel"></label>
+          </div>
+          <label>Nettsiden deres<input name="site_url" type="url" inputmode="url" placeholder="https://" autocomplete="url"></label>
+          <label>Hva ønsker dere å bli funnet på? <span class="opt">(valgfritt)</span><textarea name="message" placeholder="F.eks. «rørlegger Oslo» eller «vi vil ha flere kunder fra Google»"></textarea></label>
+          <div class="hp" aria-hidden="true"><label>Ikke fyll ut<input name="website" tabindex="-1" autocomplete="off"></label></div>
+          <button class="btn btn-primary" type="submit" id="seoSubmit">Få gratis SEO-sjekk</button>
+          <p class="form-status" id="seoStatus" role="status" aria-live="polite"></p>
+          <p class="form-note">Uforpliktende. Vi bruker opplysningene kun til å svare deg.</p>
+        </form>
       </div>
     </section>
   </main>
 
   <footer>
-    <div class="container">SETAI · Oslo, Norway · AI, SaaS, SEO &amp; Digital Systems</div>
+    <div class="container">
+      <span>SETAI · Oslo · AI, SaaS, SEO &amp; digitale systemer</span>
+      <a href="https://setai.no/">setai.no</a>
+    </div>
   </footer>
+
+  <script>
+    (function () {
+      var form = document.getElementById('seoForm');
+      var btn = document.getElementById('seoSubmit');
+      var status = document.getElementById('seoStatus');
+      function setStatus(msg, cls) { status.textContent = msg; status.className = 'form-status' + (cls ? ' ' + cls : ''); }
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        var fd = new FormData(form);
+        var get = function (k) { return (fd.get(k) || '').toString().trim(); };
+        var name = get('name'), email = get('email'), site = get('site_url'), msg = get('message');
+        if (name.length < 2) { setStatus('Skriv inn navnet ditt.', 'err'); return; }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { setStatus('Skriv inn en gyldig e-postadresse.', 'err'); return; }
+        var message = 'Gratis SEO-sjekk' + (site ? '\nNettside: ' + site : '') + (msg ? '\n\n' + msg : '');
+        btn.disabled = true;
+        setStatus('Sender…', '');
+        try {
+          var r = await fetch('/api/homepage-contact.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name: name, company: get('company'), email: email, phone: get('phone'), message: message, source: 'seo-page', website: get('website') })
+          });
+          var d = await r.json().catch(function () { return {}; });
+          if (d.ok) {
+            form.reset();
+            setStatus('Takk! Jeg ser på nettsiden deres og tar kontakt.', 'ok');
+            if (typeof gtag === 'function') gtag('event', 'generate_lead', { source: 'seo-page' });
+          } else {
+            setStatus('Klarte ikke å sende. Send gjerne en e-post til khabat@setai.no i mellomtiden.', 'err');
+            btn.disabled = false;
+          }
+        } catch (err) {
+          setStatus('Nettverksfeil. Prøv igjen, eller send en e-post til khabat@setai.no.', 'err');
+          btn.disabled = false;
+        }
+      });
+    })();
+  </script>
 </body>
 </html>
