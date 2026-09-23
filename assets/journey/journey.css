@@ -197,3 +197,5 @@
 .cert-grid3{grid-template-columns:repeat(3,1fr);gap:12px 14px}
 .cert-item{font-size:10px}
 }
+/* BIAP har ingen logo-fil; typografisk merke i stedet (2026-09-23). */
+.gallery-badge-text{background:#12110f;border:1px solid #e9b77855;color:#e9b778;font:600 20px var(--display);letter-spacing:.06em}

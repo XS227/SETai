@@ -1,0 +1,13 @@
+/* Felles header for undersider, speiler forsidens .site-nav (assets/journey/journey.css).
+   Overstyrer de eldre header-reglene i seo-expansion.css / blog-dark.css / services-dark.css. */
+header.site-nav{position:sticky;top:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:20px 4vw;background:rgba(16,16,15,.92);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-bottom:1px solid #ffffff18;color:#fffaf0;font-family:'Inter',system-ui,sans-serif}
+header.site-nav::before{display:none}
+header.site-nav a{color:inherit;text-decoration:none}
+header.site-nav .wordmark{font:700 27px 'Space Grotesk','Inter',sans-serif;letter-spacing:.12em;color:#fffaf0}
+header.site-nav .wordmark span{font-weight:400}
+header.site-nav .wordmark i{font:10px 'Inter',sans-serif;vertical-align:top;letter-spacing:0;margin-left:3px}
+header.site-nav .nav-actions{display:flex;align-items:center;gap:28px;font-size:14px}
+header.site-nav .nav-actions a:hover{color:#e9b778}
+header.site-nav .nav-talk{border-bottom:1px solid #ffffff70;padding:6px 0}
+header.site-nav a[aria-current="page"]{color:#e9b778}
+@media(max-width:800px){header.site-nav{padding:16px 6vw}header.site-nav .wordmark{font-size:22px}header.site-nav .nav-actions{gap:16px}header.site-nav .nav-link,header.site-nav .nav-all{display:none}}
