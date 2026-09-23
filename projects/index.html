@@ -1,17 +1,23 @@
-<!doctype html><html lang='no'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>Prosjekter | SETAEI</title><meta name='description' content='Utvalgte prosjekter fra SETAEI.'><link rel='canonical' href='https://setai.no/projects/'><meta property='og:title' content='Prosjekter | SETAEI'><meta property='og:description' content='Utvalgte prosjekter fra SETAEI.'><meta property='og:url' content='https://setai.no/projects/'><meta name='twitter:card' content='summary_large_image'><meta name='google-site-verification' content='WRUluLzpLR0S0ly8fGmWj9uAyz2d6l1rYXXvK7YBfRg'><script async src='https://www.googletagmanager.com/gtag/js?id=G-28EZMGVX60'></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config','G-28EZMGVX60');</script><link rel='stylesheet' href='/projects/projects-dark.css'><link rel='preconnect' href='https://fonts.googleapis.com'><link rel='preconnect' href='https://fonts.gstatic.com' crossorigin><link href='https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap' rel='stylesheet'>
-<style>
-/* 2026-08-10: video-preview cards (film project, hobby reference) — scoped
-   to .has-video so the shared /seo-expansion.css .card rules elsewhere on
-   the site are untouched. */
-.card.has-video{position:relative;overflow:hidden;color:#fff;padding:0}
-.card.has-video .cv-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:.55}
-.card.has-video .cv-overlay{position:absolute;inset:0;z-index:0;background:linear-gradient(180deg,rgba(10,8,6,.5),rgba(10,8,6,.85) 75%)}
-.card.has-video .cv-body{position:relative;z-index:1;padding:16px}
-.card.has-video .cat{color:#f3d9a8}
-.card.has-video h3{color:#fff}
-.card.has-video p{color:rgba(255,255,255,.82)}
-.card.has-video a{color:#f3d9a8}
-</style>
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prosjekter | SETAEI</title>
+<meta name="description" content="Utvalgte prosjekter fra SETAEI: nettsider og SEO for kunder som SOMI Klinikken, Styrk Karriere og Volla Byggmester, egne produkter som RealGram og TrustAI, og AI-film.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://setai.no/projects/">
+<meta property="og:title" content="Prosjekter | SETAEI">
+<meta property="og:description" content="Nettsider, SEO, egne produkter og AI-film fra SETAEI.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://setai.no/projects/">
+<meta property="og:image" content="https://setai.no/assets/work/projects/somiklinikken.webp">
+<meta property="og:locale" content="nb_NO">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-28EZMGVX60"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config','G-28EZMGVX60');</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -22,40 +28,211 @@
   ]
 }
 </script>
-</head><body><header><div class='container nav'><strong>SETAEI</strong><input type='checkbox' id='navToggle' class='nav-toggle'><label for='navToggle' class='nav-burger' aria-label='Åpne meny'><span></span><span></span><span></span></label><label for='navToggle' class='nav-close' aria-label='Lukk meny'>&times;</label><nav class='links'><a href='/'>Hjem</a><a href='/services/'>Tjenester</a><a href='/industries/'>Bransjer</a><a href='/blog/'>Blogg</a><a href='/projects/'>Prosjekter</a><a href='/#contact'>Kontakt</a></nav></div></header><main class='container'><div class='breadcrumb'><a href='/'>Hjem</a> / projects</div><div class='hero'><h1>Prosjekter</h1><p>Utvalgte systemer og satsinger fra SETAEI — bevis på gjennomføring, ikke bare tjenestebeskrivelser.</p></div><section class='article-body'>
-<p>Under er egne produkter og satsinger Khabat Setaei har bygget og drifter gjennom SETAEI. De er tatt med fordi de viser den samme tekniske tilnærmingen som brukes i kundeprosjekter: fra idé og arkitektur til et system som faktisk kjører i produksjon, ikke bare en demo.</p>
+<style>
+/* Farger, skrift og header speiler forsiden (assets/journey/journey.css). */
+:root{--bg:#10100f;--bg-card:#181a1b;--text:#fffaf0;--muted:#d6d0c4;--dim:#b7b0a4;--border:#ffffff30;--line:#ffffff18;--accent:#e9b778;--accent-h:#f7c891;--display:'Space Grotesk',sans-serif;--sans:'Inter',sans-serif;color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 var(--sans);overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+h1,h2,h3,p{margin:0}
+em{font-family:Georgia,serif;font-weight:400;color:var(--accent)}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:5px}
 
-<div class='grid'>
-<div class='card'><span class='cat'>Case study</span><h3>REALGRAM</h3><p>Et helt økosystem, ikke en enkelt app: gratis VPN, et tap-to-earn-spill bygget på det persiske eposet Shahnameh, en egen token-økonomi og en meldingstjeneste — alt bundet sammen av ett prinsipp: jo flere som kobler til, jo sterkere og billigere blir nettet for alle. <a href='/projects/realgram/'>Les hele case-studien →</a></p></div>
-<div class='card'><span class='cat'>Case study</span><h3>Shahnameh</h3><p>Dypdykk i RealGrams spill: hvordan vi bygger Ferdowsis «Boken om kongene» — fra en kildegransket kunnskapsbase og AI-genererte karakterer til en Rostam &amp; Sohrab-kortfilm og et live tap-to-earn-spill. <a href='/projects/shahnameh/'>Se hele historien →</a></p></div>
-<div class='card has-video'>
-  <video class='cv-video' autoplay muted loop playsinline preload='metadata' poster='https://d2ol7oe51mr4n9.cloudfront.net/user_3GqVodiVsV7T5gGVNoTV4Q5Q3ZK/f15c83ac-f266-49bf-9862-81d2bdacf9bb.png' aria-hidden='true'>
-    <source src='https://d8j0ntlcm91z4.cloudfront.net/user_3GqVodiVsV7T5gGVNoTV4Q5Q3ZK/hf_20260913_162329_c2f3473c-6c62-4503-82d6-63ce5bdc5024.mp4' type='video/mp4'>
-  </video>
-  <div class='cv-overlay' aria-hidden='true'></div>
-  <div class='cv-body'>
-    <span class='cat'>Higgsfield · Konkurransebidrag publisert</span>
-    <h3>The Son He Did Not Know</h3>
-    <p>Den ferdige 4:04-kortfilmen er ute: Ferdowsis Shahnameh, Rostam &amp; Sohrab og historien om Mehrak flettes sammen i en AI-film bygget shot for shot med karakterreferanser, kontinuitetsarbeid og endelig klipp i CapCut. <a href='/projects/the-son-he-did-not-know/'>Se filmprosjektet →</a> · <a href='/blog/making-the-son-he-did-not-know/'>Les making-of →</a></p>
-  </div>
-</div>
-<div class='card'><span class='cat'>Samarbeid</span><h3>BIAP</h3><p>AI-analyseplattform for det iranske aksjemarkedet, bygget sammen med Dr. Nasrin Dadashi: et team av AI-agenter (fundamental, risiko, prognose, sammenligning) som veies sammen til kjøp/hold/selg-anbefalinger. <a href='/biap/'>Se prosjektet →</a></p></div>
-<div class='card'><h3>Numerologist AI</h3><p>Eksperimentell AI-drevet mønster- og tolkningsplattform som utforsker brukerinput, symbolske systemer og personalisering — bygget med samme <a href='/services/ai-ekspert-oslo/'>AI-utviklingskompetanse</a> som brukes i kundeprosjekter. <a href='https://numerologist.setai.no/' target='_blank' rel='noopener'>Åpne Numerologist →</a></p></div>
-<div class='card'><span class='cat'>Design og visualisering</span><h3>چرخونه گردون (Gardoon)</h3><p>Teknisk visualisering og veikart for en mekanisk innretning med to messingplater på 76 cm, én stående aksel, 37 lommer oppe og 24 nede — tegning, mål, 3D-uttrykk og logoforslag. <a href='/projects/gardoon/'>Se prosjektforhåndsvisning →</a></p></div>
-<div class='card has-video'>
-  <video class='cv-video' autoplay muted loop playsinline preload='metadata' poster='https://d8j0ntlcm91z4.cloudfront.net/user_3GqVodiVsV7T5gGVNoTV4Q5Q3ZK/hf_20260802_220401_efc779ce-7fc9-4c4f-8085-5b54f6795b1f.png' aria-hidden='true'>
-    <source src='https://d8j0ntlcm91z4.cloudfront.net/user_3GqVodiVsV7T5gGVNoTV4Q5Q3ZK/hf_20260809_204325_06cada49-4c59-4bcc-804f-c3d519c51619.mp4' type='video/mp4'>
-  </video>
-  <div class='cv-overlay' aria-hidden='true'></div>
-  <div class='cv-body'>
-    <span class='cat'>Hobby / kreativ referanse</span>
-    <h3>Crown of My Heart</h3>
-    <p>En test-musikkvideo laget på Higgsfield — egen stemme, eget bilde, AI-synkronisert lyd og kamerabevegelse. Ikke et kundeprosjekt, bare et eksempel på samme verktøy brukt kreativt. <a href='https://d8j0ntlcm91z4.cloudfront.net/user_3GqVodiVsV7T5gGVNoTV4Q5Q3ZK/hf_20260809_204325_06cada49-4c59-4bcc-804f-c3d519c51619.mp4' target='_blank' rel='noopener'>Se hele klippet →</a></p>
-  </div>
-</div>
-</div>
+.site-nav{position:sticky;top:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:20px 4vw;background:rgba(16,16,15,.92);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.wordmark{font:700 27px var(--display);letter-spacing:.12em}
+.wordmark span{font-weight:400}
+.wordmark i{font:10px var(--sans);vertical-align:top;letter-spacing:0;margin-left:3px}
+.nav-actions{display:flex;align-items:center;gap:28px;font-size:14px}
+.nav-talk{border-bottom:1px solid #ffffff70;padding:6px 0}
 
-<h2>Fra egne produkter til kundeprosjekter</h2>
-<p>Erfaringen fra å bygge og drifte disse produktene selv — fra multi-tenant-arkitektur til betalingsintegrasjoner og skalering — er den samme erfaringen som brukes i <a href='/services/'>tjenestene</a> SETAEI leverer til kunder. Forskjellen er at her er Khabat selv produkteier, med alt ansvar for teknisk gjeld, drift og videreutvikling som det innebærer.</p>
+.wrap{width:min(1180px,92vw);margin:0 auto}
+.eyebrow{text-transform:uppercase;letter-spacing:.19em;font-size:12px;color:#eee3d4}
+.hero{padding:clamp(70px,10vw,130px) 0 clamp(40px,6vw,70px)}
+.hero h1{font:500 clamp(3rem,6.9vw,6.4rem)/1.01 var(--display);letter-spacing:-.055em;margin-top:22px;max-width:12ch}
+.hero .intro{max-width:520px;margin-top:24px;color:var(--muted)}
 
-<h3>Ta kontakt</h3><p><a class='cta' href='/#contact'>Snakk med SETAEI</a> &nbsp; <a class='cta' href='/services/saas-utvikler-oslo/'>Se SaaS-utvikling →</a></p></section></main><footer><div class='container'>© SETAEI · Oslo</div></footer><script src="/assets/js/reveal.js" defer></script></body></html>
+.group{padding:clamp(34px,5vw,60px) 0;border-top:1px solid var(--line)}
+.group-head{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:28px}
+.group-head h2{font:500 clamp(1.8rem,3.4vw,2.8rem)/1.05 var(--display);letter-spacing:-.04em}
+.group-head p{color:var(--dim);font-size:14px;max-width:420px}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:22px}
+.proj{display:flex;flex-direction:column;background:var(--bg-card);border:1px solid var(--line);border-radius:6px;overflow:hidden;transition:border-color .25s,transform .25s}
+.proj:hover{border-color:#e9b77880;transform:translateY(-3px)}
+.proj .media{position:relative;aspect-ratio:16/10;overflow:hidden;background:#0c0c0b}
+.proj .media img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s}
+.proj:hover .media img{transform:scale(1.04)}
+.proj .media.contain img{object-fit:contain;padding:18px}
+.proj .media.paper{background:#f3ead9}
+.proj .media.word{display:flex;align-items:flex-end;padding:22px;background:radial-gradient(circle at 80% 20%,#e9b77833,transparent 60%),#12110f}
+.proj .media.word span{font:500 clamp(3.4rem,6vw,4.6rem)/.9 var(--display);letter-spacing:-.06em;color:#faf3e6}
+.proj .media.word small{display:block;font:12px var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-top:10px}
+.proj .tag{position:absolute;left:14px;top:14px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;background:#10100fcc;border:1px solid var(--border);padding:5px 9px;border-radius:2px}
+.proj .body{display:flex;flex-direction:column;gap:10px;padding:22px 22px 24px;flex:1}
+.proj h3{font:500 1.5rem/1.15 var(--display);letter-spacing:-.03em}
+.proj p{color:var(--muted);font-size:15px}
+.proj .ctas{margin-top:auto;padding-top:10px;display:flex;gap:18px;flex-wrap:wrap}
+.cta{display:inline-block;font-size:14px;border-bottom:1px solid #ffffff80;padding-bottom:6px}
+.cta.primary{color:var(--accent);border-color:var(--accent)}
+.cta:hover{color:var(--accent-h);border-color:var(--accent-h)}
+
+.contact{padding:clamp(60px,9vw,120px) 0;border-top:1px solid var(--line)}
+.contact h2{font:500 clamp(2.6rem,6vw,5rem)/1.01 var(--display);letter-spacing:-.055em;max-width:14ch}
+.contact .intro{max-width:460px;margin-top:22px;color:var(--muted)}
+.contact-cta{display:inline-block;background:var(--accent);color:#17120b;border-radius:2px;padding:17px 25px;margin-top:28px;font-weight:500}
+.contact-cta:hover{background:var(--accent-h)}
+.small-links{display:flex;gap:24px;flex-wrap:wrap;font-size:14px;margin-top:26px;color:var(--dim)}
+.small-links a{border-bottom:1px solid #ffffff50;padding-bottom:4px;color:var(--text)}
+footer{border-top:1px solid var(--line);padding:26px 0 40px;font-size:12px;letter-spacing:.12em;color:var(--dim)}
+footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+footer i{color:var(--accent);font-style:normal;padding:0 8px}
+
+@media(max-width:800px){
+  .site-nav{padding:16px 6vw}.wordmark{font-size:22px}.nav-actions{gap:16px}.nav-all{display:none}
+  .grid{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){.proj,.proj .media img{transition:none}.proj:hover{transform:none}.proj:hover .media img{transform:none}}
+</style>
+</head>
+<body>
+<header class="site-nav">
+  <a class="wordmark" href="/" aria-label="SETAEI hjem">SET<span>AEI</span><i>®</i></a>
+  <div class="nav-actions"><a class="nav-all" href="/projects/" aria-current="page">Alle prosjekter</a><a class="nav-talk" href="/#contact">La oss snakke</a></div>
+</header>
+
+<main>
+  <section class="hero wrap">
+    <p class="eyebrow">Prosjekter</p>
+    <h1>Bygget, lansert og <em>i drift.</em></h1>
+    <p class="intro">Nettsider og SEO for kunder, egne produkter vi drifter selv, og AI-film. Alt her kjører i produksjon — ikke bare som demo.</p>
+  </section>
+
+  <section class="group wrap" aria-labelledby="g-kunder">
+    <div class="group-head">
+      <h2 id="g-kunder">Kundeprosjekter</h2>
+      <p>Nettsider, SEO og synlighet for norske bedrifter.</p>
+    </div>
+    <div class="grid">
+      <article class="proj">
+        <a class="media" href="https://somiklinikken.no/" target="_blank" rel="noopener"><img src="/assets/work/projects/somiklinikken.webp" alt="Behandlingsrom hos SOMI Klinikken i Sandnes" loading="lazy"><span class="tag">Nettside · SEO</span></a>
+        <div class="body">
+          <h3>SOMI Klinikken</h3>
+          <p>Hudpleieklinikk i Sandnes. Ny nettside med prisliste, behandlingssider og blogg, pluss løpende SEO og kampanje — nå på første side i Google for flere av behandlingene.</p>
+          <div class="ctas"><a class="cta primary" href="https://somiklinikken.no/" target="_blank" rel="noopener">Besøk somiklinikken.no ↗</a></div>
+        </div>
+      </article>
+      <article class="proj">
+        <a class="media contain paper" href="https://styrk-karriere.no/" target="_blank" rel="noopener"><img src="/assets/work/projects/styrk-karriere.webp" alt="Illustrasjon fra Styrk Karriere sin nettside" loading="lazy"><span class="tag">Nettside · SEO</span></a>
+        <div class="body">
+          <h3>Styrk Karriere</h3>
+          <p>Karriererådgivning for ledere og fagspesialister. Nettside i retro-plakatstil med parallax, blogg, kandidatskjema og SEO fra dag én.</p>
+          <div class="ctas"><a class="cta primary" href="https://styrk-karriere.no/" target="_blank" rel="noopener">Besøk styrk-karriere.no ↗</a></div>
+        </div>
+      </article>
+      <article class="proj">
+        <a class="media" href="https://vollabyggmester.no/" target="_blank" rel="noopener"><img src="/assets/work/projects/vollabyggmester.webp" alt="Nybygg fra Volla Byggmester" loading="lazy"><span class="tag">Nettside · SEO</span></a>
+        <div class="body">
+          <h3>Volla Byggmester</h3>
+          <p>Byggmester i Oslo og Akershus. Nettside med tjenestesider, prosjektgalleri og blogg om pris på bad, kjøkken og tilbygg.</p>
+          <div class="ctas"><a class="cta primary" href="https://vollabyggmester.no/" target="_blank" rel="noopener">Besøk vollabyggmester.no ↗</a></div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="group wrap" aria-labelledby="g-produkter">
+    <div class="group-head">
+      <h2 id="g-produkter">Egne produkter</h2>
+      <p>Systemer SETAEI eier og drifter selv — samme erfaring som brukes i kundeprosjektene.</p>
+    </div>
+    <div class="grid">
+      <article class="proj">
+        <a class="media" href="/projects/realgram/"><img src="/assets/work/projects/realgram.webp" alt="RealGram" loading="lazy"><span class="tag">Case study</span></a>
+        <div class="body">
+          <h3>RealGram</h3>
+          <p>Et helt økosystem i én app: gratis VPN, meldinger, lommebok, Hakim AI og Shahnameh-spillet — samlet under én REAL-ID.</p>
+          <div class="ctas"><a class="cta primary" href="/projects/realgram/">Les case-studien →</a><a class="cta" href="https://realgram.no/" target="_blank" rel="noopener">realgram.no ↗</a></div>
+        </div>
+      </article>
+      <article class="proj">
+        <a class="media" href="/projects/shahnameh/"><img src="/projects/shahnameh/poster-hero.jpg" alt="Shahnameh" loading="lazy"><span class="tag">Case study</span></a>
+        <div class="body">
+          <h3>Shahnameh</h3>
+          <p>Ferdowsis «Boken om kongene» som spill: kildegransket kunnskapsbase, AI-genererte karakterer og et live tap-to-earn-spill.</p>
+          <div class="ctas"><a class="cta primary" href="/projects/shahnameh/">Se hele historien →</a></div>
+        </div>
+      </article>
+      <article class="proj">
+        <a class="media" href="https://trustai.no/" target="_blank" rel="noopener"><img src="/assets/work/projects/trustai.webp" alt="TrustAI-dashbord for nettbutikker" loading="lazy"><span class="tag">SaaS</span></a>
+        <div class="body">
+          <h3>TrustAI</h3>
+          <p>Henvisnings- og ambassadørplattform for nettbutikker: dashbord, provisjoner og utbetalinger, koblet til Shopify og Vipps.</p>
+          <div class="ctas"><a class="cta primary" href="https://trustai.no/" target="_blank" rel="noopener">Besøk trustai.no ↗</a></div>
+        </div>
+      </article>
+      <article class="proj">
+        <a class="media" href="https://numerologist.setai.no/" target="_blank" rel="noopener"><img src="/assets/work/projects/numerologist.webp" alt="Numerologist" loading="lazy"><span class="tag">AI</span></a>
+        <div class="body">
+          <h3>Numerologist AI</h3>
+          <p>AI-drevet mønster- og tolkningsplattform med kalkulatorer, artikler og personlige lesninger.</p>
+          <div class="ctas"><a class="cta primary" href="https://numerologist.setai.no/" target="_blank" rel="noopener">Åpne Numerologist ↗</a></div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="group wrap" aria-labelledby="g-samarbeid">
+    <div class="group-head">
+      <h2 id="g-samarbeid">Samarbeid og kreativt</h2>
+      <p>Forskning, AI-film og design.</p>
+    </div>
+    <div class="grid">
+      <article class="proj">
+        <a class="media word" href="https://biap.dadashi.no/" target="_blank" rel="noopener"><span>BIAP<small>AI-analyse · aksjemarkedet</small></span><span class="tag">Samarbeid</span></a>
+        <div class="body">
+          <h3>BIAP</h3>
+          <p>AI-analyseplattform for det iranske aksjemarkedet, bygget sammen med Dr. Nasrin Dadashi: et team av AI-agenter som gir kjøp/hold/selg-anbefalinger.</p>
+          <div class="ctas"><a class="cta primary" href="https://biap.dadashi.no/" target="_blank" rel="noopener">Se prosjektet ↗</a></div>
+        </div>
+      </article>
+      <article class="proj">
+        <a class="media" href="/projects/the-son-he-did-not-know/"><img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3GqVodiVsV7T5gGVNoTV4Q5Q3ZK/f15c83ac-f266-49bf-9862-81d2bdacf9bb.png" alt="The Son He Did Not Know" loading="lazy"><span class="tag">AI-film</span></a>
+        <div class="body">
+          <h3>The Son He Did Not Know</h3>
+          <p>4:04 kortfilm om Rostam og Sohrab, bygget shot for shot med AI — Higgsfield-konkurransebidrag.</p>
+          <div class="ctas"><a class="cta primary" href="/projects/the-son-he-did-not-know/">Se filmen →</a><a class="cta" href="/blog/making-the-son-he-did-not-know/">Making-of →</a></div>
+        </div>
+      </article>
+      <article class="proj">
+        <a class="media" href="https://d8j0ntlcm91z4.cloudfront.net/user_3GqVodiVsV7T5gGVNoTV4Q5Q3ZK/hf_20260809_204325_06cada49-4c59-4bcc-804f-c3d519c51619.mp4" target="_blank" rel="noopener"><img src="https://d8j0ntlcm91z4.cloudfront.net/user_3GqVodiVsV7T5gGVNoTV4Q5Q3ZK/hf_20260802_220401_efc779ce-7fc9-4c4f-8085-5b54f6795b1f.png" alt="Crown of My Heart" loading="lazy"><span class="tag">AI-musikkvideo</span></a>
+        <div class="body">
+          <h3>Crown of My Heart</h3>
+          <p>Test-musikkvideo laget i Higgsfield — egen stemme, eget bilde, AI-synkronisert lyd og kamerabevegelse.</p>
+          <div class="ctas"><a class="cta primary" href="https://d8j0ntlcm91z4.cloudfront.net/user_3GqVodiVsV7T5gGVNoTV4Q5Q3ZK/hf_20260809_204325_06cada49-4c59-4bcc-804f-c3d519c51619.mp4" target="_blank" rel="noopener">Se klippet ↗</a></div>
+        </div>
+      </article>
+      <article class="proj">
+        <div class="media word"><span>گردون<small>Gardoon · design</small></span><span class="tag">Design</span></div>
+        <div class="body">
+          <h3>Gardoon</h3>
+          <p>Teknisk visualisering og veikart for en mekanisk innretning med to messingplater på 76 cm — tegning, mål, 3D-uttrykk og logoforslag.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="contact wrap">
+    <p class="eyebrow">Neste prosjekt</p>
+    <h2>Skal ditt prosjekt stå <em>her?</em></h2>
+    <p class="intro">Nettside, SEO, SaaS eller AI — du snakker direkte med gründeren, fra første skisse til drift.</p>
+    <a class="contact-cta" href="/#contact">La oss snakke</a>
+    <div class="small-links"><a href="/seo/">SEO for bedrifter</a><a href="/services/">Alle tjenester</a><a href="https://wa.me/4741227175" rel="noopener">WhatsApp</a></div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap"><span>© SETAEI<i>·</i>Oslo</span><span>setai.no</span></div>
+</footer>
+</body>
+</html>
