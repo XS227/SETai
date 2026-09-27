@@ -81,7 +81,7 @@ if ('IntersectionObserver' in window) {
  $$('.reveal').forEach(el => observer.observe(el));
  document.documentElement.classList.add('js');
 }
-const services = $('.service');
+const services = [...document.querySelectorAll('.service')];
 const brandStory = $('.brand-story');
 const brandSticky = $('.brand-story-sticky');
 const serviceRail = $('.service-grid');
@@ -98,7 +98,7 @@ function paintBrandStory(){
  brandSticky.style.setProperty('--brand-scale',scale);
  brandSticky.style.setProperty('--brand-origin',ox+'% '+oy+'%');
  brandSticky.style.setProperty('--brand-shade',shade);
- $('.brand-story-copy',brandSticky).forEach((el,i)=>el.classList.toggle('is-active',i===scene));
+ [...brandSticky.querySelectorAll('.brand-story-copy')].forEach((el,i)=>el.classList.toggle('is-active',i===scene));
 }
 function paintServiceOrbit(){
  if(!serviceRail)return;
