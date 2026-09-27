@@ -162,6 +162,13 @@ const filters=[...document.querySelectorAll(".chip")];
 const groups=[...document.querySelectorAll(".group")];
 const status=document.getElementById("filterStatus");
 const label={all:"alle prosjekter",ai:"AI",web:"nettside",seo:"SEO",video:"video",app:"app",brand:"merkevare",automation:"automatisering",strategy:"strategi"};
+const allCards=[...document.querySelectorAll(".proj")];
+filters.forEach(btn=>{
+ const s=btn.dataset.service;
+ const n=s==="all"?allCards.length:allCards.filter(card=>card.dataset.services.split(" ").includes(s)).length;
+ const badge=btn.querySelector(".n"); if(badge)badge.textContent=String(n);
+});
+const pc=document.getElementById("projectCount"); if(pc)pc.textContent=String(allCards.length);
 
 function applyFilter(service,updateUrl=true){
  filters.forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.service===service)));
