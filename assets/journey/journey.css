@@ -291,3 +291,25 @@ html[dir="rtl"] .links{justify-content:flex-start}
   .scene-screen .gallery-head{top:39%}.all-projects-link{bottom:72px}
 }
 @media(prefers-reduced-motion:reduce){.project-logo{animation:none}}
+
+
+/* 2026-09-27 tablet/RTL collision fixes */
+html[dir="rtl"] .chapter-nav{left:3vw;right:auto}
+html[dir="rtl"] .chapter-nav a{direction:ltr}
+@media (max-width:1280px) and (min-width:801px){
+  /* Tablets/Fold: the orbit layout gets crowded; use a clean project matrix. */
+  .scene-screen{padding:92px 5vw 105px!important;display:flex;flex-direction:column;justify-content:center;gap:18px;overflow:hidden!important}
+  .scene-screen .gallery-head{position:relative!important;left:auto!important;top:auto!important;transform:none!important;width:min(760px,90vw)!important;margin:0 auto;text-align:center}
+  html[dir="rtl"] .scene-screen .gallery-head{text-align:center}
+  .scene-screen .gallery-head h2{font-size:clamp(2.2rem,5.8vw,4rem)}
+  .project-kicker{max-width:520px}
+  .project-cloud{position:relative!important;inset:auto!important;width:min(940px,94vw);margin:0 auto;display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px 8px;transform:none!important;will-change:auto}
+  .project-cloud:before,.project-cloud:after{display:none!important}
+  .project-node{position:static!important;left:auto!important;top:auto!important;width:auto!important;transform:none!important;gap:5px;min-height:92px}
+  .project-logo,.project-node.featured .project-logo{width:56px!important;height:56px!important}
+  .project-node strong{font-size:10px;max-width:150px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .project-node small{font-size:8px}
+  .all-projects-link{position:relative!important;left:auto!important;bottom:auto!important;transform:none!important;margin-top:0}
+  /* Side chapter rail is redundant on tablet and collides with RTL copy. */
+  .chapter-nav{display:none!important}
+}
