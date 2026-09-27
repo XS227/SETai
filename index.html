@@ -45,7 +45,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+Arabic:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <script type="application/ld+json">
   {
@@ -98,13 +98,13 @@
   </script>
 
 <link rel="preload" as="image" href="/projects/shahnameh/poster-hero.jpg">
-<link rel="stylesheet" href="/assets/journey/journey.css?v=6">
+<link rel="stylesheet" href="/assets/journey/journey.css?v=7">
 </head>
 <body>
 <a class="skip" href="#contact">Hopp til kontakt</a>
 <header class="site-nav">
   <a class="wordmark" href="#scene-intro" aria-label="SETAEI hjem">SET<span>AEI</span><i>®</i></a>
-  <div class="nav-actions"><a href="/projects/" data-en="All work">Alle prosjekter</a><button class="js-open-contact" data-en="Let's talk">La oss snakke</button><button id="language" aria-label="Switch language">EN</button></div>
+  <div class="nav-actions"><a href="/projects/" data-en="All work">Alle prosjekter</a><button class="js-open-contact" data-en="Let's talk">La oss snakke</button><div class="lang-switch" role="group" aria-label="Language"><button type="button" data-lang="no">NO</button><button type="button" data-lang="en">EN</button><button type="button" data-lang="fa">فا</button></div></div>
 </header>
 <main id="journey">
  <div class="journey-stage">
@@ -119,36 +119,28 @@
    <div class="scene-copy"><p class="eyebrow" data-en="02 / Behind the scenes">02 / Bak kulissene</p><h2 data-en="Back at<br>the <em>desk.</em>">Tilbake ved<br><em>skrivebordet.</em></h2><p class="intro" data-en="The brief becomes sketches. Sketches become code. 15+ years across IT, security and infrastructure meet strategy, design and AI research in the same workspace.">Briefen blir til skisser. Skissene blir til kode. 15+ år med IT, sikkerhet og infrastruktur møter strategi, design og AI-forskning på samme arbeidsflate.</p><a class="text-link" href="/services/" data-en="How I can help ↗">Dette kan jeg hjelpe med ↗</a></div>
    <span class="scene-credit" data-en="Studio / Creative visualization">Studio / Kreativ visualisering</span>
   </section>
-  <section class="scene scene-screen" id="scene-screen" data-chapter="På skjermen" data-fx="browserZoom">
+  <section class="scene scene-screen" id="scene-screen" data-chapter="Prosjekter" data-fx="projectField">
    <div class="visual"><img src="/assets/journey/studio.webp" width="1672" height="941" alt="" decoding="async"></div><div class="shade"></div>
-   <div class="gallery-head"><p class="eyebrow" data-en="03 / One idea, many screens">03 / Én idé, mange skjermer</p><h2 data-en="From an idea<br>on screen<br>to another <em>world.</em>">Fra en idé<br>på skjermen<br>til en annen <em>verden.</em></h2></div>
-   <div class="browser-surface">
-    <div class="browser-bar"><span class="browser-mark">SETAEI / STUDIO</span><span>projects /</span></div>
-    <div class="gallery-groups">
-     <div class="gallery-group">
-      <span class="gallery-group-label" data-en="Mobile apps">Mobilapper</span>
-      <div class="gallery-grid">
-       <a class="gallery-tile" href="https://biap.dadashi.no/" target="_blank" rel="noopener"><span class="gallery-badge gallery-badge-text" aria-hidden="true">BIAP</span><span class="gallery-name">BIAP</span></a>
-       <a class="gallery-tile" href="/projects/realgram/"><span class="gallery-badge"><img src="/projects/shahnameh/img/realtoken-logo.webp" alt="" loading="lazy"></span><span class="gallery-name">RealGram</span></a>
-      </div>
-     </div>
-     <div class="gallery-group">
-      <span class="gallery-group-label" data-en="AI film projects">AI-filmprosjekter</span>
-      <div class="gallery-grid">
-       <a class="gallery-tile" href="/projects/shahnameh/"><span class="gallery-badge gallery-badge-photo"><img src="/projects/shahnameh/poster-hero.jpg" alt="" loading="lazy"></span><span class="gallery-name">Shahnameh</span></a>
-       <button type="button" class="gallery-tile js-video-tile" data-video="https://d8j0ntlcm91z4.cloudfront.net/user_3GqVodiVsV7T5gGVNoTV4Q5Q3ZK/hf_20260809_204325_06cada49-4c59-4bcc-804f-c3d519c51619.mp4" data-poster="https://d8j0ntlcm91z4.cloudfront.net/user_3GqVodiVsV7T5gGVNoTV4Q5Q3ZK/hf_20260802_220401_efc779ce-7fc9-4c4f-8085-5b54f6795b1f.png"><span class="gallery-badge" aria-hidden="true">👑</span><span class="gallery-name">Crown of My Heart</span></button>
-      </div>
-     </div>
-     <div class="gallery-group">
-      <span class="gallery-group-label" data-en="Businesses SETAEI helps">Bedrifter SETAEI hjelper</span>
-      <div class="gallery-grid">
-       <a class="gallery-tile" href="/projects/styrk-karriere/"><span class="gallery-badge"><img src="/assets/work/styrk-karriere-logo.png" alt="Styrk Karriere" loading="lazy"></span></a>
-       <a class="gallery-tile" href="/projects/somiklinikken/"><span class="gallery-badge"><img src="/assets/work/somiklinikken-logo.png" alt="Somiklinikken" loading="lazy"></span></a>
-       <a class="gallery-tile" href="https://vollabyggmester.no/" target="_blank" rel="noopener"><span class="gallery-badge gallery-badge-wide"><img src="/assets/work/volla-logo.webp" alt="Volla Byggmester" loading="lazy"></span></a>
-      </div>
-     </div>
-    </div>
+   <div class="gallery-head">
+    <p class="eyebrow" data-en="03 / One studio, many worlds">03 / Ett studio, mange verdener</p>
+    <h2 data-en="Built ideas.<br><em>Out in the world.</em>">Ideer bygget.<br><em>Ute i verden.</em></h2>
+    <p class="project-kicker" data-en="Products, client work, research and film — move through the constellation.">Produkter, kundearbeid, forskning og film — beveg deg gjennom konstellasjonen.</p>
    </div>
+   <div class="project-cloud" aria-label="SETAEI projects">
+    <a class="project-node featured" href="/projects/realgram/" style="--x:7%;--y:27%;--r:-5deg;--s:1.08;--d:-1s"><span class="project-logo"><img src="/assets/work/realgram-logo.svg" alt="" loading="lazy"></span><strong>RealGram</strong><small data-en="VPN · Wallet · AI">VPN · Wallet · AI</small></a>
+    <a class="project-node" href="/projects/shahnameh/" style="--x:31%;--y:22%;--r:4deg;--s:.96;--d:-2.4s"><span class="project-logo photo"><img src="/projects/shahnameh/poster-hero.jpg" alt="" loading="lazy"></span><strong>Shahnameh</strong><small data-en="Game · AI world">Spill · AI-verden</small></a>
+    <a class="project-node" href="https://trustai.no/" target="_blank" rel="noopener" style="--x:58%;--y:24%;--r:-3deg;--s:.95;--d:-3.1s"><span class="project-logo photo"><img src="/assets/work/projects/trustai.webp" alt="" loading="lazy"></span><strong>TrustAI</strong><small>SaaS</small></a>
+    <a class="project-node" href="https://numerologist.setai.no/" target="_blank" rel="noopener" style="--x:84%;--y:30%;--r:5deg;--s:.92;--d:-.7s"><span class="project-logo photo"><img src="/assets/work/projects/numerologist.webp" alt="" loading="lazy"></span><strong>Numerologist AI</strong><small>AI</small></a>
+    <a class="project-node" href="/drniloo/v3/" target="_blank" rel="noopener" style="--x:11%;--y:57%;--r:4deg;--s:.92;--d:-2s"><span class="project-logo contain"><img src="/drniloo/assets/logo.webp" alt="" loading="lazy"></span><strong>Dr. Niloufar</strong><small data-en="Brand · Web">Profil · Web</small></a>
+    <a class="project-node" href="/projects/somiklinikken/" style="--x:33%;--y:61%;--r:-4deg;--s:.9;--d:-3.6s"><span class="project-logo contain"><img src="/assets/work/somiklinikken-logo.png" alt="" loading="lazy"></span><strong>SOMI Klinikken</strong><small>Web · SEO</small></a>
+    <a class="project-node" href="/projects/styrk-karriere/" style="--x:58%;--y:59%;--r:3deg;--s:.92;--d:-1.5s"><span class="project-logo contain"><img src="/assets/work/styrk-karriere-logo.png" alt="" loading="lazy"></span><strong>Styrk Karriere</strong><small>Web · SEO</small></a>
+    <a class="project-node" href="https://vollabyggmester.no/" target="_blank" rel="noopener" style="--x:83%;--y:61%;--r:-5deg;--s:.9;--d:-2.8s"><span class="project-logo contain"><img src="/assets/work/volla-logo.webp" alt="" loading="lazy"></span><strong>Volla Byggmester</strong><small>Web · SEO</small></a>
+    <a class="project-node" href="https://biap.dadashi.no/" target="_blank" rel="noopener" style="--x:8%;--y:82%;--r:-3deg;--s:.82;--d:-3.4s"><span class="project-logo type">BIAP</span><strong>BIAP</strong><small data-en="AI analytics">AI-analyse</small></a>
+    <a class="project-node" href="/projects/the-son-he-did-not-know/" style="--x:31%;--y:82%;--r:5deg;--s:.84;--d:-1.2s"><span class="project-logo photo"><img src="/projects/shahnameh/poster-hero.jpg" alt="" loading="lazy"></span><strong>The Son He Did Not Know</strong><small data-en="AI film">AI-film</small></a>
+    <button type="button" class="project-node js-video-tile" data-video="https://d8j0ntlcm91z4.cloudfront.net/user_3GqVodiVsV7T5gGVNoTV4Q5Q3ZK/hf_20260809_204325_06cada49-4c59-4bcc-804f-c3d519c51619.mp4" data-poster="https://d8j0ntlcm91z4.cloudfront.net/user_3GqVodiVsV7T5gGVNoTV4Q5Q3ZK/hf_20260802_220401_efc779ce-7fc9-4c4f-8085-5b54f6795b1f.png" style="--x:57%;--y:82%;--r:-4deg;--s:.82;--d:-2.1s"><span class="project-logo type">♥</span><strong>Crown of My Heart</strong><small data-en="AI music video">AI-musikkvideo</small></button>
+    <span class="project-node project-node-static" style="--x:82%;--y:82%;--r:4deg;--s:.82;--d:-.4s"><span class="project-logo type">گردون</span><strong>Gardoon</strong><small>Design</small></span>
+   </div>
+   <a class="all-projects-link" href="/projects/" data-en="All projects ↗">Alle prosjekter ↗</a>
   </section>
   <section class="scene scene-shahnameh" id="shahnameh" data-chapter="Shahnameh" data-fx="zoomTiny">
    <div class="visual"><video id="world-film" muted playsinline loop preload="none" poster="/projects/shahnameh/poster-hero.jpg" aria-label="Shahnameh filmutdrag"><source data-src="/projects/shahnameh/intro-hero.mp4" type="video/mp4"></video></div><div class="shade"></div>
@@ -157,12 +149,14 @@
   <section class="scene scene-higgsfield" id="higgsfield" data-chapter="Higgsfield AI Festival">
    <div class="visual"><video muted playsinline loop autoplay preload="metadata" poster="https://d8j0ntlcm91z4.cloudfront.net/user_3GqVodiVsV7T5gGVNoTV4Q5Q3ZK/hf_20260812_211817_e9a8cd99-ed76-405b-84a4-e9e11499c037.png"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_3GqVodiVsV7T5gGVNoTV4Q5Q3ZK/hf_20260814_211047_38be42f1-2296-4df8-83cc-fa01fc974650.mp4" type="video/mp4"></video></div>
    <div class="shade"></div>
-   <div class="scene-copy"><p class="eyebrow" data-en="05 / Where we're competing">05 / Der vi konkurrerer</p><h2 data-en="Higgsfield<br><em>AI Festival.</em>">Higgsfield<br><em>AI Festival.</em></h2><p class="intro" data-en="SETAEI is entering the Higgsfield AI Festival — a $1M competition — with a cinematic AI-generated sequence from the Shahnameh film.">SETAEI deltar i Higgsfield AI Festival — en konkurranse med $1M i premiepott — med en filmatisk AI-generert sekvens fra Shahnameh-filmen.</p><a class="text-link" href="/projects/shahnameh/" data-en="See the film project ↗">Se filmprosjektet ↗</a></div>
+   <div class="scene-copy"><p class="eyebrow" data-en="05 / The global stage">05 / Den globale scenen</p><h2 data-en="A film.<br>A global stage.<br><em>One shot.</em>">En film.<br>En global scene.<br><em>Ett forsøk.</em></h2><p class="intro" data-en="Our Shahnameh short film is competing in Higgsfield's global AI film festival.">Shahnameh-kortfilmen vår konkurrerer i Higgsfields globale AI-filmfestival.</p><a class="text-link" href="/projects/the-son-he-did-not-know/" data-en="See how the film was made ↗">Se hvordan filmen ble laget ↗</a></div>
+   <a class="million-hook" href="https://higgsfield.ai/s/zd8gg350A_Q" target="_blank" rel="noopener" aria-label="Open the Higgsfield festival entry"><span>1M$</span><small data-en="AI FILM FESTIVAL · VIEW ENTRY ↗">AI FILMFESTIVAL · SE BIDRAGET ↗</small></a>
    <span class="scene-credit" data-en="AI video / Higgsfield">AI-video / Higgsfield</span>
   </section>
-  <section class="scene scene-biap" id="biap" data-chapter="BIAP">
-   <div class="visual"><img src="/assets/journey/studio.webp" width="1672" height="941" alt="" decoding="async"></div><div class="shade"></div>
-   <div class="scene-copy"><p class="eyebrow" data-en="06 / A different kind of question">06 / Et annet slags spørsmål</p><h2 data-en="What can<br>the data<br><em>tell us?</em>">Hva kan<br>dataene<br><em>fortelle?</em></h2><p class="intro" data-en="BIAP is a collaboration in financial and business analytics. Dashboards, scenarios and AI-assisted decision support turn questions into something we can explore.">BIAP er et samarbeidsprosjekt innen finans- og forretningsanalyse. Dashboard, scenarioer og AI-støttet beslutningsarbeid gjør spørsmål til noe vi kan utforske.</p><a class="text-link" href="https://biap.dadashi.no/" target="_blank" rel="noopener" data-en="Open BIAP ↗">Åpne BIAP ↗</a></div><div class="biap-word" aria-hidden="true">BIAP<span>Business intelligence.<br>Applied.</span></div>
+  <section class="scene scene-realgram" id="realgram" data-chapter="RealGram" data-fx="zoomTiny">
+   <div class="visual"><img src="/assets/work/projects/realgram.webp" width="1600" height="1000" alt="RealGram" decoding="async"></div><div class="shade"></div>
+   <div class="scene-copy"><p class="eyebrow" data-en="06 / Product ecosystem">06 / Produktøkosystem</p><h2 data-en="VPN. Wallet. AI.<br><em>One identity.</em>">VPN. Wallet. AI.<br><em>Én identitet.</em></h2><p class="intro" data-en="RealGram brings privacy, community, wallet, Hakim AI and the Shahnameh game into one product — built as a living platform, not a static demo.">RealGram samler personvern, community, wallet, Hakim AI og Shahnameh-spillet i ett produkt — bygget som en levende plattform, ikke en statisk demo.</p><div class="links"><a class="text-link" href="/projects/realgram/" data-en="Explore the case study ↗">Utforsk case-studien ↗</a><a class="text-link" href="https://realgram.no/" target="_blank" rel="noopener" data-en="Open RealGram ↗">Åpne RealGram ↗</a></div></div>
+   <div class="realgram-word" aria-hidden="true">REAL<span>GRAM</span></div>
   </section>
   <section class="scene scene-services" id="services" data-chapter="Tjenester">
    <div class="scene-copy wide"><p class="eyebrow" data-en="07 / Strategy and execution">07 / Strategi og gjennomføring</p><h2 data-en="Strategy and execution<br>from the same <em>brain.</em>">Strategi og gjennomføring<br>fra samme <em>hjerne.</em></h2><p class="intro" data-en="Services designed for founders, SMEs and organizations in Oslo and Norway that need a CTO, AI developer, SaaS developer, full-stack developer or SEO expert — without a full-time hire.">Tjenester designet for gründere, SMB-er og organisasjoner i Oslo og Norge som trenger en CTO, AI-utvikler, SaaS-utvikler, fullstack-utvikler eller SEO-ekspert — uten fast ansettelse.</p>
@@ -197,11 +191,11 @@
   </section>
   <section class="scene scene-contact" id="contact" data-chapter="Neste idé">
    <div class="visual"><img src="/assets/journey/volla.webp" width="1920" height="1200" alt="" decoding="async"></div><div class="shade"></div>
-   <div class="scene-copy"><p class="eyebrow" data-en="10 / The next beginning">10 / Neste begynnelse</p><h2 data-en="Where does<br>your idea<br><em>take us?</em>">Hvor tar<br>din idé<br><em>oss videre?</em></h2><p class="intro" data-en="A website. An AI product. A world nobody has seen before. Let's start with a conversation.">En nettside. Et AI-produkt. En verden ingen har sett før. La oss begynne med en samtale.</p><button class="contact-cta js-open-contact" data-en="Tell me about your idea ↗">Fortell meg om ideen din ↗</button><div class="links small-links"><a href="/services/" data-en="Services">Tjenester</a><a href="/projects/" data-en="Work">Prosjekter</a><a href="/blog/">Blogg</a><a href="#" class="js-email" data-u="khabat" data-d="setai.no" data-en="Email">E-post</a><a class="whatsapp-btn" href="https://wa.me/4741227175" target="_blank" rel="noopener" aria-label="Send melding til Visionary &amp; Intelligence Arshian på WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5A9.5 9.5 0 0 0 3.6 17l-1.1 4.4 4.5-1.2A9.5 9.5 0 1 0 12 2.5zm0 1.9a7.6 7.6 0 1 1 0 15.2 7.5 7.5 0 0 1-3.9-1.1l-.3-.2-2.6.7.7-2.5-.2-.3A7.6 7.6 0 0 1 12 4.4zm-3.7 3.9c-.2 0-.5.1-.7.4-.2.3-.9.9-.9 2.1s.9 2.4 1 2.6c.1.2 1.8 2.8 4.4 3.8 2.2.9 2.6.7 3.1.6.5 0 1.6-.6 1.8-1.3.2-.6.2-1.2.2-1.3-.1-.1-.2-.2-.5-.3l-1.9-.9c-.3-.1-.4-.1-.6.1l-.8.9c-.1.2-.3.2-.5.1-.3-.1-1.1-.4-2.1-1.3-.8-.7-1.3-1.5-1.4-1.8-.2-.3 0-.4.1-.6l.4-.5c.1-.2.2-.3.2-.5.1-.2 0-.4 0-.5l-.8-2c-.2-.5-.4-.4-.6-.4h-.5z"/></svg></a></div></div>
+   <div class="scene-copy"><p class="eyebrow" data-en="10 / The next beginning">10 / Neste begynnelse</p><h2 data-en="Where does<br>your idea<br><em>take us?</em>">Hvor tar<br>din idé<br><em>oss videre?</em></h2><p class="intro" data-en="A website. An AI product. A world nobody has seen before. Let's start with a conversation.">En nettside. Et AI-produkt. En verden ingen har sett før. La oss begynne med en samtale.</p><button class="contact-cta js-open-contact" data-en="Tell me about your idea ↗">Fortell meg om ideen din ↗</button><div class="links small-links"><a href="/services/" data-en="Services">Tjenester</a><a href="/projects/" data-en="Work">Prosjekter</a><a href="/blog/" data-en="Blog">Blogg</a><a href="#" class="js-email" data-u="khabat" data-d="setai.no" data-en="Email">E-post</a><a class="whatsapp-btn" href="https://wa.me/4741227175" target="_blank" rel="noopener" aria-label="Send melding til Visionary &amp; Intelligence Arshian på WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5A9.5 9.5 0 0 0 3.6 17l-1.1 4.4 4.5-1.2A9.5 9.5 0 1 0 12 2.5zm0 1.9a7.6 7.6 0 1 1 0 15.2 7.5 7.5 0 0 1-3.9-1.1l-.3-.2-2.6.7.7-2.5-.2-.3A7.6 7.6 0 0 1 12 4.4zm-3.7 3.9c-.2 0-.5.1-.7.4-.2.3-.9.9-.9 2.1s.9 2.4 1 2.6c.1.2 1.8 2.8 4.4 3.8 2.2.9 2.6.7 3.1.6.5 0 1.6-.6 1.8-1.3.2-.6.2-1.2.2-1.3-.1-.1-.2-.2-.5-.3l-1.9-.9c-.3-.1-.4-.1-.6.1l-.8.9c-.1.2-.3.2-.5.1-.3-.1-1.1-.4-2.1-1.3-.8-.7-1.3-1.5-1.4-1.8-.2-.3 0-.4.1-.6l.4-.5c.1-.2.2-.3.2-.5.1-.2 0-.4 0-.5l-.8-2c-.2-.5-.4-.4-.6-.4h-.5z"/></svg></a></div></div>
   </section>
  </div>
 </main>
-<nav class="chapter-nav" aria-label="Kapitler"><a href="#scene-intro" aria-label="Intro">01</a><a href="#scene-studio" aria-label="Studio">02</a><a href="#scene-screen" aria-label="På skjermen">03</a><a href="#shahnameh" aria-label="Shahnameh">04</a><a href="#higgsfield" aria-label="Higgsfield AI Festival">05</a><a href="#biap" aria-label="BIAP">06</a><a href="#services" aria-label="Tjenester">07</a><a href="#research" aria-label="Forskning">08</a><a href="#certifications" aria-label="Sertifiseringer">09</a><a href="#contact" aria-label="Kontakt">10</a></nav>
+<nav class="chapter-nav" aria-label="Kapitler"><a href="#scene-intro" aria-label="Intro">01</a><a href="#scene-studio" aria-label="Studio">02</a><a href="#scene-screen" aria-label="På skjermen">03</a><a href="#shahnameh" aria-label="Shahnameh">04</a><a href="#higgsfield" aria-label="Higgsfield AI Festival">05</a><a href="#realgram" aria-label="RealGram">06</a><a href="#services" aria-label="Tjenester">07</a><a href="#research" aria-label="Forskning">08</a><a href="#certifications" aria-label="Sertifiseringer">09</a><a href="#contact" aria-label="Kontakt">10</a></nav>
 <div class="journey-footer"><span>KHABAT SETAEI <i>/</i> OSLO</span><button id="next-scene">Scroll for å utforske ↓</button><span id="chapter-label">01 / Intro</span></div>
 <div class="video-overlay" id="videoOverlay" aria-hidden="true"></div>
 <div class="video-modal" id="videoModal" role="dialog" aria-modal="true" aria-hidden="true">
@@ -254,6 +248,6 @@
 
 <!-- ── FOOTER ──────────────────────────────────────────── -->
 
-<script src="/assets/journey/journey.js?v=2" defer></script>
+<script src="/assets/journey/journey.js?v=3" defer></script>
 </body>
 </html>
