@@ -33,3 +33,26 @@
  .map-frame,.map-frame iframe{height:390px;min-height:390px}
  .video-blog .section-heading p{margin-top:18px}
 }
+
+/* Dr Niloo signature mark + homepage journal — v4.3 */
+.brand-logo{position:relative;width:52px;height:52px;flex:0 0 52px;display:grid;place-items:center;direction:ltr}
+.logo-n{font:italic 43px/1 Georgia,serif;letter-spacing:-5px;transform:translateX(-5px);color:var(--ink)}
+.logo-profile{position:absolute;width:21px;height:28px;border:1.5px solid var(--gold);border-left-color:transparent;border-bottom-color:transparent;border-radius:55% 60% 45% 50%;right:4px;top:8px;transform:rotate(14deg)}
+.logo-profile:after{content:'';position:absolute;width:13px;height:8px;border-bottom:1.5px solid var(--gold);border-radius:50%;right:4px;bottom:-8px;transform:rotate(20deg)}
+.logo-orbit{position:absolute;width:45px;height:45px;border:1px solid #93734155;border-radius:50%;inset:3px}
+.video-home-grid{display:grid;grid-template-columns:1.45fr .75fr;gap:5vw;align-items:stretch}
+.video-home-grid .video-feature{grid-template-columns:minmax(260px,.85fr) 1fr;gap:4vw;margin:0}
+.video-side-list{display:flex;flex-direction:column;border-top:1px solid var(--line)}
+.video-card{display:grid;grid-template-columns:38px 1fr 24px;gap:18px;align-items:center;padding:28px 4px;border-bottom:1px solid var(--line);transition:padding .4s var(--ease),background .3s}
+.video-card:hover{padding-inline:14px;background:#e6e2d8}
+.video-card .video-number{font:14px Georgia,serif;color:var(--gold)}
+.video-card small,.video-card em{display:block;font-size:10px;font-style:normal;color:var(--muted);font-weight:400}
+.video-card strong{display:block;font-size:19px;font-weight:500;margin:8px 0}
+.video-card b{font-size:21px;color:var(--gold);font-weight:400}
+.all-blog-link{margin-top:auto;padding:25px 4px 10px;display:flex;justify-content:space-between;font-size:12px;color:var(--gold)}
+@media(max-width:1050px){.video-home-grid{grid-template-columns:1fr}.video-side-list{margin-top:20px}}
+@media(max-width:720px){
+ .brand-logo{width:42px;height:42px;flex-basis:42px}.logo-n{font-size:35px}.logo-profile{width:18px;height:24px;right:1px;top:7px}.logo-orbit{width:38px;height:38px;inset:2px}
+ .video-home-grid .video-feature{grid-template-columns:1fr;gap:32px}
+ .video-card{padding-block:22px}
+}
