@@ -199,3 +199,95 @@
 }
 /* BIAP har ingen logo-fil; typografisk merke i stedet (2026-09-23). */
 .gallery-badge-text{background:#12110f;border:1px solid #e9b77855;color:#e9b778;font:600 20px var(--display);letter-spacing:.06em}
+
+
+/* ── v7 floating project constellation + multilingual UI ───────── */
+.lang-switch{display:flex;align-items:center;gap:3px;padding:3px;border:1px solid #ffffff35;border-radius:999px;background:#0b0b0a55;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);direction:ltr}
+.lang-switch button{min-width:31px;height:27px;padding:0 8px;border-radius:999px;font-size:10px;letter-spacing:.06em;color:#d8d2c8;transition:background .2s,color .2s}
+.lang-switch button[aria-pressed="true"]{background:#fff;color:#111}
+html[lang="fa"] body{font-family:'Noto Sans Arabic',var(--sans);line-height:1.8}
+html[lang="fa"] h1,html[lang="fa"] h2,html[lang="fa"] .wordmark,html[lang="fa"] .project-node strong{font-family:'Noto Sans Arabic',var(--display)}
+html[dir="rtl"] .wordmark,html[dir="rtl"] .project-cloud,html[dir="rtl"] .lang-switch{direction:ltr}
+html[dir="rtl"] .scene-copy,html[dir="rtl"] .gallery-head{text-align:right}
+html[dir="rtl"] .links{justify-content:flex-start}
+
+/* Scene 03: projects float in open space — no browser box and no nested scroll. */
+.scene-screen{display:flex;justify-content:center;align-items:center;overflow:hidden!important;padding:100px 5vw 115px}
+.scene-screen .visual{filter:brightness(.18) saturate(.75);transform:scale(1.28)}
+.scene-screen .shade{background:radial-gradient(circle at 50% 48%,#10100f33 0 22%,#090a0bdd 72%),linear-gradient(0deg,#050505cc,transparent 44%)}
+.scene-screen .gallery-head{position:absolute;z-index:5;left:50%;top:39%;transform:translate(-50%,-50%);width:min(760px,78vw);text-align:center;pointer-events:none}
+.scene-screen .gallery-head h2{display:block;font-size:clamp(2.35rem,5vw,5.6rem);line-height:1.02}
+.scene-screen .gallery-head .eyebrow{margin-bottom:16px}
+.project-kicker{max-width:520px;margin:16px auto 0;color:#d7d0c5;font-size:13px;line-height:1.55}
+.project-cloud{position:absolute;inset:0;z-index:3;pointer-events:none;transform-origin:50% 50%;will-change:transform}
+.project-cloud:before,.project-cloud:after{content:"";position:absolute;left:50%;top:50%;border:1px solid #ffffff0d;border-radius:50%;transform:translate(-50%,-50%) rotate(-8deg);pointer-events:none}
+.project-cloud:before{width:72vw;height:44vh}
+.project-cloud:after{width:48vw;height:70vh;transform:translate(-50%,-50%) rotate(62deg)}
+.project-node{position:absolute;left:var(--x);top:var(--y);z-index:2;display:flex;flex-direction:column;align-items:center;gap:5px;width:150px;transform:translate(-50%,-50%) rotate(var(--r)) scale(var(--s));transform-origin:center;pointer-events:auto;color:var(--text);text-align:center}
+.project-node:hover .project-logo{transform:translateY(-5px) scale(1.09);border-color:#e9b7789e;box-shadow:0 16px 45px #0009,0 0 0 7px #e9b7780d}
+.project-logo{width:68px;height:68px;border-radius:50%;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#f7f3eb;border:1px solid #ffffff38;box-shadow:0 12px 35px #0008;animation:projectFloat 5.8s ease-in-out infinite;animation-delay:var(--d);transition:transform .25s,border-color .25s,box-shadow .25s}
+.project-node.featured .project-logo{width:88px;height:88px}
+.project-logo img{display:block;width:100%;height:100%;object-fit:contain;padding:10px}
+.project-logo.photo{background:#111}
+.project-logo.photo img{object-fit:cover;padding:0}
+.project-logo.contain img{object-fit:contain;padding:12px}
+.project-logo.type{background:#12110f;color:var(--accent);font:600 16px var(--display);letter-spacing:.03em;padding:6px}
+.project-node strong{font:500 12px/1.2 var(--display);text-shadow:0 2px 12px #000}
+.project-node small{font-size:9px;line-height:1.2;letter-spacing:.08em;text-transform:uppercase;color:#c9c1b4;text-shadow:0 2px 10px #000}
+.project-node-static{cursor:default}
+.all-projects-link{position:absolute;left:50%;bottom:92px;z-index:6;transform:translateX(-50%);font-size:12px;letter-spacing:.08em;border-bottom:1px solid #ffffff70;padding-bottom:5px}
+@keyframes projectFloat{0%,100%{translate:0 0}50%{translate:0 -7px}}
+
+/* Scene 05: make the prize the curiosity hook. */
+.scene-higgsfield .shade{background:linear-gradient(90deg,#060607ef 0%,#060607a8 42%,#06060725 78%),linear-gradient(0deg,#000a,transparent 45%)}
+.million-hook{position:absolute;right:6vw;top:50%;z-index:3;transform:translateY(-50%);display:flex;flex-direction:column;align-items:flex-end;line-height:.78;text-align:right}
+.million-hook span{font:600 clamp(7rem,18vw,18rem)/.78 var(--display);letter-spacing:-.085em;color:var(--accent);text-shadow:0 20px 80px #0009}
+.million-hook small{margin-top:24px;font-size:11px;line-height:1.2;letter-spacing:.18em;color:#fff;text-transform:uppercase;border-bottom:1px solid #ffffff70;padding-bottom:8px}
+.million-hook:hover span{color:var(--accent-h)}
+
+/* Scene 06 now spotlights RealGram instead of BIAP. */
+.scene-realgram .visual{filter:brightness(.35) saturate(.85);transform:scale(1.12);transform-origin:68% 48%}
+.scene-realgram .shade{background:linear-gradient(90deg,#070809f2 0%,#070809a8 46%,#07080920 78%)}
+.realgram-word{position:absolute;right:5vw;top:35%;z-index:1;font:600 clamp(5rem,12vw,12rem)/.75 var(--display);letter-spacing:-.075em;color:#fff3;pointer-events:none}
+.realgram-word span{display:block;color:#e9b77855;margin-left:.65em}
+
+/* Certification marks: approximately 2× previous size. */
+.cert-grid3{gap:22px 24px;margin-top:26px}
+.cert-badge{height:68px;border-radius:12px;padding:8px 14px}
+.cert-badge img{height:40px;max-width:100%}
+.cert-badge-text{font-size:24px}
+.cert-badge-apple svg{width:40px;height:40px}
+.cert-item{gap:10px;font-size:12px}
+
+@media(max-width:800px){
+  .nav-actions{gap:11px}.nav-actions .js-open-contact{display:none}.lang-switch button{min-width:28px;padding:0 7px}
+  .scene-screen{padding:88px 5vw 116px;display:flex;flex-direction:column;justify-content:center;gap:16px;overflow:hidden!important}
+  .scene-screen .gallery-head{position:relative;left:auto;top:auto;transform:none;width:100%;max-width:520px;margin:0 auto;text-align:center}
+  html[dir="rtl"] .scene-screen .gallery-head{text-align:center}
+  .scene-screen .gallery-head h2{display:block!important;font-size:clamp(2rem,8.2vw,3.35rem)}
+  .scene-screen .gallery-head .eyebrow{margin-bottom:9px}
+  .project-kicker{font-size:11px;margin-top:10px;max-width:350px}
+  .project-cloud{position:relative;inset:auto;width:100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px 4px;transform:none!important;will-change:auto}
+  .project-cloud:before,.project-cloud:after{display:none}
+  .project-node{position:static!important;left:auto;top:auto;width:auto;transform:none!important;gap:4px;min-height:66px}
+  .project-logo,.project-node.featured .project-logo{width:48px;height:48px}
+  .project-logo img{padding:7px}.project-logo.contain img{padding:8px}
+  .project-logo.type{font-size:11px}
+  .project-node strong{font-size:9px;max-width:92px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .project-node small{display:none}
+  .all-projects-link{position:relative;left:auto;bottom:auto;transform:none;margin-top:2px;font-size:11px}
+  .million-hook{right:6vw;top:20%;transform:none;opacity:.95}
+  .million-hook span{font-size:clamp(5rem,24vw,8rem)}
+  .million-hook small{margin-top:12px;font-size:8px;letter-spacing:.12em}
+  .scene-higgsfield .scene-copy{max-width:70vw}
+  .scene-realgram .visual img{object-position:62% center}
+  .realgram-word{top:16%;right:6vw;font-size:18vw}
+  .cert-grid3{grid-template-columns:repeat(3,1fr);gap:14px 10px}
+  .cert-badge{height:58px;padding:7px 9px}.cert-badge img{height:34px}.cert-badge-text{font-size:19px}.cert-badge-apple svg{width:34px;height:34px}
+}
+@media(max-height:650px) and (min-width:801px){
+  .project-logo{width:56px;height:56px}.project-node.featured .project-logo{width:70px;height:70px}
+  .project-node strong{font-size:10px}.project-node small{display:none}
+  .scene-screen .gallery-head{top:39%}.all-projects-link{bottom:72px}
+}
+@media(prefers-reduced-motion:reduce){.project-logo{animation:none}}
