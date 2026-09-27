@@ -235,7 +235,8 @@ html[dir="rtl"] .links{justify-content:flex-start}
 .project-node strong{font:500 12px/1.2 var(--display);text-shadow:0 2px 12px #000}
 .project-node small{font-size:9px;line-height:1.2;letter-spacing:.08em;text-transform:uppercase;color:#c9c1b4;text-shadow:0 2px 10px #000}
 .project-node-static{cursor:default}
-.all-projects-link{position:absolute;left:50%;bottom:92px;z-index:6;transform:translateX(-50%);font-size:12px;letter-spacing:.08em;border-bottom:1px solid #ffffff70;padding-bottom:5px}
+.all-projects-link{display:inline-block;margin-top:18px;pointer-events:auto;font-size:12px;letter-spacing:.08em;border-bottom:1px solid #ffffff70;padding-bottom:5px;transition:color .2s,border-color .2s}
+.all-projects-link:hover{color:var(--accent-h);border-color:var(--accent)}
 @keyframes projectFloat{0%,100%{translate:0 0}50%{translate:0 -7px}}
 
 /* Scene 05: make the prize the curiosity hook. */
@@ -261,21 +262,6 @@ html[dir="rtl"] .links{justify-content:flex-start}
 
 @media(max-width:800px){
   .nav-actions{gap:11px}.nav-actions .js-open-contact{display:none}.lang-switch button{min-width:28px;padding:0 7px}
-  .scene-screen{padding:88px 5vw 116px;display:flex;flex-direction:column;justify-content:center;gap:16px;overflow:hidden!important}
-  .scene-screen .gallery-head{position:relative;left:auto;top:auto;transform:none;width:100%;max-width:520px;margin:0 auto;text-align:center}
-  html[dir="rtl"] .scene-screen .gallery-head{text-align:center}
-  .scene-screen .gallery-head h2{display:block!important;font-size:clamp(2rem,8.2vw,3.35rem)}
-  .scene-screen .gallery-head .eyebrow{margin-bottom:9px}
-  .project-kicker{font-size:11px;margin-top:10px;max-width:350px}
-  .project-cloud{position:relative;inset:auto;width:100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px 4px;transform:none!important;will-change:auto}
-  .project-cloud:before,.project-cloud:after{display:none}
-  .project-node{position:static!important;left:auto;top:auto;width:auto;transform:none!important;gap:4px;min-height:66px}
-  .project-logo,.project-node.featured .project-logo{width:48px;height:48px}
-  .project-logo img{padding:7px}.project-logo.contain img{padding:8px}
-  .project-logo.type{font-size:11px}
-  .project-node strong{font-size:9px;max-width:92px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .project-node small{display:none}
-  .all-projects-link{position:relative;left:auto;bottom:auto;transform:none;margin-top:2px;font-size:11px}
   .million-hook{right:6vw;top:20%;transform:none;opacity:.95}
   .million-hook span{font-size:clamp(5rem,24vw,8rem)}
   .million-hook small{margin-top:12px;font-size:8px;letter-spacing:.12em}
@@ -285,9 +271,96 @@ html[dir="rtl"] .links{justify-content:flex-start}
   .cert-grid3{grid-template-columns:repeat(3,1fr);gap:14px 10px}
   .cert-badge{height:58px;padding:7px 9px}.cert-badge img{height:34px}.cert-badge-text{font-size:19px}.cert-badge-apple svg{width:34px;height:34px}
 }
-@media(max-height:650px) and (min-width:801px){
+@media(max-height:650px) and (min-width:1200px){
   .project-logo{width:56px;height:56px}.project-node.featured .project-logo{width:70px;height:70px}
   .project-node strong{font-size:10px}.project-node small{display:none}
-  .scene-screen .gallery-head{top:39%}.all-projects-link{bottom:72px}
+  .project-kicker{display:none}
 }
 @media(prefers-reduced-motion:reduce){.project-logo{animation:none}}
+
+/* ── v8 (2026-09-27): RTL chapter rail, orbit constellation, grid below 1200px, Persian type ── */
+@property --orbit{syntax:'<angle>';inherits:false;initial-value:0deg}
+@keyframes orbitSpin{to{--orbit:360deg}}
+
+/* Gold progress hairline on the footer: the whole journey at a glance, and the
+   stand-in for the side rail wherever that rail is hidden. */
+.journey-footer:before,.journey-footer:after{content:"";position:absolute;left:0;right:0;top:0;height:1px}
+.journey-footer:before{background:#ffffff12}
+.journey-footer:after{background:linear-gradient(90deg,#e9b77800,var(--accent));transform:scaleX(var(--journey-progress,0));transform-origin:left center;transition:transform .18s linear}
+html[dir="rtl"] .journey-footer:after{transform-origin:right center;background:linear-gradient(270deg,#e9b77800,var(--accent))}
+#chapter-label b{font-weight:600;color:var(--accent)}
+
+/* Chapter rail lives on the side opposite the reading edge; copy never runs under it. */
+@media(min-width:1200px){
+  .scene{padding-inline-end:max(8vw,132px)}
+  .million-hook,.realgram-word{right:calc(3vw + 112px)}
+  html[dir="rtl"] .million-hook,html[dir="rtl"] .realgram-word{right:auto;left:calc(3vw + 112px)}
+}
+@media(max-width:1199px){
+  .chapter-nav{display:none}
+  .journey-footer>span:last-child{display:inline}
+}
+@media(max-width:800px){.scene{padding-bottom:118px}.scene-credit{bottom:70px}}
+@media(max-width:600px){.journey-footer>span:first-child{display:none}}
+
+/* RTL: mirror everything that is anchored to a side. */
+html[dir="rtl"] .chapter-nav{right:auto;left:3vw}
+html[dir="rtl"] .shade{transform:scaleX(-1)}
+html[dir="rtl"] .scene-credit{right:auto;left:4vw}
+html[dir="rtl"] .million-hook{right:auto;left:6vw;align-items:flex-start;text-align:left}
+html[dir="rtl"] .realgram-word{right:auto;left:5vw}
+html[dir="rtl"] .realgram-word span{margin-left:0;margin-right:.65em}
+html[dir="rtl"] .scene-screen .gallery-head{text-align:center}
+html[dir="rtl"] .pipe-row i{display:inline-block;transform:scaleX(-1)}
+html[dir="rtl"] .contact-close{right:auto;left:16px}
+html[dir="rtl"] .video-close{right:auto;left:0}
+@media(max-width:800px){html[dir="rtl"] .scene-credit{left:7vw}html[dir="rtl"] .million-hook{left:6vw}html[dir="rtl"] .realgram-word{left:6vw}}
+
+/* Persian: no Latin tracking on a joined script, no fake italics, room for the tall glyphs. */
+html[lang="fa"] h1,html[lang="fa"] h2{letter-spacing:0;line-height:1.22}
+html[lang="fa"] em{font-family:'Noto Sans Arabic',sans-serif;font-style:normal;font-weight:600}
+html[lang="fa"] .eyebrow{letter-spacing:0;font-size:13px}
+html[lang="fa"] .intro{line-height:1.95}
+html[lang="fa"] .journey-footer,html[lang="fa"] .project-node small,html[lang="fa"] .million-hook small,html[lang="fa"] .all-projects-link,html[lang="fa"] .chapter-nav a{letter-spacing:0}
+html[lang="fa"] .chapter-nav a{font-size:12px}
+
+/* ≥1200px: the free-floating orbit. Nodes sit on the ring; a gold comet travels it. */
+@media(min-width:1200px){
+  .scene-screen .gallery-head{top:50%;width:min(680px,56vw)}
+  .project-cloud:before{width:80%;height:62%;transform:translate(-50%,-50%);border:0;padding:1px;background:conic-gradient(from var(--orbit),#ffffff12 0 60%,#e9b77800 60%,#e9b778c0 86%,#ffffff12 86.4%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);animation:orbitSpin 30s linear infinite}
+  .project-node{transition:opacity .8s cubic-bezier(.2,.8,.2,1) calc(var(--i,0)*60ms),scale .8s cubic-bezier(.2,.8,.2,1) calc(var(--i,0)*60ms)}
+  .journey-motion .scene-screen:not(.is-active) .project-node{opacity:0;scale:.55}
+}
+
+/* <1200px: a calm, centred grid. Same nodes, no absolute positioning, staggered entrance. */
+@media(max-width:1199px){
+  .scene-screen{flex-direction:column;justify-content:center;gap:clamp(14px,3vh,30px);padding:clamp(76px,11vh,104px) 5vw clamp(64px,9vh,96px)}
+  .scene-screen .gallery-head{position:relative;left:auto;top:auto;transform:none;width:100%;max-width:640px;margin:0 auto;text-align:center}
+  .scene-screen .gallery-head h2{font-size:clamp(1.9rem,5.4vw,3.4rem)}
+  .scene-screen .gallery-head .eyebrow{margin-bottom:10px}
+  .project-kicker{font-size:12px;margin-top:10px;max-width:420px}
+  .all-projects-link{margin-top:12px;font-size:11px}
+  .project-cloud{position:relative;inset:auto;width:min(100%,1000px);margin:0 auto;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;transform:none!important;will-change:auto}
+  html[dir="rtl"] .project-cloud{direction:rtl}
+  .project-cloud:before,.project-cloud:after{display:none}
+  .project-node{position:relative;left:auto;top:auto;width:auto;transform:none;display:grid;grid-template-columns:auto minmax(0,1fr);grid-template-rows:auto auto;column-gap:12px;row-gap:2px;align-items:center;text-align:start;padding:10px 12px;border-radius:14px;border:1px solid #ffffff14;background:linear-gradient(135deg,#ffffff0e,#ffffff03);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);transition:border-color .3s,background .3s,opacity .6s cubic-bezier(.2,.8,.2,1) calc(var(--i,0)*50ms),translate .6s cubic-bezier(.2,.8,.2,1) calc(var(--i,0)*50ms)}
+  .project-node:hover{border-color:#e9b77870;background:linear-gradient(135deg,#e9b77816,#ffffff05)}
+  .project-node.featured{border-color:#e9b77850}
+  .project-logo,.project-node.featured .project-logo{grid-row:1/3;width:44px;height:44px;animation:none;box-shadow:none}
+  .project-node:hover .project-logo{transform:none;box-shadow:0 0 0 4px #e9b7781c}
+  .project-node strong{align-self:end;font-size:13px;line-height:1.2;text-shadow:none;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .project-node small{display:block;align-self:start;font-size:9px;text-shadow:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .journey-motion .scene-screen:not(.is-active) .project-node{opacity:0;translate:0 14px}
+}
+@media(max-width:899px){.project-cloud{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:639px){
+  .project-cloud{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+  .project-node{padding:8px 10px;column-gap:10px;border-radius:12px}
+  .project-logo,.project-node.featured .project-logo{width:36px;height:36px}
+  .project-logo img,.project-logo.contain img{padding:6px}
+  .project-logo.photo img{padding:0}
+  .project-logo.type{font-size:10px}
+  .project-node strong{font-size:12px}
+  .project-kicker{display:none}
+}
+@media(max-width:1199px) and (max-height:700px){.project-kicker{display:none}.all-projects-link{margin-top:6px}}

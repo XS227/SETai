@@ -17,7 +17,7 @@
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config','G-28EZMGVX60');</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Sans+Arabic:wght@500&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -88,14 +88,80 @@ footer{border-top:1px solid var(--line);padding:26px 0 40px;font-size:12px;lette
 footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 footer i{color:var(--accent);font-style:normal;padding:0 8px}
 
+/* ── Service icon system + logo seals (2026-09-27) ───────────────────────── */
+.sprite{position:absolute;width:0;height:0;overflow:hidden}
+.ico{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+.stats{margin-top:34px;display:flex;gap:28px;flex-wrap:wrap;color:var(--dim);font-size:13px;letter-spacing:.04em}
+.stats b{display:block;font:500 clamp(2rem,3.4vw,2.8rem)/1 var(--display);letter-spacing:-.04em;color:var(--text);margin-bottom:6px}
+.stats b em{font-size:.9em}
+
+.svc-filter{display:flex;flex-wrap:wrap;gap:8px;margin-top:34px}
+.svc-filter[hidden]{display:none}
+.chip{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 14px 0 11px;border:1px solid var(--line);border-radius:999px;background:#ffffff05;color:var(--muted);font:500 13px var(--sans);cursor:pointer;transition:border-color .2s,color .2s,background .2s}
+.chip .n{font:500 11px var(--display);color:var(--dim);min-width:1.4em;text-align:center;padding:2px 6px;border-radius:999px;background:#ffffff0d}
+.chip:hover{border-color:#e9b77866;color:var(--text)}
+.chip[aria-pressed="true"]{border-color:var(--accent);color:var(--text);background:#e9b77812}
+.chip[aria-pressed="true"] .ico,.chip[aria-pressed="true"] .n{color:var(--accent)}
+.chip:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+.proj{position:relative;transition:border-color .25s,transform .25s,opacity .35s,filter .35s}
+.proj.is-dim{opacity:.22;filter:grayscale(1)}
+.proj.is-dim:hover{transform:none}
+
+/* Coverage ring: how many of the eight disciplines went into the project. */
+.count{position:absolute;right:12px;top:12px;display:flex;align-items:center;gap:9px;padding:5px 12px 5px 5px;border-radius:999px;background:#10100fcc;border:1px solid var(--border);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.ring{position:relative;display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:conic-gradient(var(--accent) calc(var(--n)*45deg),#ffffff1f 0)}
+.ring:before{content:"";position:absolute;inset:2px;border-radius:50%;background:#141312}
+.ring b{position:relative;font:600 13px var(--display);color:var(--accent)}
+
+.id{display:flex;align-items:flex-end;gap:14px;margin-top:-50px}
+.seal{position:relative;z-index:1;display:grid;place-items:center;flex-shrink:0;width:64px;height:64px;border-radius:50%;overflow:hidden;background:#f7f3eb;border:3px solid var(--bg-card);box-shadow:0 10px 30px #0008,0 0 0 1px #ffffff1a;transition:box-shadow .3s}
+.seal img{width:100%;height:100%;object-fit:contain;padding:9px}
+.seal.photo img{object-fit:cover;padding:0}
+.seal.type{background:radial-gradient(circle at 30% 25%,#2a2419,#12110f 70%);color:var(--accent);font:600 15px var(--display);letter-spacing:.04em}
+.seal.type.fa{font:500 26px 'Noto Sans Arabic',var(--display);letter-spacing:0}
+.seal.type .ico{width:22px;height:22px}
+.proj:hover .seal{box-shadow:0 10px 30px #0008,0 0 0 1px #e9b77899}
+.id h3{padding-bottom:1px}
+.kind{display:block;margin-top:4px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+
+.svc{list-style:none;display:flex;flex-wrap:wrap;gap:7px;margin:6px 0 0;padding:0}
+.svc li{position:relative;display:grid;place-items:center;width:32px;height:32px;border-radius:50%;border:1px solid #ffffff22;color:var(--muted);transition:color .3s,border-color .3s,background .3s;transition-delay:calc(var(--k,0)*45ms)}
+.svc li .lbl{position:absolute;bottom:calc(100% + 8px);left:50%;transform:translate(-50%,4px);white-space:nowrap;padding:4px 9px;border-radius:4px;background:#f7f3eb;color:#17120b;font-size:11px;font-weight:500;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;transition-delay:0s}
+.svc li:hover .lbl,.svc li:focus-visible .lbl{opacity:1;transform:translate(-50%,0)}
+.svc li:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.proj:hover .svc li{color:var(--accent);border-color:#e9b77866}
+.svc li.is-hit{color:#17120b;background:var(--accent);border-color:var(--accent)}
+/* Touch screens have no hover: show the label beside the icon instead. */
+@media(hover:none){
+  .svc li{width:auto;height:30px;display:inline-flex;gap:6px;padding:0 11px 0 9px;border-radius:999px;font-size:12px}
+  .svc li .lbl{position:static;transform:none;opacity:1;padding:0;background:none;color:inherit;font-weight:400}
+}
+
 @media(max-width:800px){
   .site-nav{padding:16px 6vw}.wordmark{font-size:22px}.nav-actions{gap:16px}.nav-all{display:none}
   .grid{grid-template-columns:1fr}
+  .stats{gap:20px}
+  .svc-filter{flex-wrap:nowrap;overflow-x:auto;margin-inline:-4vw;padding:2px 4vw 6px;scrollbar-width:none}
+  .svc-filter::-webkit-scrollbar{display:none}
+  .chip{flex-shrink:0}
 }
-@media(prefers-reduced-motion:reduce){.proj,.proj .media img{transition:none}.proj:hover{transform:none}.proj:hover .media img{transform:none}}
+@media(prefers-reduced-motion:reduce){.proj,.proj .media img,.svc li,.seal{transition:none}.proj:hover{transform:none}.proj:hover .media img{transform:none}}
 </style>
 </head>
 <body>
+<svg class="sprite" aria-hidden="true" focusable="false">
+  <symbol id="i-web" viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="15" rx="2.5"/><path d="M3 9h18M6.5 6.8h.01M9 6.8h.01"/></symbol>
+  <symbol id="i-seo" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5M7.6 12.2l2-2 1.7 1.5 2.4-2.8"/></symbol>
+  <symbol id="i-brand" viewBox="0 0 24 24"><path d="M6.5 4h11L21 9l-9 11L3 9z"/><path d="M3 9h18M9.5 4 8 9l4 11 4-11-1.5-5"/></symbol>
+  <symbol id="i-ai" viewBox="0 0 24 24"><path d="M11 4c.6 4.4 2.6 6.4 7 7-4.4.6-6.4 2.6-7 7-.6-4.4-2.6-6.4-7-7 4.4-.6 6.4-2.6 7-7z"/><path d="M19 3v3.5M17.25 4.75h3.5"/></symbol>
+  <symbol id="i-video" viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="12" rx="2.5"/><path d="m16 10.5 5-3v9l-5-3z"/></symbol>
+  <symbol id="i-auto" viewBox="0 0 24 24"><path d="M19.5 12a7.5 7.5 0 0 1-13 5.1M4.5 12a7.5 7.5 0 0 1 13-5.1"/><path d="M17.5 3v4h-4M6.5 21v-4h4"/></symbol>
+  <symbol id="i-strategy" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m15.6 8.4-2.1 5.1-5.1 2.1 2.1-5.1z"/></symbol>
+  <symbol id="i-app" viewBox="0 0 24 24"><rect x="6.5" y="2.5" width="11" height="19" rx="2.5"/><path d="M10.5 18.5h3"/></symbol>
+</svg>
 <header class="site-nav">
   <a class="wordmark" href="/" aria-label="SETAEI hjem">SET<span>AEI</span><i>®</i></a>
   <div class="nav-actions"><a class="nav-all" href="/projects/" aria-current="page">Alle prosjekter</a><a class="nav-talk" href="/#contact">La oss snakke</a></div>
@@ -106,6 +172,8 @@ footer i{color:var(--accent);font-style:normal;padding:0 8px}
     <p class="eyebrow">Prosjekter</p>
     <h1>Bygget, lansert og <em>i drift.</em></h1>
     <p class="intro">Nettsider og SEO for kunder, egne produkter vi drifter selv, og AI-film. Alt her kjører i produksjon — ikke bare som demo.</p>
+    <div class="stats" id="stats" hidden><span><b id="st-proj">12</b>prosjekter</span><span><b id="st-del">–</b>leveranser</span><span><b>8</b>fagfelt</span></div>
+    <div class="svc-filter" id="svcFilter" role="group" aria-label="Filtrer prosjekter på tjeneste" hidden></div>
   </section>
 
   <section class="group wrap" aria-labelledby="g-kunder">
@@ -114,32 +182,39 @@ footer i{color:var(--accent);font-style:normal;padding:0 8px}
       <p>Nettsider, SEO og synlighet for norske bedrifter.</p>
     </div>
     <div class="grid">
-      <article class="proj">
-<a class="media contain paper" href="/drniloo/v3/" target="_blank" rel="noopener"><img src="/drniloo/assets/logo.webp" alt="Dr. Niloufar Ghafouri — Aesthetic Medicine" loading="lazy"><span class="tag">Under arbeid</span></a>
-<div class="body"><h3>Dr. Niloufar Ghafouri</h3><p>Visuell identitet, behandlingsunivers, video-blogg og scroll-drevet nettside for estetisk medisin.</p>
-<div class="ctas"><a class="cta primary" href="/drniloo/v3/" target="_blank" rel="noopener">Se nettsiden ↗</a><a class="cta" href="/drniloo/seo/">SEO-analyse →</a></div></div>
-</article>
-      <article class="proj">
-        <a class="media" href="https://somiklinikken.no/" target="_blank" rel="noopener"><img src="/assets/work/projects/somiklinikken.webp" alt="Behandlingsrom hos SOMI Klinikken i Sandnes" loading="lazy"><span class="tag">Nettside · SEO</span></a>
+      <article class="proj" data-services="brand web video seo">
+        <a class="media contain paper" href="/drniloo/v3/" target="_blank" rel="noopener"><img src="/drniloo/assets/logo.webp" alt="Dr. Niloufar Ghafouri — Aesthetic Medicine" loading="lazy"><span class="tag">Under arbeid</span></a>
         <div class="body">
-          <h3>SOMI Klinikken</h3>
+          <div class="id"><span class="seal photo"><img src="/drniloo/assets/doctor.webp" alt="" loading="lazy"></span><div><h3>Dr. Niloufar Ghafouri</h3><span class="kind">Estetisk medisin</span></div></div>
+          <p>Visuell identitet, behandlingsunivers, video-blogg og scroll-drevet nettside for estetisk medisin.</p>
+          <ul class="svc"></ul>
+          <div class="ctas"><a class="cta primary" href="/drniloo/v3/" target="_blank" rel="noopener">Se nettsiden ↗</a><a class="cta" href="/drniloo/seo/">SEO-analyse →</a></div>
+        </div>
+      </article>
+      <article class="proj" data-services="web seo strategy">
+        <a class="media" href="https://somiklinikken.no/" target="_blank" rel="noopener"><img src="/assets/work/projects/somiklinikken.webp" alt="Behandlingsrom hos SOMI Klinikken i Sandnes" loading="lazy"></a>
+        <div class="body">
+          <div class="id"><span class="seal"><img src="/assets/work/somiklinikken-logo.png" alt="SOMI Klinikken logo" loading="lazy"></span><div><h3>SOMI Klinikken</h3><span class="kind">Hudklinikk · Sandnes</span></div></div>
           <p>Hudpleieklinikk i Sandnes. Ny nettside med prisliste, behandlingssider og blogg, pluss løpende SEO og kampanje — nå på første side i Google for flere av behandlingene.</p>
+          <ul class="svc"></ul>
           <div class="ctas"><a class="cta primary" href="https://somiklinikken.no/" target="_blank" rel="noopener">Besøk somiklinikken.no ↗</a></div>
         </div>
       </article>
-      <article class="proj">
-        <a class="media contain paper" href="https://styrk-karriere.no/" target="_blank" rel="noopener"><img src="/assets/work/projects/styrk-karriere.webp" alt="Illustrasjon fra Styrk Karriere sin nettside" loading="lazy"><span class="tag">Nettside · SEO</span></a>
+      <article class="proj" data-services="web seo">
+        <a class="media contain paper" href="https://styrk-karriere.no/" target="_blank" rel="noopener"><img src="/assets/work/projects/styrk-karriere.webp" alt="Illustrasjon fra Styrk Karriere sin nettside" loading="lazy"></a>
         <div class="body">
-          <h3>Styrk Karriere</h3>
+          <div class="id"><span class="seal"><img src="/assets/work/styrk-karriere-logo.png" alt="Styrk Karriere logo" loading="lazy"></span><div><h3>Styrk Karriere</h3><span class="kind">Karriererådgivning</span></div></div>
           <p>Karriererådgivning for ledere og fagspesialister. Nettside i retro-plakatstil med parallax, blogg, kandidatskjema og SEO fra dag én.</p>
+          <ul class="svc"></ul>
           <div class="ctas"><a class="cta primary" href="https://styrk-karriere.no/" target="_blank" rel="noopener">Besøk styrk-karriere.no ↗</a></div>
         </div>
       </article>
-      <article class="proj">
-        <a class="media" href="https://vollabyggmester.no/" target="_blank" rel="noopener"><img src="/assets/work/projects/vollabyggmester.webp" alt="Nybygg fra Volla Byggmester" loading="lazy"><span class="tag">Nettside · SEO</span></a>
+      <article class="proj" data-services="web seo">
+        <a class="media" href="https://vollabyggmester.no/" target="_blank" rel="noopener"><img src="/assets/work/projects/vollabyggmester.webp" alt="Nybygg fra Volla Byggmester" loading="lazy"></a>
         <div class="body">
-          <h3>Volla Byggmester</h3>
+          <div class="id"><span class="seal"><img src="/assets/work/volla-logo.webp" alt="Volla Byggmester logo" loading="lazy"></span><div><h3>Volla Byggmester</h3><span class="kind">Byggmester · Oslo</span></div></div>
           <p>Byggmester i Oslo og Akershus. Nettside med tjenestesider, prosjektgalleri og blogg om pris på bad, kjøkken og tilbygg.</p>
+          <ul class="svc"></ul>
           <div class="ctas"><a class="cta primary" href="https://vollabyggmester.no/" target="_blank" rel="noopener">Besøk vollabyggmester.no ↗</a></div>
         </div>
       </article>
@@ -152,35 +227,39 @@ footer i{color:var(--accent);font-style:normal;padding:0 8px}
       <p>Systemer SETAEI eier og drifter selv — samme erfaring som brukes i kundeprosjektene.</p>
     </div>
     <div class="grid">
-      <article class="proj">
+      <article class="proj" data-services="app ai web brand">
         <a class="media" href="/projects/realgram/"><img src="/assets/work/projects/realgram.webp" alt="RealGram" loading="lazy"><span class="tag">Case study</span></a>
         <div class="body">
-          <h3>RealGram</h3>
+          <div class="id"><span class="seal"><img src="/assets/work/realgram-logo.svg" alt="RealGram logo" loading="lazy"></span><div><h3>RealGram</h3><span class="kind">Super-app</span></div></div>
           <p>Et helt økosystem i én app: gratis VPN, meldinger, lommebok, Hakim AI og Shahnameh-spillet — samlet under én REAL-ID.</p>
+          <ul class="svc"></ul>
           <div class="ctas"><a class="cta primary" href="/projects/realgram/">Les case-studien →</a><a class="cta" href="https://realgram.no/" target="_blank" rel="noopener">realgram.no ↗</a></div>
         </div>
       </article>
-      <article class="proj">
+      <article class="proj" data-services="app ai video">
         <a class="media" href="/projects/shahnameh/"><img src="/projects/shahnameh/poster-hero.jpg" alt="Shahnameh" loading="lazy"><span class="tag">Case study</span></a>
         <div class="body">
-          <h3>Shahnameh</h3>
+          <div class="id"><span class="seal type fa" aria-hidden="true">ش</span><div><h3>Shahnameh</h3><span class="kind">Spill · AI-verden</span></div></div>
           <p>Ferdowsis «Boken om kongene» som spill: kildegransket kunnskapsbase, AI-genererte karakterer og et live tap-to-earn-spill.</p>
+          <ul class="svc"></ul>
           <div class="ctas"><a class="cta primary" href="/projects/shahnameh/">Se hele historien →</a></div>
         </div>
       </article>
-      <article class="proj">
-        <a class="media" href="https://trustai.no/" target="_blank" rel="noopener"><img src="/assets/work/projects/trustai.webp" alt="TrustAI-dashbord for nettbutikker" loading="lazy"><span class="tag">SaaS</span></a>
+      <article class="proj" data-services="web ai auto">
+        <a class="media" href="https://trustai.no/" target="_blank" rel="noopener"><img src="/assets/work/projects/trustai.webp" alt="TrustAI-dashbord for nettbutikker" loading="lazy"></a>
         <div class="body">
-          <h3>TrustAI</h3>
+          <div class="id"><span class="seal"><img src="/assets/work/trustai-logo.webp" alt="TrustAI logo" loading="lazy"></span><div><h3>TrustAI</h3><span class="kind">SaaS · netthandel</span></div></div>
           <p>Henvisnings- og ambassadørplattform for nettbutikker: dashbord, provisjoner og utbetalinger, koblet til Shopify og Vipps.</p>
+          <ul class="svc"></ul>
           <div class="ctas"><a class="cta primary" href="https://trustai.no/" target="_blank" rel="noopener">Besøk trustai.no ↗</a></div>
         </div>
       </article>
-      <article class="proj">
-        <a class="media" href="https://numerologist.setai.no/" target="_blank" rel="noopener"><img src="/assets/work/projects/numerologist.webp" alt="Numerologist" loading="lazy"><span class="tag">AI</span></a>
+      <article class="proj" data-services="ai web seo">
+        <a class="media" href="https://numerologist.setai.no/" target="_blank" rel="noopener"><img src="/assets/work/projects/numerologist.webp" alt="Numerologist" loading="lazy"></a>
         <div class="body">
-          <h3>Numerologist AI</h3>
+          <div class="id"><span class="seal type" aria-hidden="true">N°</span><div><h3>Numerologist AI</h3><span class="kind">AI-plattform</span></div></div>
           <p>AI-drevet mønster- og tolkningsplattform med kalkulatorer, artikler og personlige lesninger.</p>
+          <ul class="svc"></ul>
           <div class="ctas"><a class="cta primary" href="https://numerologist.setai.no/" target="_blank" rel="noopener">Åpne Numerologist ↗</a></div>
         </div>
       </article>
@@ -193,35 +272,39 @@ footer i{color:var(--accent);font-style:normal;padding:0 8px}
       <p>Forskning, AI-film og design.</p>
     </div>
     <div class="grid">
-      <article class="proj">
+      <article class="proj" data-services="ai auto app">
         <a class="media word" href="https://biap.dadashi.no/" target="_blank" rel="noopener"><span>BIAP<small>AI-analyse · aksjemarkedet</small></span><span class="tag">Samarbeid</span></a>
         <div class="body">
-          <h3>BIAP</h3>
+          <div class="id"><span class="seal type" aria-hidden="true">BIAP</span><div><h3>BIAP</h3><span class="kind">AI-analyse</span></div></div>
           <p>AI-analyseplattform for det iranske aksjemarkedet, bygget sammen med Dr. Nasrin Dadashi: et team av AI-agenter som gir kjøp/hold/selg-anbefalinger.</p>
+          <ul class="svc"></ul>
           <div class="ctas"><a class="cta primary" href="https://biap.dadashi.no/" target="_blank" rel="noopener">Se prosjektet ↗</a></div>
         </div>
       </article>
-      <article class="proj">
-        <a class="media" href="/projects/the-son-he-did-not-know/"><img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3GqVodiVsV7T5gGVNoTV4Q5Q3ZK/f15c83ac-f266-49bf-9862-81d2bdacf9bb.png" alt="The Son He Did Not Know" loading="lazy"><span class="tag">AI-film</span></a>
+      <article class="proj" data-services="video ai">
+        <a class="media" href="/projects/the-son-he-did-not-know/"><img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3GqVodiVsV7T5gGVNoTV4Q5Q3ZK/f15c83ac-f266-49bf-9862-81d2bdacf9bb.png" alt="The Son He Did Not Know" loading="lazy"></a>
         <div class="body">
-          <h3>The Son He Did Not Know</h3>
+          <div class="id"><span class="seal type" aria-hidden="true"><svg class="ico"><use href="#i-video"/></svg></span><div><h3>The Son He Did Not Know</h3><span class="kind">AI-kortfilm</span></div></div>
           <p>4:04 kortfilm om Rostam og Sohrab, bygget shot for shot med AI — Higgsfield-konkurransebidrag.</p>
+          <ul class="svc"></ul>
           <div class="ctas"><a class="cta primary" href="/projects/the-son-he-did-not-know/">Se filmen →</a><a class="cta" href="/blog/making-the-son-he-did-not-know/">Making-of →</a></div>
         </div>
       </article>
-      <article class="proj">
-        <a class="media" href="https://d8j0ntlcm91z4.cloudfront.net/user_3GqVodiVsV7T5gGVNoTV4Q5Q3ZK/hf_20260809_204325_06cada49-4c59-4bcc-804f-c3d519c51619.mp4" target="_blank" rel="noopener"><img src="https://d8j0ntlcm91z4.cloudfront.net/user_3GqVodiVsV7T5gGVNoTV4Q5Q3ZK/hf_20260802_220401_efc779ce-7fc9-4c4f-8085-5b54f6795b1f.png" alt="Crown of My Heart" loading="lazy"><span class="tag">AI-musikkvideo</span></a>
+      <article class="proj" data-services="video ai">
+        <a class="media" href="https://d8j0ntlcm91z4.cloudfront.net/user_3GqVodiVsV7T5gGVNoTV4Q5Q3ZK/hf_20260809_204325_06cada49-4c59-4bcc-804f-c3d519c51619.mp4" target="_blank" rel="noopener"><img src="https://d8j0ntlcm91z4.cloudfront.net/user_3GqVodiVsV7T5gGVNoTV4Q5Q3ZK/hf_20260802_220401_efc779ce-7fc9-4c4f-8085-5b54f6795b1f.png" alt="Crown of My Heart" loading="lazy"></a>
         <div class="body">
-          <h3>Crown of My Heart</h3>
+          <div class="id"><span class="seal type" aria-hidden="true">♥</span><div><h3>Crown of My Heart</h3><span class="kind">AI-musikkvideo</span></div></div>
           <p>Test-musikkvideo laget i Higgsfield — egen stemme, eget bilde, AI-synkronisert lyd og kamerabevegelse.</p>
+          <ul class="svc"></ul>
           <div class="ctas"><a class="cta primary" href="https://d8j0ntlcm91z4.cloudfront.net/user_3GqVodiVsV7T5gGVNoTV4Q5Q3ZK/hf_20260809_204325_06cada49-4c59-4bcc-804f-c3d519c51619.mp4" target="_blank" rel="noopener">Se klippet ↗</a></div>
         </div>
       </article>
-      <article class="proj">
-        <div class="media word"><span>گردون<small>Gardoon · design</small></span><span class="tag">Design</span></div>
+      <article class="proj" data-services="brand strategy">
+        <div class="media word"><span>گردون<small>Gardoon · design</small></span></div>
         <div class="body">
-          <h3>Gardoon</h3>
+          <div class="id"><span class="seal type fa" aria-hidden="true">گ</span><div><h3>Gardoon</h3><span class="kind">Design · konsept</span></div></div>
           <p>Teknisk visualisering og veikart for en mekanisk innretning med to messingplater på 76 cm — tegning, mål, 3D-uttrykk og logoforslag.</p>
+          <ul class="svc"></ul>
         </div>
       </article>
     </div>
@@ -239,5 +322,46 @@ footer i{color:var(--accent);font-style:normal;padding:0 8px}
 <footer>
   <div class="wrap"><span>© SETAEI<i>·</i>Oslo</span><span>setai.no</span></div>
 </footer>
+<script>
+// Service badges, coverage ring and filter are all built from each card's
+// data-services attribute — edit that attribute to change what a project shows.
+(()=>{
+const SERVICES={web:'Nettside',seo:'SEO',brand:'Merkevare',ai:'AI',video:'Video',auto:'Automatisering',strategy:'Strategi',app:'App'};
+const TOTAL=Object.keys(SERVICES).length;
+const cards=[...document.querySelectorAll('.proj[data-services]')];
+const icon=k=>`<svg class="ico" aria-hidden="true"><use href="#i-${k}"/></svg>`;
+const usage={};let deliveries=0;
+cards.forEach(card=>{
+  const list=card.dataset.services.split(/\s+/).filter(k=>SERVICES[k]);
+  card._services=list;deliveries+=list.length;
+  list.forEach(k=>usage[k]=(usage[k]||0)+1);
+  const ul=card.querySelector('.svc');
+  ul.setAttribute('aria-label',`${list.length} tjenester levert`);
+  ul.innerHTML=list.map((k,i)=>`<li data-svc="${k}" tabindex="0" style="--k:${i}">${icon(k)}<span class="lbl">${SERVICES[k]}</span></li>`).join('');
+  const media=card.querySelector('.media');
+  media.insertAdjacentHTML('beforeend',`<span class="count" aria-hidden="true" title="${list.length} av ${TOTAL} fagfelt"><span class="ring" style="--n:${list.length}"><b>${list.length}</b></span>${list.length===1?'tjeneste':'tjenester'}</span>`);
+});
+document.getElementById('st-proj').textContent=cards.length;
+document.getElementById('st-del').textContent=deliveries;
+document.getElementById('stats').hidden=false;
+
+const bar=document.getElementById('svcFilter');
+const keys=Object.keys(SERVICES).filter(k=>usage[k]).sort((a,b)=>usage[b]-usage[a]);
+bar.innerHTML=`<button type="button" class="chip" data-filter="all" aria-pressed="true">Alle<span class="n">${cards.length}</span></button>`+
+  keys.map(k=>`<button type="button" class="chip" data-filter="${k}" aria-pressed="false">${icon(k)}${SERVICES[k]}<span class="n">${usage[k]}</span></button>`).join('');
+bar.hidden=false;
+function apply(f,push){
+  if(!SERVICES[f])f='all';
+  bar.querySelectorAll('.chip').forEach(c=>c.setAttribute('aria-pressed',String(c.dataset.filter===f)));
+  cards.forEach(card=>{
+    card.classList.toggle('is-dim',f!=='all'&&!card._services.includes(f));
+    card.querySelectorAll('.svc li').forEach(li=>li.classList.toggle('is-hit',li.dataset.svc===f));
+  });
+  if(push){const u=new URL(location.href);if(f==='all')u.searchParams.delete('tjeneste');else u.searchParams.set('tjeneste',f);history.replaceState(null,'',u)}
+}
+bar.addEventListener('click',e=>{const c=e.target.closest('.chip');if(c)apply(c.dataset.filter,true)});
+apply(new URLSearchParams(location.search).get('tjeneste')||'all',false);
+})();
+</script>
 </body>
 </html>

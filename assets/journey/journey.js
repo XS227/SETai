@@ -16,7 +16,7 @@ const faMap={
 "Let's talk":"گفتگو کنیم",
 "01 / Where every story starts":"۰۱ / جایی که هر داستان آغاز می‌شود",
 "Every idea<br>needs a place<br>to <em>begin.</em>":"هر ایده‌ای<br>به جایی برای<br><em>شروع نیاز دارد.</em>",
-"I'm Khabat. Come behind the scenes of SETAEI — from the first line of a story to the systems, products and worlds I build.":"من خبات هستم. پشت صحنه SETAEI را ببینید — از نخستین خط یک داستان تا سیستم‌ها، محصولات و جهان‌هایی که می‌سازم.",
+"I'm Khabat. Come behind the scenes of SETAEI — from the first line of a story to the systems, products and worlds I build.":"من خباط هستم. پشت صحنه SETAEI را ببینید — از نخستین خط یک داستان تا سیستم‌ها، محصولات و جهان‌هایی که می‌سازم.",
 "Enter the Shahnameh project ↗":"ورود به پروژه شاهنامه ↗",
 "Project imagery / Shahnameh film":"تصویر پروژه / فیلم شاهنامه",
 "02 / Behind the scenes":"۰۲ / پشت صحنه",
@@ -110,6 +110,9 @@ const chapterNames={
  fa:{"Intro":"مقدمه","Studio":"استودیو","Prosjekter":"پروژه‌ها","Shahnameh":"شاهنامه","Higgsfield AI Festival":"جشنواره Higgsfield","RealGram":"RealGram","Tjenester":"خدمات","Forskning":"پژوهش","Sertifiseringer":"گواهی‌ها","Neste idé":"ایده بعدی"}
 };
 const ui=(no,en,fa)=>language==='fa'?fa:language==='en'?en:no;
+// Two-digit chapter numbers; Persian digits in fa ("۰۳" rather than "03").
+const faDigits='۰۱۲۳۴۵۶۷۸۹';
+const num=n=>{const s=String(n).padStart(2,'0');return language==='fa'?s.replace(/\d/g,d=>faDigits[d]):s};
 function filmLabel(){filmButton.textContent=film.paused?ui('Spill film','Play film','پخش فیلم'):ui('Pause film','Pause film','توقف فیلم')}
 function loadFilm(){const source=film.querySelector('source');if(!source.src){source.src=source.dataset.src;film.load()}}
 function playFilm(){loadFilm();film.play().then(filmLabel).catch(filmLabel)}
@@ -151,7 +154,10 @@ function update(){
  });
  chapters.forEach((a,i)=>a.setAttribute('aria-current',String(i===active)));
  const chapter=scenes[active].dataset.chapter;
- document.getElementById('chapter-label').textContent=`0${active+1} / ${chapterNames[language]?.[chapter]||chapter}`;
+ const label=document.getElementById('chapter-label');const b=document.createElement('b');b.textContent=num(active+1);
+ label.replaceChildren(b,` / ${chapterNames[language]?.[chapter]||chapter}`);
+ const docSpan=Math.max(1,document.documentElement.scrollHeight-innerHeight);
+ root.style.setProperty('--journey-progress',(motion?progress/last:clamp(scrollY/docSpan)).toFixed(4));
  nextBtn.textContent=active===last?ui('Tilbake til toppen ↑','Back to top ↑','بازگشت به بالا ↑'):ui('Scroll for å utforske ↓','Scroll to explore ↓','برای ادامه اسکرول کنید ↓');
  if(active===filmSceneIndex&&!document.hidden&&!reduced.matches&&!userPaused&&!navigator.connection?.saveData){if(film.paused)playFilm()}else if(!film.paused){film.pause()}
 }
@@ -189,6 +195,7 @@ function setLanguage(lang,persist=true){
  root.lang=lang==='no'?'no':lang;
  root.dir=lang==='fa'?'rtl':'ltr';
  translations.forEach(t=>t.el.innerHTML=t[lang]||t.en);
+ chapters.forEach((a,i)=>a.textContent=num(i+1));
  document.querySelectorAll('.lang-switch [data-lang]').forEach(btn=>btn.setAttribute('aria-pressed',String(btn.dataset.lang===lang)));
  const m=metaByLang[lang]; if(m){document.title=m.title;const d=document.getElementById('metaDesc');if(d)d.content=m.desc;const ot=document.getElementById('metaOgTitle');if(ot)ot.content=m.title;const od=document.getElementById('metaOgDesc');if(od)od.content=m.desc;const tt=document.getElementById('metaTwTitle');if(tt)tt.content=m.title;const td=document.getElementById('metaTwDesc');if(td)td.content=m.desc;}
  const message=document.getElementById('cf-message');if(message)message.placeholder=ui('Noen setninger om prosjektet, tidsplan og hvordan vi kan hjelpe.','A few lines about the project, timing and how we can help.','چند خط درباره پروژه، زمان‌بندی و اینکه چگونه می‌توانیم کمک کنیم.');
