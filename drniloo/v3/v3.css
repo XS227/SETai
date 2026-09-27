@@ -78,3 +78,11 @@
 .service:nth-child(13) .service-thumb{--bx:0%;--by:100%}.service:nth-child(14) .service-thumb{--bx:20%;--by:100%}.service:nth-child(15) .service-thumb{--bx:40%;--by:100%}.service:nth-child(16) .service-thumb{--bx:60%;--by:100%}.service:nth-child(17) .service-thumb{--bx:80%;--by:100%}.service:nth-child(18) .service-thumb{--bx:100%;--by:100%}
 .service-name{position:absolute;z-index:2;right:0;left:0;bottom:0;padding:55px 20px 22px;color:#fff;background:linear-gradient(transparent,#071a18e8);font-size:20px!important;text-align:right}.service-name small{color:#d7c9ad!important}.service-arrow{position:absolute;z-index:3;left:18px;bottom:23px;color:#d5b56f!important}
 @media(max-width:720px){.brand-logo-image{width:42px;height:42px;flex-basis:42px}.brand-story{height:360vh}.brand-story-logo{object-position:50% 30%}.brand-story-shade{background:linear-gradient(0deg,#f5f1e8e8 0%,transparent 60%)}.brand-story-copy{right:24px;left:24px;top:auto;bottom:80px;transform:none}.brand-story-copy h2{font-size:45px}.service-orbit{margin-inline:-24px}.service-grid{padding-inline:calc(50vw - 115px)}.service{flex-basis:230px;height:390px}}
+
+/* Individual service artwork — v5.1 */
+.brand-logo-image{display:none!important}
+.service{flex:0 0 clamp(190px,18vw,250px)!important;height:auto!important;aspect-ratio:300/667!important;padding:0!important}
+.service-thumb-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;z-index:1}
+.service-name{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+.service-arrow{top:14px!important;left:14px!important;bottom:auto!important;width:34px;height:34px;display:grid;place-items:center;border-radius:50%;background:#071a18b8;border:1px solid #d5b56f77}
+@media(max-width:720px){.service{flex-basis:210px!important}.service-grid{padding-inline:calc(50vw - 105px)!important}}
