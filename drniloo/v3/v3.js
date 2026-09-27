@@ -50,6 +50,7 @@ function paint() {
  queued = false;
  const y = window.scrollY;
  document.body.classList.toggle('scrolled', y > 24);
+ paintBrandStory(); paintServiceOrbit();
  if (!motion.matches) {
   const total = document.documentElement.scrollHeight - innerHeight;
   bar.style.transform = `scaleX(${total > 0 ? Math.min(1, y / total) : 0})`;
@@ -80,13 +81,44 @@ if ('IntersectionObserver' in window) {
  $$('.reveal').forEach(el => observer.observe(el));
  document.documentElement.classList.add('js');
 }
-const services = $$('.service');
+const services = $('.service');
+const brandStory = $('.brand-story');
+const brandSticky = $('.brand-story-sticky');
+const serviceRail = $('.service-grid');
+function paintBrandStory(){
+ if(!brandStory||!brandSticky)return;
+ const r=brandStory.getBoundingClientRect(), travel=Math.max(1,brandStory.offsetHeight-innerHeight);
+ const p=Math.max(0,Math.min(1,-r.top/travel));
+ brandSticky.style.setProperty('--brand-progress',p);
+ let scale=1, ox=50, oy=42, shade=.72, scene=0;
+ if(p<.25){scale=1+p*1.2;scene=0}
+ else if(p<.5){const q=(p-.25)/.25;scale=1.3+q*.9;ox=53;oy=50;shade=.48;scene=1}
+ else if(p<.75){const q=(p-.5)/.25;scale=2.2+q*1.2;ox=51;oy=58;shade=.3;scene=2}
+ else {const q=(p-.75)/.25;scale=3.4+q*1.25;ox=51;oy=49;shade=.18;scene=3}
+ brandSticky.style.setProperty('--brand-scale',scale);
+ brandSticky.style.setProperty('--brand-origin',ox+'% '+oy+'%');
+ brandSticky.style.setProperty('--brand-shade',shade);
+ $('.brand-story-copy',brandSticky).forEach((el,i)=>el.classList.toggle('is-active',i===scene));
+}
+function paintServiceOrbit(){
+ if(!serviceRail)return;
+ const rc=serviceRail.getBoundingClientRect(), center=rc.left+rc.width/2;
+ let nearest=null, nd=Infinity;
+ services.filter(s=>!s.hidden).forEach(card=>{
+   const r=card.getBoundingClientRect(), d=(r.left+r.width/2-center)/Math.max(1,r.width);
+   card.style.setProperty('--orbit-d',Math.max(-3,Math.min(3,d)).toFixed(2));
+   const ad=Math.abs(d); if(ad<nd){nd=ad;nearest=card}
+ });
+ services.forEach(s=>s.classList.toggle('is-center',s===nearest));
+}
+serviceRail?.addEventListener('scroll',()=>requestAnimationFrame(paintServiceOrbit),{passive:true});
+
 function filterServices(category, announce = true) {
  $$('[data-filter]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.filter === category)));
  let count = 0;
  services.forEach(button => { button.hidden = category !== 'all' && button.dataset.category !== category; if (!button.hidden) count++; });
  if (announce) $('#filter-status').textContent = `${count.toLocaleString('fa-IR')} خدمت نمایش داده می‌شود.`;
- schedule();
+ schedule(); paintServiceOrbit();
 }
 $$('[data-filter]').forEach(button => button.addEventListener('click', () => filterServices(button.dataset.filter)));
 $$('[data-filter-link]').forEach(link => link.addEventListener('click', () => filterServices(link.dataset.filterLink)));
