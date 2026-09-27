@@ -13,3 +13,23 @@
 .journey-stage:not([data-ready]) .journey-image{width:100%;height:100%;object-fit:cover;object-position:65% 8%}
 .journey-stage.is-measuring,.journey-stage.is-measuring .focus-ring{transition:none}
 @media(prefers-reduced-motion:reduce){.journey-stage,.focus-ring{transition:none!important;will-change:auto}}
+
+/* Video journal + location — v4.2 */
+.video-blog{border-top:1px solid var(--line);background:#eeebe3}
+.video-feature{display:grid;grid-template-columns:minmax(300px,.8fr) 1.2fr;gap:8vw;align-items:center;max-width:1240px;margin:auto}
+.reel-shell{width:min(100%,430px);margin:auto;min-height:620px;display:flex;align-items:center;justify-content:center;background:#fff;border-radius:3px;overflow:hidden;box-shadow:0 25px 70px #14252212}
+.reel-shell .instagram-media{min-width:0!important;width:100%!important;margin:0!important}
+.video-copy h3{font-size:clamp(36px,4vw,64px);font-weight:500;margin:0 0 22px}
+.video-copy p,.location-copy p{font-size:14px;line-height:2.35;color:var(--muted);max-width:520px}
+.location{background:#dedfd6}
+.location-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:7vw;align-items:center}
+.location-copy .button{margin-top:30px}
+.map-frame{min-height:540px;overflow:hidden;border-radius:3px;background:#d3d3ca;box-shadow:0 25px 70px #1425220d}
+.map-frame iframe{display:block;width:100%;height:540px;border:0;filter:saturate(.65) contrast(.95)}
+@media(max-width:720px){
+ .video-feature,.location-grid{grid-template-columns:1fr;gap:38px}
+ .reel-shell{min-height:520px;width:100%}
+ .video-copy h3{font-size:38px}
+ .map-frame,.map-frame iframe{height:390px;min-height:390px}
+ .video-blog .section-heading p{margin-top:18px}
+}
