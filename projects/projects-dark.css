@@ -1,4 +1,4 @@
-:root{--bg:#10100f;--card:#181a1b;--border:#ffffff30;--border-h:#ffffff50;--text:#fffaf0;--muted:#d6d0c4;--accent:#e9b778;--accent-ink:#17120b;--terracotta:233,183,120;--sans:'Inter',system-ui,sans-serif;--display:'Space Grotesk','Inter',sans-serif}
+:root{--bg:#10100f;--card:#181a1b;--border:#ffffff30;--border-h:#ffffff50;--text:#fffaf0;--muted:#d6d0c4;--accent:#F47A2A;--accent-ink:#17120b;--terracotta:244,122,42;--sans:'Inter',system-ui,sans-serif;--display:'Space Grotesk','Inter',sans-serif}
 *{box-sizing:border-box}body{margin:0;font-family:var(--sans);background:var(--bg);color:var(--text);line-height:1.7;position:relative}a{color:inherit} .container{max-width:1080px;margin:0 auto;padding:0 24px}
 
 /* Same paper-grain signature as the homepage's classic pages — just tuned

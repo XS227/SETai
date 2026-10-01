@@ -1,0 +1,17 @@
+/* SETAEI living journey flow */
+.journey-flow-art{position:absolute;inset:0;z-index:2;pointer-events:none;overflow:hidden}
+.journey-flow-art svg{position:absolute;right:0;top:0;width:58%;height:100%;overflow:visible}
+.journey-flow-art .dim{stroke:#5a5751;opacity:.35}
+.journey-flow-art .orange{stroke:#F47A2A;filter:drop-shadow(0 0 7px #f47a2a88)}
+.journey-flow-art .flow-path{fill:none;stroke-width:2;vector-effect:non-scaling-stroke}
+.journey-flow-art .flow-node{fill:#10100F;stroke:#F47A2A;stroke-width:2;filter:drop-shadow(0 0 6px #f47a2a99)}
+.journey-flow-art .flow-star{fill:#F47A2A;filter:drop-shadow(0 0 18px #f47a2acc)}
+.journey-flow-art .soft{fill:#F47A2A;opacity:.08}
+.scene>.scene-copy,.scene>.gallery-head,.scene>.million-hook,.scene>.seo-signal{z-index:4}
+.scene-seo .visual{opacity:.18!important}
+.scene-certifications,.scene-services,.scene-contact{background:#0d1115}
+.flow-rail{position:fixed;right:4.4vw;top:90px;bottom:58px;width:20px;z-index:6;pointer-events:none;opacity:.72}
+.flow-rail:before{content:"";position:absolute;left:9px;top:0;bottom:0;width:1px;background:linear-gradient(transparent,#F47A2A55 12%,#F47A2A88 50%,#F47A2A55 88%,transparent)}
+.flow-rail-star{position:absolute;left:2px;top:calc(var(--journey-progress,0)*100% - 8px);width:16px;height:16px;transform:rotate(45deg);background:#F47A2A;box-shadow:0 0 18px #F47A2Aaa;clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%)}
+@media(max-width:800px){.journey-flow-art svg{width:74%;opacity:.78}.flow-rail{right:10px;opacity:.45}.scene-screen .journey-flow-art{display:none}}
+@media(prefers-reduced-motion:reduce){.journey-flow-art .flow-path{stroke-dasharray:none!important;stroke-dashoffset:0!important}.flow-rail-star{display:none}}

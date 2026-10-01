@@ -24,6 +24,13 @@ const faMap={
 "The brief becomes sketches. Sketches become code. 15+ years across IT, security and infrastructure meet strategy, design and AI research in the same workspace.":"ایده به طرح تبدیل می‌شود و طرح به کد. بیش از ۱۵ سال تجربه در فناوری اطلاعات، امنیت و زیرساخت در کنار استراتژی، طراحی و پژوهش هوش مصنوعی قرار می‌گیرد.",
 "How I can help ↗":"ببینید چگونه می‌توانم کمک کنم ↗",
 "Studio / Creative visualization":"استودیو / تصویرسازی خلاق",
+"03 / Selected client work":"۰۳ / پروژه‌های منتخب مشتریان",
+"Three collaborations.<br><em>Built to perform.</em>":"سه همکاری.<br><em>ساخته‌شده برای نتیجه.</em>",
+"A quieter look at three client projects where brand, web and SEO meet.":"نگاهی ساده‌تر به سه پروژه مشتری که در آن هویت برند، وب و سئو به هم می‌رسند.",
+"See all projects ↗":"مشاهده همه پروژه‌ها ↗",
+"Brand · Web · SEO":"هویت برند · وب · سئو",
+"Web · SEO · Content":"وب · سئو · محتوا",
+"Web · SEO · Local visibility":"وب · سئو · دیده‌شدن محلی",
 "03 / One studio, many worlds":"۰۳ / یک استودیو، جهان‌های متعدد",
 "Built ideas.<br><em>Out in the world.</em>":"ایده‌هایی که ساخته شدند.<br><em>و وارد دنیای واقعی شدند.</em>",
 "Products, client work, research and film — move through the constellation.":"محصولات، پروژه‌های مشتریان، پژوهش و فیلم — در این منظومه حرکت کنید.",
@@ -46,12 +53,21 @@ const faMap={
 "See how the film was made ↗":"پشت صحنه ساخت فیلم را ببینید ↗",
 "AI FILM FESTIVAL · VIEW ENTRY ↗":"جشنواره فیلم AI · مشاهده اثر ↗",
 "AI video / Higgsfield":"ویدیوی AI / Higgsfield",
+"06 / Search visibility":"۰۶ / دیده‌شدن در جستجو",
+"Get found.<br><em>Get chosen.</em>":"پیدا شوید.<br><em>انتخاب شوید.</em>",
+"SEO, local visibility and AI-driven content that helps the right customers actually find you.":"سئو، دیده‌شدن محلی و محتوای مبتنی بر هوش مصنوعی که کمک می‌کند مشتریان درست واقعاً شما را پیدا کنند.",
+"SEO in Oslo ↗":"سئو در اسلو ↗",
+"Get found.<br>Get chosen.<br><em>Keep growing.</em>":"پیدا شوید.<br>انتخاب شوید.<br><em>و رشد را ادامه دهید.</em>",
+"SETAEI combines technical SEO, content structure, local search and AI-search visibility — built to turn rankings into real business opportunities.":"SETAEI سئوی فنی، ساختار محتوا، جستجوی محلی و دیده‌شدن در جستجوی هوش مصنوعی را ترکیب می‌کند تا رتبه‌ها به فرصت‌های واقعی کسب‌وکار تبدیل شوند.",
+"Explore SEO services ↗":"خدمات سئو را ببینید ↗",
+"AI-driven SEO ↗":"سئوی مبتنی بر هوش مصنوعی ↗",
+"Google · Local · AI search":"گوگل · محلی · جستجوی AI",
 "06 / Product ecosystem":"۰۶ / اکوسیستم محصول",
 "VPN. Wallet. AI.<br><em>One identity.</em>":"VPN. کیف پول. AI.<br><em>یک هویت.</em>",
 "RealGram brings privacy, community, wallet, Hakim AI and the Shahnameh game into one product — built as a living platform, not a static demo.":"RealGram حریم خصوصی، جامعه، کیف پول، Hakim AI و بازی شاهنامه را در یک محصول جمع می‌کند — یک پلتفرم زنده، نه یک دموی ثابت.",
 "Explore the case study ↗":"مطالعه موردی را ببینید ↗",
 "Open RealGram ↗":"باز کردن RealGram ↗",
-"07 / Strategy and execution":"۰۷ / استراتژی و اجرا",
+"08 / Strategy and execution":"۰۸ / استراتژی و اجرا",
 "Strategy and execution<br>from the same <em>brain.</em>":"استراتژی و اجرا<br>از یک <em>ذهن.</em>",
 "Services designed for founders, SMEs and organizations in Oslo and Norway that need a CTO, AI developer, SaaS developer, full-stack developer or SEO expert — without a full-time hire.":"خدمات برای بنیان‌گذاران، شرکت‌های کوچک و سازمان‌هایی که به CTO، توسعه‌دهنده AI، SaaS، فول‌استک یا متخصص SEO نیاز دارند — بدون استخدام تمام‌وقت.",
 "AI Development":"توسعه هوش مصنوعی",
@@ -75,7 +91,7 @@ const faMap={
 "Outreach Agent":"عامل ارتباط",
 "Payout / Decision Agent":"عامل پرداخت / تصمیم",
 "Published work connecting token economies, AI models and financial systems — the founder profile working at the intersection of technology and commerce.":"آثار منتشرشده در پیوند اقتصاد توکنی، مدل‌های هوش مصنوعی و سیستم‌های مالی — در مرز فناوری و تجارت.",
-"09 / Continuous learning":"۰۹ / یادگیری مستمر",
+"07 / Continuous learning":"۰۷ / یادگیری مستمر",
 "Certified by the world's<br>leading <em>technology companies.</em>":"دارای گواهی از<br><em>شرکت‌های فناوری پیشرو جهان.</em>",
 "AI Developer Certificate":"گواهی توسعه‌دهنده هوش مصنوعی",
 "AI Professional Certificate":"گواهی حرفه‌ای هوش مصنوعی",
@@ -83,7 +99,7 @@ const faMap={
 "Learn AI Agents":"یادگیری AI Agents",
 "AI for Work and Life":"هوش مصنوعی برای کار و زندگی",
 "Experience at Apple":"تجربه در Apple",
-"10 / The next beginning":"۱۰ / آغاز بعدی",
+"09 / The next beginning":"۰۹ / آغاز بعدی",
 "Where does<br>your idea<br><em>take us?</em>":"ایده شما<br>ما را به کجا<br><em>می‌برد؟</em>",
 "A website. An AI product. A world nobody has seen before. Let's start with a conversation.":"یک وب‌سایت. یک محصول هوش مصنوعی. جهانی که هنوز کسی ندیده است. از یک گفتگو شروع کنیم.",
 "Tell me about your idea ↗":"از ایده‌تان بگویید ↗",
@@ -105,9 +121,9 @@ const faMap={
 };
 const translations=[...document.querySelectorAll('[data-en]')].map(el=>({el,no:el.innerHTML,en:el.dataset.en,fa:faMap[el.dataset.en]||el.dataset.en}));
 const chapterNames={
- no:{"Intro":"Intro","Studio":"Studio","Prosjekter":"Prosjekter","Shahnameh":"Shahnameh","Higgsfield AI Festival":"Higgsfield AI Festival","RealGram":"RealGram","Tjenester":"Tjenester","Forskning":"Forskning","Sertifiseringer":"Sertifiseringer","Neste idé":"Neste idé"},
- en:{"Intro":"Intro","Studio":"Studio","Prosjekter":"Projects","Shahnameh":"Shahnameh","Higgsfield AI Festival":"Higgsfield AI Festival","RealGram":"RealGram","Tjenester":"Services","Forskning":"Research","Sertifiseringer":"Certifications","Neste idé":"Next idea"},
- fa:{"Intro":"مقدمه","Studio":"استودیو","Prosjekter":"پروژه‌ها","Shahnameh":"شاهنامه","Higgsfield AI Festival":"جشنواره Higgsfield","RealGram":"RealGram","Tjenester":"خدمات","Forskning":"پژوهش","Sertifiseringer":"گواهی‌ها","Neste idé":"ایده بعدی"}
+ no:{"Intro":"Intro","Studio":"Studio","Prosjekter":"Prosjekter","Shahnameh":"Shahnameh","Higgsfield AI Festival":"Higgsfield AI Festival","SEO":"SEO","Tjenester":"Tjenester","Forskning":"Forskning","Sertifiseringer":"Sertifiseringer","Neste idé":"Neste idé"},
+ en:{"Intro":"Intro","Studio":"Studio","Prosjekter":"Projects","Shahnameh":"Shahnameh","Higgsfield AI Festival":"Higgsfield AI Festival","SEO":"SEO","Tjenester":"Services","Forskning":"Research","Sertifiseringer":"Certifications","Neste idé":"Next idea"},
+ fa:{"Intro":"مقدمه","Studio":"استودیو","Prosjekter":"پروژه‌ها","Shahnameh":"شاهنامه","Higgsfield AI Festival":"جشنواره Higgsfield","SEO":"سئو","Tjenester":"خدمات","Forskning":"پژوهش","Sertifiseringer":"گواهی‌ها","Neste idé":"ایده بعدی"}
 };
 const ui=(no,en,fa)=>language==='fa'?fa:language==='en'?en:no;
 // Two-digit chapter numbers; Persian digits in fa ("۰۳" rather than "03").

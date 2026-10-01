@@ -1,0 +1,13 @@
+/* SETAEI global header v3 — compact wordmark + ≡ menu */
+header.site-nav{height:72px;padding:0 4vw;background:rgba(16,16,15,.90);border-bottom:1px solid rgba(255,255,255,.09);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+header.site-nav .wordmark{display:flex!important;align-items:center!important;height:72px}
+header.site-nav .wordmark img{width:auto!important;height:29px!important;max-width:45vw!important;display:block}
+header.site-nav .brand-menu-toggle{display:grid;place-items:center;width:44px;height:44px;margin-left:auto;border:1px solid rgba(255,255,255,.16);border-radius:50%;background:rgba(16,16,15,.66);color:#FFF7EA;cursor:pointer;z-index:112}
+header.site-nav .brand-menu-toggle span{font:400 28px/1 'Space Grotesk','Inter',sans-serif;letter-spacing:-.06em;transform:translateY(-1px)}
+header.site-nav .brand-menu-toggle:hover,header.site-nav .brand-menu-toggle[aria-expanded="true"]{border-color:#F47A2A;color:#F47A2A}
+header.site-nav .nav-actions{position:fixed!important;inset:0!important;z-index:110!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:24px!important;background:rgba(12,12,11,.97)!important;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);opacity:0;visibility:hidden;pointer-events:none;transform:translateY(-8px);transition:opacity .22s ease,transform .22s ease,visibility .22s}
+header.site-nav.menu-open .nav-actions{opacity:1;visibility:visible;pointer-events:auto;transform:none}
+header.site-nav .nav-actions>a,header.site-nav .nav-actions>button{display:block!important;font:500 clamp(24px,4vw,44px)/1.05 'Space Grotesk','Inter',sans-serif!important;letter-spacing:-.035em;color:#FFF7EA!important;border:0!important;padding:4px 0!important}
+header.site-nav .nav-actions>a:hover,header.site-nav .nav-actions>button:hover,header.site-nav .nav-actions a[aria-current="page"]{color:#F47A2A!important}
+header.site-nav .lang-switch{margin-top:12px}
+@media(max-width:800px){header.site-nav{height:64px;padding:0 5vw}header.site-nav .wordmark{height:64px}header.site-nav .wordmark img{height:24px!important}header.site-nav .brand-menu-toggle{width:40px;height:40px}header.site-nav .brand-menu-toggle span{font-size:25px}}

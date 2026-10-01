@@ -7,7 +7,7 @@ header.site-nav .wordmark{font:700 27px 'Space Grotesk','Inter',sans-serif;lette
 header.site-nav .wordmark span{font-weight:400}
 header.site-nav .wordmark i{font:10px 'Inter',sans-serif;vertical-align:top;letter-spacing:0;margin-left:3px}
 header.site-nav .nav-actions{display:flex;align-items:center;gap:28px;font-size:14px}
-header.site-nav .nav-actions a:hover{color:#e9b778}
+header.site-nav .nav-actions a:hover{color:#F47A2A}
 header.site-nav .nav-talk{border-bottom:1px solid #ffffff70;padding:6px 0}
-header.site-nav a[aria-current="page"]{color:#e9b778}
+header.site-nav a[aria-current="page"]{color:#F47A2A}
 @media(max-width:800px){header.site-nav{padding:16px 6vw}header.site-nav .wordmark{font-size:22px}header.site-nav .nav-actions{gap:16px}header.site-nav .nav-link,header.site-nav .nav-all{display:none}}

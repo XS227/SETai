@@ -1,4 +1,4 @@
-:root{--bg:#10100f;--card:#181a1b;--border:#ffffff30;--border-h:#ffffff50;--text:#fffaf0;--muted:#d6d0c4;--accent:#e9b778;--accent-ink:#17120b;--terracotta:233,183,120;--sans:'Inter',system-ui,sans-serif;--display:'Space Grotesk','Inter',sans-serif}
+:root{--bg:#10100f;--card:#181a1b;--border:#ffffff30;--border-h:#ffffff50;--text:#fffaf0;--muted:#d6d0c4;--accent:#F47A2A;--accent-ink:#17120b;--terracotta:244,122,42;--sans:'Inter',system-ui,sans-serif;--display:'Space Grotesk','Inter',sans-serif}
 *{box-sizing:border-box}body{margin:0;font-family:var(--sans);background:var(--bg);color:var(--text);line-height:1.7;position:relative}a{color:inherit} .container{max-width:1080px;margin:0 auto;padding:0 24px}
 
 /* Same paper-grain signature as the homepage's classic pages — just tuned
@@ -134,3 +134,41 @@ section{margin-top:clamp(48px,8vw,96px)}
 @media (prefers-reduced-motion: reduce){
   .seo-fu-js{opacity:1 !important;transform:none !important;transition:none !important}
 }
+
+/* Service overview — bespoke icon cards */
+.service-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:22px}
+.service-card{position:relative;min-height:210px;padding:24px 24px 22px;overflow:hidden;text-decoration:none;background:
+ radial-gradient(circle at 100% 0,rgba(244,122,42,.09),transparent 34%),
+ linear-gradient(145deg,#181a18,#121311);border-radius:18px}
+.service-card::before{content:'';position:absolute;inset:auto -30px -60px auto;width:150px;height:150px;border-radius:50%;background:radial-gradient(circle,rgba(244,122,42,.12),transparent 68%);transition:transform .35s ease}
+.service-card:hover::before{transform:scale(1.25)}
+.service-icon{width:58px;height:58px;border-radius:18px;display:grid;place-items:center;color:var(--accent);background:linear-gradient(145deg,rgba(244,122,42,.14),rgba(244,122,42,.04));border:1px solid rgba(244,122,42,.25);box-shadow:inset 0 0 24px rgba(244,122,42,.035),0 10px 35px rgba(0,0,0,.18)}
+.service-icon svg{width:31px;height:31px;display:block}
+.service-card h3{font-family:var(--display);font-size:21px;letter-spacing:-.02em;margin:26px 0 8px}
+.service-card p{margin:0;color:var(--muted);font-size:14px;line-height:1.65;max-width:90%}
+.service-arrow{position:absolute;right:20px;top:20px;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;border:1px solid var(--border);color:var(--muted);font-size:15px;transition:.25s ease}
+.service-card:hover .service-arrow{border-color:var(--accent);background:var(--accent);color:var(--accent-ink);transform:translate(2px,-2px)}
+.service-card:nth-child(7){grid-column:span 2;background:
+ radial-gradient(circle at 85% 18%,rgba(244,122,42,.16),transparent 25%),
+ linear-gradient(145deg,#1a1711,#111310)}
+.service-card:nth-child(7) .service-icon{width:66px;height:66px;border-radius:50%;box-shadow:0 0 45px rgba(244,122,42,.16)}
+.article-body>h2{font-size:clamp(25px,4vw,36px);letter-spacing:-.035em}
+@media(max-width:700px){.service-grid{grid-template-columns:1fr}.service-card:nth-child(7){grid-column:auto}.service-card{min-height:190px}}
+
+/* SETAEI Agency service overview */
+.agency-hero{padding:clamp(30px,6vw,62px);background:
+ radial-gradient(circle at 82% 20%,rgba(244,122,42,.16),transparent 28%),
+ linear-gradient(145deg,#191a18,#111210)}
+.agency-kicker{display:inline-flex;align-items:center;gap:8px;margin-bottom:16px;padding:6px 10px;border-radius:999px;border:1px solid rgba(244,122,42,.25);color:var(--accent);font-size:10px;font-weight:700;letter-spacing:.14em}
+.agency-kicker:before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px var(--accent)}
+.agency-hero h1{font-size:clamp(46px,8vw,82px);letter-spacing:-.055em;line-height:.96}
+.agency-hero p{max-width:760px;font-size:clamp(16px,2.2vw,21px);line-height:1.65}
+.agency-intro{max-width:850px;font-size:17px;line-height:1.8;color:var(--muted)}
+.agency-grid .service-card:nth-child(7){grid-column:auto;background:radial-gradient(circle at 100% 0,rgba(244,122,42,.09),transparent 34%),linear-gradient(145deg,#181a18,#121311)}
+.agency-grid .service-card:nth-child(7) .service-icon{width:58px;height:58px;border-radius:18px;box-shadow:inset 0 0 24px rgba(244,122,42,.035),0 10px 35px rgba(0,0,0,.18)}
+.agency-grid .service-card:nth-child(4){grid-column:span 2;background:
+ radial-gradient(circle at 82% 18%,rgba(244,122,42,.18),transparent 28%),
+ linear-gradient(145deg,#1b1710,#111310)}
+.agency-grid .service-card:nth-child(4) .service-icon{width:66px;height:66px;border-radius:50%;box-shadow:0 0 45px rgba(244,122,42,.17)}
+.agency-grid .service-card:nth-child(4) h3{font-size:25px}
+@media(max-width:700px){.agency-grid .service-card:nth-child(4){grid-column:auto}}

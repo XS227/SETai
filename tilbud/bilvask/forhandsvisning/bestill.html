@@ -1,0 +1,862 @@
+<!doctype html>
+<html lang="no">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+
+  <title>Bestill time | Bilvask Express AS – Lillestrøm</title>
+  <meta name="description" content="Bestill time hos Bilvask Express AS i Lillestrøm. Velg tidspunkt på nett eller ring SETAEI på 919 26 901. Rett ved Coop, Voldgata 58." />
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#0b2740" />
+
+  <meta property="og:title" content="Bestill time | Bilvask Express AS" />
+  <meta property="og:description" content="Velg tidspunkt for bilvask hos Bilvask Express AS i Lillestrøm. Rett ved Coop, Voldgata 58." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="/img/og-cover.jpg" />
+
+  <link rel="icon" href="/tilbud/bilvask/forhandsvisning/img/favicon.ico" />
+
+  <style>
+    :root{
+      --bg:#0b2740;
+      --bg2:#071a2b;
+
+      --card: rgba(255,255,255,.06);
+      --card2: rgba(255,255,255,.10);
+      --line: rgba(255,255,255,.14);
+
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.72);
+
+      --cyan:#38c6d9;
+      --cyan2:#7fe7f2;
+
+      --yellow:#ffcc33;
+      --yellow2:#ffd86a;
+
+      --xmasRed:#d53131;
+      --xmasGreen:#3bbf7a;
+
+      --shadow: 0 16px 44px rgba(0,0,0,.35);
+      --shadowSoft: 0 12px 28px rgba(0,0,0,.22);
+
+      --radius: 18px;
+      --max: 1160px;
+
+      --navH: 82px;
+
+      --glowA: rgba(255,204,51,.42);
+      --glowB: rgba(127,231,242,.24);
+      --glowC: rgba(213,49,49,.22);
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      color: var(--text);
+      background:
+        radial-gradient(1100px 650px at 20% 0%, rgba(56,198,217,.16), transparent 55%),
+        radial-gradient(900px 520px at 90% 5%, rgba(255,204,51,.10), transparent 52%),
+        linear-gradient(180deg, var(--bg2), var(--bg));
+      line-height:1.55;
+      overflow-x:hidden;
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+    }
+    a{ color:inherit; text-decoration:none; }
+    .container{ width:min(var(--max), calc(100% - 32px)); margin:0 auto; }
+
+    @media (prefers-reduced-motion: reduce){
+      *{ animation:none !important; transition:none !important; scroll-behavior:auto !important; }
+      .snow, .snow::before, .snow::after { display:none !important; }
+    }
+
+    /* Sticky header */
+    .nav{
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      min-height: var(--navH);
+      display:flex;
+      align-items:center;
+      padding: 6px 0;
+      background: linear-gradient(180deg, rgba(7,26,43,.94), rgba(7,26,43,.76));
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+      box-shadow: 0 16px 36px rgba(0,0,0,.24);
+    }
+    .nav-inner{ display:flex; align-items:center; justify-content:space-between; gap:12px; }
+
+    .brand{ display:flex; align-items:center; gap:10px; min-width:0; }
+    .logo-wrap{ position:relative; width:44px; height:44px; flex:0 0 auto; }
+    .badge{
+      width:100%;height:100%;border-radius:14px;
+      background: linear-gradient(135deg, rgba(56,198,217,.35), rgba(255,255,255,.06));
+      border:1px solid rgba(255,255,255,.18);
+      box-shadow: 0 10px 24px rgba(0,0,0,.25);
+      display:grid; place-items:center;
+      position:relative;
+      overflow:hidden;
+    }
+    .badge img{
+      width:100%; height:100%; display:block;
+      object-fit:contain;
+      padding:8px;
+    }
+    .badge::after{
+      content:"";
+      position:absolute; inset:-40%;
+      background: radial-gradient(circle, rgba(255,204,51,.18), transparent 60%);
+      animation: badgeGlow 4.8s ease-in-out infinite;
+    }
+    .logo-spark{ position:absolute; inset:-2px; pointer-events:none; overflow:hidden; }
+    .sparkle{
+      position:absolute;
+      width:16px; height:16px;
+      pointer-events:none;
+      background: radial-gradient(circle at 50% 50%, rgba(255,255,255,.98), rgba(255,255,255,.32) 55%, transparent 70%);
+      border-radius:50%;
+      opacity:0;
+      transform: scale(.6) rotate(0deg);
+      animation: sparklePop 2s ease-out forwards;
+    }
+    .sparkle::before,
+    .sparkle::after{
+      content:"";
+      position:absolute; inset:0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.96), transparent);
+      transform-origin:center;
+      border-radius:50%;
+    }
+    .sparkle::before{ transform: rotate(45deg); opacity:.85; }
+    .sparkle::after{ transform: rotate(-45deg); opacity:.65; }
+    @keyframes sparklePop{
+      0%{ opacity:0; transform: scale(.4) rotate(0deg); }
+      25%{ opacity:1; transform: scale(1) rotate(16deg); }
+      55%{ opacity:.92; transform: scale(.82) rotate(32deg); }
+      100%{ opacity:0; transform: scale(1.45) rotate(60deg); }
+    }
+    @keyframes badgeGlow{
+      0%,100%{ transform: translate(-10px, 6px) scale(1); opacity:.7; }
+      50%{ transform: translate(14px, -10px) scale(1.06); opacity:.95; }
+    }
+    .brand-text{ min-width:0; position:relative; z-index:1; }
+    .brand-text b{
+      display:block;
+      font-size:14px;
+      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    }
+    .brand-text span{
+      display:block;
+      font-size:12px;
+      color:var(--muted);
+      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    }
+
+    .nav-links{
+      display:flex; gap:10px; align-items:center;
+      color:var(--muted); font-size:14px;
+    }
+    .nav-links a{
+      padding:10px 10px; border-radius:12px;
+      border:1px solid transparent;
+      transition:.15s ease;
+    }
+    .nav-links a:hover{
+      color:var(--text);
+      background: rgba(255,255,255,.05);
+      border-color: rgba(255,255,255,.14);
+    }
+
+    .nav-actions{ display:flex; align-items:center; gap:10px; }
+
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      gap:10px;
+      padding:12px 14px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.06);
+      color:var(--text);
+      font-weight:950;
+      box-shadow: 0 10px 24px rgba(0,0,0,.22);
+      transition: transform .15s ease, background .15s ease, border-color .15s ease, box-shadow .2s ease;
+      cursor:pointer;
+      user-select:none;
+      white-space:nowrap;
+      position:relative;
+      overflow:hidden;
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      background: rgba(255,255,255,.09);
+      border-color: rgba(255,255,255,.28);
+    }
+
+    /* CTA glow */
+    .btn.primary{
+      background: linear-gradient(135deg, rgba(255,204,51,.95), rgba(255,204,51,.20));
+      border-color: rgba(255,204,51,.55);
+      color:#1a1a1a;
+      box-shadow: 0 18px 44px rgba(0,0,0,.22), 0 0 0 rgba(255,204,51,0);
+      animation: ctaPulse 2.8s ease-in-out infinite;
+    }
+    .btn.primary::after{
+      content:"";
+      position:absolute; inset:-60% -50%;
+      background: radial-gradient(circle, rgba(255,204,51,.38), transparent 58%);
+      transform: translate(-10px, 10px);
+      opacity:.85;
+      animation: ctaSweep 2.8s ease-in-out infinite;
+      pointer-events:none;
+      mix-blend-mode: screen;
+    }
+    @keyframes ctaPulse{
+      0%,100%{ box-shadow: 0 18px 44px rgba(0,0,0,.22), 0 0 0 rgba(255,204,51,0); }
+      50%{ box-shadow: 0 18px 44px rgba(0,0,0,.22), 0 0 34px rgba(255,204,51,.26); }
+    }
+    @keyframes ctaSweep{
+      0%,100%{ transform: translate(-22px, 18px) scale(1); opacity:.65; }
+      50%{ transform: translate(28px, -18px) scale(1.06); opacity:.92; }
+    }
+
+    .hamburger{
+      display:none;
+      width:46px;height:46px;border-radius:14px;
+      border:1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.06);
+      align-items:center; justify-content:center;
+      cursor:pointer;
+    }
+    .mobile-menu{
+      display:none;
+      position:fixed;
+      left:0; right:0;
+      top: var(--navH);
+      background: rgba(7,26,43,.94);
+      border-bottom:1px solid rgba(255,255,255,.14);
+      backdrop-filter: blur(12px);
+      padding:12px 16px 16px 16px;
+      z-index:998;
+    }
+    .mobile-menu a{
+      display:flex; padding:12px 12px; border-radius:14px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      margin:10px 0;
+      color: var(--text);
+      font-weight:950;
+    }
+
+    main.frame-page{
+      flex:1;
+      display:flex;
+      align-items:center;
+      padding: 30px 0 46px 0;
+    }
+    .booking-shell{
+      width:100%;
+      background:
+        radial-gradient(800px 420px at 18% 0%, rgba(127,231,242,.12), transparent 60%),
+        linear-gradient(180deg, #061A2B, #041827);
+      padding: 18px;
+      border-radius: 20px;
+      border:1px solid rgba(255,255,255,.16);
+      box-shadow:
+        0 30px 70px rgba(0,0,0,.40),
+        inset 0 0 0 1px rgba(255,255,255,.08);
+      position:relative;
+      overflow:hidden;
+    }
+    .booking-shell::after{
+      content:"";
+      position:absolute;
+      inset:-25% -18% auto auto;
+      height:240px; width:240px;
+      background: radial-gradient(circle, rgba(255,204,51,.14), transparent 58%);
+      opacity:.75;
+      transform: rotate(8deg);
+      pointer-events:none;
+    }
+    .booking-frame{
+      width:100%;
+      height: calc(100vh - var(--navH) - 140px);
+      min-height: 640px;
+      border:0;
+      display:block;
+      background:#fff;
+      border-radius: 18px;
+      box-shadow:
+        0 30px 80px rgba(0,0,0,.45),
+        inset 0 0 0 1px rgba(255,255,255,.12);
+      opacity:0;
+      transform: translateY(12px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+    .booking-frame.is-ready{
+      opacity:1;
+      transform: translateY(0);
+    }
+
+    section{ padding: 56px 0; position:relative; }
+    [id]{ scroll-margin-top: calc(var(--navH) + 18px); }
+
+    h1,h2,h3{ margin:0; line-height:1.1; }
+    h1{ font-size: clamp(34px, 6vw, 56px); letter-spacing:-.6px; }
+    h2{ font-size: clamp(24px, 4vw, 36px); letter-spacing:-.3px; }
+    p{ margin: 10px 0 0 0; color: var(--muted); }
+
+    .card{
+      background: rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.12);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .soft{ box-shadow: var(--shadowSoft); }
+    .pad{ padding:18px; }
+
+    .section-title{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:14px;
+      margin-bottom: 16px;
+    }
+
+    /* Reveal animations */
+    .reveal{
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity .7s ease, transform .7s ease;
+      will-change: opacity, transform;
+    }
+    .reveal.in{
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal.delay-1{ transition-delay: .08s; }
+    .reveal.delay-2{ transition-delay: .16s; }
+    .reveal.delay-3{ transition-delay: .24s; }
+
+    /* Section divider (roofline + wave) */
+    .divider{
+      position:absolute;
+      left:0; right:0;
+      bottom:-1px;
+      height: 64px;
+      pointer-events:none;
+      opacity:.95;
+    }
+    .divider svg{ width:100%; height:100%; display:block; }
+    .divider .roof{
+      stroke: rgba(255,255,255,.14);
+      stroke-width: 2;
+      fill: none;
+    }
+    .divider .wave{
+      fill: rgba(255,255,255,.04);
+      stroke: rgba(255,255,255,.10);
+      stroke-width: 1;
+    }
+    .divider .accent{
+      stroke: rgba(255,204,51,.35);
+      stroke-width: 2;
+      fill: none;
+      stroke-linecap: round;
+      stroke-dasharray: 8 12;
+      opacity:.9;
+    }
+
+    /* HERO with facade background */
+    .hero{
+      position:relative;
+      overflow:hidden;
+      padding: 28px 0 44px 0;
+    }
+    .hero-bg{
+      position:absolute; inset:0;
+      background-image:
+        linear-gradient(180deg, rgba(7,26,43,.46), rgba(7,26,43,.92)),
+        radial-gradient(900px 520px at 85% 0%, rgba(255,204,51,.12), transparent 55%),
+        url("/tilbud/bilvask/forhandsvisning/img/fasade.jpg");
+      background-size: cover;
+      background-position: center;
+      transform: translateY(var(--heroParallax, 0px)) scale(1.02);
+      filter: saturate(1.03) contrast(1.05);
+      will-change: transform;
+    }
+    .hero-glow{
+      position:absolute; inset:0;
+      background:
+        radial-gradient(800px 520px at 20% 0%, rgba(56,198,217,.18), transparent 55%),
+        radial-gradient(900px 520px at 90% 5%, rgba(255,204,51,.12), transparent 52%),
+        radial-gradient(900px 520px at 60% 30%, rgba(213,49,49,.10), transparent 60%);
+      pointer-events:none;
+    }
+    .hero-wrap{
+      position:relative;
+      display:grid;
+      grid-template-columns: 1.25fr .75fr;
+      gap: 18px;
+      align-items: start;
+    }
+    .hero-main{
+      position:relative;
+      padding:22px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(7,26,43,.46);
+      backdrop-filter: blur(10px);
+    }
+    .hero-main::before{
+      content:"";
+      position:absolute;
+      inset:-70% -60% auto auto;
+      width:520px;height:420px;
+      background: radial-gradient(circle, rgba(255,204,51,.20), transparent 55%);
+      transform: rotate(12deg);
+      border-radius: 90px;
+      pointer-events:none;
+      animation: heroWarm 6s ease-in-out infinite;
+      opacity:.95;
+    }
+    @keyframes heroWarm{
+      0%,100%{ transform: rotate(12deg) translate(0,0) scale(1); opacity:.75; }
+      50%{ transform: rotate(12deg) translate(-18px, 12px) scale(1.04); opacity:.95; }
+    }
+
+    .pill{
+      display:inline-flex; align-items:center; gap:10px;
+      padding: 8px 12px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.08);
+      color: rgba(255,255,255,.78);
+      font-size:14px;
+      width: fit-content;
+      backdrop-filter: blur(10px);
+      position:relative;
+      overflow:hidden;
+    }
+    .pill::after{
+      content:"";
+      position:absolute; inset:-80% -60%;
+      background: repeating-linear-gradient(45deg, rgba(213,49,49,.16) 0 12px, rgba(255,255,255,.08) 12px 24px, rgba(59,191,122,.12) 24px 36px);
+      transform: translate(-28px, 18px);
+      opacity:.35;
+      animation: pillStripe 6.8s ease-in-out infinite;
+      pointer-events:none;
+    }
+    @keyframes pillStripe{
+      0%,100%{ transform: translate(-28px, 18px) rotate(0deg); opacity:.20; }
+      50%{ transform: translate(36px, -24px) rotate(0deg); opacity:.38; }
+    }
+    .dot{
+      width:10px;height:10px;border-radius:999px;
+      background: var(--yellow);
+      box-shadow: 0 0 0 6px rgba(255,204,51,.12);
+      position:relative;
+      z-index:1;
+    }
+
+    /* Snow effect (hero only) */
+    .snow, .snow::before, .snow::after{
+      position:absolute;
+      inset:-200px 0 0 0;
+      content:"";
+      background-image:
+        radial-gradient(2px 2px at 20px 30px, rgba(255,255,255,.85) 50%, transparent 52%),
+        radial-gradient(2px 2px at 60px 80px, rgba(255,255,255,.70) 50%, transparent 52%),
+        radial-gradient(1.5px 1.5px at 130px 110px, rgba(255,255,255,.75) 50%, transparent 52%),
+        radial-gradient(2px 2px at 180px 50px, rgba(255,255,255,.65) 50%, transparent 52%),
+        radial-gradient(1.5px 1.5px at 240px 140px, rgba(255,255,255,.75) 50%, transparent 52%),
+        radial-gradient(2px 2px at 320px 90px, rgba(255,255,255,.70) 50%, transparent 52%);
+      background-size: 360px 180px;
+      opacity:.58;
+      pointer-events:none;
+      animation: snowFall 12s linear infinite;
+      filter: blur(.2px);
+    }
+    .snow::before{
+      opacity:.42;
+      animation-duration: 18s;
+      transform: translateY(-120px);
+    }
+    .snow::after{
+      opacity:.30;
+      animation-duration: 24s;
+      transform: translateY(-240px);
+    }
+    @keyframes snowFall{
+      from{ transform: translateY(-160px); }
+      to  { transform: translateY(420px); }
+    }
+
+    /* Side card */
+    .side-card{
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(7,26,43,.46);
+      backdrop-filter: blur(10px);
+      position:relative;
+      overflow:hidden;
+    }
+    .side-card::after{
+      content:"";
+      position:absolute; inset:-70% -60%;
+      background: radial-gradient(circle, rgba(127,231,242,.12), transparent 62%);
+      opacity:.65;
+      transform: translate(18px,-10px);
+      pointer-events:none;
+    }
+    .side-card h3, .side-card p, .side-card .btn{ position:relative; z-index:1; }
+
+    /* Booking widget container */
+    .booking-widget{
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:16px;
+      padding:16px;
+      box-shadow: var(--shadowSoft);
+    }
+
+    /* Footer */
+    footer{
+      padding: 30px 0 42px 0;
+      border-top: 1px solid rgba(255,255,255,.12);
+      background: rgba(7,26,43,.50);
+    }
+    .footer-inner{
+      display:flex;
+      gap:14px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:space-between;
+      color: var(--muted);
+      font-size:14px;
+    }
+    .footer-brand .logo-wrap{
+      height: 48px;
+      padding: 4px 8px;
+    }
+    .footer-brand .logo-img{ height: 44px; }
+    .footer-links{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      font-weight: 900;
+    }
+    .footer-links a{
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid transparent;
+      transition: .15s ease;
+      color: var(--muted);
+      background: rgba(255,255,255,.02);
+    }
+    .footer-links a:hover{
+      color: var(--text);
+      border-color: rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+    }
+
+    @media (max-width: 720px){
+      main.frame-page{ padding: 16px 0 28px 0; }
+      .booking-shell{ padding: 12px; border-radius: 16px; box-shadow: 0 18px 44px rgba(0,0,0,.30); }
+      .booking-frame{ min-height: 520px; height: calc(100vh - var(--navH) - 70px); }
+    }
+
+    @media (max-width: 540px){
+      .booking-shell{ padding: 10px; }
+      .booking-frame{ height: calc(100vh - var(--navH) - 40px); min-height: 480px; }
+    }
+    .footer-inner a{
+      color: inherit;
+      font-weight: inherit;
+      text-decoration: none;
+    }
+
+    /* Responsive */
+    @media (max-width: 980px){
+      .nav-links{ display:none; }
+      .hamburger{ display:flex; }
+      .hero-wrap{ grid-template-columns: 1fr; }
+    }
+
+    /* ---------- Brand colors: dark navy base + light blue + silver/white ---------- */
+    :root{
+      --navyDeep:#061a2b;     /* mørk blå (sidebakgrunn) */
+      --navyLogo:#0b2740;     /* logo-blå (secondary bg) */
+      --iceBlue:#7fe7f2;      /* lys blå */
+      --silver:#d7dde6;       /* hvitt/sølv */
+      --silver2:rgba(215,221,230,.72);
+
+      /* Gold is reserved for offers/prices only */
+      --gold:#ffcc33;
+      --gold2:#ffd86a;
+    }
+
+    /* Force page background closer to logo navy */
+    body{
+      background:
+        radial-gradient(1100px 650px at 20% 0%, rgba(127,231,242,.10), transparent 55%),
+        radial-gradient(900px 520px at 90% 5%, rgba(215,221,230,.06), transparent 52%),
+        linear-gradient(180deg, var(--navyDeep), var(--navyLogo));
+    }
+
+    /* Remove accidental gold usage outside offers */
+    .btn.primary:not(.offer-only),
+    .pkg-tag:not(.offer-only),
+    .stars{
+      /* keep existing look but ensure stars are not gold unless you want them.
+         If you want stars still gold, delete this block. */
+    }
+
+    /* ---------- Header logo: bigger + no name/address ---------- */
+    .brand-logo-only{ align-items:center; }
+    .logo-wrap{
+      display:flex;
+      align-items:center;
+      gap:0;
+      height: 52px;
+      padding: 6px 8px;
+      border-radius: 16px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(6,26,43,.35);
+      backdrop-filter: blur(10px);
+      position:relative;
+      overflow:hidden;
+      box-shadow: 0 12px 26px rgba(0,0,0,.22);
+    }
+    .logo-img{
+      height: 46px;            /* desktop */
+      width: auto;
+      display:block;
+      filter: drop-shadow(0 10px 18px rgba(0,0,0,.25));
+    }
+    @media (max-width: 980px){
+      .logo-img{ height: 52px; } /* litt større på mobil, siden du ønsket større logo */
+    }
+
+    /* Subtle live glow behind logo */
+    .logo-wrap::before{
+      content:"";
+      position:absolute;
+      inset:-60% -50%;
+      background:
+        radial-gradient(circle, rgba(127,231,242,.18), transparent 60%),
+        radial-gradient(circle, rgba(215,221,230,.10), transparent 65%);
+      transform: translate(18px,-10px);
+      opacity:.75;
+      animation: logoAura 6.5s ease-in-out infinite;
+      pointer-events:none;
+    }
+    @keyframes logoAura{
+      0%,100%{ transform: translate(18px,-10px) scale(1); opacity:.55; }
+      50%{ transform: translate(-12px,14px) scale(1.06); opacity:.85; }
+    }
+
+    /* Sparkles layer */
+    .logo-spark{
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+    }
+
+    /* individual sparkle elements (created by JS) */
+    .sparkle{
+      position:absolute;
+      width:10px;
+      height:10px;
+      transform: rotate(0deg) scale(.5);
+      opacity:0;
+      filter: drop-shadow(0 0 10px rgba(215,221,230,.35));
+      animation: sparklePop 1.6s ease-in-out forwards;
+    }
+    .sparkle::before, .sparkle::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background: radial-gradient(circle, rgba(255,255,255,.95), rgba(215,221,230,.65) 55%, transparent 62%);
+      clip-path: polygon(50% 0%, 58% 40%, 100% 50%, 58% 60%, 50% 100%, 42% 60%, 0% 50%, 42% 40%);
+    }
+    .sparkle::after{
+      transform: rotate(45deg) scale(.88);
+      opacity:.85;
+    }
+    @keyframes sparklePop{
+      0%{ opacity:0; transform: rotate(0deg) scale(.45); }
+      20%{ opacity:1; transform: rotate(12deg) scale(1); }
+      70%{ opacity:.9; transform: rotate(42deg) scale(.92); }
+      100%{ opacity:0; transform: rotate(70deg) scale(.55); }
+    }
+
+    /* ---------- Gold ONLY on campaign/offer/prices ---------- */
+    .xmas-price,
+    .xmas-title,
+    .btn.primary,
+    .pkg-tag{
+      /* SETAEI lar disse være “gull” fordi de er kampanje/pris/CTA */
+      color: inherit;
+    }
+
+    /* Restrict gold usage:
+       - Buttons primary keep gold (CTA)
+       - Offer price keep gold
+       - Package tags keep gold only if they are offer badges
+    */
+    .pkg-tag{ background: rgba(255,204,51,.95); border-color: rgba(255,204,51,.45); color:#1a1a1a; }
+    .stars{ color: rgba(215,221,230,.78); } /* reviews stars in silver/white */
+  </style>
+</head>
+
+<body id="top">
+  <header class="nav">
+    <div class="container nav-inner">
+      <div class="brand brand-logo-only">
+        <a href="#top" class="logo-wrap" aria-label="Til toppen">
+          <img src="/tilbud/bilvask/forhandsvisning/img/logo.png" alt="Lillestrøm Bilvask Express" class="logo-img" />
+          <span class="logo-spark" aria-hidden="true"></span>
+        </a>
+      </div>
+
+      <nav class="nav-links" aria-label="Hovedmeny">
+        <a href="/tilbud/bilvask/forhandsvisning/">Forside</a>
+        <a href="#bestill">Bestill</a>
+        <a href="tel:+4791926901">Ring 919 26 901</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="hamburger" id="hamburger" aria-label="Åpne meny" aria-expanded="false">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M4 7h16M4 12h16M4 17h16" stroke="rgba(255,255,255,.92)" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <a href="/tilbud/bilvask/forhandsvisning/">Forside</a>
+    <a href="#bestill">Bestill</a>
+    <a href="tel:+4791926901">Ring 919 26 901</a>
+  </div>
+
+  <main class="frame-page" id="bestill">
+    <div class="booking-shell">
+      <iframe
+        class="booking-frame"
+        id="bookingFrame"
+        src="https://anolla.com/url/cauV7afg7blskXd5VRslkppGHoE5QdOM"
+        title="Bestill time hos Bilvask Express AS"
+        loading="lazy"
+        allowfullscreen></iframe>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <div class="brand brand-logo-only footer-brand">
+        <a href="#top" class="logo-wrap" aria-label="Til toppen">
+          <img src="/tilbud/bilvask/forhandsvisning/img/logo.png" alt="Bilvask Express AS" class="logo-img" />
+          <span class="logo-spark" aria-hidden="true"></span>
+        </a>
+      </div>
+      <nav class="footer-links" aria-label="Bunnmeny">
+        <a href="/tilbud/bilvask/forhandsvisning/">Forside</a>
+        <a href="#bestill">Bestill</a>
+        <a href="tel:+4791926901">Ring 919 26 901</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu
+    const hamburger = document.getElementById("hamburger");
+    const mobileMenu = document.getElementById("mobileMenu");
+    function setMenu(open){
+      hamburger.setAttribute("aria-expanded", String(open));
+      mobileMenu.style.display = open ? "block" : "none";
+      mobileMenu.setAttribute("aria-hidden", String(!open));
+    }
+    hamburger.addEventListener("click", () => {
+      const open = hamburger.getAttribute("aria-expanded") !== "true";
+      setMenu(open);
+    });
+    mobileMenu.querySelectorAll("a").forEach(a => a.addEventListener("click", () => setMenu(false)));
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener("click", (e) => {
+        const id = a.getAttribute("href");
+        if (!id || id === "#") return;
+        const el = document.querySelector(id);
+        if (!el) return;
+        e.preventDefault();
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    });
+
+    // Reveal on scroll
+    (function(){
+      const els = document.querySelectorAll(".reveal");
+      const io = new IntersectionObserver((entries)=>{
+        entries.forEach(entry=>{
+          if(entry.isIntersecting){
+            entry.target.classList.add("in");
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+      els.forEach(el => io.observe(el));
+    })();
+
+    // Hero parallax
+    (function(){
+      const bg = document.getElementById("heroBg");
+      if(!bg) return;
+      let ticking = false;
+      function onScroll(){
+        if(ticking) return;
+        ticking = true;
+        requestAnimationFrame(()=>{
+          const y = window.scrollY || 0;
+          const offset = Math.min(28, y * 0.06);
+          bg.style.setProperty("--heroParallax", offset + "px");
+          ticking = false;
+        });
+      }
+      window.addEventListener("scroll", onScroll, { passive:true });
+      onScroll();
+    })();
+
+    // Logo sparkles
+    (function(){
+      const hosts = document.querySelectorAll(".logo-spark");
+      if(!hosts.length) return;
+      function spawn(host){
+        const spark = document.createElement("span");
+        spark.className = "sparkle";
+        spark.style.left = Math.random() * 80 + 10 + "%";
+        spark.style.top = Math.random() * 60 + 10 + "%";
+        spark.style.animationDelay = (Math.random() * 0.4).toFixed(2) + "s";
+        host.appendChild(spark);
+        setTimeout(()=>spark.remove(), 1800);
+      }
+      hosts.forEach(host=>{
+        spawn(host);
+        setInterval(()=>spawn(host), 1400);
+      });
+    })();
+
+    // Fade/slide booking frame on load
+    (function(){
+      const frame = document.getElementById("bookingFrame");
+      if(!frame) return;
+      frame.addEventListener("load", ()=> frame.classList.add("is-ready"), { once:true });
+    })();
+  </script>
+</body>
+</html>

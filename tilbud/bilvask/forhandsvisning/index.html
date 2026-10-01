@@ -1,0 +1,1804 @@
+<!doctype html>
+<html lang="no">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+
+  <title>Bilvask Lillestrøm | Bilvask Express AS – Voldgata 58</title>
+  <meta name="description" content="Bilvask i Lillestrøm: utvendig og innvendig vask, supervask, rens og polering. Tydelige pakker for sedan, SUV og varebil. Rett ved Coop. Bestill på 919 26 901." />
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#0b2740" />
+
+  <meta property="og:title" content="Bilvask Lillestrøm | Bilvask Express AS" />
+  <meta property="og:description" content="Utvendig og innvendig bilvask, rens og polering. Rett ved Coop i Lillestrøm. Bestill på 919 26 901." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://bilvaskexpress.no/img/og-cover.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:url" content="https://bilvaskexpress.no/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="canonical" href="https://bilvaskexpress.no/" />
+
+  <link rel="icon" href="/tilbud/bilvask/forhandsvisning/img/favicon.ico" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "AutoWash",
+    "@id": "https://bilvaskexpress.no/#bedrift",
+    "url": "https://bilvaskexpress.no/",
+    "image": "https://bilvaskexpress.no/img/og-cover.jpg",
+    "priceRange": "199–4000 kr",
+    "name": "Bilvask Express AS",
+    "telephone": "+47 919 26 901",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Voldgata 58",
+      "postalCode": "2000",
+      "addressLocality": "Lillestrøm",
+      "addressCountry": "NO"
+    },
+    "openingHoursSpecification": [{
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+      "opens": "08:00",
+      "closes": "19:00"
+    }],
+    "sameAs": ["https://maps.app.goo.gl/aUYi53CLXqsCJw5a9"]
+  }
+  </script>
+
+  <style>
+    :root{
+      --bg:#0b2740;
+      --bg2:#071a2b;
+
+      --card: rgba(255,255,255,.06);
+      --card2: rgba(255,255,255,.10);
+      --line: rgba(255,255,255,.14);
+
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.72);
+
+      --cyan:#38c6d9;
+      --cyan2:#7fe7f2;
+
+      --yellow:#ffcc33;
+      --yellow2:#ffd86a;
+
+      --xmasRed:#d53131;
+      --xmasGreen:#3bbf7a;
+
+      --shadow: 0 16px 44px rgba(0,0,0,.35);
+      --shadowSoft: 0 12px 28px rgba(0,0,0,.22);
+
+      --radius: 18px;
+      --max: 1160px;
+
+      --navH: 82px;
+
+      --glowA: rgba(255,204,51,.42);
+      --glowB: rgba(127,231,242,.24);
+      --glowC: rgba(213,49,49,.22);
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      color: var(--text);
+      background:
+        radial-gradient(1100px 650px at 20% 0%, rgba(56,198,217,.16), transparent 55%),
+        radial-gradient(900px 520px at 90% 5%, rgba(255,204,51,.10), transparent 52%),
+        linear-gradient(180deg, var(--bg2), var(--bg));
+      line-height:1.55;
+      overflow-x:hidden;
+    }
+    a{ color:inherit; text-decoration:none; }
+    .container{ width:min(var(--max), calc(100% - 32px)); margin:0 auto; }
+
+    @media (prefers-reduced-motion: reduce){
+      *{ animation:none !important; transition:none !important; scroll-behavior:auto !important; }
+      .snow, .snow::before, .snow::after { display:none !important; }
+    }
+
+    /* Sticky header */
+    .nav{
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      min-height: var(--navH);
+      display:flex;
+      align-items:center;
+      padding: 6px 0;
+      background: rgba(7,26,43,.84);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav-inner{ display:flex; align-items:center; justify-content:space-between; gap:12px; }
+
+    .brand{ display:flex; align-items:center; gap:10px; min-width:0; }
+    .logo-wrap{ position:relative; width:44px; height:44px; flex:0 0 auto; }
+    .badge{
+      width:100%;height:100%;border-radius:14px;
+      background: linear-gradient(135deg, rgba(56,198,217,.35), rgba(255,255,255,.06));
+      border:1px solid rgba(255,255,255,.18);
+      box-shadow: 0 10px 24px rgba(0,0,0,.25);
+      display:grid; place-items:center;
+      position:relative;
+      overflow:hidden;
+    }
+    .badge img{
+      width:100%; height:100%; display:block;
+      object-fit:contain;
+      padding:8px;
+    }
+    .badge::after{
+      content:"";
+      position:absolute; inset:-40%;
+      background: radial-gradient(circle, rgba(255,204,51,.18), transparent 60%);
+      animation: badgeGlow 4.8s ease-in-out infinite;
+    }
+    .logo-spark{ position:absolute; inset:-2px; pointer-events:none; overflow:hidden; }
+    .sparkle{
+      position:absolute;
+      width:16px; height:16px;
+      pointer-events:none;
+      background: radial-gradient(circle at 50% 50%, rgba(255,255,255,.98), rgba(255,255,255,.32) 55%, transparent 70%);
+      border-radius:50%;
+      opacity:0;
+      transform: scale(.6) rotate(0deg);
+      animation: sparklePop 2s ease-out forwards;
+    }
+    .sparkle::before,
+    .sparkle::after{
+      content:"";
+      position:absolute; inset:0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.96), transparent);
+      transform-origin:center;
+      border-radius:50%;
+    }
+    .sparkle::before{ transform: rotate(45deg); opacity:.85; }
+    .sparkle::after{ transform: rotate(-45deg); opacity:.65; }
+    @keyframes sparklePop{
+      0%{ opacity:0; transform: scale(.4) rotate(0deg); }
+      25%{ opacity:1; transform: scale(1) rotate(16deg); }
+      55%{ opacity:.92; transform: scale(.82) rotate(32deg); }
+      100%{ opacity:0; transform: scale(1.45) rotate(60deg); }
+    }
+    @keyframes badgeGlow{
+      0%,100%{ transform: translate(-10px, 6px) scale(1); opacity:.7; }
+      50%{ transform: translate(14px, -10px) scale(1.06); opacity:.95; }
+    }
+    .brand-text{ min-width:0; position:relative; z-index:1; }
+    .brand-text b{
+      display:block;
+      font-size:14px;
+      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    }
+    .brand-text span{
+      display:block;
+      font-size:12px;
+      color:var(--muted);
+      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    }
+
+    .nav-links{
+      display:flex; gap:10px; align-items:center;
+      color:var(--muted); font-size:14px;
+    }
+    .nav-links a{
+      padding:10px 10px; border-radius:12px;
+      border:1px solid transparent;
+      transition:.15s ease;
+    }
+    .nav-links a:hover{
+      color:var(--text);
+      background: rgba(255,255,255,.05);
+      border-color: rgba(255,255,255,.14);
+    }
+
+    .nav-actions{ display:flex; align-items:center; gap:10px; }
+
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      gap:10px;
+      padding:12px 14px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.06);
+      color:var(--text);
+      font-weight:950;
+      box-shadow: 0 10px 24px rgba(0,0,0,.22);
+      transition: transform .15s ease, background .15s ease, border-color .15s ease, box-shadow .2s ease;
+      cursor:pointer;
+      user-select:none;
+      white-space:nowrap;
+      position:relative;
+      overflow:hidden;
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      background: rgba(255,255,255,.09);
+      border-color: rgba(255,255,255,.28);
+    }
+
+    /* CTA glow */
+    .btn.primary{
+      background: linear-gradient(135deg, rgba(255,204,51,.95), rgba(255,204,51,.20));
+      border-color: rgba(255,204,51,.55);
+      color:#1a1a1a;
+      box-shadow: 0 18px 44px rgba(0,0,0,.22), 0 0 0 rgba(255,204,51,0);
+      animation: ctaPulse 2.8s ease-in-out infinite;
+    }
+    .btn.primary::after{
+      content:"";
+      position:absolute; inset:-60% -50%;
+      background: radial-gradient(circle, rgba(255,204,51,.38), transparent 58%);
+      transform: translate(-10px, 10px);
+      opacity:.85;
+      animation: ctaSweep 2.8s ease-in-out infinite;
+      pointer-events:none;
+      mix-blend-mode: screen;
+    }
+    @keyframes ctaPulse{
+      0%,100%{ box-shadow: 0 18px 44px rgba(0,0,0,.22), 0 0 0 rgba(255,204,51,0); }
+      50%{ box-shadow: 0 18px 44px rgba(0,0,0,.22), 0 0 34px rgba(255,204,51,.26); }
+    }
+    @keyframes ctaSweep{
+      0%,100%{ transform: translate(-22px, 18px) scale(1); opacity:.65; }
+      50%{ transform: translate(28px, -18px) scale(1.06); opacity:.92; }
+    }
+
+    .hamburger{
+      display:none;
+      width:46px;height:46px;border-radius:14px;
+      border:1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.06);
+      align-items:center; justify-content:center;
+      cursor:pointer;
+    }
+    .mobile-menu{
+      display:none;
+      position:fixed;
+      left:0; right:0;
+      top: var(--navH);
+      background: rgba(7,26,43,.94);
+      border-bottom:1px solid rgba(255,255,255,.14);
+      backdrop-filter: blur(12px);
+      padding:12px 16px 16px 16px;
+      z-index:998;
+    }
+    .mobile-menu a{
+      display:flex; padding:12px 12px; border-radius:14px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      margin:10px 0;
+      color: var(--text);
+      font-weight:950;
+    }
+
+    section{ padding: 56px 0; position:relative; }
+    [id]{ scroll-margin-top: calc(var(--navH) + 18px); }
+
+    h1,h2,h3{ margin:0; line-height:1.1; }
+    h1{ font-size: clamp(34px, 6vw, 56px); letter-spacing:-.6px; }
+    h2{ font-size: clamp(24px, 4vw, 36px); letter-spacing:-.3px; }
+    p{ margin: 10px 0 0 0; color: var(--muted); }
+
+    .card{
+      background: rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.12);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .soft{ box-shadow: var(--shadowSoft); }
+    .pad{ padding:18px; }
+
+    .section-title{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:14px;
+      margin-bottom: 16px;
+    }
+
+    /* Reveal animations */
+    .reveal{
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity .7s ease, transform .7s ease;
+      will-change: opacity, transform;
+    }
+    .reveal.in{
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal.delay-1{ transition-delay: .08s; }
+    .reveal.delay-2{ transition-delay: .16s; }
+    .reveal.delay-3{ transition-delay: .24s; }
+
+    /* Section divider (roofline + wave) */
+    .divider{
+      position:absolute;
+      left:0; right:0;
+      bottom:-1px;
+      height: 64px;
+      pointer-events:none;
+      opacity:.95;
+    }
+    .divider svg{ width:100%; height:100%; display:block; }
+    .divider .roof{
+      stroke: rgba(255,255,255,.14);
+      stroke-width: 2;
+      fill: none;
+    }
+    .divider .wave{
+      fill: rgba(255,255,255,.04);
+      stroke: rgba(255,255,255,.10);
+      stroke-width: 1;
+    }
+    .divider .accent{
+      stroke: rgba(255,204,51,.35);
+      stroke-width: 2;
+      fill: none;
+      stroke-linecap: round;
+      stroke-dasharray: 8 12;
+      opacity:.9;
+    }
+
+    /* HERO with facade background */
+    .hero{
+      position:relative;
+      overflow:hidden;
+      padding: 28px 0 44px 0;
+    }
+    .hero-bg{
+      position:absolute; inset:0;
+      background-image:
+        linear-gradient(180deg, rgba(7,26,43,.46), rgba(7,26,43,.92)),
+        radial-gradient(900px 520px at 85% 0%, rgba(255,204,51,.12), transparent 55%),
+        url("/tilbud/bilvask/forhandsvisning/img/fasade.jpg");
+      background-size: cover;
+      background-position: center;
+      transform: translateY(var(--heroParallax, 0px)) scale(1.02);
+      filter: saturate(1.03) contrast(1.05);
+      will-change: transform;
+    }
+    .hero-glow{
+      position:absolute; inset:0;
+      background:
+        radial-gradient(800px 520px at 20% 0%, rgba(56,198,217,.18), transparent 55%),
+        radial-gradient(900px 520px at 90% 5%, rgba(255,204,51,.12), transparent 52%),
+        radial-gradient(900px 520px at 60% 30%, rgba(213,49,49,.10), transparent 60%);
+      pointer-events:none;
+    }
+    .hero-wrap{
+      position:relative;
+      display:grid;
+      grid-template-columns: 1.25fr .75fr;
+      gap: 18px;
+      align-items: start;
+    }
+    .hero-main{
+      position:relative;
+      padding:22px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(7,26,43,.46);
+      backdrop-filter: blur(10px);
+    }
+    .hero-main::before{
+      content:"";
+      position:absolute;
+      inset:-70% -60% auto auto;
+      width:520px;height:420px;
+      background: radial-gradient(circle, rgba(255,204,51,.20), transparent 55%);
+      transform: rotate(12deg);
+      border-radius: 90px;
+      pointer-events:none;
+      animation: heroWarm 6s ease-in-out infinite;
+      opacity:.95;
+    }
+    @keyframes heroWarm{
+      0%,100%{ transform: rotate(12deg) translate(0,0) scale(1); opacity:.75; }
+      50%{ transform: rotate(12deg) translate(-18px, 12px) scale(1.04); opacity:.95; }
+    }
+
+    .pill{
+      display:inline-flex; align-items:center; gap:10px;
+      padding: 8px 12px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.08);
+      color: rgba(255,255,255,.78);
+      font-size:14px;
+      width: fit-content;
+      backdrop-filter: blur(10px);
+      position:relative;
+      overflow:hidden;
+    }
+    /* candy stripe shimmer */
+    .pill::after{
+      content:"";
+      position:absolute; inset:-80% -60%;
+      background: repeating-linear-gradient(45deg, rgba(213,49,49,.16) 0 12px, rgba(255,255,255,.08) 12px 24px, rgba(59,191,122,.12) 24px 36px);
+      transform: translate(-28px, 18px);
+      opacity:.35;
+      animation: pillStripe 6.8s ease-in-out infinite;
+      pointer-events:none;
+    }
+    @keyframes pillStripe{
+      0%,100%{ transform: translate(-28px, 18px) rotate(0deg); opacity:.20; }
+      50%{ transform: translate(36px, -24px) rotate(0deg); opacity:.38; }
+    }
+    .dot{
+      width:10px;height:10px;border-radius:999px;
+      background: var(--yellow);
+      box-shadow: 0 0 0 6px rgba(255,204,51,.12);
+      position:relative;
+      z-index:1;
+    }
+    .pill span, .pill b, .pill strong{ position:relative; z-index:1; }
+
+    .hero-actions{
+      display:flex; flex-wrap:wrap; gap:12px;
+      margin-top: 16px;
+    }
+
+    /* Christmas offer */
+    .xmas-offer{
+      margin-top:16px;
+      padding:14px 14px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.16);
+      background: linear-gradient(135deg, rgba(255,204,51,.18), rgba(255,255,255,.05));
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      position:relative;
+      overflow:hidden;
+    }
+    .xmas-offer::before{
+      content:"";
+      position:absolute; inset:0;
+      background: repeating-linear-gradient(45deg, rgba(213,49,49,.18) 0 12px, rgba(255,255,255,.08) 12px 24px);
+      opacity:.16;
+      pointer-events:none;
+    }
+    .xmas-left{
+      display:flex; align-items:center; gap:12px;
+      min-width:0;
+      position:relative;
+      z-index:1;
+    }
+    .xmas-badge{
+      width:44px;height:44px;border-radius:16px;
+      border:1px solid rgba(255,255,255,.18);
+      background: rgba(7,26,43,.55);
+      display:grid; place-items:center;
+      backdrop-filter: blur(10px);
+      position:relative;
+    }
+    /* Santa hat */
+    .xmas-badge::before{
+      content:"";
+      position:absolute;
+      top:-10px; left:14px;
+      width:22px; height:14px;
+      background: var(--xmasRed);
+      border-radius: 10px 10px 8px 8px;
+      transform: rotate(-18deg);
+      box-shadow: 0 6px 18px rgba(0,0,0,.22);
+    }
+    .xmas-badge::after{
+      content:"";
+      position:absolute;
+      top:-15px; left:30px;
+      width:10px; height:10px;
+      background: #ffffff;
+      border-radius:999px;
+      transform: rotate(-18deg);
+      box-shadow: 0 6px 18px rgba(0,0,0,.18);
+    }
+    .xmas-title{
+      font-weight:1100;
+      color: var(--yellow2);
+      letter-spacing:.2px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .xmas-sub{ color: rgba(255,255,255,.78); font-size:13px; margin-top:2px; }
+    .xmas-price{
+      font-size:30px;
+      font-weight:1200;
+      color: var(--yellow);
+      letter-spacing:-.6px;
+      white-space:nowrap;
+      position:relative;
+      z-index:1;
+      text-shadow: 0 0 18px rgba(255,204,51,.20);
+    }
+
+    /* Snow effect (hero only) */
+    .snow, .snow::before, .snow::after{
+      position:absolute;
+      inset:-200px 0 0 0;
+      content:"";
+      background-image:
+        radial-gradient(2px 2px at 20px 30px, rgba(255,255,255,.85) 50%, transparent 52%),
+        radial-gradient(2px 2px at 60px 80px, rgba(255,255,255,.70) 50%, transparent 52%),
+        radial-gradient(1.5px 1.5px at 130px 110px, rgba(255,255,255,.75) 50%, transparent 52%),
+        radial-gradient(2px 2px at 180px 50px, rgba(255,255,255,.65) 50%, transparent 52%),
+        radial-gradient(1.5px 1.5px at 240px 140px, rgba(255,255,255,.75) 50%, transparent 52%),
+        radial-gradient(2px 2px at 320px 90px, rgba(255,255,255,.70) 50%, transparent 52%);
+      background-size: 360px 180px;
+      opacity:.58;
+      pointer-events:none;
+      animation: snowFall 12s linear infinite;
+      filter: blur(.2px);
+    }
+    .snow::before{
+      opacity:.42;
+      animation-duration: 18s;
+      transform: translateY(-120px);
+    }
+    .snow::after{
+      opacity:.30;
+      animation-duration: 24s;
+      transform: translateY(-240px);
+    }
+    @keyframes snowFall{
+      from{ transform: translateY(-160px); }
+      to  { transform: translateY(420px); }
+    }
+
+    /* Side card */
+    .side-card{
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(7,26,43,.46);
+      backdrop-filter: blur(10px);
+      position:relative;
+      overflow:hidden;
+    }
+    .side-card::after{
+      content:"";
+      position:absolute; inset:-60%;
+      background: radial-gradient(circle, rgba(127,231,242,.16), transparent 60%);
+      transform: translate(20px,-12px);
+      opacity:.65;
+      pointer-events:none;
+      animation: sideGlow 7.4s ease-in-out infinite;
+    }
+    @keyframes sideGlow{
+      0%,100%{ transform: translate(20px,-12px) scale(1); opacity:.55; }
+      50%{ transform: translate(-18px, 18px) scale(1.06); opacity:.85; }
+    }
+    .side-card h3, .side-card p{ position:relative; z-index:1; }
+    .side-card p b{ color: var(--text); }
+
+    /* Services */
+    .services-grid{
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .service-box{
+      padding:16px;
+      border-radius: var(--radius);
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      transition: transform .2s ease, border-color .2s ease, background .2s ease, box-shadow .2s ease;
+      position:relative;
+      overflow:hidden;
+    }
+    .service-box::after{
+      content:"";
+      position:absolute; inset:-60%;
+      background: radial-gradient(circle, rgba(255,204,51,.16), transparent 60%);
+      opacity:0;
+      transition: opacity .25s ease;
+      pointer-events:none;
+    }
+    .service-box:hover{
+      transform: translateY(-3px);
+      border-color: rgba(255,255,255,.22);
+      background: rgba(255,255,255,.065);
+      box-shadow: 0 18px 44px rgba(0,0,0,.22), 0 0 22px rgba(255,204,51,.08);
+    }
+    .service-box:hover::after{ opacity:.7; }
+    .service-head{ display:flex; gap:12px; align-items:center; }
+    .icon{
+      width:44px;height:44px;border-radius:14px;
+      background: rgba(56,198,217,.10);
+      border:1px solid rgba(56,198,217,.24);
+      display:grid; place-items:center;
+      flex:0 0 auto;
+    }
+    .service-box h3{ font-size:16px; }
+    .service-box ul{
+      margin: 10px 0 0 0;
+      padding: 0;
+      list-style: none;
+      color: var(--muted);
+      font-size:14px;
+      position:relative;
+      z-index:1;
+    }
+    .service-box li{ display:flex; gap:10px; margin: 8px 0; }
+    .bullet{
+      width:10px;height:10px;border-radius:999px;
+      background: rgba(255,204,51,.95);
+      box-shadow: 0 0 0 6px rgba(255,204,51,.10);
+      margin-top: 6px;
+      flex:0 0 auto;
+    }
+
+    /* Package size selector */
+    .size-selector{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:space-between;
+      padding: 14px;
+      border-radius: 18px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.05);
+      position:relative;
+      overflow:hidden;
+    }
+    .size-selector::before{
+      content:"";
+      position:absolute; inset:-80% -60%;
+      background: radial-gradient(circle, rgba(213,49,49,.16), transparent 62%);
+      transform: translate(24px,-10px);
+      opacity:.55;
+      pointer-events:none;
+    }
+    .size-left{ min-width:0; position:relative; z-index:1; }
+    .size-left b{ display:block; }
+    .size-left span{ color: var(--muted); font-size:14px; display:block; margin-top:4px; }
+
+    .size-tabs{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      position:relative;
+      z-index:1;
+    }
+    .tab{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 12px;
+      border-radius: 16px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(7,26,43,.35);
+      cursor:pointer;
+      user-select:none;
+      transition: transform .15s ease, border-color .15s ease, background .15s ease, box-shadow .2s ease;
+      font-weight:950;
+      color: rgba(255,255,255,.88);
+    }
+    .tab:hover{
+      transform: translateY(-1px);
+      border-color: rgba(255,255,255,.24);
+      background: rgba(255,255,255,.06);
+      box-shadow: 0 10px 24px rgba(0,0,0,.18);
+    }
+    .tab.active{
+      border-color: rgba(255,204,51,.55);
+      background: linear-gradient(135deg, rgba(255,204,51,.20), rgba(255,255,255,.04));
+      box-shadow: 0 14px 34px rgba(0,0,0,.20), 0 0 18px rgba(255,204,51,.12);
+    }
+    .tab svg{ opacity:.92; }
+
+    /* Packages grid: PC 4 columns, tablet/mobile 2 columns */
+    .packages-grid{
+      display:grid;
+      grid-template-columns: repeat(4, minmax(0,1fr));
+      gap:14px;
+      margin-top: 14px;
+    }
+    .package{
+      padding:16px;
+      border-radius: var(--radius);
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      position:relative;
+      overflow:hidden;
+      transition: transform .2s ease, border-color .2s ease, background .2s ease, box-shadow .2s ease;
+      min-height: 172px;
+    }
+    .package::after{
+      content:"";
+      position:absolute; inset:-70% -60%;
+      background: radial-gradient(circle, rgba(127,231,242,.14), transparent 60%);
+      opacity:0;
+      transition: opacity .25s ease;
+      pointer-events:none;
+    }
+    .package:hover{
+      transform: translateY(-3px);
+      border-color: rgba(255,255,255,.22);
+      background: rgba(255,255,255,.065);
+      box-shadow: 0 18px 44px rgba(0,0,0,.22), 0 0 26px rgba(127,231,242,.09);
+    }
+    .package:hover::after{ opacity:.85; }
+
+    .pkg-tag{
+      position:absolute;
+      right: 12px;
+      top: 12px;
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:1100;
+      color:#1a1a1a;
+      background: rgba(255,204,51,.95);
+      border: 1px solid rgba(255,204,51,.45);
+      z-index:2;
+    }
+    .package h3{ font-size:16px; margin-top: 0; position:relative; z-index:1; }
+    .package p{ margin-top: 6px; font-size:14px; position:relative; z-index:1; }
+    .price-badge{
+      margin-top: 12px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      font-weight:1100;
+      position:relative;
+      z-index:1;
+    }
+    .price-badge span{ color:var(--muted); font-weight:900; }
+    .price{ font-size:18px; letter-spacing:-.2px; }
+
+    /* Diverse arbeid */
+    .diverse{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .list{
+      margin: 10px 0 0 0;
+      padding: 0;
+      list-style:none;
+      color: var(--muted);
+      font-size:14px;
+    }
+    .list li{
+      display:flex; justify-content:space-between; gap:12px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      margin-top: 10px;
+      font-weight:950;
+    }
+    .list li em{ font-style:normal; color: var(--muted); font-weight:850; }
+
+    /* Gallery */
+    .gallery{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 12px;
+    }
+    .shot{
+      border-radius: 18px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.03);
+      position:relative;
+      min-height: 200px;
+      box-shadow: var(--shadowSoft);
+    }
+    .shot img{
+      width:100%; height:100%; display:block;
+      object-fit:cover;
+      transform: scale(1.01);
+      transition: transform .35s ease, filter .35s ease;
+      filter: saturate(1.02) contrast(1.03);
+    }
+    .shot:hover img{ transform: scale(1.06); filter: saturate(1.06) contrast(1.06); }
+    .cap{
+      position:absolute;
+      left:12px; bottom:12px;
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(7,26,43,.70);
+      backdrop-filter: blur(10px);
+      color: rgba(255,255,255,.82);
+      font-weight:1100;
+      font-size:12px;
+      display:flex; align-items:center; gap:10px;
+    }
+    .cap i{
+      width:8px;height:8px;border-radius:999px;
+      background: var(--cyan2);
+      box-shadow: 0 0 0 6px rgba(127,231,242,.10);
+      display:inline-block;
+    }
+    .w6{ grid-column: span 6; }
+
+    /* History */
+    .history{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      align-items: stretch;
+    }
+    .history-photo{
+      border-radius: 18px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.03);
+      min-height: 280px;
+      box-shadow: var(--shadowSoft);
+    }
+    .history-photo img{ width:100%; height:100%; object-fit:cover; display:block; }
+    .history-text{ padding:18px; position:relative; overflow:hidden; }
+    .history-text::after{
+      content:"";
+      position:absolute; inset:-70% -60%;
+      background: radial-gradient(circle, rgba(255,204,51,.14), transparent 62%);
+      opacity:.65;
+      transform: translate(30px,-18px);
+      pointer-events:none;
+    }
+    .history-text h3, .history-text p, .history-text .btn{ position:relative; z-index:1; }
+
+    /* Reviews */
+    .reviews{
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 14px;
+    }
+    .review{
+      padding:16px;
+      border-radius: var(--radius);
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      position:relative;
+      overflow:hidden;
+      box-shadow: var(--shadowSoft);
+    }
+    .review::after{
+      content:"";
+      position:absolute; inset:-70% -60%;
+      background: radial-gradient(circle, rgba(213,49,49,.12), transparent 62%);
+      opacity:.55;
+      transform: translate(22px,-12px);
+      pointer-events:none;
+    }
+    .review-top{
+      display:flex; justify-content:space-between; gap:10px; align-items:flex-start;
+      margin-bottom:10px;
+      position:relative;
+      z-index:1;
+    }
+    .review-name{ font-weight:1100; }
+    .stars{ color: var(--yellow); letter-spacing:2px; font-size:14px; white-space:nowrap; }
+    blockquote{
+      margin:0;
+      color: rgba(255,255,255,.84);
+      font-weight:650;
+      line-height:1.5;
+      position:relative;
+      z-index:1;
+    }
+    .review-meta{ margin-top:10px; color: var(--muted); font-size:13px; position:relative; z-index:1; }
+
+    /* Map */
+    .map{
+      border-radius: 18px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.03);
+      height: 380px;
+      box-shadow: var(--shadowSoft);
+    }
+    .map iframe{ width:100%; height:100%; border:0; }
+
+    /* Footer */
+    footer{
+      padding: 30px 0 42px 0;
+      border-top: 1px solid rgba(255,255,255,.12);
+      background: rgba(7,26,43,.50);
+    }
+    .footer-inner{
+      display:flex; gap:12px; flex-wrap:wrap;
+      align-items:center; justify-content:space-between;
+      color: var(--muted);
+      font-size:14px;
+    }
+    .footer-inner a{ color: var(--yellow2); font-weight:1100; }
+
+    /* Responsive */
+    @media (max-width: 980px){
+      .nav-links{ display:none; }
+      .hamburger{ display:flex; }
+
+      .hero-wrap{ grid-template-columns: 1fr; }
+      .services-grid{ grid-template-columns: 1fr; }
+      .packages-grid{ grid-template-columns: repeat(2, minmax(0,1fr)); }
+      .diverse{ grid-template-columns: 1fr; }
+      .history{ grid-template-columns: 1fr; }
+      .reviews{ grid-template-columns: 1fr; }
+
+      .map{ height: 320px; }
+      .w6{ grid-column: span 12; }
+      .shot{ min-height: 220px; }
+    }
+    @media (min-width: 981px) and (max-width: 1200px){
+      .packages-grid{ grid-template-columns: repeat(2, minmax(0,1fr)); }
+    }
+
+    /* ---------- Brand colors: dark navy base + light blue + silver/white ---------- */
+    :root{
+      --navyDeep:#061a2b;     /* mørk blå (sidebakgrunn) */
+      --navyLogo:#0b2740;     /* logo-blå (secondary bg) */
+      --iceBlue:#7fe7f2;      /* lys blå */
+      --silver:#d7dde6;       /* hvitt/sølv */
+      --silver2:rgba(215,221,230,.72);
+
+      /* Gold is reserved for offers/prices only */
+      --gold:#ffcc33;
+      --gold2:#ffd86a;
+    }
+
+    /* Force page background closer to logo navy */
+    body{
+      background:
+        radial-gradient(1100px 650px at 20% 0%, rgba(127,231,242,.10), transparent 55%),
+        radial-gradient(900px 520px at 90% 5%, rgba(215,221,230,.06), transparent 52%),
+        linear-gradient(180deg, var(--navyDeep), var(--navyLogo));
+    }
+
+    /* Remove accidental gold usage outside offers */
+    .btn.primary:not(.offer-only),
+    .pkg-tag:not(.offer-only),
+    .stars{
+      /* keep existing look but ensure stars are not gold unless you want them.
+         If you want stars still gold, delete this block. */
+    }
+
+    /* ---------- Header logo: bigger + no name/address ---------- */
+    .brand-logo-only{ align-items:center; }
+    .logo-wrap{
+      display:flex;
+      align-items:center;
+      gap:0;
+      width: auto;
+      height: auto;
+      flex: 0 0 auto;
+      min-height: 68px;
+      padding: 10px 12px;
+      border-radius: 18px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(6,26,43,.35);
+      backdrop-filter: blur(10px);
+      position:relative;
+      overflow:hidden;
+      box-shadow: 0 12px 26px rgba(0,0,0,.22);
+    }
+    .logo-img{
+      height: 58px;            /* desktop */
+      width: auto;
+      display:block;
+      filter: drop-shadow(0 10px 18px rgba(0,0,0,.25));
+    }
+    @media (max-width: 980px){
+      .logo-wrap{
+        min-height: 76px;
+        padding: 12px 14px;
+      }
+      .logo-img{ height: 64px; } /* litt større på mobil, siden du ønsket større logo */
+    }
+
+    /* Subtle live glow behind logo */
+    .logo-wrap::before{
+      content:"";
+      position:absolute;
+      inset:-60% -50%;
+      background:
+        radial-gradient(circle, rgba(127,231,242,.18), transparent 60%),
+        radial-gradient(circle, rgba(215,221,230,.10), transparent 65%);
+      transform: translate(18px,-10px);
+      opacity:.75;
+      animation: logoAura 6.5s ease-in-out infinite;
+      pointer-events:none;
+    }
+    @keyframes logoAura{
+      0%,100%{ transform: translate(18px,-10px) scale(1); opacity:.55; }
+      50%{ transform: translate(-12px,14px) scale(1.06); opacity:.85; }
+    }
+
+    /* Sparkles layer */
+    .logo-spark{
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+    }
+
+    /* individual sparkle elements (created by JS) */
+    .sparkle{
+      position:absolute;
+      width:10px;
+      height:10px;
+      transform: rotate(0deg) scale(.5);
+      opacity:0;
+      filter: drop-shadow(0 0 10px rgba(215,221,230,.35));
+      animation: sparklePop 1.6s ease-in-out forwards;
+    }
+    .sparkle::before, .sparkle::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background: radial-gradient(circle, rgba(255,255,255,.95), rgba(215,221,230,.65) 55%, transparent 62%);
+      clip-path: polygon(50% 0%, 58% 40%, 100% 50%, 58% 60%, 50% 100%, 42% 60%, 0% 50%, 42% 40%);
+    }
+    .sparkle::after{
+      transform: rotate(45deg) scale(.88);
+      opacity:.85;
+    }
+    @keyframes sparklePop{
+      0%{ opacity:0; transform: rotate(0deg) scale(.45); }
+      20%{ opacity:1; transform: rotate(12deg) scale(1); }
+      70%{ opacity:.9; transform: rotate(42deg) scale(.92); }
+      100%{ opacity:0; transform: rotate(70deg) scale(.55); }
+    }
+
+    /* ---------- Gold ONLY on campaign/offer/prices ---------- */
+    .xmas-price,
+    .xmas-title,
+    .btn.primary,
+    .pkg-tag{
+      /* SETAEI lar disse være “gull” fordi de er kampanje/pris/CTA */
+      color: inherit;
+    }
+
+    /* Restrict gold usage:
+       - Buttons primary keep gold (CTA)
+       - Offer price keep gold
+       - Package tags keep gold only if they are offer badges
+    */
+    .pkg-tag{ background: rgba(255,204,51,.95); border-color: rgba(255,204,51,.45); color:#1a1a1a; }
+    .stars{ color: rgba(215,221,230,.78); } /* reviews stars in silver/white */
+      /* 2026-09: julepynt av utenom sesong */
+    .snow,.xmas-tree{display:none!important}
+    .site-links{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:10px}
+    .site-links a{color:var(--muted)}.site-links a:hover{color:var(--text)}
+  </style>
+</head>
+
+<body>
+<div style="position:sticky;top:0;z-index:9999;background:#ffcc33;color:#1a1a1a;font:600 13px system-ui;text-align:center;padding:6px">FORHÅNDSVISNING — ikke publisert. Ekte side: bilvaskexpress.no</div>
+  <header class="nav">
+    <div class="container nav-inner">
+      <div class="brand brand-logo-only">
+        <a href="#top" class="logo-wrap" aria-label="Til toppen">
+          <img src="/tilbud/bilvask/forhandsvisning/img/logo.png" alt="Lillestrøm Bilvask Express" class="logo-img" />
+          <span class="logo-spark" aria-hidden="true"></span>
+        </a>
+      </div>
+
+      <nav class="nav-links" aria-label="Hovedmeny">
+        <a href="#tjenester">Tjenester</a>
+        <a href="#pakker">Pakker</a>
+        <a href="#diverse">Diverse arbeid</a>
+        <a href="#bilder">Bilder</a>
+        <a href="#historikk">Historikk</a>
+        <a href="#tilbakemeldinger">Tilbakemeldinger</a>
+        <a href="#kart">Kart</a>
+        <a href="#kontakt">Kontakt</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a class="btn primary" href="bestill.html" aria-label="Bestill på nett">Bestill</a>
+        <button class="hamburger" id="hamburger" aria-label="Åpne meny" aria-expanded="false">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M4 7h16M4 12h16M4 17h16" stroke="rgba(255,255,255,.92)" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <a href="#tjenester">Tjenester</a>
+    <a href="#pakker">Pakker</a>
+    <a href="#diverse">Diverse arbeid</a>
+    <a href="#bilder">Bilder</a>
+    <a href="#historikk">Historikk</a>
+    <a href="#tilbakemeldinger">Tilbakemeldinger</a>
+    <a href="#kart">Kart</a>
+    <a href="#kontakt">Kontakt</a>
+    <a href="bestill.html">Bestill på nett</a>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero" id="top">
+    <div class="hero-bg" id="heroBg"></div>
+    <div class="hero-glow"></div>
+    <div class="snow" aria-hidden="true"></div>
+    <div class="xmas-tree" aria-hidden="true"></div>
+
+    <div class="container hero-wrap">
+      <div class="card hero-main soft reveal">
+        <div class="pill"><span class="dot"></span> Rett ved Coop • Perfekt mens du handler</div>
+
+        <h1 style="margin-top:12px">Bilvask i Lillestrøm som gir synlig resultat</h1>
+        <p>
+          Skånsom vask, grundig innvendig og premium behandling når du vil ha det ekstra pent. Enkelt å bestille – ring SETAEI.
+        </p>
+
+        <div class="hero-actions">
+          <a class="btn primary" href="bestill.html">Bestill</a>
+          <a class="btn" href="#pakker">Se pakker</a>
+          <a class="btn" href="https://maps.app.goo.gl/aUYi53CLXqsCJw5a9" target="_blank" rel="noopener">Finn veien</a>
+        </div>
+
+        <div class="xmas-offer reveal delay-1">
+          <div class="xmas-left">
+            <div class="xmas-badge" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                <path d="M12 2c2 3 2 7 0 10-2-3-2-7 0-10Z" stroke="rgba(255,255,255,.92)" stroke-width="2" stroke-linejoin="round"/>
+                <path d="M6 14c2.5 2 9.5 2 12 0" stroke="rgba(255,255,255,.92)" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div style="min-width:0">
+              <div class="xmas-title">Tilbud</div>
+              <div class="xmas-sub">Utvendig bilvask fra</div>
+            </div>
+          </div>
+          <div class="xmas-price">199,-</div>
+        </div>
+      </div>
+
+      <div class="card pad soft side-card reveal delay-1">
+        <h3>Åpningstider</h3>
+        <p><b>Man–Lør:</b> 08:00 – 19:00</p>
+        <p style="margin-top:12px"><b>Adresse:</b> Voldgata 58, 2000 Lillestrøm</p>
+        <p style="margin-top:12px"><b>Bestilling:</b> <a href="tel:+4791926901" style="color:var(--yellow2); font-weight:1100">919 26 901</a></p>
+        <div class="hero-actions" style="margin-top:12px">
+          <a class="btn primary" href="bestill.html">Bestill</a>
+          <a class="btn" href="#kart">Se kart</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider" aria-hidden="true">
+      <svg viewBox="0 0 1440 64" preserveAspectRatio="none">
+        <!-- roofline -->
+        <path class="roof" d="M0,36 L160,30 L280,18 L420,26 L560,16 L720,28 L860,20 L1000,30 L1140,18 L1280,28 L1440,22" />
+        <!-- accent dashed -->
+        <path class="accent" d="M0,40 L160,34 L280,22 L420,30 L560,20 L720,32 L860,24 L1000,34 L1140,22 L1280,32 L1440,26" />
+        <!-- wave -->
+        <path class="wave" d="M0,48 C160,62 320,34 480,46 C640,58 800,36 960,46 C1120,56 1280,40 1440,50 L1440,64 L0,64 Z" />
+      </svg>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="tjenester">
+    <div class="container">
+      <div class="section-title">
+        <div class="reveal">
+          <h2>Tjenester</h2>
+          <p>Velg det som passer deg – fra rask utvendig vask til full behandling med rens og polering.</p>
+        </div>
+        <a class="btn primary reveal delay-1" href="bestill.html">Bestill</a>
+      </div>
+
+      <div class="services-grid">
+        <div class="service-box reveal">
+          <div class="service-head">
+            <div class="icon" aria-hidden="true" style="background:rgba(255,204,51,.10); border-color:rgba(255,204,51,.25);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path d="M4 14c2-6 14-6 16 0" stroke="rgba(255,255,255,.92)" stroke-width="2" stroke-linecap="round"/>
+                <path d="M6 14v4M18 14v4" stroke="rgba(255,255,255,.92)" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div>
+              <h3>Utvendig vask</h3>
+              <p style="margin:2px 0 0 0;">Skånsom og effektiv</p>
+            </div>
+          </div>
+          <ul>
+            <li><span class="bullet"></span> Skum, sjampo og felgvask</li>
+            <li><span class="bullet"></span> For en “nyvasket” finish</li>
+            <li><span class="bullet"></span> Populært før helg og høytider</li>
+          </ul>
+        </div>
+
+        <div class="service-box reveal delay-1">
+          <div class="service-head">
+            <div class="icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path d="M6 19c4 2 8 2 12 0" stroke="rgba(255,255,255,.92)" stroke-width="2" stroke-linecap="round"/>
+                <path d="M8 10c.8-3 2.6-5 4-5s3.2 2 4 5" stroke="rgba(255,255,255,.92)" stroke-width="2" stroke-linecap="round"/>
+                <path d="M12 4v2" stroke="rgba(255,255,255,.92)" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div>
+              <h3>Innvendig vask & rens</h3>
+              <p style="margin:2px 0 0 0;">Ren kupé du merker</p>
+            </div>
+          </div>
+          <ul>
+            <li><span class="bullet"></span> Støvsuging, matter og vinduer</li>
+            <li><span class="bullet"></span> Rens av seter/tepper ved behov</li>
+            <li><span class="bullet"></span> Perfekt for familiebil og pendlerbil</li>
+          </ul>
+        </div>
+
+        <div class="service-box reveal delay-2">
+          <div class="service-head">
+            <div class="icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path d="M12 2l3 7 7 3-7 3-3 7-3-7-7-3 7-3 3-7z" stroke="rgba(255,255,255,.92)" stroke-width="2" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div>
+              <h3>Polering</h3>
+              <p style="margin:2px 0 0 0;">Glans og beskyttelse</p>
+            </div>
+          </div>
+          <ul>
+            <li><span class="bullet"></span> Lakkrens, polering og voks</li>
+            <li><span class="bullet"></span> Bedre glød i fargen</li>
+            <li><span class="bullet"></span> Anbefalt før salg eller sesongskifte</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider" aria-hidden="true">
+      <svg viewBox="0 0 1440 64" preserveAspectRatio="none">
+        <path class="roof" d="M0,30 L220,18 L360,28 L520,16 L700,26 L860,18 L1040,30 L1200,20 L1440,28" />
+        <path class="accent" d="M0,36 L220,24 L360,34 L520,22 L700,32 L860,24 L1040,36 L1200,26 L1440,34" />
+        <path class="wave" d="M0,46 C180,58 320,34 520,46 C720,58 920,36 1120,46 C1280,54 1360,42 1440,48 L1440,64 L0,64 Z" />
+      </svg>
+    </div>
+  </section>
+
+  <!-- PACKAGES -->
+  <section id="pakker">
+    <div class="container">
+      <div class="section-title">
+        <div class="reveal">
+          <h2>Pakker</h2>
+          <p>Velg biltype og se prisene med en gang. Bestill på telefon – så finner SETAEI riktig pakke på 1 minutt. <a href="/tilbud/bilvask/forhandsvisning/priser/" style="color:var(--cyan2)">Se full prisliste →</a></p>
+        </div>
+        <a class="btn primary reveal delay-1" href="bestill.html">Bestill</a>
+      </div>
+
+      <div class="size-selector reveal">
+        <div class="size-left">
+          <b>Velg biltype</b>
+          <span>Sedan, SUV eller varebil</span>
+        </div>
+
+        <div class="size-tabs" role="tablist" aria-label="Velg biltype">
+          <button class="tab active" data-size="sedan" type="button" role="tab" aria-selected="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+              <path d="M4 14c2-6 14-6 16 0" stroke="rgba(255,255,255,.92)" stroke-width="2" stroke-linecap="round"/>
+              <path d="M6 14v4M18 14v4" stroke="rgba(255,255,255,.92)" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            Sedan
+          </button>
+          <button class="tab" data-size="suv" type="button" role="tab" aria-selected="false">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+              <path d="M5 14c2.2-6 11.8-6 14 0" stroke="rgba(255,255,255,.92)" stroke-width="2" stroke-linecap="round"/>
+              <path d="M7 14v5M17 14v5" stroke="rgba(255,255,255,.92)" stroke-width="2" stroke-linecap="round"/>
+              <path d="M8 10h8" stroke="rgba(255,255,255,.92)" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            SUV
+          </button>
+          <button class="tab" data-size="varebil" type="button" role="tab" aria-selected="false">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+              <path d="M3 14c1.8-5 12.2-5 14 0" stroke="rgba(255,255,255,.92)" stroke-width="2" stroke-linecap="round"/>
+              <path d="M6 14v5M16 14v5" stroke="rgba(255,255,255,.92)" stroke-width="2" stroke-linecap="round"/>
+              <path d="M17 12h4v7h-4" stroke="rgba(255,255,255,.92)" stroke-width="2" stroke-linejoin="round"/>
+            </svg>
+            Varebil
+          </button>
+        </div>
+      </div>
+
+      <div class="packages-grid">
+        <article class="package reveal" data-sedan="350" data-suv="400" data-varebil="500">
+          <div class="pkg-tag">Populær</div>
+          <h3>Utvendig vask</h3>
+          <p>Skum, sjampo og felgvask</p>
+          <div class="price-badge"><span>Pris</span><div class="price">350,-</div></div>
+        </article>
+
+        <article class="package reveal delay-1" data-sedan="350" data-suv="400" data-varebil="400">
+          <h3>Innvendig vask</h3>
+          <p>Støvsuging, vinduer, matter, dashbord</p>
+          <div class="price-badge"><span>Pris</span><div class="price">350,-</div></div>
+        </article>
+
+        <article class="package reveal delay-2" data-sedan="600" data-suv="700" data-varebil="750">
+          <h3>Utvendig &amp; innvendig</h3>
+          <p>Komplett vask – godt totalresultat</p>
+          <div class="price-badge"><span>Pris</span><div class="price">600,-</div></div>
+        </article>
+
+        <article class="package reveal delay-3" data-sedan="650" data-suv="750" data-varebil="800">
+          <h3>Supervask</h3>
+          <p>Understell, avfetting, felgrens + mer</p>
+          <div class="price-badge"><span>Pris</span><div class="price">650,-</div></div>
+        </article>
+
+        <article class="package reveal" data-sedan="1100" data-suv="1200" data-varebil="1400">
+          <h3>Dekk &amp; vask</h3>
+          <p>Dekkskift + vaskepakke</p>
+          <div class="price-badge"><span>Pris</span><div class="price">1100,-</div></div>
+        </article>
+
+        <article class="package reveal delay-1" data-sedan="2000" data-suv="2200" data-varebil="2500">
+          <h3>Polering</h3>
+          <p>Lakkrens, polering og voks</p>
+          <div class="price-badge"><span>Pris</span><div class="price">2000,-</div></div>
+        </article>
+
+        <article class="package reveal delay-2" data-sedan="2000" data-suv="2200" data-varebil="2500">
+          <h3>Innvendig rens</h3>
+          <p>Rens av seter/tepper + innvendig</p>
+          <div class="price-badge"><span>Pris</span><div class="price">2000,-</div></div>
+        </article>
+
+        <article class="package reveal delay-3" data-sedan="3500" data-suv="4000" data-varebil="4000">
+          <div class="pkg-tag">Full</div>
+          <h3>Fullpakke</h3>
+          <p>Polering, motor/understell, rens + vask</p>
+          <div class="price-badge"><span>Pris</span><div class="price">3500,-</div></div>
+        </article>
+      </div>
+
+      <div style="margin-top:16px" class="reveal">
+        <a class="btn primary" href="bestill.html">Bestill</a>
+      </div>
+    </div>
+
+    <div class="divider" aria-hidden="true">
+      <svg viewBox="0 0 1440 64" preserveAspectRatio="none">
+        <path class="roof" d="M0,28 L180,22 L340,30 L520,18 L680,26 L860,20 L1020,28 L1200,20 L1440,26" />
+        <path class="accent" d="M0,34 L180,28 L340,36 L520,24 L680,32 L860,26 L1020,34 L1200,26 L1440,32" />
+        <path class="wave" d="M0,46 C180,58 360,34 540,46 C720,58 900,36 1080,46 C1260,56 1350,40 1440,50 L1440,64 L0,64 Z" />
+      </svg>
+    </div>
+  </section>
+
+  <!-- DIVERSE -->
+  <section id="diverse">
+    <div class="container">
+      <div class="section-title">
+        <div class="reveal">
+          <h2>Diverse arbeid</h2>
+          <p>Tilleggstjenester når du vil løfte resultatet eller løse et konkret behov.</p>
+        </div>
+        <a class="btn primary reveal delay-1" href="bestill.html">Bestill</a>
+      </div>
+
+      <div class="diverse">
+        <div class="card pad soft reveal">
+          <h3>Tillegg</h3>
+          <ul class="list">
+            <li><em>Voks</em> <span>50,-</span></li>
+            <li><em>Understellvask</em> <span>100,-</span></li>
+            <li><em>Felgrens</em> <span>100,-</span></li>
+            <li><em>Dekkskift (fra)</em> <span>400,-</span></li>
+          </ul>
+        </div>
+
+        <div class="card pad soft reveal delay-1">
+          <h3>Tillegg</h3>
+          <ul class="list">
+            <li><em>Avfetting</em> <span>100,-</span></li>
+            <li><em>Dekkvask</em> <span>100,-</span></li>
+            <li><em>Motorvask</em> <span>300,-</span></li>
+            <li><em>Lappe dekk</em> <span>300,-</span></li>
+          </ul>
+          <p style="margin-top:12px; font-size:13px;">
+            Fjerning av hundehår etter avtale. Feil med motor er på eget ansvar.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider" aria-hidden="true">
+      <svg viewBox="0 0 1440 64" preserveAspectRatio="none">
+        <path class="roof" d="M0,30 L200,18 L380,28 L560,16 L740,28 L920,18 L1100,30 L1280,20 L1440,28" />
+        <path class="accent" d="M0,36 L200,24 L380,34 L560,22 L740,34 L920,24 L1100,36 L1280,26 L1440,34" />
+        <path class="wave" d="M0,46 C200,58 360,34 560,46 C760,58 920,36 1120,46 C1280,54 1360,42 1440,48 L1440,64 L0,64 Z" />
+      </svg>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="bilder">
+    <div class="container">
+      <div class="section-title">
+        <div class="reveal">
+          <h2>Bilder</h2>
+          <p>Se vaskehall, venterom og beliggenheten – Coop ligger rett over veien.</p>
+        </div>
+      </div>
+
+      <div class="gallery">
+        <div class="shot w6 reveal">
+          <img src="/tilbud/bilvask/forhandsvisning/img/hall.jpg" alt="Vaskehall – bilvask i Lillestrøm" />
+          <div class="cap"><i></i> Vaskehall</div>
+        </div>
+        <div class="shot w6 reveal delay-1">
+          <img src="/tilbud/bilvask/forhandsvisning/img/venterom.jpg" alt="Venterom – bilvask i Lillestrøm" />
+          <div class="cap"><i></i> Venterom</div>
+        </div>
+        <div class="shot w6 reveal delay-2">
+          <img src="/tilbud/bilvask/forhandsvisning/img/fasade.jpg" alt="Fasade – Bilvask Express AS i Lillestrøm" />
+          <div class="cap"><i></i> Fasade</div>
+        </div>
+        <div class="shot w6 reveal delay-3">
+          <img src="/tilbud/bilvask/forhandsvisning/img/coop.jpg" alt="Coop rett over veien fra bilvasken" />
+          <div class="cap"><i></i> Coop rett over veien</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider" aria-hidden="true">
+      <svg viewBox="0 0 1440 64" preserveAspectRatio="none">
+        <path class="roof" d="M0,28 L160,20 L340,30 L520,18 L700,28 L860,18 L1040,30 L1200,22 L1440,28" />
+        <path class="accent" d="M0,34 L160,26 L340,36 L520,24 L700,34 L860,24 L1040,36 L1200,28 L1440,34" />
+        <path class="wave" d="M0,46 C160,62 320,34 520,46 C720,58 900,36 1080,46 C1260,56 1350,40 1440,50 L1440,64 L0,64 Z" />
+      </svg>
+    </div>
+  </section>
+
+  <!-- HISTORY (before reviews) -->
+  <section id="historikk">
+    <div class="container">
+      <div class="section-title">
+        <div class="reveal">
+          <h2>Historikk</h2>
+          <p>Tilbake med ny profil og tydeligere opplevelse – samme fokus på kvalitet.</p>
+        </div>
+        <a class="btn primary reveal delay-1" href="bestill.html">Bestill</a>
+      </div>
+
+      <div class="history">
+        <div class="history-photo reveal">
+          <img src="/tilbud/bilvask/forhandsvisning/img/brann.jpg" alt="Historisk bilde av bilvasken etter brannen" />
+        </div>
+        <div class="card history-text soft reveal delay-1">
+          <h3>Ny start i blått</h3>
+          <p>
+            Etter en periode med stengt drift er bilvasken tilbake – nå med ny, blå profil. Målet er enkelt:
+            tydelige pakker, rask gjennomføring og et resultat du ser med en gang.
+          </p>
+          <div style="margin-top:14px">
+            <a class="btn primary" href="bestill.html">Bestill</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider" aria-hidden="true">
+      <svg viewBox="0 0 1440 64" preserveAspectRatio="none">
+        <path class="roof" d="M0,30 L220,18 L380,28 L560,16 L740,26 L920,18 L1100,30 L1280,20 L1440,28" />
+        <path class="accent" d="M0,36 L220,24 L380,34 L560,22 L740,32 L920,24 L1100,36 L1280,26 L1440,34" />
+        <path class="wave" d="M0,46 C220,58 360,34 560,46 C760,58 920,36 1120,46 C1280,54 1360,42 1440,48 L1440,64 L0,64 Z" />
+      </svg>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section id="tilbakemeldinger">
+    <div class="container">
+      <div class="section-title">
+        <div class="reveal">
+          <h2>Tilbakemeldinger</h2>
+          <p>Dette sier kundene om bilvasken i Lillestrøm.</p>
+        </div>
+        <a class="btn reveal delay-1" href="https://maps.app.goo.gl/aUYi53CLXqsCJw5a9" target="_blank" rel="noopener">Se alle</a>
+      </div>
+
+      <div class="reviews">
+        <div class="review reveal">
+          <div class="review-top">
+            <div>
+              <div class="review-name">Georg Mikkelsen</div>
+              <div class="review-meta">★★★★★ • 5/5</div>
+            </div>
+            <div class="stars">★★★★★</div>
+          </div>
+          <blockquote>Fantastisk service og kvalitet! Bilen ble skinnende ren, og opplevelsen var profesjonell fra start til slutt.</blockquote>
+          <div class="review-meta">Anbefales.</div>
+        </div>
+
+        <div class="review reveal delay-1">
+          <div class="review-top">
+            <div>
+              <div class="review-name">Håvard Siegel Haukeborg</div>
+              <div class="review-meta">★★★★★ • 5/5</div>
+            </div>
+            <div class="stars">★★★★★</div>
+          </div>
+          <blockquote>Tar vask, dekkskift og detailing. Effektivt og raskt. Prisene er helt innafor for tjenesten de yter.</blockquote>
+          <div class="review-meta">Har brukt stedet i flere år.</div>
+        </div>
+
+        <div class="review reveal delay-2">
+          <div class="review-top">
+            <div>
+              <div class="review-name">Christian Borlaug</div>
+              <div class="review-meta">★★★★★ • 5/5</div>
+            </div>
+            <div class="stars">★★★★★</div>
+          </div>
+          <blockquote>Fikk “Supervask” med vask av understell og rens. Også gratis kaffe og en behagelig ventesone.</blockquote>
+          <div class="review-meta">Tusen takk.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider" aria-hidden="true">
+      <svg viewBox="0 0 1440 64" preserveAspectRatio="none">
+        <path class="roof" d="M0,28 L180,22 L340,30 L520,18 L680,26 L860,20 L1020,28 L1200,20 L1440,26" />
+        <path class="accent" d="M0,34 L180,28 L340,36 L520,24 L680,32 L860,26 L1020,34 L1200,26 L1440,32" />
+        <path class="wave" d="M0,46 C180,58 360,34 540,46 C720,58 900,36 1080,46 C1260,56 1350,40 1440,50 L1440,64 L0,64 Z" />
+      </svg>
+    </div>
+  </section>
+
+  <!-- MAP -->
+  <section id="kart">
+    <div class="container">
+      <div class="section-title">
+        <div class="reveal">
+          <h2>Kart</h2>
+          <p>Voldgata 58, 2000 Lillestrøm – enkel adkomst og lett å finne.</p>
+        </div>
+        <a class="btn reveal delay-1" href="https://maps.app.goo.gl/aUYi53CLXqsCJw5a9" target="_blank" rel="noopener">Åpne i Google Maps</a>
+      </div>
+
+      <div class="map card reveal">
+        <iframe
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          src="https://www.google.com/maps?q=Voldgata%2058%2C%202000%20Lillestr%C3%B8m&z=16&output=embed"
+          title="Kart - Bilvask Express AS">
+        </iframe>
+      </div>
+    </div>
+
+    <div class="divider" aria-hidden="true">
+      <svg viewBox="0 0 1440 64" preserveAspectRatio="none">
+        <path class="roof" d="M0,30 L200,18 L380,28 L560,16 L740,28 L920,18 L1100,30 L1280,20 L1440,28" />
+        <path class="accent" d="M0,36 L200,24 L380,34 L560,22 L740,34 L920,24 L1100,36 L1280,26 L1440,34" />
+        <path class="wave" d="M0,46 C200,58 360,34 560,46 C760,58 920,36 1120,46 C1280,54 1360,42 1440,48 L1440,64 L0,64 Z" />
+      </svg>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="kontakt">
+    <div class="container">
+      <div class="section-title">
+        <div class="reveal">
+          <h2>Kontakt</h2>
+          <p>Bestill på telefon – SETAEI hjelper deg å velge riktig pakke.</p>
+        </div>
+        <a class="btn primary reveal delay-1" href="bestill.html">Bestill</a>
+      </div>
+
+      <div class="card pad soft reveal">
+        <h3>Bilvask Express AS</h3>
+        <p><b style="color:var(--text)">Telefon:</b> <a href="tel:+4791926901" style="color:var(--yellow2); font-weight:1100;">919 26 901</a></p>
+        <p style="margin-top:10px"><b style="color:var(--text)">Adresse:</b> Voldgata 58, 2000 Lillestrøm</p>
+        <p style="margin-top:10px"><b style="color:var(--text)">Åpent:</b> Man–Lør 08:00 – 19:00</p>
+
+        <div style="margin-top:14px">
+          <a class="btn primary" href="bestill.html">Bestill</a>
+          <a class="btn" href="#top" style="margin-left:8px;">Til toppen</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container footer-inner">
+      <div>© <span id="year"></span> Bilvask Express AS • Voldgata 58, Lillestrøm
+        <nav class="site-links" aria-label="Sider"><a href="/tilbud/bilvask/forhandsvisning/priser/">Priser</a><a href="/tilbud/bilvask/forhandsvisning/utvendig-bilvask/">Utvendig bilvask</a><a href="/tilbud/bilvask/forhandsvisning/innvendig-bilvask/">Innvendig bilvask</a><a href="/tilbud/bilvask/forhandsvisning/supervask/">Supervask</a><a href="/tilbud/bilvask/forhandsvisning/polering/">Polering</a><a href="/tilbud/bilvask/forhandsvisning/bedrift/">Bedriftsavtale</a><a href="/tilbud/bilvask/forhandsvisning/apningstider/">Åpningstider</a><a href="/tilbud/bilvask/forhandsvisning/blogg/">Blogg</a></nav>
+      </div>
+      <div>Levert av <a href="https://setai.no" target="_blank" rel="noopener">SETAEI</a></div>
+    </div>
+  </footer>
+
+  <script>
+    // Year
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Mobile menu
+    const hamburger = document.getElementById("hamburger");
+    const mobileMenu = document.getElementById("mobileMenu");
+    function setMenu(open){
+      hamburger.setAttribute("aria-expanded", String(open));
+      mobileMenu.style.display = open ? "block" : "none";
+      mobileMenu.setAttribute("aria-hidden", String(!open));
+    }
+    hamburger.addEventListener("click", () => {
+      const open = hamburger.getAttribute("aria-expanded") !== "true";
+      setMenu(open);
+    });
+    mobileMenu.querySelectorAll("a").forEach(a => a.addEventListener("click", () => setMenu(false)));
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener("click", (e) => {
+        const id = a.getAttribute("href");
+        if (!id || id === "#") return;
+        const el = document.querySelector(id);
+        if (!el) return;
+        e.preventDefault();
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    });
+
+    // Reveal on scroll
+    (function(){
+      const els = document.querySelectorAll(".reveal");
+      const io = new IntersectionObserver((entries)=>{
+        entries.forEach(entry=>{
+          if(entry.isIntersecting){
+            entry.target.classList.add("in");
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+      els.forEach(el => io.observe(el));
+    })();
+
+    // Hero parallax
+    (function(){
+      const bg = document.getElementById("heroBg");
+      if(!bg) return;
+      let ticking = false;
+      function onScroll(){
+        if(ticking) return;
+        ticking = true;
+        requestAnimationFrame(()=>{
+          const y = window.scrollY || 0;
+          const offset = Math.min(28, y * 0.06);
+          bg.style.setProperty("--heroParallax", offset + "px");
+          ticking = false;
+        });
+      }
+      window.addEventListener("scroll", onScroll, { passive:true });
+      onScroll();
+    })();
+
+    // Logo sparkles
+    (function(){
+      const hosts = document.querySelectorAll(".logo-spark");
+      if(!hosts.length) return;
+      function spawn(host){
+        const spark = document.createElement("span");
+        spark.className = "sparkle";
+        spark.style.left = Math.random() * 80 + 10 + "%";
+        spark.style.top = Math.random() * 60 + 10 + "%";
+        spark.style.animationDelay = (Math.random() * 0.4).toFixed(2) + "s";
+        host.appendChild(spark);
+        setTimeout(()=>spark.remove(), 1800);
+      }
+      hosts.forEach(host=>{
+        spawn(host);
+        setInterval(()=>spawn(host), 1400);
+      });
+    })();
+
+    // Package size selector
+    (function(){
+      const tabs = Array.from(document.querySelectorAll(".tab"));
+      const cards = Array.from(document.querySelectorAll(".package"));
+
+      function setSize(size){
+        tabs.forEach(t=>{
+          const active = t.dataset.size === size;
+          t.classList.toggle("active", active);
+          t.setAttribute("aria-selected", String(active));
+        });
+
+        cards.forEach(c=>{
+          const value = c.dataset[size];
+          const priceEl = c.querySelector(".price");
+          if(priceEl && value){
+            priceEl.textContent = value + ",-";
+          }
+        });
+      }
+
+      tabs.forEach(t => t.addEventListener("click", () => setSize(t.dataset.size)));
+      setSize("sedan");
+    })();
+
+    // Logo sparkles
+    (function(){
+      const wrap = document.querySelector(".logo-wrap");
+      const layer = document.querySelector(".logo-spark");
+      if(!wrap || !layer) return;
+
+      function spawn(){
+        const r = wrap.getBoundingClientRect();
+        // spawn within the logo-wrap bounds
+        const s = document.createElement("span");
+        s.className = "sparkle";
+        const x = Math.random() * (r.width - 14) + 4;
+        const y = Math.random() * (r.height - 14) + 4;
+        s.style.left = x + "px";
+        s.style.top  = y + "px";
+        s.style.animationDuration = (1.2 + Math.random()*1.2) + "s";
+        s.style.filter = `drop-shadow(0 0 ${8+Math.random()*14}px rgba(215,221,230,.35))`;
+        layer.appendChild(s);
+        setTimeout(()=> s.remove(), 2200);
+      }
+
+      // steady sparkle cadence
+      let t = setInterval(()=>{
+        spawn();
+        if(Math.random() > .55) spawn();
+      }, 520);
+
+      // extra sparkles on hover / tap
+      wrap.addEventListener("mouseenter", ()=> { for(let i=0;i<5;i++) setTimeout(spawn, i*90); });
+      wrap.addEventListener("click", ()=> { for(let i=0;i<7;i++) setTimeout(spawn, i*80); });
+
+      // pause if reduced motion
+      if(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches){
+        clearInterval(t);
+      }
+    })();
+
+    // Xmas tree build
+    (function(){
+      const tree = document.querySelector(".xmas-tree");
+      if(!tree) return;
+
+      const star = document.createElement("div");
+      star.className = "tree-star";
+      tree.appendChild(star);
+
+      const lights = document.createElement("div");
+      lights.className = "tree-lights";
+      tree.appendChild(lights);
+
+      const trunk = document.createElement("div");
+      trunk.className = "tree-trunk";
+      tree.appendChild(trunk);
+
+      const pts = [
+        {x:38,y:44,c:"r"},{x:52,y:52,c:"g"},{x:30,y:62,c:""},
+        {x:58,y:66,c:"r"},{x:42,y:74,c:"g"},{x:28,y:78,c:"r"},
+        {x:56,y:84,c:""},{x:40,y:90,c:"g"}
+      ];
+      pts.forEach((p,i)=>{
+        const d=document.createElement("div");
+        d.className="light "+(p.c||"");
+        d.style.left = p.x+"%";
+        d.style.top  = p.y+"%";
+        d.style.animationDelay = (i*0.12)+"s";
+        lights.appendChild(d);
+      });
+    })();
+  </script>
+</body>
+  </html>

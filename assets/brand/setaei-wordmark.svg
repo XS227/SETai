@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="15 15 545 105" role="img" aria-labelledby="title">
+<title id="title">SETAEI</title>
+<g fill="none" stroke="#FFF7EA" stroke-width="16" stroke-linecap="butt" stroke-linejoin="round">
+<path d="M78 29H49C31 29 27 50 43 58L68 70C83 77 79 105 58 105H27"/>
+<path d="M118 31h58M118 68h48M118 105h58"/>
+<path d="M215 31h70M250 31v74"/>
+<path d="M321 105l34-74 34 74"/>
+<path d="M429 31h58M429 68h48M429 105h58"/>
+<path d="M539 31v74"/>
+</g>
+<path fill="#F47A2A" d="M355 58l5 11 12 1-9 8 3 12-11-6-11 6 3-12-9-8 12-1z"/>
+</svg>

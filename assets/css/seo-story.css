@@ -1,0 +1,5 @@
+.seo-story-visual{position:relative;max-width:1180px;margin:30px auto 56px;overflow:hidden;border:1px solid rgba(255,255,255,.09);border-radius:24px;background:#0B1014;box-shadow:0 28px 90px #0006}
+.seo-story-visual img{display:block;width:100%;height:auto}
+.seo-story-visual:after{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(11,16,20,.32),transparent 44%,transparent)}
+.seo-story-visual figcaption{position:absolute;left:28px;bottom:22px;font:500 11px/1.4 'Inter',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#d6d0c4}
+@media(max-width:760px){.seo-story-visual{margin:22px 0 42px;border-radius:16px}.seo-story-visual figcaption{left:18px;bottom:14px;font-size:9px}}

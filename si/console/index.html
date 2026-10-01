@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="no">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>SI — Super Intelligence by SETAEI</title>
+  <meta name="description" content="SETAEI SI is a self-hosted, model-independent AI system with private memory, tools and open knowledge.">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="theme-color" content="#080b0c">
+  <link rel="icon" href="/assets/brand/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/si/si.css?v=1">
+</head>
+<body>
+  <div class="noise" aria-hidden="true"></div>
+  <div class="app-shell">
+    <aside class="rail">
+      <a class="brand" href="/" aria-label="SETAEI home">
+        <span class="brand-mark">SI</span>
+        <span class="brand-copy"><strong>SUPER<br>INTELLIGENCE</strong><small>BY SETAEI</small></span>
+      </a>
+      <div class="system-label">SYSTEM</div>      <div class="status-list" aria-label="System status">
+        <div class="status-row" data-service="core"><span class="dot"></span><span>CORE</span><em>checking</em></div>
+        <div class="status-row" data-service="model"><span class="dot"></span><span>MODEL</span><em>checking</em></div>
+        <div class="status-row" data-service="memory"><span class="dot"></span><span>MEMORY</span><em>planned</em></div>
+        <div class="status-row" data-service="web"><span class="dot"></span><span>WEB</span><em>planned</em></div>
+        <div class="status-row" data-service="tools"><span class="dot"></span><span>TOOLS</span><em>MCP</em></div>
+      </div>
+      <div class="rail-bottom">
+        <div class="privacy"><span>●</span> PRIVATE BY DEFAULT</div>
+        <p>Self-hosted orchestration.<br>Replaceable open models.<br>Source-aware knowledge.</p>
+        <a href="/projects/" class="rail-link">SETAEI / PROJECTS ↗</a>
+      </div>
+    </aside>
+
+    <main class="workspace">
+      <header class="topbar">
+        <div>
+          <span class="eyebrow">SETAEI / SI / 0.1</span>
+          <h1>Think beyond<br><i>one model.</i></h1>
+        </div>
+        <div class="top-meta">
+          <div><small>MODE</small><strong>ORCHESTRATED</strong></div>
+          <div><small>KNOWLEDGE</small><strong>PROVENANCE FIRST</strong></div>
+          <div><small>CONTROL</small><strong>SELF HOSTED</strong></div>
+        </div>
+      </header>      <section class="chat-panel">
+        <div class="thread" id="thread" aria-live="polite">
+          <article class="message si-message">
+            <div class="avatar">SI</div>
+            <div class="bubble">
+              <div class="msg-meta"><strong>SI</strong><span>BOOT SEQUENCE</span></div>
+              <p>I am the interface to SETAEI's independent intelligence layer. My model can change; my memory, tools, source policy and identity stay under your control.</p>
+              <div class="cap-grid">
+                <span>reason</span><span>research</span><span>code</span><span>retrieve</span><span>tools</span><span>memory</span>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <form class="composer" id="composer">
+          <div class="composer-top">
+            <textarea id="prompt" rows="1" placeholder="Ask SI anything…" aria-label="Message SI"></textarea>
+            <button type="submit" id="send" aria-label="Send">↗</button>
+          </div>
+          <div class="composer-foot">
+            <span id="runtime">runtime: detecting…</span>
+            <span>ENTER SEND · SHIFT+ENTER NEW LINE</span>
+          </div>
+        </form>
+      </section>      <section class="architecture" aria-label="SI architecture">
+        <div class="arch-head">
+          <span class="eyebrow">LIVE ARCHITECTURE</span>
+          <p>SI is a system, not a skin around a vendor API.</p>
+        </div>
+        <div class="arch-flow">
+          <div class="arch-node active"><small>01</small><strong>INTERFACE</strong><span>setai.no/si</span></div>
+          <b>→</b>
+          <div class="arch-node"><small>02</small><strong>ORCHESTRATOR</strong><span>routing + policy</span></div>
+          <b>→</b>
+          <div class="arch-node"><small>03</small><strong>INTELLIGENCE</strong><span>local / GPU models</span></div>
+          <b>↔</b>
+          <div class="arch-node"><small>04</small><strong>KNOWLEDGE</strong><span>RAG + memory</span></div>
+          <b>↔</b>
+          <div class="arch-node"><small>05</small><strong>TOOLS</strong><span>MCP + agents</span></div>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script src="/si/si.js?v=1"></script>
+</body>
+</html>

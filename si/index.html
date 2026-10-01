@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="no">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#070b0b">
+  <meta name="description" content="SI by SETAEI — offline-first personal AI that runs on your Android device.">
+  <title>SI — Your intelligence. On your device.</title>
+  <link rel="stylesheet" href="/si/assets/landing.css?v=2">
+</head>
+<body>
+  <div class="noise"></div>
+  <div class="orb orb-a"></div>
+  <div class="orb orb-b"></div>
+
+  <header class="site-header">
+    <a class="brand" href="/">
+      <span class="mark">SI</span>
+      <span class="brand-copy">SUPER INTELLIGENCE<small>BY SETAEI</small></span>
+    </a>
+    <nav>
+      <a href="#why">Why SI</a>
+      <a href="#modes">Modes</a>
+      <a href="#control">Control</a>
+      <a href="#benchmarks">Benchmarks</a>
+    </nav>
+    <a class="nav-cta" href="#download">Android V0.2</a>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow"><span></span> OFFLINE-FIRST / ANDROID</div>
+        <h1>Your intelligence.<br><em>On your device.</em></h1>
+        <p class="lead">SI is a personal AI that runs locally on your Android phone. Your model, memory, permissions and working style stay under your control.</p>
+        <div class="hero-actions">
+          <a class="btn primary" href="#download">Get SI for Android <b>↗</b></a>
+          <a class="btn ghost" href="#why">Explore SI</a>
+        </div>
+        <div class="hero-proof">
+          <span><i></i> Runs offline</span>
+          <span><i></i> Local memory</span>
+          <span><i></i> Your permissions</span>
+        </div>
+      </div>
+
+      <div class="device-stage" aria-label="SI Android app preview">
+        <div class="halo"></div>
+        <div class="phone">
+          <div class="phone-top"><span>00:47</span><b></b><span>100%</span></div>
+          <div class="app-head">
+            <div><strong>SI</strong><small>SUPER INTELLIGENCE</small></div>
+            <span class="online">LOCAL</span>
+          </div>
+          <div class="app-card model">
+            <small>MODEL</small>
+            <strong>LOCAL GGUF</strong>
+            <span>READY</span>
+          </div>
+          <div class="mode-row">
+            <button class="active">EXPERT</button><button>AGENT</button><button>HARD TEST</button>
+          </div>
+          <div class="chat-card">
+            <small>SI / HARD TEST</small>
+            <p>Give me a URL, codebase or technical problem. I’ll inspect, reason, implement and verify.</p>
+            <div class="chips"><span>SEO</span><span>CODE</span><span>UX</span><span>AI</span></div>
+          </div>
+          <div class="prompt">
+            <span>Give SI a task…</span><b>↗</b>
+          </div>
+          <div class="phone-foot"><span>●</span><span>○</span><span>□</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="statement" id="why">
+      <p class="section-label">01 / PHILOSOPHY</p>
+      <h2>Cloud is optional.<br><span>Ownership is not.</span></h2>
+      <p>SI does not need a remote server to think. The model runs on your device, memory stays local, and internet access becomes a tool you can allow, ask for or deny.</p>
+    </section>
+
+    <section class="feature-grid">
+      <article><span>01</span><h3>Local brain</h3><p>Install the recommended SI brain in one tap, or import another GGUF model and run inference directly on Android with llama.cpp.</p></article>
+      <article><span>02</span><h3>Private memory</h3><p>Conversations, benchmarks and operator memory are stored locally in app-private storage.</p></article>
+      <article><span>03</span><h3>Replaceable models</h3><p>SI is not one model. Swap a faster 4B model for a stronger 8B model without changing SI itself.</p></article>
+      <article><span>04</span><h3>Evidence first</h3><p>SI is built to inspect the actual system, show evidence, implement and verify — not simply generate text.</p></article>
+    </section>
+
+    <section class="modes-section" id="modes">
+      <div class="section-head">
+        <p class="section-label">02 / OPERATING MODES</p>
+        <h2>One system.<br><span>Three mindsets.</span></h2>
+      </div>
+      <div class="mode-cards">
+        <article class="mode-card">
+          <small>01</small><h3>Expert</h3><p>Direct, technical problem solving at senior engineering and research level.</p><b>DEFAULT MODE</b>
+        </article>
+        <article class="mode-card featured">
+          <small>02</small><h3>Agent</h3><p>Plans, uses permitted tools, executes steps and stops when your approval is required.</p><b>TOOL MODE</b>
+        </article>
+        <article class="mode-card">
+          <small>03</small><h3>Hard Test</h3><p>Treats the task as a benchmark. Evidence, implementation and verification are mandatory.</p><b>BENCHMARK MODE</b>
+        </article>
+      </div>
+    </section>
+
+    <section class="control-section" id="control">
+      <div class="control-copy">
+        <p class="section-label">03 / OPERATOR CONTROL</p>
+        <h2>You decide what<br><span>SI can do.</span></h2>
+        <p>Every capability has its own operator policy. Android permission is only the first layer — SI also checks your decision before using a capability.</p>
+      </div>
+      <div class="permission-panel">
+        <div class="permission-head"><span>CAPABILITY</span><span>POLICY</span></div>
+        <div><b>Internet</b><span class="ask">ASK</span></div>
+        <div><b>Read files</b><span class="allow">ALLOW</span></div>
+        <div><b>Execute code</b><span class="ask">ASK</span></div>
+        <div><b>Modify repo / site</b><span class="ask">ASK</span></div>
+        <div><b>External actions</b><span class="deny">DENY</span></div>
+        <div><b>Location</b><span class="deny">DENY</span></div>
+        <footer>ALLOW / ASK / DENY — controlled locally</footer>
+      </div>
+    </section>
+
+    <section class="benchmark-section" id="benchmarks">
+      <div class="benchmark-top">
+        <div>
+          <p class="section-label">04 / HARD TEST</p>
+          <h2>Benchmark #1<br><span>URL Audit.</span></h2>
+        </div>
+        <div class="url-box">
+          <small>INPUT</small>
+          <span>https://your-site.com</span>
+          <b>ANALYZE ↗</b>
+        </div>
+      </div>
+      <div class="audit-grid">
+        <article><span>SEO</span><strong>Title · Meta · H1 · Canonical · Schema</strong></article>
+        <article><span>DESIGN / UX</span><strong>Structure · Mobile · Accessibility · Hierarchy</strong></article>
+        <article><span>CODE</span><strong>HTML · CSS · JS · Payload · Structure</strong></article>
+        <article><span>TECHNICAL</span><strong>HTTPS · Redirects · Status · Performance signals</strong></article>
+      </div>
+    </section>
+
+    <section class="architecture-section">
+      <p class="section-label">05 / ARCHITECTURE</p>
+      <h2>Local by default.<br><span>Expandable by choice.</span></h2>
+      <div class="architecture">
+        <div><small>01</small><b>YOU</b><span>Operator</span></div><i>→</i>
+        <div><small>02</small><b>SI</b><span>Policy + memory</span></div><i>→</i>
+        <div><small>03</small><b>LOCAL MODEL</b><span>GGUF / llama.cpp</span></div><i>↔</i>
+        <div><small>04</small><b>TOOLS</b><span>Only if allowed</span></div>
+      </div>
+    </section>
+
+    <section class="download" id="download">
+      <div class="download-glow"></div>
+      <p class="section-label">ANDROID / V0.2</p>
+      <h2>SI is being built<br><span>for your pocket.</span></h2>
+      <p>V0.2 adds one-tap local brain installation, local memory and evidence-aware Agent / Hard Test flows. Your model. Your memory. Your rules.</p>
+      <a class="download-btn" href="/si/downloads/SI-v0.2.0-debug.apk" download>
+        <span><b>SI V0.2</b><small>ANDROID APK · 402 MB · AVAILABLE NOW</small></span><i>→</i>
+      </a>
+      <small class="build-note"><i></i> V0.2 build verified · direct download · local brain installs separately</small>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <a class="brand" href="/"><span class="mark">SI</span><span class="brand-copy">SUPER INTELLIGENCE<small>BY SETAEI</small></span></a>
+    <p>Independent intelligence infrastructure.</p>
+    <span>© 2026 SETAEI</span>
+  </footer>
+
+  <script src="/si/assets/landing.js?v=2"></script>
+</body>
+</html>
