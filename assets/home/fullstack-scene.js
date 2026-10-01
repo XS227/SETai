@@ -1,5 +1,5 @@
 // /services/fullstack-utvikler-oslo/: scroll-driven 3D stack (5 layers + integration satellites) behind the sections.
-// Stages: 0 start, 1 frontend, 2 backend, 3 database, 4 integrations, 5 operations, 6 modernisation, 7 for teams, 8 contact
+// Stages: 0 start, 1 frontend, 2 backend, 3 database, 4 integrations, 5 operations, 6 data/AI, 7 modernisation, 8 for teams, 9 contact
 (function(){
   var canvas = document.getElementById('scene');
   var sections = Array.prototype.slice.call(document.querySelectorAll('[data-stage]'));
@@ -91,7 +91,7 @@
   star.add(new THREE.PointLight(0xF47A2A, 2.2, 7));
 
   // stage -> active layer index (-1 = none)
-  var ACTIVE = [-1, 4, 2, 1, 3, 0, -1, -1, -1];
+  var ACTIVE = [-1, 4, 2, 1, 3, 0, -1, -1, -1, -1];
   function inspecting(s){ return s>=1 && s<=5; }
   function layerState(s, L, time){
     var gap = inspecting(s) ? 0.55 : 0.4;
@@ -99,12 +99,12 @@
     var act = ACTIVE[s]===L ? 1 : 0;
     var hl = act;
     if (s===6){ hl = Math.pow(Math.max(0, Math.sin(time*2 - L*1.1)), 6); }
-    if (s===0 || s===8) hl = (L===4 ? 0.35 : 0);
+    if (s===0 || s===9) hl = (L===4 ? 0.35 : 0);
     return {p:[act*0.35, y + act*0.08, act*1.05], hl:hl, lab: inspecting(s) ? (act ? 1 : 0.3) : (s===0 ? 0.55 : 0)};
   }
   function satState(s, k, time){
     if (s===4){ var P=[[-2.4,0.6,0.6],[2.6,0.9,0.4],[-1.6,1.8,-1.0],[1.8,1.9,-1.0]]; return {p:P[k], s:.36}; }
-    if (s===7){ var a=k*Math.PI/2 + time*0.35; return {p:[Math.cos(a)*2.4, -0.4, Math.sin(a)*2.4], s:.34}; }
+    if (s===8){ var a=k*Math.PI/2 + time*0.35; return {p:[Math.cos(a)*2.4, -0.4, Math.sin(a)*2.4], s:.34}; }
     return {p:[0,-0.4,0], s:.001};
   }
   function topY(s){ return -1.3 + 4*(inspecting(s)?0.55:0.4) + 0.75; }
@@ -157,7 +157,7 @@
     });
     satGeo.attributes.position.needsUpdate = true; satMat.opacity = 0.45*weight(current,4);
 
-    var w6 = weight(current,6);
+    var w6 = weight(current,7);
     scan.visible = w6 > 0.01; scan.position.y = -1.5 + ((time*0.35)%1)*2.3;
     scan.material.opacity = 0.1*w6; scanEdge.material.opacity = 0.75*w6;
 
