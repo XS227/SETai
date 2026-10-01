@@ -107,7 +107,7 @@
     var e = new THREE.LineSegments(boxEdge, new THREE.LineBasicMaterial({color:k===3?0xF47A2A:0xFFFAF0, transparent:true, opacity:0.6}));
     m.add(e); root.add(m); return m;
   });
-  var stepLabels = ['Warrior · 3','Pahlavan · 6','Champion · 10','King'].map(textSprite);
+  var stepLabels = ['Warrior','Pahlavan · 3+','Champion · 6+','King · 10+'].map(textSprite);
 
   // SSO ring
   var ring = new THREE.Mesh(new THREE.TorusGeometry(1.15,0.015,8,100), new THREE.MeshBasicMaterial({color:0xF47A2A, transparent:true, opacity:0}));
