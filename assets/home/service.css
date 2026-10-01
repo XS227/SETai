@@ -1,4 +1,4 @@
-/* /services/seo-oslo/: page extras on top of /assets/home/home.css */
+/* Shared service-page components on top of /assets/home/home.css (seo-oslo, ai-drevet-seo) */
 .crumb{margin:0 0 1.4rem;font-size:.92rem;color:var(--muted)}
 .crumb a{color:var(--muted);text-decoration:none}
 .crumb a:hover{color:var(--ink)}
