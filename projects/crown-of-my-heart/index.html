@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="no">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Crown of My Heart — AI musikkvideo med Suno + Higgsfield | SETAEI</title>
+<meta name="description" content="SETAEI case study: Crown of My Heart, en AI-musikkvideo der lyd ble utviklet med Suno og det visuelle universet ble bygget i Higgsfield.">
+<link rel="canonical" href="https://setai.no/projects/crown-of-my-heart/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Crown of My Heart — AI music video | SETAEI">
+<meta property="og:description" content="Fra sang i Suno til karakter, image direction og musikkvideo i Higgsfield.">
+<meta property="og:image" content="https://setai.no/projects/crown-of-my-heart/media/look-05.webp">
+<link rel="stylesheet" href="/assets/css/setaei-brand-v2.css?v=1">
+<link rel="stylesheet" href="/assets/css/setaei-header-v4.css?v=2">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#090707;--ink:#f7f1ec;--muted:#a89c98;--line:rgba(255,255,255,.12);--rose:#e68489;--wine:#5b1d28;--gold:#d8ad69}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,sans-serif;overflow-x:hidden}a{color:inherit}
+.site-nav{position:fixed;inset:0 0 auto 0;z-index:50}.wrap{width:min(1180px,calc(100% - 40px));margin:auto}
+.hero{min-height:100svh;position:relative;display:grid;align-items:end;overflow:hidden;border-bottom:1px solid var(--line)}
+.hero-bg{position:absolute;inset:0;background:url('media/look-05.webp') center 24%/cover no-repeat;transform:scale(1.03)}
+.hero-bg:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,5,6,.18),rgba(8,5,6,.34) 42%,#090707 96%),linear-gradient(90deg,rgba(8,5,6,.58),transparent 65%)}
+.hero-inner{position:relative;z-index:2;padding:150px 0 78px;max-width:940px}
+.eyebrow,.num{font:600 12px/1 Space Grotesk,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--rose)}
+h1,h2,h3{font-family:Space Grotesk,sans-serif}h1{font-size:clamp(58px,10vw,142px);line-height:.84;letter-spacing:-.07em;margin:18px 0 24px;max-width:920px}
+.lead{font:400 clamp(24px,3vw,42px)/1.1 Newsreader,serif;max-width:820px;margin:0;color:#fff7f0}.meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:30px}.meta span{font-size:12px;padding:9px 13px;border:1px solid var(--line);border-radius:999px;background:rgba(8,5,6,.36);backdrop-filter:blur(10px)}
+.chapter{padding:112px 0;border-bottom:1px solid var(--line)}.grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:78px;align-items:start}.sticky{position:sticky;top:120px}.num{margin-bottom:18px}
+h2{font-size:clamp(42px,6vw,76px);line-height:.96;letter-spacing:-.045em;margin:0 0 24px}.intro{font:400 clamp(22px,2.5vw,34px)/1.2 Newsreader,serif;color:#e7ddd6}.copy{color:#bdb1ab;line-height:1.7;font-size:16px}.copy strong{color:#fff}
+.video-shell{position:relative;border-radius:28px;overflow:hidden;border:1px solid var(--line);background:#000;box-shadow:0 30px 90px rgba(0,0,0,.38)}.video-shell video{width:100%;display:block;aspect-ratio:16/9;object-fit:cover;background:#000}.cap{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;padding:14px 16px;color:var(--muted);font-size:12px;border-top:1px solid var(--line)}.cap strong{color:#eee}
+.sound{border:1px solid rgba(230,132,137,.3);border-radius:28px;padding:clamp(28px,5vw,56px);background:radial-gradient(circle at 80% 20%,rgba(230,132,137,.14),transparent 36%),#0e0a0b}.sound h2{max-width:700px}.sound-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:32px}.tool{padding:24px;border:1px solid var(--line);border-radius:20px;background:rgba(255,255,255,.025)}.tool b{display:block;font:600 24px/1 Space Grotesk;margin:12px 0}.tool p{margin:0;color:var(--muted);line-height:1.55;font-size:14px}
+.gallery{display:grid;grid-template-columns:1.1fr .9fr .9fr;gap:12px;margin-top:38px}.shot{position:relative;overflow:hidden;border-radius:22px;border:1px solid var(--line);min-height:520px}.shot img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .8s cubic-bezier(.2,.7,.2,1)}.shot:hover img{transform:scale(1.025)}.shot:nth-child(4),.shot:nth-child(5){min-height:420px}.shot:nth-child(4){grid-column:1/2}.shot:nth-child(5){grid-column:2/4}
+.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:24px;overflow:hidden;margin-top:36px}.step{padding:28px;background:#0c090a}.step span{color:var(--rose);font:600 12px Space Grotesk}.step b{display:block;font:600 22px/1.1 Space Grotesk;margin:14px 0}.step p{margin:0;color:var(--muted);font-size:13px;line-height:1.55}
+.pull{font:400 clamp(38px,6vw,76px)/1 Newsreader,serif;letter-spacing:-.035em;max-width:1000px}.pull em{color:var(--rose)}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}.btn{display:inline-flex;align-items:center;gap:8px;text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:13px 18px;font-size:14px;font-weight:700}.btn.primary{background:var(--rose);color:#160b0e;border-color:var(--rose)}
+.final{padding:125px 0 150px}.finalbox{border:1px solid var(--line);border-radius:30px;padding:clamp(30px,6vw,68px);background:radial-gradient(circle at 75% 20%,rgba(216,173,105,.12),transparent 32%),#0d0a0a}
+.reveal{opacity:0;transform:translateY(24px);transition:.75s cubic-bezier(.2,.75,.2,1)}.reveal.on{opacity:1;transform:none}
+@media(max-width:850px){.wrap{width:min(100% - 26px,1180px)}.grid{grid-template-columns:1fr;gap:34px}.sticky{position:static}.chapter{padding:82px 0}.gallery{grid-template-columns:1fr 1fr}.shot,.shot:nth-child(4),.shot:nth-child(5){min-height:440px;grid-column:auto}.flow{grid-template-columns:1fr 1fr}.sound-grid{grid-template-columns:1fr}}
+@media(max-width:540px){h1{font-size:17vw}.gallery{grid-template-columns:1fr}.shot,.shot:nth-child(4),.shot:nth-child(5){min-height:65vh}.flow{grid-template-columns:1fr}.hero-inner{padding-bottom:54px}}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoObject","name":"Crown of My Heart","description":"AI music video created with Suno for audio and Higgsfield for visual production.","thumbnailUrl":"https://setai.no/projects/crown-of-my-heart/media/look-05.webp","contentUrl":"https://setai.no/projects/crown-of-my-heart/media/crown-of-my-heart.mp4","uploadDate":"2026-08-09","creator":{"@type":"Organization","name":"SETAEI","url":"https://setai.no"}}</script>
+</head>
+<body>
+<header class="site-nav">
+<a class="wordmark" href="/" aria-label="SETAEI hjem"><svg class="setaei-logo" viewBox="15 15 545 105" role="img" aria-label="SETAEI"><g fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="butt" stroke-linejoin="round"><path d="M78 29H49C31 29 27 50 43 58L68 70C83 77 79 105 58 105H27"/><path d="M118 31h58M118 68h48M118 105h58"/><path d="M215 31h70M250 31v74"/><path d="M321 105l34-74 34 74"/><path d="M429 31h58M429 68h48M429 105h58"/><path d="M539 31v74"/></g><path fill="#F47A2A" d="M355 58l5 11 12 1-9 8 3 12-11-6-11 6 3-12-9-8 12-1z"/></svg></a>
+<nav class="nav-actions" aria-label="Hovedmeny"><a class="nav-link" href="/services/">Tjenester</a><a class="nav-link" href="/blog/">Blogg</a><a class="nav-all" href="/projects/" aria-current="page">Alle prosjekter</a><a class="nav-talk" href="/#contact">Kontakt SETAEI</a></nav>
+<div class="lang-switch" role="group" aria-label="Language"><button type="button" data-lang="no">NO</button><button type="button" data-lang="en">EN</button><button type="button" data-lang="fa">فا</button></div>
+</header>
+
+<main>
+<section class="hero">
+<div class="hero-bg"></div>
+<div class="wrap hero-inner reveal">
+<p class="eyebrow">SETAEI / Music video / Suno + Higgsfield</p>
+<h1>CROWN OF<br>MY HEART</h1>
+<p class="lead">En låt ble til et visuelt univers. Musikk og lyd utviklet med Suno. Karakter, styling, kamera og musikkvideo bygget videre i Higgsfield.</p>
+<div class="meta"><span>Suno · audio</span><span>Higgsfield · visual production</span><span>AI music video</span><span>2026</span></div>
+</div>
+</section>
+
+<section class="chapter">
+<div class="wrap grid">
+<div class="sticky reveal"><p class="num">01 — Fra lyd til bilde</p><h2>Musikken kom først.</h2></div>
+<div class="reveal"><p class="intro">Crown of My Heart startet ikke med et bilde. Den startet med lyd — og spørsmålet om hvordan én AI-generert låt kunne få en tydelig visuell identitet.</p><p class="copy">Suno ble brukt til lydsporet. Deretter ble karakter, styling og scenestemning bygget som et separat visuelt system. Poenget var å unngå at videoen bare ble tilfeldige AI-shots: samme person, samme energi og samme romantiske univers skulle kunne gjenkjennes gjennom hele uttrykket.</p></div>
+</div>
+</section>
+
+<section class="chapter">
+<div class="wrap">
+<div class="sound reveal">
+<p class="num">02 — To verktøy, én produksjon</p>
+<h2>Suno lager stemmen i prosjektet. Higgsfield gir den et ansikt.</h2>
+<div class="sound-grid">
+<div class="tool"><span class="eyebrow">Audio</span><b>Suno</b><p>Låt og lydmateriale ble utviklet først og fungerte som tempo, stemning og retning for det visuelle arbeidet.</p></div>
+<div class="tool"><span class="eyebrow">Visual</span><b>Higgsfield</b><p>Karakterbilder, fashion-look, kamerafølelse og den ferdige 29-sekunders musikkvideoen ble produsert videre i Higgsfield.</p></div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="chapter">
+<div class="wrap">
+<p class="num reveal">03 — Se musikkvideoen</p>
+<div class="video-shell reveal">
+<video controls playsinline preload="metadata" poster="media/look-05.webp"><source src="media/crown-of-my-heart.mp4" type="video/mp4"></video>
+<div class="cap"><strong>Crown of My Heart</strong><span>29 sec · Suno audio + Higgsfield visual production</span></div>
+</div>
+</div>
+</section>
+
+<section class="chapter">
+<div class="wrap">
+<div class="grid">
+<div class="sticky reveal"><p class="num">04 — Visual identity</p><h2>Før motion:<br>finn karakteren.</h2><p class="copy">De fem bildene du delte er ikke pynt rundt videoen. De er selve look-developmenten.</p></div>
+<div class="reveal"><p class="intro">Vi jobbet gjennom forskjellige uttrykk før videoen fikk sitt endelige språk — portrett, styling, masken, lys og attitude.</p><p class="copy">Når karakteren først er definert, blir videoarbeidet enklere: kamera og bevegelse kan variere uten at prosjektet mister identiteten sin.</p></div>
+</div>
+<div class="gallery">
+<div class="shot reveal"><img src="media/look-01.webp" alt="Crown of My Heart look development 1" loading="lazy"></div>
+<div class="shot reveal"><img src="media/look-02.webp" alt="Crown of My Heart look development 2" loading="lazy"></div>
+<div class="shot reveal"><img src="media/look-03.webp" alt="Crown of My Heart look development 3" loading="lazy"></div>
+<div class="shot reveal"><img src="media/look-04.webp" alt="Crown of My Heart look development 4" loading="lazy"></div>
+<div class="shot reveal"><img src="media/look-05.webp" alt="Crown of My Heart look development 5" loading="lazy"></div>
+</div>
+</div>
+</section>
+
+<section class="chapter">
+<div class="wrap">
+<p class="num reveal">05 — Pipeline</p>
+<p class="pull reveal">Ikke «lag en AI-video». Bygg <em>lyd → identitet → shots → motion</em>.</p>
+<div class="flow reveal">
+<div class="step"><span>01</span><b>Song</b><p>Suno etablerer stemning og rytme.</p></div>
+<div class="step"><span>02</span><b>Character</b><p>Visuell identitet låses gjennom stillbilder.</p></div>
+<div class="step"><span>03</span><b>Direction</b><p>Kamera, transitions og Gen Z-musikkvideo-estetikk bygges i Higgsfield.</p></div>
+<div class="step"><span>04</span><b>Sync</b><p>Lyd og visuelt uttrykk samles til én kort musikkvideo.</p></div>
+</div>
+</div>
+</section>
+
+<section class="chapter">
+<div class="wrap grid">
+<div class="sticky reveal"><p class="num">06 — Hva prosjektet viser</p><h2>AI som kreativ produksjonskjede.</h2></div>
+<div class="reveal"><p class="intro">Crown of My Heart er interessant fordi ingen enkeltmodell lager hele prosjektet.</p><p class="copy">Suno løser én del. Higgsfield løser en annen. Det kreative arbeidet ligger i å få verktøyene til å dele samme retning. For SETAEI er det nettopp dette som er poenget med AI-produksjon: ikke å vise én modell, men å orkestrere flere modeller til ett sammenhengende resultat.</p>
+<div class="actions"><a class="btn primary" href="https://higgsfield.ai/s/uTPvrif09u0" rel="noopener">Se Higgsfield-materiale →</a><a class="btn" href="/projects/">Alle prosjekter</a></div></div>
+</div>
+</section>
+
+<section class="final">
+<div class="wrap">
+<div class="finalbox reveal"><p class="num">SETAEI / Creative AI</p><h2>Lyd, karakter og kamera i samme idé.</h2><p class="intro">Crown of My Heart er en liten musikkvideo, men en komplett produksjon: fra lydgenerering til look-development og ferdig motion.</p><div class="actions"><a class="btn primary" href="/#contact">Bygg noe med SETAEI →</a><a class="btn" href="/projects/shahnameh/">Shahnameh</a><a class="btn" href="/projects/the-son-he-did-not-know/">The Son He Did Not Know</a></div></div>
+</div>
+</section>
+</main>
+<script src="/assets/js/setaei-header-v4.js?v=1" defer></script>
+<script>
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('on')}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body></html>
