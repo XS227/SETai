@@ -13,3 +13,6 @@ staticfiles/
 node_modules/
 .DS_Store
 locale/**/*.mo
+
+# Store binærfiler som serveres direkte fra VPS-en (over GitHubs 100 MB-grense)
+si/downloads/
