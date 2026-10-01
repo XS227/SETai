@@ -1,0 +1,1381 @@
+<!DOCTYPE html>
+<html lang="no" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gardoon — interaktiv produktvisualisering | SETAEI</title>
+<meta name="description" content="To messingplater på 76 cm, én stående aksel, 37 lommer oppe og 24 nede. Teknisk visualisering, analyse og veikart.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Vazirmatn:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0b0a08; --brass-hi:#f6e3ab; --brass-light:#e7c877; --brass:#c9a35a;
+    --red:#a51c26; --green:#0f6a34; --ink:#f4ecd8; --muted:#a2926c;
+    --dim:#6b5f42; --panel:#080706; --ok:#2f8f57; --now:#c9a35a; --next:#5a7fa3;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  html{scroll-snap-type:y mandatory; background:var(--bg);}
+  html.nosnap{scroll-snap-type:none;}
+  body{
+    background:radial-gradient(120% 80% at 50% 8%, rgba(30,24,17,.92) 0%, rgba(11,10,8,.98) 55%, rgba(4,4,3,1) 100%);
+    color:var(--ink); font-family:'Inter',sans-serif; -webkit-font-smoothing:antialiased; overflow-x:hidden;
+  }
+  body.fa{font-family:'Vazirmatn',sans-serif;}
+  body.fa .copy h2, body.fa .hero h1, body.fa .sec-head h3, body.fa .specs dd, body.fa .plaque{
+    font-family:'Vazirmatn',sans-serif; font-weight:700; letter-spacing:0; line-height:1.35;}
+  body.fa .step, body.fa .spec, body.fa dt, body.fa .tag, body.fa footer, body.fa .menu a,
+  body.fa .status, body.fa .k, body.fa .kk, body.fa .key, body.fa table.tbl th,
+  body.fa table.tbl td:first-child, body.fa .road .n, body.fa .swatch b{
+    font-family:'Vazirmatn',sans-serif; letter-spacing:0;}
+
+  /* ---------------- scene ---------------- */
+  .stage{position:fixed; inset:0; z-index:1; overflow:hidden; pointer-events:none;}
+  .stage.parked{visibility:hidden;}
+  body.view-logo .stage,body.view-logo .rail,body.view-logo .hint,body.view-logo .result{display:none;}
+  .glow{
+    position:absolute; left:50%; top:50%; width:130vmax; height:130vmax; transform:translate(-50%,-50%);
+    background:radial-gradient(circle at 50% 45%, rgba(201,163,90,.12) 0%, rgba(201,163,90,.035) 32%, transparent 62%);
+    opacity:0; transition:opacity 1.2s ease;
+  }
+  .glow.on{opacity:1;}
+  .starfield{
+    position:absolute; inset:0; opacity:0; transition:opacity 1.4s ease;
+    background-image:
+      radial-gradient(1.4px 1.4px at 12% 22%, rgba(255,255,255,.75), transparent),
+      radial-gradient(1.2px 1.2px at 68% 14%, rgba(255,246,220,.6), transparent),
+      radial-gradient(1.6px 1.6px at 82% 62%, rgba(255,255,255,.55), transparent),
+      radial-gradient(1.1px 1.1px at 26% 74%, rgba(255,255,255,.5), transparent),
+      radial-gradient(1.3px 1.3px at 47% 41%, rgba(255,255,255,.42), transparent),
+      radial-gradient(1.1px 1.1px at 91% 31%, rgba(255,255,255,.4), transparent),
+      radial-gradient(1.5px 1.5px at 6% 55%, rgba(255,255,255,.45), transparent),
+      radial-gradient(1.2px 1.2px at 58% 86%, rgba(255,255,255,.4), transparent),
+      radial-gradient(1.1px 1.1px at 35% 8%, rgba(255,255,255,.4), transparent),
+      radial-gradient(1.3px 1.3px at 74% 92%, rgba(255,255,255,.35), transparent);
+  }
+  .starfield.on{opacity:1;}
+  .world{
+    position:absolute; left:50%; top:50%; width:800px; height:800px; margin:-400px 0 0 -400px;
+    transform-origin:400px 400px; will-change:transform; backface-visibility:hidden;
+  }
+  .layer{position:absolute; left:0; top:0; width:800px; height:800px;}
+  #solar{opacity:0; visibility:hidden; transition:opacity .9s ease, visibility 0s linear .9s;}
+  #solar.on{opacity:1; visibility:visible; transition:opacity .9s ease, visibility 0s;}
+  .orbit{position:absolute; left:400px; top:400px; border:1px solid rgba(201,163,90,.2); border-radius:50%;}
+  .planet{position:absolute; left:400px; top:400px; border-radius:50%; box-shadow:0 0 8px rgba(0,0,0,.6);}
+
+  .plate{position:absolute; left:0; top:0; width:800px; height:800px; opacity:0;
+    will-change:transform; visibility:hidden; transition:opacity .9s ease, visibility 0s linear .9s;}
+  .plate.visible{opacity:1; visibility:visible; transition:opacity .9s ease, visibility 0s;}
+  .disc{position:absolute; inset:0; transition:opacity .7s ease;}
+  .plate.underside .disc{opacity:0;}
+  .disc canvas{
+    position:absolute; inset:0; width:800px; height:800px;
+    opacity:0; transition:opacity .75s ease;
+  }
+  .plate .edge{
+    position:absolute; left:0; top:0; width:800px; height:800px; border-radius:50%;
+    background:linear-gradient(180deg,#6a4f20 0%,#c9a35a 20%,#f6e3ab 38%,#a9843c 60%,#4a3714 100%);
+  }
+  .pole{
+    position:absolute; left:400px; top:400px; width:44px; margin-left:-22px; border-radius:5px;
+    background:linear-gradient(90deg,#33260d 0%,#8a6a2c 12%,#e7c877 32%,#f6e3ab 44%,#c9a35a 58%,#7d5f27 78%,#2c210b 100%);
+    box-shadow:inset 0 0 18px rgba(0,0,0,.5); opacity:0; transition:opacity .8s ease;
+  }
+  .pole.visible{opacity:1;}
+  .collar{
+    position:absolute; left:400px; top:400px; width:110px; height:110px; margin:-55px 0 0 -55px; border-radius:50%;
+    background:radial-gradient(circle at 38% 30%, #fff6dc, #e7c877 40%, #8a6a2c 78%, #3a2c10 100%);
+    opacity:0; transition:opacity .8s ease;
+  }
+  .collar.visible{opacity:1;}
+  .ball{
+    position:absolute; left:400px; top:400px; width:22px; height:22px; margin:-11px 0 0 -11px; border-radius:50%;
+    background:radial-gradient(circle at 34% 28%, #ffffff 0%, #fffaf0 30%, #e6dcc6 62%, #a1937a 88%, #6a5f4c 100%);
+    box-shadow:0 0 14px rgba(255,250,240,.4), inset -2px -3px 5px rgba(0,0,0,.28);
+    will-change:transform;
+  }
+  .ball .corona{
+    position:absolute; inset:-2px; border-radius:50%;
+    background:radial-gradient(circle at 42% 38%, #fffdf4 0%, #ffe9a8 22%, #ffb545 50%, #f26a1b 76%, rgba(180,60,10,.12) 100%);
+    box-shadow:0 0 30px 10px rgba(255,150,40,.4);
+  }
+  .ball-shadow{
+    position:absolute; left:400px; top:400px; width:26px; height:13px; margin:-6px 0 0 -13px; border-radius:50%;
+    background:radial-gradient(ellipse at center, rgba(0,0,0,.7) 0%, rgba(0,0,0,0) 72%);
+  }
+  .dimline{
+    position:absolute; left:400px; top:400px; margin-left:60px;
+    display:flex; align-items:center; gap:14px; opacity:0; transition:opacity .6s ease;
+  }
+  .dimline i{display:block; width:2px; height:100%; background:var(--brass); position:relative;}
+  .dimline i::before,.dimline i::after{content:""; position:absolute; left:-12px; width:26px; height:2px; background:var(--brass);}
+  .dimline i::before{top:0;} .dimline i::after{bottom:0;}
+  .dimline span{font-family:'JetBrains Mono',monospace; font-size:30px; color:var(--brass-hi); white-space:nowrap;}
+  .dimline.visible{opacity:1;}
+
+  /* ---------------- scroll ---------------- */
+  .track{position:relative; z-index:5;}
+  body.view-logo .track,body.view-logo .doc{display:none;}
+  .beat{
+    height:100svh; min-height:540px; scroll-snap-align:start; scroll-snap-stop:always;
+    display:flex; align-items:center; padding:0 clamp(18px,5vw,80px);
+  }
+  .copy{
+    max-width:400px; width:100%; padding:26px 28px;
+    border-inline-start:1px solid rgba(201,163,90,.28);
+    background:linear-gradient(90deg, rgba(6,5,4,.94) 0%, rgba(6,5,4,.84) 58%, rgba(6,5,4,0) 100%);
+    opacity:0; transform:translateY(20px);
+    transition:opacity .6s ease, transform .6s cubic-bezier(.2,.7,.3,1);
+  }
+  .beat[data-side="r"] .copy{
+    margin-inline-start:auto;
+    background:linear-gradient(270deg, rgba(6,5,4,.94) 0%, rgba(6,5,4,.84) 58%, rgba(6,5,4,0) 100%);
+  }
+  body.fa .copy{background:linear-gradient(270deg, rgba(6,5,4,.94) 0%, rgba(6,5,4,.84) 58%, rgba(6,5,4,0) 100%);}
+  body.fa .beat[data-side="r"] .copy{background:linear-gradient(90deg, rgba(6,5,4,.94) 0%, rgba(6,5,4,.84) 58%, rgba(6,5,4,0) 100%);}
+  .beat.active .copy{opacity:1; transform:none;}
+  .step{
+    font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.26em; text-transform:uppercase;
+    color:var(--brass); margin:0 0 14px; display:flex; gap:11px; align-items:center;
+  }
+  .step em{font-style:normal; color:var(--brass-hi); border:1px solid rgba(201,163,90,.35); border-radius:999px; padding:3px 8px; letter-spacing:.12em;}
+  .copy h2{font-family:'Cormorant Garamond',serif; font-weight:600; font-size:clamp(28px,4.2vw,46px); line-height:1.05; margin:0 0 15px; color:var(--brass-hi);}
+  .copy h2 i{font-style:italic; color:var(--ink);}
+  .copy p{margin:0; font-size:15px; line-height:1.7; color:#cdbf9e;}
+  .copy .spec{margin-top:18px; padding-top:14px; border-top:1px solid rgba(201,163,90,.16); font-family:'JetBrains Mono',monospace; font-size:11.5px; color:var(--muted); letter-spacing:.04em;}
+  .copy .spec b{color:var(--brass-light); font-weight:500;}
+  .hero h1{font-family:'Cormorant Garamond',serif; font-weight:500; font-size:clamp(34px,5.6vw,64px); line-height:1.02; margin:0 0 18px; color:var(--brass-hi);}
+  .hero h1 i{font-style:italic; color:var(--ink);}
+
+  /* ---------------- topp + meny ---------------- */
+  .topnav{
+    position:fixed; top:0; left:0; right:0; z-index:32; display:flex; align-items:center; gap:14px;
+    padding:14px clamp(14px,4vw,34px);
+    background:linear-gradient(180deg, rgba(4,4,3,.92), rgba(4,4,3,0));
+  }
+  .brand{color:var(--brass-hi); font-family:'Vazirmatn',sans-serif; font-size:16px; margin-inline-end:auto; text-decoration:none;}
+  .langbtn,.burger{
+    background:none; border:1px solid rgba(201,163,90,.4); color:var(--brass-hi); border-radius:999px;
+    padding:7px 14px; cursor:pointer; font-family:'Vazirmatn',sans-serif; font-size:11px; line-height:1;
+  }
+  .burger{display:flex; align-items:center; gap:8px; font-family:'JetBrains Mono',monospace; letter-spacing:.18em; text-transform:uppercase;}
+  .burger i{display:block; width:15px; height:9px; border-top:1.5px solid currentColor; border-bottom:1.5px solid currentColor; position:relative;}
+  .burger i::after{content:""; position:absolute; top:3px; left:0; right:0; border-top:1.5px solid currentColor;}
+  .langbtn:hover,.burger:hover{background:rgba(201,163,90,.12);}
+
+  .menu{
+    position:fixed; inset:0; z-index:34; background:rgba(4,4,3,.97);
+    display:flex; flex-direction:column; justify-content:center; padding:0 clamp(24px,8vw,110px);
+    opacity:0; pointer-events:none; transition:opacity .35s ease;
+  }
+  .menu.open{opacity:1; pointer-events:auto;}
+  .menu-close{position:absolute; top:16px; inset-inline-end:clamp(14px,4vw,34px);}
+  .menu h5{
+    font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.28em; text-transform:uppercase;
+    color:var(--brass); margin:0 0 16px;
+  }
+  .menu nav{display:flex; flex-direction:column; gap:4px; margin-bottom:38px;}
+  .menu a{
+    font-family:'Cormorant Garamond',serif; font-size:clamp(26px,4.6vw,42px); color:var(--ink);
+    text-decoration:none; line-height:1.25; transition:color .2s ease;
+  }
+  .menu a:hover,.menu a.current{color:var(--brass-hi);}
+  .menu .sub a{font-family:'Inter',sans-serif; font-size:15px; color:var(--muted); line-height:1.9;}
+  body.fa .menu a{font-family:'Vazirmatn',sans-serif;}
+
+  .rail{
+    position:fixed; inset-inline-end:clamp(10px,2vw,24px); top:50%; transform:translateY(-50%); z-index:20;
+    display:flex; flex-direction:column; gap:6px; align-items:center; transition:opacity .5s ease;
+  }
+  .rail b{display:block; width:2px; height:12px; border-radius:2px; background:rgba(201,163,90,.22); transition:all .35s ease;}
+  .rail b.on{background:var(--brass-hi); height:22px;}
+  .rail b.past{background:rgba(201,163,90,.5);}
+  .hint{
+    position:fixed; left:50%; bottom:20px; z-index:20; transform:translateX(-50%);
+    font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.3em; text-transform:uppercase;
+    color:var(--brass); display:flex; flex-direction:column; align-items:center; gap:8px; transition:opacity .5s ease;
+  }
+  .hint b{display:block; width:1px; height:28px; background:linear-gradient(180deg,var(--brass),transparent);}
+  .result{
+    position:fixed; inset-inline-start:clamp(18px,6vw,90px); top:50%; z-index:15;
+    transform:translateY(-50%) scale(.92); opacity:0; pointer-events:none;
+    transition:opacity .6s ease, transform .6s cubic-bezier(.2,.8,.3,1);
+  }
+  .result.on{opacity:1; transform:translateY(-50%) scale(1);}
+  .result .plaque{font-family:'Cormorant Garamond',serif; font-size:clamp(66px,12vw,140px); line-height:1; color:var(--brass-hi); text-shadow:0 0 60px rgba(246,227,171,.3), 0 8px 30px rgba(0,0,0,.9);}
+  .result .tag{font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.32em; text-transform:uppercase; color:var(--red); margin-top:4px;}
+
+  /* ---------------- dokument ---------------- */
+  .doc{position:relative; z-index:5; background:linear-gradient(180deg, rgba(4,4,3,0) 0%, #050403 10%, #070605 100%); padding:clamp(70px,12vh,140px) clamp(18px,5vw,80px) 0;}
+  .doc-in{max-width:1060px; margin:0 auto;}
+  .sec{padding-bottom:clamp(60px,10vh,116px); scroll-margin-top:70px; scroll-snap-align:start; scroll-snap-stop:normal;}
+  .sec-head{display:flex; align-items:baseline; gap:16px; flex-wrap:wrap; border-bottom:1px solid rgba(201,163,90,.18); padding-bottom:16px; margin-bottom:32px;}
+  .sec-head h3{font-family:'Cormorant Garamond',serif; font-weight:500; font-size:clamp(26px,4.2vw,44px); margin:0; color:var(--brass-hi);}
+  .k{font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.24em; text-transform:uppercase; color:var(--brass);}
+  .lead{max-width:660px; font-size:15px; line-height:1.75; color:#bdb094; margin:0 0 32px;}
+
+  .specs{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1px; background:rgba(201,163,90,.16); border:1px solid rgba(201,163,90,.16);}
+  .specs div{background:var(--panel); padding:22px 20px;}
+  .specs dt{font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--brass); margin:0 0 10px;}
+  .specs dd{margin:0; font-family:'Cormorant Garamond',serif; font-size:32px; color:var(--ink); line-height:1.1;}
+  .specs dd small{font-size:13px; color:var(--muted); font-family:'Inter',sans-serif; margin-inline-start:5px;}
+  .specs .note{display:block; margin-top:9px; font-size:12px; line-height:1.55; color:var(--dim); font-family:'Inter',sans-serif;}
+  body.fa .specs .note{font-family:'Vazirmatn',sans-serif;}
+
+  .cards{display:grid; grid-template-columns:repeat(auto-fit,minmax(258px,1fr)); gap:14px;}
+  .card{border:1px solid rgba(201,163,90,.16); background:var(--panel); padding:22px 20px;}
+  .card h4{margin:0 0 10px; font-size:15px; color:var(--brass-hi); font-weight:600;}
+  .card p{margin:0; font-size:13.5px; line-height:1.68; color:#b3a78d;}
+  .kk{font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--brass); display:block; margin-bottom:12px;}
+
+  .tbl-wrap{overflow-x:auto;}
+  table.tbl{width:100%; border-collapse:collapse; font-size:13.5px; min-width:520px;}
+  table.tbl th,table.tbl td{text-align:start; padding:14px; border-bottom:1px solid rgba(201,163,90,.13); vertical-align:top;}
+  table.tbl th{font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--brass); font-weight:400;}
+  table.tbl td{color:#b3a78d; line-height:1.6;}
+  table.tbl td:first-child{color:var(--brass-light); font-family:'JetBrains Mono',monospace; font-size:12px;}
+
+  .road{list-style:none; margin:0; padding:0;}
+  .road li{display:grid; grid-template-columns:52px 1fr auto; gap:20px; align-items:start; padding:22px 0; border-bottom:1px solid rgba(201,163,90,.13);}
+  .road .n{font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--brass); padding-top:3px;}
+  .road h4{margin:0 0 7px; font-size:16px; color:var(--ink); font-weight:600;}
+  .road p{margin:0; font-size:13.5px; line-height:1.62; color:#a2977e;}
+  .status{font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:.16em; text-transform:uppercase; padding:5px 10px; border-radius:999px; white-space:nowrap; border:1px solid currentColor;}
+  .status.done{color:var(--ok);} .status.now{color:var(--now);} .status.next{color:var(--next);}
+
+  .seqblock{margin-bottom:30px;}
+  .seqblock h6{font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--brass); margin:0 0 12px; font-weight:400;}
+  .seq{display:flex; flex-wrap:wrap; gap:4px; direction:ltr;}
+  .seq span{width:33px; height:33px; display:flex; align-items:center; justify-content:center; font-family:'JetBrains Mono',monospace; font-size:11px; color:#f0e6cf; border-radius:3px; background:#161616;}
+  .seq span.r{background:linear-gradient(180deg,#a51c26,#6c1219);}
+  .seq span.g{background:linear-gradient(180deg,#0f6a34,#073d1e);}
+  .seq span.h{box-shadow:inset 0 0 0 1.5px var(--brass-hi);}
+  .key{margin:14px 0 0; font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--dim);}
+
+  .legal{border:1px solid rgba(201,163,90,.2); background:var(--panel); padding:26px 24px;}
+  .legal p{margin:0 0 12px; font-size:13.5px; line-height:1.72; color:#b3a78d;}
+  .legal p:last-child{margin-bottom:0;}
+  .legal b{color:var(--brass-hi); font-weight:600;}
+
+  footer{
+    scroll-snap-align:end; border-top:1px solid rgba(201,163,90,.16); padding:30px 0 44px; margin-top:16px;
+    display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap;
+    font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--dim);
+  }
+  footer a{color:var(--brass); text-decoration:none;}
+  footer a:hover{color:var(--brass-hi);}
+
+  /* ---------------- logoside ---------------- */
+  .logopage{display:none; position:relative; z-index:5; padding:clamp(96px,14vh,150px) clamp(18px,5vw,80px) 0;}
+  body.view-logo .logopage{display:block;}
+  .logo-hero{max-width:720px; margin:0 auto clamp(50px,8vh,90px);}
+  .logo-hero h1{font-family:'Cormorant Garamond',serif; font-weight:500; font-size:clamp(34px,6vw,62px); margin:0 0 18px; color:var(--brass-hi);}
+  body.fa .logo-hero h1{font-family:'Vazirmatn',sans-serif; font-weight:700;}
+  .logo-hero p{font-size:15px; line-height:1.75; color:#bdb094; margin:0;}
+  .logogrid{max-width:1060px; margin:0 auto; display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:18px;}
+  .logocard{border:1px solid rgba(201,163,90,.18); background:var(--panel); overflow:hidden;}
+  .logostage{
+    aspect-ratio:4/3; display:flex; align-items:center; justify-content:center;
+    background:radial-gradient(circle at 50% 40%, #171310 0%, #0a0908 70%);
+    border-bottom:1px solid rgba(201,163,90,.14);
+  }
+  .logostage svg{width:62%; height:auto;}
+  .logovariants{display:flex; border-bottom:1px solid rgba(201,163,90,.14);}
+  .logovariants div{flex:1; aspect-ratio:2/1; display:flex; align-items:center; justify-content:center;}
+  .logovariants div+div{border-inline-start:1px solid rgba(201,163,90,.14);}
+  .logovariants svg{width:52%; height:auto;}
+  .v-brass{background:#100e0b;} .v-light{background:#efe7d6;} .v-mono{background:#0f0f0f;}
+  .logometa{padding:22px 20px;}
+  .logometa h4{margin:0 0 4px; font-size:17px; color:var(--brass-hi);}
+  .logometa .lat{font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--brass); display:block; margin-bottom:12px;}
+  .logometa p{margin:0 0 12px; font-size:13.5px; line-height:1.68; color:#b3a78d;}
+  .logometa .use{margin:0; font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--dim); line-height:1.7;}
+  body.fa .logometa .use{font-family:'Vazirmatn',sans-serif;}
+  .palette{max-width:1060px; margin:clamp(56px,9vh,100px) auto 0; }
+  .swatches{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:1px; background:rgba(201,163,90,.16); border:1px solid rgba(201,163,90,.16);}
+  .swatch{background:var(--panel); padding:0;}
+  .swatch .chip{height:86px;}
+  .swatch .txt{padding:14px 16px;}
+  .swatch b{display:block; font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--ink); font-weight:400; margin-bottom:5px;}
+  .swatch span{font-family:'JetBrains Mono',monospace; font-size:10.5px; color:var(--dim);}
+
+  :focus-visible{outline:2px solid var(--brass-hi); outline-offset:3px;}
+
+  @media (max-width:760px){
+    .beat{align-items:flex-end; padding-bottom:30px;}
+    .copy{max-width:none; padding:20px 18px; border-inline-start:none; border-top:1px solid rgba(201,163,90,.24);
+      background:linear-gradient(180deg, rgba(6,5,4,0) 0%, rgba(6,5,4,.92) 15%, rgba(6,5,4,.98) 100%) !important;}
+    .copy h2{font-size:clamp(24px,7.2vw,33px);} .copy p{font-size:14px;}
+    .hero h1{font-size:clamp(30px,8.4vw,40px);}
+    .rail{display:none;}
+    .result{display:none;}
+    .road li{grid-template-columns:34px 1fr; gap:12px;}
+    .road .status{grid-column:2; justify-self:start; margin-top:10px;}
+    .seq span{width:29px; height:29px; font-size:10px;}
+  }
+  /* tabellene stables på små skjermer i stedet for å kreve sidescroll */
+  @media (max-width:700px){
+    table.tbl{min-width:0;}
+    table.tbl thead{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0);}
+    table.tbl tr{display:block; padding:16px 0; border-bottom:1px solid rgba(201,163,90,.13);}
+    table.tbl td{display:block; border:none; padding:0 0 6px;}
+    table.tbl td:last-child{padding-bottom:0;}
+    table.tbl td:first-child{font-size:11px; letter-spacing:.14em; text-transform:uppercase; padding-bottom:9px;}
+  }
+
+  @media (prefers-reduced-motion:reduce){ .copy{transition:none;} }
+</style>
+<style id="setaei-frame">
+:root{--bg:#080808;--panel:#0d0d0d;--ink:#f4f1ea;--muted:#9f9b94;--dim:#6f6b64;--setaei:#f47a2a}
+body{background:radial-gradient(90% 65% at 50% 8%,rgba(201,163,90,.10),transparent 55%),#080808}
+.topnav{height:84px;padding:0 clamp(18px,4vw,46px);background:rgba(8,8,8,.82);backdrop-filter:blur(18px);border-bottom:1px solid rgba(255,255,255,.08)}
+.brand{font-family:Inter,sans-serif!important;font-weight:700!important;letter-spacing:.16em!important;color:#f5f2ec!important}
+.brand span{font-size:11px;color:#9f9b94;letter-spacing:.12em}
+.langbtn,.burger{border-color:rgba(255,255,255,.14)!important;color:#eee9e2!important;background:rgba(255,255,255,.025)!important}
+.langbtn:hover,.burger:hover{background:rgba(244,122,42,.09)!important;border-color:rgba(244,122,42,.4)!important}
+.menu{background:rgba(8,8,8,.985)!important;backdrop-filter:blur(24px)}
+.copy{border-inline-start-color:rgba(244,122,42,.33)!important;border-radius:0 22px 22px 0!important;backdrop-filter:blur(8px)}
+.beat[data-side="r"] .copy{border-radius:22px 0 0 22px!important}
+.step,.k,.kk,.key{color:var(--setaei)!important}
+.doc{background:linear-gradient(180deg,rgba(8,8,8,0),#080808 10%,#080808)!important}
+.sec-head{border-bottom-color:rgba(255,255,255,.10)!important}
+.card,.legal,.specs div{background:#0d0d0d!important}
+.specs{background:rgba(255,255,255,.08)!important;border-color:rgba(255,255,255,.08)!important}
+.rail b.on{background:var(--setaei)!important;box-shadow:0 0 14px rgba(244,122,42,.42)}
+.result .tag{color:var(--setaei)!important}
+@media(max-width:680px){.topnav{height:72px;padding:0 14px}.brand span{display:none}.copy,.beat[data-side="r"] .copy{border-radius:18px!important}}
+</style><link rel="canonical" href="https://setai.no/projects/gardoon/"></head>
+<body>
+
+<header class="topnav">
+  <a class="brand" href="/">SETAEI <span>· GARDOON</span></a>
+  <button class="langbtn" id="langbtn" type="button">فارسی</button>
+  <button class="burger" id="burger" type="button"><i></i><span data-t="ui.menu"></span></button>
+</header>
+
+<div class="menu" id="menu">
+  <button class="langbtn menu-close" id="menuClose" type="button" data-t="ui.close"></button>
+  <h5 data-t="ui.pages"></h5>
+  <nav id="menuMain"></nav>
+  <h5 data-t="ui.sections"></h5>
+  <nav class="sub" id="menuSub"></nav>
+</div>
+
+<div class="stage" id="stage" aria-hidden="true">
+  <div class="starfield" id="stars"></div>
+  <div class="glow" id="glow"></div>
+  <div class="world" id="world">
+    <div class="layer" id="solar"></div>
+
+    <div class="plate" id="plateBottom">
+      <div class="edge"></div>
+      <div class="disc" id="discBottom"></div>
+    </div>
+
+    <div class="collar" id="collarBottom"></div>
+    <div class="pole" id="pole"></div>
+    <div class="collar" id="collarTop"></div>
+
+    <div class="plate" id="plateTop">
+      <div class="edge"></div>
+      <div class="disc" id="discTop"></div>
+    </div>
+
+    <div class="dimline" id="dimline"><i></i><span>50 cm</span></div>
+    <div class="ball-shadow" id="shadow"></div>
+    <div class="ball" id="ball"><div class="corona" id="corona"></div></div>
+  </div>
+</div>
+
+<div class="result" id="result" aria-hidden="true">
+  <div class="plaque">20</div>
+  <div class="tag" data-t="result.tag"></div>
+</div>
+
+<nav class="rail" id="rail" aria-hidden="true"></nav>
+<div class="hint" id="hint"><b></b><span data-t="ui.scroll"></span></div>
+
+<main class="track" id="reisen"></main>
+
+<div class="doc">
+  <div class="doc-in">
+    <section class="sec" id="mekanisme">
+      <div class="sec-head"><span class="k" data-t="s.mech.k"></span><h3 data-t="s.mech.h"></h3></div>
+      <p class="lead" data-t="s.mech.lead"></p>
+      <div class="cards" id="mechCards"></div>
+    </section>
+
+    <section class="sec" id="mal">
+      <div class="sec-head"><span class="k" data-t="s.dims.k"></span><h3 data-t="s.dims.h"></h3></div>
+      <p class="lead" data-t="s.dims.lead"></p>
+      <dl class="specs" id="specGrid"></dl>
+      <div class="tbl-wrap" style="margin-top:34px"><table class="tbl" id="massTable"></table></div>
+      <div style="margin-top:44px">
+        <div class="seqblock"><h6 data-t="s.dims.seqtop"></h6><div class="seq" id="seqTop"></div></div>
+        <div class="seqblock"><h6 data-t="s.dims.seqbot"></h6><div class="seq" id="seqBot"></div></div>
+        <p class="key" data-t="s.dims.seqkey"></p>
+      </div>
+    </section>
+
+    <section class="sec" id="elektro">
+      <div class="sec-head"><span class="k" data-t="s.el.k"></span><h3 data-t="s.el.h"></h3></div>
+      <p class="lead" data-t="s.el.lead"></p>
+      <div class="tbl-wrap"><table class="tbl" id="elTable"></table></div>
+    </section>
+
+    <section class="sec" id="miljo">
+      <div class="sec-head"><span class="k" data-t="s.env.k"></span><h3 data-t="s.env.h"></h3></div>
+      <p class="lead" data-t="s.env.lead"></p>
+      <div class="cards" id="envCards"></div>
+    </section>
+
+    <section class="sec" id="standarder">
+      <div class="sec-head"><span class="k" data-t="s.std.k"></span><h3 data-t="s.std.h"></h3></div>
+      <p class="lead" data-t="s.std.lead"></p>
+      <div class="tbl-wrap"><table class="tbl" id="stdTable"></table></div>
+    </section>
+
+    <section class="sec" id="veikart">
+      <div class="sec-head"><span class="k" data-t="s.road.k"></span><h3 data-t="s.road.h"></h3></div>
+      <p class="lead" data-t="s.road.lead"></p>
+      <ul class="road" id="roadList"></ul>
+    </section>
+
+    <section class="sec" id="rettigheter">
+      <div class="sec-head"><span class="k" data-t="s.ip.k"></span><h3 data-t="s.ip.h"></h3></div>
+      <div class="legal" id="ipBox"></div>
+    </section>
+
+    <footer>
+      <span data-t="foot.a"></span>
+      <span data-t="foot.b"></span>
+      <span><a href="https://setai.no" target="_blank" rel="noopener">setai.no</a></span>
+    </footer>
+  </div>
+</div>
+
+<div class="logopage" id="logopage">
+  <div class="logo-hero">
+    <h1 data-t="logo.h"></h1>
+    <p data-t="logo.lead"></p>
+    <p style="margin-top:16px;"><a href="/projects/gardoon/logoer/" style="color:var(--brass-hi); font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:.08em; text-decoration:none; border-bottom:1px solid rgba(201,163,90,.5);" data-t="logo.compare"></a></p>
+  </div>
+  <div class="logogrid" id="logoGrid"></div>
+  <div class="palette">
+    <div class="sec-head"><span class="k" data-t="logo.palk"></span><h3 data-t="logo.palh"></h3></div>
+    <p class="lead" data-t="logo.pallead"></p>
+    <div class="swatches" id="swatches"></div>
+  </div>
+  <footer style="max-width:1060px;margin:70px auto 0">
+    <span data-t="foot.a"></span>
+    <span data-t="foot.b"></span>
+    <span><a href="https://setai.no" target="_blank" rel="noopener">setai.no</a></span>
+  </footer>
+</div>
+
+<script>
+/* =====================================================
+   1. HJULENE
+===================================================== */
+const TOP_POCKETS = [
+  [0,'g',true],[32,'r',false],[15,'b',false],[19,'r',false],[4,'b',true],
+  [21,'r',false],[2,'b',false],[25,'r',false],[17,'b',false],[34,'r',true],
+  [6,'b',false],[27,'r',false],[13,'b',false],[36,'r',true],[11,'b',false],
+  [30,'r',false],[8,'b',false],[23,'r',false],[10,'b',true],[5,'r',false],
+  [24,'b',false],[16,'r',false],[33,'b',false],[1,'r',false],[20,'b',true],
+  [14,'r',false],[31,'b',false],[9,'r',false],[22,'b',true],[18,'r',false],
+  [29,'b',false],[7,'r',false],[28,'b',true],[12,'r',false],[35,'b',false],
+  [3,'r',false],[26,'b',false]
+];
+/* nedre plate: kun tallene som har hull i øvre plate, gjentatt tre runder */
+const HOLE_NUMS=[0,4,10,20,22,28,34,36];
+const GROUP_COLORS=['g','r','b','r','b','r','b','r'];
+const BOT_POCKETS=[];
+for(let round=0; round<3; round++){
+  HOLE_NUMS.forEach((n,i)=>BOT_POCKETS.push([n,GROUP_COLORS[i],false]));
+}
+const STEP_T=360/TOP_POCKETS.length;   /* 9,73° */
+const STEP_B=360/BOT_POCKETS.length;   /* 15°   */
+
+const cx=400, cy=400;
+const rEdge=396, rRimInner=350, rPocketOuter=326, rPocketInner=236, rNumber=282, rHole=190;
+const rConeOuter=236, rConeMid=150, rHubTop=60, rHandleLen=88, rKnob=20;
+const FILL={r:'url(#redG)',b:'url(#blackG)',g:'url(#greenG)'};
+
+const pt=(r,deg)=>{const a=(deg-90)*Math.PI/180; return [ (cx+r*Math.cos(a)).toFixed(2), (cy+r*Math.sin(a)).toFixed(2) ];};
+function arcPath(rOut,rIn,a0,a1){
+  const [x0o,y0o]=pt(rOut,a0),[x1o,y1o]=pt(rOut,a1),[x1i,y1i]=pt(rIn,a1),[x0i,y0i]=pt(rIn,a0);
+  return `M ${x0o} ${y0o} A ${rOut} ${rOut} 0 0 1 ${x1o} ${y1o} L ${x1i} ${y1i} A ${rIn} ${rIn} 0 0 0 ${x0i} ${y0i} Z`;
+}
+
+/* Bygger hele hjulet som én SVG-streng. Rasteriseres til canvas én gang per tilstand,
+   slik at nettleseren ikke må tegne vektorene på nytt for hver eneste frame. */
+function wheelSVG(pockets, step, opt){
+  const P=[];
+  P.push(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="800" height="800">`);
+  P.push(`<defs>
+   <linearGradient id="rimG" x1="15%" y1="0%" x2="85%" y2="100%">
+     <stop offset="0%" stop-color="#f6e3ab"/><stop offset="30%" stop-color="#c9a35a"/>
+     <stop offset="55%" stop-color="#8a6a2c"/><stop offset="78%" stop-color="#c9a35a"/>
+     <stop offset="100%" stop-color="#f6e3ab"/></linearGradient>
+   <radialGradient id="faceG" cx="38%" cy="34%" r="75%">
+     <stop offset="0%" stop-color="#f6e3ab"/><stop offset="45%" stop-color="#d1ab63"/>
+     <stop offset="78%" stop-color="#96762f"/><stop offset="100%" stop-color="#5a4318"/></radialGradient>
+   <radialGradient id="coneG" cx="36%" cy="30%" r="80%">
+     <stop offset="0%" stop-color="#fdf1cf"/><stop offset="35%" stop-color="#e7c877"/>
+     <stop offset="65%" stop-color="#b78e46"/><stop offset="88%" stop-color="#7a5c26"/>
+     <stop offset="100%" stop-color="#4a3714"/></radialGradient>
+   <radialGradient id="hubG" cx="35%" cy="30%" r="80%">
+     <stop offset="0%" stop-color="#fff6dc"/><stop offset="45%" stop-color="#e7c877"/>
+     <stop offset="80%" stop-color="#8a6a2c"/><stop offset="100%" stop-color="#3a2c10"/></radialGradient>
+   <radialGradient id="redG" cx="50%" cy="32%" r="80%">
+     <stop offset="0%" stop-color="#c8323f"/><stop offset="100%" stop-color="#6c1219"/></radialGradient>
+   <radialGradient id="blackG" cx="50%" cy="32%" r="80%">
+     <stop offset="0%" stop-color="#2e2e2e"/><stop offset="100%" stop-color="#0a0a0a"/></radialGradient>
+   <radialGradient id="greenG" cx="50%" cy="32%" r="80%">
+     <stop offset="0%" stop-color="#1c8a4c"/><stop offset="100%" stop-color="#073d1e"/></radialGradient>
+   <radialGradient id="holeG" cx="45%" cy="38%" r="65%">
+     <stop offset="0%" stop-color="#2a2a2a"/><stop offset="55%" stop-color="#0a0a0a"/>
+     <stop offset="100%" stop-color="#000"/></radialGradient>
+  </defs>`);
+
+  P.push(`<circle cx="400" cy="400" r="${rEdge}" fill="none" stroke="url(#rimG)" stroke-width="16"/>`);
+  P.push(`<circle cx="400" cy="400" r="388" fill="none" stroke="#4a3714" stroke-width="1.6" opacity=".55"/>`);
+  P.push(`<circle cx="400" cy="400" r="${rRimInner}" fill="none" stroke="url(#rimG)" stroke-width="30"/>`);
+  P.push(`<circle cx="400" cy="400" r="336" fill="none" stroke="#4a3714" stroke-width="1.4" opacity=".5"/>`);
+  P.push(`<circle cx="400" cy="400" r="${rPocketOuter}" fill="url(#faceG)"/>`);
+
+  if(opt.colors){
+    pockets.forEach((p,i)=>P.push(
+      `<path d="${arcPath(rPocketOuter,rPocketInner,i*step,(i+1)*step)}" fill="${FILL[p[1]]}" stroke="#e7c877" stroke-width="1.2"/>`));
+  }
+  P.push(`<circle cx="400" cy="400" r="${rPocketOuter}" fill="none" stroke="#f6e3ab" stroke-width="1.3" opacity=".8"/>`);
+  P.push(`<circle cx="400" cy="400" r="${rPocketInner}" fill="none" stroke="#f6e3ab" stroke-width="1.3" opacity=".8"/>`);
+  pockets.forEach((p,i)=>{
+    const [x1,y1]=pt(rPocketOuter+3,i*step),[x2,y2]=pt(rPocketInner-2,i*step);
+    P.push(`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#8a6a2c" stroke-width="1" opacity=".6"/>`);
+  });
+
+  if(opt.numbers){
+    pockets.forEach((p,i)=>{
+      const mid=i*step+step/2,[x,y]=pt(rNumber,mid);
+      const fs=(step>12?28:(p[0]===0?26:23));
+      P.push(`<text x="${x}" y="${y}" font-size="${fs}" font-family="Georgia,'Times New Roman',serif" font-weight="700" fill="#f7efe0" stroke="rgba(0,0,0,.5)" stroke-width="1" paint-order="stroke" text-anchor="middle" dominant-baseline="middle" transform="rotate(${mid.toFixed(2)} ${x} ${y})">${p[0]}</text>`);
+    });
+  }
+
+  P.push(`<circle cx="400" cy="400" r="${rConeOuter}" fill="url(#coneG)"/>`);
+  P.push(`<circle cx="400" cy="400" r="${rConeOuter}" fill="none" stroke="#4a3714" stroke-width="1.4" opacity=".5"/>`);
+  P.push(`<circle cx="400" cy="400" r="${rConeMid}" fill="none" stroke="#4a3714" stroke-width="1" opacity=".35"/>`);
+  for(let i=0;i<pockets.length;i++){
+    const [x1,y1]=pt(rConeOuter-4,i*step),[x2,y2]=pt(rHubTop+18,i*step);
+    P.push(`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#4a3714" stroke-width=".6" opacity=".22"/>`);
+  }
+  if(opt.holes){
+    pockets.forEach((p,i)=>{
+      if(!p[2]) return;
+      const [x,y]=pt(rHole,i*step+step/2);
+      P.push(`<circle cx="${x}" cy="${y}" r="12" fill="url(#holeG)" stroke="#f6e3ab" stroke-width="1.7"/>`);
+      P.push(`<circle cx="${x}" cy="${y}" r="4" fill="#000"/>`);
+    });
+  }
+  P.push(`<circle cx="400" cy="400" r="${rHubTop+26}" fill="url(#hubG)" stroke="#3a2c10" stroke-width="1.8"/>`);
+  P.push(`<circle cx="400" cy="400" r="${rHubTop}" fill="url(#hubG)" stroke="#f6e3ab" stroke-width="1.6"/>`);
+  [0,90,180,270].forEach(a=>{
+    const [x1,y1]=pt(18,a),[x2,y2]=pt(rHandleLen,a);
+    P.push(`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="url(#hubG)" stroke-width="9" stroke-linecap="round"/>`);
+    P.push(`<circle cx="${x2}" cy="${y2}" r="11" fill="url(#hubG)" stroke="#3a2c10" stroke-width="1.3"/>`);
+  });
+  P.push(`<circle cx="400" cy="400" r="${rKnob}" fill="url(#hubG)" stroke="#f6e3ab" stroke-width="1.6"/>`);
+  P.push(`<circle cx="400" cy="400" r="7" fill="#fff6dc"/>`);
+  P.push(`</svg>`);
+  return P.join('');
+}
+
+/* --- canvas-par per hjul, med kryssfading mellom tilstander --- */
+const RASTER = Math.min(1200, Math.round(Math.min(window.innerWidth,window.innerHeight)*1.9)) || 900;
+function makeWheel(host, pockets, step){
+  const a=document.createElement('canvas'), b=document.createElement('canvas');
+  [a,b].forEach(c=>{ c.width=c.height=RASTER; host.appendChild(c); });
+  return {host, pockets, step, a, b, showing:null, key:''};
+}
+function setWheel(w, opt){
+  const key=`${opt.colors?1:0}${opt.numbers?1:0}${opt.holes?1:0}`;
+  if(w.key===key) return;
+  w.key=key;
+  const target = w.showing===w.a ? w.b : w.a;
+  const img=new Image();
+  img.onload=()=>{
+    const ctx=target.getContext('2d');
+    ctx.clearRect(0,0,RASTER,RASTER);
+    ctx.drawImage(img,0,0,RASTER,RASTER);
+    target.style.opacity=1;
+    if(w.showing && w.showing!==target) w.showing.style.opacity=0;
+    w.showing=target;
+  };
+  img.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(wheelSVG(w.pockets,w.step,opt));
+}
+const wheelTop=makeWheel(document.getElementById('discTop'),TOP_POCKETS,STEP_T);
+const wheelBot=makeWheel(document.getElementById('discBottom'),BOT_POCKETS,STEP_B);
+
+/* =====================================================
+   2. GEOMETRI — 800 px = 76 cm
+===================================================== */
+const PXCM=800/76;
+const Z_TOP=-321, Z_BOT=321;
+const THICK=11*PXCM;
+const R_TRACK=360, R_POCKET=281, R_HOLE=190;
+const HOLE_INDEX=TOP_POCKETS.findIndex(p=>p[0]===20);   /* hullet kula faller i */
+const WIN_INDEX=3;                                      /* nedre lomme: tallet 20 */
+const HOLE_A=HOLE_INDEX*STEP_T+STEP_T/2;
+const WIN_A=WIN_INDEX*STEP_B+STEP_B/2;
+
+const stage=document.getElementById('stage');
+const world=document.getElementById('world');
+const ball=document.getElementById('ball');
+const corona=document.getElementById('corona');
+const shadow=document.getElementById('shadow');
+const plateTop=document.getElementById('plateTop');
+const plateBottom=document.getElementById('plateBottom');
+const discTop=document.getElementById('discTop');
+const discBottom=document.getElementById('discBottom');
+const edgeTop=plateTop.querySelector('.edge');
+const edgeBot=plateBottom.querySelector('.edge');
+const pole=document.getElementById('pole');
+const collarTop=document.getElementById('collarTop');
+const collarBottom=document.getElementById('collarBottom');
+const dimline=document.getElementById('dimline');
+const glow=document.getElementById('glow');
+const stars=document.getElementById('stars');
+const solar=document.getElementById('solar');
+const result=document.getElementById('result');
+const hint=document.getElementById('hint');
+const rail=document.getElementById('rail');
+
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const lerp=(a,b,t)=>a+(b-a)*t;
+const easeInOut=t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
+const easeOut=t=>1-Math.pow(1-t,3);
+const easeIn=t=>t*t;
+const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+const PLANETS=[
+  {r:150,s:7, c:'#b7a893', d:1.00},{r:196,s:10,c:'#d8b784', d:0.76},
+  {r:242,s:11,c:'#6fa8dc', d:0.60},{r:290,s:9, c:'#c1553b', d:0.48},
+  {r:360,s:20,c:'#d9b98a', d:0.29},{r:424,s:17,c:'#e0cf9a', d:0.22},
+  {r:484,s:13,c:'#93c9d6', d:0.16},{r:540,s:13,c:'#5b7fc7', d:0.12}
+];
+const planetEls=PLANETS.map(pl=>{
+  const o=document.createElement('div');
+  o.className='orbit';
+  o.style.width=o.style.height=(pl.r*2)+'px';
+  o.style.margin=(-pl.r)+'px 0 0 '+(-pl.r)+'px';
+  solar.appendChild(o);
+  const d=document.createElement('div');
+  d.className='planet';
+  d.style.width=d.style.height=pl.s+'px';
+  d.style.margin=(-pl.s/2)+'px 0 0 '+(-pl.s/2)+'px';
+  d.style.background='radial-gradient(circle at 34% 30%, rgba(255,255,255,.55), transparent 60%), '+pl.c;
+  solar.appendChild(d);
+  return {orbit:o, dot:d, r:pl.r, d:pl.d, phase:Math.random()*Math.PI*2};
+});
+
+const CAM=[
+  {x:0,   z:0,     s:.52, phi:62},{x:0,   z:-260,  s:1.4, phi:62},
+  {x:150, z:-520,  s:2.5, phi:60},{x:-165,z:Z_TOP, s:1.00,phi:58},
+  {x:-165,z:Z_TOP, s:1.10,phi:42},{x:160, z:Z_TOP, s:1.14,phi:30},
+  {x:160, z:Z_TOP, s:1.16,phi:20},{x:-160,z:Z_TOP, s:1.00,phi:48},
+  {x:-160,z:Z_TOP, s:1.00,phi:56},{x:165, z:Z_TOP, s:1.16,phi:10},
+  {x:165, z:Z_TOP, s:1.75,phi:18, follow:.8},{x:-175,z:0, s:.48, phi:60},
+  {x:-175,z:0,     s:.54, phi:60},{x:170, z:Z_BOT-130, s:.92, phi:70},
+  {x:170, z:Z_BOT, s:1.06,phi:76},{x:-168,z:Z_BOT, s:1.10,phi:44},
+  {x:150, z:Z_BOT, s:1.16,phi:28},{x:150, z:Z_BOT, s:1.26,phi:30}
+];
+const BEATS=CAM.length-1;
+
+let p=0, pTarget=0, rotTop=0, rotBot=0, dropAngle=null, last=performance.now(), solarT=0;
+let beatsEls=[], railTicks=[], view='reisen';
+
+function proj(r,angleDeg,z,cosP,sinP){
+  const a=angleDeg*Math.PI/180;
+  return {x:r*Math.sin(a), y:-r*Math.cos(a)*cosP + z*sinP, depth:-Math.cos(a)};
+}
+
+function onScroll(){
+  if(view!=='reisen') return;
+  pTarget=clamp(window.scrollY/window.innerHeight,0,BEATS-1);
+  if(reduce) p=pTarget;
+  const b=Math.round(pTarget);
+  beatsEls.forEach((s,i)=>s.classList.toggle('active', i===b));
+  railTicks.forEach((t,i)=>{t.classList.toggle('on',i===b); t.classList.toggle('past',i<b);});
+  hint.style.opacity=pTarget>.15?0:1;
+  rail.style.opacity=pTarget>BEATS-1.1?0:1;
+
+  stars.classList.toggle('on', pTarget<1.4);
+  solar.classList.toggle('on', pTarget<.85);
+  glow.classList.toggle('on', pTarget>1.4);
+  /* fra og med andre landing er det bare den nedre platen som er scenen:
+     kort overgang der vi ser undersiden av den øvre, så forsvinner den helt */
+  plateTop.classList.toggle('visible', pTarget>2.45 && pTarget<13.6);
+  plateTop.classList.toggle('underside', pTarget>12.4);
+  setWheel(wheelTop,{colors:pTarget>5.45, numbers:pTarget>4.45, holes:pTarget>3.45});
+  plateBottom.classList.toggle('visible', pTarget>10.4);
+  setWheel(wheelBot,{colors:true, numbers:true, holes:false});
+  pole.classList.toggle('visible', pTarget>10.4);
+  collarTop.classList.toggle('visible', pTarget>10.4 && pTarget<13.6);
+  collarBottom.classList.toggle('visible', pTarget>10.4);
+  dimline.classList.toggle('visible', pTarget>10.7 && pTarget<12.4);
+  result.classList.toggle('on', false);
+  /* når dokumentdelen dekker skjermen står scenen helt stille og tas ut av tegningen */
+  const vh=window.innerHeight, parked=stage.classList.contains('parked');
+  stage.classList.toggle('parked', window.scrollY > vh*(parked ? BEATS-0.25 : BEATS+0.35));
+  if(pTarget<9.9) dropAngle=null;
+}
+window.addEventListener('scroll',onScroll,{passive:true});
+window.addEventListener('resize',onScroll);
+
+const _last={};
+function setT(elm,key,val){ if(_last[key]!==val){ _last[key]=val; elm.style.transform=val; } }
+
+function frame(now){
+  const dt=Math.min(.05,(now-last)/1000); last=now;
+  if(view!=='reisen'){ requestAnimationFrame(frame); return; }
+
+  const dp=pTarget-p;
+  p = Math.abs(dp)<0.0005 ? pTarget : p + dp*Math.min(1, dt*9);
+  const still = Math.abs(dp)<0.0005;
+  if(still && pTarget>=BEATS-1 && window.scrollY>window.innerHeight*(BEATS-0.2)){
+    requestAnimationFrame(frame); return;
+  }
+  const i=Math.floor(p), t=p-i;
+
+  if(!reduce){
+    let sT=0,sB=0;
+    if(p>=6.6&&p<8) sT=lerp(0,175,clamp((p-6.6)/1.2,0,1));
+    else if(p>=8&&p<10) sT=lerp(175,30,easeOut(clamp((p-8)/2,0,1)));
+    else if(p>=10) sT=24;
+    if(p>=12.6&&p<15) sB=-lerp(0,145,clamp((p-12.6)/1.2,0,1));
+    else if(p>=15) sB=lerp(-145,0,easeOut(clamp((p-15)/1.4,0,1)));
+    rotTop+=sT*dt; rotBot+=sB*dt; solarT+=dt;
+  }
+  if(p>16.4){
+    const cur=((rotBot%360)+360)%360, want=(((180-WIN_A)%360)+360)%360;
+    let d=want-cur; if(d>180)d-=360; if(d<-180)d+=360;
+    rotBot+=d*Math.min(1,dt*3);
+  }
+  setT(discTop,'rt',`rotate(${rotTop.toFixed(1)}deg)`);
+  setT(discBottom,'rb',`rotate(${rotBot.toFixed(1)}deg)`);
+
+  const c0=CAM[clamp(i,0,BEATS)], c1=CAM[clamp(i+1,0,BEATS)];
+  const e=easeInOut(t);
+  const phi=lerp(c0.phi,c1.phi,e)*Math.PI/180;
+  const cosP=Math.cos(phi), sinP=Math.sin(phi);
+  const camS=lerp(c0.s,c1.s,e);
+  const mob=window.innerWidth<760;
+  const unit=Math.min(560, window.innerWidth*(mob?1.02:.9), window.innerHeight*(mob?.60:.80))/800;
+  const s=unit*camS;
+  const camZ=lerp(c0.z,c1.z,e);
+  const camX=mob?0:lerp(c0.x,c1.x,e);
+  const camYoff=mob?-window.innerHeight*0.14:0;
+  const follow=lerp(c0.follow||0,c1.follow||0,e);
+
+  const zT=Z_TOP*sinP, zB=Z_BOT*sinP, kY=cosP.toFixed(4);
+  setT(plateTop,'pt',`translateY(${zT.toFixed(1)}px) scaleY(${kY})`);
+  setT(plateBottom,'pb',`translateY(${zB.toFixed(1)}px) scaleY(${kY})`);
+  const eOff=(THICK*sinP).toFixed(1);
+  setT(edgeTop,'et',`translateY(${eOff}px)`);
+  setT(edgeBot,'eb',`translateY(${eOff}px)`);
+  const poleH=Math.max(1,(Z_BOT-Z_TOP)*sinP), poleHs=poleH.toFixed(1)+'px';
+  if(_last.ph!==poleHs){ _last.ph=poleHs; pole.style.height=poleHs; dimline.style.height=poleHs; }
+  setT(pole,'po',`translateY(${(-poleH/2).toFixed(1)}px)`);
+  setT(dimline,'dl',`translateY(${(-poleH/2).toFixed(1)}px)`);
+  setT(collarTop,'ct',`translateY(${(zT+THICK*sinP*0.5).toFixed(1)}px) scaleY(${kY})`);
+  setT(collarBottom,'cb',`translateY(${zB.toFixed(1)}px) scaleY(${kY})`);
+
+  if(p<1.5){
+    planetEls.forEach(pl=>{
+      const a=pl.phase+solarT*pl.d*.32;
+      pl.dot.style.transform=`translate(${(Math.cos(a)*pl.r).toFixed(1)}px,${(Math.sin(a)*pl.r*cosP).toFixed(1)}px)`;
+      pl.orbit.style.transform=`scaleY(${kY})`;
+    });
+  }
+
+  let bx=0,by=0,bs=1,bo=1,sh=0,shS=1,cor=0;
+  const LAND=200;
+
+  if(p<1){ bs=9; cor=1; }
+  else if(p<2){ const f=easeInOut(t); bs=lerp(9,1,f); cor=1-easeIn(clamp(t*1.25,0,1)); by=lerp(0,-520,f); }
+  else if(p<3){ bx=Math.sin(now/900)*7; by=lerp(-520,-500,easeInOut(t)); }
+  else if(p<6){ const q=clamp((p-3)/3,0,1); bx=Math.sin(now/900)*6; by=lerp(-500,-470,q); bo=lerp(1,.8,q); }
+  else if(p<7){
+    const L=proj(R_TRACK,LAND,Z_TOP,cosP,sinP), f=easeIn(t);
+    bx=lerp(0,L.x,easeOut(t)); by=lerp(-470,L.y,f)-Math.sin(Math.PI*t)*10;
+    sh=f*.5; shS=lerp(2.6,1,f);
+  }
+  else if(p<9){ const L=proj(R_TRACK,LAND-rotTop*1.6,Z_TOP,cosP,sinP); bx=L.x; by=L.y; bs=1+L.depth*.07; sh=.5; }
+  else if(p<10){ const L=proj(lerp(R_TRACK,R_HOLE+34,easeInOut(t)),LAND-rotTop*1.6,Z_TOP,cosP,sinP); bx=L.x; by=L.y; bs=1+L.depth*.07; sh=.45; }
+  else if(p<11){
+    const k=clamp(t*1.4,0,1);
+    const L=proj(lerp(R_HOLE+34,R_HOLE,easeInOut(t)), lerp(LAND-rotTop*1.6, rotTop+HOLE_A, easeInOut(k)), Z_TOP,cosP,sinP);
+    bx=L.x; by=L.y;
+    bs=(1+L.depth*.07)*(t>.85?lerp(1,.12,(t-.85)/.15):1);
+    bo=t>.9?lerp(1,0,(t-.9)/.1):1;
+    sh=.45*(1-clamp((t-.85)/.15,0,1));
+    if(t>.85&&dropAngle===null) dropAngle=rotTop+HOLE_A;
+  }
+  else if(p<12){ const L=proj(R_HOLE,(dropAngle===null?HOLE_A:dropAngle),Z_TOP,cosP,sinP); bx=L.x; by=L.y; bo=0; sh=0; }
+  else if(p<13){
+    const L=proj(R_HOLE,(dropAngle===null?HOLE_A:dropAngle),Z_TOP,cosP,sinP), f=easeIn(t);
+    bx=L.x; by=lerp(L.y+THICK*sinP+18, 100*sinP, f);
+    bo=clamp(t*5,0,1); sh=.14+f*.18; shS=lerp(3.4,2.2,f);
+  }
+  else if(p<14){
+    const S=proj(R_HOLE,(dropAngle===null?HOLE_A:dropAngle),Z_TOP,cosP,sinP);
+    const L=proj(R_TRACK,LAND,Z_BOT,cosP,sinP), f=easeIn(t);
+    bx=lerp(S.x,L.x,easeInOut(t)); by=lerp(100*sinP,L.y,f)-Math.sin(Math.PI*t)*6;
+    sh=lerp(.3,.5,f); shS=lerp(2.2,1,f);
+  }
+  else if(p<15){ const L=proj(R_TRACK,LAND-rotBot*1.5,Z_BOT,cosP,sinP); bx=L.x; by=L.y; bs=1+L.depth*.07; sh=.5; }
+  else if(p<16){ const L=proj(lerp(R_TRACK,R_TRACK-56,easeInOut(t)),LAND-rotBot*1.5,Z_BOT,cosP,sinP); bx=L.x; by=L.y; bs=1+L.depth*.07; sh=.48; }
+  else {
+    const k=easeOut(clamp(t*1.6,0,1));
+    const L=proj(lerp(R_TRACK-56,R_POCKET,k), lerp(LAND-rotBot*1.5, rotBot+WIN_A, k), Z_BOT,cosP,sinP);
+    bx=L.x; by=L.y; bs=1+L.depth*.07; sh=.45;
+  }
+
+  const focusY=lerp(camZ*sinP, by, follow), focusX=lerp(0, bx, follow);
+  setT(world,'w',`translate3d(${(camX-focusX*s).toFixed(1)}px,${(camYoff-focusY*s).toFixed(1)}px,0) scale(${s.toFixed(4)})`);
+  setT(ball,'b',`translate3d(${bx.toFixed(1)}px,${by.toFixed(1)}px,0) scale(${bs.toFixed(3)})`);
+  setT(shadow,'sh',`translate3d(${bx.toFixed(1)}px,${(by+9).toFixed(1)}px,0) scale(${shS.toFixed(2)})`);
+  if(_last.bo!==bo){_last.bo=bo; ball.style.opacity=bo;}
+  if(_last.co!==cor){_last.co=cor; corona.style.opacity=cor;}
+  if(_last.so!==sh){_last.so=sh; shadow.style.opacity=sh;}
+
+  requestAnimationFrame(frame);
+}
+
+/* =====================================================
+   3. LOGOFORSLAG
+===================================================== */
+const G='#0f6a34', R='#a51c26', BR='#c9a35a', BRH='#f6e3ab', IV='#fffaf0', BK='#101010';
+
+function logoChe(c){ /* bokstaven چ — bollen er hjulets kant, de tre prikkene er fargene */
+  const m=c.mark||BRH, dots=c.mono?[m,m,m]:[G,c.light?BK:IV,R];
+  return `<svg viewBox="0 0 220 160" xmlns="http://www.w3.org/2000/svg">
+    <path d="M28 44 A82 82 0 0 0 192 44" fill="none" stroke="${m}" stroke-width="13" stroke-linecap="round"/>
+    <path d="M192 44 L192 22" stroke="${m}" stroke-width="13" stroke-linecap="round"/>
+    <circle cx="110" cy="86" r="9.5" fill="${dots[1]}"/>
+    <circle cx="74"  cy="112" r="9.5" fill="${dots[0]}"/>
+    <circle cx="146" cy="112" r="9.5" fill="${dots[2]}"/>
+    <circle cx="110" cy="30" r="7" fill="${c.light?BK:IV}" opacity="${c.mono?'1':'.9'}"/>
+  </svg>`;
+}
+function logoAxis(c){ /* de to platene og den stående akselen, sett i profil */
+  const m=c.mark||BRH, acc=c.mono?m:BR;
+  return `<svg viewBox="0 0 220 160" xmlns="http://www.w3.org/2000/svg">
+    <ellipse cx="110" cy="44" rx="76" ry="24" fill="none" stroke="${m}" stroke-width="9"/>
+    <ellipse cx="110" cy="118" rx="76" ry="24" fill="none" stroke="${m}" stroke-width="9"/>
+    <rect x="104" y="44" width="12" height="74" rx="6" fill="${acc}"/>
+    <circle cx="167" cy="36" r="8" fill="${c.light?BK:IV}"/>
+    ${c.mono?'':`<circle cx="110" cy="44" r="7" fill="${G}"/><circle cx="110" cy="118" r="7" fill="${R}"/>`}
+  </svg>`;
+}
+function logoEight(c){ /* de åtte gjennomføringene som en ring */
+  const m=c.mark||BRH;
+  let dots='';
+  for(let i=0;i<8;i++){
+    const a=(i*45-90)*Math.PI/180, x=110+58*Math.cos(a), y=80+58*Math.sin(a);
+    const fill = c.mono ? m : (i===0?G:(i===4?R:m));
+    dots+=`<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${i===2?11:8}" fill="${fill}"/>`;
+  }
+  return `<svg viewBox="0 0 220 160" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="110" cy="80" r="72" fill="none" stroke="${m}" stroke-width="6" opacity=".55"/>
+    <circle cx="110" cy="80" r="30" fill="none" stroke="${m}" stroke-width="6"/>
+    ${dots}
+    <circle cx="110" cy="22" r="7.5" fill="${c.light?BK:IV}"/>
+  </svg>`;
+}
+function logoGardoon(c){ /* 24 streker = nedre hjul, 8 lange = tallene med hull */
+  const m=c.mark||BRH;
+  let ticks='';
+  for(let i=0;i<24;i++){
+    const long=i%3===0, a=(i*15-90)*Math.PI/180;
+    const r1=long?42:54, r2=72;
+    const col = c.mono ? m : (long ? (i%9===0?G:(i%9===3?R:m)) : m);
+    ticks+=`<line x1="${(110+r1*Math.cos(a)).toFixed(1)}" y1="${(80+r1*Math.sin(a)).toFixed(1)}" x2="${(110+r2*Math.cos(a)).toFixed(1)}" y2="${(80+r2*Math.sin(a)).toFixed(1)}" stroke="${col}" stroke-width="${long?7:3.5}" stroke-linecap="round" opacity="${long?1:.5}"/>`;
+  }
+  return `<svg viewBox="0 0 220 160" xmlns="http://www.w3.org/2000/svg">
+    ${ticks}<circle cx="110" cy="80" r="15" fill="${c.mono?m:BR}"/>
+    <circle cx="110" cy="80" r="6" fill="${c.light?BK:IV}"/>
+  </svg>`;
+}
+const LOGOS=[
+  {id:'che', fn:logoChe, lat:'CHE',
+   t:{no:'Bokstaven چ',fa:'حرف چ'},
+   p:{no:'Navnet begynner på چ, og bokstaven har tre prikker under seg. Der ligger fargene: grønn, hvit og rød. Bollen i bokstaven er samtidig hjulets ytterkant, og kula er prikken over. Det er den eneste av forslagene som sier navnet direkte.',
+      fa:'نام با چ آغاز می‌شود و این حرف سه نقطه زیر خود دارد. رنگ‌ها همان‌جا می‌نشینند: سبز، سفید و سرخ. کاسهٔ حرف در عین حال لبهٔ بیرونی چرخ است و گوی، نقطهٔ بالای آن. تنها پیشنهادی که مستقیم نام را می‌گوید.'},
+   u:{no:'Gravert i messing på øvre ramme · 40 mm minstestørrelse',fa:'حکاکی روی برنجِ قاب بالا · حداقل اندازه ۴۰ میلی‌متر'}},
+  {id:'axis', fn:logoAxis, lat:'AXIS',
+   t:{no:'Aksen',fa:'محور'},
+   p:{no:'Produktet sett fra siden, redusert til det som bærer det: to plater og én stående aksel. Kula ligger på den øvre banen. Grønn i toppnavet, rød i det nedre, som en påminnelse om at platene går hver sin vei.',
+      fa:'محصول از نما، خلاصه‌شده به آنچه آن را نگه می‌دارد: دو صفحه و یک محور ایستاده. گوی روی مسیر بالایی است. سبز در توپی بالا و سرخ در پایین، یادآور اینکه صفحه‌ها خلاف هم می‌چرخند.'},
+   u:{no:'Fungerer i én farge · frest i aluminium på foten',fa:'در یک رنگ نیز کار می‌کند · فرزکاری روی آلومینیوم پایه'}},
+  {id:'eight', fn:logoEight, lat:'OCTO',
+   t:{no:'De åtte',fa:'هشت'},
+   p:{no:'Åtte hull i ring rundt en åpen kjerne — mekanismens signatur. Ett hull er større enn de andre: det er utgangen kula finner. Grønn og rød markerer null og motstående punkt.',
+      fa:'هشت سوراخ در حلقه‌ای گرد یک هستهٔ باز — امضای سازوکار. یکی از سوراخ‌ها بزرگ‌تر است: همان راهی که گوی می‌یابد. سبز و سرخ، صفر و نقطهٔ روبه‌رو را نشان می‌دهند.'},
+   u:{no:'Leser godt helt ned i 16 mm · egnet som preget merke',fa:'تا ۱۶ میلی‌متر خوانا می‌ماند · مناسب برای مُهر برجسته'}},
+  {id:'gardoon', fn:logoGardoon, lat:'GARDOON',
+   t:{no:'Gardoon',fa:'گردون'},
+   p:{no:'Tjuefire streker for lommene på nedre plate, hver tredje lang for de åtte tallene som går igjen. Sett fra avstand blir det en sol — tilbake til der fortellingen begynner.',
+      fa:'بیست‌وچهار خط برای خانه‌های صفحهٔ پایین، و هر سومی بلند برای هشت عددی که تکرار می‌شوند. از دور، خورشیدی می‌شود — بازگشت به همان‌جا که روایت آغاز شد.'},
+   u:{no:'Best stort · lyssatt bakfra i selve platen',fa:'در اندازهٔ بزرگ بهتر است · با نور از پشت در خود صفحه'}}
+];
+const PALETTE=[
+  {hex:'#0f6a34', t:{no:'Grønn',fa:'سبز'}, n:{no:'Null og start',fa:'صفر و آغاز'}},
+  {hex:'#fffaf0', t:{no:'Elfenben',fa:'عاجی'}, n:{no:'Kula',fa:'گوی'}},
+  {hex:'#a51c26', t:{no:'Rød',fa:'سرخ'}, n:{no:'Halvparten av lommene',fa:'نیمی از خانه‌ها'}},
+  {hex:'#101010', t:{no:'Svart',fa:'سیاه'}, n:{no:'Den andre halvparten',fa:'نیمهٔ دیگر'}},
+  {hex:'#c9a35a', t:{no:'Messing',fa:'برنج'}, n:{no:'Konstruksjonen',fa:'سازه'}}
+];
+
+/* =====================================================
+   4. INNHOLD
+===================================================== */
+const SCENES=[
+ {n:'00',side:'l',hero:true,
+  no:{k:'Solsystemet',h:'Alt som roterer,<br><i>roterer rundt noe</i>',p:'Planetene holder banen fordi noe i midten holder dem fast. Hele چرخونه گردون hviler på det samme prinsippet: én stillestående akse, alt annet i bevegelse rundt den.',s:'Prinsipp: <b>fast akse, fri rotasjon</b>'},
+  fa:{k:'منظومهٔ شمسی',h:'هرچه می‌چرخد،<br><i>گرد چیزی می‌چرخد</i>',p:'سیاره‌ها در مدار می‌مانند چون چیزی در مرکز، آن‌ها را نگه داشته است. تمام چرخونه گردون بر همین اصل استوار است: یک محور ثابت، و همه‌چیز در گردش پیرامون آن.',s:'اصل: <b>محور ثابت، چرخش آزاد</b>'}},
+
+ {n:'01',side:'l',
+  no:{k:'Overgangen',h:'Sola krymper<br>til <i>én kule</i>',p:'Vi tar bort alt annet. Igjen står ett legeme i bevegelse — og det er det eneste som beveger seg fritt i hele mekanismen.',s:'Fra <b>sol</b> til <b>kule</b>'},
+  fa:{k:'گذر',h:'خورشید کوچک می‌شود<br>و <i>یک گوی</i> می‌ماند',p:'همه‌چیز دیگر را کنار می‌گذاریم. تنها یک جسم متحرک باقی می‌ماند — و همان تنها چیزی است که در کل سازوکار آزادانه حرکت می‌کند.',s:'از <b>خورشید</b> به <b>گوی</b>'}},
+
+ {n:'02',side:'l',
+  no:{k:'Kula',h:'21 millimeter,<br><i>5,7 gram</i>',p:'Samme størrelse som kula i et profesjonelt hjul. Liten nok til å ligge i en lomme, tung nok til å holde banen gjennom hele spinnet.',s:'Ø <b>21 mm</b> · <b>≈5,7 g</b>'},
+  fa:{k:'گوی',h:'۲۱ میلی‌متر،<br><i>۵٫۷ گرم</i>',p:'هم‌اندازهٔ گوی چرخ‌های حرفه‌ای. آن‌قدر کوچک که در خانه جا بگیرد و آن‌قدر سنگین که در تمام چرخش مسیرش را نگه دارد.',s:'قطر <b>۲۱ میلی‌متر</b> · <b>≈۵٫۷ گرم</b>'}},
+
+ {n:'03',side:'r',
+  no:{k:'Øvre plate',h:'76 centimeter<br><i>messing</i>',p:'Først bare skiven: 76 cm i diameter og 11 cm høy profil. Ingen hull, ingen tall — bare massen som skal holde farten jevn.',s:'Ø <b>76 cm</b> · høyde <b>11 cm</b>'},
+  fa:{k:'صفحهٔ بالا',h:'۷۶ سانتی‌متر<br><i>برنج</i>',p:'نخست فقط صفحه: قطر ۷۶ سانتی‌متر و ارتفاع ۱۱ سانتی‌متر. بدون سوراخ، بدون عدد — تنها جرمی که سرعت را یکنواخت نگه می‌دارد.',s:'قطر <b>۷۶ سانتی‌متر</b> · ارتفاع <b>۱۱ سانتی‌متر</b>'}},
+
+ {n:'04',side:'r',
+  no:{k:'Hullene',h:'Åtte <i>gjennomføringer</i>',p:'Åtte hull brytes gjennom platen på samme radius, 19 cm fra senter. De ligger ved 0, 4, 10, 20, 22, 28, 34 og 36 — jevnt fordelt, så platen forblir i balanse.',s:'8 × Ø <b>24 mm</b> · radius <b>19 cm</b>'},
+  fa:{k:'سوراخ‌ها',h:'هشت <i>گذرگاه</i>',p:'هشت سوراخ روی یک شعاع، ۱۹ سانتی‌متر از مرکز، در صفحه باز می‌شود: کنار ۰، ۴، ۱۰، ۲۰، ۲۲، ۲۸، ۳۴ و ۳۶ — با فاصلهٔ یکسان تا توازن صفحه حفظ شود.',s:'۸ × قطر <b>۲۴ میلی‌متر</b> · شعاع <b>۱۹ سانتی‌متر</b>'}},
+
+ {n:'05',side:'l',
+  no:{k:'Tallene',h:'Trettisju lommer,<br><i>gravert</i>',p:'Tallene kommer først som gravering i messingen, i den offisielle europeiske rekkefølgen. Hver lomme er 9,73 grader bred.',s:'37 lommer · <b>9,73°</b> per lomme'},
+  fa:{k:'اعداد',h:'سی‌وهفت خانه،<br><i>حکاکی‌شده</i>',p:'اعداد نخست به شکل حکاکی روی برنج ظاهر می‌شوند، به ترتیب رسمی اروپایی. هر خانه ۹٫۷۳ درجه پهنا دارد.',s:'۳۷ خانه · <b>۹٫۷۳ درجه</b>'}},
+
+ {n:'06',side:'l',
+  no:{k:'Fargene',h:'Rødt, svart<br>og <i>én grønn</i>',p:'Til slutt fylles lommene: atten røde, atten svarte og den grønne nullen, som er fast referansepunkt både for spilleren og for posisjonsgiveren.',s:'18 rød · 18 svart · <b>1 grønn</b>'},
+  fa:{k:'رنگ‌ها',h:'سرخ، سیاه<br>و <i>یک سبز</i>',p:'در پایان خانه‌ها پر می‌شوند: هجده سرخ، هجده سیاه و صفرِ سبز که نقطهٔ مرجع ثابت برای بازیکن و برای حسگر موقعیت است.',s:'۱۸ سرخ · ۱۸ سیاه · <b>۱ سبز</b>'}},
+
+ {n:'07',side:'r',
+  no:{k:'Landing',h:'Kula treffer<br><i>ytterbanen</i>',p:'Den kastes inn mot ytterkanten og løper i banen mellom rammen og lommeringen. Så lenge farten holder, rører den ikke tallene.',s:'Baneradius <b>34 cm</b> · start <b>≈3 m/s</b>'},
+  fa:{k:'فرود',h:'گوی به <i>مسیر بیرونی</i><br>می‌رسد',p:'گوی به سمت لبهٔ بیرونی پرتاب می‌شود و در شیار میان قاب و حلقهٔ خانه‌ها می‌دود. تا وقتی سرعت دارد، به اعداد نمی‌رسد.',s:'شعاع مسیر <b>۳۴ سانتی‌متر</b> · <b>≈۳ متر بر ثانیه</b>'}},
+
+ {n:'08',side:'r',
+  no:{k:'Spinnet',h:'Platen én vei,<br><i>kula den andre</i>',p:'Øvre plate går med klokken på 18–26 omdreininger i minuttet, kula løper motsatt vei. Motsatt retning gir lengre reell løpetid og et jevnere utfall.',s:'Plate <b>18–26 o/min</b> · kule mot klokken'},
+  fa:{k:'چرخش',h:'صفحه یک سو،<br><i>گوی سوی دیگر</i>',p:'صفحهٔ بالا با ۱۸ تا ۲۶ دور در دقیقه در جهت عقربه‌های ساعت می‌چرخد و گوی در خلاف آن. جهت مخالف، زمان حرکت را بیشتر و نتیجه را یکنواخت‌تر می‌کند.',s:'صفحه <b>۱۸ تا ۲۶ دور در دقیقه</b>'}},
+
+ {n:'09',side:'l',
+  no:{k:'Sett ovenfra',h:'Kula siger <i>innover</i>',p:'Kameraet legger seg rett over platen. Farten faller, sentrifugalkraften avtar, og kula sklir innover mot hullradiusen.',s:'Fra radius <b>34 cm</b> til <b>19 cm</b>'},
+  fa:{k:'نمای بالا',h:'گوی <i>به مرکز</i> می‌آید',p:'دوربین درست بالای صفحه می‌ایستد. سرعت کم می‌شود، نیروی گریز از مرکز افت می‌کند و گوی به سمت شعاع سوراخ‌ها می‌لغزد.',s:'از شعاع <b>۳۴</b> به <b>۱۹ سانتی‌متر</b>'}},
+
+ {n:'10',side:'l',
+  no:{k:'Gjennomføringen',h:'Ett hull<br><i>tar den</i>',p:'Kula finner en av de åtte åpningene og forsvinner gjennom platen. Passeringen registreres her — dette er det første punktet elektronikken må se.',s:'Sensor: <b>IR-gate per hull</b>'},
+  fa:{k:'عبور',h:'یک سوراخ<br><i>آن را می‌گیرد</i>',p:'گوی یکی از هشت دهانه را می‌یابد و از صفحه می‌گذرد. عبور همین‌جا ثبت می‌شود — نخستین نقطه‌ای که الکترونیک باید ببیند.',s:'حسگر: <b>گیت مادون‌قرمز در هر سوراخ</b>'}},
+
+ {n:'11',side:'r',
+  no:{k:'Riggen',h:'To plater,<br><i>én stående aksel</i>',p:'Akselen står stille og bærer hele konstruksjonen. Øvre plate hviler på toppen av den, nedre plate er festet i bunnen, og begge nav løper på lager rundt samme senterlinje.',s:'Aksel <b>Ø 4 cm</b> · klaring <b>50 cm</b>'},
+  fa:{k:'سازه',h:'دو صفحه،<br><i>یک محور ایستاده</i>',p:'محور ثابت است و تمام سازه را نگه می‌دارد. صفحهٔ بالا روی سرِ آن می‌نشیند، صفحهٔ پایین به پای آن بسته است و هر دو توپی روی بلبرینگ و بر یک خط مرکزی می‌گردند.',s:'محور <b>قطر ۴ سانتی‌متر</b> · فاصله <b>۵۰ سانتی‌متر</b>'}},
+
+ {n:'12',side:'r',
+  no:{k:'Fallet',h:'50 cm,<br><i>0,32 sekunder</i>',p:'Fritt fall gjennom hele mellomrommet. Kula treffer nedre plate i omtrent 3,1 meter i sekundet — det er tallet slagdemping og materialvalg må dimensjoneres etter.',s:'h <b>0,50 m</b> · t <b>0,32 s</b> · v <b>3,1 m/s</b>'},
+  fa:{k:'سقوط',h:'۵۰ سانتی‌متر،<br><i>۰٫۳۲ ثانیه</i>',p:'سقوط آزاد در تمام فاصله. گوی با حدود ۳٫۱ متر بر ثانیه به صفحهٔ پایین می‌رسد — همین عدد مبنای انتخاب مواد و ضربه‌گیر است.',s:'ارتفاع <b>۰٫۵۰ متر</b> · <b>۰٫۳۲ ثانیه</b> · <b>۳٫۱ متر بر ثانیه</b>'}},
+
+ {n:'13',side:'l',
+  no:{k:'Andre landing',h:'Bare de <i>åtte tallene</i>',p:'Den nedre platen har ikke trettisju lommer. Den har bare de åtte tallene som har hull i den øvre — 0, 4, 10, 20, 22, 28, 34 og 36 — gjentatt tre runder rundt skiven.',s:'8 tall × 3 runder = <b>24 lommer</b>'},
+  fa:{k:'فرود دوم',h:'تنها همان <i>هشت عدد</i>',p:'صفحهٔ پایین سی‌وهفت خانه ندارد. تنها هشت عددی را دارد که در صفحهٔ بالا سوراخ داشتند — ۰، ۴، ۱۰، ۲۰، ۲۲، ۲۸، ۳۴ و ۳۶ — که سه دور گرد صفحه تکرار می‌شوند.',s:'۸ عدد × ۳ دور = <b>۲۴ خانه</b>'}},
+
+ {n:'14',side:'l',
+  no:{k:'Motrotasjon',h:'Mot klokken<br><i>denne gangen</i>',p:'Nedre plate drives i motsatt retning av den øvre. Med 24 lommer er hver av dem 15 grader bred — halvannen gang så bred som oppe, og dermed lettere å lese av sikkert.',s:'Mot klokken · <b>15°</b> per lomme'},
+  fa:{k:'چرخش معکوس',h:'این بار<br><i>خلاف عقربه</i>',p:'صفحهٔ پایین در جهت مخالف صفحهٔ بالا رانده می‌شود. با ۲۴ خانه، هر خانه ۱۵ درجه پهنا دارد — یک‌ونیم برابر بالا، و در نتیجه خواندنش مطمئن‌تر است.',s:'خلاف عقربه · <b>۱۵ درجه</b> در هر خانه'}},
+
+ {n:'15',side:'r',
+  no:{k:'Utløpet',h:'Tre farger,<br><i>ingen andre</i>',p:'Nede finnes bare grønt, rødt og svart. Færre tall, bredere lommer og et strammere fargebilde — det er den nedre platen som skal leses på avstand.',s:'Grønn · rød · svart'},
+  fa:{k:'پایان مسیر',h:'سه رنگ،<br><i>نه بیشتر</i>',p:'پایین تنها سبز، سرخ و سیاه هست. عددهای کمتر، خانه‌های پهن‌تر و رنگ‌بندی جمع‌وجورتر — صفحهٔ پایین همان است که باید از دور خوانده شود.',s:'سبز · سرخ · سیاه'}},
+
+ {n:'16',side:'l',
+  no:{k:'Resultatet',h:'Én lomme<br><i>av tjuefire</i>',p:'Kula falt gjennom hullet ved 20 og stanser på 20 igjen — ett av åtte tall, men i én av tre runder. Posisjonsgiveren leser lommen og sender resultatet videre.',s:'Oppløsning <b>1/24</b> · <b>15°</b>'},
+  fa:{k:'نتیجه',h:'یک خانه<br><i>از بیست‌وچهار</i>',p:'گوی از سوراخِ ۲۰ افتاد و باز روی ۲۰ ایستاد — یکی از هشت عدد، اما در یکی از سه دور. حسگر موقعیت خانه را می‌خواند و نتیجه را می‌فرستد.',s:'تفکیک <b>۱ از ۲۴</b> · <b>۱۵ درجه</b>'}}
+];
+
+const T={
+ no:{
+  'ui.menu':'Meny','ui.close':'Lukk','ui.pages':'Sider','ui.sections':'Seksjoner',
+  'ui.scroll':'Rull','result.tag':'Rouge · Pair · Passe',
+  'nav.journey':'Reisen','nav.logo':'Logoforslag','nav.mech':'Mekanisme','nav.dims':'Mål',
+  'nav.electro':'Elektro','nav.env':'Miljø','nav.std':'Standarder','nav.road':'Veikart','nav.ip':'Rettigheter',
+  's.mech.k':'01 — Prinsipp','s.mech.h':'Slik virker den',
+  's.mech.lead':'To messingskiver på en felles, stillestående aksel. Oppe trettisju lommer og åtte hull, nede tjuefire lommer og ingen vei videre. Kula er det eneste frie legemet i systemet.',
+  's.dims.k':'02 — Mål','s.dims.h':'Mål og masse',
+  's.dims.lead':'Alle mål er hentet fra tegningen. Massetallene er regnet ut fra geometrien og viser hvorfor platene må bygges som ribbet skall og ikke i massivt materiale.',
+  's.dims.seqtop':'Øvre plate — 37 lommer',
+  's.dims.seqbot':'Nedre plate — 24 lommer, 8 tall × 3 runder',
+  's.dims.seqkey':'Gylden ramme = gjennomføring i øvre plate. De samme åtte tallene går igjen nede.',
+  's.el.k':'03 — Elektro','s.el.h':'Grensesnitt for elektro-teamet',
+  's.el.lead':'Tabellen er et utgangspunkt, ikke en ferdig kravspesifikasjon. Verdiene er avledet av geometrien og av kravene i standardene lenger ned. Alt her skal bekreftes eller endres av elektro-teamet før prototypen bygges.',
+  's.env.k':'04 — Miljø','s.env.h':'Miljø og levetid',
+  's.env.lead':'Produktet er stort, tungt og skal stå i mange år. Da ligger miljøbelastningen i materialvalg, reparerbarhet og standby — ikke i driftseffekten.',
+  's.std.k':'05 — Regelverk','s.std.h':'Europeiske krav',
+  's.std.lead':'Produktet er en maskin med elektrisk drift beregnet på det europeiske markedet. Listen viser hvilke direktiver og standarder som styrer CE-merkingen, og hva de betyr i praksis for denne konstruksjonen.',
+  's.road.k':'06 — Vei videre','s.road.h':'Veikart',
+  's.road.lead':'Fra tegning til produkt. Hver fase avsluttes med et dokument neste fase kan bygge videre på.',
+  's.ip.k':'07 — Rettigheter','s.ip.h':'Rettigheter og leveranse',
+  'logo.h':'Fire logoforslag',
+  'logo.compare':'Se dem gravert på selve platen →',
+  'logo.lead':'Alle fire er bygget på noe som allerede finnes i produktet: bokstaven navnet begynner på, akselen som bærer det, de åtte gjennomføringene og de tjuefire lommene nede. Fargene grønn, hvit og rød ligger i det iranske flagget; på selve produktet erstattes hvit av svart, siden nedre plate bare bruker grønt, rødt og svart. Hvert forslag vises i messing, i mørk utgave på lys bunn og i én farge for gravering.',
+  'logo.palk':'Palett','logo.palh':'Fargene',
+  'logo.pallead':'Fem farger totalt. Tre av dem finnes i lommene på nedre plate, én er kula og én er selve konstruksjonen.',
+  'foot.a':'چرخونه گردون','foot.b':'Design · analyse · visualisering · webdesign'
+ },
+ fa:{
+  'ui.menu':'منو','ui.close':'بستن','ui.pages':'صفحه‌ها','ui.sections':'بخش‌ها',
+  'ui.scroll':'اسکرول','result.tag':'سرخ · زوج · بالا',
+  'nav.journey':'مسیر','nav.logo':'پیشنهاد نشان','nav.mech':'سازوکار','nav.dims':'ابعاد',
+  'nav.electro':'الکترونیک','nav.env':'محیط زیست','nav.std':'استانداردها','nav.road':'نقشهٔ راه','nav.ip':'حقوق',
+  's.mech.k':'۰۱ — اصل کار','s.mech.h':'چگونه کار می‌کند',
+  's.mech.lead':'دو صفحهٔ برنجی روی یک محور ثابت مشترک. بالا سی‌وهفت خانه و هشت سوراخ، پایین بیست‌وچهار خانه و بی‌راهِ ادامه. گوی تنها جسم آزاد سامانه است.',
+  's.dims.k':'۰۲ — ابعاد','s.dims.h':'ابعاد و جرم',
+  's.dims.lead':'همهٔ ابعاد از نقشه گرفته شده است. اعداد جرم از روی هندسه محاسبه شده‌اند و نشان می‌دهند چرا صفحه‌ها باید به‌صورت پوستهٔ دنده‌دار ساخته شوند، نه توپُر.',
+  's.dims.seqtop':'صفحهٔ بالا — ۳۷ خانه',
+  's.dims.seqbot':'صفحهٔ پایین — ۲۴ خانه، ۸ عدد × ۳ دور',
+  's.dims.seqkey':'قاب طلایی = سوراخ در صفحهٔ بالا. همان هشت عدد پایین تکرار می‌شوند.',
+  's.el.k':'۰۳ — الکترونیک','s.el.h':'واسط برای تیم الکترونیک',
+  's.el.lead':'این جدول نقطهٔ شروع است، نه مشخصات نهایی. مقادیر از هندسه و از الزامات استانداردهای پایین صفحه به دست آمده‌اند و باید پیش از ساخت نمونهٔ اولیه توسط تیم الکترونیک تأیید یا اصلاح شوند.',
+  's.env.k':'۰۴ — محیط زیست','s.env.h':'محیط زیست و طول عمر',
+  's.env.lead':'محصول بزرگ و سنگین است و سال‌ها کار خواهد کرد. بنابراین بار زیست‌محیطی در انتخاب مواد، تعمیرپذیری و مصرف در حالت آماده‌باش است، نه در توان کارکرد.',
+  's.std.k':'۰۵ — مقررات','s.std.h':'الزامات اروپایی',
+  's.std.lead':'این محصول ماشینی با محرک الکتریکی برای بازار اروپا است. فهرست زیر نشان می‌دهد کدام دستورالعمل‌ها و استانداردها نشان CE را تعیین می‌کنند و در عمل برای این سازه چه معنایی دارند.',
+  's.road.k':'۰۶ — ادامهٔ راه','s.road.h':'نقشهٔ راه',
+  's.road.lead':'از نقشه تا محصول. هر مرحله با سندی پایان می‌یابد که مرحلهٔ بعد بر آن بنا می‌شود.',
+  's.ip.k':'۰۷ — حقوق','s.ip.h':'حقوق و تحویل',
+  'logo.h':'چهار پیشنهاد نشان',
+  'logo.compare':'دیدن آن‌ها حک‌شده روی خود صفحه ←',
+  'logo.lead':'هر چهار پیشنهاد بر چیزی ساخته شده که پیش‌تر در خود محصول هست: حرفی که نام با آن آغاز می‌شود، محوری که آن را نگه می‌دارد، هشت گذرگاه و بیست‌وچهار خانهٔ پایین. سبز، سفید و سرخ رنگ‌های پرچم ایران‌اند؛ روی خود محصول به‌جای سفید، سیاه می‌نشیند، چون صفحهٔ پایین تنها سبز، سرخ و سیاه دارد. هر پیشنهاد در برنج، در نسخهٔ تیره روی زمینهٔ روشن و در یک رنگ برای حکاکی نشان داده می‌شود.',
+  'logo.palk':'پالت','logo.palh':'رنگ‌ها',
+  'logo.pallead':'در مجموع پنج رنگ. سه رنگ در خانه‌های صفحهٔ پایین هست، یکی گوی است و یکی خودِ سازه.',
+  'foot.a':'چرخونه گردون','foot.b':'طراحی · تحلیل · تصویرسازی · طراحی وب'
+ }
+};
+
+const MECH=[
+ {k:{no:'Bærende',fa:'سازه'},t:{no:'Én stillestående aksel',fa:'یک محور ثابت'},
+  p:{no:'Akselen roterer aldri. Den bærer begge platene: øvre plate hviler på toppen, nedre plate er festet nederst. Begge nav løper på lager rundt samme senterlinje, så konstruksjonen har bare én referanseakse å rette inn etter.',
+     fa:'محور هرگز نمی‌چرخد. هر دو صفحه را نگه می‌دارد: صفحهٔ بالا روی سرِ آن و صفحهٔ پایین در پای آن. هر دو توپی روی بلبرینگ و بر یک خط مرکزی می‌گردند، پس سازه تنها یک محور مرجع برای تنظیم دارد.'}},
+ {k:{no:'Drift',fa:'محرک'},t:{no:'To uavhengige motorer',fa:'دو موتور مستقل'},
+  p:{no:'Hver plate drives for seg og i motsatt retning av den andre. Motsatt rotasjon gir lengre løpetid for kula og nuller ut mye av reaksjonsmomentet mot foten, slik at riggen ikke trenger å boltes fast i gulvet.',
+     fa:'هر صفحه جداگانه و در خلاف جهت دیگری رانده می‌شود. چرخش معکوس زمان حرکت گوی را بیشتر می‌کند و بخش زیادی از گشتاور واکنشی روی پایه را خنثی می‌کند، تا نیازی به مهار سازه در کف نباشد.'}},
+ {k:{no:'Overgang',fa:'گذرگاه'},t:{no:'Åtte gjennomføringer',fa:'هشت سوراخ'},
+  p:{no:'Åtte hull på radius 19 cm er den eneste veien fra øvre til nedre plate. De er jevnt fordelt rundt skiven, slik at platen fortsatt er i balanse og ikke gir ubalansekrefter i lageret.',
+     fa:'هشت سوراخ روی شعاع ۱۹ سانتی‌متر تنها راه از صفحهٔ بالا به پایین است. توزیع یکنواخت آن‌ها توازن صفحه را حفظ می‌کند و نیروی نامتوازن به بلبرینگ وارد نمی‌شود.'}},
+ {k:{no:'Nedre plate',fa:'صفحهٔ پایین'},t:{no:'Åtte tall, tre runder',fa:'هشت عدد، سه دور'},
+  p:{no:'Nedre plate viser bare de åtte tallene som har hull i den øvre, gjentatt tre ganger: 24 lommer på 15 grader hver. Kula kan dermed bare lande på et tall den faktisk kunne falle gjennom, og lommene blir 54 % bredere enn oppe — enklere å lese av og mer robust mot posisjonsfeil.',
+     fa:'صفحهٔ پایین تنها همان هشت عددی را نشان می‌دهد که در صفحهٔ بالا سوراخ دارند، سه بار تکرارشده: ۲۴ خانه، هر یک ۱۵ درجه. پس گوی فقط روی عددی می‌نشیند که واقعاً می‌توانست از آن بیفتد، و خانه‌ها ۵۴ درصد پهن‌تر از بالا می‌شوند — خواندن آسان‌تر و در برابر خطای موقعیت مقاوم‌تر.'}},
+ {k:{no:'Fall',fa:'سقوط'},t:{no:'50 cm fritt fall',fa:'۵۰ سانتی‌متر سقوط آزاد'},
+  p:{no:'Mellomrommet er tomt bortsett fra akselen. Kula faller 0,32 sekunder og treffer nedre plate i 3,1 m/s. Anslagssonen bør ha et dempende innlegg for å begrense støy og slitasje.',
+     fa:'فاصله جز محور خالی است. گوی ۰٫۳۲ ثانیه سقوط می‌کند و با ۳٫۱ متر بر ثانیه به صفحهٔ پایین می‌رسد. ناحیهٔ برخورد بهتر است لایهٔ ضربه‌گیر داشته باشد تا صدا و سایش کم شود.'}},
+ {k:{no:'Avlesning',fa:'خوانش'},t:{no:'To målepunkter',fa:'دو نقطهٔ اندازه‌گیری'},
+  p:{no:'Passeringen gjennom hullet gir det første signalet, og forteller allerede hvilket av de åtte tallene som er i spill. Endelig lomme leses av posisjonsgiveren på nedre plate sammen med en detektor i lommeringen.',
+     fa:'عبور از سوراخ نخستین سیگنال را می‌دهد و همان‌جا روشن می‌کند کدام‌یک از هشت عدد در بازی است. خانهٔ نهایی از ترکیب انکودر صفحهٔ پایین و آشکارساز حلقهٔ خانه‌ها خوانده می‌شود.'}},
+ {k:{no:'Materiale',fa:'مواد'},t:{no:'Skall, ikke massiv',fa:'پوسته، نه توپُر'},
+  p:{no:'En massiv skive på 76 × 11 cm veier 424 kg i messing. Konstruksjonen må derfor være et ribbet aluminiumsskall med messingfinish — samme uttrykk, om lag 20 kg per plate.',
+     fa:'یک صفحهٔ توپُر ۷۶ در ۱۱ سانتی‌متر از برنج ۴۲۴ کیلوگرم وزن دارد. پس سازه باید پوستهٔ آلومینیومی دنده‌دار با روکش برنجی باشد — همان ظاهر، حدود ۲۰ کیلوگرم برای هر صفحه.'}}
+];
+
+const SPECS=[
+ {l:{no:'Platediameter',fa:'قطر صفحه'},v:{no:'76',fa:'۷۶'},u:{no:'cm',fa:'سانتی‌متر'},n:{no:'Begge plater',fa:'هر دو صفحه'}},
+ {l:{no:'Plateprofil',fa:'ارتفاع صفحه'},v:{no:'11',fa:'۱۱'},u:{no:'cm',fa:'سانتی‌متر'},n:{no:'Ytre høyde inkludert ramme',fa:'ارتفاع بیرونی با قاب'}},
+ {l:{no:'Klaring mellom platene',fa:'فاصلهٔ صفحه‌ها'},v:{no:'50',fa:'۵۰'},u:{no:'cm',fa:'سانتی‌متر'},n:{no:'Fri fallhøyde',fa:'ارتفاع سقوط آزاد'}},
+ {l:{no:'Total høyde',fa:'ارتفاع کل'},v:{no:'72',fa:'۷۲'},u:{no:'cm',fa:'سانتی‌متر'},n:{no:'11 + 50 + 11, uten fot',fa:'۱۱ + ۵۰ + ۱۱، بدون پایه'}},
+ {l:{no:'Lommer, øvre plate',fa:'خانه‌های صفحهٔ بالا'},v:{no:'37',fa:'۳۷'},u:{no:'',fa:''},n:{no:'9,73° per lomme',fa:'۹٫۷۳ درجه در هر خانه'}},
+ {l:{no:'Lommer, nedre plate',fa:'خانه‌های صفحهٔ پایین'},v:{no:'24',fa:'۲۴'},u:{no:'',fa:''},n:{no:'8 tall × 3 runder, 15° per lomme',fa:'۸ عدد × ۳ دور، ۱۵ درجه در هر خانه'}},
+ {l:{no:'Gjennomføringer',fa:'سوراخ‌ها'},v:{no:'8',fa:'۸'},u:{no:'',fa:''},n:{no:'Radius 19 cm, kun øvre plate',fa:'شعاع ۱۹ سانتی‌متر، تنها صفحهٔ بالا'}},
+ {l:{no:'Kule',fa:'گوی'},v:{no:'21',fa:'۲۱'},u:{no:'mm',fa:'میلی‌متر'},n:{no:'≈5,7 g',fa:'حدود ۵٫۷ گرم'}},
+ {l:{no:'Anslagshastighet',fa:'سرعت برخورد'},v:{no:'3,1',fa:'۳٫۱'},u:{no:'m/s',fa:'متر بر ثانیه'},n:{no:'Etter 0,32 s fritt fall',fa:'پس از ۰٫۳۲ ثانیه سقوط'}},
+ {l:{no:'Aksel',fa:'محور'},v:{no:'40',fa:'۴۰'},u:{no:'mm',fa:'میلی‌متر'},n:{no:'Stillestående og bærende',fa:'ثابت و باربر'}}
+];
+
+const MASS={
+ head:{no:['Utførelse','Volum','Tetthet','Masse per plate','Vurdering'],
+       fa:['اجرا','حجم','چگالی','جرم هر صفحه','ارزیابی']},
+ rows:[
+  {no:['Massiv messing','0,050 m³','8 500 kg/m³','424 kg','Ikke gjennomførbart — lager, transport og montasje'],
+   fa:['برنج توپُر','۰٫۰۵۰ متر مکعب','۸۵۰۰ کیلوگرم بر متر مکعب','۴۲۴ کیلوگرم','ناممکن — بلبرینگ، حمل و نصب']},
+  {no:['Massiv aluminium','0,050 m³','2 700 kg/m³','135 kg','Fortsatt for tungt til å håndteres av én person'],
+   fa:['آلومینیوم توپُر','۰٫۰۵۰ متر مکعب','۲۷۰۰ کیلوگرم بر متر مکعب','۱۳۵ کیلوگرم','هنوز برای جابه‌جایی یک‌نفره سنگین است']},
+  {no:['Ribbet aluminiumsskall','≈0,008 m³','2 700 kg/m³','≈20 kg','Anbefalt — messingfinish, samme uttrykk'],
+   fa:['پوستهٔ آلومینیومی دنده‌دار','حدود ۰٫۰۰۸ متر مکعب','۲۷۰۰ کیلوگرم بر متر مکعب','حدود ۲۰ کیلوگرم','پیشنهادی — روکش برنجی، همان ظاهر']}
+ ]
+};
+
+const EL={
+ head:{no:['Punkt','Forslag','Merknad'],fa:['مورد','پیشنهاد','توضیح']},
+ rows:[
+  {no:['Forsyning','230 V AC inn → 24 V DC internt','Alt bevegelig og all logikk på lavspenning'],
+   fa:['تغذیه','۲۳۰ ولت متناوب ← ۲۴ ولت مستقیم','همهٔ بخش‌های متحرک و منطق روی ولتاژ پایین']},
+  {no:['Drift','2 × børsteløs DC med reduksjon','Uavhengig retning og turtall per plate'],
+   fa:['محرک','۲ × موتور بدون‌جاروبک با گیربکس','جهت و دور مستقل برای هر صفحه']},
+  {no:['Turtall','Øvre 18–26 o/min, nedre 16–22 o/min','Motsatt retning, myk opp- og nedrampe'],
+   fa:['دور','بالا ۱۸ تا ۲۶، پایین ۱۶ تا ۲۲ دور در دقیقه','جهت مخالف، شتاب‌گیری و توقف نرم']},
+  {no:['Posisjon, øvre','Absoluttgiver, minst 12 bit','9,73° per lomme krever under 1° feil'],
+   fa:['موقعیت، بالا','انکودر مطلق، دست‌کم ۱۲ بیت','۹٫۷۳ درجه در هر خانه، خطای زیر ۱ درجه']},
+  {no:['Posisjon, nedre','Absoluttgiver, 10 bit er nok','15° per lomme gir romsligere margin'],
+   fa:['موقعیت، پایین','انکودر مطلق، ۱۰ بیت کافی است','۱۵ درجه در هر خانه، حاشیهٔ راحت‌تر']},
+  {no:['Kuledeteksjon','IR-gate i hvert av de åtte hullene','Identifiserer tallet allerede ved passering'],
+   fa:['تشخیص گوی','گیت مادون‌قرمز در هر هشت سوراخ','عدد را همان لحظهٔ عبور مشخص می‌کند']},
+  {no:['Utfallslesing','Detektorring i lommeringen, nedre plate','24 posisjoner; kombineres med giverposisjon'],
+   fa:['خواندن نتیجه','حلقهٔ آشکارساز در خانه‌های صفحهٔ پایین','۲۴ موقعیت؛ با موقعیت انکودر ترکیب می‌شود']},
+  {no:['Kryssjekk','Hullnummer mot lommenummer','Skal stemme overens — ellers avvis runden'],
+   fa:['بررسی متقابل','شمارهٔ سوراخ در برابر شمارهٔ خانه','باید یکی باشد — وگرنه دور باطل شود']},
+  {no:['Styring','MCU med sanntidsløkke, CAN eller RS-485','Skill styring fra en eventuell nettverksdel'],
+   fa:['کنترل','میکروکنترلر با حلقهٔ بی‌درنگ، CAN یا RS-485','بخش کنترل از بخش شبکه جدا شود']},
+  {no:['Nødstopp','Kategori 0 eller 1, kablet','Uavhengig av programvare, jf. EN ISO 13850'],
+   fa:['توقف اضطراری','دستهٔ ۰ یا ۱، سیم‌کشی مستقیم','مستقل از نرم‌افزار، مطابق EN ISO 13850']},
+  {no:['Effekt','≈40 W drift, ≈160 W topp, under 0,5 W standby','Standbykravet følger av forordning 1275/2008'],
+   fa:['توان','حدود ۴۰ وات کارکرد، ۱۶۰ وات اوج، زیر ۰٫۵ وات آماده‌باش','حد آماده‌باش از مقررات ۱۲۷۵/۲۰۰۸']},
+  {no:['Belysning','24 V LED, adresserbar og dimbar','Vurder EN 62471 for blenderisiko'],
+   fa:['روشنایی','LED ۲۴ ولت، آدرس‌پذیر و کم‌نورشونده','بررسی EN 62471 برای خیرگی']},
+  {no:['Kabling','Gjennom den stillestående akselen','Ingen kabel i roterende ledd — slepering unngås'],
+   fa:['سیم‌کشی','از داخل محور ثابت','هیچ کابلی در بخش چرخان نیست — حلقهٔ لغزان لازم نمی‌شود']}
+ ]
+};
+
+const ENV=[
+ {t:{no:'Materialer',fa:'مواد'},p:{no:'Aluminium med messingfinish i stedet for massiv messing. Aluminium har etablert retursystem i Europa, og valget tar konstruksjonen fra 424 kg til rundt 20 kg per plate: mindre råvare, lettere transport og lavere last på lager og motor.',fa:'آلومینیوم با روکش برنجی به‌جای برنج توپُر. آلومینیوم در اروپا چرخهٔ بازیافت جاافتاده دارد و این انتخاب وزن هر صفحه را از ۴۲۴ به حدود ۲۰ کیلوگرم می‌رساند: مادهٔ خام کمتر، حمل سبک‌تر و بار کمتر بر بلبرینگ و موتور.'}},
+ {t:{no:'Reparerbarhet',fa:'تعمیرپذیری'},p:{no:'Skrudd, ikke limt. Motor, lager, giver og LED-kurs skal kunne byttes hver for seg uten å demontere platene. Reservedeler og koblingsskjema holdes tilgjengelig i minst ti år.',fa:'پیچ‌شده، نه چسب‌شده. موتور، بلبرینگ، انکودر و مدار LED باید جداگانه و بدون بازکردن صفحه‌ها تعویض شوند. قطعات یدکی و نقشهٔ سیم‌کشی دست‌کم ده سال در دسترس بماند.'}},
+ {t:{no:'Energi',fa:'انرژی'},p:{no:'Rundt 40 W i drift er lite for et produkt i denne størrelsen. Det som betyr noe over levetiden er hvilemodus: under 0,5 W, med automatisk nedtrekk etter inaktivitet.',fa:'حدود ۴۰ وات در کارکرد برای محصولی در این ابعاد کم است. آنچه در طول عمر اهمیت دارد حالت خواب است: زیر ۰٫۵ وات، با خاموشی خودکار پس از بی‌کاری.'}},
+ {t:{no:'Kjemi',fa:'شیمی'},p:{no:'Ingen PVC og ingen blyholdig lodding. Overflatebehandling uten heksavalent krom. Alle stoffer dokumenteres mot REACH og RoHS før innkjøp, ikke etterpå.',fa:'بدون PVC و بدون لحیم سربی. پرداخت سطح بدون کروم شش‌ظرفیتی. همهٔ مواد پیش از خرید — نه پس از آن — با REACH و RoHS تطبیق داده شود.'}},
+ {t:{no:'Slutt på levetid',fa:'پایان عمر'},p:{no:'Elektronikk og mekanikk skal kunne skilles med vanlig verktøy. Produsenten registreres i WEEE-ordningen i hvert marked, og delene merkes med materialkode for sortering.',fa:'الکترونیک و مکانیک با ابزار معمولی از هم جدا شود. تولیدکننده در هر بازار در طرح WEEE ثبت شود و قطعات برای تفکیک، کد مواد بخورند.'}},
+ {t:{no:'Emballasje',fa:'بسته‌بندی'},p:{no:'Resirkulert bølgepapp og formet papirmasse, uten skumplast. Transportmålet bør holdes under standard pallhøyde, slik at en forsendelse ikke krever spesialtransport.',fa:'مقوای بازیافتی و خمیرکاغذ قالبی، بدون فوم پلاستیکی. ابعاد حمل زیر ارتفاع استاندارد پالت بماند تا محموله نیازمند حمل ویژه نباشد.'}}
+];
+
+const STD={
+ head:{no:['Referanse','Hva det er','Hva det betyr her'],fa:['مرجع','چیست','در اینجا یعنی چه']},
+ rows:[
+  {no:['(EU) 2023/1230','Maskinforordningen, erstatter maskindirektivet 2006/42/EF fra 20. januar 2027','Hoveddokumentet for CE-merkingen: risikovurdering, teknisk fil og samsvarserklæring'],
+   fa:['(EU) 2023/1230','مقررات ماشین‌آلات؛ از ۲۰ ژانویه ۲۰۲۷ جایگزین دستورالعمل ۲۰۰۶/۴۲/EC','سند اصلی نشان CE: ارزیابی ریسک، پروندهٔ فنی و اظهارنامهٔ انطباق']},
+  {no:['EN ISO 12100','Risikovurdering og risikoreduksjon','Utføres først. Klemfare mellom roterende plate og ramme er det sentrale punktet'],
+   fa:['EN ISO 12100','ارزیابی و کاهش ریسک','نخستین گام. خطر گیرافتادن میان صفحهٔ چرخان و قاب نکتهٔ اصلی است']},
+  {no:['EN 60204-1','Elektrisk utstyr på maskiner','Styrer kabling, jording, merking og stoppfunksjoner'],
+   fa:['EN 60204-1','تجهیزات الکتریکی ماشین‌آلات','سیم‌کشی، اتصال زمین، برچسب‌گذاری و توابع توقف را تعیین می‌کند']},
+  {no:['EN ISO 13850','Nødstopp','Kablet stoppkrets, uavhengig av programvaren'],
+   fa:['EN ISO 13850','توقف اضطراری','مدار توقف سیم‌کشی‌شده و مستقل از نرم‌افزار']},
+  {no:['2014/30/EU','EMC-direktivet','Utslipp og immunitet, prøves mot EN IEC 61000-6-1 og 61000-6-3'],
+   fa:['2014/30/EU','دستورالعمل سازگاری الکترومغناطیسی','تشعشع و ایمنی، آزمون بر پایهٔ EN IEC 61000-6-1 و 61000-6-3']},
+  {no:['2014/35/EU','Lavspenningsdirektivet','Gjelder nettdelen på 230 V; den interne 24 V-siden faller utenfor'],
+   fa:['2014/35/EU','دستورالعمل ولتاژ پایین','برای بخش ۲۳۰ ولت؛ بخش داخلی ۲۴ ولت مشمول نیست']},
+  {no:['EN IEC 62368-1','Sikkerhet for elektronisk utstyr','Gjelder strømforsyning og styreelektronikk'],
+   fa:['EN IEC 62368-1','ایمنی تجهیزات الکترونیکی','برای منبع تغذیه و برد کنترل']},
+  {no:['2011/65/EU','RoHS','Stoffbegrensninger i all elektronikk og kabling'],
+   fa:['2011/65/EU','RoHS','محدودیت مواد در تمام الکترونیک و سیم‌کشی']},
+  {no:['(EF) 1907/2006','REACH','Dokumentasjon av kjemikalier i overflatebehandling og plast'],
+   fa:['(EC) 1907/2006','REACH','مستندسازی مواد شیمیایی در پوشش سطح و پلاستیک']},
+  {no:['2012/19/EU','WEEE','Produsentregistrering og retursystem i hvert marked'],
+   fa:['2012/19/EU','WEEE','ثبت تولیدکننده و سامانهٔ بازگشت در هر بازار']},
+  {no:['(EU) 2023/988','Produktsikkerhet (GPSR)','Sporbarhet, kontaktpunkt og rapportering av hendelser'],
+   fa:['(EU) 2023/988','ایمنی عمومی محصول (GPSR)','ردیابی، نقطهٔ تماس و گزارش حوادث']},
+  {no:['(EU) 2024/1781','Økodesign (ESPR)','Rammeverket for reparerbarhet og materialdokumentasjon framover'],
+   fa:['(EU) 2024/1781','طراحی زیست‌سازگار (ESPR)','چارچوب آیندهٔ تعمیرپذیری و مستندات مواد']},
+  {no:['(EF) 1275/2008','Standbyforbruk','Under 0,5 W i hvilemodus'],
+   fa:['(EC) 1275/2008','مصرف آماده‌باش','زیر ۰٫۵ وات در حالت خواب']},
+  {no:['2014/53/EU','Radiodirektivet (RED)','Gjelder bare hvis produktet får trådløs tilkobling'],
+   fa:['2014/53/EU','دستورالعمل رادیویی (RED)','تنها در صورت افزودن ارتباط بی‌سیم']},
+  {no:['Nasjonalt regelverk','Bruksområdet','Brukes produktet til pengespill, kommer nasjonale spillregler i tillegg til CE. Avklares per marked'],
+   fa:['مقررات ملی','حوزهٔ کاربرد','اگر برای شرط‌بندی به کار رود، مقررات ملی بازی افزون بر CE اعمال می‌شود؛ برای هر بازار جداگانه روشن شود']}
+ ]
+};
+
+const ROAD=[
+ {t:{no:'Idé og konsept',fa:'ایده و مفهوم'},p:{no:'Mekanismen definert: to plater, én stående aksel, åtte gjennomføringer og åtte tall som går igjen nede.',fa:'سازوکار تعریف شد: دو صفحه، یک محور ایستاده، هشت گذرگاه و هشت عددی که پایین تکرار می‌شوند.'},s:'done',st:{no:'Ferdig',fa:'انجام شد'}},
+ {t:{no:'Design og visualisering',fa:'طراحی و تصویرسازی'},p:{no:'Tegning, mål, 3D-uttrykk, logoforslag og denne gjennomgangen. Levert av setai.no.',fa:'نقشه، ابعاد، بیان سه‌بعدی، پیشنهاد نشان و همین ارائه. تحویل‌شده توسط setai.no.'},s:'done',st:{no:'Ferdig',fa:'انجام شد'}},
+ {t:{no:'Rettigheter',fa:'حقوق'},p:{no:'Produktideen er registrert hos Patentstyret i Norge.',fa:'ایدهٔ محصول در ادارهٔ ثبت اختراعات نروژ ثبت شده است.'},s:'done',st:{no:'Registrert',fa:'ثبت‌شده'}},
+ {t:{no:'Valg av logo',fa:'انتخاب نشان'},p:{no:'Ett av de fire forslagene velges og tegnes ferdig i alle størrelser og utførelser.',fa:'یکی از چهار پیشنهاد انتخاب و در همهٔ اندازه‌ها و اجراها نهایی می‌شود.'},s:'now',st:{no:'Til vurdering',fa:'در دست بررسی'}},
+ {t:{no:'Teknisk spesifikasjon',fa:'مشخصات فنی'},p:{no:'Elektro-teamet bekrefter eller endrer verdiene i tabellen over, og fastsetter motor, giver og styring.',fa:'تیم الکترونیک مقادیر جدول بالا را تأیید یا اصلاح می‌کند و موتور، انکودر و کنترل را تعیین می‌کند.'},s:'now',st:{no:'Pågår',fa:'در جریان'}},
+ {t:{no:'Prototype i full skala',fa:'نمونهٔ اولیه در مقیاس کامل'},p:{no:'Måles på løpetid, støy, treffsikkerhet i avlesningen og slitasje i anslagssonen.',fa:'زمان حرکت، صدا، دقت خوانش و سایش ناحیهٔ برخورد سنجیده می‌شود.'},s:'next',st:{no:'Neste',fa:'مرحلهٔ بعد'}},
+ {t:{no:'Test og CE',fa:'آزمون و CE'},p:{no:'Risikovurdering etter EN ISO 12100, EMC- og elsikkerhetsprøving, teknisk fil og samsvarserklæring.',fa:'ارزیابی ریسک بر پایهٔ EN ISO 12100، آزمون EMC و ایمنی برقی، پروندهٔ فنی و اظهارنامهٔ انطباق.'},s:'next',st:{no:'Planlagt',fa:'برنامه‌ریزی‌شده'}},
+ {t:{no:'Nullserie',fa:'سری صفر'},p:{no:'Et lite antall enheter fra produksjonsverktøy, for å bekrefte toleranser og montasjetid.',fa:'شمار اندکی واحد از ابزار تولید، برای تأیید رواداری‌ها و زمان مونتاژ.'},s:'next',st:{no:'Planlagt',fa:'برنامه‌ریزی‌شده'}},
+ {t:{no:'Produksjon',fa:'تولید'},p:{no:'Serieproduksjon og lansering i det europeiske markedet.',fa:'تولید انبوه و عرضه در بازار اروپا.'},s:'next',st:{no:'Planlagt',fa:'برنامه‌ریزی‌شده'}}
+];
+
+const IP={
+ no:['<b>چرخونه گردون</b> er et originalt produkt. Idé, mekanisme og utforming er beskyttet, og produktideen er registrert hos Patentstyret i Norge.',
+     'Tegninger, visualiseringer, logoforslag, tekst og kode på denne siden er en del av leveransen og kan ikke gjenbrukes utenfor prosjektet uten avtale.',
+     'Etter prototypefasen går produktet i produksjon som et selvstendig produkt i sin kategori.',
+     'Design, analyse, visualisering og webdesign er levert av <b>setai.no</b>.'],
+ fa:['<b>چرخونه گردون</b> محصولی اصیل است. ایده، سازوکار و طراحی آن محفوظ است و ایدهٔ محصول در ادارهٔ ثبت اختراعات نروژ به ثبت رسیده است.',
+     'نقشه‌ها، تصویرسازی‌ها، پیشنهادهای نشان، متن و کد این صفحه بخشی از تحویل پروژه است و بدون توافق، خارج از پروژه قابل استفاده نیست.',
+     'پس از مرحلهٔ نمونهٔ اولیه، محصول به‌عنوان محصولی مستقل در دستهٔ خود وارد تولید می‌شود.',
+     'طراحی، تحلیل، تصویرسازی و طراحی وب توسط <b>setai.no</b> انجام شده است.']
+};
+
+/* =====================================================
+   5. RENDER OG NAVIGASJON
+===================================================== */
+let LANG='no';
+const track=document.getElementById('reisen');
+const langbtn=document.getElementById('langbtn');
+const menu=document.getElementById('menu');
+
+const PAGES=[{id:'reisen',t:'nav.journey'},{id:'logo',t:'nav.logo'}];
+const SECTIONS=['mekanisme','mal','elektro','miljo','standarder','veikart','rettigheter'];
+const SECKEY={mekanisme:'nav.mech',mal:'nav.dims',elektro:'nav.electro',miljo:'nav.env',standarder:'nav.std',veikart:'nav.road',rettigheter:'nav.ip'};
+
+function seqRow(host, pockets, markHoles){
+  host.innerHTML='';
+  pockets.forEach(pk=>{
+    const sp=document.createElement('span');
+    sp.className=(pk[1]==='r'?'r':pk[1]==='g'?'g':'')+((markHoles&&pk[2])?' h':'');
+    sp.textContent=pk[0];
+    host.appendChild(sp);
+  });
+}
+
+function render(){
+  const L=LANG, d=T[L];
+  document.documentElement.lang = L==='fa' ? 'fa' : 'no';
+  document.documentElement.dir  = L==='fa' ? 'rtl' : 'ltr';
+  document.body.classList.toggle('fa', L==='fa');
+  langbtn.textContent = L==='fa' ? 'Norsk' : 'فارسی';
+
+  document.querySelectorAll('[data-t]').forEach(e=>{ e.innerHTML = d[e.dataset.t] || ''; });
+
+  track.innerHTML='';
+  SCENES.forEach((sc,i)=>{
+    const c=sc[L];
+    const s=document.createElement('section');
+    s.className='beat'; s.dataset.beat=i; s.dataset.side=sc.side;
+    s.innerHTML=`<div class="copy${sc.hero?' hero':''}">
+      <p class="step"><em>${sc.n}</em> ${c.k}</p>
+      ${sc.hero?`<h1>${c.h}</h1>`:`<h2>${c.h}</h2>`}
+      <p>${c.p}</p>
+      <p class="spec">${c.s}</p>
+    </div>`;
+    track.appendChild(s);
+  });
+  beatsEls=[...track.querySelectorAll('.beat')];
+
+  rail.innerHTML='';
+  SCENES.forEach(()=>rail.appendChild(document.createElement('b')));
+  railTicks=[...rail.children];
+
+  document.getElementById('menuMain').innerHTML=
+    PAGES.map(pg=>`<a href="#/${pg.id}" data-page="${pg.id}">${d[pg.t]}</a>`).join('');
+  document.getElementById('menuSub').innerHTML=
+    SECTIONS.map(id=>`<a href="#/reisen/${id}">${d[SECKEY[id]]}</a>`).join('');
+
+  document.getElementById('mechCards').innerHTML=MECH.map(m=>
+    `<div class="card"><span class="kk">${m.k[L]}</span><h4>${m.t[L]}</h4><p>${m.p[L]}</p></div>`).join('');
+
+  document.getElementById('specGrid').innerHTML=SPECS.map(sp=>
+    `<div><dt>${sp.l[L]}</dt><dd>${sp.v[L]}${sp.u[L]?`<small>${sp.u[L]}</small>`:''}<span class="note">${sp.n[L]}</span></dd></div>`).join('');
+
+  const mkTable=o=>`<thead><tr>${o.head[L].map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>${
+    o.rows.map(r=>`<tr>${r[L].map(c=>`<td>${c}</td>`).join('')}</tr>`).join('')}</tbody>`;
+  document.getElementById('massTable').innerHTML=mkTable(MASS);
+  document.getElementById('elTable').innerHTML=mkTable(EL);
+  document.getElementById('stdTable').innerHTML=mkTable(STD);
+
+  document.getElementById('envCards').innerHTML=ENV.map(e=>
+    `<div class="card"><h4>${e.t[L]}</h4><p>${e.p[L]}</p></div>`).join('');
+
+  document.getElementById('roadList').innerHTML=ROAD.map((r,i)=>
+    `<li><span class="n">${String(i+1).padStart(2,'0')}</span>
+      <div><h4>${r.t[L]}</h4><p>${r.p[L]}</p></div>
+      <span class="status ${r.s}">${r.st[L]}</span></li>`).join('');
+
+  document.getElementById('ipBox').innerHTML=IP[L].map(x=>`<p>${x}</p>`).join('');
+
+  seqRow(document.getElementById('seqTop'),TOP_POCKETS,true);
+  seqRow(document.getElementById('seqBot'),BOT_POCKETS,false);
+
+  document.getElementById('logoGrid').innerHTML=LOGOS.map(lg=>`
+    <div class="logocard">
+      <div class="logostage">${lg.fn({})}</div>
+      <div class="logovariants">
+        <div class="v-brass">${lg.fn({mark:BR})}</div>
+        <div class="v-light">${lg.fn({mark:BK, light:true})}</div>
+        <div class="v-mono">${lg.fn({mark:'#e9e2d2', mono:true})}</div>
+      </div>
+      <div class="logometa">
+        <span class="lat">${lg.lat}</span>
+        <h4>${lg.t[L]}</h4>
+        <p>${lg.p[L]}</p>
+        <p class="use">${lg.u[L]}</p>
+      </div>
+    </div>`).join('');
+
+  document.getElementById('swatches').innerHTML=PALETTE.map(c=>`
+    <div class="swatch"><div class="chip" style="background:${c.hex}"></div>
+      <div class="txt"><b>${c.t[L]}</b><span>${c.hex.toUpperCase()} · ${c.n[L]}</span></div></div>`).join('');
+
+  markMenu();
+  onScroll();
+}
+
+function markMenu(){
+  document.querySelectorAll('#menuMain a').forEach(a=>
+    a.classList.toggle('current', a.dataset.page===view));
+}
+
+function applyRoute(){
+  const h=location.hash.replace(/^#\/?/,'');
+  const [pageRaw, sec]=h.split('/');
+  const page = pageRaw==='logo' ? 'logo' : 'reisen';
+  const changed = page!==view;
+  view=page;
+  document.body.classList.toggle('view-logo', page==='logo');
+  document.documentElement.classList.toggle('nosnap', page==='logo');
+  markMenu();
+  if(page==='reisen'){
+    if(sec && document.getElementById(sec)){
+      document.getElementById(sec).scrollIntoView();
+    } else {
+      window.scrollTo(0,0);
+    }
+    onScroll();
+  } else if(changed){
+    window.scrollTo(0,0);
+  }
+}
+if ('scrollRestoration' in history) history.scrollRestoration='manual';
+window.addEventListener('hashchange',applyRoute);
+window.addEventListener('pageshow',()=>{
+  const h=location.hash.replace(/^#\/?/,'');
+  const [,sec]=h.split('/');
+  if(!sec) requestAnimationFrame(()=>window.scrollTo(0,0));
+});
+
+const openMenu=v=>menu.classList.toggle('open',v);
+document.getElementById('burger').addEventListener('click',()=>openMenu(true));
+document.getElementById('menuClose').addEventListener('click',()=>openMenu(false));
+menu.addEventListener('click',e=>{ if(e.target.tagName==='A'||e.target===menu) openMenu(false); });
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') openMenu(false); });
+
+langbtn.addEventListener('click',()=>{
+  LANG = LANG==='no' ? 'fa' : 'no';
+  try{ localStorage.setItem('cg-lang',LANG); }catch(err){}
+  render();
+});
+try{ if(localStorage.getItem('cg-lang')==='fa') LANG='fa'; }catch(err){}
+
+render();
+applyRoute();
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>
