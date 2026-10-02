@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Prosjekter | SETAEI Lab</title>
-<meta name="description" content="Utvalgte prosjekter fra SETAEI: egne produkter, AI, apper, nettsider, SEO, merkevare, film og kundearbeid.">
+<meta name="description" content="Prosjekter fra SETAEI: egne produkter, AI-film til Higgsfield Global Film Festival, design og kundeprosjekter innen web, SEO og booking.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://setai.no/projects/">
 <meta property="og:title" content="Prosjekter | SETAEI">
@@ -18,135 +18,164 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&family=Space+Grotesk:wght@400;500;600;700&family=Vazirmatn:wght@500&display=swap" rel="stylesheet">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "CollectionPage", "name": "Prosjekter fra SETAEI", "url": "https://setai.no/projects/", "isPartOf": {"@type": "WebSite", "name": "SETAEI", "url": "https://setai.no/"}, "mainEntity": {"@type": "ItemList", "numberOfItems": 10, "itemListElement": [{"@type": "ListItem", "position": 1, "name": "REALGRAM", "url": "https://setai.no/projects/realgram/"}, {"@type": "ListItem", "position": 2, "name": "TrustAI", "url": "https://trustai.no/"}, {"@type": "ListItem", "position": 3, "name": "Shahnameh", "url": "https://setai.no/projects/shahnameh/"}, {"@type": "ListItem", "position": 4, "name": "Numerologist AI", "url": "https://numerologist.setai.no/"}, {"@type": "ListItem", "position": 5, "name": "Super Intelligence", "url": "https://si.setai.no/"}, {"@type": "ListItem", "position": 6, "name": "The Son He Did Not Know", "url": "https://setai.no/projects/the-son-he-did-not-know/"}, {"@type": "ListItem", "position": 7, "name": "Crown of My Heart", "url": "https://setai.no/projects/crown-of-my-heart/"}, {"@type": "ListItem", "position": 8, "name": "Gardoon", "url": "https://setai.no/projects/gardoon/"}, {"@type": "ListItem", "position": 9, "name": "Styrk Karriere", "url": "https://styrk-karriere.no/"}, {"@type": "ListItem", "position": 10, "name": "Volla Byggmester", "url": "https://vollabyggmester.no/"}]}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "CollectionPage", "name": "Prosjekter fra SETAEI", "url": "https://setai.no/projects/", "isPartOf": {"@type": "WebSite", "name": "SETAEI", "url": "https://setai.no/"}, "mainEntity": {"@type": "ItemList", "numberOfItems": 12, "itemListElement": [{"@type": "ListItem", "position": 1, "name": "REALGRAM", "url": "https://setai.no/projects/realgram/"}, {"@type": "ListItem", "position": 2, "name": "TrustAI", "url": "https://trustai.no/"}, {"@type": "ListItem", "position": 3, "name": "Shahnameh", "url": "https://setai.no/projects/shahnameh/"}, {"@type": "ListItem", "position": 4, "name": "Numerologist AI", "url": "https://setai.no/projects/numerologist/"}, {"@type": "ListItem", "position": 5, "name": "Super Intelligence", "url": "https://si.setai.no/"}, {"@type": "ListItem", "position": 6, "name": "The Son He Did Not Know", "url": "https://setai.no/projects/the-son-he-did-not-know/"}, {"@type": "ListItem", "position": 7, "name": "Crown of My Heart", "url": "https://setai.no/projects/crown-of-my-heart/"}, {"@type": "ListItem", "position": 8, "name": "Gardoon", "url": "https://setai.no/projects/gardoon/"}, {"@type": "ListItem", "position": 9, "name": "Styrk Karriere", "url": "https://setai.no/projects/styrk-karriere/"}, {"@type": "ListItem", "position": 10, "name": "Volla Byggmester", "url": "https://setai.no/projects/vollabyggmester/"}, {"@type": "ListItem", "position": 11, "name": "Bilvaskexpress", "url": "https://setai.no/projects/bilvaskexpress/"}, {"@type": "ListItem", "position": 12, "name": "SOMI Klinikken", "url": "https://setai.no/projects/somiklinikken/"}]}}</script>
 <link rel="stylesheet" href="/assets/css/setaei-brand-v2.css?v=1">
 <link rel="stylesheet" href="/assets/css/setaei-header-v4.css?v=2">
-<link rel="stylesheet" href="/assets/home/essay.css?v=2">
-<link rel="stylesheet" href="/assets/home/projects-lab.css?v=1">
+<link rel="stylesheet" href="/assets/home/projects-v2.css?v=1">
 <link rel="stylesheet" href="/assets/i18n/page-i18n.css?v=1">
 </head>
 <body>
 <canvas id="scene" aria-hidden="true"></canvas>
-<div class="lab-shade" aria-hidden="true"></div>
+<div class="reel" aria-hidden="true"></div>
+<div class="shade" aria-hidden="true"></div>
 <header class="site-nav"><a class="wordmark" href="/" aria-label="SETAEI hjem"><svg class="setaei-logo" viewBox="15 15 545 105" role="img" aria-label="SETAEI"><g fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="butt" stroke-linejoin="round"><path d="M78 29H49C31 29 27 50 43 58L68 70C83 77 79 105 58 105H27"/><path d="M118 31h58M118 68h48M118 105h58"/><path d="M215 31h70M250 31v74"/><path d="M321 105l34-74 34 74"/><path d="M429 31h58M429 68h48M429 105h58"/><path d="M539 31v74"/></g><path fill="#F47A2A" d="M355 58l5 11 12 1-9 8 3 12-11-6-11 6 3-12-9-8 12-1z"/></svg></a><nav class="nav-actions" aria-label="Hovedmeny"><a class="nav-link" href="/services/">Tjenester</a><a class="nav-link" href="/blog/">Blogg</a><a class="nav-link" href="/black-white-universe/">Bok</a><a class="nav-all" href="/projects/" aria-current="page">Alle prosjekter</a><a class="nav-talk" href="/#contact">Kontakt SETAEI</a></nav><div class="lang-switch" role="group" aria-label="Language"><button type="button" data-lang="no">NO</button><button type="button" data-lang="en">EN</button><button type="button" data-lang="fa">فا</button></div></header>
-<main class="lab">
-<section class="lab-hero"><div class="copy">
-<p class="crumb"><a href="/">Hjem</a> / Prosjekter</p>
-<p class="kicker">SETAEI Lab · Prosjekter</p>
-<h1>Bygget, lansert og <em>i drift.</em></h1>
-<p class="dek">Egne produkter, kreative eksperimenter og kundearbeid. Hvert objekt i laboratoriet er et ekte prosjekt. Velg et fagfelt, og se hva som lyser.</p>
-<ul class="stats"><li><b data-count="projects">11</b><span>prosjekter</span></li><li><b>8</b><span>fagfelt</span></li><li><b>3</b><span>verdener: produkt, lab, kunde</span></li></ul>
-<div class="filters" role="group" aria-label="Filtrer etter fagfelt">
-<button class="fchip" type="button" data-f="alle" aria-pressed="true">Alle <small>11</small></button>
-<button class="fchip" type="button" data-f="ai" aria-pressed="false">AI <small></small></button>
-<button class="fchip" type="button" data-f="nettside" aria-pressed="false">Nettside <small></small></button>
-<button class="fchip" type="button" data-f="seo" aria-pressed="false">SEO <small></small></button>
-<button class="fchip" type="button" data-f="app" aria-pressed="false">App <small></small></button>
-<button class="fchip" type="button" data-f="video" aria-pressed="false">Video <small></small></button>
-<button class="fchip" type="button" data-f="merkevare" aria-pressed="false">Merkevare <small></small></button>
-<button class="fchip" type="button" data-f="automatisering" aria-pressed="false">Automatisering <small></small></button>
-<button class="fchip" type="button" data-f="strategi" aria-pressed="false">Strategi <small></small></button>
-</div>
-<p class="hint" aria-live="polite">Viser alle 11 prosjekter</p>
+<p class="now" aria-hidden="true"><span>Prosjekter</span><i class="now-n"></i><b class="now-name">SETAEI Lab</b></p>
+<div class="rail" aria-hidden="true"><span></span></div>
+
+<main class="lab2">
+<section class="hero" data-stage data-name="SETAEI Lab"><div class="wrap">
+<p class="kicker reveal">Prosjekter · SETAEI Lab</p>
+<h1 class="reveal">Bygget, lansert <em>og i drift.</em></h1>
+<p class="dek reveal">Tolv prosjekter. Egne produkter, eksperimenter der teknologi møter kunst, og kunder som har fått sin egen digitale verden.</p>
+<p class="hint reveal">Scroll for å <b>reise gjennom laben</b>.</p>
 </div></section>
 
-<div class="board" id="prosjekter">
-<section class="group" aria-labelledby="g1">
-<div class="ghead"><h2 id="g1">Egne produkter</h2><p>Bygget, eid og videreutviklet av SETAEI.</p></div>
-<ul class="pgrid">
-<li class="wide" data-id="realgram" data-tags="app ai strategi seo"><article class="pcard">
-<div class="media"><img src="/assets/work/projects/realgram.webp" alt="" loading="lazy"><span class="badge">Case study</span></div>
-<div class="pbody"><p class="ptype">Super-app</p><h3>REALGRAM</h3><p class="desc">Gratis VPN, meldinger, wallet, Hakim AI og Shahnameh-spillet, samlet under én identitet.</p>
-<div class="ptags"><span>App</span><span>AI</span><span>Strategi</span><span>SEO</span></div>
-<div class="plinks"><a class="main" href="/projects/realgram/">Les case-studien</a><a href="https://realgram.no/" target="_blank" rel="noopener">realgram.no</a></div></div>
-</article></li>
-<li data-id="trustai" data-tags="ai automatisering nettside"><article class="pcard">
-<div class="media"><img src="/assets/work/projects/trustai.webp" alt="" loading="lazy"></div>
-<div class="pbody"><p class="ptype">SaaS · netthandel</p><h3>TrustAI</h3><p class="desc">Ambassadør- og henvisningsplattform med provisjoner, utbetalinger, Shopify og Vipps.</p>
-<div class="ptags"><span>AI</span><span>Automatisering</span><span>Nettside</span></div>
-<div class="plinks"><a class="main" href="https://trustai.no/" target="_blank" rel="noopener">Besøk trustai.no</a></div></div>
-</article></li>
-<li class="wide" data-id="shahnameh" data-tags="ai app video"><article class="pcard">
-<div class="media"><img src="/projects/shahnameh/poster-hero.jpg" alt="" loading="lazy"><span class="badge">Case study</span></div>
-<div class="pbody"><p class="ptype">Spill · AI-verden</p><h3>Shahnameh</h3><p class="desc">Ferdowsis «Boken om kongene» som interaktivt univers: kunnskapsbase, AI-karakterer og spill.</p>
-<div class="ptags"><span>AI</span><span>App</span><span>Video</span></div>
-<div class="plinks"><a class="main" href="/projects/shahnameh/">Se hele historien</a></div></div>
-</article></li>
-<li data-id="numerologist" data-tags="ai nettside automatisering"><article class="pcard">
-<div class="media"><img src="/assets/work/projects/numerologist.webp" alt="" loading="lazy"></div>
-<div class="pbody"><p class="ptype">AI-plattform</p><h3>Numerologist AI</h3><p class="desc">Mønster- og tolkningsplattform med kalkulatorer og personaliserte lesninger.</p>
-<div class="ptags"><span>AI</span><span>Nettside</span><span>Automatisering</span></div>
-<div class="plinks"><a class="main" href="https://numerologist.setai.no/" target="_blank" rel="noopener">Åpne Numerologist</a></div></div>
-</article></li>
-</ul>
-</section>
+<section class="chapter" data-stage data-name="Egne produkter"><div class="wrap">
+<p class="roman reveal" aria-hidden="true">I</p>
+<h2 class="reveal">Egne produkter</h2>
+<p class="sub reveal">Bygget, eid og videreutviklet av SETAEI.</p>
+</div></section>
 
-<section class="group" aria-labelledby="g2">
-<div class="ghead"><h2 id="g2">Lab: forskning, film og design</h2><p>Eksperimenter der teknologi møter kunst.</p></div>
-<ul class="pgrid">
-<li data-id="si" data-tags="ai app strategi"><article class="pcard">
-<div class="media"><span class="glyph">SI</span></div>
-<div class="pbody"><p class="ptype">Lokal AI · Android</p><h3>Super Intelligence</h3><p class="desc">Personlig AI som kjører offline, med lokal modell og lokal hukommelse.</p>
-<div class="ptags"><span>AI</span><span>App</span><span>Strategi</span></div>
-<div class="plinks"><a class="main" href="https://si.setai.no/">Åpne SI</a><a href="/blog/super-intelligence-si/">Les om SI</a></div></div>
-</article></li>
-<li data-id="film" data-tags="video ai"><article class="pcard">
-<div class="media"><img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3GqVodiVsV7T5gGVNoTV4Q5Q3ZK/f15c83ac-f266-49bf-9862-81d2bdacf9bb.png" alt="" loading="lazy" onerror="this.src='/projects/shahnameh/poster-hero.jpg'"></div>
-<div class="pbody"><p class="ptype">AI-kortfilm</p><h3>The Son He Did Not Know</h3><p class="desc">Rostam og Sohrab, produsert shot for shot med AI for Higgsfield Global Film Festival.</p>
-<div class="ptags"><span>Video</span><span>AI</span></div>
-<div class="plinks"><a class="main" href="/projects/the-son-he-did-not-know/">Se filmen</a><a href="/blog/making-the-son-he-did-not-know/">Making-of</a></div></div>
-</article></li>
-<li data-id="crown" data-tags="video ai"><article class="pcard">
-<div class="media"><img src="/projects/crown-of-my-heart/media/look-05.webp" alt="Crown of My Heart" loading="lazy"></div>
-<div class="pbody"><p class="ptype">AI-musikkvideo</p><h3>Crown of My Heart</h3><p class="desc">Musikkvideo bygget som en AI-pipeline: lyd i Suno, karakter og visuell produksjon i Higgsfield.</p>
-<div class="ptags"><span>Video</span><span>AI</span></div>
-<div class="plinks"><a class="main" href="/projects/crown-of-my-heart/">Se prosjektet</a></div></div>
-</article></li>
-<li data-id="gardoon" data-tags="merkevare"><article class="pcard">
-<div class="media"><span class="glyph fa" lang="fa">گ</span></div>
-<div class="pbody"><p class="ptype">Design · konsept</p><h3>Gardoon</h3><p class="desc">Teknisk visualisering, dimensjoner, 3D-uttrykk og identitetsforslag for en mekanisk innretning.</p>
-<div class="ptags"><span>Merkevare</span></div><div class="plinks"><a class="main" href="/projects/gardoon/">Opplev prosjektet</a></div></div>
-</article></li>
-</ul>
-</section>
+<section class="proj" data-stage data-obj="realgram" data-n="01" data-name="REALGRAM"><div class="wrap">
+<p class="num reveal" aria-hidden="true">01</p>
+<p class="cat reveal">Super-app</p>
+<h2 class="reveal">REALGRAM</h2>
+<p class="line reveal">Gratis VPN, meldinger, wallet, Hakim AI og Shahnameh-spillet, samlet under én identitet.</p>
+<p class="tags reveal">App / AI / Strategi / SEO</p>
+<p class="links reveal"><a href="/projects/realgram/">Les case-studien</a><a class="soft" href="https://realgram.no/" target="_blank" rel="noopener">realgram.no</a></p>
+</div></section>
 
-<section class="group" aria-labelledby="g3">
-<div class="ghead"><h2 id="g3">Kundeprosjekter</h2><p>Nettsider og synlighet for norske bedrifter, i drift i dag.</p></div>
-<ul class="pgrid">
-<li data-id="somi" data-tags="nettside seo merkevare"><article class="pcard">
-<div class="media logo"><img src="/assets/work/brand-approved/somi-dark.png" alt="SOMI Klinikken" loading="lazy"></div>
-<div class="pbody"><p class="ptype">Hudklinikk · Sandnes</p><h3>SOMI Klinikken</h3><p class="desc">Ny nettside med behandlingssider, prisliste og løpende SEO, bygget for synlighet og bestillinger.</p>
-<div class="ptags"><span>Nettside</span><span>SEO</span><span>Merkevare</span></div>
-<div class="plinks"><a class="main" href="https://somiklinikken.no/" target="_blank" rel="noopener">Besøk somiklinikken.no</a></div></div>
-</article></li>
-<li data-id="styrk" data-tags="nettside seo"><article class="pcard">
-<div class="media logo styrk"><img src="/assets/work/brand-approved/styrk-karriere-green.png" alt="Styrk Karriere" loading="lazy"></div>
-<div class="pbody"><p class="ptype">Karriererådgivning</p><h3>Styrk Karriere</h3><p class="desc">Karrierenettside i egen visuell stil med parallax, blogg, kandidatskjema og SEO fra dag én.</p>
-<div class="ptags"><span>Nettside</span><span>SEO</span></div>
-<div class="plinks"><a class="main" href="https://styrk-karriere.no/" target="_blank" rel="noopener">Besøk styrk-karriere.no</a></div></div>
-</article></li>
-<li data-id="volla" data-tags="nettside seo"><article class="pcard">
-<div class="media logo"><img src="/assets/work/brand-approved/volla-dark.webp" alt="Volla Byggmester" loading="lazy"></div>
-<div class="pbody"><p class="ptype">Byggmester · Oslo</p><h3>Volla Byggmester</h3><p class="desc">Nettside, tjenestesider, prosjektgalleri og innhold for bygg og oppussing i Oslo og Akershus.</p>
-<div class="ptags"><span>Nettside</span><span>SEO</span></div>
-<div class="plinks"><a class="main" href="https://vollabyggmester.no/" target="_blank" rel="noopener">Besøk vollabyggmester.no</a></div></div>
-</article></li>
-</ul>
-</section>
+<section class="proj" data-stage data-obj="shahnameh" data-video="/projects/shahnameh/intro-hero.mp4" data-n="02" data-name="Shahnameh"><div class="wrap">
+<p class="num reveal" aria-hidden="true">02</p>
+<p class="cat reveal">Spill og AI-verden</p>
+<h2 class="reveal">Shahnameh</h2>
+<p class="line reveal">Ferdowsis «Boken om kongene» som et interaktivt univers: kunnskapsbase, AI-karakterer og spill.</p>
+<p class="tags reveal">AI / App / Video</p>
+<p class="links reveal"><a href="/projects/shahnameh/">Se hele historien</a><a class="soft" href="/projects/the-son-he-did-not-know/">Filmen til $1M-festivalen</a></p>
+</div></section>
 
-<p class="empty" hidden>Ingen prosjekter i dette fagfeltet ennå.</p>
+<section class="proj" data-stage data-obj="trustai" data-n="03" data-name="TrustAI"><div class="wrap">
+<p class="num reveal" aria-hidden="true">03</p>
+<p class="cat reveal">SaaS · netthandel</p>
+<h2 class="reveal">TrustAI</h2>
+<p class="line reveal">En multi-tenant plattform for ambassadører og henvisninger, med provisjoner, utbetalinger, Shopify og Vipps.</p>
+<p class="tags reveal">AI / Automatisering / SaaS</p>
+<p class="links reveal"><a href="https://trustai.no/">Besøk trustai.no</a></p>
+</div></section>
 
-<div class="end">
-<h2>Skal ditt prosjekt stå <em>her?</em></h2>
-<p>Nettside, SEO, SaaS eller AI, fra første skisse til drift.</p>
-<a class="cta" href="/#contact">Start et prosjekt</a>
-</div>
-</div>
+<section class="proj" data-stage data-obj="numerologist" data-n="04" data-name="Numerologist AI"><div class="wrap">
+<p class="num reveal" aria-hidden="true">04</p>
+<p class="cat reveal">AI-plattform</p>
+<h2 class="reveal">Numerologist AI</h2>
+<p class="line reveal">Mønster- og tolkningsplattform med kalkulatorer og personaliserte lesninger.</p>
+<p class="tags reveal">AI / Nettside / Automatisering</p>
+<p class="links reveal"><a href="https://numerologist.setai.no/">Åpne Numerologist</a></p>
+</div></section>
+
+<section class="proj" data-stage data-obj="si" data-n="05" data-name="Super Intelligence"><div class="wrap">
+<p class="num reveal" aria-hidden="true">05</p>
+<p class="cat reveal">Lokal AI · Android</p>
+<h2 class="reveal">Super Intelligence</h2>
+<p class="line reveal">Personlig AI som kjører offline på telefonen, med lokal modell og lokal hukommelse.</p>
+<p class="tags reveal">AI / App / Personvern</p>
+<p class="links reveal"><a href="https://si.setai.no/">Åpne SI</a><a class="soft" href="/blog/super-intelligence-si/">Les om SI</a></p>
+</div></section>
+
+<section class="chapter" data-stage data-name="Lab"><div class="wrap">
+<p class="roman reveal" aria-hidden="true">II</p>
+<h2 class="reveal">Lab: film og design</h2>
+<p class="sub reveal">Der teknologi møter kunst.</p>
+</div></section>
+
+<section class="proj" data-stage data-obj="film" data-video="https://d8j0ntlcm91z4.cloudfront.net/user_3GqVodiVsV7T5gGVNoTV4Q5Q3ZK/hf_20260913_162329_c2f3473c-6c62-4503-82d6-63ce5bdc5024.mp4" data-n="06" data-name="The Son He Did Not Know"><div class="wrap">
+<p class="num reveal" aria-hidden="true">06</p>
+<p class="cat reveal">AI-kortfilm</p>
+<h2 class="reveal">The Son He Did Not Know</h2>
+<p class="line reveal">Rostam og Sohrab, produsert shot for shot med AI til Higgsfield Global Film Festival.</p>
+<a class="fest reveal" href="https://higgsfield.ai/contests/higgsfield-global-film-festival" target="_blank" rel="noopener"><img src="/assets/work/higgsfield/festival-badge.webp" width="1000" height="520" alt="Higgsfield Global Film Festival, $1,000,000 Prize Fund" loading="lazy"><span><b>Higgsfield Global Film Festival</b>Deltar i den globale AI-filmfestivalen med en premiepott på $1 000 000.</span></a>
+<p class="tags reveal">Video / AI / Shahnameh</p>
+<p class="links reveal"><a href="/projects/the-son-he-did-not-know/">Se filmen</a><a class="soft" href="/blog/making-the-son-he-did-not-know/">Making-of</a></p>
+</div></section>
+
+<section class="proj" data-stage data-obj="crown" data-video="https://d8j0ntlcm91z4.cloudfront.net/user_3GqVodiVsV7T5gGVNoTV4Q5Q3ZK/hf_20260809_204325_06cada49-4c59-4bcc-804f-c3d519c51619.mp4" data-n="07" data-name="Crown of My Heart"><div class="wrap">
+<p class="num reveal" aria-hidden="true">07</p>
+<p class="cat reveal">AI-musikkvideo</p>
+<h2 class="reveal">Crown of My Heart</h2>
+<p class="line reveal">Eksperimentell musikkvideo der lyd, identitet og kamerabevegelse er synkronisert med AI.</p>
+<p class="tags reveal">Video / AI / Musikk</p>
+<p class="links reveal"><a href="/projects/crown-of-my-heart/">Se klippet</a></p>
+</div></section>
+
+<section class="proj" data-stage data-obj="gardoon" data-n="08" data-name="Gardoon"><div class="wrap">
+<p class="num reveal" aria-hidden="true">08</p>
+<p class="cat reveal">Design · konsept</p>
+<h2 class="reveal">Gardoon</h2>
+<p class="line reveal">Teknisk visualisering, dimensjoner, 3D-uttrykk og identitetsforslag for en mekanisk innretning.</p>
+<p class="tags reveal">Merkevare / 3D / Produktdesign</p>
+</div></section>
+
+<section class="chapter" data-stage data-name="Kunder"><div class="wrap">
+<p class="roman reveal" aria-hidden="true">III</p>
+<h2 class="reveal">Kunder</h2>
+<p class="sub reveal">Hver kunde har fått sin egen digitale verden.</p>
+</div></section>
+
+<section class="proj" data-stage data-obj="somi" data-n="09" data-name="SOMI Klinikken"><div class="wrap">
+<p class="num reveal" aria-hidden="true">09</p>
+<p class="cat reveal">Hudklinikk · Sandnes</p>
+<h2 class="reveal">SOMI Klinikken</h2>
+<p class="line reveal">Fra uro til ro: stabil drift, behandlinger som er lette å forstå og en kortere vei til booking.</p>
+<p class="tags reveal">Nettside / Lokal SEO / Innhold</p>
+<p class="links reveal"><a href="/projects/somiklinikken/">Les case-studien</a><a class="soft" href="https://somiklinikken.no/" target="_blank" rel="noopener">somiklinikken.no</a></p>
+</div></section>
+
+<section class="proj" data-stage data-obj="styrk" data-n="10" data-name="Styrk-karriere.no"><div class="wrap">
+<p class="num reveal" aria-hidden="true">10</p>
+<p class="cat reveal">Karriererådgiver · eget firma</p>
+<h2 class="reveal">Styrk-karriere.no</h2>
+<p class="line reveal">Mange års erfaring, nytt firma: navn, slagord, identitet, nettside og en SEO-strategi som eide sine egne topper.</p>
+<p class="tags reveal">Merkevare / Nettside / SEO / Kampanje</p>
+<p class="links reveal"><a href="/projects/styrk-karriere/">Les case-studien</a><a class="soft" href="https://styrk-karriere.no/" target="_blank" rel="noopener">styrk-karriere.no</a></p>
+</div></section>
+
+<section class="proj" data-stage data-obj="volla" data-n="11" data-name="Volla Byggmester"><div class="wrap">
+<p class="num reveal" aria-hidden="true">11</p>
+<p class="cat reveal">Byggmester · Oslo</p>
+<h2 class="reveal">Volla Byggmester</h2>
+<p class="line reveal">Fra første strek til ferdig hus: tjenestesider, prosjektgalleri og lokal synlighet i Oslo og Akershus.</p>
+<p class="tags reveal">Nettside / Design / Lokal SEO</p>
+<p class="links reveal"><a href="/projects/vollabyggmester/">Les case-studien</a><a class="soft" href="https://vollabyggmester.no/" target="_blank" rel="noopener">vollabyggmester.no</a></p>
+</div></section>
+
+<section class="proj" data-stage data-obj="bilvask" data-n="12" data-name="Bilvaskexpress"><div class="wrap">
+<p class="num reveal" aria-hidden="true">12</p>
+<p class="cat reveal">Bilvask · Romerike</p>
+<h2 class="reveal">Bilvaskexpress</h2>
+<p class="line reveal">Inn skitten, ut skinnende: en kundereise med prislogikk, booking og lokal SEO.</p>
+<p class="tags reveal">Nettside / Booking / Lokal SEO / AI</p>
+<p class="links reveal"><a href="/projects/bilvaskexpress/">Les case-studien</a><a class="soft" href="https://bilvaskexpress.no/" target="_blank" rel="noopener">bilvaskexpress.no</a></p>
+</div></section>
+
+<section class="end" data-stage data-name="Ditt prosjekt"><div class="wrap">
+<h2 class="reveal">Skal ditt prosjekt <em>stå her?</em></h2>
+<p class="reveal">Nettside, SEO, SaaS eller AI. Fra første strek til drift.</p>
+<p class="reveal"><a class="go" href="/#contact">Start et prosjekt</a></p>
+</div></section>
 </main>
 <script src="/assets/js/setaei-header-v4.js?v=1" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
-<script src="/assets/home/projects-lab.js?v=1" defer></script>
-<script id="setaei-page-i18n" type="application/json">{"en": {"html": "html", "Prosjekter | SETAEI Lab": "Projects | SETAI Lab", "Tjenester": "Services", "Blogg": "Blog", "Alle prosjekter": "All projects", "Kontakt SETAEI": "Contact SETAEI", "NO": "NO", "EN": "EN", "فا": "فا", "Hjem": "Home", "/ Prosjekter": "/ Projects", "SETAEI Lab · Prosjekter": "SETAEI Lab · Projects", "Bygget, lansert og": "Built, launched and", "i drift.": "in operation.", "Egne produkter, kreative eksperimenter og kundearbeid. Hvert objekt i laboratoriet er et ekte prosjekt. Velg et fagfelt, og se hva som lyser.": "Own products, creative experiments and customer work. Each object in the laboratory is a real project. Choose a field of study and see what lights up.", "prosjekter": "projects", "fagfelt": "professional field", "verdener: produkt, lab, kunde": "worlds: product, lab, customer", "Alle": "Everyone", "AI": "AI", "Nettside": "Website", "SEO": "SEO", "App": "App", "Video": "Video", "Merkevare": "Branded product", "Automatisering": "Automation", "Strategi": "Strategy", "Viser alle 11 prosjekter": "Showing all 11 projects", "Egne produkter": "Own products", "Bygget, eid og videreutviklet av SETAEI.": "Built, owned and further developed by SETAEI.", "Case study": "Case studies", "Super-app": "Super app", "REALGRAM": "REALGRAM", "Gratis VPN, meldinger, wallet, Hakim AI og Shahnameh-spillet, samlet under én identitet.": "Free VPN, messaging, wallet, Hakim AI and the Shahnameh game, all under one identity.", "Les case-studien": "Read the case study", "SaaS · netthandel": "SaaS · online shopping", "TrustAI": "TrustAI", "Ambassadør- og henvisningsplattform med provisjoner, utbetalinger, Shopify og Vipps.": "Ambassador and referral platform with commissions, payouts, Shopify and Vipps.", "Besøk trustai.no": "Visit trustai.no", "Spill · AI-verden": "Games · AI World", "Shahnameh": "Shahnameh", "Ferdowsis «Boken om kongene» som interaktivt univers: kunnskapsbase, AI-karakterer og spill.": "Ferdowsi's \"Book of Kings\" as an interactive universe: knowledge base, AI characters and games.", "Se hele historien": "See the full story", "AI-plattform": "AI platform", "Numerologist AI": "Numerologist AI", "Mønster- og tolkningsplattform med kalkulatorer og personaliserte lesninger.": "Pattern and interpretation platform with calculators and personalized readings.", "Åpne Numerologist": "Open Numerologist", "Lab: forskning, film og design": "Lab: research, film and design", "Eksperimenter der teknologi møter kunst.": "Experiments where technology meets art.", "SI": "SI", "Lokal AI · Android": "Local AI · Android", "Super Intelligence": "Super Intelligence", "Personlig AI som kjører offline, med lokal modell og lokal hukommelse.": "Personal AI that runs offline, with local model and local memory.", "Åpne SI": "Open SI", "Les om SI": "Read about SI", "AI-kortfilm": "AI short film", "The Son He Did Not Know": "The Son He Did Not Know", "Rostam og Sohrab, produsert shot for shot med AI for Higgsfield Global Film Festival.": "Rostam and Sohrab, produced shot by shot with AI for the Higgsfield Global Film Festival.", "Se filmen": "Watch the movie", "Making-of": "Making-of", "AI-musikkvideo": "AI music video", "Crown of My Heart": "Crown of My Heart", "Musikkvideo bygget som en AI-pipeline: lyd i Suno, karakter og visuell produksjon i Higgsfield.": "Experimental music video with AI-synchronized sound, identity and camera movement.", "Se klippet": "Watch the clip", "Design · konsept": "Design · concept", "Gardoon": "Gardoon", "Teknisk visualisering, dimensjoner, 3D-uttrykk og identitetsforslag for en mekanisk innretning.": "Technical visualization, dimensions, 3D expression and identity proposal for a mechanical device.", "Kundeprosjekter": "Customer projects", "Nettsider og synlighet for norske bedrifter, i drift i dag.": "Websites and visibility for Norwegian companies, in operation today.", "Hudklinikk · Sandnes": "Skin Clinic · Sandnes", "SOMI Klinikken": "SOMI Clinic", "Ny nettside med behandlingssider, prisliste og løpende SEO, bygget for synlighet og bestillinger.": "New website with treatment pages, price list and ongoing SEO, built for visibility and orders.", "Besøk somiklinikken.no": "Visit somiklinikken.no", "Karriererådgivning": "Career counseling", "Styrk Karriere": "Strengthen Career", "Karrierenettside i egen visuell stil med parallax, blogg, kandidatskjema og SEO fra dag én.": "Career website in own visual style with parallax, blog, candidate form and SEO from day one.", "Besøk styrk-karriere.no": "Visit styrk-karriere.no", "Byggmester · Oslo": "Builder · Oslo", "Volla Byggmester": "Volla Builder", "Nettside, tjenestesider, prosjektgalleri og innhold for bygg og oppussing i Oslo og Akershus.": "Website, service pages, project gallery and content for construction and renovation in Oslo and Akershus.", "Besøk vollabyggmester.no": "Visit vollabyggmester.no", "Ingen prosjekter i dette fagfeltet ennå.": "No projects in this field yet.", "Skal ditt prosjekt stå": "Should your project stand", "her?": "here?", "Nettside, SEO, SaaS eller AI, fra første skisse til drift.": "Website, SEO, SaaS or AI, from first sketch to operation.", "Start et prosjekt": "Start a project"}, "fa": {"html": "html", "Prosjekter | SETAEI Lab": "پروژه ها | آزمایشگاه SETAI", "Tjenester": "خدمات", "Blogg": "وبلاگ", "Alle prosjekter": "همه پروژه ها", "Kontakt SETAEI": "با SETAEI تماس بگیرید", "NO": "NO", "EN": "EN", "فا": "فا", "Hjem": "صفحه اصلی", "/ Prosjekter": "/ پروژه ها", "SETAEI Lab · Prosjekter": "آزمایشگاه SETAEI · پروژه ها", "Bygget, lansert og": "ساخته، راه اندازی و", "i drift.": "در حال بهره برداری", "Egne produkter, kreative eksperimenter og kundearbeid. Hvert objekt i laboratoriet er et ekte prosjekt. Velg et fagfelt, og se hva som lyser.": "محصولات خود، آزمایش های خلاقانه و کار مشتری. هر جسم در آزمایشگاه یک پروژه واقعی است. یک رشته تحصیلی را انتخاب کنید و ببینید چه چیزی روشن می شود.", "prosjekter": "پروژه ها", "fagfelt": "زمینه حرفه ای", "verdener: produkt, lab, kunde": "دنیاها: محصول، آزمایشگاه، مشتری", "Alle": "همه", "AI": "AI", "Nettside": "وب سایت", "SEO": "SEO", "App": "برنامه", "Video": "ویدئو", "Merkevare": "محصول مارک دار", "Automatisering": "اتوماسیون", "Strategi": "استراتژی", "Viser alle 11 prosjekter": "نمایش تمام 11 پروژه", "Egne produkter": "محصولات خود را", "Bygget, eid og videreutviklet av SETAEI.": "ساخت، مالکیت و توسعه بیشتر توسط SETAEI.", "Case study": "مطالعات موردی", "Super-app": "برنامه فوق العاده", "REALGRAM": "REALGRAM", "Gratis VPN, meldinger, wallet, Hakim AI og Shahnameh-spillet, samlet under én identitet.": "VPN رایگان، پیام رسانی، کیف پول، هوش مصنوعی حکیم و بازی شاهنامه، همه با یک هویت.", "Les case-studien": "مطالعه موردی را بخوانید", "SaaS · netthandel": "SaaS · خرید آنلاین", "TrustAI": "TrustAI", "Ambassadør- og henvisningsplattform med provisjoner, utbetalinger, Shopify og Vipps.": "سفیر و پلت فرم ارجاع با کمیسیون، پرداخت، Shopify و Vipps.", "Besøk trustai.no": "به trustai.no مراجعه کنید", "Spill · AI-verden": "بازی ها · AI World", "Shahnameh": "Shahnameh", "Ferdowsis «Boken om kongene» som interaktivt univers: kunnskapsbase, AI-karakterer og spill.": "\"کتاب شاهان\" فردوسی به عنوان یک جهان تعاملی: پایگاه دانش، شخصیت ها و بازی های هوش مصنوعی.", "Se hele historien": "داستان کامل را ببینید", "AI-plattform": "پلتفرم هوش مصنوعی", "Numerologist AI": "اعداد شناس AI", "Mønster- og tolkningsplattform med kalkulatorer og personaliserte lesninger.": "پلت فرم الگو و تفسیر با ماشین حساب و خوانش های شخصی.", "Åpne Numerologist": "شماره شناس را باز کنید", "Lab: forskning, film og design": "آزمایشگاه: تحقیق، فیلم و طراحی", "Eksperimenter der teknologi møter kunst.": "آزمایش هایی که در آن فناوری با هنر روبرو می شود.", "SI": "SI", "Lokal AI · Android": "هوش مصنوعی محلی · اندروید", "Super Intelligence": "سوپر هوش", "Personlig AI som kjører offline, med lokal modell og lokal hukommelse.": "هوش مصنوعی شخصی که بصورت آفلاین با مدل محلی و حافظه محلی اجرا می شود.", "Åpne SI": "SI را باز کنید", "Les om SI": "درباره SI بخوانید", "AI-kortfilm": "فیلم کوتاه هوش مصنوعی", "The Son He Did Not Know": "پسری که او نمی دانست", "Rostam og Sohrab, produsert shot for shot med AI for Higgsfield Global Film Festival.": "رستم و سهراب، شات به شات با هوش مصنوعی برای جشنواره جهانی فیلم هیگزفیلد تهیه شده است.", "Se filmen": "فیلم را تماشا کنید", "Making-of": "ساخت از", "AI-musikkvideo": "موزیک ویدیو هوش مصنوعی", "Crown of My Heart": "تاج قلب من", "Musikkvideo bygget som en AI-pipeline: lyd i Suno, karakter og visuell produksjon i Higgsfield.": "موزیک ویدیوی آزمایشی با صدای هماهنگ شده با هوش مصنوعی، هویت و حرکت دوربین.", "Se klippet": "کلیپ را ببینید", "Design · konsept": "طراحی · مفهوم", "Gardoon": "گردون", "Teknisk visualisering, dimensjoner, 3D-uttrykk og identitetsforslag for en mekanisk innretning.": "تجسم فنی، ابعاد، بیان سه بعدی و پیشنهاد هویت برای یک دستگاه مکانیکی.", "Kundeprosjekter": "پروژه های مشتری", "Nettsider og synlighet for norske bedrifter, i drift i dag.": "وب‌سایت‌ها و قابلیت مشاهده برای شرکت‌های نروژی، امروز در حال اجرا هستند.", "Hudklinikk · Sandnes": "کلینیک پوست · ساندنس", "SOMI Klinikken": "کلینیک SOMI", "Ny nettside med behandlingssider, prisliste og løpende SEO, bygget for synlighet og bestillinger.": "وب سایت جدید با صفحات درمان، لیست قیمت و سئوی مداوم، ساخته شده برای مشاهده و سفارش.", "Besøk somiklinikken.no": "به somiklinikken.no مراجعه کنید", "Karriererådgivning": "مشاوره شغلی", "Styrk Karriere": "تقویت شغل", "Karrierenettside i egen visuell stil med parallax, blogg, kandidatskjema og SEO fra dag én.": "وب سایت شغلی به سبک بصری خاص با اختلاف منظر، وبلاگ، فرم نامزد و سئو از روز اول.", "Besøk styrk-karriere.no": "به styrk-karriere.no مراجعه کنید", "Byggmester · Oslo": "سازنده · اسلو", "Volla Byggmester": "ولا ساز", "Nettside, tjenestesider, prosjektgalleri og innhold for bygg og oppussing i Oslo og Akershus.": "وب سایت، صفحات خدمات، گالری پروژه و محتوای ساخت و ساز و بازسازی در اسلو و آکرشوس.", "Besøk vollabyggmester.no": "به vollabyggmester.no مراجعه کنید", "Ingen prosjekter i dette fagfeltet ennå.": "هنوز پروژه ای در این زمینه وجود ندارد.", "Skal ditt prosjekt stå": "اگر پروژه شما پابرجا باشد", "her?": "اینجا؟", "Nettside, SEO, SaaS eller AI, fra første skisse til drift.": "وب سایت، سئو، SaaS یا AI، از اولین طرح تا عملیات.", "Start et prosjekt": "یک پروژه را شروع کنید"}}</script>
+<script src="/assets/home/projects-scene.js?v=1" defer></script>
+<script id="setaei-page-i18n" type="application/json">{"en":{"html":"html","Prosjekter | SETAEI Lab":"Projects | SETAI Lab","Tjenester":"Services","Blogg":"Blog","Alle prosjekter":"All projects","Kontakt SETAEI":"Contact SETAEI","NO":"NO","EN":"EN","فا":"فا","Hjem":"Home","/ Prosjekter":"/ Projects","SETAEI Lab · Prosjekter":"SETAEI Lab · Projects","Bygget, lansert og":"Built, launched and","i drift.":"in operation.","Kundeprosjekter først. Deretter egne digitale produkter og kreative eksperimenter. Alt her er bygget, lansert eller utviklet av SETAEI.":"Own products, creative experiments and customer work. Each object in the laboratory is a real project. Choose a field of study and see what lights up.","prosjekter":"projects","fagfelt":"professional field","verdener: kunde, produkt, lab":"worlds: product, lab, customer","Alle":"Everyone","AI":"AI","Nettside":"Website","SEO":"SEO","App":"App","Video":"Video","Merkevare":"Branded product","Automatisering":"Automation","Strategi":"Strategy","Viser alle 13 prosjekter":"Showing all 11 projects","Egne produkter":"Own products","Bygget, eid og videreutviklet av SETAEI.":"Built, owned and further developed by SETAEI.","Case study":"Case studies","Super-app":"Super app","REALGRAM":"REALGRAM","Gratis VPN, meldinger, wallet, Hakim AI og Shahnameh-spillet, samlet under én identitet.":"Free VPN, messaging, wallet, Hakim AI and the Shahnameh game, all under one identity.","Les case-studien":"Read the case study","SaaS · netthandel":"SaaS · online shopping","TrustAI":"TrustAI","Ambassadør- og henvisningsplattform med provisjoner, utbetalinger, Shopify og Vipps.":"Ambassador and referral platform with commissions, payouts, Shopify and Vipps.","Besøk trustai.no":"Visit trustai.no","Spill · AI-verden":"Games · AI World","Shahnameh":"Shahnameh","Ferdowsis «Boken om kongene» som interaktivt univers: kunnskapsbase, AI-karakterer og spill.":"Ferdowsi's \"Book of Kings\" as an interactive universe: knowledge base, AI characters and games.","Se hele historien":"See the full story","AI-plattform":"AI platform","Numerologist AI":"Numerologist AI","Mønster- og tolkningsplattform med kalkulatorer og personaliserte lesninger.":"Pattern and interpretation platform with calculators and personalized readings.","Åpne Numerologist":"Open Numerologist","Lab: forskning, film og design":"Lab: research, film and design","Eksperimenter der teknologi møter kunst.":"Experiments where technology meets art.","SI":"SI","Lokal AI · Android":"Local AI · Android","Super Intelligence":"Super Intelligence","Personlig AI som kjører offline, med lokal modell og lokal hukommelse.":"Personal AI that runs offline, with local model and local memory.","Åpne SI":"Open SI","Les om SI":"Read about SI","AI-kortfilm":"AI short film","The Son He Did Not Know":"The Son He Did Not Know","Rostam og Sohrab, produsert shot for shot med AI for Higgsfield Global Film Festival.":"Rostam and Sohrab, produced shot by shot with AI for the Higgsfield Global Film Festival.","Se filmen":"Watch the movie","Making-of":"Making-of","AI-musikkvideo":"AI music video","Crown of My Heart":"Crown of My Heart","Musikkvideo bygget som en AI-pipeline: lyd i Suno, karakter og visuell produksjon i Higgsfield.":"Experimental music video with AI-synchronized sound, identity and camera movement.","Se klippet":"Watch the clip","Design · konsept":"Design · concept","Gardoon":"Gardoon","Teknisk visualisering, dimensjoner, 3D-uttrykk og identitetsforslag for en mekanisk innretning.":"Technical visualization, dimensions, 3D expression and identity proposal for a mechanical device.","Kundeprosjekter":"Customer projects","Nettsider og synlighet for norske bedrifter, i drift i dag.":"Websites and visibility for Norwegian companies, in operation today.","Hudklinikk · Sandnes":"Skin Clinic · Sandnes","SOMI Klinikken":"SOMI Clinic","Ny nettside med behandlingssider, prisliste og løpende SEO, bygget for synlighet og bestillinger.":"New website with treatment pages, price list and ongoing SEO, built for visibility and orders.","Besøk somiklinikken.no":"Visit somiklinikken.no","Karriererådgivning":"Career counseling","Styrk Karriere":"Strengthen Career","Karrierenettside i egen visuell stil med parallax, blogg, kandidatskjema og SEO fra dag én.":"Career website in own visual style with parallax, blog, candidate form and SEO from day one.","Besøk styrk-karriere.no":"Visit styrk-karriere.no","Byggmester · Oslo":"Builder · Oslo","Volla Byggmester":"Volla Builder","Nettside, tjenestesider, prosjektgalleri og innhold for bygg og oppussing i Oslo og Akershus.":"Website, service pages, project gallery and content for construction and renovation in Oslo and Akershus.","Besøk vollabyggmester.no":"Visit vollabyggmester.no","Ingen prosjekter i dette fagfeltet ennå.":"No projects in this field yet.","Skal ditt prosjekt stå":"Should your project stand","her?":"here?","Nettside, SEO, SaaS eller AI, fra første skisse til drift.":"Website, SEO, SaaS or AI, from first sketch to operation.","Start et prosjekt":"Start a project"},"fa":{"html":"html","Prosjekter | SETAEI Lab":"پروژه ها | آزمایشگاه SETAI","Tjenester":"خدمات","Blogg":"وبلاگ","Alle prosjekter":"همه پروژه ها","Kontakt SETAEI":"با SETAEI تماس بگیرید","NO":"NO","EN":"EN","فا":"فا","Hjem":"صفحه اصلی","/ Prosjekter":"/ پروژه ها","SETAEI Lab · Prosjekter":"آزمایشگاه SETAEI · پروژه ها","Bygget, lansert og":"ساخته، راه اندازی و","i drift.":"در حال بهره برداری","Kundeprosjekter først. Deretter egne digitale produkter og kreative eksperimenter. Alt her er bygget, lansert eller utviklet av SETAEI.":"محصولات خود، آزمایش های خلاقانه و کار مشتری. هر جسم در آزمایشگاه یک پروژه واقعی است. یک رشته تحصیلی را انتخاب کنید و ببینید چه چیزی روشن می شود.","prosjekter":"پروژه ها","fagfelt":"زمینه حرفه ای","verdener: kunde, produkt, lab":"دنیاها: محصول، آزمایشگاه، مشتری","Alle":"همه","AI":"AI","Nettside":"وب سایت","SEO":"SEO","App":"برنامه","Video":"ویدئو","Merkevare":"محصول مارک دار","Automatisering":"اتوماسیون","Strategi":"استراتژی","Viser alle 13 prosjekter":"نمایش تمام 11 پروژه","Egne produkter":"محصولات خود را","Bygget, eid og videreutviklet av SETAEI.":"ساخت، مالکیت و توسعه بیشتر توسط SETAEI.","Case study":"مطالعات موردی","Super-app":"برنامه فوق العاده","REALGRAM":"REALGRAM","Gratis VPN, meldinger, wallet, Hakim AI og Shahnameh-spillet, samlet under én identitet.":"VPN رایگان، پیام رسانی، کیف پول، هوش مصنوعی حکیم و بازی شاهنامه، همه با یک هویت.","Les case-studien":"مطالعه موردی را بخوانید","SaaS · netthandel":"SaaS · خرید آنلاین","TrustAI":"TrustAI","Ambassadør- og henvisningsplattform med provisjoner, utbetalinger, Shopify og Vipps.":"سفیر و پلت فرم ارجاع با کمیسیون، پرداخت، Shopify و Vipps.","Besøk trustai.no":"به trustai.no مراجعه کنید","Spill · AI-verden":"بازی ها · AI World","Shahnameh":"Shahnameh","Ferdowsis «Boken om kongene» som interaktivt univers: kunnskapsbase, AI-karakterer og spill.":"\"کتاب شاهان\" فردوسی به عنوان یک جهان تعاملی: پایگاه دانش، شخصیت ها و بازی های هوش مصنوعی.","Se hele historien":"داستان کامل را ببینید","AI-plattform":"پلتفرم هوش مصنوعی","Numerologist AI":"اعداد شناس AI","Mønster- og tolkningsplattform med kalkulatorer og personaliserte lesninger.":"پلت فرم الگو و تفسیر با ماشین حساب و خوانش های شخصی.","Åpne Numerologist":"شماره شناس را باز کنید","Lab: forskning, film og design":"آزمایشگاه: تحقیق، فیلم و طراحی","Eksperimenter der teknologi møter kunst.":"آزمایش هایی که در آن فناوری با هنر روبرو می شود.","SI":"SI","Lokal AI · Android":"هوش مصنوعی محلی · اندروید","Super Intelligence":"سوپر هوش","Personlig AI som kjører offline, med lokal modell og lokal hukommelse.":"هوش مصنوعی شخصی که بصورت آفلاین با مدل محلی و حافظه محلی اجرا می شود.","Åpne SI":"SI را باز کنید","Les om SI":"درباره SI بخوانید","AI-kortfilm":"فیلم کوتاه هوش مصنوعی","The Son He Did Not Know":"پسری که او نمی دانست","Rostam og Sohrab, produsert shot for shot med AI for Higgsfield Global Film Festival.":"رستم و سهراب، شات به شات با هوش مصنوعی برای جشنواره جهانی فیلم هیگزفیلد تهیه شده است.","Se filmen":"فیلم را تماشا کنید","Making-of":"ساخت از","AI-musikkvideo":"موزیک ویدیو هوش مصنوعی","Crown of My Heart":"تاج قلب من","Musikkvideo bygget som en AI-pipeline: lyd i Suno, karakter og visuell produksjon i Higgsfield.":"موزیک ویدیوی آزمایشی با صدای هماهنگ شده با هوش مصنوعی، هویت و حرکت دوربین.","Se klippet":"کلیپ را ببینید","Design · konsept":"طراحی · مفهوم","Gardoon":"گردون","Teknisk visualisering, dimensjoner, 3D-uttrykk og identitetsforslag for en mekanisk innretning.":"تجسم فنی، ابعاد، بیان سه بعدی و پیشنهاد هویت برای یک دستگاه مکانیکی.","Kundeprosjekter":"پروژه های مشتری","Nettsider og synlighet for norske bedrifter, i drift i dag.":"وب‌سایت‌ها و قابلیت مشاهده برای شرکت‌های نروژی، امروز در حال اجرا هستند.","Hudklinikk · Sandnes":"کلینیک پوست · ساندنس","SOMI Klinikken":"کلینیک SOMI","Ny nettside med behandlingssider, prisliste og løpende SEO, bygget for synlighet og bestillinger.":"وب سایت جدید با صفحات درمان، لیست قیمت و سئوی مداوم، ساخته شده برای مشاهده و سفارش.","Besøk somiklinikken.no":"به somiklinikken.no مراجعه کنید","Karriererådgivning":"مشاوره شغلی","Styrk Karriere":"تقویت شغل","Karrierenettside i egen visuell stil med parallax, blogg, kandidatskjema og SEO fra dag én.":"وب سایت شغلی به سبک بصری خاص با اختلاف منظر، وبلاگ، فرم نامزد و سئو از روز اول.","Besøk styrk-karriere.no":"به styrk-karriere.no مراجعه کنید","Byggmester · Oslo":"سازنده · اسلو","Volla Byggmester":"ولا ساز","Nettside, tjenestesider, prosjektgalleri og innhold for bygg og oppussing i Oslo og Akershus.":"وب سایت، صفحات خدمات، گالری پروژه و محتوای ساخت و ساز و بازسازی در اسلو و آکرشوس.","Besøk vollabyggmester.no":"به vollabyggmester.no مراجعه کنید","Ingen prosjekter i dette fagfeltet ennå.":"هنوز پروژه ای در این زمینه وجود ندارد.","Skal ditt prosjekt stå":"اگر پروژه شما پابرجا باشد","her?":"اینجا؟","Nettside, SEO, SaaS eller AI, fra første skisse til drift.":"وب سایت، سئو، SaaS یا AI، از اولین طرح تا عملیات.","Start et prosjekt":"یک پروژه را شروع کنید","REAL Token":"توکن واقعی","Bilvaskexpress":"اکسپرس کارواش","50 cm":"50 سانتی متر","Bok":"کتاب","Blockchain":"بلاک چین","Design, utvikling, SEO og digitale systemer for virksomheter i drift.":"طراحی، توسعه، سئو و سیستم های دیجیتال برای کسب و کارهای در حال فعالیت."}}</script>
 <script src="/assets/i18n/page-i18n.js?v=2"></script>
 </body>
 </html>
