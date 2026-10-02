@@ -1,4 +1,4 @@
-// /projects/styrk-karriere/: the candidate's journey as a mountain path, one stop per section
+// /projects/styrk-karriere/: a new firm climbing its own peaks, one scene per section
 (function(){
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var canvas = document.getElementById('scene');
@@ -107,13 +107,34 @@
   board.scale.setScalar(0.001);
   var visitors = []; for (var v=0; v<10; v++){ var vm = new THREE.Mesh(new THREE.CircleGeometry(0.03,12), flat(COL.mustard, 0)); poster.add(vm); visitors.push(vm); }
   // SEO flags (7)
-  var FLAGS = [['#4',[-0.6,0.7,-1.95]],['#1',[1.2,1.05,-1.95]],['#2',[1.6,1.6,-2.55]]];
+  var FLAGS = [['#4',[-0.6,0.7,-1.95]],['#2',[1.2,1.05,-1.95]]];
   var flags = FLAGS.map(function(f,k){ var g = new THREE.Group(); g.position.set(f[1][0], f[1][1], f[1][2]+0.02); poster.add(g);
     var pole = new THREE.Mesh(new THREE.PlaneGeometry(0.025,0.5), flat(0x2B2A26)); pole.position.y = 0.25; g.add(pole);
     var cloth = new THREE.Mesh(new THREE.PlaneGeometry(0.34,0.2), flat(k===1?COL.rust:COL.mustard)); cloth.position.set(0.18,0.4,0.005); g.add(cloth);
     var l = sprite(f[0], k===1?'#EFE4CC':'#2B2A26', '700 64px Karla, system-ui, sans-serif', g); l.position.set(0.18,0.4,0.01); l.scale.set(0.5,0.1,1); l.material.opacity = 1;
     g.scale.setScalar(0.001); return g; });
-  // strata cross-section (8)
+
+  // competitors on the broad peak (1) and niche peaks (2)
+  var compG = new THREE.Group(); poster.add(compG);
+  var compFlags = [[1.38,1.42],[1.55,1.6],[1.72,1.5],[1.86,1.3]].map(function(q,k){ var g = new THREE.Group(); g.position.set(q[0], q[1], -2.55); compG.add(g);
+    var pole = new THREE.Mesh(new THREE.PlaneGeometry(0.02,0.36), flat(0x55524C,0)); pole.position.y = 0.18; g.add(pole);
+    var cloth = new THREE.Mesh(new THREE.PlaneGeometry(0.2,0.12), flat(0x7E7A72,0)); cloth.position.set(0.1,0.3,0.004); g.add(cloth); return g; });
+  var bigLbl = sprite('«karriererådgivning»', '#2B2A26', 'italic 600 40px "Playfair Display", Georgia, serif', compG); bigLbl.position.set(1.6, 2.15, -2.5); bigLbl.scale.set(1.6,0.3,1);
+  var bigSub = sprite('etablerte aktører', '#55524C', '500 34px Karla, system-ui, sans-serif', compG); bigSub.position.set(1.6, 1.92, -2.5); bigSub.scale.set(1.1,0.2,1);
+  var NICHE = [['ledere og fagspesialister',[-0.6,0.72,-1.95],0.52],['100 % digital',[1.2,1.07,-1.95],0.8],['jobbsøk fra utlandet',[-2.4,0.42,-1.95],0.3]];
+  var nicheG = new THREE.Group(); poster.add(nicheG);
+  var niche = NICHE.map(function(n){ var dot = new THREE.Mesh(new THREE.CircleGeometry(0.06,20), flat(COL.mustard,0)); dot.position.set(n[1][0], n[1][1], n[1][2]+0.03); nicheG.add(dot);
+    var l = sprite(n[0], '#B4532F', '700 36px Karla, system-ui, sans-serif', nicheG); l.position.set(n[1][0], n[1][1]+0.22, n[1][2]+0.04); l.scale.set(1.35,0.25,1);
+    var from = path.getPoint(n[2]); var route = new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(from.x,from.y,from.z+0.02), new THREE.Vector3((from.x+n[1][0])/2, Math.max(from.y,n[1][1])+0.15, (from.z+n[1][2])/2), new THREE.Vector3(n[1][0], n[1][1], n[1][2]+0.03)]), new THREE.LineDashedMaterial({color:COL.rust, dashSize:0.05, gapSize:0.04, transparent:true, opacity:0}));
+    route.computeLineDistances(); nicheG.add(route); return {dot:dot, l:l, route:route}; });
+  // consultation cabin (6)
+  var cabin = new THREE.Group(); var cp = path.getPoint(0.5); cabin.position.set(cp.x+0.32, cp.y+0.02, cp.z+0.04); poster.add(cabin);
+  shapeMesh([[-0.2,0],[0.2,0],[0.2,0.22],[0,0.38],[-0.2,0.22]], COL.mustard, 0, cabin);
+  shapeMesh([[-0.05,0],[0.05,0],[0.05,0.14],[-0.05,0.14]], COL.rust, 0.005, cabin);
+  var win = new THREE.Mesh(new THREE.PlaneGeometry(0.07,0.06), flat(0xFFF1C9)); win.position.set(0.12,0.16,0.006); cabin.add(win);
+  var cabL = sprite('Gratis samtale', '#2B2A26', '700 38px Karla, system-ui, sans-serif', cabin); cabL.position.set(0,0.52,0.01); cabL.scale.set(0.95,0.18,1); cabL.material.opacity = 1;
+  cabin.scale.setScalar(0.001);
+  // strata cross-section (9)
   var strataG = new THREE.Group(); strataG.position.set(-1.65, -2.9, 0.15); poster.add(strataG);
   var STR = [[COL.pine,'Grunnmur'],[0x3E5A45,'Nisjeinnhold'],[0x8C5530,'Kommersiell intensjon'],[COL.rust,'Forsterkning']];
   var strata = STR.map(function(s,k){ var m = new THREE.Mesh(new THREE.PlaneGeometry(2.3,0.32), flat(s[0], 0)); m.position.set(0, k*0.34, 0); strataG.add(m); var l = sprite(s[1], '#EFE4CC', '500 36px Karla, system-ui, sans-serif', strataG); l.position.set(0, k*0.34, 0.01); l.scale.set(1.5,0.14,1); m.userData.l = l; return m; });
@@ -164,23 +185,28 @@
     walked.geometry.setDrawRange(0, Math.floor(tubeCount * fA / 3) * 3);
 
     // sun rises with identity (3), sets at end
-    var p3 = p(c,3), pEnd = p(c,LAST);
+    var p3 = p(c,4), pEnd = p(c,LAST);
     sun.position.y = -1.6 + ease(p3)*3.2 - pEnd*1.0;
     sunRays.forEach(function(ray,i){ var a = ray.userData.a + time*0.1; ray.position.set(sun.position.x + Math.cos(a)*0.95, sun.position.y + Math.sin(a)*0.95, -2.96); ray.rotation.z = a - Math.PI/2; ray.material.opacity = 0.9*p3; });
     skyMat.color.copy(PAPER0).lerp(DUSK, pEnd*0.85);
     clouds.forEach(function(cl,i){ cl.position.x = ((cl.position.x + 2.6 + (reduce?0:0.0015*(i+1))) % 5.6) - 2.6; });
-    titleSpr.material.opacity = 0.95; subSpr.material.opacity = 0.9*clamp01(p(c,2)*1.2);
+    titleSpr.material.opacity = 0.95; subSpr.material.opacity = 0.9*clamp01(p(c,3)*1.2);
 
     // signposts (1)
-    signs.forEach(function(g,i){ var on = clamp01(p(c,1)*1.4 - i*0.08); g.scale.setScalar(Math.max(0.001, ease(on))); });
-    trail.scale.setScalar(Math.max(0.001, ease(p(c,2))));
-    steps3.forEach(function(m,k){ var o = clamp01(p(c,4)*1.5 - k*0.2) * (1 - p(c,7)*0.7); m.material.opacity = o; m.userData.l.material.opacity = o; });
-    board.scale.setScalar(Math.max(0.001, ease(p(c,6))));
-    var w6 = w(c,6);
+    signs.forEach(function(g,i){ var on = clamp01(p(c,2)*1.4 - i*0.08); g.scale.setScalar(Math.max(0.001, ease(on))); });
+    trail.scale.setScalar(Math.max(0.001, ease(p(c,3))));
+    steps3.forEach(function(m,k){ var o = clamp01(p(c,5)*1.5 - k*0.2) * (1 - p(c,8)*0.7); m.material.opacity = o; m.userData.l.material.opacity = o; });
+    board.scale.setScalar(Math.max(0.001, ease(p(c,7))));
+    var w6 = w(c,7);
     visitors.forEach(function(vm,i){ var t2 = ((time*0.25) + i/10) % 1; var from = new THREE.Vector3(board.position.x, board.position.y+0.75, board.position.z+0.02); var to = path.getPoint(Math.min(0.97, 0.66 + t2*0.25)); vm.position.copy(from).lerp(to, ease(Math.min(1,t2*1.3))); vm.position.z += 0.02; vm.material.opacity = w6*(1-t2*0.4); vm.visible = w6>0.02; });
-    flags.forEach(function(g,k){ g.scale.setScalar(Math.max(0.001, ease(clamp01(p(c,7)*1.5 - k*0.2)))); g.children[1].rotation.y = Math.sin(time*2+k)*0.25; });
-    strata.forEach(function(m,k){ var o = clamp01(p(c,8)*1.6 - k*0.15) * (1 - p(c,9)); m.material.opacity = o; m.userData.l.material.opacity = o; m.position.x = (1-o)*-0.4; });
-    tower.scale.setScalar(Math.max(0.001, ease(p(c,9))));
+    flags.forEach(function(g,k){ g.scale.setScalar(Math.max(0.001, ease(clamp01(p(c,8)*1.5 - k*0.2)))); g.children[1].rotation.y = Math.sin(time*2+k)*0.25; });
+    strata.forEach(function(m,k){ var o = clamp01(p(c,9)*1.6 - k*0.15) * (1 - p(c,10)); m.material.opacity = o; m.userData.l.material.opacity = o; m.position.x = (1-o)*-0.4; });
+    tower.scale.setScalar(Math.max(0.001, ease(p(c,10))));
+    var cOp = p(c,1) * (1 - 0.55*p(c,2));
+    compFlags.forEach(function(g,k){ g.children.forEach(function(ch){ ch.material.opacity = cOp; }); g.children[1].rotation.y = Math.sin(time*2+k)*0.3; });
+    bigLbl.material.opacity = 0.95*Math.max(cOp, 0.35*p(c,8)); bigSub.material.opacity = 0.8*cOp;
+    niche.forEach(function(n,k){ var o = clamp01(p(c,2)*1.4 - k*0.15); n.dot.material.opacity = o; n.l.material.opacity = o*(1 - 0.5*p(c,8)); n.route.material.opacity = 0.85*o*(1 - 0.6*p(c,5)); });
+    cabin.scale.setScalar(Math.max(0.001, ease(p(c,6)))); win.material.color.setHex(Math.sin(time*2) > 0 ? 0xFFE7A8 : 0xFFF1C9);
     bars.forEach(function(b,k){ b.scale.y = 0.6 + 0.4*Math.abs(Math.sin(time*0.8+k)); });
 
     // star guides just ahead of the walkers
