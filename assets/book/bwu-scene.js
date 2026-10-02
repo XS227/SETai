@@ -39,7 +39,7 @@
 '#else',
 'precision mediump float;',
 '#endif',
-'uniform vec2 uRes; uniform float uTime, uA, uB, uW, uM, uZoom; uniform vec2 uFocal;',
+'uniform vec2 uRes; uniform float uTime, uA, uB, uW, uM, uBM, uZoom; uniform vec2 uFocal;',
 '#define PI 3.14159265',
 'float PX;',
 'float sq(float x){ return x*x; }',
@@ -64,7 +64,7 @@
 '  PX=1./(uRes.y*uZoom);',
 '  vec2 p=((gl_FragCoord.xy-.5*uRes)/uRes.y-uFocal)/uZoom;',
 '  vec3 col=scene(uA,p,uTime,uM);',
-'  if(uW>.001) col=mix(col,scene(uB,p,uTime,0.),uW);',
+'  if(uW>.001) col=mix(col,scene(uB,p,uTime,uBM),uW);',
 '  vec2 s=gl_FragCoord.xy/uRes-.5;',
 '  col*=1.-.9*dot(s,s);',
 '  col+=(h21(gl_FragCoord.xy+fract(uTime)*100.)-.5)*.035;',
@@ -82,7 +82,7 @@
   var buf = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, buf);
   gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 3,-1, -1,3]), gl.STATIC_DRAW);
   var loc = gl.getAttribLocation(prog, 'a'); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
-  var U = {}; ['uRes','uTime','uA','uB','uW','uM','uZoom','uFocal'].forEach(function(n){ U[n] = gl.getUniformLocation(prog, n); });
+  var U = {}; ['uRes','uTime','uA','uB','uW','uM','uBM','uZoom','uFocal'].forEach(function(n){ U[n] = gl.getUniformLocation(prog, n); });
 
   // Render below native resolution and step down further if frames get slow; the grain hides the upscale.
   var quality = innerWidth < 760 ? 0.55 : 0.7, slow = 0, lastT = 0;
@@ -105,7 +105,10 @@
     var b = beats[i], m = local(b), fixed = b.getAttribute('data-m');
     var next = beats[i+1], w = next ? Math.max(0, (m - 0.86) / 0.14) : 0;
     w = w * w * (3 - 2 * w);
-    return { a: +b.getAttribute('data-scene'), b: next ? +next.getAttribute('data-scene') : 0, w: w, m: fixed ? +fixed : Math.min(1, m / 0.86) };
+    // data-m0/data-m1 let one scene continue across two beats (the second beat picks up where the first stopped)
+    var m0 = +(b.getAttribute('data-m0') || 0), m1 = +(b.getAttribute('data-m1') || 1);
+    var nm0 = next ? +(next.getAttribute('data-m0') || 0) : 0;
+    return { a: +b.getAttribute('data-scene'), b: next ? +next.getAttribute('data-scene') : 0, bm: nm0, w: w, m: fixed ? +fixed : m0 + (m1 - m0) * Math.min(1, m / 0.86) };
   }
   function frame(now){
     if (hidden) return;
@@ -116,7 +119,7 @@
       if (Math.abs(s.m - smM) > 0.5) smM = s.m;   // jumped to another beat: don't sweep through
       gl.uniform2f(U.uRes, canvas.width, canvas.height);
       gl.uniform1f(U.uTime, reduce ? 4 : (now - t0) / 1000);
-      gl.uniform1f(U.uA, s.a); gl.uniform1f(U.uB, s.b); gl.uniform1f(U.uW, smW); gl.uniform1f(U.uM, smM);
+      gl.uniform1f(U.uA, s.a); gl.uniform1f(U.uB, s.b); gl.uniform1f(U.uW, smW); gl.uniform1f(U.uM, smM); gl.uniform1f(U.uBM, s.bm);
       gl.uniform1f(U.uZoom, zoom); gl.uniform2f(U.uFocal, focal[0], focal[1]);
       gl.drawArrays(gl.TRIANGLES, 0, 3);
       if (lastT && now - lastT > 30){ if (++slow > 40 && quality > 0.35){ quality *= 0.8; slow = 0; resize(); } } else slow = Math.max(0, slow - 1);
