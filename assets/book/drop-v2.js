@@ -278,7 +278,8 @@
     canvas.width = Math.round(innerWidth * d); canvas.height = Math.round(innerHeight * d);
     gl.viewport(0, 0, canvas.width, canvas.height);
     var asp = innerWidth / innerHeight;
-    if (asp > 1.05){ focal = [Math.min(.42, asp*.5 - .42), 0]; zoom = 1; }   // desktop: scene to the right, text left
+    var rtl = document.documentElement.dir === 'rtl';
+    if (asp > 1.05){ focal = [Math.min(.42, asp*.5 - .42) * (rtl ? -1 : 1), 0]; zoom = 1; }   // desktop: scene beside the text (left of it in Persian)
     else { focal = [0, .2]; zoom = .8; }                                      // phone: scene above, text below
   }
   addEventListener('resize', resize); resize();
