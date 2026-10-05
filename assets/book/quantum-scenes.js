@@ -1,0 +1,66 @@
+// Black & White Universe, part 11 «Quantum experiments»: the scenes the shared engine (bwu-scene.js) renders.
+// Each experiment page uses its own block of scene ids (delayed choice: 0-2).
+window.BWU_SCENES = [
+'vec3 bg(vec2 p, float t){ return vec3(.01)+vec3(.03)*fbm(p*2.2+vec2(t*.02,-t*.015))*(1.-smoothstep(0.,1.2,length(p)))+vec3(stars(p*55.,.03))*.35; }',
+'vec3 WARM=vec3(1.,.62,.34);',
+'float pt(vec2 p, vec2 c, float k){ vec2 d=p-c; return k/(dot(d,d)+k); }',
+'vec2 along(vec2 a, vec2 b, vec2 c, float u){ return u<.5 ? mix(a,b,u*2.) : mix(b,c,u*2.-1.); }',
+'float eyeD(vec2 q, float W){ return abs(q.y)-W*.45*(1.-sq(q.x/W)); }',
+
+// delayed choice 0: two paths; observe the path and the screen shows two clumps, erase it later and fringes appear
+'vec3 sEraser(vec2 p, float t, float m){',
+'  vec3 c=bg(p,t)*.7;',
+'  vec2 S=vec2(-.42,0.), BS=vec2(-.26,0.), M1=vec2(-.04,.13), M2=vec2(-.04,-.13), D=vec2(.27,0.), C=vec2(.12,-.3);',
+'  float split=smoothstep(0.,.22,m), obs=smoothstep(.28,.42,m), erase=smoothstep(.62,.84,m);',
+'  c+=vec3(1.)*pt(p,S,.00004)+vec3(.4)*exp(-length(p-S)*30.)*.3;',
+'  c+=vec3(.75)*glowLine(sdSeg(p,S,BS),1.2*PX);',
+'  c+=vec3(.9)*glowLine(sdSeg(p,BS+vec2(-.018,-.018),BS+vec2(.018,.018)),1.4*PX);',
+'  float paths=min(min(sdSeg(p,BS,M1),sdSeg(p,M1,D)),min(sdSeg(p,BS,M2),sdSeg(p,M2,D)));',
+'  c+=vec3(.55)*glowLine(paths,1.1*PX)*split;',
+'  float u=fract(t*.35);',
+'  c+=vec3(1.)*(pt(p,along(BS,M1,D,u),.000025)+pt(p,along(BS,M2,D,u),.000025))*split;',
+'  c+=vec3(.4)*glowLine(p.x-.3,1.*PX)*step(abs(p.y),.2);',
+'  if(p.x>.302&&p.x<.37&&abs(p.y)<.2){',
+'    float y=p.y;',
+'    float part=exp(-sq((y-.06)/.028))+exp(-sq((y+.06)/.028));',
+'    float wave=sq(cos(y*48.))*exp(-y*y*30.);',
+'    float P=mix(part,wave,erase)*split;',
+'    vec2 g=floor(p*260.); float h=h21(g);',
+'    c+=vec3(.95)*step(h,P*mix(.2,1.,split)*(.35+.65*m))*step(.5,h21(g+7.));',
+'  }',
+'  vec2 eq=p-vec2(-.04,.2); float ed=eyeD(eq,.035)+(1.-step(abs(eq.x),.035))*9.;',
+'  c+=vec3(.9)*glowLine(ed,1.2*PX)*obs*(1.-erase)+vec3(.9)*pt(p,vec2(-.04,.2),.000008)*obs*(1.-erase);',
+'  float id=sdSeg(p,BS,C)+.0*sin(p.x*80.); float dash=step(.5,fract(length(p-BS)*40.-t*1.5));',
+'  c+=vec3(.4)*glowLine(id,1.*PX)*dash*split;',
+'  float flash=smoothstep(.6,.66,m)*(1.-smoothstep(.75,.95,m));',
+'  c+=vec3(.7)*glowLine(length(p-C)-.022,1.2*PX)*split+mix(vec3(1.),WARM,.4)*(pt(p,C,.00003)*erase+exp(-length(p-C)*30.)*flash*.8);',
+'  return c; }',
+
+// delayed choice 1: yesterday is gone, tomorrow has not come; only this breath is real
+'vec3 sNow(vec2 p, float t, float m){',
+'  vec3 c=bg(p,t)*.6;',
+'  float x=p.x, line=glowLine(p.y,1.*PX)*step(abs(x),.45);',
+'  float past=step(x,0.)*exp(x*(3.+4.*m)), fut=step(0.,x)*(.5+.5*step(.5,fract(x*30.)))*exp(-x*(3.+4.*m));',
+'  c+=vec3(.6)*line*(past+fut*.6);',
+'  for(int k=1;k<8;k++){ float xk=-float(k)*.055-fract(t*.12)*.055; c+=vec3(.7)*pt(p,vec2(xk,0.),.000012)*exp(xk*(4.+4.*m)); }',
+'  float b=.5+.5*sin(t*1.1);',
+'  c+=mix(vec3(1.),WARM,.3)*(pt(p,vec2(0.),.00005*(1.+b))+exp(-length(p)*18.)*(.15+.25*m));',
+'  c+=vec3(.4)*glowLine(length(p)-(.04+.03*b),1.*PX)*(.3+.7*m);',
+'  return c; }',
+
+// delayed choice 2: the present moment, where all time converges; the Now creates reality
+'vec3 sConverge(vec2 p, float t, float m){',
+'  vec3 c=bg(p,t)*.6; float r=length(p), a=atan(p.y,p.x);',
+'  float in_=smoothstep(.0,.55,m), out_=smoothstep(.55,1.,m);',
+'  float threads=pow(.5+.5*cos(a*16.),30.)*smoothstep(.02,.06,r)*(1.-smoothstep(.2,.45,r));',
+'  float flow=.5+.5*sin(r*50.+t*4.);',
+'  c+=vec3(.75)*threads*flow*in_*(1.-out_*.6);',
+'  for(int k=0;k<3;k++){ float R=fract(t*.18+float(k)/3.)*.4; c+=vec3(.6)*glowLine(r-R,1.3*PX)*(1.-R/.4)*out_; }',
+'  c+=mix(vec3(1.),WARM,.3)*(pt(p,vec2(0.),.00005)+exp(-r*16.)*.25*(in_+out_));',
+'  return c; }',
+
+'vec3 scene(float id, vec2 p, float t, float m){',
+'  if(id<.5) return sEraser(p,t,m);',
+'  if(id<1.5) return sNow(p,t,m);',
+'  return sConverge(p,t,m); }'
+].join('\n');
