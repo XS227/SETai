@@ -59,6 +59,10 @@
     if(m>.62){ctx.save();ctx.strokeStyle='rgba(255,255,255,.28)';ctx.lineWidth=1.3;ctx.beginPath();for(var x=barrierX-bw/2;x>W*.22;x-=3){var env=Math.exp(-Math.pow((x-(barrierX-bw/2-90))/100,2));var y=cy+Math.sin((barrierX-x)*.09-t*.005)*18*env;if(x===barrierX-bw/2)ctx.moveTo(x,y);else ctx.lineTo(x,y)}ctx.stroke();ctx.restore()}
   }
   var last=0;
-  function frame(t){var s=stage();bg(t); if(page==='double-slit')slit(t,s.id===0?s.m:s.id===1?.55+.4*s.m:1); else if(page==='bells-inequality')bell(t,s.id===0?s.m*.35:s.id===1?.35+.45*s.m:.8+.2*s.m); else tunnel(t,s.id===0?s.m*.45:s.id===1?.35+.45*s.m:.8+.2*s.m);last=t;requestAnimationFrame(frame)}
+  function frame(t){if(document.hidden){paused=true;return}var s=stage();if(rtl){ctx.save();ctx.translate(W,0);ctx.scale(-1,1)}bg(t); if(page==='double-slit')slit(t,s.id===0?s.m:s.id===1?.55+.4*s.m:1); else if(page==='bells-inequality')bell(t,s.id===0?s.m*.35:s.id===1?.35+.45*s.m:.8+.2*s.m); else tunnel(t,s.id===0?s.m*.45:s.id===1?.35+.45*s.m:.8+.2*s.m);if(rtl)ctx.restore();last=t;if(!reduce)requestAnimationFrame(frame)}
+  // Persian reads right to left: mirror the scene so it sits opposite the text. Pause in background tabs; with reduced motion, draw only on scroll.
+  var rtl=document.documentElement.dir==='rtl', reduce=matchMedia('(prefers-reduced-motion: reduce)').matches, paused=false;
+  document.addEventListener('visibilitychange',function(){if(!document.hidden&&paused){paused=false;requestAnimationFrame(frame)}});
+  if(reduce){addEventListener('scroll',function(){requestAnimationFrame(frame)},{passive:true});addEventListener('resize',function(){requestAnimationFrame(frame)})}
   requestAnimationFrame(frame);
 })();
