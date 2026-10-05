@@ -5,249 +5,144 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <title>SEO-status | SETAEI</title>
-<meta name="description" content="Intern oversikt over setai.no sine rangeringer i Google: start, nå og mål.">
+<meta name="description" content="Intern live-status for setai.no: Google Search Console, rangeringer, sitemap og indeksering.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
 <style>
-:root {
-  --page: #f6f5f2; --surface: #ffffff; --surface-2: #eeece6;
-  --ink: #1d1c1a; --ink-2: #5c5a55; --ink-muted: #8d8a83; --hairline: #e0ddd5;
-  --brand: #3a4fd8; --good: #2f7a4a; --bad: #b0473a;
-  --shadow: 0 1px 2px rgba(0,0,0,.04), 0 6px 20px rgba(0,0,0,.06);
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --page: #121213; --surface: #1b1b1d; --surface-2: #232326;
-    --ink: #f2f1ee; --ink-2: #c3c1bb; --ink-muted: #8b8983; --hairline: #2f2f33;
-    --brand: #8c9bff; --good: #7fc79a; --bad: #ec8b7e;
-    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.35);
-  }
-}
-:root[data-theme="dark"] {
-  --page: #121213; --surface: #1b1b1d; --surface-2: #232326;
-  --ink: #f2f1ee; --ink-2: #c3c1bb; --ink-muted: #8b8983; --hairline: #2f2f33;
-  --brand: #8c9bff; --good: #7fc79a; --bad: #ec8b7e;
-  --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.35);
-}
-* { box-sizing: border-box; min-width: 0; }
-body { margin: 0; background: var(--page); color: var(--ink); font-family: -apple-system, "Segoe UI", system-ui, sans-serif; line-height: 1.55; overflow-x: hidden; }
-.wrap { max-width: 860px; margin: 0 auto; padding: 56px 24px 96px; }
-h1, h2 { font-weight: 650; margin: 0; letter-spacing: -0.01em; }
-header.hero { background: var(--surface); border: 1px solid var(--hairline); border-radius: 18px; padding: 32px; box-shadow: var(--shadow); margin-bottom: 40px; }
-.eyebrow { font-size: 12.5px; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; color: var(--brand); }
-header.hero h1 { font-size: 30px; margin-top: 8px; }
-.lede { color: var(--ink-2); font-size: 16.5px; margin: 10px 0 0; max-width: 62ch; }
-.meta { display: flex; gap: 18px; flex-wrap: wrap; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--hairline); font-size: 13px; color: var(--ink-muted); }
-section { margin-bottom: 44px; }
-.head { margin-bottom: 16px; }
-.head h2 { font-size: 21px; }
-.head p { margin: 6px 0 0; color: var(--ink-2); font-size: 15px; max-width: 64ch; }
-.card { background: var(--surface); border: 1px solid var(--hairline); border-radius: 14px; padding: 20px 22px; box-shadow: var(--shadow); }
-.tbl { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-table { width: 100%; border-collapse: collapse; font-size: 14.5px; min-width: 600px; }
-th { text-align: left; font-size: 11.5px; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-muted); font-weight: 600; padding: 0 10px 8px; border-bottom: 1px solid var(--hairline); }
-td { padding: 11px 10px; border-bottom: 1px solid var(--hairline); vertical-align: top; }
-tr:last-child td { border-bottom: none; }
-td.kw { font-weight: 600; }
-td.kw .grp { display: block; font-size: 12px; font-weight: 400; color: var(--ink-muted); }
-td.num { font-variant-numeric: tabular-nums; white-space: nowrap; }
-td.num .impr { display: block; font-size: 11.5px; color: var(--ink-muted); }
-td.goal { font-weight: 600; color: var(--brand); white-space: nowrap; }
-.trend { font-size: 12.5px; font-weight: 600; white-space: nowrap; }
-.up { color: var(--good); } .down { color: var(--bad); } .flat { color: var(--ink-muted); }
-ul.list { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 12px; }
-ul.list li { padding-left: 22px; position: relative; font-size: 15px; }
-ul.list li::before { content: "→"; position: absolute; left: 0; color: var(--brand); font-weight: 700; }
-.note { font-size: 12.5px; color: var(--ink-muted); margin-top: 14px; }
-footer { margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--hairline); font-size: 12.5px; color: var(--ink-muted); }
-@media (max-width: 640px) {
-  .wrap { padding: 32px 16px 72px; }
-  header.hero { padding: 24px 18px; }
-  header.hero h1 { font-size: 24px; }
-  .card { padding: 16px; }
-}
-
-    /* Samme header som forsiden (assets/journey/journey.css .site-nav) */
-    .site-nav{position:sticky;top:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:20px 4vw;background:rgba(16,16,15,.92);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-bottom:1px solid #ffffff14;color:#fffaf0;font-family:'Inter',system-ui,sans-serif}
-    .site-nav a{color:inherit;text-decoration:none}
-    .site-nav .wordmark{font:700 27px 'Space Grotesk',sans-serif;letter-spacing:.12em}
-    .site-nav .wordmark span{font-weight:400}
-    .site-nav .wordmark i{font:10px 'Inter',sans-serif;vertical-align:top;letter-spacing:0;margin-left:3px}
-    .site-nav .nav-actions{display:flex;align-items:center;gap:28px;font-size:14px}
-    .site-nav .nav-talk{border-bottom:1px solid #ffffff70;padding:6px 0}
-    @media(max-width:800px){.site-nav{padding:16px 6vw}.site-nav .wordmark{font-size:22px}.site-nav .nav-actions{gap:16px}.site-nav .nav-all{display:none}}
-
-.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:0 0 38px}
-.kpi{background:var(--surface);border:1px solid var(--hairline);border-radius:14px;padding:18px;box-shadow:var(--shadow)}
-.kpi b{display:block;font-size:26px;line-height:1.05;letter-spacing:-.04em}
-.kpi span{display:block;margin-top:7px;color:var(--ink-muted);font-size:12px}
-.kpi em{display:block;margin-top:10px;font-style:normal;font-size:12px;font-weight:650}
-.good{color:var(--good)} .warn{color:#a16b12}
-.overview{display:grid;grid-template-columns:1.15fr .85fr;gap:14px}
-.rankbars{display:flex;flex-direction:column;gap:12px}
-.rb{display:grid;grid-template-columns:160px 1fr 52px;align-items:center;gap:10px;font-size:13px}
-.rb .bar{height:8px;border-radius:999px;background:var(--surface-2);overflow:hidden}
-.rb .fill{height:100%;border-radius:999px;background:var(--brand)}
-.rb strong{text-align:right;font-variant-numeric:tabular-nums}
-.legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:12px;color:var(--ink-muted);font-size:11.5px}
-.timeline{display:grid;gap:12px}
-.tl{display:grid;grid-template-columns:72px 1fr;gap:12px;padding-bottom:12px;border-bottom:1px solid var(--hairline)}
-.tl:last-child{border-bottom:0;padding-bottom:0}.tl time{font-size:11px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.04em}
-.tl p{margin:0;font-size:13.5px}.tl p b{display:block;margin-bottom:2px}
-.pill{display:inline-flex;padding:4px 8px;border-radius:999px;background:var(--surface-2);font-size:11px;font-weight:650;color:var(--ink-2)}
-@media(max-width:760px){.kpis{grid-template-columns:repeat(2,1fr)}.overview{grid-template-columns:1fr}.rb{grid-template-columns:120px 1fr 48px}}
-
+:root{--bg:#0d0f12;--panel:#15181d;--panel2:#1b2027;--line:#2a3038;--text:#f3f5f7;--muted:#9ca6b2;--orange:#f47a2a;--green:#60d394;--yellow:#f2c14e;--red:#ef6b73;--blue:#7fa7ff}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 15% -10%,#252b34 0,transparent 32%),var(--bg);color:var(--text);font:15px/1.55 Inter,system-ui,sans-serif}.wrap{max-width:1120px;margin:auto;padding:42px 22px 90px}
+a{color:inherit}.top{display:flex;justify-content:space-between;gap:20px;align-items:center;margin-bottom:34px}.brand{font:700 24px Space Grotesk;letter-spacing:.14em}.tag{font-size:12px;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:7px 11px}
+.hero{padding:28px;border:1px solid var(--line);border-radius:20px;background:linear-gradient(145deg,#171b21,#111419);box-shadow:0 24px 80px #0005}.eyebrow{color:var(--orange);font-weight:700;font-size:12px;letter-spacing:.12em;text-transform:uppercase}.hero h1{font:700 clamp(30px,5vw,52px)/1.03 Space Grotesk;margin:10px 0 12px}.hero p{color:var(--muted);max-width:78ch;margin:0}.meta{display:flex;gap:14px;flex-wrap:wrap;margin-top:20px;color:var(--muted);font-size:12px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:18px 0 38px}.kpi,.card{border:1px solid var(--line);background:rgba(21,24,29,.92);border-radius:16px}.kpi{padding:18px}.kpi b{display:block;font:700 28px Space Grotesk}.kpi span{display:block;color:var(--muted);font-size:12px;margin-top:4px}.delta{margin-top:9px;font-size:12px;font-weight:700}.good{color:var(--green)}.warn{color:var(--yellow)}.bad{color:var(--red)}.blue{color:var(--blue)}
+section{margin-top:38px}.head{display:flex;justify-content:space-between;gap:18px;align-items:end;margin-bottom:12px}.head h2{font:700 23px Space Grotesk;margin:0}.head p{color:var(--muted);margin:0;max-width:70ch}.card{padding:20px}.statusrow{display:grid;grid-template-columns:1.2fr .8fr;gap:14px}.signal{display:flex;gap:12px;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--line)}.signal:last-child{border-bottom:0}.dot{width:10px;height:10px;border-radius:50%;margin-top:6px;flex:0 0 auto}.dot.g{background:var(--green)}.dot.y{background:var(--yellow)}.dot.r{background:var(--red)}.signal b{display:block}.signal small{color:var(--muted)}
+table{width:100%;border-collapse:collapse;min-width:720px}.tbl{overflow:auto}th,td{padding:11px 10px;border-bottom:1px solid var(--line);text-align:left}th{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted)}td.num{font-variant-numeric:tabular-nums;white-space:nowrap}.pill{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:4px 8px;font-size:11px;color:var(--muted)}ul{margin:0;padding-left:18px}li{margin:8px 0}.footer{color:var(--muted);font-size:12px;margin-top:40px;padding-top:18px;border-top:1px solid var(--line)}
+@media(max-width:850px){.grid{grid-template-columns:repeat(2,1fr)}.statusrow{grid-template-columns:1fr}.head{display:block}.head p{margin-top:6px}}@media(max-width:520px){.grid{grid-template-columns:1fr 1fr}.kpi b{font-size:23px}.wrap{padding:24px 14px 70px}.hero{padding:22px}}
 </style>
-<link rel="stylesheet" href="/assets/css/setaei-brand-v2.css?v=1">
-<link rel="stylesheet" href="/assets/css/setaei-header-v4.css?v=1">
 </head>
 <body>
-  <header class="site-nav">
-    <a class="wordmark" href="/" aria-label="SETAEI hjem"><svg class="setaei-logo" viewBox="15 15 545 105" role="img" aria-label="SETAEI"><g fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="butt" stroke-linejoin="round"><path d="M78 29H49C31 29 27 50 43 58L68 70C83 77 79 105 58 105H27"/><path d="M118 31h58M118 68h48M118 105h58"/><path d="M215 31h70M250 31v74"/><path d="M321 105l34-74 34 74"/><path d="M429 31h58M429 68h48M429 105h58"/><path d="M539 31v74"/></g><path fill="#F47A2A" d="M355 58l5 11 12 1-9 8 3 12-11-6-11 6 3-12-9-8 12-1z"/></svg></a>
-    <div class="nav-actions"><a class="nav-all" href="/projects/">Alle prosjekter</a><a class="nav-talk" href="/#contact">Kontakt SETAEI</a></div>
-  <div class="lang-switch" role="group" aria-label="Language"><button type="button" data-lang="no">NO</button><button type="button" data-lang="en">EN</button><button type="button" data-lang="fa">فا</button></div></header>
 <div class="wrap">
+  <div class="top"><a class="brand" href="/">SETAEI</a><span class="tag">Intern SEO-status · noindex</span></div>
+
   <header class="hero">
-    <span class="eyebrow">Internt — ikke indeksert</span>
-    <h1>SEO-status for setai.no</h1>
-    <p class="lede">Hvor setai.no står i Google på de 12 søkeordene som passer tjenestene best: SEO, nettsider/utvikling og AI.</p>
-    <div class="meta">
-      <span>Kilde: Google Search Console</span>
-      <span>Oppdatert 23. september 2026</span>
-    </div>
+    <div class="eyebrow">Live Google-status · 3. oktober 2026</div>
+    <h1>SEO command center</h1>
+    <p>Oppdatert med faktiske data fra Google Search Console for hoveddomenet <strong>setai.no</strong>, pluss live kontroll av sitemap og robots.txt. Tallene under skiller mellom synlighet, rangering og faktisk indekseringsstatus.</p>
+    <div class="meta"><span>Periode: 20. sep.–3. okt. 2026</span><span>Search Console: sc-domain:setai.no</span><span>Sitemap live: 129 URL-er</span></div>
   </header>
 
-  <div class="kpis">
-    <div class="kpi"><b>1</b><span>Søkeord på side 1</span><em class="good">AI-drevet SEO · #7,4</em></div>
-    <div class="kpi"><b>3</b><span>Søkeord innen topp 15</span><em class="good">Nær klikk-sonen</em></div>
-    <div class="kpi"><b>2</b><span>SEO-søk med sterk vekst</span><em class="good">Byrå + AI SEO</em></div>
-    <div class="kpi"><b>23. sep</b><span>Siste verifiserte GSC-måling</span><em class="warn">Ikke live-data</em></div>
+  <div class="grid">
+    <div class="kpi"><b>983</b><span>Google-visninger · 27. sep.–3. okt.</span><div class="delta bad">−28,4 % fra uken før</div></div>
+    <div class="kpi"><b>2</b><span>Klikk · 27. sep.–3. okt.</span><div class="delta warn">CTR 0,20 %</div></div>
+    <div class="kpi"><b>#38,79</b><span>Vektet snittposisjon</span><div class="delta good">Bedret fra #41,34</div></div>
+    <div class="kpi"><b>33</b><span>setai.no-sider med visninger</span><div class="delta blue">Siste 7 dager</div></div>
   </div>
 
   <section>
-    <div class="head"><h2>SEO command center</h2><p>En rask visuell oversikt over hvilke søk som er nærmest å gi organisk trafikk, og hva som er gjort siden forrige måling.</p></div>
-    <div class="overview">
+    <div class="head"><div><h2>Er alle sider registrert hos Google?</h2><p>Kort svar: sitemapet er riktig tilgjengelig, men Google har ennå ikke bekreftet behandling av alle nye URL-er.</p></div></div>
+    <div class="statusrow">
       <div class="card">
-        <div class="rankbars">
-          <div class="rb"><span>AI-drevet SEO</span><div class="bar"><div class="fill" style="width:92%"></div></div><strong>#7,4</strong></div>
-          <div class="rb"><span>Synlig på Google</span><div class="bar"><div class="fill" style="width:84%"></div></div><strong>#12,7</strong></div>
-          <div class="rb"><span>SEO ekspert Oslo</span><div class="bar"><div class="fill" style="width:62%"></div></div><strong>#28,1</strong></div>
-          <div class="rb"><span>Fullstack utvikler</span><div class="bar"><div class="fill" style="width:60%"></div></div><strong>#28,8</strong></div>
-          <div class="rb"><span>Webdesign Oslo</span><div class="bar"><div class="fill" style="width:57%"></div></div><strong>#30,7</strong></div>
-          <div class="rb"><span>SEO byrå Oslo</span><div class="bar"><div class="fill" style="width:39%"></div></div><strong>#40,8</strong></div>
-        </div>
-        <div class="legend"><span>Lengre stolpe = nærmere #1</span><span>Basert på siste GSC-snitt</span></div>
+        <div class="signal"><span class="dot g"></span><div><b>robots.txt er OK</b><small>Google er tillatt å crawle nettstedet. Sitemap peker til https://setai.no/sitemap.xml.</small></div></div>
+        <div class="signal"><span class="dot g"></span><div><b>Live sitemap: 129 URL-er</b><small>Det nye sitemapet inkluderer tjenester, blogg, prosjekter og det utvidede Black & White Universe.</small></div></div>
+        <div class="signal"><span class="dot y"></span><div><b>Search Console viser fortsatt 47 innsendte URL-er</b><small>Siste registrerte innsending er 31. juli. Google lastet sitemapet sist 1. oktober uten feil eller advarsler, men statusen reflekterer ikke de 129 live-URL-ene ennå.</small></div></div>
+        <div class="signal"><span class="dot y"></span><div><b>Ikke alle 129 kan bekreftes som indeksert ennå</b><small>Search Console-feltet «indexed» for sitemap er deprecated og rapporterer 0, så dette tallet kan ikke brukes som indekseringsbevis. 33 hoveddomene-sider hadde faktiske Google-visninger siste uke.</small></div></div>
       </div>
-      <div class="card timeline">
-        <div class="tl"><time>23 sep</time><p><b>Kannibalisering ryddet</b>Fem tynne SEO-sider slått sammen og 301-redirectet.</p></div>
-        <div class="tl"><time>1 okt</time><p><b>Fullstack for rekruttering</b>React, Node.js, Python, Docker og data/AI lagt inn. Se analysen under.</p></div>
-        <div class="tl"><time>Neste</time><p><b>Press topp 10</b>Styrk «AI-drevet SEO» og artikkelen om Google-synlighet.</p></div>
-        <div class="tl"><time>Deretter</time><p><b>Oslo-søk</b>Bygg autoritet rundt SEO ekspert, webdesign og fullstack.</p></div>
-        <div><span class="pill">Intern · noindex</span></div>
+      <div class="card">
+        <span class="pill">Ny sitemap-ekspansjon</span>
+        <h3 style="margin:12px 0 6px">Black & White Universe</h3>
+        <p style="color:var(--muted);margin-top:0">Omtrent 80 sitemap-URL-er ligger nå under <code>/black-white-universe/</code>, inkludert NO/EN/FA, quantum-sider og åpne spørsmål. Disse er så nye at Search Console ennå ikke viser bred synlighet for dem.</p>
+        <p class="warn"><strong>Prioritet:</strong> send sitemapet inn på nytt i Search Console og følg Page indexing / Crawled – currently not indexed de neste dagene.</p>
       </div>
     </div>
   </section>
 
   <section>
-    <div class="head">
-      <h2>Rangering i Google — start, nå og mål</h2>
-      <p>Snittplassering per måned (lavere tall = høyere opp). Start er første måned søket dukket opp (juli for de fleste), nå er september, målet gjelder starten av november.</p>
-    </div>
-    <div class="card">
-      <div class="tbl">
-        <table>
-          <thead><tr><th>Søkeord</th><th>Start</th><th>Nå (sep.)</th><th>Endring</th><th>Mål (nov.)</th></tr></thead>
-          <tbody id="rows"></tbody>
-        </table>
-      </div>
-      <p class="note">Plasseringen er et månedssnitt. Søk med få visninger (under ca. 20) svinger mye og bør leses som retning, ikke eksakte tall.</p>
+    <div class="head"><div><h2>Uke mot uke</h2><p>Hoveddomenet setai.no, ekskludert underdomener som numerologist.setai.no.</p></div></div>
+    <div class="card tbl">
+      <table>
+        <thead><tr><th>Periode</th><th>Visninger</th><th>Klikk</th><th>CTR</th><th>Snittposisjon</th><th>Sider med visninger</th></tr></thead>
+        <tbody>
+          <tr><td>20.–26. sep.</td><td class="num">1 372</td><td class="num">3</td><td class="num">0,22 %</td><td class="num">#41,34</td><td class="num">35</td></tr>
+          <tr><td>27. sep.–3. okt.</td><td class="num">983</td><td class="num">2</td><td class="num">0,20 %</td><td class="num good">#38,79</td><td class="num">33</td></tr>
+        </tbody>
+      </table>
     </div>
   </section>
 
   <section>
-    <div class="head">
-      <h2>Fullstack-siden — rekruttering og søk (1. oktober 2026)</h2>
-      <p>Analyse av <a href="/services/fullstack-utvikler-oslo/">/services/fullstack-utvikler-oslo/</a> for det norske markedet: hva folk søker etter, hvor siden står, og hvilke ord rekrutterere bruker.</p>
-    </div>
-    <div class="card">
-      <div class="tbl">
-        <table>
-          <thead><tr><th>Søk (Search Console, 90 dager)</th><th>Visninger</th><th>Snittposisjon</th><th>Klikk</th></tr></thead>
-          <tbody>
-            <tr><td>fullstack utvikler</td><td>327</td><td>#30,5</td><td>0</td></tr>
-            <tr><td>full stack utvikler</td><td>282</td><td>#38,6</td><td>0</td></tr>
-            <tr><td>fullstack-utvikling</td><td>41</td><td>#19,1</td><td>0</td></tr>
-            <tr><td>utvikler oslo</td><td>20</td><td>#19,9</td><td>0</td></tr>
-            <tr><td>fullstack-utvikler</td><td>15</td><td>#26,9</td><td>0</td></tr>
-            <tr><td>fullstackutvikler</td><td>7</td><td>#32,1</td><td>0</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p class="note">Search Console teller bare visninger når siden faktisk vises, så den reelle søkemengden er høyere. Rundt 650 visninger på hovedordet uten ett eneste klikk betyr at etterspørselen finnes, men at siden ligger på side 3–4.</p>
-    </div>
-    <div class="card">
-      <ul class="list">
-        <li><strong>Markedet:</strong> FINN har rundt 112 fullstack-stillinger i Oslo og rundt 217 som nevner React. Utlysninger fra blant andre Entur, UiO og Cobrief ber gjennomgående om React, TypeScript, Node.js og SQL, ofte Python, typisk med 5+ års erfaring.</li>
-        <li><strong>Mest etterspurt i Norge:</strong> Python, TypeScript/JavaScript, React og Node.js; Docker/Kubernetes og sky (AWS, Azure, GCP); og AI/maskinlæring, der etterspørselen er større enn tilbudet.</li>
-        <li><strong>Gjort 1. oktober:</strong> React, TypeScript, Node.js, Python, SQL og Docker lagt inn i stakk-lagene. Ny seksjon for master i datavitenskap, AI og robotikk. H1 «Fullstack-utvikler i Oslo». Ny tittel «Fullstack-utvikler Oslo – React, Node.js, Python og AI». Ny FAQ om teknologier og knowsAbout i schema. Norsk, engelsk og persisk.</li>
-        <li><strong>Strategi 1 — hovedordet:</strong> «fullstack utvikler» / «full stack utvikler» + Oslo. Størst gap (~650 visninger, #30). Mål: topp 15 innen desember.</li>
-        <li><strong>Strategi 2 — rekrutteringsord:</strong> «React utvikler», «Python utvikler», «Node.js utvikler» og «maskinlæring» skal rangere i kombinasjon med fullstack på samme side, ikke som egne tynne sider som konkurrerer mot hverandre.</li>
-        <li><strong>Strategi 3 — engelsk side:</strong> Mange Oslo-rekrutterere søker på engelsk, for eksempel «full stack developer Oslo», «React developer Norway» og «machine learning engineer Oslo». En /en/-versjon av fullstack-siden er trolig den største nye kilden til trafikk.</li>
-        <li><strong>Strategi 4 — signaler utenfra:</strong> LinkedIn-profil med samme nøkkelord og lenke til siden, og lenker fra prosjektsidene (TrustAI, RealGram). Mål posisjonene på nytt om 3–4 uker.</li>
-        <li><strong>Åpne spørsmål:</strong> Universitetet for mastergraden, hva «UNF» står for, og om kursene fra Anthropic, OpenAI og Apple skal stå på siden.</li>
-      </ul>
-      <p class="note">Kilder: Google Search Console (sc-domain:setai.no, siste 90 dager per 1. okt.), finn.no-søk «Full stack utvikler i Oslo» og «react», arbeidsplassen.no, tekjobb.no og Cobrief-utlysninger.</p>
+    <div class="head"><div><h2>Viktigste sider akkurat nå</h2><p>Search Console-data for 20. september–3. oktober.</p></div></div>
+    <div class="card tbl">
+      <table>
+        <thead><tr><th>Side</th><th>Visninger</th><th>Klikk</th><th>Snittposisjon</th><th>Kommentar</th></tr></thead>
+        <tbody>
+          <tr><td>/services/seo-oslo/</td><td class="num">567</td><td class="num">0</td><td class="num">#53,66</td><td>Stor eksponering, men null CTR.</td></tr>
+          <tr><td>/seo/</td><td class="num">415</td><td class="num">2</td><td class="num">#42,78</td><td>Beste SEO-side på klikk; rangerer sterkt på «ai drevet seo».</td></tr>
+          <tr><td>/seo/seo-byrå-oslo/</td><td class="num">295</td><td class="num">0</td><td class="num">#52,66</td><td>Fortsetter å konkurrere med /services/seo-oslo/.</td></tr>
+          <tr><td>/blog/google-business-profil-guide-norge/</td><td class="num">247</td><td class="num">0</td><td class="num">#19,99</td><td>«google min bedrift» ligger rundt #5,53.</td></tr>
+          <tr><td>/blog/hva-koster-nettside-bedrift-norge/</td><td class="num">225</td><td class="num">0</td><td class="num">#44,67</td><td>God etterspørsel, lav CTR.</td></tr>
+          <tr><td>/services/web-design-oslo/</td><td class="num">83</td><td class="num">0</td><td class="num">#35,82</td><td>«webdesign oslo» rundt #33,53.</td></tr>
+          <tr><td>/services/fullstack-utvikler-oslo/</td><td class="num">67</td><td class="num">1</td><td class="num">#27,04</td><td>«fullstack utvikler» rundt #29,22.</td></tr>
+          <tr><td>/projects/shahnameh/</td><td class="num">39</td><td class="num">0</td><td class="num good">#8,28</td><td>Sterk gjennomsnittsposisjon for prosjektrelaterte søk.</td></tr>
+        </tbody>
+      </table>
     </div>
   </section>
 
   <section>
-    <div class="head"><h2>Kort oppsummert</h2></div>
+    <div class="head"><div><h2>Søkeord og rangering</h2><p>De tydeligste signalene fra de siste 14 dagene.</p></div></div>
+    <div class="card tbl">
+      <table>
+        <thead><tr><th>Søkeord</th><th>Visninger</th><th>Snittposisjon</th><th>Landingsside(r)</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td><strong>ai drevet seo</strong></td><td class="num">25</td><td class="num good">#8,24</td><td>/seo/</td><td class="good">Topp 10</td></tr>
+          <tr><td><strong>google min bedrift</strong></td><td class="num">64</td><td class="num good">#5,53</td><td>GBP-guiden</td><td class="good">Topp 10</td></tr>
+          <tr><td><strong>fullstack utvikler</strong></td><td class="num">27</td><td class="num">#29,22</td><td>/services/fullstack-utvikler-oslo/</td><td>Side 3</td></tr>
+          <tr><td><strong>webdesign oslo</strong></td><td class="num">45</td><td class="num">#33,53</td><td>/services/web-design-oslo/</td><td>Side 4</td></tr>
+          <tr><td><strong>seo ekspert</strong></td><td class="num">44</td><td class="num">#33,84</td><td>/services/seo-oslo/</td><td>Side 4</td></tr>
+          <tr><td><strong>søkemotoroptimalisering oslo</strong></td><td class="num">91</td><td class="num">#47,49</td><td>2 SEO-sider</td><td class="warn">Kannibalisering</td></tr>
+          <tr><td><strong>seo byrå oslo</strong></td><td class="num">91</td><td class="num">#59,14</td><td>2 SEO-sider</td><td class="warn">Kannibalisering</td></tr>
+          <tr><td><strong>seo norge</strong></td><td class="num">97</td><td class="num">#63,96</td><td>5 SEO-sider</td><td class="bad">Sterk kannibalisering</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <div class="head"><div><h2>Hva statusen betyr</h2></div></div>
     <div class="card">
-      <ul class="list">
-        <li><strong>Beste utvikling:</strong> «ai drevet seo» har gått fra #17 til #7 på en måned — første søkeord på side 1. «seo byrå oslo» har klatret fra #54 til #41.</li>
-        <li><strong>Nærmest side 1:</strong> «hvorfor er ikke nettsiden synlig på google» (#12,7, bloggartikkel) og «skreddersydd nettside» (#13,8 i august). Små forbedringer her gir klikk raskt.</li>
-        <li><strong>Tyngst:</strong> de brede Oslo-søkene («seo oslo», «søkemotoroptimalisering oslo») står stille rundt #45–50. Mange visninger, men for langt ned til å gi klikk.</li>
-        <li><strong>Ryddet 23. september:</strong> fem tynne /seo/-undersider som konkurrerte mot /services/seo-oslo/ om de samme søkene er slått sammen med 301 og fjernet fra sitemap. Den gamle kopien av Somi på somi.setai.no og den døde /jc-sk-forhåndsvisningen er tatt ned. Effekten viser seg i neste måling.</li>
+      <ul>
+        <li><strong>Rangeringen bedres selv om visningene falt denne uken:</strong> vektet snittposisjon gikk fra #41,34 til #38,79.</li>
+        <li><strong>CTR er fortsatt hovedproblemet:</strong> 983 visninger ga bare 2 klikk siste uke. Titler/metabeskrivelser og høyere plassering må jobbe sammen.</li>
+        <li><strong>SEO-kannibaliseringen er ikke ferdig løst:</strong> Google viser fortsatt flere SETAEI-sider på samme søk, særlig «seo norge», «seo byrå oslo» og «søkemotoroptimalisering oslo».</li>
+        <li><strong>Nye sider er teknisk oppdagbare:</strong> robots.txt tillater crawling, og live sitemap er vokst til 129 URL-er uten tekniske sitemap-feil.</li>
+        <li><strong>Indeksering av de nyeste sidene må følges separat:</strong> Search Console har ikke rukket å reflektere hele den nye sitemap-mengden ennå.</li>
       </ul>
     </div>
   </section>
 
-  <footer>Rangeringstabell: 23. september 2026 · Fullstack-analyse: 1. oktober 2026 · Google Search Console (setai.no) · Intern side, noindex</footer>
+  <section>
+    <div class="head"><div><h2>Coverage-eksport 3. oktober</h2><p>Google Search Console-eksporten er generert 3. oktober 2026. Siste datapunkt i selve rapporten er 21. september.</p></div></div>
+    <div class="grid">
+      <div class="kpi"><b>92</b><span>Indekserte kjente URL-er</span><div class="delta blue">Siste datapunkt 21. sep.</div></div>
+      <div class="kpi"><b>119</b><span>Ikke indekserte URL-varianter</span><div class="delta warn">Ikke det samme som 119 feil</div></div>
+      <div class="kpi"><b>211</b><span>Google-kjente URL-er totalt</span><div class="delta blue">Inkluderer historikk og duplikater</div></div>
+      <div class="kpi"><b>129</b><span>URL-er i live sitemap nå</span><div class="delta good">Etter dagens oppdatering</div></div>
+    </div>
+    <div class="card tbl"><table><thead><tr><th>Årsak</th><th>Sider</th><th>Vurdering</th></tr></thead><tbody>
+      <tr><td>Alternativ side med gyldig canonical</td><td class="num">55</td><td>Vanligvis forventet hvis canonical peker riktig.</td></tr>
+      <tr><td>Duplikat uten valgt canonical</td><td class="num">25</td><td class="bad">Må kontrolleres – største reelle risikogruppe.</td></tr>
+      <tr><td>Ikke funnet (404)</td><td class="num">13</td><td>OK hvis sidene bevisst er fjernet; ellers repareres.</td></tr>
+      <tr><td>Ekskludert med noindex</td><td class="num">8</td><td>Forventet for interne/administrative sider dersom tilsiktet.</td></tr>
+      <tr><td>Side med viderekobling</td><td class="num">6</td><td>Vanligvis forventet.</td></tr>
+      <tr><td>Blokkert av robots.txt</td><td class="num">3</td><td>Kontrolleres mot demo/tools/interne områder.</td></tr>
+      <tr><td>Annet 4xx-problem</td><td class="num">1</td><td class="warn">Bør identifiseres.</td></tr>
+      <tr><td>Oppdaget – ikke indeksert</td><td class="num">4</td><td class="warn">Prioritert for internlenking og kvalitetskontroll.</td></tr>
+      <tr><td>Gjennomsøkt – ikke indeksert</td><td class="num">3</td><td class="warn">Google har sett innholdet, men valgt å ikke indeksere ennå.</td></tr>
+      <tr><td>Google valgte annen canonical</td><td class="num">1</td><td class="warn">Canonical-signalet bør undersøkes.</td></tr>
+    </tbody></table></div>
+    <div class="card" style="margin-top:14px"><p><strong>Viktig:</strong> 119 «ikke indeksert» betyr ikke at 119 av de 129 sitemap-sidene mangler. Coverage-rapporten teller også gamle URL-er, redirecter, duplikater, canonical-varianter, 404-er og noindex-sider som Google kjenner fra historikken. Det riktige neste steget er å skille tilsiktede ekskluderinger fra de omtrent 33 tydelig handlingsbare URL-ene: 25 duplikater uten canonical, 4 oppdaget/ikke indeksert, 3 crawlet/ikke indeksert og 1 Google-valgt canonical.</p></div>
+  </section>
+<div class="footer">Oppdatert 3. oktober 2026 · Kilder: Google Search Console + live sitemap/robots-kontroll · Intern side, noindex/nofollow</div>
 </div>
-
-<script>
-// Google Search Console, hentet 23.09.2026. start/now = snittplassering, *Impr = visninger den måneden.
-// now = null betyr ingen visninger i september.
-const rows = [
-  { kw: 'søkemotoroptimalisering oslo', grp: 'SEO', startLbl: 'jul.', start: 46.9, startImpr: 70, now: 46.9, nowImpr: 356, goal: 'Topp 30' },
-  { kw: 'seo oslo', grp: 'SEO', startLbl: 'jul.', start: 45.6, startImpr: 55, now: 49.3, nowImpr: 281, goal: 'Topp 30' },
-  { kw: 'seo byrå oslo', grp: 'SEO', startLbl: 'jul.', start: 54.5, startImpr: 17, now: 40.8, nowImpr: 257, goal: 'Topp 25' },
-  { kw: 'seo ekspert oslo', grp: 'SEO', startLbl: 'jul.', start: 31.2, startImpr: 17, now: 28.1, nowImpr: 74, goal: 'Topp 15' },
-  { kw: 'norsk seo ekspert', grp: 'SEO', startLbl: 'jul.', start: 27.4, startImpr: 5, now: 40.0, nowImpr: 61, goal: 'Topp 25' },
-  { kw: 'ai drevet seo', grp: 'AI', startLbl: 'aug.', start: 17.2, startImpr: 28, now: 7.4, nowImpr: 38, goal: 'Topp 5' },
-  { kw: 'ai seo byrå', grp: 'AI', startLbl: 'aug.', start: 20.0, startImpr: 17, now: 23.8, nowImpr: 15, goal: 'Topp 10' },
-  { kw: 'ai automatisering', grp: 'AI', startLbl: 'mai', start: 48.0, startImpr: 4, now: 43.8, nowImpr: 22, goal: 'Topp 30' },
-  { kw: 'hvorfor er ikke nettsiden synlig på google', grp: 'Blogg', startLbl: 'jul.', start: 8.8, startImpr: 35, now: 12.7, nowImpr: 118, goal: 'Topp 5' },
-  { kw: 'webdesign oslo', grp: 'Nettsider', startLbl: 'jul.', start: 35.8, startImpr: 176, now: 30.7, nowImpr: 170, goal: 'Topp 20' },
-  { kw: 'skreddersydd nettside', grp: 'Nettsider', startLbl: 'jul.', start: 10.3, startImpr: 3, now: null, nowImpr: 0, goal: 'Topp 10', nowNote: 'sist #13,8 i aug.' },
-  { kw: 'fullstack utvikler', grp: 'Utvikling', startLbl: 'jul.', start: 32.1, startImpr: 78, now: 28.8, nowImpr: 77, goal: 'Topp 20' },
-];
-const fmt = (p) => '#' + p.toFixed(1).replace('.', ',');
-function trend(r) {
-  if (r.now === null) return '<span class="trend flat">Ingen visn.</span>';
-  const d = r.start - r.now;
-  if (Math.abs(d) < 1) return '<span class="trend flat">Uendret</span>';
-  const v = Math.abs(d).toFixed(1).replace('.', ',');
-  return d > 0 ? '<span class="trend up">▲ ' + v + '</span>' : '<span class="trend down">▼ ' + v + '</span>';
-}
-document.getElementById('rows').innerHTML = rows.map((r) =>
-  '<tr><td class="kw">' + r.kw + '<span class="grp">' + r.grp + '</span></td>' +
-  '<td class="num">' + fmt(r.start) + '<span class="impr">' + r.startLbl + ' · ' + r.startImpr + ' visn.</span></td>' +
-  '<td class="num">' + (r.now === null ? '—' : fmt(r.now)) + '<span class="impr">' + (r.now === null ? r.nowNote : r.nowImpr + ' visn.') + '</span></td>' +
-  '<td>' + trend(r) + '</td><td class="goal">' + r.goal + '</td></tr>'
-).join('');
-</script>
-<script src="/assets/js/setaei-header-v4.js?v=1" defer></script>
 </body>
 </html>

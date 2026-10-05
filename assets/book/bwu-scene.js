@@ -73,7 +73,7 @@
 '}'].join('\n');
 
   function sh(type, src){ var s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s);
-    if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)){ console.warn('bwu shader:', gl.getShaderInfoLog(s)); return null; } return s; }
+    if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)){ var info=gl.getShaderInfoLog(s)||'shader compile failed'; console.warn('bwu shader:', info); try{document.documentElement.setAttribute('data-bwu-error',info.slice(0,500));}catch(e){} return null; } return s; }
   var vs = sh(gl.VERTEX_SHADER, VS), fs = sh(gl.FRAGMENT_SHADER, FS);
   if (!vs || !fs){ document.documentElement.classList.add('d2-nogl'); return; }
   var prog = gl.createProgram(); gl.attachShader(prog, vs); gl.attachShader(prog, fs); gl.linkProgram(prog);

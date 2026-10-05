@@ -1,0 +1,31 @@
+// Black & White Universe 11.2 — Double slit.
+// Memory image: one source -> two openings -> many bright/dark bands; measurement turns bands into two clumps.
+window.BWU_SCENES = [
+'vec3 bg2(vec2 p,float t){return vec3(.008)+vec3(.035)*fbm(p*2.4+vec2(t*.015,0.))*(1.-smoothstep(.1,.8,length(p)))+vec3(stars(p*58.,.025))*.28;}',
+'vec3 W=vec3(1.,.63,.35);',
+'float slitMask(vec2 p){float wall=glowLine(abs(p.x)-.02,1.1*PX);float holes=1.-max(smoothstep(.025,.045,abs(p.y-.105)),smoothstep(.025,.045,abs(p.y+.105)));return wall*(1.-holes);}',
+'vec3 sWave(vec2 p,float t,float m){',
+' vec3 c=bg2(p,t)*.65; vec2 src=vec2(-.42,0.);',
+' c+=vec3(1.)*(pt(p,src,.000035)+exp(-length(p-src)*22.)*.16);',
+' float r=length(p-src); c+=vec3(.35)*glowLine(fract((r-t*.08)*9.)-.5,.045)*step(p.x,-.02)*(.25+.75*m);',
+' c+=vec3(.55)*slitMask(p);',
+' float x=max(0.,p.x-.02); float env=exp(-abs(p.y)*2.8)*smoothstep(0.,.08,x);',
+' float ph=cos((length(p-vec2(.02,.105))-length(p-vec2(.02,-.105)))*115.);',
+' c+=mix(vec3(.55),W,.14)*(.12+.42*sq(ph))*env*(.25+.75*m);',
+' if(p.x>.31&&p.x<.37&&abs(p.y)<.34){float fring=sq(cos(p.y*47.))*exp(-p.y*p.y*8.);vec2 g=floor(p*250.);float h=h21(g);c+=vec3(.95)*step(h,fring*.85)*step(.52,h21(g+4.));}',
+' return c;}',
+'vec3 sMeasure(vec2 p,float t,float m){',
+' vec3 c=bg2(p,t)*.62; vec2 src=vec2(-.42,0.); c+=vec3(1.)*pt(p,src,.000035); c+=vec3(.5)*slitMask(p);',
+' float det=smoothstep(.08,.32,m);',
+' for(int k=0;k<2;k++){float sy=(k==0?.105:-.105);vec2 q=p-vec2(.055,sy);float eye=abs(q.y)-.026*(1.-sq(q.x/.035));c+=vec3(.8)*glowLine(eye,1.3*PX)*step(abs(q.x),.035)*det;c+=W*pt(p,vec2(.055,sy),.000009)*det;}',
+' float u=fract(t*.32); vec2 a=mix(src,vec2(.02,(sin(t*2.)>0.?.105:-.105)),min(u*2.,1.)); vec2 b=mix(vec2(.02,(sin(t*2.)>0.?.105:-.105)),vec2(.34,(sin(t*2.)>0.?.09:-.09)),max(0.,u*2.-1.)); vec2 z=u<.5?a:b;c+=vec3(1.)*pt(p,z,.000025);',
+' if(p.x>.31&&p.x<.37&&abs(p.y)<.34){float cl=exp(-sq((p.y-.095)/.042))+exp(-sq((p.y+.095)/.042));vec2 g=floor(p*250.);float h=h21(g);c+=vec3(.95)*step(h,cl*.52)*step(.52,h21(g+6.));}',
+' return c;}',
+'vec3 sRemember(vec2 p,float t,float m){',
+' vec3 c=bg2(p,t)*.55; float side=smoothstep(-.01,.01,p.x);',
+' float bands=sq(cos(p.y*48.))*exp(-p.y*p.y*8.); float cl=exp(-sq((p.y-.1)/.045))+exp(-sq((p.y+.1)/.045));',
+' float pat=mix(bands,cl,side); float bar=glowLine(abs(p.x)-.012,1.2*PX); c+=vec3(.45)*bar;',
+' vec2 g=floor(vec2(p.x*180.,p.y*250.));float h=h21(g);c+=mix(vec3(.9),W,.1)*step(h,pat*.68)*step(.5,h21(g+9.))*smoothstep(.48,.32,abs(p.x));',
+' c+=W*(pt(p,vec2(-.24,0.),.000018)*(1.-side)+pt(p,vec2(.24,0.),.000018)*side)*(.6+.4*sin(t*2.)*.5+.2); return c;}',
+'vec3 scene(float id,vec2 p,float t,float m){if(id<.5)return sWave(p,t,m);if(id<1.5)return sMeasure(p,t,m);return sRemember(p,t,m);}'
+].join('\n');

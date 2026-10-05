@@ -43,10 +43,10 @@
   // ---------- the poster ----------
   var poster = new THREE.Group(); root.add(poster);
   var PW = 6.0, PH = 7.6;
-  var frame = new THREE.Mesh(new THREE.PlaneGeometry(PW+0.36, PH+0.36), flat(0xE3D5B6)); frame.position.z = -3.02; poster.add(frame);
+  var posterFrame = new THREE.Mesh(new THREE.PlaneGeometry(PW+0.36, PH+0.36), flat(0xE3D5B6)); posterFrame.position.z = -3.02; poster.add(posterFrame);
   var skyMat = flat(COL.paper); var sky = new THREE.Mesh(new THREE.PlaneGeometry(PW, PH), skyMat); sky.position.z = -3.0; poster.add(sky);
   var titleSpr = sprite('STYRK-KARRIERE.NO', '#2F4A3A', '600 46px "Playfair Display", Georgia, serif'); titleSpr.position.set(0, PH/2-0.45, -2.9); titleSpr.scale.set(3.2,0.6,1);
-  var subSpr = sprite('Karriererådgivning · hånd i hånd', '#B4532F', 'italic 500 40px "Playfair Display", Georgia, serif'); subSpr.position.set(0, PH/2-0.95, -2.9); subSpr.scale.set(2.8,0.5,1);
+  var subSpr = sprite('Karriererådgivning', '#B4532F', 'italic 500 34px "Playfair Display", Georgia, serif'); subSpr.position.set(0, PH/2-0.94, -2.9); subSpr.scale.set(2.35,0.42,1);
   // sun
   var sunMat = flat(COL.mustard); var sun = new THREE.Mesh(new THREE.CircleGeometry(0.72, 48), sunMat); sun.position.set(1.3, -1.0, -2.95); poster.add(sun);
   var sunRays = []; for (var r=0;r<12;r++){ var ray = new THREE.Mesh(new THREE.PlaneGeometry(0.06, 0.32), flat(COL.mustard, 0)); var a = r/12*Math.PI*2; ray.userData.a = a; poster.add(ray); sunRays.push(ray); }
@@ -102,7 +102,7 @@
   var board = new THREE.Group(); var bp = path.getPoint(0.66); board.position.set(bp.x-1.55, bp.y+0.25, bp.z+0.1); poster.add(board);
   var bLegs = [-0.35,0.35].map(function(x){ var m = new THREE.Mesh(new THREE.PlaneGeometry(0.04,0.5), flat(0x5A3A26)); m.position.set(x,0.25,0); board.add(m); return m; });
   var bFace = new THREE.Mesh(new THREE.PlaneGeometry(1.15,0.55), flat(COL.rust)); bFace.position.set(0,0.75,0.005); board.add(bFace);
-  var bTxt = sprite('Karriererådgivning', '#EFE4CC', 'italic 600 44px "Playfair Display", Georgia, serif', board); bTxt.position.set(0,0.8,0.01); bTxt.scale.set(1.05,0.2,1); bTxt.material.opacity = 1;
+  var bTxt = sprite('Karriererådgivning', '#EFE4CC', 'italic 600 34px "Playfair Display", Georgia, serif', board); bTxt.position.set(0,0.8,0.01); bTxt.scale.set(0.94,0.18,1); bTxt.material.opacity = 1;
   var bTag = sprite('Amedia · 1.–14. oktober', '#EFE4CC', '500 34px Karla, system-ui, sans-serif', board); bTag.position.set(0,0.62,0.01); bTag.scale.set(0.95,0.16,1); bTag.material.opacity = 1;
   board.scale.setScalar(0.001);
   var visitors = []; for (var v=0; v<10; v++){ var vm = new THREE.Mesh(new THREE.CircleGeometry(0.03,12), flat(COL.mustard, 0)); poster.add(vm); visitors.push(vm); }
