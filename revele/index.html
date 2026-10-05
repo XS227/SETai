@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="no">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Révele | Skjønnhet & velvære i Lillestrøm</title>
+  <meta name="description" content="Konseptdemo for Révele i Lillestrøm – hudpleie, Hydrafacial, vipper, bryn og skjønnhetsbehandlinger i rolige, elegante omgivelser.">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="theme-color" content="#f6f0e8">
+  <link rel="preconnect" href="https://scaled-images.timma.fi">
+  <style>
+    :root{
+      --ivory:#f7f2eb;--paper:#fffdf9;--ink:#1f1b18;--muted:#786f67;
+      --gold:#ae8a55;--gold2:#d4bc93;--sand:#e9ded0;--deep:#2d2824;
+      --line:rgba(55,44,34,.12);--shadow:0 24px 70px rgba(53,43,34,.12);
+      --serif:Georgia,"Times New Roman",serif;--sans:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif
+    }
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--ink);background:var(--ivory);font-family:var(--sans);overflow-x:hidden}
+    a{color:inherit;text-decoration:none}img{max-width:100%;display:block}
+    .wrap{width:min(1180px,calc(100% - 38px));margin:auto}
+    .eyebrow{font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);font-weight:700}
+    h1,h2,h3{font-family:var(--serif);font-weight:400;letter-spacing:-.035em;margin:0}
+    h1{font-size:clamp(3.5rem,8.6vw,8.6rem);line-height:.87}
+    h2{font-size:clamp(2.6rem,5vw,5.2rem);line-height:.97}
+    h3{font-size:1.55rem}.lead{font-size:clamp(1.05rem,1.7vw,1.28rem);line-height:1.7;color:var(--muted)}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:.65rem;padding:15px 22px;border-radius:999px;border:1px solid var(--deep);font-weight:650;font-size:.9rem;transition:.25s}
+    .btn:hover{transform:translateY(-2px)}.btn.dark{background:var(--deep);color:white}.btn.light{background:rgba(255,255,255,.75);backdrop-filter:blur(12px)}
+    .arrow{font-size:1.15rem;transition:.25s}.btn:hover .arrow{transform:translateX(4px)}
+    header{position:absolute;z-index:20;top:0;left:0;right:0;padding:24px 0}
+    nav{display:flex;align-items:center;justify-content:space-between;color:white}
+    .brand{font-family:var(--serif);font-size:1.65rem;letter-spacing:.16em}.brand small{display:block;font-family:var(--sans);font-size:.52rem;letter-spacing:.28em;text-align:center;margin-top:3px;opacity:.75}
+    .navlinks{display:flex;gap:28px;align-items:center;font-size:.84rem}.navlinks a{opacity:.87}.navlinks a:hover{opacity:1}
+    .navbook{border:1px solid rgba(255,255,255,.52);padding:11px 17px;border-radius:999px}
+    .hero{min-height:100svh;position:relative;display:flex;align-items:flex-end;color:white;background:#211d1a;isolation:isolate}
+    .hero-media{position:absolute;inset:0;z-index:-2;overflow:hidden}.hero-media img{width:100%;height:100%;object-fit:cover;object-position:center 46%;filter:saturate(.82) contrast(.93);transform:scale(1.03);animation:heroZoom 16s ease-in-out infinite alternate}
+    @keyframes heroZoom{to{transform:scale(1.09)}}
+    .hero:after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(23,20,18,.76) 0%,rgba(23,20,18,.31) 52%,rgba(23,20,18,.12)),linear-gradient(0deg,rgba(20,18,16,.77) 0%,transparent 56%)}
+    .hero-content{padding:170px 0 68px;display:grid;grid-template-columns:1.45fr .55fr;gap:40px;align-items:end}
+    .hero h1 em{font-style:italic;color:#ead9bf}.hero-copy{max-width:750px}.hero-copy .lead{color:rgba(255,255,255,.76);max-width:590px;margin:24px 0 30px}
+    .hero-actions{display:flex;gap:12px;flex-wrap:wrap}.hero .btn.dark{background:white;color:var(--deep);border-color:white}.hero .btn.light{border-color:rgba(255,255,255,.42);color:white;background:rgba(255,255,255,.08)}
+    .hero-note{border-left:1px solid rgba(255,255,255,.35);padding-left:24px;margin-bottom:6px}.hero-note b{font-family:var(--serif);font-size:3rem;font-weight:400}.hero-note span{display:block;color:rgba(255,255,255,.66);font-size:.86rem;line-height:1.55}
+    .trustbar{background:var(--deep);color:white;padding:18px 0}.trustrow{display:flex;gap:30px;align-items:center;justify-content:center;flex-wrap:wrap;font-size:.78rem;letter-spacing:.09em;text-transform:uppercase}
+    .trustrow i{width:4px;height:4px;border-radius:50%;background:var(--gold2)}
+    section{padding:112px 0}
+    .intro{background:var(--paper)}.intro-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:9vw;align-items:start}.intro .lead{max-width:720px;margin:24px 0 0}
+    .quote{font-family:var(--serif);font-size:clamp(2rem,4.4vw,4.5rem);line-height:1.08;color:#3b332d}
+    .services{position:relative;background:var(--ivory)}.services-head{display:flex;justify-content:space-between;gap:30px;align-items:end;margin-bottom:48px}.services-head p{max-width:450px;margin:0}
+    .service-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.card{position:relative;min-height:360px;border:1px solid var(--line);border-radius:28px;padding:28px;overflow:hidden;background:rgba(255,255,255,.55);transition:.35s}
+    .card:hover{transform:translateY(-6px);box-shadow:var(--shadow);background:white}.card-num{font-size:.72rem;color:var(--gold);letter-spacing:.18em}.card h3{margin-top:95px;font-size:2rem}.card p{color:var(--muted);line-height:1.65;margin:12px 0 0;max-width:280px}.card .circle{position:absolute;width:160px;height:160px;border-radius:50%;right:-44px;top:-48px;background:radial-gradient(circle at 30% 30%,#fff 0%,#e8d8c2 36%,#b79461 100%);opacity:.45;filter:blur(.2px);transition:.45s}.card:hover .circle{transform:scale(1.16)}
+    .story{background:var(--deep);color:white}.story-grid{display:grid;grid-template-columns:1fr 1fr;gap:7vw;align-items:center}.story-photo{border-radius:180px 180px 26px 26px;overflow:hidden;max-height:650px;box-shadow:0 30px 90px rgba(0,0,0,.28)}.story-photo img{width:100%;height:650px;object-fit:cover}
+    .story .lead{color:rgba(255,255,255,.68)}.story .eyebrow{color:#d7bd94}.story h2{margin:14px 0 26px}.story-sign{display:flex;gap:14px;align-items:center;margin-top:32px;color:#e6d1af}.story-sign:before{content:"";width:46px;height:1px;background:#d7bd94}
+    .experience{background:var(--paper)}.exp-grid{display:grid;grid-template-columns:1fr 1fr;gap:8vw;align-items:center}.exp-list{margin-top:35px;border-top:1px solid var(--line)}.exp-item{display:grid;grid-template-columns:52px 1fr;gap:18px;padding:22px 0;border-bottom:1px solid var(--line)}.exp-item strong{font-family:var(--serif);font-size:1.35rem;font-weight:400}.exp-item p{margin:7px 0 0;color:var(--muted);line-height:1.55;font-size:.93rem}
+    .rating-box{background:var(--ivory);border-radius:32px;padding:42px}.rating-big{font-family:var(--serif);font-size:8rem;line-height:.8}.stars{letter-spacing:.14em;color:#b18a52;margin:24px 0 10px}.rating-box p{color:var(--muted);line-height:1.7}.review{background:white;border-radius:20px;padding:22px;margin-top:16px;border:1px solid var(--line);font-family:var(--serif);font-size:1.2rem;line-height:1.5}.review small{display:block;font-family:var(--sans);font-size:.75rem;color:var(--muted);margin-top:12px}
+    .finder{background:linear-gradient(135deg,#e9ded0,#f9f4ed)}.finder-grid{display:grid;grid-template-columns:1fr 1fr;gap:7vw;align-items:center}.finder-card{background:rgba(255,255,255,.72);border:1px solid rgba(255,255,255,.9);padding:36px;border-radius:30px;box-shadow:var(--shadow)}.finder-card label{display:block;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:11px}.finder-card select{width:100%;padding:16px 18px;border:1px solid var(--line);border-radius:15px;background:white;font-size:1rem;color:var(--ink);margin-bottom:16px}
+    .location{background:var(--paper)}.location-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:5vw;align-items:stretch}.loc-copy{padding:36px 0}.loc-copy h2{margin:12px 0 24px}.details{display:grid;gap:15px;margin:30px 0}.details div{padding-bottom:14px;border-bottom:1px solid var(--line)}.details small{display:block;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:5px}.map{border-radius:30px;overflow:hidden;min-height:480px;background:#ddd}.map iframe{border:0;width:100%;height:100%;min-height:480px;filter:grayscale(.15) sepia(.08)}
+    .cta{padding:0 0 90px;background:var(--paper)}.cta-panel{background:var(--deep);color:white;border-radius:34px;padding:70px;display:flex;justify-content:space-between;align-items:center;gap:40px;overflow:hidden;position:relative}.cta-panel:after{content:"R";font-family:var(--serif);position:absolute;right:-5px;bottom:-90px;font-size:20rem;color:rgba(255,255,255,.035)}.cta-panel h2{max-width:760px}.cta-panel p{color:rgba(255,255,255,.65)}
+    footer{background:#191613;color:rgba(255,255,255,.72);padding:46px 0 28px}.footgrid{display:grid;grid-template-columns:1.4fr .6fr .6fr;gap:40px}.footerbrand{font-family:var(--serif);font-size:2rem;letter-spacing:.16em;color:white}.footgrid h4{font-size:.72rem;text-transform:uppercase;letter-spacing:.15em;color:white}.footgrid a{display:block;margin:10px 0;font-size:.9rem}.footbottom{border-top:1px solid rgba(255,255,255,.12);margin-top:34px;padding-top:20px;display:flex;justify-content:space-between;gap:20px;font-size:.72rem}
+    .concept{position:fixed;z-index:40;right:14px;bottom:14px;background:rgba(31,27,24,.86);color:white;padding:9px 13px;border-radius:999px;font-size:.68rem;backdrop-filter:blur(10px);letter-spacing:.05em}
+    .reveal{opacity:0;transform:translateY(24px);transition:.75s ease}.reveal.in{opacity:1;transform:none}
+    @media(max-width:900px){
+      .navlinks a:not(.navbook){display:none}.hero-content{grid-template-columns:1fr;padding-bottom:44px}.hero-note{display:none}.hero h1{font-size:clamp(4rem,18vw,7rem)}
+      section{padding:82px 0}.intro-grid,.story-grid,.exp-grid,.finder-grid,.location-grid{grid-template-columns:1fr;gap:48px}.services-head{display:block}.services-head p{margin-top:18px}.service-grid{grid-template-columns:1fr 1fr}
+      .story-photo img{height:520px}.location-grid{gap:20px}.cta-panel{padding:48px 28px;display:block}.cta-panel .btn{margin-top:20px}.footgrid{grid-template-columns:1fr 1fr}.footgrid>div:first-child{grid-column:1/-1}
+    }
+    @media(max-width:600px){
+      .wrap{width:min(100% - 26px,1180px)}header{padding-top:17px}.brand{font-size:1.35rem}.navbook{padding:9px 13px}
+      .hero{min-height:92svh}.hero-media img{object-position:62% center}.hero:after{background:linear-gradient(0deg,rgba(20,18,16,.9) 0%,rgba(20,18,16,.25) 74%)}
+      .hero-content{padding-top:130px}.hero h1{font-size:18vw}.hero-copy .lead{font-size:1rem;margin:18px 0 24px}.hero-actions .btn{width:100%}.trustrow{gap:12px 17px;font-size:.65rem}
+      .quote{font-size:2.1rem}.service-grid{grid-template-columns:1fr}.card{min-height:300px}.card h3{margin-top:65px}.story-photo{border-radius:130px 130px 22px 22px}.story-photo img{height:460px;object-position:center}
+      .rating-box{padding:28px}.rating-big{font-size:6rem}.finder-card{padding:24px}.map,.map iframe{min-height:360px}.cta-panel h2{font-size:2.6rem}.footgrid{grid-template-columns:1fr}.footgrid>div:first-child{grid-column:auto}.footbottom{display:block}.footbottom span{display:block;margin-top:8px}
+      .concept{font-size:.6rem}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <nav>
+        <a class="brand" href="#top">RÉVELE<small>LILLESTRØM</small></a>
+        <div class="navlinks">
+          <a href="#behandlinger">Behandlinger</a>
+          <a href="#historien">Om oss</a>
+          <a href="#opplevelse">Opplevelsen</a>
+          <a href="#kontakt">Kontakt</a>
+          <a class="navbook" href="https://timma.no/salong/revele" target="_blank" rel="noopener">Bestill time</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-media">
+        <img src="https://scaled-images.timma.fi/timma/image/upload/w_1600,c_limit,q_auto/v1762122623/c/r-vele-8510fe30-b83b-11f0-961b-f7778ed33bf0.jpg" alt="Révele i Lillestrøm">
+      </div>
+      <div class="wrap hero-content">
+        <div class="hero-copy">
+          <div class="eyebrow">Skjønnhet & velvære · Torvet 3</div>
+          <h1>Avdekk din<br><em>naturlige glød.</em></h1>
+          <p class="lead">Personlige behandlinger, faglig trygghet og en rolig pause midt i Lillestrøm. Hos Révele handler skjønnhet om å fremheve det som allerede er ditt.</p>
+          <div class="hero-actions">
+            <a class="btn dark" href="https://timma.no/salong/revele" target="_blank" rel="noopener">Bestill time <span class="arrow">→</span></a>
+            <a class="btn light" href="#behandlinger">Utforsk behandlinger</a>
+          </div>
+        </div>
+        <div class="hero-note">
+          <b>4,9</b>
+          <span>på Google<br>Elsket av kunder i Lillestrøm</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="trustbar">
+      <div class="wrap trustrow"><span>Personlig veiledning</span><i></i><span>Hudhelse i fokus</span><i></i><span>Sentral beliggenhet</span><i></i><span>Online booking</span></div>
+    </div>
+
+    <section class="intro">
+      <div class="wrap intro-grid reveal">
+        <div><div class="eyebrow">Révele betyr å avsløre</div></div>
+        <div>
+          <div class="quote">«Ikke bli en annen. Bli den mest strålende versjonen av deg selv.»</div>
+          <p class="lead">Vi kombinerer moderne behandlinger med tid, omsorg og personlig oppfølging. Resultatet skal føles som deg – bare litt mer uthvilt, trygg og strålende.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="services" id="behandlinger">
+      <div class="wrap">
+        <div class="services-head reveal">
+          <div><div class="eyebrow">Behandlinger</div><h2>Din hud. Ditt uttrykk.<br>Din Révele.</h2></div>
+          <p class="lead">Fra glød og hudforbedring til vipper, bryn og de små detaljene som gjør en stor forskjell.</p>
+        </div>
+        <div class="service-grid">
+          <article class="card reveal"><span class="card-num">01</span><span class="circle"></span><h3>Hydrafacial</h3><p>Dyprens, eksfoliering og intens fukt for friskere hud og umiddelbar glød.</p></article>
+          <article class="card reveal"><span class="card-num">02</span><span class="circle"></span><h3>Hud & ansikt</h3><p>Tilpassede ansiktsbehandlinger, hudanalyse, peelinger og målrettet hudpleie.</p></article>
+          <article class="card reveal"><span class="card-num">03</span><span class="circle"></span><h3>Microneedling</h3><p>Hudforbedrende behandling med fokus på tekstur, glød og et jevnere uttrykk.</p></article>
+          <article class="card reveal"><span class="card-num">04</span><span class="circle"></span><h3>Vipper & bryn</h3><p>Form, farge og løft som rammer inn ansiktet og fremhever dine naturlige trekk.</p></article>
+          <article class="card reveal"><span class="card-num">05</span><span class="circle"></span><h3>Tannbleking</h3><p>Profesjonell behandling for et lysere smil – med komfort og veiledning i fokus.</p></article>
+          <article class="card reveal"><span class="card-num">06</span><span class="circle"></span><h3>Finn din behandling</h3><p>Usikker på hva huden trenger? Start med en samtale, så finner vi riktig vei sammen.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="story" id="historien">
+      <div class="wrap story-grid">
+        <div class="story-photo reveal">
+          <img src="https://scaled-images.timma.fi/timma/image/upload/w_1200,c_limit,q_auto/v1762121530/c/r-vele-f9696a40-b838-11f0-961b-f7778ed33bf0.jpg" alt="Personlig veiledning hos Révele">
+        </div>
+        <div class="reveal">
+          <div class="eyebrow">Fire søstre · én visjon</div>
+          <h2>Et familiedrevet skjønnhetsunivers.</h2>
+          <p class="lead">Révele ble skapt av fire søstre med en felles idé: skjønnhetsbehandlinger skal føles trygge, personlige og gjennomtenkte. Det handler ikke bare om behandlingen du bestiller, men om hvordan du blir møtt, sett og fulgt opp.</p>
+          <p class="lead">Her kombineres faglighet og varme med et øye for detaljer – i rolige omgivelser midt i Lillestrøm.</p>
+          <div class="story-sign">Velkommen til Révele</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="experience" id="opplevelse">
+      <div class="wrap exp-grid">
+        <div class="reveal">
+          <div class="eyebrow">Mer enn en behandling</div>
+          <h2>Du skal føle deg trygg hele veien.</h2>
+          <div class="exp-list">
+            <div class="exp-item"><span class="card-num">01</span><div><strong>Vi lytter først</strong><p>Dine ønsker, hudens behov og forventninger kommer før valg av behandling.</p></div></div>
+            <div class="exp-item"><span class="card-num">02</span><div><strong>Vi forklarer underveis</strong><p>Du skal vite hva som skjer, hvorfor vi gjør det og hva du kan forvente etterpå.</p></div></div>
+            <div class="exp-item"><span class="card-num">03</span><div><strong>Vi følger opp</strong><p>Gode resultater handler også om riktig hjemmepleie og en plan som passer hverdagen din.</p></div></div>
+          </div>
+        </div>
+        <div class="rating-box reveal">
+          <div class="rating-big">4,9</div>
+          <div class="stars">★★★★★</div>
+          <p>En sterk kundevurdering er mer enn et tall. Det er et signal om tillit – og noe nye kunder bør se før de bestemmer seg.</p>
+          <div class="review">«Profesjonell, trygg og personlig opplevelse.»<small>Eksempel på hvordan kundeomtaler kan fremheves på den nye siden</small></div>
+          <a class="btn dark" style="margin-top:20px" href="https://www.google.com/maps/search/?api=1&query=R%C3%A9vele%20Torvet%203%20Lillestr%C3%B8m" target="_blank" rel="noopener">Se på Google <span class="arrow">→</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="finder">
+      <div class="wrap finder-grid">
+        <div class="reveal">
+          <div class="eyebrow">Ikke sikker på hva du trenger?</div>
+          <h2>Start med målet ditt.</h2>
+          <p class="lead">En enkel veiviser kan hjelpe nye kunder å finne riktig kategori før de går videre til booking.</p>
+        </div>
+        <div class="finder-card reveal">
+          <label for="goal">Hva ønsker du mest akkurat nå?</label>
+          <select id="goal">
+            <option value="">Velg et mål…</option>
+            <option value="glow">Mer glød og fukt</option>
+            <option value="clean">Dyprens og renere porer</option>
+            <option value="texture">Jevnere hudtekstur</option>
+            <option value="brows">Mer definerte vipper/bryn</option>
+            <option value="smile">Et lysere smil</option>
+          </select>
+          <div id="recommendation" style="min-height:50px;color:var(--muted);line-height:1.55">Velg et mål, så viser vi en naturlig start.</div>
+          <a class="btn dark" style="margin-top:12px" href="https://timma.no/salong/revele" target="_blank" rel="noopener">Se ledige timer <span class="arrow">→</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="location" id="kontakt">
+      <div class="wrap location-grid">
+        <div class="loc-copy reveal">
+          <div class="eyebrow">Midt i Lillestrøm</div>
+          <h2>En liten pause,<br>rett rundt hjørnet.</h2>
+          <p class="lead">Révele holder til sentralt på Torvet 3. Bestill enkelt på nett og finn en tid som passer deg.</p>
+          <div class="details">
+            <div><small>Adresse</small>Torvet 3, 2000 Lillestrøm</div>
+            <div><small>Booking</small>Online via Timma</div>
+            <div><small>Instagram</small>@r.e.v.e.l.e</div>
+          </div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <a class="btn dark" href="https://timma.no/salong/revele" target="_blank" rel="noopener">Bestill time <span class="arrow">→</span></a>
+            <a class="btn" href="https://www.google.com/maps/search/?api=1&query=R%C3%A9vele%20Torvet%203%20Lillestr%C3%B8m" target="_blank" rel="noopener">Veibeskrivelse</a>
+          </div>
+        </div>
+        <div class="map reveal">
+          <iframe loading="lazy" title="Kart til Révele" src="https://www.google.com/maps?q=Torvet%203%2C%202000%20Lillestr%C3%B8m&output=embed"></iframe>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta">
+      <div class="wrap">
+        <div class="cta-panel reveal">
+          <div><div class="eyebrow" style="color:#d7bd94">Din tid. Din glød.</div><h2>Klar for å finne behandlingen som passer deg?</h2><p>Se ledige timer og bestill når det passer.</p></div>
+          <a class="btn dark" style="background:white;color:var(--deep);border-color:white;position:relative;z-index:2" href="https://timma.no/salong/revele" target="_blank" rel="noopener">Bestill hos Révele <span class="arrow">→</span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div class="footgrid">
+        <div><div class="footerbrand">RÉVELE</div><p style="max-width:380px;line-height:1.6">Skjønnhet og velvære med personlig oppfølging, midt i Lillestrøm.</p></div>
+        <div><h4>Utforsk</h4><a href="#behandlinger">Behandlinger</a><a href="#historien">Om Révele</a><a href="#opplevelse">Opplevelsen</a></div>
+        <div><h4>Kontakt</h4><a href="https://timma.no/salong/revele" target="_blank" rel="noopener">Bestill time</a><a href="https://www.instagram.com/r.e.v.e.l.e/" target="_blank" rel="noopener">Instagram</a><a href="#kontakt">Torvet 3</a></div>
+      </div>
+      <div class="footbottom"><span>© Révele · Konseptdemo</span><span>Nettsidekonsept utviklet av SETAEI</span></div>
+    </div>
+  </footer>
+
+  <div class="concept">Konseptdemo · SETAEI</div>
+  <script>
+    const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')}),{threshold:.12});
+    document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+    const goal=document.getElementById('goal'),out=document.getElementById('recommendation');
+    const rec={
+      glow:'Hydrafacial eller en tilpasset ansiktsbehandling kan være et godt sted å starte.',
+      clean:'Hydrafacial er laget for dyprens, eksfoliering og fukt i samme behandling.',
+      texture:'En konsultasjon for microneedling eller målrettet hudbehandling kan være riktig neste steg.',
+      brows:'Start med vipper & bryn – form, farge eller løft tilpasses uttrykket ditt.',
+      smile:'Tannbleking kan gi et lysere smil. Bestill eller spør om hva som passer for deg.'
+    };
+    goal.addEventListener('change',()=>out.textContent=rec[goal.value]||'Velg et mål, så viser vi en naturlig start.');
+  </script>
+</body>
+</html>
