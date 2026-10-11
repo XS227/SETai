@@ -87,3 +87,24 @@ snapshot through 2026-10-09 even after live results are updated.
 JavaScript syntax checked for engine, app, and the snapshot writer. Official
 archive completeness and latest result checked. Native browser QA was not
 available in this environment and remains a deployment check.
+
+## Personal numerology row 3
+
+Birth date is required; full name is optional. All personal data stays in
+browser memory and is never sent to the server or put into the global
+proposal archive. Personal year/month/day use each draw date, matching the
+current Numerologist report engine. Life path and name numbers match the
+main IntakeForm calculator, including master numbers 11/22/33, Norwegian
+letters and the contextual Y rule.
+
+Row 3 prioritizes personal year, month, day, life path, and birth day. Equal
+values share one ball. Gaps are filled by name factors when supplied, birth
+month/year factors, and explicitly documented sums. Main sums above 50
+wrap into 1-50. Star numbers use personal day and life path, with master
+numbers above 12 digit-reduced and documented fallbacks for duplicates.
+This is a symbolic selection rule, not a probability or prediction model.
+
+Run `node tools/eurojackpot/test_numerology.js`. A sweep verified valid,
+unique, explained 5+2 rows, and 90 profiles were compared against the
+actual Numerologist source on the production server with exact agreement.
+Native visual browser QA was not available.

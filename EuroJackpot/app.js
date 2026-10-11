@@ -5,19 +5,42 @@ const dateFmt=(date,short=false)=>new Intl.DateTimeFormat('nb-NO',{timeZone:'Eur
 const weekday=date=>new Intl.DateTimeFormat('nb-NO',{timeZone:'Europe/Oslo',weekday:'long'}).format(new Date(date+'T12:00:00Z'));
 const cap=s=>s[0].toUpperCase()+s.slice(1);
 const balls=(nums,star=false)=>nums.map(n=>`<span class="ball ${star?'star':''}" aria-label="${star?'Stjernetall':'Hovedtall'} ${n}">${n}</span>`).join('');
-let rows,model,visible=20,selected=1;
+let rows,model,visible=20,selected=1,personal=null;
 function toast(msg){$('toast').textContent=msg;$('toast').hidden=false;setTimeout(()=>$('toast').hidden=true,2500);}
+function personalMarkup(date){
+ if(!personal)return '<div class="personal-row"><div class="rowlabel">Rekke 3 · Personlig numerologi</div><p class="personal-empty">Legg inn fødselsdatoen ovenfor for å få din personlige rekke til denne datoen.</p></div>';
+ const r=EJ_NUMEROLOGY.row(personal.birthDate,date,personal.name),p=r.profile;
+ const chips=[['Personlig år',p.year],['Personlig måned',p.month],['Personlig dag',p.day],['Livsvei',p.life],['Fødselsdag',p.birthday],...(p.expression?[['Navnetall',p.expression],['Sjeletall',p.soul],['Personlighet',p.personality]]:[])];
+ const reasons=(items,star)=>items.map(x=>`<li><strong>${star?'Stjernetall ':''}${x.number}</strong>: ${x.sources.join(' · ')}</li>`).join('');
+ return `<div class="personal-row"><div class="rowlabel">Rekke 3 · Dine numerologiske tall</div><div class="balls">${balls(r.main)}<span class="plus" aria-hidden="true">+</span>${balls(r.stars,true)}</div><div class="personal-numbers">${chips.map(([label,value])=>`<span>${label} <strong>${value}</strong></span>`).join('')}</div><details><summary>Se hvordan dine 7 tall er valgt</summary><ul class="personal-reasons">${reasons(r.reasons,false)}${reasons(r.starReasons,true)}</ul><p class="tiny">Like personlige tall deler én ball. Ledige plasser fylles med andre personlige tall eller forklarte summer. Summer over 50 tilpasses 1–50. Stjernetall tilpasses 1–12. Dette er utvalgsregler for rekken, ikke en prognose.</p></details></div>`;
+}
+function setupPersonal(){
+ const parts=Object.fromEntries(new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Oslo',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date()).map(x=>[x.type,x.value]));
+ $('birth-date').max=`${parts.year}-${parts.month}-${parts.day}`;
+ $('personal-form').addEventListener('submit',event=>{
+  event.preventDefault();$('personal-error').hidden=true;
+  if(!$('personal-form').reportValidity())return;
+  try{
+   const birthDate=$('birth-date').value,name=$('personal-name').value.trim();
+   if(name&&!EJ_NUMEROLOGY.nameNumber(name))throw Error('Navnet må inneholde bokstaver A–Z, Æ, Ø eller Å. Du kan også la navnefeltet stå tomt.');
+   for(const date of EJ.nextDates(new Date(),rows))EJ_NUMEROLOGY.row(birthDate,date,name);
+   personal={birthDate,name};renderForecasts();toast('Din personlige rekke 3 er klar for begge datoene');
+  }catch(e){personal=null;renderForecasts();$('personal-error').textContent=e.message;$('personal-error').hidden=false;}
+ });
+ $('personal-clear').addEventListener('click',()=>{personal=null;$('personal-form').reset();$('personal-error').hidden=true;renderForecasts();});
+}
 function renderForecasts(){
  const dates=EJ.nextDates(new Date(),rows),mode=$('mode').value;
  $('next-draws').innerHTML=dates.map((date,i)=>{
    const frozen=(window.EJ_PROPOSALS?.forecasts||[]).find(r=>r.date===date&&r.mode===mode&&r.version===EJ.VERSION&&r.asOf<date);
    const predictions=frozen?.rows||[0,1].map(v=>EJ.proposal(rows,date,mode,v,model));
    const snapshot=frozen?'Registrert på forhånd':'Lokalt beregnet · ikke registrert';
-   return `<article class="card drawcard"><div class="drawhead"><div><div class="eyebrow">${cap(weekday(date))} · ${i===0?'Neste trekning':'Trekningen etter'}</div><h3>${dateFmt(date)}</h3><p>${EJ.deadlineStatus(date)}</p></div><span class="badge">${mode==='model'?'AI · eksperimentell':'Tilfeldig utvalg'}</span></div>${predictions.map((r,j)=>`<div class="rowlabel">Rekke ${j+1}</div><div class="balls">${balls(r.main)}<span class="plus" aria-hidden="true">+</span>${balls(r.stars,true)}</div>`).join('')}<div class="drawfoot"><span>5+2: <strong>1 av ${fmt(EJ.combinations)}</strong><br>per rekke</span><button class="copy" data-date="${date}" type="button">Kopier tall</button></div><p class="forecast-note">${snapshot} · Historikk til ${dateFmt(predictions[0].asOf,true)}</p></article>`;
+   return `<article class="card drawcard"><div class="drawhead"><div><div class="eyebrow">${cap(weekday(date))} · ${i===0?'Neste trekning':'Trekningen etter'}</div><h3>${dateFmt(date)}</h3><p>${EJ.deadlineStatus(date)}</p></div><span class="badge">${mode==='model'?'AI · eksperimentell':'Tilfeldig utvalg'}</span></div>${predictions.map((r,j)=>`<div class="rowlabel">Rekke ${j+1}</div><div class="balls">${balls(r.main)}<span class="plus" aria-hidden="true">+</span>${balls(r.stars,true)}</div>`).join('')}${personalMarkup(date)}<div class="drawfoot"><span>5+2: <strong>1 av ${fmt(EJ.combinations)}</strong><br>per rekke</span><button class="copy" data-date="${date}" type="button">Kopier tall</button></div><p class="forecast-note">Rekke 1–2: ${snapshot} · Historikk til ${dateFmt(predictions[0].asOf,true)}${personal?'<br>Rekke 3: beregnet lokalt for trekningsdatoen.':''}</p></article>`;
  }).join('');
  document.querySelectorAll('.copy').forEach(btn=>btn.addEventListener('click',async()=>{
   const date=btn.dataset.date, frozen=(window.EJ_PROPOSALS?.forecasts||[]).find(r=>r.date===date&&r.mode===mode&&r.version===EJ.VERSION),p=frozen?.rows||[0,1].map(v=>EJ.proposal(rows,date,mode,v,model));
-  const str=dateFmt(date)+'\n'+p.map(r=>r.main.join(' – ')+' + '+r.stars.join(' – ')).join('\n')+'\nEksperimentelle forslag. 5+2: 1 av '+fmt(EJ.combinations)+' per rekke.';
+  const nr=personal?EJ_NUMEROLOGY.row(personal.birthDate,date,personal.name):null;
+  const str=dateFmt(date)+'\n'+p.map((r,i)=>'Rekke '+(i+1)+': '+r.main.join(' – ')+' + '+r.stars.join(' – ')).join('\n')+(nr?'\nRekke 3 (personlig numerologi): '+nr.main.join(' – ')+' + '+nr.stars.join(' – '):'')+'\nEksperimentelle / symbolske forslag. 5+2: 1 av '+fmt(EJ.combinations)+' per rekke.';
   try{await navigator.clipboard.writeText(str);toast('Tallene er kopiert');}catch{toast('Kopiering er ikke tilgjengelig i denne visningen.');}
  }));
 }
@@ -99,7 +122,7 @@ function init(){
   const classes=[[5,2],[5,1],[5,0],[4,2],[4,1],[3,2],[4,0],[2,2],[3,1],[3,0],[1,2],[2,1]];
   $('odds-table').querySelector('tbody').innerHTML=classes.map(([m,s])=>`<tr><td>${m}+${s}</td><td>${fmt(Math.round(1/EJ.odds(m,s)))}</td></tr>`).join('');
   $('any-prize').textContent='En av disse premiegruppene: omtrent 1 av '+(1/classes.reduce((a,[m,s])=>a+EJ.odds(m,s),0)).toLocaleString('nb-NO',{maximumFractionDigits:1})+'.';
-  model=EJ.fit(rows);renderModel();renderForecasts();renderCalculator();renderFrequency();renderArchive();dataStatus();
+  model=EJ.fit(rows);renderModel();renderForecasts();renderCalculator();renderFrequency();renderArchive();dataStatus();setupPersonal();
   $('mode').addEventListener('change',renderForecasts);$('row-count').addEventListener('input',renderCalculator);$('number-type').addEventListener('change',renderFrequency);$('period').addEventListener('change',renderFrequency);$('year').addEventListener('change',()=>{visible=20;renderArchive();});$('more').addEventListener('click',()=>{visible+=40;renderArchive();});$('export').addEventListener('click',exportCsv);
   setInterval(()=>{renderForecasts();dataStatus();},60_000);
   setInterval(refreshData,300_000);
