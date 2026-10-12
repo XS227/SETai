@@ -29,18 +29,23 @@ function setupPersonal(){
  });
  $('personal-clear').addEventListener('click',()=>{personal=null;$('personal-form').reset();$('personal-error').hidden=true;renderForecasts();});
 }
+function exclusionMarkup(date){
+ const r=EJ_EXCLUSION.proposal(rows,date);
+ return `<div class="exclusion-row"><div class="rowlabel">Rekke 4 · Ny hovedtallkombinasjon</div><div class="balls">${balls(r.main)}<span class="plus" aria-hidden="true">+</span>${balls(r.stars,true)}</div><p class="tiny">Kontrollert mot ${fmt(r.checkedDraws)} tidligere trekninger: verken disse fem hovedtallene eller hele 5+2-rekken har vært trukket før.</p><details><summary>Hva er utelukket?</summary><p class="tiny">${fmt(r.excludedMainSets)} tidligere hovedtallsett er utelukket, med alle mulige stjernetallpar til disse settene. Det fjerner ${fmt(r.excludedCurrentRows)} hele rekker fra utvalget til dette forslaget. Stjernetallparet ${r.stars.join(' + ')} har vært trukket ${fmt(r.starPairOccurrences)} ganger. Alle dagens 66 par har vært trukket; derfor kan vi ikke kreve et ubrukt stjernetallpar også.</p><p class="tiny">Lokalt beregnet · historikk til ${dateFmt(r.asOf,true)}. Tidligere kombinasjoner kan trekkes igjen. Sjansen for denne rekken er fortsatt 1 av ${fmt(Math.round(1/r.chance))}.</p></details></div>`;
+}
 function renderForecasts(){
  const dates=EJ.nextDates(new Date(),rows),mode=$('mode').value;
  $('next-draws').innerHTML=dates.map((date,i)=>{
    const frozen=(window.EJ_PROPOSALS?.forecasts||[]).find(r=>r.date===date&&r.mode===mode&&r.version===EJ.VERSION&&r.asOf<date);
    const predictions=frozen?.rows||[0,1].map(v=>EJ.proposal(rows,date,mode,v,model));
    const snapshot=frozen?'Registrert på forhånd':'Lokalt beregnet · ikke registrert';
-   return `<article class="card drawcard"><div class="drawhead"><div><div class="eyebrow">${cap(weekday(date))} · ${i===0?'Neste trekning':'Trekningen etter'}</div><h3>${dateFmt(date)}</h3><p>${EJ.deadlineStatus(date)}</p></div><span class="badge">${mode==='model'?'AI · eksperimentell':'Tilfeldig utvalg'}</span></div>${predictions.map((r,j)=>`<div class="rowlabel">Rekke ${j+1}</div><div class="balls">${balls(r.main)}<span class="plus" aria-hidden="true">+</span>${balls(r.stars,true)}</div>`).join('')}${personalMarkup(date)}<div class="drawfoot"><span>5+2: <strong>1 av ${fmt(EJ.combinations)}</strong><br>per rekke</span><button class="copy" data-date="${date}" type="button">Kopier tall</button></div><p class="forecast-note">Rekke 1–2: ${snapshot} · Historikk til ${dateFmt(predictions[0].asOf,true)}${personal?'<br>Rekke 3: beregnet lokalt for trekningsdatoen.':''}</p></article>`;
+   return `<article class="card drawcard"><div class="drawhead"><div><div class="eyebrow">${cap(weekday(date))} · ${i===0?'Neste trekning':'Trekningen etter'}</div><h3>${dateFmt(date)}</h3><p>${EJ.deadlineStatus(date)}</p></div><span class="badge">${mode==='model'?'AI · eksperimentell':'Tilfeldig utvalg'}</span></div>${predictions.map((r,j)=>`<div class="rowlabel">Rekke ${j+1}</div><div class="balls">${balls(r.main)}<span class="plus" aria-hidden="true">+</span>${balls(r.stars,true)}</div>`).join('')}${personalMarkup(date)}${exclusionMarkup(date)}<div class="drawfoot"><span>5+2: <strong>1 av ${fmt(EJ.combinations)}</strong><br>per rekke</span><button class="copy" data-date="${date}" type="button">Kopier tall</button></div><p class="forecast-note">Rekke 1–2: ${snapshot} · Historikk til ${dateFmt(predictions[0].asOf,true)}${personal?'<br>Rekke 3: beregnet lokalt for trekningsdatoen.':''}<br>Rekke 4: lokalt utvalg som utelukker tidligere hovedtallsett.</p></article>`;
  }).join('');
  document.querySelectorAll('.copy').forEach(btn=>btn.addEventListener('click',async()=>{
   const date=btn.dataset.date, frozen=(window.EJ_PROPOSALS?.forecasts||[]).find(r=>r.date===date&&r.mode===mode&&r.version===EJ.VERSION),p=frozen?.rows||[0,1].map(v=>EJ.proposal(rows,date,mode,v,model));
   const nr=personal?EJ_NUMEROLOGY.row(personal.birthDate,date,personal.name):null;
-  const str=dateFmt(date)+'\n'+p.map((r,i)=>'Rekke '+(i+1)+': '+r.main.join(' – ')+' + '+r.stars.join(' – ')).join('\n')+(nr?'\nRekke 3 (personlig numerologi): '+nr.main.join(' – ')+' + '+nr.stars.join(' – '):'')+'\nEksperimentelle / symbolske forslag. 5+2: 1 av '+fmt(EJ.combinations)+' per rekke.';
+  const filtered=EJ_EXCLUSION.proposal(rows,date);
+  const str=dateFmt(date)+'\n'+p.map((r,i)=>'Rekke '+(i+1)+': '+r.main.join(' – ')+' + '+r.stars.join(' – ')).join('\n')+(nr?'\nRekke 3 (personlig numerologi): '+nr.main.join(' – ')+' + '+nr.stars.join(' – '):'')+'\nRekke 4 (tidligere hovedtallsett utelukket): '+filtered.main.join(' – ')+' + '+filtered.stars.join(' – ')+'\nEksperimentelle / symbolske forslag. 5+2: 1 av '+fmt(EJ.combinations)+' per rekke.';
   try{await navigator.clipboard.writeText(str);toast('Tallene er kopiert');}catch{toast('Kopiering er ikke tilgjengelig i denne visningen.');}
  }));
 }
