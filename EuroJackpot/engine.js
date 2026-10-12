@@ -22,17 +22,17 @@
   }
   function deadlineStatus(date,now=new Date()){
     const p=osloParts(now), day=`${p.year}-${p.month}-${p.day}`;
-    return day>date||(day===date&&Number(p.hour)>=19)?'Spillefristen er passert':'Spillefrist kl. 19:00 (norsk tid)';
+    return day>date||(day===date&&Number(p.hour)>=19)?'Norwegian ticket deadline has passed':'Norwegian ticket deadline: 19:00';
   }
   function validate(rows){
-    if(!Array.isArray(rows)||!rows.length)throw Error('Historikken er tom.');
+    if(!Array.isArray(rows)||!rows.length)throw Error('The archive is empty.');
     let prev='';
     return rows.map(r=>{
-      if(!r||!/^\d{4}-\d{2}-\d{2}$/.test(r.date)||r.date<=prev)throw Error('Ugyldig dato eller rekkefølge i historikken.');
+      if(!r||!/^\d{4}-\d{2}-\d{2}$/.test(r.date)||r.date<=prev)throw Error('Invalid archive date or ordering.');
       const d=new Date(r.date+'T12:00:00Z');
-      if(!Number.isFinite(+d)||d.toISOString().slice(0,10)!==r.date||![5,...(r.date>='2022-03-29'?[2]:[])].includes(d.getUTCDay()))throw Error('Ugyldig trekningsdato.');
+      if(!Number.isFinite(+d)||d.toISOString().slice(0,10)!==r.date||![5,...(r.date>='2022-03-29'?[2]:[])].includes(d.getUTCDay()))throw Error('Invalid draw date.');
       for(const [key,k,n] of [['main',5,50],['stars',2,pool(r.date)]]){
-        if(!Array.isArray(r[key])||r[key].length!==k||new Set(r[key]).size!==k||r[key].some(x=>!Number.isInteger(x)||x<1||x>n))throw Error('Ugyldige tall i historikken.');
+        if(!Array.isArray(r[key])||r[key].length!==k||new Set(r[key]).size!==k||r[key].some(x=>!Number.isInteger(x)||x<1||x>n))throw Error('Invalid archive numbers.');
       }
       prev=r.date;return {date:r.date,main:[...r.main].sort((a,b)=>a-b),stars:[...r.stars].sort((a,b)=>a-b)};
     });
@@ -91,7 +91,7 @@
   }
   function proposal(rows,date,mode='uniform',variant=0,model){
     const prior=rows.filter(r=>r.date<date);
-    if(!prior.length)throw Error('Ingen historikk før denne datoen.');
+    if(!prior.length)throw Error('No archive before this date.');
     const n=pool(date);
     const trained=model||fit(prior), random=rng(hash(VERSION+'|'+date+'|'+prior.at(-1).date+'|'+mode+'|'+variant));
     const mw=mode==='model'?trained.main:Array(50).fill(.1);

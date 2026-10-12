@@ -1,176 +1,89 @@
 'use strict';
 (function(){
-const $=id=>document.getElementById(id), fmt=n=>new Intl.NumberFormat('nb-NO').format(n);
-const dateFmt=(date,short=false)=>new Intl.DateTimeFormat('nb-NO',{timeZone:'Europe/Oslo',day:'numeric',month:short?'short':'long',year:'numeric'}).format(new Date(date+'T12:00:00Z'));
-const weekday=date=>new Intl.DateTimeFormat('nb-NO',{timeZone:'Europe/Oslo',weekday:'long'}).format(new Date(date+'T12:00:00Z'));
-const cap=s=>s[0].toUpperCase()+s.slice(1);
-const balls=(nums,star=false)=>nums.map(n=>`<span class="ball ${star?'star':''}" aria-label="${star?'Stjernetall':'Hovedtall'} ${n}">${n}</span>`).join('');
-let rows,model,visible=20,selected=1,personal=null,followToday=true,repeatVisible=12,repeatAnalysis;
-function toast(msg){$('toast').textContent=msg;$('toast').hidden=false;setTimeout(()=>$('toast').hidden=true,2500);}
-function personalMarkup(date){
- if(!personal)return '<div class="personal-row"><div class="rowlabel">Rekke 3 · Personlig numerologi</div><p class="personal-empty">Legg inn fødselsdatoen ovenfor for å få din personlige rekke til denne datoen.</p></div>';
- const r=EJ_NUMEROLOGY.row(personal.birthDate,date,personal.name),p=r.profile;
- const chips=[['Personlig år',p.year],['Personlig måned',p.month],['Personlig dag',p.day],['Livsvei',p.life],['Fødselsdag',p.birthday],...(p.expression?[['Navnetall',p.expression],['Sjeletall',p.soul],['Personlighet',p.personality]]:[])];
- const reasons=(items,star)=>items.map(x=>`<li><strong>${star?'Stjernetall ':''}${x.number}</strong>: ${x.sources.join(' · ')}</li>`).join('');
- return `<div class="personal-row"><div class="rowlabel">Rekke 3 · Dine numerologiske tall</div><div class="balls">${balls(r.main)}<span class="plus" aria-hidden="true">+</span>${balls(r.stars,true)}</div><div class="personal-numbers">${chips.map(([label,value])=>`<span>${label} <strong>${value}</strong></span>`).join('')}</div><details><summary>Se hvordan dine 7 tall er valgt</summary><ul class="personal-reasons">${reasons(r.reasons,false)}${reasons(r.starReasons,true)}</ul><p class="tiny">Like personlige tall deler én ball. Ledige plasser fylles med andre personlige tall eller forklarte summer. Summer over 50 tilpasses 1–50. Stjernetall tilpasses 1–12. Dette er utvalgsregler for rekken, ikke en prognose.</p></details></div>`;
+const $=id=>document.getElementById(id),fmt=n=>new Intl.NumberFormat('en-GB').format(n),esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const dateFmt=(d,short=false)=>new Intl.DateTimeFormat('en-GB',{timeZone:'UTC',day:'numeric',month:short?'short':'long',year:'numeric'}).format(new Date(d+'T12:00:00Z'));
+const weekday=d=>new Intl.DateTimeFormat('en-GB',{timeZone:'UTC',weekday:'long'}).format(new Date(d+'T12:00:00Z'));
+const balls=(n,star=false)=>n.map(x=>`<span class="ball ${star?'star':''}" aria-label="${star?'Euro number':'Main number'} ${x}">${x}</span>`).join('');
+let rows,model,dates,selectedDate,compiledDate,compiled=[],personal={},visible=20,selected=1,followToday=true,repeatVisible=12,repeatAnalysis,calendar=null,renderToken=0,editorIndex=0,editorDate,editorMain=[],editorStars=[],autoPot=false;
+const tickets=new Map();
+function toast(s){$('toast').textContent=s;$('toast').hidden=false;setTimeout(()=>$('toast').hidden=true,2400);}
+function slots(){if(!tickets.has(selectedDate))tickets.set(selectedDate,EJ_TICKET.defaults());return tickets.get(selectedDate);}
+function updateTabs(){
+ dates=EJ.nextDates(new Date(),rows);if(!dates.includes(selectedDate))selectedDate=dates[0];
+ $('draw-tabs').innerHTML=dates.map(d=>`<button class="draw-tab" id="tab-${d}" role="tab" type="button" data-date="${d}" aria-selected="${d===selectedDate}" aria-controls="ticket"><span class="eyebrow">${weekday(d)}</span><strong>${dateFmt(d,true)}</strong><small>${EJ.deadlineStatus(d)}</small></button>`).join('');
+ $('ticket').setAttribute('aria-labelledby','tab-'+selectedDate);
+ $('draw-tabs').querySelectorAll('[data-date]').forEach(b=>{b.addEventListener('click',()=>{selectedDate=b.dataset.date;updateTabs();prefillPot();renderTicket();});b.addEventListener('keydown',e=>{if(!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;e.preventDefault();const i=dates.indexOf(selectedDate),next=e.key==='Home'?0:e.key==='End'?dates.length-1:(i+(e.key==='ArrowRight'?1:-1)+dates.length)%dates.length;selectedDate=dates[next];updateTabs();prefillPot();renderTicket();$('tab-'+selectedDate).focus();});});
+}
+async function renderTicket(){
+ const token=++renderToken,target=selectedDate;
+ $('ticket').querySelectorAll('.line-action,#copy-ticket').forEach(b=>b.disabled=true);
+ try{
+  const result=await EJ_TICKET.compile(slots(),target,rows,model,personal,{proposals:window.EJ_PROPOSALS,calendar});if(token!==renderToken||target!==selectedDate)return;compiled=result;compiledDate=target;
+  const unique=EJ_TICKET.uniqueCount(compiled),complete=compiled.filter(l=>l.row).length;
+  const placeholders=()=>Array(5).fill('<span class="empty-ball"></span>').join('')+'<span class="ticket-star" aria-hidden="true">★</span>'+Array(2).fill('<span class="empty-ball"></span>').join('');
+  $('ticket').innerHTML=`<div class="ticket-top"><div><h3>${weekday(target)}, ${dateFmt(target,true)}</h3><p>5 main numbers + 2 Euro numbers per line</p></div><span class="badge">Your experimental ticket</span></div>${compiled.map(l=>`<div class="ticket-line"><div class="ticket-grid"><span class="ticket-index">${l.index+1}</span>${l.row?balls(l.row.main)+'<span class="ticket-star" aria-hidden="true">★</span>'+balls(l.row.stars,true):placeholders()}<button class="line-action" type="button" data-index="${l.index}" data-action="${l.row?'remove':'add'}" aria-label="${l.row?'Remove':'Complete'} line ${l.index+1}: ${esc(l.title)}">${l.row?'×':'+'}</button></div><div class="line-meta"><span class="tag">${esc(l.title)}</span><span>${esc(l.note)}</span></div></div>`).join('')}<div class="ticket-bottom"><div><span class="ticket-total">${complete} complete lines · ${unique} distinct combinations</span><p>${unique?'Jackpot match chance for these distinct lines: 1 in '+new Intl.NumberFormat('en-GB',{maximumFractionDigits:1}).format(EJ.combinations/unique):'Complete a line to calculate the ticket odds.'}</p></div><button id="copy-ticket" type="button" class="primary" ${unique?'':'disabled'}>Copy all selected lines</button></div>`;
+  $('ticket').querySelectorAll('.line-action').forEach(b=>b.addEventListener('click',()=>{const i=Number(b.dataset.index);if(b.dataset.action==='remove'){slots()[i]={kind:'empty'};renderTicket();}else if(['personal','combined'].includes(slots()[i].kind)){$('birth-date').focus();$('personal-form').scrollIntoView({behavior:'smooth',block:'center'});}else openEditor(i);}));
+  $('copy-ticket').addEventListener('click',copyTicket);
+  const p=personal.birthDate?EJ_NUMEROLOGY.profile(personal.birthDate,target,personal.name||''):null;
+  $('personal-factors').innerHTML=p?[['Personal year',p.year],['Personal month',p.month],['Personal day',p.day],['Life path',p.life],['Birthday',p.birthday],...(p.expression?[['Name number',p.expression]]:[])].map(([s,n])=>`<span>${s} <strong>${n}</strong></span>`).join(''):'';
+ }catch(e){$('error').hidden=false;$('error').textContent='Unable to prepare the ticket: '+e.message;}
+}
+async function copyTicket(){
+ if(compiledDate!==selectedDate)return;
+ const text=weekday(selectedDate)+', '+dateFmt(selectedDate)+'\n'+compiled.filter(l=>l.row).map(l=>`Line ${l.index+1} (${l.title}): ${l.row.main.join(' – ')} + ${l.row.stars.join(' – ')}`).join('\n')+'\nExperimental selections. Per-line jackpot odds: 1 in 139,838,160.\nhttps://setai.no/EuroJackpot/';
+ try{await navigator.clipboard.writeText(text);toast('Your selected lines have been copied.');}catch{toast('Clipboard access is unavailable in this browser.');}
+}
+function prefillPot(){
+ const a=(window.EJ_SITE_DATA?.announcedPots||[]).filter(a=>a.drawDate===selectedDate&&EJ_EXPERIMENT.announcementFor({announcedPots:[a]},selectedDate)).at(-1);
+ if(a&&$('currency').value==='EUR'){if(!$('pot').value||autoPot){$('pot').value=Math.round(a.amountEUR);autoPot=true;} $('pot-source').textContent='Operator announcement: '+fmt(a.amountEUR)+' EUR · recorded '+a.observedAt+'.';}
+ else{if(autoPot){$('pot').value='';if(personal.birthDate)personal.amount=null;}autoPot=false;$('pot-source').textContent='Optional amount: use a known pre-draw announcement. Result-file payouts are not pre-draw inputs.';}
+ // Keep user-confirmed personal settings; a new automatic pot is not silently applied.
 }
 function setupPersonal(){
- const parts=Object.fromEntries(new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Oslo',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date()).map(x=>[x.type,x.value]));
- $('birth-date').max=`${parts.year}-${parts.month}-${parts.day}`;
- $('personal-form').addEventListener('submit',event=>{
-  event.preventDefault();$('personal-error').hidden=true;
-  if(!$('personal-form').reportValidity())return;
-  try{
-   const birthDate=$('birth-date').value,name=$('personal-name').value.trim();
-   if(name&&!EJ_NUMEROLOGY.nameNumber(name))throw Error('Navnet må inneholde bokstaver A–Z, Æ, Ø eller Å. Du kan også la navnefeltet stå tomt.');
-   for(const date of EJ.nextDates(new Date(),rows))EJ_NUMEROLOGY.row(birthDate,date,name);
-   personal={birthDate,name};renderForecasts();toast('Din personlige rekke 3 er klar for begge datoene');
-  }catch(e){personal=null;renderForecasts();$('personal-error').textContent=e.message;$('personal-error').hidden=false;}
- });
- $('personal-clear').addEventListener('click',()=>{personal=null;$('personal-form').reset();$('personal-error').hidden=true;renderForecasts();});
+ $('birth-date').max=EJ_SAME_DATE.today();
+ $('personal-form').addEventListener('submit',e=>{e.preventDefault();$('personal-error').hidden=true;if(!$('personal-form').reportValidity())return;try{
+  const birthDate=$('birth-date').value,name=$('personal-name').value.trim(),own=$('own-number').value?Number($('own-number').value):null,amount=$('pot').value?Number($('pot').value):null;
+  if(name&&!EJ_NUMEROLOGY.nameNumber(name))throw Error('Use letters A–Z, Æ, Ø or Å, or leave the name blank.');if(own!==null&&(!Number.isInteger(own)||own<1||own>50))throw Error('Your number must be an integer from 1 to 50.');if(amount!==null)EJ_EXPERIMENT.amountRoot(amount);
+  for(const d of dates)EJ_NUMEROLOGY.row(birthDate,d,name);personal={birthDate,name,own,amount,currency:$('currency').value};renderTicket();toast('Your personal lines are ready.');
+ }catch(err){$('personal-error').hidden=false;$('personal-error').textContent=err.message;}});
+ $('personal-clear').addEventListener('click',()=>{personal={};$('personal-form').reset();autoPot=false;prefillPot();$('personal-error').hidden=true;renderTicket();});
+ $('currency').addEventListener('change',prefillPot);$('pot').addEventListener('input',()=>{autoPot=false;$('pot-source').textContent='User-entered amount. It is not independently verified as a pre-draw announcement.';});
+ $('reset-ticket').addEventListener('click',()=>{tickets.set(selectedDate,EJ_TICKET.defaults());renderTicket();toast('Suggested lines restored for this draw.');});
 }
-function exclusionMarkup(date){
- const r=EJ_EXCLUSION.proposal(rows,date);
- return `<div class="exclusion-row"><div class="rowlabel">Rekke 4 · Ny hovedtallkombinasjon</div><div class="balls">${balls(r.main)}<span class="plus" aria-hidden="true">+</span>${balls(r.stars,true)}</div><p class="tiny">Kontrollert mot ${fmt(r.checkedDraws)} tidligere trekninger: verken disse fem hovedtallene eller hele 5+2-rekken har vært trukket før.</p><details><summary>Hva er utelukket?</summary><p class="tiny">${fmt(r.excludedMainSets)} tidligere hovedtallsett er utelukket, med alle mulige stjernetallpar til disse settene. Det fjerner ${fmt(r.excludedCurrentRows)} hele rekker fra utvalget til dette forslaget. Stjernetallparet ${r.stars.join(' + ')} har vært trukket ${fmt(r.starPairOccurrences)} ganger. Alle dagens 66 par har vært trukket; derfor kan vi ikke kreve et ubrukt stjernetallpar også.</p><p class="tiny">Lokalt beregnet · historikk til ${dateFmt(r.asOf,true)}. Tidligere kombinasjoner kan trekkes igjen. Sjansen for denne rekken er fortsatt 1 av ${fmt(Math.round(1/r.chance))}.</p></details></div>`;
+function openEditor(i){editorIndex=i;editorDate=selectedDate;editorMain=[];editorStars=[];$('editor-error').hidden=true;renderEditor();$('line-editor').showModal();}
+function renderEditor(){
+ $('editor-count').textContent=`${editorMain.length}/5 main numbers · ${editorStars.length}/2 Euro numbers`;
+ for(const [id,n,chosen,max] of [['pick-main',50,editorMain,5],['pick-stars',12,editorStars,2]]){
+  $(id).innerHTML=Array.from({length:n},(_,i)=>`<button type="button" data-number="${i+1}" aria-pressed="${chosen.includes(i+1)}" ${!chosen.includes(i+1)&&chosen.length>=max?'disabled':''}>${i+1}</button>`).join('');
+  $(id).querySelectorAll('[data-number]').forEach(b=>b.addEventListener('click',()=>{const value=Number(b.dataset.number),at=chosen.indexOf(value);if(at>=0)chosen.splice(at,1);else if(chosen.length<max)chosen.push(value);renderEditor();}));
+ }
+ $('editor-save').disabled=editorMain.length!==5||editorStars.length!==2;
 }
-function renderForecasts(){
- const dates=EJ.nextDates(new Date(),rows),mode=$('mode').value;
- $('next-draws').innerHTML=dates.map((date,i)=>{
-   const frozen=(window.EJ_PROPOSALS?.forecasts||[]).find(r=>r.date===date&&r.mode===mode&&r.version===EJ.VERSION&&r.asOf<date);
-   const predictions=frozen?.rows||[0,1].map(v=>EJ.proposal(rows,date,mode,v,model));
-   const snapshot=frozen?'Registrert på forhånd':'Lokalt beregnet · ikke registrert';
-   return `<article class="card drawcard"><div class="drawhead"><div><div class="eyebrow">${cap(weekday(date))} · ${i===0?'Neste trekning':'Trekningen etter'}</div><h3>${dateFmt(date)}</h3><p>${EJ.deadlineStatus(date)}</p></div><span class="badge">${mode==='model'?'AI · eksperimentell':'Tilfeldig utvalg'}</span></div>${predictions.map((r,j)=>`<div class="rowlabel">Rekke ${j+1}</div><div class="balls">${balls(r.main)}<span class="plus" aria-hidden="true">+</span>${balls(r.stars,true)}</div>`).join('')}${personalMarkup(date)}${exclusionMarkup(date)}<div class="drawfoot"><span>5+2: <strong>1 av ${fmt(EJ.combinations)}</strong><br>per rekke</span><button class="copy" data-date="${date}" type="button">Kopier tall</button></div><p class="forecast-note">Rekke 1–2: ${snapshot} · Historikk til ${dateFmt(predictions[0].asOf,true)}${personal?'<br>Rekke 3: beregnet lokalt for trekningsdatoen.':''}<br>Rekke 4: lokalt utvalg som utelukker tidligere hovedtallsett.</p></article>`;
- }).join('');
- document.querySelectorAll('.copy').forEach(btn=>btn.addEventListener('click',async()=>{
-  const date=btn.dataset.date, frozen=(window.EJ_PROPOSALS?.forecasts||[]).find(r=>r.date===date&&r.mode===mode&&r.version===EJ.VERSION),p=frozen?.rows||[0,1].map(v=>EJ.proposal(rows,date,mode,v,model));
-  const nr=personal?EJ_NUMEROLOGY.row(personal.birthDate,date,personal.name):null;
-  const filtered=EJ_EXCLUSION.proposal(rows,date);
-  const str=dateFmt(date)+'\n'+p.map((r,i)=>'Rekke '+(i+1)+': '+r.main.join(' – ')+' + '+r.stars.join(' – ')).join('\n')+(nr?'\nRekke 3 (personlig numerologi): '+nr.main.join(' – ')+' + '+nr.stars.join(' – '):'')+'\nRekke 4 (tidligere hovedtallsett utelukket): '+filtered.main.join(' – ')+' + '+filtered.stars.join(' – ')+'\nEksperimentelle / symbolske forslag. 5+2: 1 av '+fmt(EJ.combinations)+' per rekke.';
-  try{await navigator.clipboard.writeText(str);toast('Tallene er kopiert');}catch{toast('Kopiering er ikke tilgjengelig i denne visningen.');}
- }));
+function setupEditor(){
+ $('editor-close').addEventListener('click',()=>$('line-editor').close());
+ $('editor-random').addEventListener('click',()=>{const seed=crypto.getRandomValues(new Uint32Array(1))[0],rng=EJ.rng(seed);editorMain=EJ.sample(Array(50).fill(1),5,rng);editorStars=EJ.sample(Array(12).fill(1),2,rng);renderEditor();});
+ $('editor-save').addEventListener('click',()=>{try{const row=EJ_TICKET.validateLine(editorMain,editorStars);tickets.get(editorDate)[editorIndex]={kind:'manual',...row};$('line-editor').close();renderTicket();}catch(e){$('editor-error').textContent=e.message;$('editor-error').hidden=false;}});
 }
-function renderCalculator(){
- const n=Number($('row-count').value);
- if(!Number.isInteger(n)||n<1||n>EJ.combinations){$('row-count').setCustomValidity('Velg et heltall fra 1 til 139838160.');$('calculated-odds').textContent='Ugyldig antall';$('calc-percent').textContent='';return;}
- $('row-count').setCustomValidity('');
- const p=n/EJ.combinations;
- $('calculated-odds').textContent='1 av '+new Intl.NumberFormat('nb-NO',{maximumFractionDigits:2}).format(1/p);
- $('calc-percent').textContent=new Intl.NumberFormat('nb-NO',{minimumFractionDigits:8,maximumFractionDigits:8}).format(p*100)+' %';
-}
-function renderFrequency(){
- const key=$('number-type').value, f=EJ.frequency(rows,key,$('period').value);
- const min=Math.min(...f.map(x=>x.rate)),max=Math.max(...f.map(x=>x.rate));
- if(selected>f.length)selected=1;
- $('heatmap').innerHTML=f.map(x=>`<button class="heat" type="button" data-num="${x.number}" aria-pressed="${x.number===selected}" style="--heat:${.06+.25*(x.rate-min)/(max-min||1)}" aria-label="Tall ${x.number}, ${x.count} forekomster"><strong>${x.number}</strong><small>${x.count} trekk</small></button>`).join('');
- const x=f.find(r=>r.number===selected);
- $('number-detail').innerHTML=`<div><strong>${selected}</strong><span>Valgt ${key==='main'?'hovedtall':'stjernetall'}</span></div><div><strong>${fmt(x.count)} / ${fmt(x.eligible)}</strong><span>Forekomster / mulige trekninger</span></div><div><strong>${(x.rate*100).toLocaleString('nb-NO',{maximumFractionDigits:2})} %</strong><span>Historisk frekvens</span></div><div><strong>${x.last?dateFmt(x.last,true):'—'}</strong><span>Sist trukket i denne perioden</span></div>`;
- document.querySelectorAll('.heat').forEach(b=>b.addEventListener('click',()=>{selected=Number(b.dataset.num);renderFrequency();}));
-}
-function renderSameDate(){
- if(followToday)$('same-date').value=EJ_SAME_DATE.today();
- try{
-  const result=EJ_SAME_DATE.report(rows,$('same-date').value);
-  const label=new Intl.DateTimeFormat('nb-NO',{timeZone:'UTC',day:'numeric',month:'long'}).format(new Date(result.date+'T12:00:00Z'));
-  const notes={'no-draw':'Ingen trekning på denne datoen','invalid-date':'Datoen finnes ikke dette året','not-started':'Før EuroJackpot startet','not-covered':'Historikken dekker ikke denne datoen ennå'};
-  $('same-date-title').textContent=`${followToday?'I dag':'Valgt dato'} · ${label}`;
-  $('same-date-summary').textContent=`${result.matches} tidligere ${result.matches===1?'trekning':'trekninger'} på nøyaktig samme dag og måned. Dagens dato følger din tidssone (${Intl.DateTimeFormat().resolvedOptions().timeZone}).`;
-  $('same-date-body').innerHTML=result.entries.map(entry=>entry.draw?`<tr><td class="nowrap">${cap(weekday(entry.date))}<br>${dateFmt(entry.date,true)}</td><td><div class="balls">${balls(entry.draw.main)}</div></td><td><div class="balls">${balls(entry.draw.stars,true)}</div></td></tr>`:`<tr><td class="nowrap">${entry.status==='invalid-date'?entry.year:dateFmt(entry.date,true)}</td><td colspan="2" class="tiny">${notes[entry.status]}</td></tr>`).join('');
-  $('same-date-empty').hidden=result.entries.length>0;
-  $('same-date-error').hidden=true;
- }catch(e){$('same-date-body').innerHTML='';$('same-date-summary').textContent='';$('same-date-title').textContent='Historikk for samme dato';$('same-date-empty').hidden=true;$('same-date-error').textContent=e.message;$('same-date-error').hidden=false;}
-}
-function setupSameDate(){
- $('same-date').value=EJ_SAME_DATE.today();renderSameDate();
- $('same-date').addEventListener('change',()=>{followToday=false;renderSameDate();});
- $('same-date-today').addEventListener('click',()=>{followToday=true;renderSameDate();});
-}
-function updateRepeats(){
- const selectedRows=$('repeat-period').value==='current'?rows.filter(r=>r.date>='2022-03-25'):rows;
- repeatAnalysis=EJ_REPEATS.analyze(selectedRows);renderRepeats();
-}
-function renderRepeats(){
- const data=repeatAnalysis,type=$('repeat-type').value,groups=data[type].repeated;
- for(const key of ['all7','main5','stars2'])$(`repeat-${key}`).textContent=fmt(data[key].repeatedCount);
- $('repeat-coverage').textContent=data.count?`${fmt(data.count)} trekninger · ${dateFmt(data.from,true)}–${dateFmt(data.to,true)}. Tallrekkefølgen ignoreres; hovedtall og stjernetall sammenlignes hver for seg.`:'Ingen trekninger i denne perioden.';
- $('repeat-exposure').textContent=$('repeat-period').value==='current'?'Denne perioden har samme tallmengde: 50 hovedtall og 12 stjernetall.':'Stjernetallmengden var først 8, deretter 10, og fra 25. mars 2022 er den 12. Lavere stjernetallpar har derfor vært mulige i flere år. Velg perioden fra 2022 for lik tallmengde.';
- $('repeat-empty').hidden=groups.length>0;
- $('repeat-empty').textContent=`Ingen ${type==='all7'?'hele 5+2-rekker':type==='main5'?'sett med fem hovedtall':'stjernetallpar'} har blitt trukket mer enn én gang i den valgte perioden.`;
- $('repeat-list').innerHTML=groups.slice(0,repeatVisible).map(g=>`<article class="card repeat-card"><div class="bar"><h3>${type==='stars2'?'Stjernetallpar':type==='main5'?'Fem hovedtall':'Hele 5+2-rekken'}</h3><span class="badge">${fmt(g.count)} trekninger</span></div>${g.main.length?`<div class="rowlabel">Hovedtall</div><div class="balls">${balls(g.main)}</div>`:''}${g.stars.length?`<div class="rowlabel">Stjernetall</div><div class="balls">${balls(g.stars,true)}</div>`:''}<p class="tiny">${fmt(g.count)} forekomster totalt · ${fmt(g.count-1)} gjentakelser etter den første.</p><details><summary>Se alle ${fmt(g.count)} datoene</summary><ul class="repeat-dates">${g.dates.slice().reverse().map(d=>`<li>${cap(weekday(d))} ${dateFmt(d,true)}</li>`).join('')}</ul></details></article>`).join('');
- $('repeat-more').hidden=repeatVisible>=groups.length;
- $('repeat-more').textContent=`Vis flere (${fmt(Math.max(0,groups.length-repeatVisible))} igjen)`;
-}
-function setupRepeats(){
- updateRepeats();
- $('repeat-period').addEventListener('change',()=>{repeatVisible=12;updateRepeats();});
- $('repeat-type').addEventListener('change',()=>{repeatVisible=12;renderRepeats();});
- $('repeat-more').addEventListener('click',()=>{repeatVisible+=24;renderRepeats();});
-}
+function renderCalculator(){const n=Number($('row-count').value);if(!Number.isInteger(n)||n<1||n>EJ.combinations){$('row-count').setCustomValidity('Choose a whole number between 1 and 139,838,160.');$('calculated-odds').textContent='Invalid count';$('calc-percent').textContent='';return;}$('row-count').setCustomValidity('');$('calculated-odds').textContent='1 in '+new Intl.NumberFormat('en-GB',{maximumFractionDigits:2}).format(EJ.combinations/n);$('calc-percent').textContent=new Intl.NumberFormat('en-GB',{minimumFractionDigits:8,maximumFractionDigits:8}).format(n/EJ.combinations*100)+'%';}
+function renderFrequency(){const key=$('number-type').value,f=EJ.frequency(rows,key,$('period').value),min=Math.min(...f.map(x=>x.rate)),max=Math.max(...f.map(x=>x.rate));if(selected>f.length)selected=1;$('heatmap').innerHTML=f.map(x=>`<button class="heat" type="button" data-num="${x.number}" aria-pressed="${x.number===selected}" style="--heat:${.06+.25*(x.rate-min)/(max-min||1)}" aria-label="Number ${x.number}, ${x.count} occurrences"><strong>${x.number}</strong><small>${x.count} draws</small></button>`).join('');const x=f.find(r=>r.number===selected);$('number-detail').innerHTML=`<div><strong>${selected}</strong><span>Selected ${key==='main'?'main':'Euro'} number</span></div><div><strong>${fmt(x.count)} / ${fmt(x.eligible)}</strong><span>Occurrences / eligible draws</span></div><div><strong>${(x.rate*100).toLocaleString('en-GB',{maximumFractionDigits:2})}%</strong><span>Historical frequency</span></div><div><strong>${x.last?dateFmt(x.last,true):'—'}</strong><span>Last drawn in this period</span></div>`;$('heatmap').querySelectorAll('.heat').forEach(b=>b.addEventListener('click',()=>{selected=Number(b.dataset.num);renderFrequency();}));}
+function renderSameDate(){if(followToday)$('same-date').value=EJ_SAME_DATE.today();try{const r=EJ_SAME_DATE.report(rows,$('same-date').value),label=new Intl.DateTimeFormat('en-GB',{timeZone:'UTC',day:'numeric',month:'long'}).format(new Date(r.date+'T12:00:00Z')),notes={'no-draw':'No draw on this date','invalid-date':'This date does not exist in this year','not-started':'Before EuroJackpot began','not-covered':'This date is not yet covered by the archive'};$('same-date-title').textContent=(followToday?'Today':'Selected date')+' · '+label;$('same-date-summary').textContent=`${r.matches} earlier draws on exactly this day and month. Today's date follows your time zone (${Intl.DateTimeFormat().resolvedOptions().timeZone}).`;$('same-date-body').innerHTML=r.entries.map(x=>x.draw?`<tr><td class="nowrap">${weekday(x.date)}<br>${dateFmt(x.date,true)}</td><td><div class="balls">${balls(x.draw.main)}</div></td><td><div class="balls">${balls(x.draw.stars,true)}</div></td></tr>`:`<tr><td>${x.status==='invalid-date'?x.year:dateFmt(x.date,true)}</td><td colspan="2" class="tiny">${notes[x.status]}</td></tr>`).join('');$('same-date-empty').hidden=r.entries.length>0;$('same-date-error').hidden=true;}catch(e){$('same-date-body').innerHTML='';$('same-date-summary').textContent='';$('same-date-error').textContent=e.message;$('same-date-error').hidden=false;}}
+function updateRepeats(){repeatAnalysis=EJ_REPEATS.analyze($('repeat-period').value==='current'?rows.filter(r=>r.date>='2022-03-25'):rows);renderRepeats();}
+function renderRepeats(){const d=repeatAnalysis,type=$('repeat-type').value,groups=d[type].repeated;for(const key of ['all7','main5','stars2'])$(`repeat-${key}`).textContent=fmt(d[key].repeatedCount);$('repeat-coverage').textContent=d.count?`${fmt(d.count)} draws · ${dateFmt(d.from,true)}–${dateFmt(d.to,true)}. Number order is ignored; main and Euro pools remain separate.`:'No draws in this period.';$('repeat-exposure').textContent=$('repeat-period').value==='current'?'All draws in this period use 50 main and 12 Euro numbers.':'The Euro-number pool changed from 8 to 10 to 12. Older pairs have been eligible for more years; use the period from March 2022 for a constant pool.';$('repeat-empty').hidden=!!groups.length;$('repeat-empty').textContent=`No ${type==='all7'?'complete 5+2 combinations':type==='main5'?'five-main-number sets':'Euro-number pairs'} have been drawn more than once in this period.`;$('repeat-list').innerHTML=groups.slice(0,repeatVisible).map(g=>`<article class="card repeat-card"><div class="bar"><h3>${type==='stars2'?'Euro-number pair':type==='main5'?'Five main numbers':'Complete 5+2 line'}</h3><span class="badge">${fmt(g.count)} draws</span></div>${g.main.length?`<div class="balls">${balls(g.main)}</div>`:''}${g.stars.length?`<div class="balls">${balls(g.stars,true)}</div>`:''}<p class="tiny">${fmt(g.count)} occurrences · ${fmt(g.count-1)} repeats after the first.</p><details><summary>See all ${fmt(g.count)} dates</summary><ul class="repeat-dates">${g.dates.slice().reverse().map(x=>`<li>${weekday(x)} ${dateFmt(x,true)}</li>`).join('')}</ul></details></article>`).join('');$('repeat-more').hidden=repeatVisible>=groups.length;$('repeat-more').textContent=`Show more (${fmt(Math.max(0,groups.length-repeatVisible))} remaining)`;}
 function archiveRows(){return rows.filter(r=>$('year').value==='all'||r.date.startsWith($('year').value)).slice().reverse();}
-function renderArchive(){
- const data=archiveRows();
- $('archive-body').innerHTML=data.slice(0,visible).map(r=>`<tr><td class="nowrap">${dateFmt(r.date,true)}</td><td><div class="balls">${balls(r.main)}</div></td><td><div class="balls">${balls(r.stars,true)}</div></td></tr>`).join('');
- $('more').hidden=visible>=data.length;$('more').textContent=`Vis flere (${fmt(data.length-Math.min(visible,data.length))} igjen)`;
-}
-function exportCsv(){
- const data=archiveRows().reverse(),csv='dato,hovedtall1,hovedtall2,hovedtall3,hovedtall4,hovedtall5,stjernetall1,stjernetall2\n'+data.map(r=>[r.date,...r.main,...r.stars].join(',')).join('\n');
- const url=URL.createObjectURL(new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download='EuroJackpot-historikk-'+$('year').value+'.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
-}
-function renderModel(){
- const e=model.evaluation, score=n=>Number.isFinite(n)?n.toFixed(6).replace('.',','):'—';
- $('model-scores').innerHTML=`<tr><td>Hovedtall</td><td>${score(e.main)}</td><td>${score(e.mainBaseline)}</td></tr><tr><td>Stjernetall</td><td>${score(e.stars)}</td><td>${score(e.starsBaseline)}</td></tr>`;
- $('model-verdict').textContent='Ingen dokumentert prediksjonsfordel. Små scoreforskjeller i denne testen gir ikke grunnlag for å love høyere vinnersjanse.';
- $('test-period').textContent=`${fmt(e.trainCount)} treningstrekninger · ${fmt(e.count)} testtrekninger · Testperiode ${dateFmt(e.from,true)}–${dateFmt(e.to,true)}. Brier-score, lavere er bedre.`;
-}
-function dataStatus(){
- const p=new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Oslo',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',hourCycle:'h23'}).formatToParts(new Date());const op=Object.fromEntries(p.map(x=>[x.type,x.value]));
- const today=`${op.year}-${op.month}-${op.day}`;let d=new Date(today+'T12:00:00Z');
- // At 23:00 expect a result for today. Earlier in the day, use the previous draw.
- if(Number(op.hour)<23)d.setUTCDate(d.getUTCDate()-1);
- while(![2,5].includes(d.getUTCDay()))d.setUTCDate(d.getUTCDate()-1);
- const expected=d.toISOString().slice(0,10),last=rows.at(-1);
- $('data-status').textContent=last.date<expected?`Historikken mangler resultatet fra ${dateFmt(expected,true)}. Tallforslag bruker data til ${dateFmt(last.date,true)}.`:'Historikken er komplett fram til siste forventede trekning.';
-}
-async function refreshData(){
- if(!['http:','https:'].includes(location.protocol))return;
- try{
-  const read=async(filename,prefix)=>{
-   const response=await fetch(filename+'?refresh='+Date.now(),{cache:'no-store'});
-   if(!response.ok)throw Error('Oppdateringen er ikke tilgjengelig.');
-   const body=(await response.text()).trim();
-   if(!body.startsWith(prefix))throw Error('Uventet dataformat.');
-   return JSON.parse(body.slice(prefix.length).replace(/;\s*$/,''));
-  };
-  const data=await read('history.js','window.EJ_HISTORY='),fresh=EJ.validate(data.draws);
-  if(fresh.length<rows.length||fresh.at(-1).date<rows.at(-1).date)throw Error('Utdatert datarespons.');
-  const changed=fresh.length!==rows.length;
-  rows=fresh;window.EJ_HISTORY=data;
-  try{window.EJ_PROPOSALS=await read('proposals.js','window.EJ_PROPOSALS=');}catch{}
-  if(changed){
-   model=EJ.fit(rows);renderModel();renderFrequency();renderArchive();renderSameDate();updateRepeats();
-   $('draw-count').textContent=fmt(rows.length);$('latest-date').textContent=dateFmt(rows.at(-1).date,true);
-   const last=rows.at(-1);$('last-result').innerHTML=`<div><div class="eyebrow">Siste resultat</div><strong>${dateFmt(last.date,true)}</strong></div><div class="balls">${balls(last.main)}<span class="plus">+</span>${balls(last.stars,true)}</div>`;
-   const year=last.date.slice(0,4);if(!Array.from($('year').options).some(o=>o.value===year)){const o=document.createElement('option');o.value=year;o.textContent=year;$('year').append(o);}
-  }
-  $('source-stamp').textContent='Hentet '+new Intl.DateTimeFormat('nb-NO',{timeZone:'Europe/Oslo',dateStyle:'long',timeStyle:'short'}).format(new Date(data.fetchedAt))+' (norsk tid).';
-  renderForecasts();dataStatus();
- }catch{$('data-status').textContent='Kunne ikke oppdatere akkurat nå. Viser siste lagrede historikk til '+dateFmt(rows.at(-1).date,true)+'.';}
-}
-function init(){
- try{
-  rows=EJ.validate(window.EJ_HISTORY.draws);if(rows.length<100)throw Error('For lite historikk til modellen.');
-  const last=rows.at(-1);$('draw-count').textContent=fmt(rows.length);$('latest-date').textContent=dateFmt(last.date,true);
-  $('last-result').innerHTML=`<div><div class="eyebrow">Siste resultat</div><strong>${dateFmt(last.date,true)}</strong></div><div class="balls">${balls(last.main)}<span class="plus">+</span>${balls(last.stars,true)}</div>`;
-  $('source-stamp').textContent='Hentet '+new Intl.DateTimeFormat('nb-NO',{timeZone:'Europe/Oslo',dateStyle:'long',timeStyle:'short'}).format(new Date(window.EJ_HISTORY.fetchedAt))+' (norsk tid).';
-  $('snapshot-note').textContent=window.EJ_PROPOSALS?'Registrerte forslag fryses med dato, modellversjon og siste tilgjengelige resultat. De endres ikke når nye resultater kommer.':'Forslag i denne visningen beregnes lokalt. De er ikke registrert før trekningen og skal ikke brukes som dokumentasjon på tidligere prediksjon.';
-  [...new Set(rows.map(r=>r.date.slice(0,4)))].reverse().forEach(y=>{const o=document.createElement('option');o.value=y;o.textContent=y;$('year').append(o);});
-  const classes=[[5,2],[5,1],[5,0],[4,2],[4,1],[3,2],[4,0],[2,2],[3,1],[3,0],[1,2],[2,1]];
-  $('odds-table').querySelector('tbody').innerHTML=classes.map(([m,s])=>`<tr><td>${m}+${s}</td><td>${fmt(Math.round(1/EJ.odds(m,s)))}</td></tr>`).join('');
-  $('any-prize').textContent='En av disse premiegruppene: omtrent 1 av '+(1/classes.reduce((a,[m,s])=>a+EJ.odds(m,s),0)).toLocaleString('nb-NO',{maximumFractionDigits:1})+'.';
-  model=EJ.fit(rows);renderModel();renderForecasts();renderCalculator();renderFrequency();renderArchive();dataStatus();setupPersonal();setupSameDate();setupRepeats();
-  $('mode').addEventListener('change',renderForecasts);$('row-count').addEventListener('input',renderCalculator);$('number-type').addEventListener('change',renderFrequency);$('period').addEventListener('change',renderFrequency);$('year').addEventListener('change',()=>{visible=20;renderArchive();});$('more').addEventListener('click',()=>{visible+=40;renderArchive();});$('export').addEventListener('click',exportCsv);
-  setInterval(()=>{renderForecasts();dataStatus();if(followToday)renderSameDate();},60_000);
-  setInterval(refreshData,300_000);
- }catch(e){$('error').hidden=false;$('error').textContent='Kunne ikke beregne forslagene: '+e.message;$('next-draws').innerHTML='';}
-}
+function renderArchive(){const data=archiveRows();$('archive-body').innerHTML=data.slice(0,visible).map(r=>`<tr><td class="nowrap">${dateFmt(r.date,true)}</td><td><div class="balls">${balls(r.main)}</div></td><td><div class="balls">${balls(r.stars,true)}</div></td></tr>`).join('');$('more').hidden=visible>=data.length;$('more').textContent=`Show more (${fmt(data.length-Math.min(visible,data.length))} remaining)`;}
+function exportCsv(){const data=archiveRows().reverse(),csv='date,main1,main2,main3,main4,main5,euro1,euro2\n'+data.map(r=>[r.date,...r.main,...r.stars].join(',')).join('\n'),url=URL.createObjectURL(new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'})),a=document.createElement('a');a.href=url;a.download='EuroJackpot-results-'+$('year').value+'.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
+function renderModel(){const e=model.evaluation,s=n=>Number.isFinite(n)?n.toFixed(6):'—';$('model-scores').innerHTML=`<tr><td>Main numbers</td><td>${s(e.main)}</td><td>${s(e.mainBaseline)}</td></tr><tr><td>Euro numbers</td><td>${s(e.stars)}</td><td>${s(e.starsBaseline)}</td></tr>`;$('model-verdict').textContent='No demonstrated predictive advantage. Small historical score differences do not establish better winning odds.';$('test-period').textContent=`${fmt(e.trainCount)} training draws · ${fmt(e.count)} evaluation draws · ${dateFmt(e.from,true)}–${dateFmt(e.to,true)}. Brier score: lower is better.`;}
+function dataStatus(){$('data-status').textContent='Archive through '+dateFmt(rows.at(-1).date,true)+'. Results are checked hourly; operator publication may take time.';$('source-stamp').textContent='Source snapshot: '+new Intl.DateTimeFormat('en-GB',{dateStyle:'long',timeStyle:'short',timeZone:'Europe/Oslo'}).format(new Date(window.EJ_HISTORY.fetchedAt))+' (Norwegian time).';}
+async function refreshData(){try{const read=async(n,prefix)=>{const response=await fetch(n+'?refresh='+Date.now(),{cache:'no-store'});if(!response.ok)throw Error('Data unavailable');const text=(await response.text()).trim();if(!text.startsWith(prefix))throw Error('Unexpected source format');return JSON.parse(text.slice(prefix.length).replace(/;\s*$/,''));};const h=await read('history.js','window.EJ_HISTORY='),fresh=EJ.validate(h.draws);if(fresh.length<rows.length)throw Error('Stale archive');const changed=fresh.length!==rows.length;rows=fresh;window.EJ_HISTORY=h;try{window.EJ_PROPOSALS=await read('proposals.js','window.EJ_PROPOSALS=');window.EJ_SITE_DATA=await read('site-data.js','window.EJ_SITE_DATA=');}catch{}if(changed){model=EJ.fit(rows);renderModel();renderFrequency();renderArchive();renderSameDate();updateRepeats();$('draw-count').textContent=fmt(rows.length);$('latest-date').textContent=dateFmt(rows.at(-1).date,true);const last=rows.at(-1);$('latest-result-date').textContent=dateFmt(last.date);$('latest-result-balls').innerHTML=balls(last.main)+'<span class="plus">★</span>'+balls(last.stars,true);const year=last.date.slice(0,4);if(!Array.from($('year').options).some(o=>o.value===year)){const o=document.createElement('option');o.value=year;o.textContent=year;$('year').append(o);}}updateTabs();dataStatus();await renderTicket();}catch{$('data-status').textContent='Unable to refresh right now. Showing the saved archive through '+dateFmt(rows.at(-1).date,true)+'.';}}
+async function init(){try{
+ rows=EJ.validate(window.EJ_HISTORY.draws);model=EJ.fit(rows);dates=EJ.nextDates(new Date(),rows);selectedDate=dates[0];
+ try{const r=await fetch('kandidat-20261012.json');if(r.ok)calendar=await r.json();}catch{}
+ $('draw-count').textContent=fmt(rows.length);$('latest-date').textContent=dateFmt(rows.at(-1).date,true);[...new Set(rows.map(r=>r.date.slice(0,4)))].reverse().forEach(y=>{const o=document.createElement('option');o.value=y;o.textContent=y;$('year').append(o);});
+ const classes=[[5,2],[5,1],[5,0],[4,2],[4,1],[3,2],[4,0],[2,2],[3,1],[3,0],[1,2],[2,1]];$('odds-table').querySelector('tbody').innerHTML=classes.map(([m,s])=>`<tr><td>${m}+${s}</td><td>${fmt(Math.round(1/EJ.odds(m,s)))}</td></tr>`).join('');$('any-prize').textContent='Any of these prize categories: approximately 1 in '+(1/classes.reduce((a,[m,s])=>a+EJ.odds(m,s),0)).toLocaleString('en-GB',{maximumFractionDigits:1})+'.';
+ $('snapshot-note').textContent='AI snapshots are registered separately. Personal, manual and history-filter lines are generated on your device. The calendar report preserves its original locked lines.';
+ updateTabs();setupPersonal();setupEditor();prefillPot();renderModel();renderCalculator();renderFrequency();renderArchive();updateRepeats();dataStatus();renderSameDate();await renderTicket();
+ $('row-count').addEventListener('input',renderCalculator);$('number-type').addEventListener('change',renderFrequency);$('period').addEventListener('change',renderFrequency);$('year').addEventListener('change',()=>{visible=20;renderArchive();});$('more').addEventListener('click',()=>{visible+=40;renderArchive();});$('export').addEventListener('click',exportCsv);$('same-date').addEventListener('change',()=>{followToday=false;renderSameDate();});$('same-date-today').addEventListener('click',()=>{followToday=true;renderSameDate();});$('repeat-period').addEventListener('change',()=>{repeatVisible=12;updateRepeats();});$('repeat-type').addEventListener('change',()=>{repeatVisible=12;renderRepeats();});$('repeat-more').addEventListener('click',()=>{repeatVisible+=24;renderRepeats();});
+ setInterval(()=>{updateTabs();dataStatus();if(followToday)renderSameDate();renderTicket();},60000);setInterval(refreshData,300000);
+}catch(e){$('error').hidden=false;$('error').textContent='Unable to initialise the number lab: '+e.message;}}
 init();
 })();

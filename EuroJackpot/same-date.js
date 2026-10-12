@@ -6,8 +6,8 @@
  }
  function report(rows,date){
   const parsed=new Date(date+'T12:00:00Z'),year=Number(date.slice(0,4));
-  if(!/^\d{4}-\d{2}-\d{2}$/.test(date)||!Number.isFinite(+parsed)||parsed.toISOString().slice(0,10)!==date||year<2012||year>2100)throw Error('Velg en gyldig dato mellom 2012 og 2100.');
-  if(!rows.length)throw Error('Historikken er tom.');
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(date)||!Number.isFinite(+parsed)||parsed.toISOString().slice(0,10)!==date||year<2012||year>2100)throw Error('Choose a valid date between 2012 and 2100.');
+  if(!rows.length)throw Error('The archive is empty.');
   const first=rows[0].date,last=rows.at(-1).date,index=new Map(rows.map(r=>[r.date,r]));
   const entries=[];
   for(let y=year-1;y>=Number(first.slice(0,4));y--){

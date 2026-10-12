@@ -4,28 +4,28 @@ const E=typeof module!=='undefined'?require('./engine.js'):root.EJ;
 const N=typeof module!=='undefined'?require('./numerology.js'):root.EJ_NUMEROLOGY;
 const VERSION='personal-date-prize-v1';
 function amountRoot(amount){
- if(!Number.isSafeInteger(amount)||amount<=0)throw Error('Bruk et positivt premiebeløp i hele valutaenheter.');
+ if(!Number.isSafeInteger(amount)||amount<=0)throw Error('Use a positive prize amount in whole currency units.');
  return N.reduce(amount);
 }
 function combination(birth,date,name,ownNumber,amount,currency='EUR'){
  const p=N.profile(birth,date,name),own=ownNumber||p.life;
- if(!Number.isInteger(own)||own<1||own>50)throw Error('Ditt tall må være et heltall fra 1 til 50.');
+ if(!Number.isInteger(own)||own<1||own>50)throw Error('Your number must be a whole number from 1 to 50.');
  const pr=amountRoot(amount),out=new Map(),stars=new Map();
- const factors=[{value:own,label:'Ditt tall'},{value:p.year,label:'Personlig år'},{value:p.month,label:'Personlig måned'},{value:p.day,label:'Personlig dag'},{value:pr,label:'Premiesum i '+currency+' · sifferrot'}];
+ const factors=[{value:own,label:'Your number'},{value:p.year,label:'Personal year'},{value:p.month,label:'Personal month'},{value:p.day,label:'Personal day'},{value:pr,label:'Prize amount in '+currency+' · digit root'}];
  function add(map,value,label,max,k){const n=((value-1)%max)+1;if(map.size>=k&&!map.has(n))return;if(!map.has(n))map.set(n,{number:n,sources:[]});map.get(n).sources.push(label+(n!==value?` (${value} → ${n})`:''));}
  for(const x of factors)add(out,x.value,x.label,50,5);
  for(let i=0;i<factors.length;i++)for(let j=i+1;j<factors.length;j++)if(out.size<5)add(out,factors[i].value+factors[j].value,factors[i].label+' + '+factors[j].label,50,5);
- for(let i=1;out.size<5;i++)add(out,own+p.day+pr+i,'Ditt tall + personlig dag + premiesifferrot + '+i,50,5);
- add(stars,N.reduce(p.day+pr),'Personlig dag + premiesifferrot, redusert',12,2);
- add(stars,N.reduce(own+p.year),'Ditt tall + personlig år, redusert',12,2);
- for(let i=1;stars.size<2;i++)add(stars,p.day+pr+i,'Personlig dag + premiesifferrot + '+i,12,2);
+ for(let i=1;out.size<5;i++)add(out,own+p.day+pr+i,'Your number + personal day + prize digit root + '+i,50,5);
+ add(stars,N.reduce(p.day+pr),'Personal day + prize digit root, reduced',12,2);
+ add(stars,N.reduce(own+p.year),'Your number + personal year, reduced',12,2);
+ for(let i=1;stars.size<2;i++)add(stars,p.day+pr+i,'Personal day + prize digit root + '+i,12,2);
  const reasons=[...out.values()].sort((a,b)=>a.number-b.number),starReasons=[...stars.values()].sort((a,b)=>a.number-b.number);
  return {date,main:reasons.map(x=>x.number),stars:starReasons.map(x=>x.number),reasons,starReasons,profile:p,ownNumber:own,amount,currency,premiumRoot:pr,version:VERSION};
 }
-function winnerCounts(rows){return [{label:'Ingen',count:rows.filter(r=>r.jackpotWinningRows===0).length},{label:'Én',count:rows.filter(r=>r.jackpotWinningRows===1).length},{label:'Flere',count:rows.filter(r=>r.jackpotWinningRows>1).length},{label:'Ukjent',count:rows.filter(r=>r.jackpotWinningRows===null).length}];}
+function winnerCounts(rows){return [{label:'None',count:rows.filter(r=>r.jackpotWinningRows===0).length},{label:'One',count:rows.filter(r=>r.jackpotWinningRows===1).length},{label:'Multiple',count:rows.filter(r=>r.jackpotWinningRows>1).length},{label:'Unknown',count:rows.filter(r=>r.jackpotWinningRows===null).length}];}
 function hypergeom(pool,picked,drawn,hits){return E.choose(picked,hits)*E.choose(pool-picked,drawn-hits)/E.choose(pool,drawn);}
 function announcementFor(data,date){
- return (data.announcedPots||[]).filter(a=>a.drawDate===date&&Number.isFinite(a.amountEUR)&&a.amountEUR>0&&Number.isFinite(Date.parse(a.observedAt))&&E.deadlineStatus(date,new Date(a.observedAt))!=='Spillefristen er passert').sort((a,b)=>a.observedAt.localeCompare(b.observedAt)).at(-1)||null;
+ return (data.announcedPots||[]).filter(a=>a.drawDate===date&&Number.isFinite(a.amountEUR)&&a.amountEUR>0&&Number.isFinite(Date.parse(a.observedAt))&&E.deadlineStatus(date,new Date(a.observedAt))!=='Norwegian ticket deadline has passed').sort((a,b)=>a.observedAt.localeCompare(b.observedAt)).at(-1)||null;
 }
 function historicalStars(stars,date){
  const n=E.pool(date),out=[];

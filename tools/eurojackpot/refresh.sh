@@ -8,3 +8,4 @@ flock -n 9 || exit 0
 python3 "$eurojackpot_dir/update_history.py" --output "$eurojackpot_public_dir/history.js"
 node "$eurojackpot_dir/freeze_proposals.js" "$eurojackpot_public_dir"
 python3 "$eurojackpot_dir/update_research.py" --output "$eurojackpot_public_dir/research.js"
+python3 "$eurojackpot_dir/update_site.py" --public-dir "$eurojackpot_public_dir"
