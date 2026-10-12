@@ -144,3 +144,8 @@ tools/eurojackpot/test_research.py from the repository root. Tests passed
 for data provenance, historical rules, odds, random controls and leakage
 exclusion. Graphs and HTML asset/DOM references were checked, but visual
 browser QA was unavailable.
+
+
+## Calendar candidate registered 12 October 2026
+84 retrospective method variants, seven-day information lag, 200 selection + 200 reused validation dates. Chosen calendar/dayroot/400 candidate: 0.945 mean total matches vs 0.833333 uniform, +13.4% descriptive only; zero 5+2. No corrected evidence of increased jackpot probability. Public report and immutable first two forecasts in EuroJackpot/kandidat-20261012.{html,json}. Two future draws alone cannot establish an advantage.
+Reproduce grid (numpy/scipy required): python3 tools/eurojackpot/extended-analysis.py EuroJackpot /tmp/calendar-grid.json. Verify candidate independently: node tools/eurojackpot/test_calendar_candidate.js EuroJackpot/history.js. Source version calendar-dayroot-400-v1. Registration is self-published, not third-party certified.
