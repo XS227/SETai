@@ -1,0 +1,108 @@
+{
+  "version": "calendar-candidate-registration-v1",
+  "createdAt": "2026-10-12T00:22:11.150540+00:00",
+  "method": "calendar-dayroot-400-v1",
+  "analysis": {
+    "protocol": "extended-v1",
+    "historicalDraws": 997,
+    "methods": 84,
+    "cutoff": "target minus seven calendar days, inclusive",
+    "selection": {
+      "from": "2022-12-13",
+      "to": "2024-11-08",
+      "count": 200
+    },
+    "validation": {
+      "from": "2024-11-12",
+      "to": "2026-10-09",
+      "count": 200
+    },
+    "chosen": {
+      "method": [
+        "calendar",
+        [
+          "dayroot",
+          400
+        ],
+        1
+      ],
+      "selectionMeanTotal": 0.975,
+      "validationMainMean": 0.575,
+      "validationStarMean": 0.37,
+      "validationMeanTotal": 0.945,
+      "validationPAboveUniform": 0.030696622642510087,
+      "familywiseBonferroniP": 1.0,
+      "fullJackpots": 0
+    },
+    "bestValidationDiagnosticNotSelected": {
+      "method": [
+        "frequency",
+        5,
+        1
+      ],
+      "selectionMeanTotal": 0.905,
+      "validationMainMean": 0.575,
+      "validationStarMean": 0.395,
+      "validationMeanTotal": 0.97,
+      "validationPAboveUniform": 0.011036529198845794,
+      "familywiseBonferroniP": 0.9270684527030467,
+      "fullJackpots": 0
+    },
+    "randomExpectedMeanTotal": 0.8333333333333333,
+    "randomCentral95MeanInterval": [
+      0.72,
+      0.95
+    ],
+    "variantsNumericallyAboveRandom": 42,
+    "variantsPassingBonferroni05": 0,
+    "caveat": "Exploratory retrospective protocol developed after outcomes were public. Historical validation reused; not prospective proof of a betting edge."
+  },
+  "forecastHistoryAsOf": "2026-10-09",
+  "historyDrawsSha256": "12c72e4b8db3957506734d1f03f8b878e1b482807e3717a0a8fa98ebc8dbc48f",
+  "candidateSourceSha256": "a72ee42d08db66fc573b06f77c22dcd50cbb1d4befbe5f4a17adc358ed3a54ec",
+  "rule": "Use only draws at least seven calendar days before target. For each pool, last 400 eligible draws matching target day-of-month digit root; smooth with 20 draws of full eligible-history frequency. Take five/two highest scores; ties SHA-256 extended-v1/date/pool/number. Stars reset 25 March 2022.",
+  "forecasts": [
+    {
+      "date": "2026-10-13",
+      "asOf": "2026-10-06",
+      "cutoffDate": "2026-10-06",
+      "version": "calendar-dayroot-400-v1",
+      "main": [
+        23,
+        33,
+        34,
+        41,
+        47
+      ],
+      "stars": [
+        5,
+        7
+      ]
+    },
+    {
+      "date": "2026-10-16",
+      "asOf": "2026-10-09",
+      "cutoffDate": "2026-10-09",
+      "version": "calendar-dayroot-400-v1",
+      "main": [
+        8,
+        11,
+        16,
+        36,
+        42
+      ],
+      "stars": [
+        3,
+        5
+      ]
+    }
+  ],
+  "evaluationPlan": {
+    "outcome": "Main plus star matches, each reported separately; full 5+2 also reported",
+    "baselineMeanHits": 0.8333333333333334,
+    "noOutcomeDrivenRevisions": true,
+    "twoDrawsInsufficientToEstablishAdvantage": true
+  },
+  "probabilityClaim": "No demonstrated jackpot probability increase. Historical +13.4% refers to mean individual-number hits, not chance of winning.",
+  "registrationStatus": "Self-published timestamp and git history; not an independent third-party registration."
+}
