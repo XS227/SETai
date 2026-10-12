@@ -10,7 +10,7 @@ if(!Array.isArray(data.forecasts))throw Error('Invalid proposal archive');
 const model=EJ.fit(rows);
 for(const date of EJ.nextDates(now,rows)){
   // Never represent a late generated row as a pre-draw prediction.
-  if(EJ.deadlineStatus(date,now)==='Spillefristen er passert')continue;
+  if(EJ.deadlineStatus(date,now)==='Norwegian ticket deadline has passed')continue;
   for(const mode of ['model','uniform']){
     if(data.forecasts.some(f=>f.date===date&&f.mode===mode&&f.version===EJ.VERSION))continue;
     const predictions=[0,1].map(v=>EJ.proposal(rows,date,mode,v,model));

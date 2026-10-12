@@ -9,10 +9,10 @@ assert.deepEqual(EJ.nextDates(new Date('2026-10-11T23:04:31Z'),rows),['2026-10-1
 assert.deepEqual(EJ.nextDates(new Date('2026-10-13T18:01:00Z'),rows),['2026-10-13','2026-10-16']);
 assert.deepEqual(EJ.nextDates(new Date('2026-10-13T22:01:00Z'),rows),['2026-10-16','2026-10-20']);
 assert.deepEqual(EJ.nextDates(new Date('2026-10-13T18:01:00Z'),rows.concat({date:'2026-10-13'})),['2026-10-16','2026-10-20']);
-assert.equal(EJ.deadlineStatus('2026-10-13',new Date('2026-10-13T16:59:59Z')),'Spillefrist kl. 19:00 (norsk tid)');
-assert.equal(EJ.deadlineStatus('2026-10-13',new Date('2026-10-13T17:00:00Z')),'Spillefristen er passert');
-assert.equal(EJ.deadlineStatus('2026-10-27',new Date('2026-10-27T17:59:59Z')),'Spillefrist kl. 19:00 (norsk tid)');
-assert.equal(EJ.deadlineStatus('2026-10-27',new Date('2026-10-27T18:00:00Z')),'Spillefristen er passert');
+assert.equal(EJ.deadlineStatus('2026-10-13',new Date('2026-10-13T16:59:59Z')),'Norwegian ticket deadline: 19:00');
+assert.equal(EJ.deadlineStatus('2026-10-13',new Date('2026-10-13T17:00:00Z')),'Norwegian ticket deadline has passed');
+assert.equal(EJ.deadlineStatus('2026-10-27',new Date('2026-10-27T17:59:59Z')),'Norwegian ticket deadline: 19:00');
+assert.equal(EJ.deadlineStatus('2026-10-27',new Date('2026-10-27T18:00:00Z')),'Norwegian ticket deadline has passed');
 assert.equal(EJ.pool('2014-10-03'),8);assert.equal(EJ.pool('2014-10-10'),10);assert.equal(EJ.pool('2022-03-18'),10);assert.equal(EJ.pool('2022-03-25'),12);
 assert.throws(()=>EJ.validate([{date:'2026-10-09',main:[1,1,2,3,4],stars:[1,2]}]));
 assert.throws(()=>EJ.validate([{date:'2026-10-08',main:[1,2,3,4,5],stars:[1,2]}]));
