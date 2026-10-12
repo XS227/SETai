@@ -5,7 +5,7 @@ const dateFmt=(date,short=false)=>new Intl.DateTimeFormat('nb-NO',{timeZone:'Eur
 const weekday=date=>new Intl.DateTimeFormat('nb-NO',{timeZone:'Europe/Oslo',weekday:'long'}).format(new Date(date+'T12:00:00Z'));
 const cap=s=>s[0].toUpperCase()+s.slice(1);
 const balls=(nums,star=false)=>nums.map(n=>`<span class="ball ${star?'star':''}" aria-label="${star?'Stjernetall':'Hovedtall'} ${n}">${n}</span>`).join('');
-let rows,model,visible=20,selected=1,personal=null,followToday=true;
+let rows,model,visible=20,selected=1,personal=null,followToday=true,repeatVisible=12,repeatAnalysis;
 function toast(msg){$('toast').textContent=msg;$('toast').hidden=false;setTimeout(()=>$('toast').hidden=true,2500);}
 function personalMarkup(date){
  if(!personal)return '<div class="personal-row"><div class="rowlabel">Rekke 3 · Personlig numerologi</div><p class="personal-empty">Legg inn fødselsdatoen ovenfor for å få din personlige rekke til denne datoen.</p></div>';
@@ -79,6 +79,27 @@ function setupSameDate(){
  $('same-date').addEventListener('change',()=>{followToday=false;renderSameDate();});
  $('same-date-today').addEventListener('click',()=>{followToday=true;renderSameDate();});
 }
+function updateRepeats(){
+ const selectedRows=$('repeat-period').value==='current'?rows.filter(r=>r.date>='2022-03-25'):rows;
+ repeatAnalysis=EJ_REPEATS.analyze(selectedRows);renderRepeats();
+}
+function renderRepeats(){
+ const data=repeatAnalysis,type=$('repeat-type').value,groups=data[type].repeated;
+ for(const key of ['all7','main5','stars2'])$(`repeat-${key}`).textContent=fmt(data[key].repeatedCount);
+ $('repeat-coverage').textContent=data.count?`${fmt(data.count)} trekninger · ${dateFmt(data.from,true)}–${dateFmt(data.to,true)}. Tallrekkefølgen ignoreres; hovedtall og stjernetall sammenlignes hver for seg.`:'Ingen trekninger i denne perioden.';
+ $('repeat-exposure').textContent=$('repeat-period').value==='current'?'Denne perioden har samme tallmengde: 50 hovedtall og 12 stjernetall.':'Stjernetallmengden var først 8, deretter 10, og fra 25. mars 2022 er den 12. Lavere stjernetallpar har derfor vært mulige i flere år. Velg perioden fra 2022 for lik tallmengde.';
+ $('repeat-empty').hidden=groups.length>0;
+ $('repeat-empty').textContent=`Ingen ${type==='all7'?'hele 5+2-rekker':type==='main5'?'sett med fem hovedtall':'stjernetallpar'} har blitt trukket mer enn én gang i den valgte perioden.`;
+ $('repeat-list').innerHTML=groups.slice(0,repeatVisible).map(g=>`<article class="card repeat-card"><div class="bar"><h3>${type==='stars2'?'Stjernetallpar':type==='main5'?'Fem hovedtall':'Hele 5+2-rekken'}</h3><span class="badge">${fmt(g.count)} trekninger</span></div>${g.main.length?`<div class="rowlabel">Hovedtall</div><div class="balls">${balls(g.main)}</div>`:''}${g.stars.length?`<div class="rowlabel">Stjernetall</div><div class="balls">${balls(g.stars,true)}</div>`:''}<p class="tiny">${fmt(g.count)} forekomster totalt · ${fmt(g.count-1)} gjentakelser etter den første.</p><details><summary>Se alle ${fmt(g.count)} datoene</summary><ul class="repeat-dates">${g.dates.slice().reverse().map(d=>`<li>${cap(weekday(d))} ${dateFmt(d,true)}</li>`).join('')}</ul></details></article>`).join('');
+ $('repeat-more').hidden=repeatVisible>=groups.length;
+ $('repeat-more').textContent=`Vis flere (${fmt(Math.max(0,groups.length-repeatVisible))} igjen)`;
+}
+function setupRepeats(){
+ updateRepeats();
+ $('repeat-period').addEventListener('change',()=>{repeatVisible=12;updateRepeats();});
+ $('repeat-type').addEventListener('change',()=>{repeatVisible=12;renderRepeats();});
+ $('repeat-more').addEventListener('click',()=>{repeatVisible+=24;renderRepeats();});
+}
 function archiveRows(){return rows.filter(r=>$('year').value==='all'||r.date.startsWith($('year').value)).slice().reverse();}
 function renderArchive(){
  const data=archiveRows();
@@ -120,7 +141,7 @@ async function refreshData(){
   rows=fresh;window.EJ_HISTORY=data;
   try{window.EJ_PROPOSALS=await read('proposals.js','window.EJ_PROPOSALS=');}catch{}
   if(changed){
-   model=EJ.fit(rows);renderModel();renderFrequency();renderArchive();renderSameDate();
+   model=EJ.fit(rows);renderModel();renderFrequency();renderArchive();renderSameDate();updateRepeats();
    $('draw-count').textContent=fmt(rows.length);$('latest-date').textContent=dateFmt(rows.at(-1).date,true);
    const last=rows.at(-1);$('last-result').innerHTML=`<div><div class="eyebrow">Siste resultat</div><strong>${dateFmt(last.date,true)}</strong></div><div class="balls">${balls(last.main)}<span class="plus">+</span>${balls(last.stars,true)}</div>`;
    const year=last.date.slice(0,4);if(!Array.from($('year').options).some(o=>o.value===year)){const o=document.createElement('option');o.value=year;o.textContent=year;$('year').append(o);}
@@ -140,7 +161,7 @@ function init(){
   const classes=[[5,2],[5,1],[5,0],[4,2],[4,1],[3,2],[4,0],[2,2],[3,1],[3,0],[1,2],[2,1]];
   $('odds-table').querySelector('tbody').innerHTML=classes.map(([m,s])=>`<tr><td>${m}+${s}</td><td>${fmt(Math.round(1/EJ.odds(m,s)))}</td></tr>`).join('');
   $('any-prize').textContent='En av disse premiegruppene: omtrent 1 av '+(1/classes.reduce((a,[m,s])=>a+EJ.odds(m,s),0)).toLocaleString('nb-NO',{maximumFractionDigits:1})+'.';
-  model=EJ.fit(rows);renderModel();renderForecasts();renderCalculator();renderFrequency();renderArchive();dataStatus();setupPersonal();setupSameDate();
+  model=EJ.fit(rows);renderModel();renderForecasts();renderCalculator();renderFrequency();renderArchive();dataStatus();setupPersonal();setupSameDate();setupRepeats();
   $('mode').addEventListener('change',renderForecasts);$('row-count').addEventListener('input',renderCalculator);$('number-type').addEventListener('change',renderFrequency);$('period').addEventListener('change',renderFrequency);$('year').addEventListener('change',()=>{visible=20;renderArchive();});$('more').addEventListener('click',()=>{visible+=40;renderArchive();});$('export').addEventListener('click',exportCsv);
   setInterval(()=>{renderForecasts();dataStatus();if(followToday)renderSameDate();},60_000);
   setInterval(refreshData,300_000);

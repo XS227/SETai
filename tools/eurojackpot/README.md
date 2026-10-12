@@ -153,3 +153,7 @@ Reproduce grid (numpy/scipy required): python3 tools/eurojackpot/extended-analys
 
 ## Same calendar date in previous years
 EuroJackpot/index.html#samme-dato defaults to the visitor device calendar date/timezone and permits date selection. Exact month/day comparisons only; all prior years since 2012 displayed, including no-draw years. Leap-date absence, pre-launch dates and dates beyond available coverage are labelled separately. Midnight refresh follows local date only while Today mode remains selected. Historical-data refresh re-renders selected results. Source: same-date.js; syntax and current-date/coverage/leap/timezone checks passed.
+
+
+## Exact drawn-number repetitions
+EuroJackpot/index.html#gjentakelser groups all seven numbers, the exact five main numbers, and exact star pairs separately. Numeric order ignored; pool identities retained. All-history and current 12-star regime (from 25 March 2022) filters. Every repeated group shows occurrence count, repetitions beyond its first occurrence, and every date. Refreshed with historical data. Through 9 October 2026: 997 draws, zero repeated full rows, zero repeated five-main sets, all 66 star pairs repeated, 931 occurrences beyond the first per-pair occurrence. Top pair 7/8: 29 occurrences. Current regime: 475 draws. Independent Python and JS counting, ordering invariance, pool-boundary separation and immutability checks passed. Counts refer to drawn numbers, not number of winners.
