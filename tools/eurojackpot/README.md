@@ -108,3 +108,39 @@ Run `node tools/eurojackpot/test_numerology.js`. A sweep verified valid,
 unique, explained 5+2 rows, and 90 profiles were compared against the
 actual Numerologist source on the production server with exact agreement.
 Native visual browser QA was not available.
+
+## Experiment page and research data
+
+Published at /EuroJackpot/eksperiment.html. Imports all twelve prize ranks,
+winning row counts, source-reported euro quotes and international stakes
+from the original official files. Source amounts remain explicitly post-draw.
+Four operator-reported birthday stories are curated with provenance, missing
+birth years, relation-to-birthday and the distinction between national draws
+and actual matching-number prizes. No anonymous winner is identified.
+
+The missing 2023-01-13 first-prize winning count is filled only from Norsk
+Tipping's contemporaneous confirmation of no 5+2 winner. The missing quote
+is left null. Overall first-prize counts: 831 no winner, 145 one winning row,
+and 21 multiple winning rows through 2026-10-09.
+
+Official advertised future jackpots are timestamped before the Norwegian
+19:00 deadline. HTML result date and advertised weekday must match the
+current archive. If the source layout changes, the collector preserves prior
+announcements and reports that no new value was confirmed.
+
+The combined personal/date/prize rule is versioned as personal-date-prize-v1.
+Currency and integer-unit digit reduction are explicit. It is symbolic, not
+a predictive advantage claim. Its historical test requires a real timestamped
+pre-draw pot, never a payout substituted as a pre-draw feature.
+
+Personal-row tests adapt star selections to each historical pool, and compare
+their hit distributions with exact hypergeometric expectations and 200
+independent random controls. All inputs stay in browser memory. The local
+configuration download is not represented as independently verified public
+preregistration.
+
+Run node tools/eurojackpot/test_experiment.js and python3
+tools/eurojackpot/test_research.py from the repository root. Tests passed
+for data provenance, historical rules, odds, random controls and leakage
+exclusion. Graphs and HTML asset/DOM references were checked, but visual
+browser QA was unavailable.
