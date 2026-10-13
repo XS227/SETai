@@ -1,5 +1,21 @@
 # SETAEI EuroJackpot
 
+## Date and winning-sum numerology study
+The fixed 998-draw snapshot through 2026-10-13 is presented in
+`numerology-study-20261013.html`, with complete JSON results and per-draw CSV.
+The study compares full-date/day/month/year roots with main/Euro/all-seven
+sum roots and exact root equality. Exact sum distributions use historical
+Euro pools 8/10/12, 50,000 parametric frequency controls per outcome and 9,999
+within-regime permutations; 27 tests share Holm correction. None is significant
+after correction. Personal-day birthdays only cyclically shift the date root.
+All-seven sum roots are derived from the other two sum roots, not independent
+evidence. Rankings are descriptive, not adopted prediction strategies.
+Run `python tools/eurojackpot/analyse_date_roots.py EuroJackpot` (NumPy needed)
+then `python tools/eurojackpot/render_date_root_study.py EuroJackpot`.
+Independent enumeration validated all 2,118,760 main combinations and every
+historical Euro pair against the null distributions. The dated study is not
+automatically refreshed by cron. Its main-page link survives the hourly renderer.
+
 ## Draw review — 13 October 2026
 `EuroJackpot/review-20261013.html` compares the two timestamped AI lines, two
 random controls, locked calendar candidate and replayed history filter against
