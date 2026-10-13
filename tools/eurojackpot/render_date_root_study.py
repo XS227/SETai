@@ -2,6 +2,7 @@
 """Render the fixed exploratory snapshot using the site's existing English design."""
 import html,json,sys
 from pathlib import Path
+from preview_gate import preview_gate
 p=Path(sys.argv[1] if len(sys.argv)>1 else 'EuroJackpot');r=json.loads((p/'numerology-study-20261013.json').read_text());e=html.escape
 freq=''.join(f'<tr><td>{x["root"]}</td><td>{x["main_root"]}</td><td>{x["star_root"]}</td><td>{x["all_root"]}</td></tr>' for x in r['frequencies'])
 names={'date_root':'Full calendar date','day_root':'Day of month','month_root':'Calendar month','year_root':'Calendar year','main_root':'Five main numbers','star_root':'Two Euro numbers','all_root':'All seven numbers'}
@@ -17,5 +18,5 @@ document.getElementById('root-pool').addEventListener('change',bars);document.ge
 </script></body></html>'''
 for k,v in {'FREQUENCIES':freq,'MATCHES':matches,'RAW':raw,'TESTS':tests,'PAYLOAD':payload}.items():page=page.replace(k,v)
 assert 'FREQUENCIES' not in page and 'PAYLOAD' not in page
-(p/'numerology-study-20261013.html').write_text(page)
+(p/'numerology-study-20261013.html').write_text(preview_gate(page))
 print('Rendered English numerology study, accessible frequency counts, selectable matrix and raw sums.')

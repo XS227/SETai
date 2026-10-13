@@ -1,5 +1,24 @@
 # SETAEI EuroJackpot
 
+## Preview code and filled-first ticket layout (13 October 2026)
+All six lab HTML pages load `preview-access.js`, prompting for code 227 and
+remembering approval in sessionStorage for the current tab. This is a lightweight
+browser-side preview gate, not server authentication; source and data files
+remain publicly retrievable. The English popup handles wrong codes, keyboard
+submission and storage-unavailable browsers. Critical head CSS prevents content
+flashing before the popup. The hourly renderer uses `preview_gate.py` to keep the
+gate on index and generated archive pages: deploy that module alongside the
+updated operations copy of `update_site.py`.
+The ticket display stably sorts filled rows before empty rows and numbers visible
+rows consecutively. Original slot indices remain the targets of add/remove
+actions. Personal rows move up when completed; clipboard numbering matches the
+screen. Existing forecast values and distinct-line odds are preserved.
+Deploy `app.js`, `ticket-engine.js`, `preview-access.js` and the gated HTML pages.
+Run `python tools/eurojackpot/preview_gate.py EuroJackpot` after manually rebuilding
+the dated AI review. The numerology renderer already applies the gate itself.
+Functional checks verified ordering, personal completion, stable removal mapping,
+unique-line counts, code success/failure, saved sessions and storage fallback.
+
 ## Date and winning-sum numerology study
 The fixed 998-draw snapshot through 2026-10-13 is presented in
 `numerology-study-20261013.html`, with complete JSON results and per-draw CSV.

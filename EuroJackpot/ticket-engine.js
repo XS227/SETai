@@ -4,6 +4,7 @@
  function validateLine(main,stars){if(main.length!==5||stars.length!==2||new Set(main).size!==5||new Set(stars).size!==2||main.some(n=>!Number.isInteger(n)||n<1||n>50)||stars.some(n=>!Number.isInteger(n)||n<1||n>12))throw Error('Choose 5 distinct main numbers and 2 distinct Euro numbers.');return {main:[...main].sort((a,b)=>a-b),stars:[...stars].sort((a,b)=>a-b)};}
  function key(r){return r.main.join(',')+'|'+r.stars.join(',');}
  function uniqueCount(lines){return new Set(lines.filter(x=>x.row).map(x=>key(x.row))).size;}
+ function displayOrder(lines){return lines.slice().sort((a,b)=>Number(!!b.row)-Number(!!a.row)||a.index-b.index).map((line,i)=>({...line,displayIndex:i+1}));}
  async function compile(slots,date,rows,model,personal={},options={}){
   return Promise.all(slots.map(async(slot,index)=>{
    const out={index,kind:slot.kind,row:null,title:'Add your own line',note:'Choose numbers or generate a random line.'};
@@ -24,5 +25,5 @@
    }return out;
   }));
  }
- const API={defaults,validateLine,uniqueCount,compile};if(typeof module!=='undefined')module.exports=API;else root.EJ_TICKET=API;
+ const API={defaults,validateLine,uniqueCount,displayOrder,compile};if(typeof module!=='undefined')module.exports=API;else root.EJ_TICKET=API;
 })(typeof window!=='undefined'?window:globalThis);

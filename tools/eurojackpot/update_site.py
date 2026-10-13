@@ -2,6 +2,7 @@
 """Render public English results and SEO from the validated official archive."""
 import argparse,datetime as dt,html,json,re,os
 from pathlib import Path
+from preview_gate import preview_gate
 
 def read_js(path,prefix):
  s=path.read_text().strip();assert s.startswith(prefix);return json.loads(s[len(prefix):].rstrip(';'))
@@ -30,7 +31,7 @@ def build(public):
   for r in rows:
    key=tuple(tuple(sorted(r[f])) for f in fields);groups[key]=groups.get(key,0)+1
   repeated=sum(v>1 for v in groups.values());main=re.sub(r'(<strong id="repeat-'+kind+r'">).*?(</strong>)',lambda m:m[1]+str(repeated)+m[2],main)
- atomic(public/'index.html',main)
+ atomic(public/'index.html',preview_gate(main))
  years=sorted({r['date'][:4] for r in rows},reverse=True)
  archive=[]
  for y in years:
@@ -38,10 +39,11 @@ def build(public):
   archive.append(f'<details id="year-{y}" class="archive-year"'+(' open' if y==years[0] else '')+f'><summary>{y} · {len(rs)} draws</summary><div class="table-scroll"><table class="archive-table"><thead><tr><th>Date</th><th>Main numbers</th><th>Euro numbers</th></tr></thead><tbody>'+''.join(table_row(r) for r in rs[::-1])+'</tbody></table></div></details>')
  page='''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>EuroJackpot Winning Numbers &amp; Results Archive 2012–YEAR | SETAEI</title><meta name="description" content="Check every EuroJackpot winning-number result since 2012. Browse draw dates, five main numbers and two Euro numbers by year, from official WestLotto data."><link rel="canonical" href="https://setai.no/EuroJackpot/results.html"><meta name="robots" content="index,follow,max-image-preview:large"><meta property="og:title" content="EuroJackpot winning numbers and complete archive"><meta property="og:image" content="https://setai.no/EuroJackpot/social.png"><link rel="stylesheet" href="style.css?v=2"></head><body><header class="topbar"><div class="wrap nav"><a class="logo" href="/">SETAEI</a><nav class="navlinks"><a href="./#trekninger">Your ticket</a><a href="eksperiment.html">Research</a></nav></div></header><main class="wrap"><div class="hero"><div><div class="eyebrow">Official source. Open archive.</div><h1>EuroJackpot<br><em>winning numbers.</em></h1><p>Every recorded draw from 23 March 2012. Five main numbers, two Euro numbers, and the date they were drawn.</p></div><div class="orbit" aria-hidden="true"><div class="core">5+2<small>RESULTS SINCE 2012</small></div></div></div>LATEST<p>COUNT draws · Archive through LAST. The complete results below are available without JavaScript.</p><nav class="year-links" aria-label="Archive years">YEARS</nav>ARCHIVE<section style="margin-top:45px"><h2>How to read EuroJackpot results</h2><p>Main numbers come from 1–50. The Euro-number pool was 1–8 before 10 October 2014, 1–10 until March 2022, and 1–12 from 25 March 2022. The archive preserves the rules that applied to each draw.</p><p>Drawn numbers are recorded whether or not any player matched the jackpot. Use <a class="audit-link" href="./#gjentakelser">the repetition analysis</a> to compare complete combinations, main-number sets and Euro-number pairs.</p><p>Source: <a class="audit-link" href="https://www.westlotto.de/service/downloads/downloads.html" target="_blank" rel="noopener">WestLotto official results downloads</a>. Compare current outcomes with your licensed lottery operator before relying on a result.</p><a class="button-link" href="./#trekninger">Explore AI, mathematics and numerology lines →</a></section></main><footer><div class="wrap footerinner"><span>SETAEI · Independent number lab</span><a href="./">Back to the lab</a></div></footer></body></html>'''
  page=page.replace('YEARS',''.join(f'<a href="#year-{y}">{y}</a>' for y in years)).replace('YEAR',years[0]).replace('LATEST',latest).replace('COUNT',f'{len(rows):,}').replace('LAST',date_label(last['date'])).replace('ARCHIVE',''.join(archive))
- atomic(public/'results.html',page)
+ atomic(public/'results.html',preview_gate(page))
  research=read_js(public/'research.js','window.EJ_RESEARCH=') if (public/'research.js').exists() else {}
  meta={'drawCount':len(rows),'latestDate':last['date'],'fetchedAt':h['fetchedAt'],'announcedPots':research.get('announcedPots',[])}
  atomic(public/'site-data.js','window.EJ_SITE_DATA='+json.dumps(meta,separators=(',',':'))+';\n')
  print(f'English SEO/results refreshed: {len(rows)} draws through {last["date"]}')
 if __name__=='__main__':
  parser=argparse.ArgumentParser();parser.add_argument('--public-dir',type=Path,required=True);build(parser.parse_args().public_dir)
+
