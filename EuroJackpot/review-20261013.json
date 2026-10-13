@@ -1,0 +1,349 @@
+{
+  "draw": {
+    "date": "2026-10-13",
+    "main": [
+      11,
+      17,
+      20,
+      22,
+      35
+    ],
+    "stars": [
+      4,
+      8
+    ]
+  },
+  "jackpot": {
+    "winningLines": 1,
+    "amountEUR": 120000000,
+    "region": "North Rhine-Westphalia, Germany",
+    "sources": {
+      "result": "https://www.juegosonce.es/resultados-eurojackpot-13-octubre-2026",
+      "region": "https://www.ad-hoc-news.de/unterhaltung/kultur/eurojackpot-120-millionen-euro-gehen-nach-nordrhein-westfalen/70317246"
+    }
+  },
+  "lines": [
+    {
+      "method": "AI selection 1",
+      "date": "2026-10-13",
+      "main": [
+        4,
+        13,
+        34,
+        44,
+        48
+      ],
+      "stars": [
+        4,
+        10
+      ],
+      "mode": "model",
+      "asOf": "2026-10-09",
+      "version": "1.0.0",
+      "chance": 7.1511238420185165e-9,
+      "registeredAt": "2026-10-11T23:13:03.799Z",
+      "evidence": "Timestamp in the self-published forecast log",
+      "hits": {
+        "main": [],
+        "stars": [
+          4
+        ]
+      }
+    },
+    {
+      "method": "AI selection 2",
+      "date": "2026-10-13",
+      "main": [
+        8,
+        31,
+        33,
+        35,
+        36
+      ],
+      "stars": [
+        4,
+        8
+      ],
+      "mode": "model",
+      "asOf": "2026-10-09",
+      "version": "1.0.0",
+      "chance": 7.1511238420185165e-9,
+      "registeredAt": "2026-10-11T23:13:03.799Z",
+      "evidence": "Timestamp in the self-published forecast log",
+      "hits": {
+        "main": [
+          35
+        ],
+        "stars": [
+          4,
+          8
+        ]
+      }
+    },
+    {
+      "method": "Random control 1",
+      "date": "2026-10-13",
+      "main": [
+        14,
+        20,
+        29,
+        40,
+        49
+      ],
+      "stars": [
+        1,
+        6
+      ],
+      "mode": "uniform",
+      "asOf": "2026-10-09",
+      "version": "1.0.0",
+      "chance": 7.1511238420185165e-9,
+      "registeredAt": "2026-10-11T23:13:03.799Z",
+      "evidence": "Timestamp in the self-published forecast log",
+      "hits": {
+        "main": [
+          20
+        ],
+        "stars": []
+      }
+    },
+    {
+      "method": "Random control 2",
+      "date": "2026-10-13",
+      "main": [
+        2,
+        19,
+        21,
+        41,
+        42
+      ],
+      "stars": [
+        6,
+        10
+      ],
+      "mode": "uniform",
+      "asOf": "2026-10-09",
+      "version": "1.0.0",
+      "chance": 7.1511238420185165e-9,
+      "registeredAt": "2026-10-11T23:13:03.799Z",
+      "evidence": "Timestamp in the self-published forecast log",
+      "hits": {
+        "main": [],
+        "stars": []
+      }
+    },
+    {
+      "method": "Calendar hypothesis",
+      "date": "2026-10-13",
+      "asOf": "2026-10-06",
+      "cutoffDate": "2026-10-06",
+      "version": "calendar-dayroot-400-v1",
+      "main": [
+        23,
+        33,
+        34,
+        41,
+        47
+      ],
+      "stars": [
+        5,
+        7
+      ],
+      "evidence": "Original locked calendar record",
+      "hits": {
+        "main": [],
+        "stars": []
+      }
+    },
+    {
+      "method": "History filter",
+      "date": "2026-10-13",
+      "main": [
+        7,
+        11,
+        20,
+        28,
+        45
+      ],
+      "stars": [
+        3,
+        8
+      ],
+      "asOf": "2026-10-09",
+      "version": "unseen-main-and-full-v1",
+      "checkedDraws": 997,
+      "excludedMainSets": 997,
+      "excludedFullRows": 997,
+      "excludedCurrentRows": 65802,
+      "selectionRowsRemaining": 139772358,
+      "starPairOccurrences": 19,
+      "chance": 7.1511238420185165e-9,
+      "attempts": 1,
+      "evidence": "Replayed from pre-draw history; this browser-generated line has no separate public pre-draw timestamp",
+      "hits": {
+        "main": [
+          11,
+          20
+        ],
+        "stars": [
+          8
+        ]
+      }
+    }
+  ],
+  "ai2Factors": [
+    {
+      "pool": "Main",
+      "number": 8,
+      "last50": 2,
+      "total": 104,
+      "eligible": 997,
+      "gap": 22,
+      "modelScore": 0.10090749402730471
+    },
+    {
+      "pool": "Main",
+      "number": 31,
+      "last50": 4,
+      "total": 94,
+      "eligible": 997,
+      "gap": 10,
+      "modelScore": 0.10088374910145738
+    },
+    {
+      "pool": "Main",
+      "number": 33,
+      "last50": 6,
+      "total": 95,
+      "eligible": 997,
+      "gap": 5,
+      "modelScore": 0.09995286811714359
+    },
+    {
+      "pool": "Main",
+      "number": 35,
+      "last50": 7,
+      "total": 114,
+      "eligible": 997,
+      "gap": 8,
+      "modelScore": 0.09799875504464438
+    },
+    {
+      "pool": "Main",
+      "number": 36,
+      "last50": 7,
+      "total": 87,
+      "eligible": 997,
+      "gap": 3,
+      "modelScore": 0.10017667304088805
+    },
+    {
+      "pool": "Euro",
+      "number": 4,
+      "last50": 10,
+      "total": 74,
+      "eligible": 475,
+      "gap": 5,
+      "modelScore": 0.1691224976402512
+    },
+    {
+      "pool": "Euro",
+      "number": 8,
+      "last50": 7,
+      "total": 70,
+      "eligible": 475,
+      "gap": 7,
+      "modelScore": 0.157395723732217
+    }
+  ],
+  "nextAIForecasts": [
+    {
+      "date": "2026-10-16",
+      "asOf": "2026-10-09",
+      "registeredAt": "2026-10-11T23:13:03.799Z",
+      "rows": [
+        {
+          "date": "2026-10-16",
+          "main": [
+            6,
+            14,
+            31,
+            33,
+            50
+          ],
+          "stars": [
+            3,
+            12
+          ],
+          "mode": "model",
+          "asOf": "2026-10-09",
+          "version": "1.0.0",
+          "chance": 7.1511238420185165e-9
+        },
+        {
+          "date": "2026-10-16",
+          "main": [
+            1,
+            15,
+            43,
+            48,
+            50
+          ],
+          "stars": [
+            1,
+            2
+          ],
+          "mode": "model",
+          "asOf": "2026-10-09",
+          "version": "1.0.0",
+          "chance": 7.1511238420185165e-9
+        }
+      ]
+    },
+    {
+      "date": "2026-10-20",
+      "asOf": "2026-10-13",
+      "registeredAt": "2026-10-13T19:15:03.162Z",
+      "rows": [
+        {
+          "date": "2026-10-20",
+          "main": [
+            13,
+            30,
+            38,
+            41,
+            42
+          ],
+          "stars": [
+            5,
+            9
+          ],
+          "mode": "model",
+          "asOf": "2026-10-13",
+          "version": "1.0.0",
+          "chance": 7.1511238420185165e-9
+        },
+        {
+          "date": "2026-10-20",
+          "main": [
+            7,
+            10,
+            11,
+            43,
+            49
+          ],
+          "stars": [
+            3,
+            5
+          ],
+          "mode": "model",
+          "asOf": "2026-10-13",
+          "version": "1.0.0",
+          "chance": 7.1511238420185165e-9
+        }
+      ]
+    }
+  ],
+  "methodVersion": "1.0.0",
+  "verdict": "One forward result does not establish a predictive advantage. Model version and registered future forecasts remain unchanged."
+}

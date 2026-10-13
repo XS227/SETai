@@ -1,5 +1,18 @@
 # SETAEI EuroJackpot
 
+## Draw review — 13 October 2026
+`EuroJackpot/review-20261013.html` compares the two timestamped AI lines, two
+random controls, locked calendar candidate and replayed history filter against
+the official result. AI selection 2 reproduced from the earlier 997 draws and
+scored 1+2; the history filter scored 2+1 and calendar 0+0. The filter is explicitly
+labelled as replayed, with no independent public pre-draw timestamp. The review
+includes source-linked jackpot/prize facts, model factors and unchanged future
+AI snapshots for 16 and 20 October. Personal/manual lines cannot be evaluated
+without the player's actual selections. No increased-odds claim is made.
+Rebuild this dated record with `node tools/eurojackpot/build_draw_review.js EuroJackpot`.
+Deploy the two review files and the new `#forecast-review` panel in index.html;
+the panel is outside hourly-generated HTML blocks and survives `update_site.py`.
+
 Requested destination: https://setai.no/EuroJackpot/
 
 Published at https://setai.no/EuroJackpot/ on 2026-10-11. Runtime update tasks
@@ -167,3 +180,4 @@ Version unseen-main-and-full-v1, source EuroJackpot/exclusion.js. Every target-d
 Ten-slot ticket: AI lines 1/2, personal numerology 3, historical exclusion 4, locked calendar hypothesis 5, personal/date/prize hypothesis 6, plus user-selected lines. Empty personal slots await birthday/amount. Remove/add controls, validated number picker, randomise and copy; odds count distinct complete combinations. Per-draw ticket state and personal details stay browser-local and unsaved. Calendar WebCrypto implementation reproduces original registered Node protocol; locked JSON unchanged. All user-facing EuroJackpot pages/calculator labels/errors use English.
 SEO: canonical tags, English titles/descriptions, Open Graph PNG, WebSite/WebPage/Dataset/FAQ JSON-LD; latest results and all 997 historical results in HTML. New results.html archive and year navigation. update_site.py refreshes HTML fragments, full archive and lightweight site-data.js after the existing hourly updates. Four lab URLs added to sitemap without replacing unrelated live entries. No ranking guarantee.
 Validation: engine/numerology/experiment/calendar tests passed; browser-calendar equivalence, ticket assembly/placeholders/manual validation/removal/deduplication; static HTML ID/assets/language/schema and full-archive checks. Visual browser/mobile QA unavailable without control-browser.
+
