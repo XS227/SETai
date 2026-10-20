@@ -1,0 +1,111 @@
+{
+  "targetDate": "2026-10-23",
+  "rows": [
+    {
+      "date": "2026-10-23",
+      "kind": "original",
+      "label": "Original AI 1",
+      "main": [
+        23,
+        28,
+        42,
+        47,
+        48
+      ],
+      "stars": [
+        6,
+        10
+      ],
+      "createdAt": "2026-10-16T18:15:03.463Z",
+      "asOf": "2026-10-16",
+      "featureCutoff": null,
+      "fitLabelDate": null,
+      "informationKnownThrough": "2026-10-16"
+    },
+    {
+      "date": "2026-10-23",
+      "kind": "original",
+      "label": "Original AI 2",
+      "main": [
+        2,
+        14,
+        15,
+        19,
+        39
+      ],
+      "stars": [
+        1,
+        2
+      ],
+      "createdAt": "2026-10-16T18:15:03.463Z",
+      "asOf": "2026-10-16",
+      "featureCutoff": null,
+      "fitLabelDate": null,
+      "informationKnownThrough": "2026-10-16"
+    },
+    {
+      "date": "2026-10-23",
+      "kind": "uniform",
+      "label": "Uniform comparison 1",
+      "main": [
+        1,
+        12,
+        26,
+        34,
+        36
+      ],
+      "stars": [
+        5,
+        9
+      ],
+      "createdAt": "2026-10-20T22:28:36.440Z",
+      "asOf": "2026-10-20",
+      "featureCutoff": null,
+      "fitLabelDate": null,
+      "informationKnownThrough": "2026-10-20"
+    },
+    {
+      "date": "2026-10-23",
+      "kind": "uniform",
+      "label": "Uniform comparison 2",
+      "main": [
+        9,
+        26,
+        31,
+        43,
+        45
+      ],
+      "stars": [
+        7,
+        8
+      ],
+      "createdAt": "2026-10-20T22:28:36.440Z",
+      "asOf": "2026-10-20",
+      "featureCutoff": null,
+      "fitLabelDate": null,
+      "informationKnownThrough": "2026-10-20"
+    },
+    {
+      "date": "2026-10-23",
+      "kind": "inverse",
+      "label": "Frozen inverse quadratic",
+      "main": [
+        5,
+        34,
+        38,
+        42,
+        48
+      ],
+      "stars": [
+        6,
+        8
+      ],
+      "createdAt": "2026-10-20T22:47:53.610Z",
+      "asOf": "2026-10-16",
+      "featureCutoff": "2026-10-16",
+      "fitLabelDate": "2026-10-20",
+      "informationKnownThrough": "2026-10-20"
+    }
+  ],
+  "note": "Historical fits are not registered predictions. These records were saved before the target draw; original records are preserved."
+}

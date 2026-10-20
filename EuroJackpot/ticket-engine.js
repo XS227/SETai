@@ -1,6 +1,6 @@
 (function(root){'use strict';
  const E=typeof module!=='undefined'?require('./engine.js'):root.EJ,N=typeof module!=='undefined'?require('./numerology.js'):root.EJ_NUMEROLOGY,X=typeof module!=='undefined'?require('./exclusion.js'):root.EJ_EXCLUSION,P=typeof module!=='undefined'?require('./experiment-engine.js'):root.EJ_EXPERIMENT,C=typeof module!=='undefined'?require('./calendar-client.js'):root.EJ_CALENDAR;
- function defaults(){return [{kind:'ai',variant:0},{kind:'ai',variant:1},{kind:'comparison',variant:0},{kind:'comparison',variant:1},{kind:'personal'},{kind:'history'},{kind:'calendar'},{kind:'combined'},...Array.from({length:4},()=>({kind:'empty'}))];}
+ function defaults(){return [{kind:'ai',variant:0},{kind:'ai',variant:1},{kind:'comparison',variant:0},{kind:'comparison',variant:1},{kind:'inverse'},{kind:'personal'},{kind:'history'},{kind:'calendar'},{kind:'combined'},...Array.from({length:4},()=>({kind:'empty'}))];}
  function validateLine(main,stars){if(main.length!==5||stars.length!==2||new Set(main).size!==5||new Set(stars).size!==2||main.some(n=>!Number.isInteger(n)||n<1||n>50)||stars.some(n=>!Number.isInteger(n)||n<1||n>12))throw Error('Choose 5 distinct main numbers and 2 distinct Euro numbers.');return {main:[...main].sort((a,b)=>a-b),stars:[...stars].sort((a,b)=>a-b)};}
  function key(r){return r.main.join(',')+'|'+r.stars.join(',');}
  function uniqueCount(lines){return new Set(lines.filter(x=>x.row).map(x=>key(x.row))).size;}
@@ -11,6 +11,8 @@
    if(slot.kind==='ai'){
     const frozen=(options.proposals?.forecasts||[]).find(r=>r.date===date&&r.mode==='model'&&r.version===E.VERSION&&r.asOf<date);
     out.title=`AI selection ${slot.variant+1}`;out.row=frozen?.rows[slot.variant]||E.proposal(rows,date,'model',slot.variant,model);out.note=(frozen?'Registered before the draw':'Experimental local selection')+' · history through '+out.row.asOf;
+   }else if(slot.kind==='inverse'){
+    out.title='Frozen inverse quadratic';const f=(options.inverse?.forecasts||[]).find(f=>f.date===date);if(f){out.row=f.rows[0];out.note='Registered '+f.createdAt+' · coefficients fitted after the '+f.fitLabelDate+' answer · experimental';}else out.note='No frozen inverse row registered for this draw.';
    }else if(slot.kind==='comparison'){
     out.title='New uniform comparison '+(slot.variant+1);const f=(options.comparisons?.forecasts||[]).find(f=>f.date===date);if(f){out.row=f.rows[slot.variant];out.note='Registered '+f.createdAt+' · uniform comparison, no demonstrated advantage';}else{out.note='No separately registered comparison for this draw.';}
    }else if(slot.kind==='history'){

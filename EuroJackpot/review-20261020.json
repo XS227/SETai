@@ -1013,6 +1013,28 @@
           "version": "uniform-comparison-v1",
           "registeredAt": "2026-10-20T22:28:36.440Z",
           "evidence": "New prospective comparison; no demonstrated advantage"
+        },
+        {
+          "method": "Frozen inverse quadratic",
+          "date": "2026-10-23",
+          "version": "inverse-quadratic-20261020-v1",
+          "featureCutoff": "2026-10-16",
+          "fitLabelDate": "2026-10-20",
+          "main": [
+            5,
+            34,
+            38,
+            42,
+            48
+          ],
+          "stars": [
+            6,
+            8
+          ],
+          "asOf": "2026-10-16",
+          "informationKnownThrough": "2026-10-20",
+          "registeredAt": "2026-10-20T22:47:53.610Z",
+          "evidence": "Prospective registration after fitting the known 2026-10-20 answer"
         }
       ]
     },
