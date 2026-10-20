@@ -104,17 +104,31 @@ def announcement(html,draws,now):
     if now>=cutoff:return None
     return {'drawDate':date.isoformat(),'amountEUR':money(amount[1],True)*1_000_000,'observedAt':now.isoformat(),'sourceUrl':RESULTS,'type':'Offentlig annonsert før trekningen'}
 
+def completed_fields(before,after,path=''):
+    """Accept publication of previously unknown payouts, never revise known values."""
+    if before==after:return []
+    if before is None and after is not None:return [{'field':path,'before':None,'after':after}]
+    if isinstance(before,dict) and isinstance(after,dict) and before.keys()==after.keys():
+        return [change for key in before for change in completed_fields(before[key],after[key],path+'.'+key)]
+    if isinstance(before,list) and isinstance(after,list) and len(before)==len(after):
+        return [change for i,(a,b) in enumerate(zip(before,after)) for change in completed_fields(a,b,path+f'[{i}]')]
+    raise ValueError('Published known value changed: '+path)
+
 def main():
     a=argparse.ArgumentParser();a.add_argument('--output',type=Path,default=Path(__file__).parent/'research.js');a.add_argument('--archive-cache',type=Path);a.add_argument('--recent-cache',type=Path);a.add_argument('--banner-cache',type=Path);args=a.parse_args()
     old=args.archive_cache.read_bytes() if args.archive_cache else H.fetch(H.ARCHIVE)
     new=args.recent_cache.read_bytes() if args.recent_cache else H.fetch(H.RECENT)
-    draws=build(old,new);now=dt.datetime.now(dt.timezone.utc);previous=None
+    draws=build(old,new);now=dt.datetime.now(dt.timezone.utc);previous=None;completions=[]
     if args.output.exists():
         previous=json.loads(args.output.read_text().split('=',1)[1].strip().rstrip(';'))
         earlier={r['date']:r for r in previous['draws']}
         if len(draws)<len(earlier):raise ValueError('Research refresh would shorten history')
         for row in draws:
-            if row['date'] in earlier and row!=earlier[row['date']]:raise ValueError('Published prize data changed: '+row['date'])
+            if row['date'] in earlier and row!=earlier[row['date']]:
+                before=earlier[row['date']]
+                if any(before[k]!=row[k] for k in ['date','main','stars']):raise ValueError('Published winning numbers changed: '+row['date'])
+                changes=completed_fields(before,row)
+                completions.append({'date':row['date'],'observedAt':now.isoformat(),'reason':'Official source completed previously unknown prize fields','changes':changes})
     announcements=previous.get('announcedPots',[]) if previous else []
     status='Ingen ny bekreftet forhåndspott'
     try:
@@ -126,6 +140,7 @@ def main():
     except Exception:status='Forhåndspott kunne ikke oppdateres; tidligere tidsstempler beholdt'
     cases=json.loads(Path(__file__).with_name('research_cases.json').read_text())
     data={'version':'research-data-v1','sourceUrl':'https://www.westlotto.de/service/downloads/downloads.html','currency':'EUR','fetchedAt':now.isoformat(),'draws':draws,'cases':cases,'announcedPots':announcements,'announcementStatus':status,
+          'prizeCompletions':(previous.get('prizeCompletions',[]) if previous else [])+completions,
           'notes':['Premiebeløp fra resultatfilene er kjent etter trekningen. De brukes kun beskrivende, aldri som historisk forhåndspott.','Vinnertall, antall vinnerrekker og alle 12 premieklasser er hentet fra operatørens originalfiler.','Premieklassene følger kildens historiske rangering. Bare de tre øverste klassene brukes til sammenligning på tvers av regelendringer.','Bursdagshistoriene er et lite utvalg funnet via søk, ikke en representativ undersøkelse av alle vinnere.','Ukjente fødselsår og valgte stjernetall er null, ikke gjetninger.']}
     tmp=args.output.with_suffix('.tmp');tmp.write_text('window.EJ_RESEARCH='+json.dumps(data,ensure_ascii=False,separators=(',',':'))+';\n');tmp.replace(args.output)
     counts={'zero':sum(r['jackpotWinningRows']==0 for r in draws),'one':sum(r['jackpotWinningRows']==1 for r in draws),'multiple':sum(r['jackpotWinningRows'] is not None and r['jackpotWinningRows']>1 for r in draws),'unknown':sum(r['jackpotWinningRows'] is None for r in draws)}

@@ -1,0 +1,45 @@
+{
+  "version": "uniform-comparison-v1",
+  "forecasts": [
+    {
+      "date": "2026-10-23",
+      "asOf": "2026-10-20",
+      "createdAt": "2026-10-20T22:28:36.440Z",
+      "version": "uniform-comparison-v1",
+      "seed": 695197640,
+      "entropy": "13200c4caea2171f59694a1ad983d45d",
+      "rows": [
+        {
+          "date": "2026-10-23",
+          "main": [
+            1,
+            12,
+            26,
+            34,
+            36
+          ],
+          "stars": [
+            5,
+            9
+          ]
+        },
+        {
+          "date": "2026-10-23",
+          "main": [
+            9,
+            26,
+            31,
+            43,
+            45
+          ],
+          "stars": [
+            7,
+            8
+          ]
+        }
+      ],
+      "method": "Uniform sampling without replacement in each pool; reject complete combinations already registered for this target date. No outcome or frequency weighting.",
+      "status": "New prospective comparison; no demonstrated advantage"
+    }
+  ]
+}
