@@ -12,7 +12,7 @@ Python standard library only; actual CPU, memory, root disk, swap, uptime and ph
 
 Each server keeps at most 180 real samples, approximately 15 minutes. The central collector exposes a relay bound only to 127.0.0.1:9159, proxied by the existing nginx vhost under /server/remote/. Each remote agent posts only its own aggregate metrics over verified HTTPS with an independent per-server bearer token. Tokens live outside the repository and public webroot. The relay requires authentication, enforces schema, size, timestamp, order and server identity, and strips unknown fields. Remote data is held in memory. No metrics from SETAEI are substituted for a missing remote server.
 
-The interface clears measurements on a tab change, isolates in-flight responses by generation, retains separate per-server history and uses hash navigation and keyboard-accessible tabs. Tab badges check all servers every 30 seconds; the selected tab updates every five seconds. Measurements become stale after 20 seconds and unavailable after 60 seconds. Background tabs pause polling.
+The interface clears measurements on a tab change, isolates in-flight responses by generation, retains separate per-server history and uses hash navigation and keyboard-accessible tabs. Tab badges check all servers every 10 seconds; the selected tab updates every five seconds. Measurements become stale after 20 seconds and unavailable after 60 seconds. Background tabs pause polling.
 
 The HTTP response card and speed test measure the client connection to the central SETAEI dashboard. They do not claim to measure direct client connectivity to the selected remote server. The speed test downloads a random uncached, uncompressed 512 KiB payload.
 

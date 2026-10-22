@@ -218,6 +218,6 @@
   });
   document.addEventListener('visibilitychange', () => { if (!document.hidden) { freshness(); refresh(); } });
   window.addEventListener('online', refresh);
-  setInterval(refresh, 5000); setInterval(freshness, 1000); setInterval(probeOtherServers, 30000);
+  setInterval(refresh, 5000); setInterval(freshness, 1000); setInterval(probeOtherServers, 10000);
   selectServer(location.hash.slice(1)); probeOtherServers();
 })();
