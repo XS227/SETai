@@ -1,0 +1,232 @@
+[
+  {
+    "id": "biap-global",
+    "name": "BIAP Global",
+    "name_fa": "BIAP Global",
+    "roots": [
+      "/home/ubuntu/biap-global",
+      "/var/www/biap-global-web",
+      "/var/www/biap-showcase"
+    ],
+    "mode": "files",
+    "units": [
+      "biap-global.service"
+    ],
+    "command_patterns": [],
+    "process_names": []
+  },
+  {
+    "id": "biap-fin",
+    "name": "BIAP Finance / Kiasha",
+    "name_fa": "BIAP Finance / Kiasha",
+    "roots": [
+      "/home/ubuntu/biap-kiasha",
+      "/home/ubuntu/biap-fin-signals"
+    ],
+    "mode": "files",
+    "units": [
+      "biap-fin.service"
+    ],
+    "command_patterns": [],
+    "process_names": []
+  },
+  {
+    "id": "biap-mobile",
+    "name": "BIAP mobile and downloads",
+    "name_fa": "اپلیکیشن و دانلودهای BIAP",
+    "roots": [
+      "/home/ubuntu/biap-mobile",
+      "/var/www/biap-downloads",
+      "/home/ubuntu/biap-apk-verify",
+      "/home/ubuntu/eas-build-tmp"
+    ],
+    "mode": "files",
+    "units": [],
+    "command_patterns": [],
+    "process_names": []
+  },
+  {
+    "id": "biap-research",
+    "name": "BIAP research and audits",
+    "name_fa": "پژوهش‌ها و ارزیابی‌های BIAP",
+    "roots": [
+      "/home/ubuntu/BIAP",
+      "/home/ubuntu/biap-main",
+      "/home/ubuntu/biap-backend",
+      "/home/ubuntu/biap_research",
+      "/home/ubuntu/biap_audit_2026-10-19",
+      "/home/ubuntu/biap-pr58",
+      "/home/ubuntu/biap-ch-scope",
+      "/home/ubuntu/biap-snapshot-runner",
+      "/home/ubuntu/biap-canary-20261015",
+      "/home/ubuntu/biap-global-staging-data",
+      "/home/ubuntu/biap-validation-20261016",
+      "/home/ubuntu/biap-pr9-fix",
+      "/home/ubuntu/de-staging-data",
+      "/home/ubuntu/italy-audit",
+      "/home/ubuntu/germany-audit",
+      "/home/ubuntu/uk-audit",
+      "/home/ubuntu/us-audit",
+      "/home/ubuntu/de-pilot-scratch",
+      "/home/ubuntu/exports"
+    ],
+    "mode": "files",
+    "units": [],
+    "command_patterns": [],
+    "process_names": []
+  },
+  {
+    "id": "dma",
+    "name": "DMA research agent",
+    "name_fa": "DMA research agent",
+    "roots": [
+      "/home/nasrin/Artical - agent",
+      "/var/www/dma-agent-v2",
+      "/home/ubuntu/dma-agent-agent10",
+      "/home/ubuntu/dma-eval-v3-20260929",
+      "/home/ubuntu/dma-eval-v2-20260929"
+    ],
+    "mode": "files",
+    "units": [
+      "dma-agent.service"
+    ],
+    "command_patterns": [],
+    "process_names": []
+  },
+  {
+    "id": "dma-staging",
+    "name": "DMA staging",
+    "name_fa": "DMA staging",
+    "roots": [
+      "/opt/dma-agent-staging"
+    ],
+    "mode": "files",
+    "units": [
+      "dma-agent-staging.service"
+    ],
+    "command_patterns": [],
+    "process_names": []
+  },
+  {
+    "id": "somi",
+    "name": "Somiklinikken",
+    "name_fa": "Somiklinikken",
+    "roots": [
+      "/home/ubuntu/somi-klinikken",
+      "/home/ubuntu/somi-mongodb-data",
+      "/home/ubuntu/somi-mongodb-log",
+      "/home/ubuntu/somi-finalize",
+      "/home/ubuntu/somi-stage",
+      "/home/ubuntu/somi-build"
+    ],
+    "mode": "files",
+    "units": [
+      "somi-klinikken.service",
+      "somi-mongodb.service"
+    ],
+    "command_patterns": [],
+    "process_names": []
+  },
+  {
+    "id": "realgram",
+    "name": "Realgram applications",
+    "name_fa": "برنامه‌های Realgram",
+    "roots": [
+      "/home/ubuntu/Realgram",
+      "/home/ubuntu/SetaLink",
+      "/var/www/realgram-ai-workspace"
+    ],
+    "mode": "files",
+    "units": [],
+    "command_patterns": [],
+    "process_names": []
+  },
+  {
+    "id": "archives",
+    "name": "Backups and staging archives",
+    "name_fa": "پشتیبان‌ها و آرشیوهای آزمایشی",
+    "roots": [
+      "/home/ubuntu/backups",
+      "/home/ubuntu/biap-local-backups",
+      "/home/ubuntu/italy-backup-20261004",
+      "/home/ubuntu/claude-temp-backup",
+      "/home/ubuntu/claude-temp-backup-curated-20261014",
+      "/home/ubuntu/claude-scratch-archive",
+      "/home/ubuntu/claude-tmp",
+      "/home/ubuntu/face-swap-test",
+      "/opt/dma-agent-staging-backup-20260929T100239Z",
+      "/opt/dma-agent-staging-backup-20260929T075718Z",
+      "/opt/dma-agent-staging-backup-20260929T102751Z",
+      "/opt/dma-agent-staging-backup-20260929T220404Z",
+      "/opt/dma-agent-staging-backup-20260929T072658Z",
+      "/opt/dma-agent-staging-backup-20260929T105206Z",
+      "/opt/dma-agent-staging-backup-20260929T115605Z"
+    ],
+    "mode": "files",
+    "units": [],
+    "command_patterns": [],
+    "process_names": []
+  },
+  {
+    "id": "shared-web",
+    "name": "Shared web services",
+    "name_fa": "سرویس‌های مشترک وب",
+    "roots": [],
+    "mode": "files",
+    "units": [
+      "nginx.service",
+      "php-fpm.service"
+    ],
+    "command_patterns": [],
+    "process_names": []
+  },
+  {
+    "id": "shared-databases",
+    "name": "Shared databases",
+    "name_fa": "پایگاه‌های داده مشترک",
+    "roots": [],
+    "mode": "files",
+    "units": [
+      "mongod.service",
+      "mysql.service",
+      "postgresql@14-main.service",
+      "somi-mongodb.service"
+    ],
+    "command_patterns": [],
+    "process_names": []
+  },
+  {
+    "id": "vpn",
+    "name": "Realgram VPN",
+    "name_fa": "Realgram VPN",
+    "roots": [],
+    "mode": "files",
+    "units": [
+      "xray.service",
+      "openvpn-server@server.service"
+    ],
+    "command_patterns": [],
+    "process_names": []
+  },
+  {
+    "id": "management",
+    "name": "Management and monitoring",
+    "name_fa": "مدیریت و پایش",
+    "roots": [
+      "/opt/setai-server-status",
+      "/home/ubuntu/.local/share/setai-server-status",
+      "/home/ubuntu/.npm",
+      "/home/ubuntu/.cache",
+      "/home/ubuntu/.claude"
+    ],
+    "mode": "files",
+    "units": [],
+    "command_patterns": [
+      "desktop-commander",
+      "setai-server-status/collector.py"
+    ],
+    "process_names": [
+      "claude"
+    ]
+  }
+]

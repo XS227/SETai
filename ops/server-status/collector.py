@@ -70,6 +70,10 @@ def main():
     server_id = os.environ.get('STATUS_SERVER_ID', 'setaei')
     if server_id not in ('setaei', 'realgram', 'biab'):
         raise ValueError('Invalid server identity')
+    project_monitor = None
+    if os.environ.get('STATUS_PROJECTS_FILE'):
+        from projects import ProjectMonitor
+        project_monitor = ProjectMonitor(os.environ['STATUS_PROJECTS_FILE'])
     push_token = None
     if os.environ.get('STATUS_PUSH_TOKEN_FILE'):
         from relay import push
@@ -122,6 +126,8 @@ def main():
                        'uptime_seconds': int(float(pathlib.Path('/proc/uptime').read_text().split()[0])),
                        'load_average': [round(value, 2) for value in os.getloadavg()],
                        'services': services, 'history_points': len(history)}
+            if project_monitor:
+                payload['projects'] = project_monitor.snapshot()
             publish('history.json', {'interval_seconds': INTERVAL, 'points': list(history)})
             publish('live.json', payload)
             if push_token:

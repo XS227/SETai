@@ -1,0 +1,328 @@
+[
+  {
+    "id": "setaei",
+    "name": "SETAEI website",
+    "name_fa": "وب‌سایت SETAEI",
+    "roots": [
+      "/var/www/setai"
+    ],
+    "mode": "static",
+    "units": [],
+    "command_patterns": [],
+    "process_names": []
+  },
+  {
+    "id": "artshop",
+    "name": "SETAEI Artshop",
+    "name_fa": "SETAEI Artshop",
+    "roots": [
+      "/var/www/setai-artshop"
+    ],
+    "mode": "files",
+    "units": [],
+    "command_patterns": [],
+    "process_names": []
+  },
+  {
+    "id": "realgram-front",
+    "name": "Realgram website",
+    "name_fa": "وب‌سایت Realgram",
+    "roots": [
+      "/var/www/realgram",
+      "/var/www/setalink"
+    ],
+    "mode": "static",
+    "units": [],
+    "command_patterns": [],
+    "process_names": []
+  },
+  {
+    "id": "realgram-app",
+    "name": "Realgram backend",
+    "name_fa": "بک‌اند Realgram",
+    "roots": [
+      "/var/www/backend"
+    ],
+    "mode": "files",
+    "units": [],
+    "command_patterns": [],
+    "process_names": []
+  },
+  {
+    "id": "styrk",
+    "name": "Styrk-karriere",
+    "name_fa": "Styrk-karriere",
+    "roots": [
+      "/var/www/styrk-karriere"
+    ],
+    "mode": "files",
+    "units": [],
+    "command_patterns": [],
+    "process_names": []
+  },
+  {
+    "id": "numerologist",
+    "name": "Numerologist",
+    "name_fa": "Numerologist",
+    "roots": [
+      "/var/www/numerologist"
+    ],
+    "mode": "files",
+    "units": [],
+    "command_patterns": [],
+    "process_names": []
+  },
+  {
+    "id": "trustai",
+    "name": "TrustAI",
+    "name_fa": "TrustAI",
+    "roots": [
+      "/var/www/trustai"
+    ],
+    "mode": "static",
+    "units": [],
+    "command_patterns": [],
+    "process_names": []
+  },
+  {
+    "id": "shahnameh",
+    "name": "Shahnameh",
+    "name_fa": "Shahnameh",
+    "roots": [
+      "/var/www/shahnameh-site",
+      "/var/www/shahnameh",
+      "/var/www/shahnameh_demo",
+      "/var/www/shahnameh-admin"
+    ],
+    "mode": "files",
+    "units": [],
+    "command_patterns": [],
+    "process_names": []
+  },
+  {
+    "id": "crown",
+    "name": "Crown of My Heart",
+    "name_fa": "Crown of My Heart",
+    "roots": [
+      "/var/www/crown-of-my-hero"
+    ],
+    "mode": "files",
+    "units": [],
+    "command_patterns": [],
+    "process_names": []
+  },
+  {
+    "id": "ipip",
+    "name": "IP-IP",
+    "name_fa": "IP-IP",
+    "roots": [
+      "/opt/ip-ip-v3",
+      "/var/www/ip-ip-demo"
+    ],
+    "mode": "files",
+    "units": [],
+    "command_patterns": [],
+    "process_names": []
+  },
+  {
+    "id": "bilvask",
+    "name": "Bilvaskexpress",
+    "name_fa": "Bilvaskexpress",
+    "roots": [
+      "/var/www/bilvaskexpress",
+      "/var/www/bilvask-booking",
+      "/var/www/bilvask-preview",
+      "/var/www/bilvaskexpress-staging"
+    ],
+    "mode": "static",
+    "units": [],
+    "command_patterns": [],
+    "process_names": []
+  },
+  {
+    "id": "volla",
+    "name": "Volla Bygg",
+    "name_fa": "Volla Bygg",
+    "roots": [
+      "/var/www/vollabyggmester"
+    ],
+    "mode": "static",
+    "units": [],
+    "command_patterns": [],
+    "process_names": []
+  },
+  {
+    "id": "nasrin",
+    "name": "Nasrin Dadashi website",
+    "name_fa": "وب‌سایت نسرین داداشی",
+    "roots": [
+      "/var/www/nasrindadashi"
+    ],
+    "mode": "static",
+    "units": [],
+    "command_patterns": [],
+    "process_names": []
+  },
+  {
+    "id": "si",
+    "name": "Super Intelligence",
+    "name_fa": "Super Intelligence",
+    "roots": [
+      "/var/www/setai-si"
+    ],
+    "mode": "files",
+    "units": [],
+    "command_patterns": [],
+    "process_names": []
+  },
+  {
+    "id": "lottery",
+    "name": "Lottery analytics",
+    "name_fa": "تحلیل قرعه‌کشی",
+    "roots": [
+      "/opt/setai-eurojackpot",
+      "/opt/setai-lottery-audit",
+      "/opt/setai-lottery-labs",
+      "/var/www/setai/EuroJackpot",
+      "/var/www/setai/LotteryAudit",
+      "/var/www/setai/LotteryLab",
+      "/var/www/setai/Lotto",
+      "/var/www/setai/Vikinglotto"
+    ],
+    "mode": "static",
+    "units": [],
+    "command_patterns": [],
+    "process_names": []
+  },
+  {
+    "id": "kashi",
+    "name": "Kashi",
+    "name_fa": "Kashi",
+    "roots": [
+      "/var/www/setai/kashi"
+    ],
+    "mode": "static",
+    "units": [],
+    "command_patterns": [],
+    "process_names": []
+  },
+  {
+    "id": "stenhuset",
+    "name": "Stenhuset",
+    "name_fa": "Stenhuset",
+    "roots": [
+      "/var/www/setai/stenhuset"
+    ],
+    "mode": "static",
+    "units": [],
+    "command_patterns": [],
+    "process_names": []
+  },
+  {
+    "id": "git-europe",
+    "name": "GIT Europe",
+    "name_fa": "GIT Europe",
+    "roots": [
+      "/var/www/setai/git"
+    ],
+    "mode": "static",
+    "units": [],
+    "command_patterns": [],
+    "process_names": []
+  },
+  {
+    "id": "universe",
+    "name": "Black & White Universe",
+    "name_fa": "Black & White Universe",
+    "roots": [
+      "/var/www/setai/black-white-universe"
+    ],
+    "mode": "static",
+    "units": [],
+    "command_patterns": [],
+    "process_names": []
+  },
+  {
+    "id": "staging",
+    "name": "Staging and archived builds",
+    "name_fa": "نسخه‌های آزمایشی و آرشیو",
+    "roots": [
+      "/var/www/styrk-karriere-seo-build-20261009",
+      "/var/www/styrk-karriere-native-cta-build-20261011",
+      "/var/www/styrk-karriere-en-build-20261009",
+      "/var/www/styrk-karriere-cta-build-20261010",
+      "/var/www/styrk-karriere-gif-tool-cta-build-20261011",
+      "/var/www/styrk-karriere-plan-build-20261010",
+      "/var/www/lashine",
+      "/var/www/lashine-maintenance",
+      "/var/www/stapay",
+      "/var/www/3real"
+    ],
+    "mode": "files",
+    "units": [],
+    "command_patterns": [],
+    "process_names": []
+  },
+  {
+    "id": "shared-web",
+    "name": "Shared web services",
+    "name_fa": "سرویس‌های مشترک وب",
+    "roots": [],
+    "mode": "files",
+    "units": [
+      "nginx.service",
+      "php8.1-fpm.service"
+    ],
+    "command_patterns": [],
+    "process_names": []
+  },
+  {
+    "id": "shared-databases",
+    "name": "Shared databases",
+    "name_fa": "پایگاه‌های داده مشترک",
+    "roots": [],
+    "mode": "files",
+    "units": [
+      "mongod.service",
+      "mysql.service",
+      "postgresql@14-main.service",
+      "somi-mongodb.service"
+    ],
+    "command_patterns": [],
+    "process_names": []
+  },
+  {
+    "id": "vpn",
+    "name": "Realgram VPN",
+    "name_fa": "Realgram VPN",
+    "roots": [],
+    "mode": "files",
+    "units": [
+      "xray.service",
+      "openvpn-server@server.service"
+    ],
+    "command_patterns": [],
+    "process_names": []
+  },
+  {
+    "id": "management",
+    "name": "Management and monitoring",
+    "name_fa": "مدیریت و پایش",
+    "roots": [
+      "/opt/setai-server-status",
+      "/root/.local/share/setai-server-status",
+      "/root/.npm",
+      "/root/.cache",
+      "/root/.claude"
+    ],
+    "mode": "files",
+    "units": [],
+    "command_patterns": [
+      "desktop-commander",
+      "setai-server-status/collector.py"
+    ],
+    "process_names": [
+      "claude"
+    ]
+  }
+]

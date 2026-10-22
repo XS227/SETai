@@ -1,0 +1,182 @@
+[
+  {
+    "id": "realgram-api",
+    "name": "Realgram application and API",
+    "name_fa": "برنامه و API ریل‌گرام",
+    "roots": [
+      "/var/www/setalink",
+      "/home/ubuntu/SetaLink",
+      "/home/ubuntu/Realgram",
+      "/opt/realink"
+    ],
+    "mode": "shared",
+    "units": [],
+    "command_patterns": [],
+    "process_names": []
+  },
+  {
+    "id": "calling",
+    "name": "Realgram calling relay",
+    "name_fa": "رله تماس Realgram",
+    "roots": [
+      "/home/ubuntu/SetaLink/calling-relay"
+    ],
+    "mode": "files",
+    "units": [],
+    "command_patterns": [],
+    "process_names": []
+  },
+  {
+    "id": "workspace",
+    "name": "Realgram AI workspace",
+    "name_fa": "فضای کاری هوش مصنوعی Realgram",
+    "roots": [
+      "/var/www/realgram-ai-workspace"
+    ],
+    "mode": "static",
+    "units": [],
+    "command_patterns": [],
+    "process_names": []
+  },
+  {
+    "id": "si",
+    "name": "Super Intelligence",
+    "name_fa": "Super Intelligence",
+    "roots": [
+      "/var/www/si",
+      "/home/ubuntu/si",
+      "/home/ubuntu/SI"
+    ],
+    "mode": "files",
+    "units": [],
+    "command_patterns": [],
+    "process_names": []
+  },
+  {
+    "id": "volla",
+    "name": "Volla Bygg preview",
+    "name_fa": "پیش‌نمایش Volla Bygg",
+    "roots": [
+      "/home/ubuntu/vollabyggmester"
+    ],
+    "mode": "files",
+    "units": [],
+    "command_patterns": [],
+    "process_names": []
+  },
+  {
+    "id": "security",
+    "name": "Security test service",
+    "name_fa": "سرویس آزمون امنیت",
+    "roots": [
+      "/home/ubuntu/securetest"
+    ],
+    "mode": "files",
+    "units": [
+      "securetest.service"
+    ],
+    "command_patterns": [],
+    "process_names": []
+  },
+  {
+    "id": "research",
+    "name": "Research workspaces",
+    "name_fa": "فضاهای کاری پژوهشی",
+    "roots": [
+      "/home/ubuntu/ibkr-arena",
+      "/home/ubuntu/biap-kiasha",
+      "/home/ubuntu/abstention-audit",
+      "/home/ubuntu/Numerologist"
+    ],
+    "mode": "files",
+    "units": [],
+    "command_patterns": [],
+    "process_names": []
+  },
+  {
+    "id": "archives",
+    "name": "Release archives and backups",
+    "name_fa": "نسخه‌های انتشار و پشتیبان",
+    "roots": [
+      "/home/ubuntu/realgram-0.9.150-preview",
+      "/home/ubuntu/realgram-0.9.148-verification",
+      "/home/ubuntu/backup-admin-intel-20260702-104759",
+      "/home/ubuntu/SetaLink-livetv-20261020",
+      "/home/ubuntu/realgram-seo-backup-20261020",
+      "/home/ubuntu/backups",
+      "/home/ubuntu/staging",
+      "/home/ubuntu/realgram-0.9.149-release",
+      "/home/ubuntu/setalink-backups",
+      "/home/ubuntu/SetaLink-vpn-20261020",
+      "/home/ubuntu/v4-edit",
+      "/home/ubuntu/setalink-cleanup-quarantine",
+      "/home/ubuntu/realgram-0.9.148-ci"
+    ],
+    "mode": "files",
+    "units": [],
+    "command_patterns": [],
+    "process_names": []
+  },
+  {
+    "id": "shared-web",
+    "name": "Shared web services",
+    "name_fa": "سرویس‌های مشترک وب",
+    "roots": [],
+    "mode": "files",
+    "units": [
+      "nginx.service",
+      "php8.3-fpm.service"
+    ],
+    "command_patterns": [],
+    "process_names": []
+  },
+  {
+    "id": "shared-databases",
+    "name": "Shared databases",
+    "name_fa": "پایگاه‌های داده مشترک",
+    "roots": [],
+    "mode": "files",
+    "units": [
+      "mongod.service",
+      "mysql.service",
+      "postgresql@14-main.service",
+      "somi-mongodb.service"
+    ],
+    "command_patterns": [],
+    "process_names": []
+  },
+  {
+    "id": "vpn",
+    "name": "Realgram VPN",
+    "name_fa": "Realgram VPN",
+    "roots": [],
+    "mode": "files",
+    "units": [
+      "xray.service",
+      "openvpn-server@server.service"
+    ],
+    "command_patterns": [],
+    "process_names": []
+  },
+  {
+    "id": "management",
+    "name": "Management and monitoring",
+    "name_fa": "مدیریت و پایش",
+    "roots": [
+      "/opt/setai-server-status",
+      "/home/ubuntu/.local/share/setai-server-status",
+      "/home/ubuntu/.npm",
+      "/home/ubuntu/.cache",
+      "/home/ubuntu/.claude"
+    ],
+    "mode": "files",
+    "units": [],
+    "command_patterns": [
+      "desktop-commander",
+      "setai-server-status/collector.py"
+    ],
+    "process_names": [
+      "claude"
+    ]
+  }
+]

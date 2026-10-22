@@ -43,11 +43,14 @@ def main():
         environment = 'STATUS_SERVER_ID=' + role + '\nSTATUS_PUSH_TOKEN_FILE=' + str(token_file) + '\n'
     token_file.chmod(0o640)
     os.chown(token_file, 0, www)
+    shutil.copy2(source / ('projects-' + role + '.json'), config / 'projects.json')
+    (config / 'projects.json').chmod(0o644)
+    environment += 'STATUS_PROJECTS_FILE=' + str(config / 'projects.json') + '\n'
     (config / 'agent.conf').write_text(environment)
     (config / 'agent.conf').chmod(0o644)
     target = pathlib.Path('/opt/setai-server-status')
     target.mkdir(exist_ok=True)
-    for filename in ('collector.py', 'relay.py'):
+    for filename in ('collector.py', 'relay.py', 'projects.py', 'export-process-map.py'):
         shutil.copy2(source / filename, target / filename)
     shutil.copy2(source / 'setai-server-status.service', '/etc/systemd/system/setai-server-status.service')
     if role == 'setaei':
@@ -65,10 +68,17 @@ def main():
     subprocess.run(['systemctl', 'enable', 'setai-server-status'], check=True)
     subprocess.run(['systemctl', 'restart', 'setai-server-status'], check=True)
     if role == 'setaei':
+        subprocess.run(['/usr/bin/python3', str(target / 'export-process-map.py')], check=True)
+        existing = subprocess.run(['crontab', '-l'], capture_output=True, text=True)
+        if existing.returncode not in (0, 1):
+            raise SystemExit('Could not read existing crontab')
+        lines = [line for line in existing.stdout.splitlines() if '# setai-project-process-map' not in line]
+        lines.append('* * * * * /usr/bin/python3 /opt/setai-server-status/export-process-map.py # setai-project-process-map')
+        subprocess.run(['crontab', '-'], input='\n'.join(lines) + '\n', text=True, check=True)
         public = pathlib.Path('/var/www/setai/server')
         backup = pathlib.Path('/var/backups/setai-server-status') / datetime.datetime.now().strftime('%Y%m%d-%H%M%S')
         backup.mkdir(parents=True, mode=0o700)
-        for filename in ('app.js', 'style.css', 'index.html'):
+        for filename in ('i18n.js', 'app.js', 'style.css', 'index.html'):
             if (public / filename).exists():
                 shutil.copy2(public / filename, backup / filename)
             staging = public / (filename + '.new')

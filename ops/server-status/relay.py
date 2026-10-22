@@ -9,6 +9,7 @@ import threading
 import time
 import urllib.error
 import urllib.request
+import ssl
 
 NAMES = {'realgram': 'Realgram', 'biab': 'BIAB'}
 LIMIT = 65536
@@ -62,7 +63,36 @@ def sanitize(data, server):
                        'memory': numeric(point['memory'], 0, 100),
                        'rx': numeric(point['rx']), 'tx': numeric(point['tx'])})
     live['history_points'] = len(points)
+    if 'projects' in source:
+        live['projects'] = sanitize_projects(source['projects'])
     return {'live': live, 'history': {'interval_seconds': 5, 'points': points}}
+
+
+def sanitize_projects(source):
+    rows = source['rows']
+    if not isinstance(rows, list) or len(rows) > 60 or type(source['disk_scanning']) is not bool:
+        raise ValueError('Invalid projects')
+    result = []
+    for row in rows:
+        if not isinstance(row['id'], str) or not re.fullmatch(r'[a-z0-9-]{1,60}', row['id']):
+            raise ValueError('Invalid project identity')
+        if row['status'] not in ('running', 'static', 'shared', 'files'):
+            raise ValueError('Invalid project status')
+        clean = {key: row[key] for key in ('id', 'status')}
+        for key in ('name', 'name_fa'):
+            value = row[key]
+            if not isinstance(value, str) or not 1 <= len(value) <= 100 or any(ord(c) < 32 for c in value):
+                raise ValueError('Invalid project name')
+            clean[key] = value
+        for key in ('cpu_percent', 'memory_bytes', 'disk_bytes', 'disk_timestamp'):
+            clean[key] = None if row[key] is None else numeric(row[key], 0, 100 if key == 'cpu_percent' else 10**18)
+        clean['processes'] = int(numeric(row['processes'], 0, 100000))
+        if type(row['disk_complete']) is not bool:
+            raise ValueError('Invalid disk completeness')
+        clean['disk_complete'] = row['disk_complete']
+        result.append(clean)
+    return {'timestamp': int(numeric(source['timestamp'])), 'disk_scanning': source['disk_scanning'],
+            'disk_interval_seconds': 900, 'rows': result}
 
 
 def start_receiver(token_file):
@@ -128,6 +158,10 @@ class NoRedirect(urllib.request.HTTPRedirectHandler):
         return None
 
 
+# Reuse the verified TLS context: repeatedly loading certificate stores increases RSS.
+_PUSH_OPENER = urllib.request.build_opener(NoRedirect, urllib.request.HTTPSHandler(context=ssl.create_default_context()))
+
+
 def push(server, token, live, history):
     if server not in NAMES:
         raise ValueError('Invalid server')
@@ -135,6 +169,6 @@ def push(server, token, live, history):
     request = urllib.request.Request('https://setai.no/server/remote/' + server, data=body,
                                     headers={'Authorization': 'Bearer ' + token,
                                              'Content-Type': 'application/json'}, method='POST')
-    with urllib.request.build_opener(NoRedirect).open(request, timeout=3) as response:
+    with _PUSH_OPENER.open(request, timeout=3) as response:
         if response.status != 200:
             raise ValueError('Relay refused sample')

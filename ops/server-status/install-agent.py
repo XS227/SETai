@@ -25,15 +25,17 @@ def main():
     if len(token) != 64 or any(c not in '0123456789abcdef' for c in token):
         raise SystemExit('Missing per-server token')
     token_file.chmod(0o600)
-    for filename in ('collector.py', 'relay.py'):
+    for filename in ('collector.py', 'relay.py', 'projects.py'):
         shutil.copy2(source / filename, target / filename)
+    shutil.copy2(source / ('projects-' + role + '.json'), config / 'projects.json')
     environment = 'STATUS_SERVER_ID=' + role + '\nSTATUS_PUSH_TOKEN_FILE=' + str(token_file) + '\nSTATUS_DIRECTORY=' + str(runtime) + '\n'
+    environment += 'STATUS_PROJECTS_FILE=' + str(config / 'projects.json') + '\n'
     sockets = sorted(pathlib.Path('/run/php').glob('php*-fpm.sock'))
     if sockets:
         environment += 'STATUS_PHP_SOCKET=' + str(sockets[-1]) + '\n'
     (config / 'agent.conf').write_text(environment)
     launcher = target / 'start.sh'
-    launcher.write_text('#!/bin/sh\nset -a\n. ' + str(config / 'agent.conf') + '\nset +a\n'
+    launcher.write_text('#!/bin/sh\nset -a\n. ' + str(config / 'agent.conf') + '\nset +a\ncd ' + str(target) + '\n'
                         'nohup /usr/bin/flock -n ' + str(runtime / 'agent.lock') +
                         ' /usr/bin/nice -n 10 /usr/bin/python3 ' + str(target / 'collector.py') +
                         ' >/dev/null 2>&1 </dev/null &\n')
