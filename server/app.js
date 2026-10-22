@@ -10,6 +10,11 @@
     return number(n / 1024 ** index, index > 1 ? 1 : 0) + ' ' + units[index];
   };
   let sample = null, history = [], lastHistory = 0, fetching = false, testing = false;
+  const servers = {setaei: 'SETAEI', realgram: 'Realgram', biab: 'BIAB'};
+  let selected = 'setaei', generation = 0;
+  const states = {};
+  const tabTimes = {}, tabErrors = {};
+  const endpoint = (id, kind) => id === 'setaei' ? `/server/${kind}.json` : `/server/remote/${id}/${kind}`;
   $('year').textContent = new Date().getFullYear();
   const set = (id, text) => { $(id).textContent = text; };
   function value(id, n, unit) {
@@ -32,7 +37,11 @@
     $('cpu-spark').innerHTML = path(line(points.slice(-36), 'cpu', 300, 46), 'var(--orange)');
     $('ram-spark').innerHTML = path(line(points.slice(-36), 'memory', 300, 46), 'var(--blue)');
     $('chart-empty').hidden = points.length >= 2;
-    if (points.length < 2) return;
+    if (points.length < 2) {
+      $('history-chart').innerHTML = '<path class="gridline" d="M0 1H1000 M0 100H1000 M0 199H1000"/>';
+      $('network-chart').innerHTML = '';
+      return;
+    }
     const end = sample.timestamp, start = end - 900;
     $('history-chart').innerHTML = '<path class="gridline" d="M0 1H1000 M0 100H1000 M0 199H1000"/>' + path(line(points, 'memory', 1000, 200, 100, start, end), 'var(--blue)') + path(line(points, 'cpu', 1000, 200, 100, start, end), 'var(--orange)');
     set('chart-start', clock(start)); set('chart-end', clock(end));
@@ -45,9 +54,31 @@
     $('connection').className = 'live-badge ' + state;
     $('connection').lastElementChild.textContent = message;
     document.body.classList.toggle('unavailable', state !== '');
+    tabErrors[selected] = state === 'error';
+    updateBadges();
     for (const icon of document.querySelectorAll('.small-live')) { icon.style.color = state ? 'var(--muted)' : ''; icon.lastChild.textContent = state ? ' PAUSE' : ' LIVE'; }
   }
+  function updateBadges() {
+    for (const id of Object.keys(servers)) {
+      const indicator = $('state-' + id), stamp = tabTimes[id];
+      const age = stamp ? Math.max(0, Date.now() / 1000 - stamp) : Infinity;
+      indicator.textContent = tabErrors[id] ? 'Ingen forbindelse' : !stamp ? 'Venter' : age > 60 ? 'Eldre måling' : age > 20 ? 'Venter på data' : 'Live';
+      indicator.className = tabErrors[id] || (stamp && age > 60) ? 'error' : !stamp || age > 20 ? 'stale' : 'good';
+    }
+  }
+  async function probeOtherServers() {
+    if (document.hidden || testing) return;
+    await Promise.all(Object.keys(servers).filter(id => id !== selected).map(async id => {
+      try {
+        const data = await (await request(endpoint(id, 'live') + '?t=' + Date.now())).json();
+        if (data.schema !== 1 || !Number.isFinite(data.timestamp) || (id !== 'setaei' && data.server_id !== id)) throw new Error('Ugyldig måling');
+        tabTimes[id] = data.timestamp; tabErrors[id] = false;
+      } catch { tabErrors[id] = true; }
+    }));
+    updateBadges();
+  }
   function freshness() {
+    updateBadges();
     if (!sample) return;
     const age = Math.max(0, Date.now() / 1000 - sample.timestamp);
     if (age > 60) {
@@ -64,6 +95,7 @@
   }
   function render(data, latency) {
     sample = data;
+    tabTimes[selected] = data.timestamp;
     connection('', 'Live · tilkoblet');
     set('last-update', clock(data.timestamp));
     const days = Math.floor(data.uptime_seconds / 86400), hours = Math.floor(data.uptime_seconds % 86400 / 3600), minutes = Math.floor(data.uptime_seconds % 3600 / 60);
@@ -88,8 +120,8 @@
     if (data.swap.percent >= 85) warnings.push('Mye swap er i bruk.');
     const stopped = Object.values(data.services).some(s => s === false);
     $('alert').hidden = !warnings.length; set('alert', warnings.join(' '));
-    set('health-title', stopped ? 'En tjeneste trenger tilsyn' : warnings.length ? 'Serveren kjører · høy belastning' : 'Serveren er i drift');
-    set('health-description', stopped ? 'Se tjenestestatus nedenfor.' : warnings.length ? 'Se kapasitetsvarselet og de løpende målingene.' : 'Live målinger mottas fra serveren som kjører setai.no.');
+    set('health-title', stopped ? 'En tjeneste trenger tilsyn' : warnings.length ? 'Serveren kjører · kapasitetsvarsel' : 'Serveren er i drift');
+    set('health-description', stopped ? 'Se tjenestestatus nedenfor.' : warnings.length ? 'Se kapasitetsvarselet og de løpende målingene.' : `Live målinger mottas fra ${servers[selected]}-serveren.`);
     set('health-icon', stopped || warnings.length ? '!' : '✓');
     $('health-icon').style.color = stopped ? 'var(--red)' : warnings.length ? 'var(--orange)' : '';
     if (!history.length || history.at(-1).timestamp < data.timestamp) history.push({timestamp: data.timestamp, cpu: data.cpu.percent, memory: data.memory.percent, rx: data.network.rx_bytes_per_second, tx: data.network.tx_bytes_per_second});
@@ -103,27 +135,67 @@
   async function refresh() {
     if (fetching || testing || document.hidden) return;
     fetching = true;
+    const ownGeneration = generation, ownServer = selected;
     try {
       const start = performance.now();
-      const response = await request('/server/live.json?t=' + Date.now());
+      const response = await request(endpoint(ownServer, 'live') + '?t=' + Date.now());
       const data = await response.json(); const latency = performance.now() - start;
+      if (ownGeneration !== generation) return;
       if (data.schema !== 1 || !Number.isFinite(data.timestamp) || !data.memory || !data.cpu) throw new Error('Ugyldige målinger');
+      if (ownServer !== 'setaei' && data.server_id !== ownServer) throw new Error('Feil server');
       render(data, latency);
       if (Date.now() - lastHistory > 30000) {
         try {
-          const past = await (await request('/server/history.json?t=' + Date.now())).json();
+          const past = await (await request(endpoint(ownServer, 'history') + '?t=' + Date.now())).json();
+          if (ownGeneration !== generation) return;
           if (!Array.isArray(past.points)) throw new Error('Ugyldig historikk');
           history = past.points.filter(p => Number.isFinite(p.timestamp)).slice(-180); lastHistory = Date.now(); charts();
         } catch { /* Keep the already measured local history. */ }
       }
     } catch {
+      if (ownGeneration !== generation) return;
       connection('error', 'Tilkobling avbrutt');
       set('health-title', 'Kan ikke hente serverstatus');
-      set('health-description', sample ? 'Viser siste mottatte måling. Prøver igjen automatisk.' : 'Ingen målinger tilgjengelig. Prøver igjen automatisk.');
+      set('health-description', sample ? 'Viser siste mottatte måling for ' + servers[selected] + '. Prøver igjen automatisk.' : 'Ingen målinger fra ' + servers[selected] + ' er tilgjengelige.');
       set('health-icon', '!');
       for (const id of ['service-web', 'service-php']) { set(id, 'Ukjent'); $(id).className = ''; }
-    } finally { fetching = false; }
+    } finally { if (ownGeneration === generation) fetching = false; }
   }
+  function selectServer(id) {
+    if (!Object.hasOwn(servers, id)) id = 'setaei';
+    if (sample) states[selected] = {sample, history, lastHistory};
+    selected = id; generation++; fetching = false;
+    sample = null; history = []; lastHistory = 0;
+    for (const tab of document.querySelectorAll('[data-server]')) {
+      const active = tab.dataset.server === selected;
+      tab.setAttribute('aria-selected', String(active)); tab.tabIndex = active ? 0 : -1;
+    }
+    $('server-view').setAttribute('aria-labelledby', 'tab-' + selected);
+    set('server-label', servers[selected].toUpperCase() + ' / SERVERSTATUS');
+    set('health-title', 'Henter målinger fra ' + servers[selected]);
+    set('health-description', 'Kobler til valgt server …');
+    set('health-icon', '◌'); $('health-icon').style.color = '';
+    for (const id of ['cpu-value', 'ram-value', 'disk-value']) value(id, null, '%');
+    value('latency-value', null, 'ms');
+    for (const id of ['cpu-bar', 'ram-bar', 'disk-bar', 'swap-bar']) bar(id, 0);
+    for (const id of ['last-update', 'uptime', 'cpu-detail', 'ram-detail', 'disk-detail', 'disk-free', 'network-in', 'network-out', 'swap-value', 'swap-detail', 'load-1', 'load-5', 'load-15', 'chart-start']) set(id, '—');
+    for (const id of ['service-web', 'service-php']) { set(id, 'Ukjent'); $(id).className = ''; }
+    set('chart-note', 'Historikk for ' + servers[selected]); set('chart-end', 'Nå');
+    $('alert').hidden = true; connection('stale', 'Kobler til ' + servers[selected]);
+    if (states[id]) { history = states[id].history; lastHistory = states[id].lastHistory; render(states[id].sample, null); }
+    charts(); refresh();
+  }
+  const tabs = [...document.querySelectorAll('[data-server]')];
+  tabs.forEach((tab, index) => {
+    tab.addEventListener('click', () => { location.hash = tab.dataset.server; });
+    tab.addEventListener('keydown', event => {
+      if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+      event.preventDefault();
+      const next = event.key === 'Home' ? 0 : event.key === 'End' ? tabs.length - 1 : (index + (event.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length;
+      tabs[next].focus(); location.hash = tabs[next].dataset.server;
+    });
+  });
+  window.addEventListener('hashchange', () => selectServer(location.hash.slice(1)));
   $('speed-test').addEventListener('click', async () => {
     if (testing) return;
     testing = true; $('speed-test').disabled = true; $('speed-test').firstChild.textContent = 'Måler forbindelsen … ';
@@ -146,5 +218,6 @@
   });
   document.addEventListener('visibilitychange', () => { if (!document.hidden) { freshness(); refresh(); } });
   window.addEventListener('online', refresh);
-  setInterval(refresh, 5000); setInterval(freshness, 1000); refresh();
+  setInterval(refresh, 5000); setInterval(freshness, 1000); setInterval(probeOtherServers, 30000);
+  selectServer(location.hash.slice(1)); probeOtherServers();
 })();

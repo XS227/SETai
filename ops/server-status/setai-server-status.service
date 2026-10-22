@@ -9,6 +9,7 @@ SupplementaryGroups=www-data
 RuntimeDirectory=setai-server-status
 RuntimeDirectoryMode=0755
 ExecStart=/usr/bin/python3 /opt/setai-server-status/collector.py
+EnvironmentFile=-/etc/setai-server-status/agent.conf
 Restart=on-failure
 RestartSec=5
 NoNewPrivileges=yes

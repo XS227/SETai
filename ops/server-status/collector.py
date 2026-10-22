@@ -67,6 +67,16 @@ def publish(name, payload):
 
 
 def main():
+    server_id = os.environ.get('STATUS_SERVER_ID', 'setaei')
+    if server_id not in ('setaei', 'realgram', 'biab'):
+        raise ValueError('Invalid server identity')
+    push_token = None
+    if os.environ.get('STATUS_PUSH_TOKEN_FILE'):
+        from relay import push
+        push_token = pathlib.Path(os.environ['STATUS_PUSH_TOKEN_FILE']).read_text().strip()
+    if os.environ.get('STATUS_RECEIVER_TOKENS'):
+        from relay import start_receiver
+        start_receiver(os.environ['STATUS_RECEIVER_TOKENS'])
     DIRECTORY.mkdir(parents=True, exist_ok=True)
     (DIRECTORY / 'speed.bin').write_bytes(os.urandom(524288))
     os.chmod(DIRECTORY / 'speed.bin', 0o644)
@@ -95,14 +105,16 @@ def main():
             disk = {'total': disk_total, 'used': disk_used, 'available': disk_available,
                     'percent': round(100 * disk_used / (disk_used + disk_available), 1)}
             if now >= next_service_check:
+                php_socket = os.environ.get('STATUS_PHP_SOCKET', '/run/php/php8.1-fpm.sock')
                 services = {'web': service_state(('127.0.0.1', 80)),
-                            'php': service_state('/run/php/php8.1-fpm.sock', unix=True)}
+                            'php': service_state(php_socket, unix=True) if pathlib.Path(php_socket).exists() else None}
                 next_service_check = now + 30
             stamp = int(time.time())
             record = {'timestamp': stamp, 'cpu': cpu, 'memory': ram['percent'],
                       'rx': rx, 'tx': tx}
             history.append(record)
-            payload = {'schema': 1, 'name': 'SETAEI', 'timestamp': stamp,
+            payload = {'schema': 1, 'name': {'setaei': 'SETAEI', 'realgram': 'Realgram', 'biab': 'BIAB'}[server_id],
+                       'server_id': server_id, 'timestamp': stamp,
                        'updated_at': datetime.datetime.now(datetime.timezone.utc).isoformat(),
                        'interval_seconds': INTERVAL, 'cpu': {'percent': cpu, 'cores': os.cpu_count()},
                        'memory': ram, 'swap': swap, 'disk': disk,
@@ -112,6 +124,11 @@ def main():
                        'services': services, 'history_points': len(history)}
             publish('history.json', {'interval_seconds': INTERVAL, 'points': list(history)})
             publish('live.json', payload)
+            if push_token:
+                try:
+                    push(server_id, push_token, payload, {'points': list(history)})
+                except Exception as error:
+                    print('Telemetry push failed: ' + type(error).__name__, flush=True)
         except Exception as error:
             # Do not overwrite the last good sample: the UI marks stale measurements.
             print('Collection failed: ' + type(error).__name__, flush=True)

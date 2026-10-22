@@ -8,16 +8,22 @@
   <title>Serverstatus · SETAEI</title>
   <meta name="description" content="Live driftsoversikt for SETAEI: CPU, minne, disk, nettverk, responstid og oppetid.">
   <link rel="icon" href="/assets/brand/favicon.png">
-  <link rel="stylesheet" href="/server/style.css?v=1">
-  <script src="/server/app.js?v=1" defer></script>
+  <link rel="stylesheet" href="/server/style.css?v=2">
+  <script src="/server/app.js?v=2" defer></script>
 </head>
 <body>
   <div class="ambient" aria-hidden="true"></div>
   <header class="topbar"><a href="/" class="brand" aria-label="SETAEI forside"><img src="/assets/brand/setaei-wordmark.svg" alt="SETAEI" width="124" height="30"></a><span class="divider"></span><span class="top-label">Driftsoversikt</span><a class="back" href="/">Til nettsiden <span aria-hidden="true">↗</span></a></header>
   <main>
-    <section class="heading"><div><div class="eyebrow"><span></span> SETAEI / INFRASTRUKTUR</div><h1>Pulsen på serveren<span>.</span></h1><p>En direkte oversikt over kapasitet, ytelse og drift.</p></div><div class="live-badge" id="connection" role="status"><i></i><span>Kobler til</span></div></section>
+    <section class="heading"><div><div class="eyebrow"><span></span> SETAEI / INFRASTRUKTUR</div><h1>Pulsen på serveren<span>.</span></h1><p>Tre servere. Én oversikt over kapasitet, ytelse og drift.</p></div><div class="live-badge" id="connection" role="status"><i></i><span>Kobler til</span></div></section>
+    <nav class="server-tabs" role="tablist" aria-label="Velg server">
+      <button type="button" role="tab" id="tab-setaei" aria-selected="true" aria-controls="server-view" data-server="setaei">SETAEI <span id="state-setaei">Venter</span></button>
+      <button type="button" role="tab" id="tab-realgram" aria-selected="false" aria-controls="server-view" data-server="realgram" tabindex="-1">Realgram <span id="state-realgram">Venter</span></button>
+      <button type="button" role="tab" id="tab-biab" aria-selected="false" aria-controls="server-view" data-server="biab" tabindex="-1">BIAB <span id="state-biab">Venter</span></button>
+    </nav>
+    <div id="server-view" role="tabpanel" aria-labelledby="tab-setaei">
     <section class="overview panel" aria-label="Samlet serverstatus">
-      <div class="health"><div class="health-icon" id="health-icon" aria-hidden="true">◌</div><div><div class="micro">SERVERSTATUS</div><h2 id="health-title">Henter målinger</h2><p id="health-description">Første måling kommer om et øyeblikk.</p></div></div>
+      <div class="health"><div class="health-icon" id="health-icon" aria-hidden="true">◌</div><div><div class="micro" id="server-label">SETAEI / SERVERSTATUS</div><h2 id="health-title">Henter målinger</h2><p id="health-description">Første måling kommer om et øyeblikk.</p></div></div>
       <div class="overview-meta"><div><span>Sist oppdatert</span><strong id="last-update">—</strong></div><div><span>Oppetid</span><strong id="uptime">—</strong></div><div><span>Oppdatering</span><strong>Hvert 5. sekund</strong></div></div>
     </section>
     <div id="alert" class="alert" role="status" hidden></div>
@@ -25,7 +31,7 @@
       <article class="metric panel"><div class="card-top"><h2>Prosessor</h2><span class="tag">CPU</span></div><div class="value" id="cpu-value">—<span>%</span></div><div class="bar"><i id="cpu-bar"></i></div><p id="cpu-detail">Venter på måling</p><svg id="cpu-spark" class="spark" viewBox="0 0 300 46" preserveAspectRatio="none" aria-hidden="true"></svg></article>
       <article class="metric panel"><div class="card-top"><h2>Minne</h2><span class="tag">RAM</span></div><div class="value" id="ram-value">—<span>%</span></div><div class="bar"><i id="ram-bar"></i></div><p id="ram-detail">Venter på måling</p><svg id="ram-spark" class="spark" viewBox="0 0 300 46" preserveAspectRatio="none" aria-hidden="true"></svg></article>
       <article class="metric panel"><div class="card-top"><h2>Lagring</h2><span class="tag">DISK</span></div><div class="value" id="disk-value">—<span>%</span></div><div class="bar"><i id="disk-bar"></i></div><p id="disk-detail">Venter på måling</p><div class="bottom-note" id="disk-free">— ledig</div></article>
-      <article class="metric panel"><div class="card-top"><h2>Responstid</h2><span class="tag">HTTP</span></div><div class="value" id="latency-value">—<span>ms</span></div><div class="latency-wave" aria-hidden="true"><svg viewBox="0 0 240 40"><path d="M0 25H54L62 17 72 31 86 4 99 36 111 20 122 25H240"/></svg></div><p>Fra din enhet til serveren</p><div class="bottom-note">Måles ved hver oppdatering</div></article>
+      <article class="metric panel"><div class="card-top"><h2>Responstid</h2><span class="tag">HTTP</span></div><div class="value" id="latency-value">—<span>ms</span></div><div class="latency-wave" aria-hidden="true"><svg viewBox="0 0 240 40"><path d="M0 25H54L62 17 72 31 86 4 99 36 111 20 122 25H240"/></svg></div><p>Din enhet → statusoversikten</p><div class="bottom-note">Måles ved hver oppdatering</div></article>
     </section>
     <section class="chart-panel panel" aria-labelledby="chart-heading"><div class="section-head"><div><div class="micro">RESSURSBRUK OVER TID</div><h2 id="chart-heading">De siste 15 minuttene</h2></div><div class="legend"><span><i class="orange"></i> CPU</span><span><i class="blue"></i> Minne</span></div></div><div class="chart"><div class="y-labels"><span>100 %</span><span>50 %</span><span>0 %</span></div><div class="plot"><svg id="history-chart" viewBox="0 0 1000 200" preserveAspectRatio="none" role="img" aria-label="Graf over CPU- og minnebruk de siste 15 minuttene"><path class="gridline" d="M0 1H1000 M0 100H1000 M0 199H1000"/></svg><div class="chart-empty" id="chart-empty">Samler de første målingene …</div></div></div><div class="x-labels"><span id="chart-start">—</span><span id="chart-note">Historikk samles mens måleren kjører</span><span id="chart-end">Nå</span></div></section>
     <section class="lower-grid" aria-label="Nettverk og kapasitet">
@@ -34,8 +40,9 @@
     </section>
     <section class="lower-grid bottom-grid">
       <article class="panel"><div class="section-head"><div><div class="micro">DRIFT</div><h2>Tjenester</h2></div><span class="tag">HVERT 30. SEK.</span></div><div class="service-row"><span><i class="service-icon">↗</i> Nettserver</span><strong id="service-web">Venter</strong></div><div class="service-row"><span><i class="service-icon">⌘</i> PHP-motor</span><strong id="service-php">Venter</strong></div><p class="subtle">Kontrollerer at tjenestene tar imot tilkoblinger. Nettstedets responstid måles separat fra enheten din.</p></article>
-      <article class="panel speed"><div class="section-head"><div><div class="micro">DIN FORBINDELSE</div><h2>Test hastigheten</h2></div><span class="speed-symbol" aria-hidden="true">↗</span></div><p class="subtle">Mål responstid og nedlasting fra SETAEI til enheten din. Testen bruker 512 KB.</p><div class="speed-results" aria-live="polite"><div><span>Nedlasting</span><strong id="speed-result">— <small>Mbit/s</small></strong></div><div><span>Responstid</span><strong id="speed-latency">— <small>ms</small></strong></div></div><button id="speed-test" type="button">Start hastighetstest <span aria-hidden="true">↗</span></button><p id="speed-note" class="speed-note" role="status">En kort måling av forbindelsen din, ikke en full linjetest.</p></article>
+      <article class="panel speed"><div class="section-head"><div><div class="micro">DIN FORBINDELSE</div><h2>Test forbindelsen til SETAEI</h2></div><span class="speed-symbol" aria-hidden="true">↗</span></div><p class="subtle">Mål responstid og nedlasting fra SETAEI til enheten din. Testen bruker 512 KB.</p><div class="speed-results" aria-live="polite"><div><span>Nedlasting</span><strong id="speed-result">— <small>Mbit/s</small></strong></div><div><span>Responstid</span><strong id="speed-latency">— <small>ms</small></strong></div></div><button id="speed-test" type="button">Start hastighetstest <span aria-hidden="true">↗</span></button><p id="speed-note" class="speed-note" role="status">En kort måling av forbindelsen din, ikke en full linjetest.</p></article>
     </section>
+    </div>
     <footer><span>© <span id="year">2026</span> SETAEI</span><span>Faktiske servermålinger · Lokal tid på din enhet</span><a href="/seo/status/">SEO-status ↗</a></footer>
   </main>
   <noscript><p class="no-script">Aktiver JavaScript for å se løpende servermålinger.</p></noscript>
