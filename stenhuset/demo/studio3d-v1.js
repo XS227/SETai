@@ -564,7 +564,10 @@ function init(){
     setSink(id){SINK_ID=id&&SINKS[id]?Number(id):null;roomKey='';update();},getSink:()=>SINK_ID,sinks:SINKS,
     setTable(id){TABLE_ID=id&&TABLES[id]?Number(id):null;roomKey='';update();},getTable:()=>TABLE_ID,tables:TABLES,
     topStones:TOP_STONES.map(([id,n])=>({id,n,c0:STONES[id]?STONES[id].c0:[200,200,200]})),
-    setTop(cfg){TOP_CFG=cfg&&cfg.stone?{stone:cfg.stone,t:cfg.t||.03}:null;roomKey='';update();},getTop:()=>TOP_CFG};
+    setTop(cfg){TOP_CFG=cfg&&cfg.stone?{stone:cfg.stone,t:cfg.t||.03}:null;roomKey='';update();},getTop:()=>TOP_CFG,
+    getView:()=>view,
+    // picture of the current view for sharing: rendered and read back in the same task (no preserveDrawingBuffer needed)
+    snapshot(){renderer.render(scene,camera);return renderer.domElement;}};
   window.addEventListener('hashchange',()=>setTimeout(()=>{resize();request();},50));
   resize();update();
 }

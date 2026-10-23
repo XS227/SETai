@@ -1,0 +1,43 @@
+{
+ "updated": "2026-10-23T00:00:00Z",
+ "account": "stenhuset_no",
+ "seed": true,
+ "looks": [
+  {
+   "id": "DbyipgkjL_K",
+   "kind": "p",
+   "url": "https://www.instagram.com/p/DbyipgkjL_K/",
+   "title": "",
+   "text": "",
+   "room": "",
+   "products": []
+  },
+  {
+   "id": "DcBAitXCt74",
+   "kind": "p",
+   "url": "https://www.instagram.com/p/DcBAitXCt74/",
+   "title": "",
+   "text": "",
+   "room": "",
+   "products": []
+  },
+  {
+   "id": "DbqMA1YquXb",
+   "kind": "reel",
+   "url": "https://www.instagram.com/reel/DbqMA1YquXb/",
+   "title": "",
+   "text": "",
+   "room": "",
+   "products": []
+  },
+  {
+   "id": "DbtIegxsjIZ",
+   "kind": "reel",
+   "url": "https://www.instagram.com/reel/DbtIegxsjIZ/",
+   "title": "",
+   "text": "",
+   "room": "",
+   "products": []
+  }
+ ]
+}

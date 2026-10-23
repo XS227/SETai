@@ -73,6 +73,7 @@ if(shell&&typeof window.getStudioMaterials==='function'){
     exit:'<svg viewBox="0 0 24 24"><path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/></svg>',
     room:'<svg viewBox="0 0 24 24"><path d="M3 20V8l9-4 9 4v12M3 20h18M9 20v-6h6v6"/></svg>',
     sun:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg>',
+    share:'<svg viewBox="0 0 24 24"><path d="M12 3v12M7 8l5-5 5 5M5 13v7h14v-7"/></svg>',
     cam:'<svg viewBox="0 0 24 24"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>',
     calc:'<svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18"/><path d="M8 7h8M8 12h2M12 12h2M16 12h0M8 16h2M12 16h2"/></svg>'
   };
@@ -85,7 +86,7 @@ if(shell&&typeof window.getStudioMaterials==='function'){
   shell.appendChild(tools);
   const pop=document.createElement('div');pop.className='su-pop';pop.setAttribute('role','group');shell.appendChild(pop);
   const bottom=document.createElement('div');bottom.className='su-bottom';
-  bottom.innerHTML='<button type="button" class="su-ib txt" id="su-try">'+ICON.cam+'Prøv i mitt rom</button><button type="button" class="su-ib txt" id="su-calc">'+ICON.calc+'Beregn materialpris</button>';
+  bottom.innerHTML='<button type="button" class="su-ib txt" id="su-try">'+ICON.cam+'Prøv i mitt rom</button><button type="button" class="su-ib txt" id="su-calc">'+ICON.calc+'Beregn materialpris</button><button type="button" class="su-ib txt" id="su-share">'+ICON.share+'Del</button>';
   shell.appendChild(bottom);
 
   const dock=document.createElement('div');dock.className='su-dock';dock.setAttribute('role','region');dock.setAttribute('aria-label','Steinvelger');
@@ -271,6 +272,11 @@ if(shell&&typeof window.getStudioMaterials==='function'){
     tryP.then(m=>m.open()).catch(err=>{console.warn('Prøv i mitt rom feilet:',err);tryP=null;alert('Funksjonen kunne ikke lastes. Sjekk tilkoblingen og prøv igjen.');});
   };
   bottom.querySelector('#su-try').onclick=openTry;
+  // sharing: picture + link to exactly this setup; a shared link (#studio?oppsett=…) is restored on arrival
+  const shareMod=()=>import('./share-v1.js?v=1');
+  bottom.querySelector('#su-share').onclick=()=>{if(document.fullscreenElement)document.exitFullscreen&&document.exitFullscreen();shareMod().then(m=>m.openShare()).catch(e=>{console.warn(e);alert('Deling kunne ikke lastes.');});};
+  const restore=()=>{if(/[?&]oppsett=/.test(location.hash))shareMod().then(m=>m.restoreFromHash());};
+  window.addEventListener('hashchange',restore);restore();
   document.querySelectorAll('[data-try-room]').forEach(b=>b.addEventListener('click',openTry));
   syncHud();
 }

@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Instagram-koblinger | Stenhuset</title>
+<style>
+:root{--cream:#f6f2eb;--paper:#fffdfa;--dark:#242725;--line:#ddd7cf;--mute:#7e817d;--accent:#846747}
+*{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:var(--dark);font:14px/1.5 Arial,sans-serif}
+header{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:16px 20px;border-bottom:1px solid var(--line);background:var(--paper);position:sticky;top:0;z-index:5}
+h1{font:400 22px Georgia,serif;margin:0}
+main{max-width:980px;margin:0 auto;padding:20px 16px 80px}
+.bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+input,select,textarea{font:inherit;color:inherit;border:1px solid var(--line);background:#fff;padding:9px 10px;min-width:0}
+textarea{width:100%;min-height:58px;resize:vertical}
+button{font:13px Arial,sans-serif;border:1px solid #c9bdab;background:transparent;color:inherit;padding:9px 13px;cursor:pointer;min-height:40px}
+button.pri{background:#30382e;border-color:#30382e;color:#fff}
+button.del{color:#9a3a2a;border-color:#e2c4bd}
+.add{display:flex;gap:8px;margin:18px 0}.add input{flex:1}
+.look{background:var(--paper);border:1px solid var(--line);padding:16px;margin-bottom:14px;display:grid;grid-template-columns:200px 1fr;gap:16px}
+.look iframe{width:100%;height:330px;border:0;background:#fff}
+.prev{display:grid;place-items:center;height:330px;background:#ece4d8;color:var(--mute);font-size:12px;text-align:center;padding:10px}
+.fields{display:grid;gap:8px}
+.row{display:flex;gap:8px;flex-wrap:wrap}.row>*{flex:1}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{display:inline-flex;gap:6px;align-items:center;border:1px solid var(--line);background:#fff;padding:3px 4px 3px 3px;font-size:12px}
+.chip img{width:30px;height:30px;object-fit:cover}.chip button{min-height:26px;padding:0 7px;border:0;font-size:16px}
+.search{position:relative}.search input{width:100%}
+.res{position:absolute;left:0;right:0;top:100%;background:#fff;border:1px solid var(--line);z-index:3;max-height:300px;overflow:auto}
+.res button{display:flex;gap:8px;align-items:center;width:100%;text-align:left;border:0;border-bottom:1px solid #eee;min-height:44px}
+.res img{width:34px;height:34px;object-fit:cover}
+.tools{display:flex;gap:6px;flex-wrap:wrap}
+.msg{min-height:20px;font-size:13px}.msg.err{color:#9a3a2a}.msg.ok{color:#355438}
+.hint{color:var(--mute);font-size:12px}
+@media(max-width:700px){.look{grid-template-columns:1fr}.look iframe,.prev{height:260px}}
+</style>
+</head>
+<body>
+<header><h1>Instagram · Shop the look</h1><div class="bar"><input id="token" type="password" placeholder="Adminnøkkel" autocomplete="off" aria-label="Adminnøkkel"><button class="pri" id="save">Lagre</button></div></header>
+<main>
+<p class="hint">Lim inn lenken til et innlegg eller en reel fra Instagram, og velg produktene som vises i det. Kundene ser produktene under innlegget på <a href="./#inspirasjon">Inspirasjon-siden</a>, med 3D, showroom, produktark og kjøp. Endringene blir synlige når du trykker «Lagre».</p>
+<div class="add"><input id="newurl" placeholder="https://www.instagram.com/p/… eller /reel/…" aria-label="Instagram-lenke"><button id="addbtn">Legg til</button></div>
+<div class="msg" id="msg" role="status"></div>
+<div id="list"></div>
+</main>
+<script>
+(()=>{
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const $=s=>document.querySelector(s),msg=(t,k)=>{const m=$('#msg');m.textContent=t;m.className='msg '+(k||'');};
+const RE=/^https:\/\/(www\.)?instagram\.com\/(p|reel|tv)\/([A-Za-z0-9_-]{5,40})/;
+let looks=[],cat=new Map(),dirty=false;
+try{$('#token').value=sessionStorage.getItem('looks-token')||'';}catch(_){}
+$('#token').addEventListener('change',()=>{try{sessionStorage.setItem('looks-token',$('#token').value.trim());}catch(_){}});
+window.addEventListener('beforeunload',e=>{if(dirty){e.preventDefault();e.returnValue='';}});
+const mark=()=>{dirty=true;msg('Ulagrede endringer.');};
+
+function render(){
+  $('#list').innerHTML=looks.map((l,i)=>`<section class="look" data-i="${i}">
+    <div><div class="prev" data-prev>${l.kind==='reel'?'Reel':'Innlegg'} ${esc(l.id)}<br><button data-a="prev">Vis forhåndsvisning</button></div></div>
+    <div class="fields">
+      <div class="row"><input data-f="title" placeholder="Overskrift (valgfri), f.eks. «Calacatta Viola på badet»" value="${esc(l.title)}" maxlength="120">
+        <select data-f="room" aria-label="Rom"><option value="">Rom (valgfritt)</option>${[['bad','Bad'],['kjokken','Kjøkken'],['stue','Stue']].map(([v,n])=>`<option value="${v}"${l.room===v?' selected':''}>${n}</option>`).join('')}</select></div>
+      <textarea data-f="text" placeholder="Kort tekst (valgfri)" maxlength="400">${esc(l.text)}</textarea>
+      <div class="chips">${l.products.map(id=>{const p=cat.get(id);return `<span class="chip">${p?`<img src="${esc(p.i)}" alt="">`:''}${esc(p?p.n:'#'+id)}<button data-a="rm" data-id="${id}" aria-label="Fjern">×</button></span>`;}).join('')||'<span class="hint">Ingen produkter valgt ennå.</span>'}</div>
+      <div class="search"><input data-a="search" placeholder="Søk produkt og legg til (navn) …" aria-label="Søk produkt"><div class="res" hidden></div></div>
+      <div class="tools"><button data-a="up" ${i?'':'disabled'}>↑ Flytt opp</button><button data-a="down" ${i<looks.length-1?'':'disabled'}>↓ Flytt ned</button><a href="${esc(l.url)}" target="_blank" rel="noopener"><button tabindex="-1">Åpne på Instagram ↗</button></a><button class="del" data-a="del">Slett</button></div>
+    </div></section>`).join('')||'<p class="hint">Ingen innlegg ennå.</p>';
+}
+$('#list').addEventListener('input',e=>{
+  const sec=e.target.closest('.look');if(!sec)return;const l=looks[+sec.dataset.i];
+  if(e.target.dataset.f){l[e.target.dataset.f]=e.target.value;mark();return;}
+  if(e.target.dataset.a==='search'){
+    const q=e.target.value.trim().toLowerCase(),res=sec.querySelector('.res');
+    if(q.length<2){res.hidden=true;return;}
+    const hits=[...cat.values()].filter(p=>p.n.toLowerCase().includes(q)&&!l.products.includes(p.id)).slice(0,10);
+    res.innerHTML=hits.map(p=>`<button data-a="pick" data-id="${p.id}"><img src="${esc(p.i)}" alt="">${esc(p.n)}</button>`).join('')||'<div class="hint" style="padding:10px">Ingen treff</div>';res.hidden=false;
+  }
+});
+$('#list').addEventListener('change',e=>{const sec=e.target.closest('.look');if(sec&&e.target.dataset.f){looks[+sec.dataset.i][e.target.dataset.f]=e.target.value;mark();}});
+$('#list').addEventListener('click',e=>{
+  const b=e.target.closest('[data-a]');if(!b||b.tagName==='INPUT')return;const sec=b.closest('.look'),i=+sec.dataset.i,l=looks[i];
+  const a=b.dataset.a;
+  if(a==='prev'){sec.querySelector('[data-prev]').outerHTML=`<iframe src="https://www.instagram.com/p/${encodeURIComponent(l.id)}/embed/captioned/" title="Forhåndsvisning" loading="lazy"></iframe>`;return;}
+  if(a==='pick'){if(l.products.length>=12){msg('Maks 12 produkter per innlegg.','err');return;}l.products.push(+b.dataset.id);}
+  else if(a==='rm')l.products=l.products.filter(x=>x!==+b.dataset.id);
+  else if(a==='up'&&i>0)[looks[i-1],looks[i]]=[looks[i],looks[i-1]];
+  else if(a==='down'&&i<looks.length-1)[looks[i+1],looks[i]]=[looks[i],looks[i+1]];
+  else if(a==='del'){if(!confirm('Slette dette innlegget fra listen?'))return;looks.splice(i,1);}
+  else return;
+  mark();render();
+});
+$('#addbtn').onclick=()=>{
+  const v=$('#newurl').value.trim(),m=RE.exec(v);
+  if(!m){msg('Det ser ikke ut som en Instagram-lenke til et innlegg eller en reel.','err');return;}
+  if(looks.some(l=>l.id===m[3])){msg('Dette innlegget er allerede i listen.','err');return;}
+  const kind=m[2]==='reel'?'reel':'p';
+  looks.unshift({id:m[3],kind,url:'https://www.instagram.com/'+kind+'/'+m[3]+'/',title:'',text:'',room:'',products:[]});
+  $('#newurl').value='';mark();render();
+};
+$('#save').onclick=async()=>{
+  const tok=$('#token').value.trim();if(!tok){msg('Skriv inn adminnøkkelen først.','err');$('#token').focus();return;}
+  try{sessionStorage.setItem('looks-token',tok);}catch(_){}
+  msg('Lagrer …');
+  try{
+    const r=await fetch('api/looks.php',{method:'POST',headers:{'Content-Type':'application/json','X-Admin-Token':tok},body:JSON.stringify({looks})});
+    const j=await r.json().catch(()=>({}));if(!r.ok)throw new Error(j.error||('HTTP '+r.status));
+    dirty=false;msg('Lagret ('+j.count+' innlegg). Synlig på Inspirasjon-siden nå.','ok');
+  }catch(e){msg('Kunne ikke lagre: '+e.message,'err');}
+};
+Promise.all([fetch('api/looks.php',{cache:'no-cache'}).then(r=>r.json()).catch(()=>fetch('looks-seed-v1.json').then(r=>r.json())),fetch('catalog-v1.json').then(r=>r.json())])
+  .then(([l,c])=>{looks=(l.looks||[]).map(x=>({...x,products:x.products||[]}));c.products.forEach(p=>cat.set(p.id,p));render();})
+  .catch(()=>msg('Kunne ikke laste data.','err'));
+})();
+</script>
+</body>
+</html>
