@@ -1,10 +1,11 @@
-/* Stenhuset: 3D viewer for a stenvask, opened from the product card / product modal.
- * Loaded on demand. Shows the real-size model (sinks3d-v1.js) on a countertop; drag to turn, pinch or scroll to zoom.
- * "Prøv i showroom" puts the same model into the bathroom of the 3D showroom. */
+/* Stenhuset: 3D viewer for a stenvask or a marmorbord, opened from the product card / product modal.
+ * Loaded on demand. Shows the real-size model (sinks3d-v1.js / furniture3d-v1.js); drag to turn, pinch or scroll to zoom.
+ * "Prøv i showroom" puts the same model into the 3D showroom (sinks in the bathroom, tables in the living room). */
 import * as THREE from 'three';
 import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
 import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
-import {SINKS,buildSink} from './sinks3d-v1.js?v=1';
+import {SINKS,buildSink} from './sinks3d-v1.js?v=2';
+import {TABLES,buildTable,tableSize} from './furniture3d-v1.js?v=1';
 
 const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const cm=v=>String(Math.round(v*1000)/10).replace('.',',');
@@ -44,14 +45,15 @@ export function close(){
 
 /* id: product id. product (optional): catalog entry {n,p,sp,u} for price and link. */
 export function open(id,product){
-  const sp=SINKS[id];if(!sp)return;
+  const isTable=!!TABLES[id],spec=SINKS[id]||TABLES[id];if(!spec)return;
+  const sz=isTable?tableSize(spec):spec,sp={...spec,...sz};
   close();css();
   const root=document.createElement('div');root.className='sv';root.setAttribute('role','dialog');root.setAttribute('aria-modal','true');root.setAttribute('aria-label','3D-visning av '+sp.n);
   const price=product&&(product.sp||product.p)?new Intl.NumberFormat('nb-NO',{style:'currency',currency:'NOK',maximumFractionDigits:0}).format(product.sp&&product.sp<product.p?product.sp:product.p):'';
   root.innerHTML=`<div class="sv-box">
-    <div class="sv-head"><div><small>Stenvask · 3D-modell</small><h2>${esc(product&&product.n||sp.n)}</h2></div><button class="sv-x" data-sv="x" aria-label="Lukk 3D-visning">×</button></div>
-    <div class="sv-stage"><div class="sv-dims">${cm(sp.W)} × ${cm(sp.D)} × ${cm(sp.H)} cm${sp.approx?' (ca.)':''}${price?'<br>'+price:''}</div><div class="sv-tip">Dra for å snu · klyp eller rull for å zoome</div></div>
-    <div class="sv-foot"><p>3D-modellen er laget etter målene på produktsiden. Årer, farge og hugget overflate er naturlige og varierer fra stein til stein.</p>
+    <div class="sv-head"><div><small>${isTable?'Marmorbord':'Stenvask'} · 3D-modell</small><h2>${esc(product&&product.n||sp.n)}</h2></div><button class="sv-x" data-sv="x" aria-label="Lukk 3D-visning">×</button></div>
+    <div class="sv-stage"><div class="sv-dims">${spec.kind==='round'?'Ø '+cm(sp.W)+' × H '+cm(sp.H):cm(sp.W)+' × '+cm(sp.D)+' × '+cm(sp.H)} cm${sp.approx?' (ca.)':''}${price?'<br>'+price:''}</div><div class="sv-tip">Dra for å snu · klyp eller rull for å zoome</div></div>
+    <div class="sv-foot"><p>3D-modellen er laget etter målene på produktsiden. Årer, farge og overflate er naturlige og varierer fra stein til stein.</p>
       <div class="sv-btns"><button class="sv-btn" data-sv="showroom">Prøv i showroom ↗</button>${product&&product.u?`<a class="sv-btn soft" href="${esc(product.u)}" target="_blank" rel="noopener">Se i nettbutikken ↗</a>`:''}</div></div>
   </div>`;
   document.body.appendChild(root);
@@ -64,16 +66,18 @@ export function open(id,product){
   const scene=new THREE.Scene(),pm=new THREE.PMREMGenerator(renderer);scene.environment=pm.fromScene(new RoomEnvironment(),.04).texture;
   const cam=new THREE.PerspectiveCamera(32,1,.02,30);
   const ctl=new OrbitControls(cam,canvas);ctl.enableDamping=true;ctl.dampingFactor=.08;ctl.enablePan=false;ctl.autoRotate=true;ctl.autoRotateSpeed=.8;
-  const size=Math.max(sp.W,sp.D);ctl.minDistance=size*.7;ctl.maxDistance=size*4;ctl.maxPolarAngle=Math.PI*.48;
-  ctl.target.set(0,sp.H*.45,0);cam.position.set(size*.95,size*.85,size*1.35);
+  const size=Math.max(sp.W,sp.D,isTable?sp.H:0);ctl.minDistance=size*.7;ctl.maxDistance=size*4;ctl.maxPolarAngle=Math.PI*.48;
+  ctl.target.set(0,sp.H*.45,0);cam.position.set(size*.95,size*(isTable?.95:.85),size*1.35);
   // countertop under the sink (top sinks stand on a slim console)
-  const topW=sp.W+.3,topD=Math.max(sp.D+.16,.5);
+  // sinks stand on a countertop, tables on an oak floor
+  const topW=isTable?2.2:sp.W+.3,topD=isTable?2.2:Math.max(sp.D+.16,.5);
   const top=new THREE.Mesh(new THREE.BoxGeometry(topW,.04,topD),new THREE.MeshStandardMaterial({color:'#b89a78',roughness:.6}));
   top.position.set(0,-.02,0);top.receiveShadow=true;scene.add(top);
   const hemi=new THREE.HemisphereLight('#fff8ee','#a89c8c',.55);scene.add(hemi);
   const sun=new THREE.DirectionalLight('#fff3e2',2.2);sun.position.set(1.2,2.2,1.4);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);
   Object.assign(sun.shadow.camera,{left:-1,right:1,top:1,bottom:-1,near:.5,far:6});sun.shadow.bias=-.0004;sun.shadow.radius=4;scene.add(sun);
-  let needs=true;const sink=buildSink(id,()=>{needs=true;});scene.add(sink);
+  let needs=true;const sink=(isTable?buildTable:buildSink)(id,()=>{needs=true;});scene.add(sink);
+  if(isTable)Object.assign(sun.shadow.camera,{left:-1.2,right:1.2,top:1.2,bottom:-1.2});
   ctl.addEventListener('start',()=>{ctl.autoRotate=false;const tip=root.querySelector('.sv-tip');if(tip)tip.style.opacity=0;});
   const resize=()=>{const r=stage.getBoundingClientRect();if(r.width<2)return;renderer.setSize(r.width,r.height,false);cam.aspect=r.width/r.height;cam.updateProjectionMatrix();needs=true;};
   const ro=new ResizeObserver(resize);ro.observe(stage);resize();
@@ -85,8 +89,8 @@ export function open(id,product){
     if(b.dataset.sv==='x')close();
     else if(b.dataset.sv==='showroom'){
       close();
-      const tab=document.querySelector('#room-tabs [data-room="bad"]');if(tab)tab.click();
-      if(window.Studio3D&&window.Studio3D.setSink)window.Studio3D.setSink(id);
+      const tab=document.querySelector('#room-tabs [data-room="'+(isTable?'stue':'bad')+'"]');if(tab)tab.click();
+      if(window.Studio3D){if(isTable&&window.Studio3D.setTable)window.Studio3D.setTable(id);else if(!isTable&&window.Studio3D.setSink)window.Studio3D.setSink(id);}
       location.hash='#studio';
     }
   });

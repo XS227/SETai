@@ -8,10 +8,12 @@ import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
 import {RoundedBoxGeometry} from 'three/addons/geometries/RoundedBoxGeometry.js';
 import {RectAreaLightUniformsLib} from 'three/addons/lights/RectAreaLightUniformsLib.js';
 import {generateStone,STONES,T} from './stone-textures-v1.js';
-import {SINKS,buildSink} from './sinks3d-v1.js?v=1';
+import {SINKS,buildSink,sinkMaterial} from './sinks3d-v1.js?v=2';
+import {TABLES,buildTable} from './furniture3d-v1.js?v=1';
 
-/* selected stenvask in the bathroom (product id) or null for the generic basin */
-let SINK_ID=null;
+/* selected stenvask in the bathroom (product id) or null for the generic basin; marmorbord in the living room;
+ * made-to-measure countertop {stone,t,...} for the kitchen, or null to use the floor stone */
+let SINK_ID=null,TABLE_ID=null,TOP_CFG=null;
 
 const MOBILE=typeof matchMedia==='function'&&matchMedia('(pointer:coarse)').matches;
 const N_QUICK=512,N_FULL=MOBILE?1024:1280;
@@ -296,7 +298,8 @@ function furnishKitchen(G,st,fm,lights,hx,hz){
     G.add(rbox(dw-.006,.74,.022,.006,MAT.cabinet,x,.47,cz+.3));
     G.add(rbox(.2,.012,.016,.004,MAT.brass,x,.78,cz+.322));
   }
-  G.add(stoneBox(len+.02,.04,.66,.004,fm,cx,.90,cz+.015));
+  const topM=TOP_CFG?sinkMaterial({stone:TOP_CFG.stone,surf:'honed'},()=>onTexture()):fm,tt=TOP_CFG?TOP_CFG.t:.04;
+  G.add(stoneBox(len+.02,tt,.66,.004,topM,cx,.92-tt/2,cz+.015));
   const sink=rbox(.55,.02,.4,.01,MAT.steel,cx-len*.2,.92,cz+.02);G.add(sink);
   G.add(faucet(cx-len*.2,.92,cz-.2,0));
   // wall cabinets and shelf
@@ -307,7 +310,7 @@ function furnishKitchen(G,st,fm,lights,hx,hz){
   // island
   const iw=clamp(st.w*.38,1.1,2.2),iz=clamp(st.l*.08,-.2,.5);
   G.add(rbox(iw,.88,.78,.012,MAT.cabinet,0,.46,iz));
-  G.add(stoneBox(iw+.08,.04,.92,.006,fm,0,.92,iz+.04));
+  G.add(stoneBox(iw+.08,tt,.92,.006,topM,0,.94-tt/2,iz+.04));
   for(const sx of [-iw*.27,iw*.27]){
     G.add(cyl(.17,.17,.05,MAT.oak,sx,.66,iz+.72,28));G.add(cyl(.02,.02,.62,MAT.dark,sx,.31,iz+.72,10));
   }
@@ -339,6 +342,7 @@ function furnishLiving(G,st,fm,lights,hx,hz){
   const l=lamp(Math.min(sx+sw/2+.5,hx-.35),sz-.1,1.45,lights,2.4);G.add(l.g);
   G.add(plant(-hx+.4,hz-.5,1.15));
   G.add(rbox(.7,.55,.5,.05,MAT.oak,hx-.5,.28,-hz+.4));
+  if(TABLE_ID&&TABLES[TABLE_ID]){const t=buildTable(TABLE_ID,()=>onTexture());t.position.set(Math.max(-hx+.32,sx-sw/2-.3),0,sz+.05);G.add(t);}
 }
 
 /* ---------- room content ---------- */
@@ -513,7 +517,7 @@ function init(){
     content=buildContent(st,fm,wm);dims=content.dims;scene.add(content.group);
   }
   async function update(){
-    const st=window.getStudioState(),key=[st.room,st.w,st.l,st.floor.id,st.wall.id,SINK_ID].join('|');
+    const st=window.getStudioState(),key=[st.room,st.w,st.l,st.floor.id,st.wall.id,SINK_ID,TABLE_ID,TOP_CFG?TOP_CFG.stone+TOP_CFG.t:''].join('|');
     if(key===roomKey){applyLight(st);request();return;}
     roomKey=key;const my=++token;
     let fm,wm;
@@ -543,7 +547,9 @@ function init(){
   }
   new ResizeObserver(resize).observe(shell);
   window.Studio3D={ready:true,update,goView,
-    setSink(id){SINK_ID=id&&SINKS[id]?Number(id):null;roomKey='';update();},getSink:()=>SINK_ID,sinks:SINKS};
+    setSink(id){SINK_ID=id&&SINKS[id]?Number(id):null;roomKey='';update();},getSink:()=>SINK_ID,sinks:SINKS,
+    setTable(id){TABLE_ID=id&&TABLES[id]?Number(id):null;roomKey='';update();},getTable:()=>TABLE_ID,tables:TABLES,
+    setTop(cfg){TOP_CFG=cfg&&cfg.stone?{stone:cfg.stone,t:cfg.t||.03}:null;roomKey='';update();},getTop:()=>TOP_CFG};
   window.addEventListener('hashchange',()=>setTimeout(()=>{resize();request();},50));
   resize();update();
 }

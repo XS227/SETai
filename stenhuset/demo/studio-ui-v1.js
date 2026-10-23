@@ -7,7 +7,7 @@
  * Room type and daylight are driven through the existing #room-tabs and #light-range controls. */
 const shell=document.querySelector('.scene-shell');
 if(shell&&typeof window.getStudioMaterials==='function'){
-  const LABEL={floor:'Gulv',wall:'Vegg',sink:'Servant'};
+  const LABEL={floor:'Gulv',wall:'Vegg',sink:'Servant',table:'Bord'};
   let target='floor',open=false,settleT=0,building=false;
 
   const css=document.createElement('style');
@@ -88,7 +88,7 @@ if(shell&&typeof window.getStudioMaterials==='function'){
 
   const dock=document.createElement('div');dock.className='su-dock';dock.setAttribute('role','region');dock.setAttribute('aria-label','Steinvelger');
   dock.innerHTML=
-    '<div class="su-head"><div class="su-seg" id="su-target"><button type="button" data-t="floor" class="on">Gulv</button><button type="button" data-t="wall">Vegg</button><button type="button" data-t="sink">Servant</button></div>'+
+    '<div class="su-head"><div class="su-seg" id="su-target"><button type="button" data-t="floor" class="on">Gulv</button><button type="button" data-t="wall">Vegg</button><button type="button" data-t="sink">Servant</button><button type="button" data-t="table">Bord</button></div>'+
     '<div class="su-name" id="su-name" aria-live="polite"></div><button type="button" class="su-close" id="su-x" aria-label="Lukk steinvelger">×</button></div>'+
     '<div class="su-track-wrap"><button type="button" class="su-arr l" aria-label="Forrige stein">‹</button><div class="su-track" id="su-track" tabindex="0"></div><button type="button" class="su-arr r" aria-label="Neste stein">›</button></div>';
   shell.appendChild(dock);
@@ -104,13 +104,16 @@ if(shell&&typeof window.getStudioMaterials==='function'){
   let catMap=null;
   const loadCat=()=>{if(catMap)return;catMap=new Map();fetch('catalog-v1.json').then(r=>r.json()).then(d=>{d.products.forEach(p=>catMap.set(p.id,p));if(open&&target==='sink')render();}).catch(()=>{});};
   const cmv=v=>String(Math.round(v*1000)/10).replace('.',',');
-  const sinkList=()=>{
-    const SK=window.Studio3D&&window.Studio3D.sinks;if(!SK)return [];
-    return [{id:'0',name:'Standard servant',pattern:'linear-gradient(135deg,#f5f3ee,#d9d5cc)'}].concat(Object.entries(SK).map(([id,sp])=>{
+  const isModel=()=>target==='sink'||target==='table';
+  const modelList=()=>{
+    const S3=window.Studio3D,SK=S3&&(target==='sink'?S3.sinks:S3.tables);if(!SK)return [];
+    return [{id:'0',name:target==='sink'?'Standard servant':'Uten bord',pattern:'linear-gradient(135deg,#f5f3ee,#d9d5cc)'}].concat(Object.entries(SK).map(([id,sp])=>{
       const p=catMap&&catMap.get(+id);return {id,name:sp.n,sp,pattern:p?"url('"+p.i+"') center/cover":'linear-gradient(135deg,#d8d2c6,#a9a294)'};}));
   };
-  const list=()=>target==='sink'?sinkList():window.getStudioMaterials().filter(m=>target==='wall'||!m.plaster);
+  const sinkList=modelList;
+  const list=()=>isModel()?modelList():window.getStudioMaterials().filter(m=>target==='wall'||!m.plaster);
   const current=()=>{
+    if(target==='table')return String((window.Studio3D&&window.Studio3D.getTable&&window.Studio3D.getTable())||0);
     if(target==='sink')return String((window.Studio3D&&window.Studio3D.getSink&&window.Studio3D.getSink())||0);
     const s=window.getStudioState();return (target==='floor'?s.floor:s.wall).id;};
   const KIND={'bastide-beige':'Kalkstein','bastide-grey':'Kalkstein','provence-beige':'Kalkstein','provence-grey':'Kalkstein','carrara-c':'Marmor','calacatta-viola':'Marmor','zellige':'Håndlaget flis','terracotta':'Terracotta','kalkpuss-hvit':'Puss','leirpuss':'Puss'};
@@ -126,7 +129,9 @@ if(shell&&typeof window.getStudioMaterials==='function'){
     if(el){showName(el);if(center)track.scrollTo({left:el.offsetLeft+el.offsetWidth/2-track.clientWidth/2,behavior:'auto'});}
   }
   function showName(card){
-    if(target==='sink'){const it=sinkList().find(x=>x.id===card.dataset.id);nameEl.innerHTML=(it?it.name:'')+'<small>Servant · '+(it&&it.sp?cmv(it.sp.W)+' × '+cmv(it.sp.D)+' × '+cmv(it.sp.H)+' cm':'standard')+'</small>';return;}
+    if(isModel()){const it=modelList().find(x=>x.id===card.dataset.id),sp=it&&it.sp;
+      const dims=!sp?'':sp.kind==='round'?'Ø '+cmv(sp.R*2)+' × H '+cmv(sp.H)+' cm':cmv(sp.W)+' × '+cmv(sp.D)+' × '+cmv(sp.H)+' cm';
+      nameEl.innerHTML=(it?it.name:'')+'<small>'+LABEL[target]+' · '+(dims||'standard')+'</small>';return;}
     const m=window.getStudioMaterials().find(x=>x.id===card.dataset.id);
     nameEl.innerHTML=(m?m.name:'')+'<small>'+LABEL[target]+' · '+(KIND[card.dataset.id]||'')+'</small>';
   }
@@ -137,9 +142,10 @@ if(shell&&typeof window.getStudioMaterials==='function'){
   }
   function apply(card){
     if(!card||card.dataset.id===current())return;
-    if(target==='sink'){
-      if(window.getStudioState().room!=='bad'){const tab=document.querySelector('#room-tabs [data-room="bad"]');if(tab)tab.click();}
-      if(window.Studio3D&&window.Studio3D.setSink)window.Studio3D.setSink(+card.dataset.id||null);
+    if(isModel()){
+      const room=target==='sink'?'bad':'stue';
+      if(window.getStudioState().room!==room){const tab=document.querySelector('#room-tabs [data-room="'+room+'"]');if(tab)tab.click();}
+      const S3=window.Studio3D;if(S3){if(target==='sink'&&S3.setSink)S3.setSink(+card.dataset.id||null);if(target==='table'&&S3.setTable)S3.setTable(+card.dataset.id||null);}
       return;
     }
     window.setStudioMaterial(target,+card.dataset.i);
@@ -172,7 +178,7 @@ if(shell&&typeof window.getStudioMaterials==='function'){
   dock.querySelector('.su-arr.r').onclick=()=>step(1);
   dock.querySelector('#su-target').addEventListener('click',e=>{
     const b=e.target.closest('[data-t]');if(!b)return;
-    target=b.dataset.t;if(target==='sink')loadCat();dock.querySelectorAll('#su-target button').forEach(x=>x.classList.toggle('on',x===b));render();
+    target=b.dataset.t;if(target==='sink'||target==='table')loadCat();dock.querySelectorAll('#su-target button').forEach(x=>x.classList.toggle('on',x===b));render();
   });
   function setOpen(v){
     open=v;dock.classList.toggle('on',v);btnStones.classList.toggle('on',v);btnStones.setAttribute('aria-expanded',v);
