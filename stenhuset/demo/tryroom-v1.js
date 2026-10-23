@@ -9,7 +9,7 @@
  *  3. Guidede bilder: a few still photos of the room, each edited with the same marking tools and the same material choice.
  *     The result is separate edited images, not a reconstructed 3D model.
  * Inventory (sink, sofa ...) is kept visible with a manual "keep visible" brush painted in the surface's own coordinates. */
-import * as MA from './tryroom-math-v1.js';
+import * as MA from './tryroom-math-v1.js?v=2';
 import {STONES,generateStone,T} from './stone-textures-v1.js';
 
 const MOBILE=typeof matchMedia==='function'&&matchMedia('(pointer:coarse)').matches;
@@ -23,10 +23,10 @@ const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',
 const S={
   mode:null,caps:null,floorId:'bastide-beige',wallId:'carrara-c',
   fmt:'natural',rot:0,bond:false,grout:GROUTS[0][1],scale:1,
-  views:[],cur:0,sel:-1,mark:null,brush:null,brushR:34,tab:'surf',frozen:false,matType:'floor',dark:false,xr:null,
+  views:[],cur:0,sel:-1,mark:null,brush:null,brushR:34,tab:'surf',frozen:false,matType:'floor',dark:false,xr:null,hc:1.4,pitch:20,autoBusy:false,autoSel:0,selKind:'manual',frozenR:null,lastError:null,
   gyro:{on:false,ref:null,now:null,fov:65},busy:0,msg:''
 };
-let root,cv,ov,gl,P={},tex={},stream,video,raf=0,lumCtx,lumData,lumT=0,lumAvgFrame=.5,drag=null,photoInput,catalogP=null,xrMod=null;
+let segMod=null,root,cv,ov,gl,P={},tex={},stream,video,raf=0,lumCtx,lumData,lumT=0,lumAvgFrame=.5,drag=null,photoInput,catalogP=null,xrMod=null;
 
 /* ---------------------------------------------------------------- css + dom */
 function injectCss(){
@@ -110,7 +110,7 @@ function showStart(){
   sheet().innerHTML=`<h2>Prøv i mitt rom</h2>
   <p>Se Stenhusets materialer på gulv og vegger i ditt eget rom. Alt skjer på din egen enhet. Bilder og video lastes ikke opp noe sted.</p>
   <button class="tr-opt" data-act="start-xr" ${c.xr?'':'disabled'}><strong>Live AR <small>Beta</small></strong><span>${c.xr?'Materialet festes til gulv og vegg i rommet mens du beveger deg. Støttet på denne enheten. Ikke testet på alle mobiler ennå.':'Ikke tilgjengelig her. Krever WebXR AR (Chrome på en ARCore-støttet Android-telefon). iPhone og iPad støtter ikke dette i nettleseren.'}</span></button>
-  <button class="tr-opt" data-act="start-cam" ${c.cam&&c.secure?'':'disabled'}><strong>Kamera og markering</strong><span>Du ser rommet i kameraet og markerer gulv eller vegg ved å trykke på fire hjørner. Materialet vises i riktig perspektiv og følger med når du dreier mobilen, men ikke når du går sidelengs. Flaten gjenkjennes ikke automatisk.${c.cam&&c.secure?'':' Krever kamera og sikker (https) tilkobling.'}</span></button>
+  <button class="tr-opt" data-act="start-cam" ${c.cam&&c.secure?'':'disabled'}><strong>Kamera og markering</strong><span>Du ser rommet i kameraet. En AI-modell på mobilen din finner gulv, vegger og møbler, og materialet legges bare på gulv og vegg. Du kan rette opp med børste eller markere flaten selv. Materialet følger med når du dreier mobilen, men ikke når du går sidelengs. Første gang lastes en liten modell (4 MB) og et analysebibliotek ned.${c.cam&&c.secure?'':' Krever kamera og sikker (https) tilkobling.'}</span></button>
   <button class="tr-opt" data-act="start-photo"><strong>Ta bilder av rommet</strong><span>Vi veileder deg gjennom noen bilder av rommet. Du markerer flatene i hvert bilde, og samme materialvalg brukes i alle. Resultatet er ferdige bilder du kan lagre og sende, ikke en 3D-modell av rommet.</span></button>
   <p style="font-size:12px;color:#aaa49a">Tips: god belysning, hold mobilen stående, og ha gulv og vegger tydelig i bildet.</p>`;
   hint('Velg hvordan du vil prøve materialene.');
@@ -123,21 +123,10 @@ const FS_BG=PREC+`varying vec2 v_uv;uniform sampler2D u_bg;uniform vec2 u_cover;
 void main(){vec2 t=(vec2(v_uv.x,1.-v_uv.y)-.5)*u_cover+.5;
  if(t.x<0.||t.x>1.||t.y<0.||t.y>1.){gl_FragColor=vec4(.07,.07,.07,1.);return;}
  gl_FragColor=vec4(texture2D(u_bg,t).rgb,1.);}`;
-const FS_SF=PREC+`uniform mat3 u_Hinv;uniform vec2 u_res,u_size,u_cover,u_tile;uniform sampler2D u_tex,u_mask,u_lum;
-uniform float u_scale,u_rot,u_grid,u_bond,u_avg,u_gain,u_gw,u_T;uniform vec3 u_gcol;
+const MATFN=`uniform sampler2D u_tex;uniform vec2 u_tile;uniform float u_scale,u_rot,u_grid,u_bond,u_gw,u_T;uniform vec3 u_gcol;
 float hh(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
-vec2 toUv(vec2 px){vec3 q=u_Hinv*vec3(px,1.);return q.xy/q.z;}
-void main(){
- vec2 px=vec2(gl_FragCoord.x,u_res.y-gl_FragCoord.y);
- vec2 uv=toUv(px);
- vec2 uvx=toUv(px+vec2(1.,0.));vec2 uvy=toUv(px+vec2(0.,1.));
- float mpp=max(length((uvx-uv)*u_size),length((uvy-uv)*u_size));
- float edge=min(min(uv.x,1.-uv.x)*u_size.x,min(uv.y,1.-uv.y)*u_size.y)/max(mpp,1e-5);
- if(edge<-.5)discard;
- float alpha=smoothstep(-.5,1.5,edge);
- float hide=texture2D(u_mask,uv).r;alpha*=1.-smoothstep(.3,.7,hide);
- if(alpha<=.003)discard;
- vec2 m=uv*u_size-.5*u_size;float c=cos(u_rot),s=sin(u_rot);m=vec2(c*m.x-s*m.y,s*m.x+c*m.y);
+vec3 matColor(vec2 m,float mpp){
+ float c=cos(u_rot),s=sin(u_rot);m=vec2(c*m.x-s*m.y,s*m.x+c*m.y);
  vec2 p=m/u_scale;vec3 col;
  if(u_grid>.5){
   vec2 t=p/u_tile;float row=floor(t.y);t.x+=u_bond*.5*mod(row,2.);
@@ -149,9 +138,57 @@ void main(){
   col*=mix(.9,1.,smoothstep(u_gw*.5,u_gw*.5+.005,d));
   col=mix(u_gcol,col,smoothstep(u_gw*.5-aa,u_gw*.5+aa,d));
  }else{col=texture2D(u_tex,p/u_T).rgb;}
+ return col;}`;
+/* manual surface: the customer marked four corners; Hinv maps canvas pixels to the surface's unit square */
+const FS_SF=PREC+`uniform mat3 u_Hinv;uniform vec2 u_res,u_size,u_cover;uniform sampler2D u_mask,u_lum;uniform float u_avg,u_gain;`+MATFN+`
+vec2 toUv(vec2 px){vec3 q=u_Hinv*vec3(px,1.);return q.xy/q.z;}
+void main(){
+ vec2 px=vec2(gl_FragCoord.x,u_res.y-gl_FragCoord.y);
+ vec2 uv=toUv(px);vec2 uvx=toUv(px+vec2(1.,0.));vec2 uvy=toUv(px+vec2(0.,1.));
+ float mpp=max(length((uvx-uv)*u_size),length((uvy-uv)*u_size));
+ float edge=min(min(uv.x,1.-uv.x)*u_size.x,min(uv.y,1.-uv.y)*u_size.y)/max(mpp,1e-5);
+ if(edge<-.5)discard;
+ float alpha=smoothstep(-.5,1.5,edge);
+ float hide=texture2D(u_mask,uv).r;alpha*=1.-smoothstep(.3,.7,hide);
+ if(alpha<=.003)discard;
+ vec3 col=matColor(uv*u_size-.5*u_size,mpp);
  vec2 vuv=(vec2(px.x/u_res.x,px.y/u_res.y)-.5)*u_cover+.5;
- float lum=texture2D(u_lum,vuv).r;
- float shade=clamp(lum/max(u_avg,.04),.55,1.45);
+ float shade=clamp(texture2D(u_lum,vuv).r/max(u_avg,.04),.55,1.45);
+ col*=mix(1.,shade,.85)*u_gain;
+ gl_FragColor=vec4(col,alpha);}`;
+/* automatic surface: every screen pixel is turned into a world ray (phone rotation R, pinhole camera) and intersected with the
+ * floor plane (z = -H) or a vertical wall plane. The segmentation mask lives in the capture frame; the ray is rotated back into it. */
+const FS_AUTO=wall=>PREC+(wall?'#define WALL\n':'')+`uniform mat3 u_R,u_RcT;uniform vec2 u_res,u_cover,u_vsize,u_c,u_P0,u_u;uniform float u_f,u_H,u_avg,u_gain;uniform sampler2D u_mask,u_user,u_lum;`+MATFN+`
+vec3 rayAt(vec2 px){vec2 vuv=(px/u_res-.5)*u_cover+.5;vec2 vp=vuv*u_vsize;return u_R*vec3((vp.x-u_c.x)/u_f,-(vp.y-u_c.y)/u_f,-1.);}
+vec3 planeUV(vec3 d){
+#ifdef WALL
+ vec2 n=vec2(-u_u.y,u_u.x);float den=dot(n,d.xy);if(abs(den)<1e-3)return vec3(0.);
+ float t=dot(n,u_P0)/den;if(t<=0.)return vec3(0.);
+ vec3 P=d*t;float h=P.z+u_H;if(h<-.1||h>3.4)return vec3(0.);
+ return vec3(dot(u_u,P.xy-u_P0),h,1.);
+#else
+ if(d.z>-.02)return vec3(0.);
+ float t=-u_H/d.z;vec3 P=d*t;return vec3(P.xy,1.);
+#endif
+}
+void main(){
+ vec2 px=vec2(gl_FragCoord.x,u_res.y-gl_FragCoord.y);
+ vec3 d=rayAt(px);vec3 q=planeUV(d);if(q.z<.5)discard;
+ vec3 dd=u_RcT*d;float z=-dd.z;if(z<=.01)discard;
+ vec2 mc=vec2(u_c.x+u_f*dd.x/z,u_c.y-u_f*dd.y/z)/u_vsize;
+ if(mc.x<0.||mc.x>1.||mc.y<0.||mc.y>1.)discard;
+ float prob=texture2D(u_mask,mc).r;vec4 usr=texture2D(u_user,mc);
+ prob=max(prob,usr.g);
+ float alpha=smoothstep(.42,.58,prob)*(1.-smoothstep(.3,.7,usr.r));
+ if(alpha<=.003)discard;
+#ifndef WALL
+ alpha*=1.-smoothstep(10.,22.,length(q.xy));
+#endif
+ vec3 q2=planeUV(rayAt(px+vec2(1.,0.)));vec3 q3=planeUV(rayAt(px+vec2(0.,1.)));
+ float mpp=.01;if(q2.z>.5&&q3.z>.5)mpp=max(length(q2.xy-q.xy),length(q3.xy-q.xy));
+ vec3 col=matColor(q.xy,mpp);
+ vec2 vuv=(vec2(px.x/u_res.x,px.y/u_res.y)-.5)*u_cover+.5;
+ float shade=clamp(texture2D(u_lum,vuv).r/max(u_avg,.04),.55,1.45);
  col*=mix(1.,shade,.85)*u_gain;
  gl_FragColor=vec4(col,alpha);}`;
 function compile(type,src){const s=gl.createShader(type);gl.shaderSource(s,src);gl.compileShader(s);if(!gl.getShaderParameter(s,gl.COMPILE_STATUS))throw new Error(gl.getShaderInfoLog(s));return s;}
@@ -161,7 +198,7 @@ function mkTex(){const t=gl.createTexture();gl.bindTexture(gl.TEXTURE_2D,t);gl.t
 function setupGL(){
   gl=cv.getContext('webgl',{alpha:false,antialias:false,preserveDrawingBuffer:true,powerPreference:'high-performance'});
   if(!gl)throw new Error('WebGL mangler');
-  P.bg=program(FS_BG);P.sf=program(FS_SF);
+  P.bg=program(FS_BG);P.sf=program(FS_SF);P.floor=program(FS_AUTO(false));P.wall=program(FS_AUTO(true));
   const b=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,b);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,1,1]),gl.STATIC_DRAW);gl.enableVertexAttribArray(0);gl.vertexAttribPointer(0,2,gl.FLOAT,false,0,0);
   tex.bg=mkTex();tex.lum=mkTex();
   gl.bindTexture(gl.TEXTURE_2D,tex.lum);gl.pixelStorei(gl.UNPACK_ALIGNMENT,1);
@@ -270,35 +307,73 @@ function drawBackground(view){
   gl.useProgram(P.bg.p);gl.uniform1i(P.bg.u.u_bg,0);const c=cover();gl.uniform2f(P.bg.u.u_cover,c[0],c[1]);
   gl.disable(gl.BLEND);gl.drawArrays(gl.TRIANGLE_STRIP,0,4);gl.enable(gl.BLEND);return true;
 }
+function bindMaterial(u,id){
+  const plaster=STONES[id].kind==='plaster',grid=S.fmt!=='natural'&&!plaster,fmt=FORMATS.find(f=>f[0]===S.fmt);
+  const t=getMaterial(id,grid);if(!t)return false;
+  gl.activeTexture(gl.TEXTURE1);gl.bindTexture(gl.TEXTURE_2D,t);gl.uniform1i(u.u_tex,1);
+  const tile=grid&&fmt[2]?fmt[2]:[.3,.3];gl.uniform2f(u.u_tile,tile[0],tile[1]);
+  gl.uniform1f(u.u_scale,S.scale);gl.uniform1f(u.u_rot,S.rot*Math.PI/180);gl.uniform1f(u.u_grid,grid?1:0);gl.uniform1f(u.u_bond,S.bond?1:0);
+  gl.uniform1f(u.u_gw,STONES[id].kind==='zellige'?.002:.003);gl.uniform1f(u.u_T,T);gl.uniform3fv(u.u_gcol,hex3(S.grout));
+  return true;
+}
 function drawSurface(s,c){
   if(s.hidden)return;const m=surfaceH(s,c);if(!m)return;s._Hinv=m.Hi;s._H=m.H;
-  const id=s.type==='floor'?S.floorId:S.wallId,plaster=STONES[id].kind==='plaster',grid=S.fmt!=='natural'&&!plaster,fmt=FORMATS.find(f=>f[0]===S.fmt);
-  const t=getMaterial(id,grid);if(!t)return;
-  const u=P.sf.u;gl.useProgram(P.sf.p);
-  gl.activeTexture(gl.TEXTURE1);gl.bindTexture(gl.TEXTURE_2D,t);
+  const id=s.type==='floor'?S.floorId:S.wallId,u=P.sf.u;gl.useProgram(P.sf.p);
+  if(!bindMaterial(u,id))return;
   if(!s.maskTex){s.maskTex=mkTex();s.maskDirty=true;}
   gl.activeTexture(gl.TEXTURE2);gl.bindTexture(gl.TEXTURE_2D,s.maskTex);
   if(s.maskDirty){gl.pixelStorei(gl.UNPACK_ALIGNMENT,4);gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,s.mask);s.maskDirty=false;}
   gl.activeTexture(gl.TEXTURE3);gl.bindTexture(gl.TEXTURE_2D,tex.lum);
-  gl.uniform1i(u.u_tex,1);gl.uniform1i(u.u_mask,2);gl.uniform1i(u.u_lum,3);
+  gl.uniform1i(u.u_mask,2);gl.uniform1i(u.u_lum,3);
   gl.uniformMatrix3fv(u.u_Hinv,false,new Float32Array(MA.transpose3(m.Hi)));
   gl.uniform2f(u.u_res,cv.width,cv.height);gl.uniform2f(u.u_size,s.w,s.h);gl.uniform2f(u.u_cover,c[0],c[1]);
-  const tile=grid&&fmt[2]?fmt[2]:[.3,.3];gl.uniform2f(u.u_tile,tile[0],tile[1]);
-  gl.uniform1f(u.u_scale,S.scale);gl.uniform1f(u.u_rot,S.rot*Math.PI/180);gl.uniform1f(u.u_grid,grid?1:0);gl.uniform1f(u.u_bond,S.bond?1:0);
   const avg=avgLum(s);s._avg=avg;gl.uniform1f(u.u_avg,avg);gl.uniform1f(u.u_gain,clamp(.5+avg*1.1,.55,1));
-  gl.uniform1f(u.u_gw,STONES[id].kind==='zellige'?.002:.003);gl.uniform1f(u.u_T,T);gl.uniform3fv(u.u_gcol,hex3(S.grout));
   gl.drawArrays(gl.TRIANGLE_STRIP,0,4);
+}
+
+/* ---- automatic surfaces (segmentation): rotation used for rendering, drawing, mask upload ---- */
+function renderR(view){
+  const a=view.auto;
+  if(view.kind!=='video')return a.cap.R;
+  if(S.frozen)return S.frozenR||a.cap.R;
+  return (S.gyro.on&&S.gyro.now)?S.gyro.now:a.cap.R;
+}
+function drawAuto(view,c){
+  const a=view.auto;if(!a)return;
+  for(const sf of a.surfaces){
+    if(sf.off)continue;
+    const wall=sf.type==='wall',pr=wall?P.wall:P.floor,u=pr.u;gl.useProgram(pr.p);
+    if(!bindMaterial(u,wall?S.wallId:S.floorId))continue;
+    const cam=a.cap;
+    gl.activeTexture(gl.TEXTURE2);gl.bindTexture(gl.TEXTURE_2D,sf.maskTex);gl.uniform1i(u.u_mask,2);
+    gl.activeTexture(gl.TEXTURE4);gl.bindTexture(gl.TEXTURE_2D,sf.userTex);
+    if(sf.userDirty){gl.pixelStorei(gl.UNPACK_ALIGNMENT,4);gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,sf.userCanvas);sf.userDirty=false;}
+    gl.uniform1i(u.u_user,4);
+    gl.activeTexture(gl.TEXTURE3);gl.bindTexture(gl.TEXTURE_2D,tex.lum);gl.uniform1i(u.u_lum,3);
+    gl.uniformMatrix3fv(u.u_R,false,new Float32Array(MA.transpose3(renderR(view))));
+    gl.uniformMatrix3fv(u.u_RcT,false,new Float32Array(cam.R)); // uploading R row-major as column-major gives R^T in GLSL
+    gl.uniform2f(u.u_res,cv.width,cv.height);gl.uniform2f(u.u_cover,c[0],c[1]);gl.uniform2f(u.u_vsize,cam.vw,cam.vh);gl.uniform2f(u.u_c,cam.cx,cam.cy);
+    gl.uniform1f(u.u_f,cam.f);gl.uniform1f(u.u_H,a.Hc);
+    if(wall){gl.uniform2f(u.u_P0,sf.p0[0],sf.p0[1]);gl.uniform2f(u.u_u,sf.u[0],sf.u[1]);}
+    gl.uniform1f(u.u_avg,sf.avg);gl.uniform1f(u.u_gain,clamp(.5+sf.avg*1.1,.55,1));
+    gl.drawArrays(gl.TRIANGLE_STRIP,0,4);
+  }
 }
 function frame(now){
   raf=requestAnimationFrame(frame);
   const view=curView();if(!view||!gl)return;
+  try{
   followGyro();
   const c=cover();
   const src=source();if(src){if(view.kind==='video'&&!S.frozen)updateLum(now,false);else if(view.kind==='img'&&bgKey!==view)updateLum(0,true);}
   if(!drawBackground(view))return;
+  drawAuto(view,c);
   view.surfaces.forEach(s=>drawSurface(s,c));
   drawOverlay(c);
   lowLightHint();
+  }catch(err){
+    if(!S.lastError){S.lastError=String(err&&err.message||err);console.error('Stenhuset prøv-i-rom:',err);hint('<span class="tr-warn">Teknisk feil i visningen: '+esc(S.lastError)+'</span>');}
+  }
 }
 function lowLightHint(){
   const v=curView();if(!v||S.mark||S.msg)return;
@@ -312,11 +387,13 @@ function drawOverlay(c){
   const g=ov.getContext('2d'),W=ov.width,H=ov.height,d=W/ov.getBoundingClientRect().width||1;g.clearRect(0,0,W,H);
   const v=curView();
   v.surfaces.forEach((s,i)=>{
-    if(s.hidden)return;const q=s.pts.map(p=>toCanvas(p,c)),on=i===S.sel;
+    if(s.hidden)return;const q=s.pts.map(p=>toCanvas(p,c)),on=i===S.sel&&S.selKind==='manual';
     g.lineWidth=(on?2.5:1.5)*d;g.strokeStyle=on?'#ffffff':'#ffffff99';g.setLineDash(on?[]:[8*d,6*d]);
     g.beginPath();q.forEach((p,k)=>k?g.lineTo(p[0],p[1]):g.moveTo(p[0],p[1]));g.closePath();g.stroke();g.setLineDash([]);
     if(on&&!S.brush)q.forEach(p=>{g.fillStyle='#fff';g.strokeStyle='#242725';g.lineWidth=2*d;g.beginPath();g.arc(p[0],p[1],11*d,0,7);g.fill();g.stroke();});
   });
+  const au=v.auto;
+  if(au&&au.preview){const age=performance.now()-au.t0;if(age<3200){const tl=toCanvas([0,0],c),br=toCanvas([1,1],c);g.globalAlpha=age<2200?1:1-(age-2200)/1000;g.drawImage(au.preview,tl[0],tl[1],br[0]-tl[0],br[1]-tl[1]);g.globalAlpha=1;}}
   if(S.mark){
     g.fillStyle='#e8d3ae';g.strokeStyle='#242725';g.lineWidth=2*d;
     const q=S.mark.pts.map(p=>toCanvas(p,c));
@@ -339,21 +416,22 @@ function bind(){
       if(S.mark.pts.length===4)finishMark();else markHint();
       return;
     }
-    if(S.brush&&S.sel>=0){drag={kind:'brush',x:p[0],y:p[1],erase:S.brush==='show'};paint(px,p);return;}
+    const aSel=S.selKind==='auto'&&curView().auto&&curView().auto.surfaces[S.autoSel];
+    if(S.brush&&(aSel||(S.selKind==='manual'&&S.sel>=0))){drag={kind:'brush',x:p[0],y:p[1],erase:S.brush==='show'};paintAny(px,p);return;}
     // pick a corner of the selected surface
-    const s=curView().surfaces[S.sel];
+    const s=S.selKind==='manual'?curView().surfaces[S.sel]:null;
     if(s&&!s.hidden){
       let best=-1,bd=44*d;s.pts.forEach((q,i)=>{const cp=toCanvas(q,c),dist=Math.hypot(cp[0]-px[0],cp[1]-px[1]);if(dist<bd){bd=dist;best=i;}});
       if(best>=0){drag={kind:'corner',i:best};return;}
     }
     // else select the surface under the finger
     const hit=curView().surfaces.findIndex(s=>!s.hidden&&inside(s,px,c));
-    if(hit>=0){S.sel=hit;renderDock();}
+    if(hit>=0){S.sel=hit;S.selKind='manual';renderDock();}
   });
   ov.addEventListener('pointermove',e=>{
     if(!drag)return;const p=evPt(e),d=cv.width/ov.getBoundingClientRect().width,c=cover(),px=[p[0]*d,p[1]*d];
-    if(drag.kind==='corner'){const s=curView().surfaces[S.sel];s.pts[drag.i]=toNorm(px,c);anchorPoint(s,drag.i);}
-    else if(drag.kind==='brush'){drag.x=p[0];drag.y=p[1];paint(px,p);}
+    if(drag.kind==='corner'){const s=curView().surfaces[S.sel];if(!s)return;s.pts[drag.i]=toNorm(px,c);anchorPoint(s,drag.i);}
+    else if(drag.kind==='brush'){drag.x=p[0];drag.y=p[1];paintAny(px,p);}
   });
   const end=()=>{drag=null;};
   ov.addEventListener('pointerup',end);ov.addEventListener('pointercancel',end);
@@ -362,6 +440,16 @@ function inside(s,px,c){
   const q=s.pts.map(p=>toCanvas(p,c));let hit=false;
   for(let i=0,j=3;i<4;j=i++){if((q[i][1]>px[1])!==(q[j][1]>px[1])&&px[0]<(q[j][0]-q[i][0])*(px[1]-q[i][1])/(q[j][1]-q[i][1])+q[i][0])hit=!hit;}
   return hit;
+}
+function paintAny(px,p){if(S.selKind==='auto')paintAuto(px);else paint(px,p);}
+/* auto surfaces: the brush paints in the capture frame (rotated back from the current view), so the correction stays in place */
+function paintAuto(px){
+  const v=curView(),a=v.auto,sf=a&&a.surfaces[S.autoSel];if(!sf)return;
+  const c=cover(),cam=a.cap,vn=toNorm(px,c),d=MA.pixelToWorldRay(vn[0]*cam.vw,vn[1]*cam.vh,renderR(v),cam.cx,cam.cy,cam.f);
+  const pc=MA.worldRayToPixel(d,cam.R,cam.cx,cam.cy,cam.f);if(!pc)return;
+  const dpr=cv.width/ov.getBoundingClientRect().width,rpx=S.brushR*dpr,rx=rpx/cv.width*c[0]*cam.vw/cam.vw,ry=rpx/cv.height*c[1];
+  const g=sf.userCanvas.getContext('2d');g.fillStyle=S.brush==='hide'?'#ff0000':S.brush==='add'?'#00ff00':'#000000';
+  g.beginPath();g.ellipse(pc[0]/cam.vw*256,pc[1]/cam.vh*256,Math.max(1,rx*256),Math.max(1,ry*256),0,0,7);g.fill();sf.userDirty=true;
 }
 function paint(px,cssPt){
   const s=curView().surfaces[S.sel];if(!s||!s._Hinv)return;
@@ -384,22 +472,35 @@ function finishMark(){
   const px=pts.map(p=>[p[0]*1000,p[1]*1000]);let o=MA.orderQuad(px);
   if(!MA.isConvexQuad(o)){S.mark.pts=[];S.msg='';hint('<span class="tr-warn">Punktene danner ikke en gyldig flate.</span> Prøv igjen, og trykk på fire hjørner rundt flaten.');return;}
   pts=o.map(p=>[p[0]/1000,p[1]/1000]);
-  const s=newSurface(type,pts);curView().surfaces.push(s);S.sel=curView().surfaces.length-1;S.matType=type;S.mark=null;S.msg='';
+  const s=newSurface(type,pts);curView().surfaces.push(s);S.sel=curView().surfaces.length-1;S.selKind='manual';S.matType=type;S.mark=null;S.msg='';
   S.tab='surf';hint('Flate lagt til. <b>Dra i hjørnene</b> for å justere. Oppgi gjerne reelle mål under «Flater» så skalaen blir riktig.');renderDock();
 }
 
 /* ---------------------------------------------------------------- dock UI */
 const MATS=()=>(typeof window.getStudioMaterials==='function'?window.getStudioMaterials():[]);
+function autoPane(v){
+  const a=v&&v.auto;
+  let h='<div class="tr-row"><button class="tr-btn pri" data-act="auto" '+(S.autoBusy?'disabled':'')+'>'+(S.autoBusy?'Analyserer …':a?'Finn flater på nytt':'Finn gulv og vegger automatisk')+'</button></div>';
+  if(!a)return h+'<p style="font-size:12px;line-height:1.55;color:#aaa49a;margin:0 0 12px">Rett kameraet mot rommet og trykk. Bildet analyseres på mobilen din av en AI-modell (4 MB som lastes ned første gang, bildet sendes ikke noe sted). Gulv, vegger og møbler skilles fra hverandre.</p>';
+  h+='<span class="tr-lbl">Funnet</span><div class="tr-row">'+(a.surfaces.length?a.surfaces.map((x,i)=>`<button class="tr-btn ${S.selKind==='auto'&&S.autoSel===i?'on':''}" data-asel="${i}">${x.name}${x.fallback?' (anslag)':''}</button>`).join(''):'<span style="font-size:12px;color:#ffd9a0">Ingen gulv eller vegg funnet</span>')+'</div>';
+  h+=`<span class="tr-lbl">Kamerahøyde: ${S.hc.toFixed(2)} m</span><input type="range" min="90" max="190" value="${Math.round(S.hc*100)}" data-hc style="width:100%;margin-bottom:10px">`;
+  h+=`<span class="tr-lbl">Synsfelt: ${S.gyro.fov}°</span><input type="range" min="50" max="85" value="${S.gyro.fov}" data-fov style="width:100%;margin-bottom:10px">`;
+  if(v.kind!=='video'||!a.cap.gyro)h+=`<span class="tr-lbl">Kameravinkel nedover: ${S.pitch}°</span><input type="range" min="0" max="60" value="${S.pitch}" data-pitch style="width:100%;margin-bottom:10px">`;
+  h+='<p style="font-size:11.5px;line-height:1.55;color:#aaa49a;margin:0 0 10px">Høyde og synsfelt styrer skala og perspektiv. De er anslag til du justerer dem selv.</p>';
+  if(S.selKind==='auto'&&a.surfaces[S.autoSel])h+=`<span class="tr-lbl">Rett opp valgt flate</span><div class="tr-row"><button class="tr-btn ${S.brush==='hide'?'on':''}" data-act="brush-hide">Behold synlig</button><button class="tr-btn ${S.brush==='add'?'on':''}" data-act="brush-add">Legg til materiale</button><button class="tr-btn ${S.brush==='show'?'on':''}" data-act="brush-show">Viskelær</button><button class="tr-btn" data-act="brush-clear">Nullstill</button></div><label class="tr-lbl">Børstestørrelse</label><input type="range" min="14" max="80" value="${S.brushR}" data-brush-size style="width:100%;margin-bottom:12px">`;
+  return h;
+}
 function renderDock(){
   const d=dock();d.hidden=false;sheet().style.display='none';
   const v=curView(),s=v&&v.surfaces[S.sel],tabs=[['surf','Flater'],['mat','Materiale'],['lay','Legging']];
   let h='<div class="tr-tabs" role="tablist">'+tabs.map(t=>`<button role="tab" aria-selected="${S.tab===t[0]}" class="${S.tab===t[0]?'on':''}" data-tab="${t[0]}">${t[1]}</button>`).join('')+'</div><div class="tr-pane">';
   if(S.tab==='surf'){
-    h+='<div class="tr-row"><button class="tr-btn pri" data-act="mark-floor">+ Marker gulv</button><button class="tr-btn pri" data-act="mark-wall">+ Marker vegg</button>'+(S.mark?'<button class="tr-btn" data-act="mark-cancel">Avbryt</button>':'')+'</div>';
+    h+=autoPane(v);
+    h+='<span class="tr-lbl" style="margin-top:6px">Eller marker selv</span><div class="tr-row"><button class="tr-btn pri" data-act="mark-floor">+ Marker gulv</button><button class="tr-btn pri" data-act="mark-wall">+ Marker vegg</button>'+(S.mark?'<button class="tr-btn" data-act="mark-cancel">Avbryt</button>':'')+'</div>';
     if(v&&v.surfaces.length){
       h+='<span class="tr-lbl">Dine flater</span><div class="tr-row">'+v.surfaces.map((x,i)=>`<button class="tr-btn ${i===S.sel?'on':''}" data-sel="${i}">${x.type==='floor'?'Gulv':'Vegg'} ${i+1}</button>`).join('')+'</div>';
-    }else h+='<p style="font-size:12.5px;line-height:1.6;color:#cfc9bf;margin:0 0 12px">Ingen flater ennå. Det finnes ingen automatisk flategjenkjenning i denne versjonen. Du markerer flaten selv ved å trykke på fire hjørner.</p>';
-    if(s){
+    }else h+='<p style="font-size:12px;line-height:1.55;color:#aaa49a;margin:0 0 12px">Marker fire hjørner av flaten hvis automatisk gjenkjenning ikke treffer.</p>';
+    if(s&&S.selKind==='manual'){
       h+=`<span class="tr-lbl">Mål på valgt flate (for riktig skala)</span><div class="tr-row"><label>Bredde m <input class="tr-num" type="number" inputmode="decimal" min=".3" max="30" step=".1" data-dim="w" value="${s.w}"></label><label>${s.type==='floor'?'Dybde':'Høyde'} m <input class="tr-num" type="number" inputmode="decimal" min=".3" max="30" step=".1" data-dim="h" value="${s.h}"></label></div>
       <p style="font-size:11.5px;line-height:1.55;color:#aaa49a;margin:-4px 0 12px">Skalaen er et anslag til du oppgir målene selv. Mål fra kameraet er ikke nøyaktige, så bruk ikke dette som bestillingsmengde.</p>
       <span class="tr-lbl">Behold møbler og inventar synlig</span><div class="tr-row"><button class="tr-btn ${S.brush==='hide'?'on':''}" data-act="brush-hide">Børste: behold synlig</button><button class="tr-btn ${S.brush==='show'?'on':''}" data-act="brush-show">Viskelær</button><button class="tr-btn" data-act="brush-clear">Nullstill</button></div>
@@ -408,6 +509,7 @@ function renderDock(){
       <div class="tr-row"><button class="tr-btn" data-act="del-surface">Slett flate</button></div>`;
     }
     h+='<div class="tr-row">'+(v&&v.kind==='video'?`<button class="tr-btn ${S.frozen?'on':''}" data-act="freeze">${S.frozen?'Fortsett kamera':'Frys bilde'}</button>`:'')+'<button class="tr-btn" data-act="save-image">Last ned bilde</button><button class="tr-btn pri" data-act="quote">Be om tilbud</button></div>';
+    h+='<p style="font-size:10.5px;line-height:1.5;color:#8a857c;margin:6px 0 0">Systemsjekk: WebGL '+(gl?'ok':'nei')+' · bevegelsessensor '+(S.gyro.on?'ja':'nei')+' · video '+(source()?source().w+'×'+source().h:'–')+' · AI-modell '+(segMod&&segMod.isLoaded()?'lastet':'ikke lastet')+(S.lastError?' · feil: '+esc(S.lastError):'')+'</p>';
     if(S.views.length>1)h+='<span class="tr-lbl">Bilder</span><div class="tr-thumbs">'+S.views.map((x,i)=>`<button data-view="${i}" style="border:0;padding:0;background:none"><canvas class="${i===S.cur?'on':''}" data-thumb="${i}" width="120" height="84"></canvas></button>`).join('')+'</div>';
   }else if(S.tab==='mat'){
     const type=S.matType,cur=type==='floor'?S.floorId:S.wallId;
@@ -428,7 +530,8 @@ function renderDock(){
 function onClick(e){
   const t=e.target.closest('button');if(!t)return;
   if(t.dataset.tab){S.tab=t.dataset.tab;renderDock();return;}
-  if(t.dataset.sel!==undefined){S.sel=+t.dataset.sel;const x=curView().surfaces[S.sel];if(x)S.matType=x.type;renderDock();return;}
+  if(t.dataset.asel!==undefined){S.autoSel=+t.dataset.asel;S.selKind='auto';const x=curView().auto.surfaces[S.autoSel];if(x)S.matType=x.type;renderDock();return;}
+  if(t.dataset.sel!==undefined){S.sel=+t.dataset.sel;S.selKind='manual';const x=curView().surfaces[S.sel];if(x)S.matType=x.type;renderDock();return;}
   if(t.dataset.view!==undefined){switchView(+t.dataset.view);return;}
   if(t.dataset.matfor){S.matType=t.dataset.matfor;S.tab='mat';renderDock();return;}
   if(t.dataset.mat){if(t.dataset.for==='floor')S.floorId=t.dataset.mat;else S.wallId=t.dataset.mat;STONES[t.dataset.mat]&&getMaterial(t.dataset.mat,S.fmt!=='natural');renderDock();return;}
@@ -437,13 +540,14 @@ function onClick(e){
   const a=t.dataset.act;if(!a)return;
   ({close,
     'start-cam':startCamera,'start-photo':startPhotos,'start-xr':startXR,
+    auto:autoDetect,'brush-add':()=>{S.brush=S.brush==='add'?null:'add';brushHint();renderDock();},
     'mark-floor':()=>startMark('floor'),'mark-wall':()=>startMark('wall'),
     'mark-cancel':()=>{S.mark=null;S.msg='';hint('Markering avbrutt.');renderDock();},
     'brush-hide':()=>{S.brush=S.brush==='hide'?null:'hide';brushHint();renderDock();},
     'brush-show':()=>{S.brush=S.brush==='show'?null:'show';brushHint();renderDock();},
-    'brush-clear':()=>{const s=curView().surfaces[S.sel];if(s){s.mask.getContext('2d').fillRect(0,0,256,256);s.maskDirty=true;}},
+    'brush-clear':()=>{if(S.selKind==='auto'){const sf=curView().auto&&curView().auto.surfaces[S.autoSel];if(sf){const g=sf.userCanvas.getContext('2d');g.fillStyle='#000';g.fillRect(0,0,256,256);sf.userDirty=true;}return;}const s=curView().surfaces[S.sel];if(s){const g=s.mask.getContext('2d');g.fillStyle='#000';g.fillRect(0,0,256,256);s.maskDirty=true;}},
     'del-surface':()=>{const v=curView();v.surfaces.splice(S.sel,1);S.sel=v.surfaces.length-1;S.brush=null;renderDock();},
-    freeze:()=>{S.frozen=!S.frozen;bgKey=null;if(!S.frozen)curView().surfaces.forEach(anchorRays);renderDock();},
+    freeze:()=>{S.frozen=!S.frozen;S.frozenR=S.frozen&&S.gyro.now?S.gyro.now.slice():null;bgKey=null;if(!S.frozen)curView().surfaces.forEach(anchorRays);renderDock();},
     'save-image':saveImage,quote,'photos-done':photosDone,'photo-take':()=>photoInput.click(),'photo-redo':redoPhoto,'photo-retry-cam':startCamera,'photo-fallback':startPhotos
   })[a]?.();
 }
@@ -453,10 +557,74 @@ function onChange(e){
   if(t.dataset.bond!==undefined){S.bond=t.checked;return;}
   if(t.dataset.scale!==undefined){S.scale=clamp(+t.value/100,.5,2);return;}
   if(t.dataset.brushSize!==undefined){S.brushR=+t.value;return;}
+  if(t.dataset.hc!==undefined||t.dataset.fov!==undefined||t.dataset.pitch!==undefined){
+    if(t.dataset.hc!==undefined)S.hc=clamp(+t.value/100,.9,1.9);
+    if(t.dataset.fov!==undefined)S.gyro.fov=clamp(+t.value,50,85);
+    if(t.dataset.pitch!==undefined)S.pitch=clamp(+t.value,0,60);
+    updatePlanes();if(e.type==='change')renderDock();return;
+  }
   if(t.dataset.dim){const s=curView().surfaces[S.sel];if(s){const v=clamp(parseFloat(String(t.value).replace(',','.'))||s[t.dataset.dim],.3,30);s[t.dataset.dim]=v;}}
 }
 function brushHint(){hint(S.brush?'<b>Børste</b>: mal over det som skal vises foran materialet. Bruk viskelær for å angre.':'Dra i hjørnene for å justere flaten.');}
 function switchView(i){S.cur=i;S.sel=curView().surfaces.length?0:-1;bgKey=null;S.mark=null;S.brush=null;renderDock();hint('Bilde '+(i+1)+' av '+S.views.length+'. Samme materialvalg gjelder alle bilder.');}
+
+/* ---------------------------------------------------------------- automatic recognition (AI on the device) */
+function maskTexture(prob,w,h){
+  const u8=new Uint8Array(w*h);for(let i=0;i<u8.length;i++)u8[i]=Math.round(clamp(prob[i],0,1)*255);
+  const t=mkTex();gl.bindTexture(gl.TEXTURE_2D,t);gl.pixelStorei(gl.UNPACK_ALIGNMENT,1);
+  gl.texImage2D(gl.TEXTURE_2D,0,gl.LUMINANCE,w,h,0,gl.LUMINANCE,gl.UNSIGNED_BYTE,u8);return t;
+}
+function userLayer(){const c=document.createElement('canvas');c.width=c.height=256;const g=c.getContext('2d');g.fillStyle='#000';g.fillRect(0,0,256,256);return c;}
+function regionAvg(prob,lum){let sum=0,n=0;for(let i=0;i<prob.length;i++)if(prob[i]>.5){sum+=lum[i];n++;}return n>20?sum/n/255:.5;}
+function buildAuto(seg,cam){
+  const {w,h}=seg,a={seg,cap:cam,Hc:S.hc,surfaces:[],t0:performance.now()};
+  const mk=(type,prob,extra)=>({type,maskTex:maskTexture(prob,w,h),userCanvas:userLayer(),userTex:mkTex(),userDirty:true,avg:regionAvg(prob,seg.lum),...extra});
+  let nf=0;for(let i=0;i<seg.floor.length;i++)if(seg.floor[i]>.5)nf++;
+  if(nf>.015*w*h)a.surfaces.push(mk('floor',seg.floor,{name:'Gulv'}));
+  const res=MA.wallPlanes(seg,cam,a.Hc),lab=res.labels;
+  res.planes.forEach((pl,i)=>{
+    const prob=new Float32Array(w*h);
+    for(let y=0;y<h;y++)for(let x=0;x<w;x++){
+      let near=false;
+      for(let dy=-1;dy<=1&&!near;dy++)for(let dx=-1;dx<=1;dx++){const xx=x+dx,yy=y+dy;if(xx>=0&&yy>=0&&xx<w&&yy<h&&lab[yy*w+xx]===pl.label){near=true;break;}}
+      if(near)prob[y*w+x]=seg.wall[y*w+x];
+    }
+    a.surfaces.push(mk('wall',prob,{name:'Vegg '+(i+1),label:pl.label,p0:pl.p0,u:pl.u,fallback:pl.fallback}));
+  });
+  const pv=document.createElement('canvas');pv.width=w;pv.height=h;const g=pv.getContext('2d'),im=g.createImageData(w,h);
+  for(let i=0;i<w*h;i++){if(seg.floor[i]>.5)im.data.set([70,150,255,120],i*4);else if(seg.cls[i]===0)im.data.set([255,170,60,120],i*4);}
+  g.putImageData(im,0,0);a.preview=pv;return a;
+}
+/* camera height / field of view / pitch changed: refit the wall planes from the stored segmentation (cheap, no new AI run) */
+function updatePlanes(){
+  const v=curView(),a=v&&v.auto;if(!a)return;
+  a.Hc=S.hc;a.cap.f=MA.focalPx(Math.max(a.cap.vw,a.cap.vh),S.gyro.fov);
+  if(v.kind!=='video'||!a.cap.gyro)a.cap.R=MA.orientationMatrix(0,90-S.pitch,0);
+  const res=MA.wallPlanes(a.seg,a.cap,a.Hc);
+  for(const sf of a.surfaces){if(sf.type!=='wall')continue;const pl=res.planes.find(x=>x.label===sf.label);if(pl){sf.p0=pl.p0;sf.u=pl.u;sf.fallback=pl.fallback;}}
+}
+async function autoDetect(){
+  const view=curView(),src=source();
+  if(!view||!src||S.autoBusy){hint('Kameraet er ikke klart ennå.');return;}
+  S.autoBusy=true;renderDock();
+  const status=m=>hint('<b>'+esc(m)+'</b>');
+  try{
+    segMod=segMod||await import('./tryroom-seg-v1.js?v=1');
+    const useGyro=view.kind==='video'&&S.gyro.on&&!!S.gyro.now;
+    const R=useGyro?S.gyro.now.slice():MA.orientationMatrix(0,90-S.pitch,0);
+    const snap=document.createElement('canvas');snap.width=src.w;snap.height=src.h;snap.getContext('2d').drawImage(src.el,0,0);
+    const seg=await segMod.segment(snap,MOBILE?384:512,status);
+    const cam={R,cx:src.w/2,cy:src.h/2,f:MA.focalPx(Math.max(src.w,src.h),S.gyro.fov),vw:src.w,vh:src.h,gyro:useGyro};
+    view.auto=buildAuto(seg,cam);S.selKind='auto';S.autoSel=0;
+    const fl=view.auto.surfaces.some(x=>x.type==='floor'),nw=view.auto.surfaces.filter(x=>x.type==='wall').length,fb=view.auto.surfaces.some(x=>x.fallback);
+    if(!fl&&!nw)hint('<span class="tr-warn">Fant verken gulv eller vegg.</span> Rett kameraet slik at gulv og vegg er tydelig i bildet, med godt lys, og prøv igjen. Du kan også markere flaten selv.');
+    else hint('<b>Fant '+(fl?'gulv':'')+(fl&&nw?' og ':'')+(nw?nw+(nw>1?' vegger':' vegg'):'')+'</b> ('+(seg.ms/1000).toFixed(1)+' s). Blått er gulv, oransje er vegg. Møbler og inventar holdes utenfor.'+(fb?' <span class="tr-warn">Veggens plassering er et anslag fordi gulvlinjen ikke er synlig.</span>':'')+(useGyro?'':' <span class="tr-warn">Uten bevegelsessensor følger ikke bildet når du dreier mobilen.</span>'));
+    S.matType=fl?'floor':'wall';
+  }catch(err){
+    console.error('Stenhuset AI-gjenkjenning feilet',err);
+    hint('<span class="tr-warn">Automatisk gjenkjenning feilet:</span> '+esc(err&&err.message||String(err))+'. Sjekk nettverket og prøv igjen, eller marker flaten selv.');
+  }finally{S.autoBusy=false;if(root)renderDock();}
+}
 
 /* ---------------------------------------------------------------- mode: camera */
 async function startCamera(){
@@ -473,13 +641,13 @@ async function startCamera(){
     S.views=[{kind:'video',surfaces:[]}];S.cur=0;S.sel=-1;bgKey=null;
     startGyro();
     sheet().style.display='none';renderDock();
-    hint('<b>Kamera er på.</b> Hold mobilen stående og vis gulv og vegger rolig. Trykk <b>+ Marker gulv</b> og trykk så på fire hjørner.'+(S.gyro.on?'':' <span class="tr-warn">Bevegelsessensor mangler eller er avslått: bildet følger ikke når du dreier mobilen. Bruk «Frys bilde» for å justere.</span>'));
+    hint('<b>Kamera er på.</b> Hold mobilen stående og vis gulv og vegger rolig. Trykk så <b>Finn gulv og vegger automatisk</b>. Fungerer ikke det, kan du markere flaten selv.'+(S.gyro.on?'':' <span class="tr-warn">Bevegelsessensor mangler eller er avslått: bildet følger ikke når du dreier mobilen. Bruk «Frys bilde» for å justere.</span>'));
     if(!raf)raf=requestAnimationFrame(frame);
   }catch(err){
     stopStream();
     const denied=err&&(err.name==='NotAllowedError'||err.name==='SecurityError');
     sheet().style.display='';dock().hidden=true;
-    sheet().innerHTML=`<h2>${denied?'Kameraet er ikke tillatt':'Fikk ikke tak i kameraet'}</h2><p>${denied?'Du har avslått kameratilgang. Slå den på i nettleserens innstillinger for siden og prøv igjen, eller ta bilder av rommet i stedet.':'Kameraet er ikke tilgjengelig akkurat nå (det kan være i bruk i en annen app). Prøv igjen, eller ta bilder av rommet i stedet.'}</p>
+    sheet().innerHTML=`<h2>${denied?'Kameraet er ikke tillatt':'Fikk ikke tak i kameraet'}</h2><p>${denied?'Du har avslått kameratilgang. Slå den på i nettleserens innstillinger for siden og prøv igjen, eller ta bilder av rommet i stedet.':'Kameraet eller grafikken kunne ikke startes. Prøv igjen, eller ta bilder av rommet i stedet.'}</p><p style="font-size:11px;color:#8a857c">Teknisk: ${esc(err&&(err.name+': '+err.message)||'ukjent')}</p>
     <button class="tr-opt" data-act="photo-retry-cam"><strong>Prøv kameraet igjen</strong></button><button class="tr-opt" data-act="photo-fallback"><strong>Ta bilder av rommet</strong><span>Fungerer uten live kamera.</span></button>`;
     hint('Kamera ikke i bruk.');
   }
@@ -572,7 +740,7 @@ function saveImage(){
     hint('Bildet er lagret på enheten din. Legg det ved e-posten når du ber om tilbud.');
   }catch(e){hint('<span class="tr-warn">Kunne ikke lagre bildet.</span>');}
 }
-function frameNow(){const v=curView(),c=cover();drawBackground(v);v.surfaces.forEach(s=>drawSurface(s,c));}
+function frameNow(){const v=curView(),c=cover();drawBackground(v);drawAuto(v,c);v.surfaces.forEach(s=>drawSurface(s,c));}
 function catalog(){return catalogP||(catalogP=fetch('catalog-v1.json').then(r=>r.json()).catch(()=>null));}
 async function quote(){
   const cat=await catalog(),mats=MATS();
@@ -581,8 +749,9 @@ async function quote(){
     const same=v.filter(s=>s.type===type);const area=same.length?same.map(s=>s.w*s.h):null;
     const hits=cat?cat.products.filter(p=>p.n.toLowerCase().startsWith(m.name.toLowerCase())):[];
     used.push({type,m,hits,area});};
-  if(v.some(s=>s.type==='floor')||(S.xr&&S.xr.floor))add('floor',S.floorId);
-  if(v.some(s=>s.type==='wall')||(S.xr&&S.xr.wall))add('wall',S.wallId);
+  const au=S.views.map(x=>x.auto).filter(Boolean).flatMap(a=>a.surfaces);
+  if(v.some(s=>s.type==='floor')||au.some(s=>s.type==='floor')||(S.xr&&S.xr.floor))add('floor',S.floorId);
+  if(v.some(s=>s.type==='wall')||au.some(s=>s.type==='wall')||(S.xr&&S.xr.wall))add('wall',S.wallId);
   if(!used.length){hint('<span class="tr-warn">Marker minst én flate først, så tar vi med materialet i forespørselen.</span>');return;}
   const lines=used.map(u=>{
     const link=u.hits.length===1?u.hits[0].u:u.hits.length>1?'flere varianter i butikken, velg format hos Stenhuset':'ingen sikker produktkobling funnet';

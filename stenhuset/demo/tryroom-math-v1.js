@@ -78,3 +78,92 @@ export function laplacianVariance(gray,w,h){
   }
   const m=sum/n;return sum2/n-m*m;
 }
+
+/* ======================= automatic surfaces from a segmentation map =======================
+ * World frame is the W3C one (Z up). The camera sits at the origin, Hc metres above the floor (floor plane z = -Hc). */
+
+/* Floor point (X,Y in metres) seen at video pixel (x,y), or null above the horizon. */
+export function pixelFloorPoint(x,y,R,cx,cy,f,Hc){
+  const d=pixelToWorldRay(x,y,R,cx,cy,f);if(d[2]>-0.02)return null;
+  const t=-Hc/d[2];return [d[0]*t,d[1]*t];
+}
+
+/* Softmax probabilities for the wall/floor classes plus the arg-max class map.
+ * logits: Float32Array laid out [C][h][w] (as ONNX returns it). */
+export function postprocess(logits,C,h,w,wallId=0,floorId=3){
+  const hw=h*w,cls=new Uint8Array(hw),floor=new Float32Array(hw),wall=new Float32Array(hw);
+  for(let i=0;i<hw;i++){
+    let mx=-1e30,arg=0;
+    for(let c=0;c<C;c++){const v=logits[c*hw+i];if(v>mx){mx=v;arg=c;}}
+    let sum=0;for(let c=0;c<C;c++)sum+=Math.exp(logits[c*hw+i]-mx);
+    cls[i]=arg;floor[i]=Math.exp(logits[floorId*hw+i]-mx)/sum;wall[i]=Math.exp(logits[wallId*hw+i]-mx)/sum;
+  }
+  return {cls,floor,wall,w,h};
+}
+
+/* 4-connected components of cls===target. Returns {labels:Int16Array (-1 none), comps:[{id,size}]} largest first, small ones dropped. */
+export function components(cls,w,h,target,minFrac=.02){
+  const labels=new Int16Array(w*h).fill(-1),comps=[],stack=[];let next=0;
+  for(let s=0;s<w*h;s++){
+    if(cls[s]!==target||labels[s]>=0)continue;
+    let size=0;stack.push(s);labels[s]=next;
+    while(stack.length){
+      const i=stack.pop();size++;const x=i%w,y=(i/w)|0;
+      if(x>0&&cls[i-1]===target&&labels[i-1]<0){labels[i-1]=next;stack.push(i-1);}
+      if(x<w-1&&cls[i+1]===target&&labels[i+1]<0){labels[i+1]=next;stack.push(i+1);}
+      if(y>0&&cls[i-w]===target&&labels[i-w]<0){labels[i-w]=next;stack.push(i-w);}
+      if(y<h-1&&cls[i+w]===target&&labels[i+w]<0){labels[i+w]=next;stack.push(i+w);}
+    }
+    comps.push({id:next,size});next++;
+  }
+  const keep=comps.filter(c=>c.size>=minFrac*w*h).sort((a,b)=>b.size-a.size);
+  return {labels,comps:keep};
+}
+
+/* Pixels where component k meets the floor: for each column the lowest wall cell that has floor within 3 cells below. Grid coords. */
+export function wallFloorBoundary(cls,labels,k,w,h,floorId=3){
+  const pts=[];
+  for(let x=0;x<w;x++){
+    let yy=-1;for(let y=h-2;y>=0;y--)if(labels[y*w+x]===k){yy=y;break;}
+    if(yy<0)continue;
+    for(let d=1;d<=3&&yy+d<h;d++)if(cls[(yy+d)*w+x]===floorId){pts.push([x+.5,yy+1]);break;}
+  }
+  return pts;
+}
+
+/* Robust 2D line fit (RANSAC, then PCA on inliers). Returns {p0,u,inliers} with u a unit direction, or null. */
+export function fitLine(pts,thr=.12,iters=80){
+  if(pts.length<6)return null;
+  let seed=12345;const rnd=()=>{seed=(seed*1103515245+12345)&0x7fffffff;return seed/0x7fffffff;};
+  let best=null,bn=0;
+  for(let k=0;k<iters;k++){
+    const a=pts[(rnd()*pts.length)|0],b=pts[(rnd()*pts.length)|0];
+    const dx=b[0]-a[0],dy=b[1]-a[1],L=Math.hypot(dx,dy);if(L<.2)continue;
+    const ux=dx/L,uy=dy/L;let n=0;
+    for(const p of pts)if(Math.abs(ux*(p[1]-a[1])-uy*(p[0]-a[0]))<thr)n++;
+    if(n>bn){bn=n;best={a,ux,uy};}
+  }
+  if(!best||bn<Math.max(5,pts.length*.4))return null;
+  const inl=pts.filter(p=>Math.abs(best.ux*(p[1]-best.a[1])-best.uy*(p[0]-best.a[0]))<thr);
+  const cx=inl.reduce((s,p)=>s+p[0],0)/inl.length,cy=inl.reduce((s,p)=>s+p[1],0)/inl.length;
+  let sxx=0,syy=0,sxy=0;for(const p of inl){const x=p[0]-cx,y=p[1]-cy;sxx+=x*x;syy+=y*y;sxy+=x*y;}
+  const ang=.5*Math.atan2(2*sxy,sxx-syy);
+  return {p0:[cx,cy],u:[Math.cos(ang),Math.sin(ang)],inliers:inl.length};
+}
+
+/* Wall planes from a class map. cam = {R,cx,cy,f,vw,vh}. Returns [{label,p0,u,inliers,fallback}] */
+export function wallPlanes(seg,cam,Hc,maxWalls=3){
+  const {cls,w,h}=seg,{labels,comps}=components(cls,w,h,0,.02),out=[];
+  for(const c of comps.slice(0,maxWalls)){
+    const bpts=wallFloorBoundary(cls,labels,c.id,w,h);
+    const floorPts=[];
+    for(const b of bpts){const p=pixelFloorPoint(b[0]/w*cam.vw,b[1]/h*cam.vh,cam.R,cam.cx,cam.cy,cam.f,Hc);if(p&&Math.hypot(p[0],p[1])<30)floorPts.push(p);}
+    const line=fitLine(floorPts);
+    if(line)out.push({label:c.id,p0:line.p0,u:line.u,inliers:line.inliers,fallback:false});
+    else{ // no visible floor line: assume a wall 3.5 m ahead, square to the camera heading
+      const f0=pixelToWorldRay(cam.vw/2,cam.vh/2,cam.R,cam.cx,cam.cy,cam.f),hd=Math.hypot(f0[0],f0[1])||1,fx=f0[0]/hd,fy=f0[1]/hd;
+      out.push({label:c.id,p0:[fx*3.5,fy*3.5],u:[-fy,fx],inliers:0,fallback:true});
+    }
+  }
+  return {planes:out,labels};
+}
