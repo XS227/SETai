@@ -9,7 +9,7 @@
  *  3. Guidede bilder: a few still photos of the room, each edited with the same marking tools and the same material choice.
  *     The result is separate edited images, not a reconstructed 3D model.
  * Inventory (sink, sofa ...) is kept visible with a manual "keep visible" brush painted in the surface's own coordinates. */
-import * as MA from './tryroom-math-v1.js?v=3';
+import * as MA from './tryroom-math-v1.js?v=4';
 import {STONES,generateStone,T} from './stone-textures-v1.js';
 
 const MOBILE=typeof matchMedia==='function'&&matchMedia('(pointer:coarse)').matches;
@@ -111,7 +111,7 @@ function showStart(){
   <p>Se Stenhusets materialer på gulv og vegger i ditt eget rom. Alt skjer på din egen enhet. Bilder og video lastes ikke opp noe sted.</p>
   <button class="tr-opt" data-act="start-cam" ${c.cam&&c.secure?'':'disabled'}><strong>Live kamera <small>Automatisk</small></strong><span>Du ser rommet i kameraet, og en AI-modell på mobilen din finner gulv, vegger og møbler av seg selv. Materialet legges bare på gulv og vegg, følger perspektivet og holder seg på plass når du dreier mobilen. Oppdateres automatisk når du flytter deg. Første gang lastes en liten modell (4 MB) og et analysebibliotek ned.${c.cam&&c.secure?'':' Krever kamera og sikker (https) tilkobling.'}</span></button>
   <button class="tr-opt" data-act="start-photo"><strong>Ta bilder av rommet</strong><span>Vi veileder deg gjennom noen bilder i appen. Hvert bilde tar vare på mobilens vinkel, og gulv og vegger gjenkjennes automatisk. Samme materialvalg brukes i alle bilder. Resultatet er ferdige bilder du kan lagre og sende, ikke en 3D-modell av rommet.</span></button>
-  <button class="tr-opt" data-act="start-xr" ${c.xr?'':'disabled'}><strong>Live AR <small>Beta</small></strong><span>${c.xr?'Materialet festes til gulv og vegg mens du går rundt. Her setter du punkter selv, og møbler holdes ikke utenfor. Ikke testet på alle telefoner. Bruk «Live kamera» hvis du vil ha automatikk.':'Ikke tilgjengelig her. Krever WebXR AR (Chrome på en ARCore-støttet Android-telefon). iPhone og iPad støtter ikke dette i nettleseren.'}</span></button>
+  <button class="tr-opt" data-act="start-xr" ${c.xr?'':'disabled'}><strong>Live AR + automatisk <small>Beta</small></strong><span>${c.xr?'Samme automatiske gjenkjenning, men med ekte AR-sporing: materialet holder seg på gulv og vegg også når du går rundt i rommet, og gulvhøyden måles. Møbler og inventar holdes utenfor. Krever kameratilgang i AR. Ikke testet på alle telefoner.':'Ikke tilgjengelig her. Krever WebXR AR (Chrome på en ARCore-støttet Android-telefon). iPhone og iPad støtter ikke dette i nettleseren.'}</span></button>
   <p style="font-size:12px;color:#aaa49a">Tips: god belysning, hold mobilen stående, og ha gulv og vegger tydelig i bildet.</p>`;
   hint('Velg hvordan du vil prøve materialene.');
 }
@@ -758,17 +758,19 @@ function photosDone(){
 /* ---------------------------------------------------------------- mode: WebXR AR (separate module, loaded only when chosen) */
 async function startXR(){
   try{
-    xrMod=xrMod||await import('./tryroom-xr-v1.js?v=2');
+    xrMod=xrMod||await import('./tryroom-ar-v1.js?v=1');
     close(true);
     await xrMod.start({
-      stoneId:()=>S.floorId,wallId:()=>S.wallId,materials:MATS(),STONES,generateStone,T,
+      S,PREC,MATFN,FORMATS,GROUTS,STONES,generateStone,T,materials:MATS(),
+      loadSeg:()=>import('./tryroom-seg-v1.js?v=2'),
       onEnd:()=>{},
+      onFallback:()=>{open(true).then(()=>startCamera());},
       onQuote:(info)=>{open(true).then(()=>{S.xr=info;S.floorId=info.floorId||S.floorId;S.wallId=info.wallId||S.wallId;quote();});}
     });
   }catch(e){
     console.warn('Stenhuset AR:',e);
     if(!root)await open(true);
-    showStart();hint('<span class="tr-warn">AR kunne ikke startes: '+esc(e&&e.message||'ukjent feil')+'</span> Bruk kamera eller bilder i stedet.');
+    showStart();hint('<span class="tr-warn">AR kunne ikke startes: '+esc(e&&e.message||'ukjent feil')+'</span> Bruk «Live kamera» i stedet.');
   }
 }
 

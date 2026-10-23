@@ -202,13 +202,13 @@ export function rotAngle(A,B){
 /* Wall planes with corner support. One wall region can contain several walls (an inside corner). Its floor line is split into
  * straight pieces; every image column is assigned to the piece whose floor points it holds. Returns
  * {planes:[{key,comp,sub,p0,u,cols|null,inliers,fallback}],labels}. cols[x] = piece index for grid column x (or -1). */
-export function wallPlanes2(seg,cam,Hc,maxRegions=3,maxPieces=3){
+export function wallPlanesGeneric(seg,fp,fallbackFn,maxRegions=3,maxPieces=3){
   const {cls,w,h}=seg,{labels,comps}=components(cls,w,h,0,.02),planes=[];
   for(const c of comps.slice(0,maxRegions)){
     const items=[];
     for(const b of wallFloorBoundary(cls,labels,c.id,w,h)){
-      const p=pixelFloorPoint(b[0]/w*cam.vw,b[1]/h*cam.vh,cam.R,cam.cx,cam.cy,cam.f,Hc);
-      if(p&&Math.hypot(p[0],p[1])<30)items.push({b,p});
+      const p=fp(b[0],b[1]);
+      if(p)items.push({b,p});
     }
     let rest=items.slice();const lines=[];
     while(lines.length<maxPieces&&rest.length>=6){
@@ -224,8 +224,8 @@ export function wallPlanes2(seg,cam,Hc,maxRegions=3,maxPieces=3){
       if(dot>Math.cos(8*Math.PI/180)&&off<.2){lines[i].inl=lines[i].inl.concat(lines[j].inl);lines.splice(j,1);}
     }
     if(!lines.length){
-      const f0=pixelToWorldRay(cam.vw/2,cam.vh/2,cam.R,cam.cx,cam.cy,cam.f),hd=Math.hypot(f0[0],f0[1])||1,fx=f0[0]/hd,fy=f0[1]/hd;
-      planes.push({key:c.id+'_0',comp:c.id,sub:0,p0:[fx*3.5,fy*3.5],u:[-fy,fx],cols:null,inliers:0,fallback:true});continue;
+      const fb=fallbackFn();
+      planes.push({key:c.id+'_0',comp:c.id,sub:0,p0:fb.p0,u:fb.u,cols:null,inliers:0,fallback:true});continue;
     }
     const cols=new Int8Array(w).fill(-1);
     lines.forEach((L,idx)=>{for(const it of L.inl)cols[Math.min(w-1,Math.floor(it.b[0]))]=idx;});
@@ -241,3 +241,36 @@ export function wallPlanes2(seg,cam,Hc,maxRegions=3,maxPieces=3){
   }
   return {planes,labels};
 }
+
+/* Gyro/pinhole version (camera mode): floor points come from a world ray and a known camera height. */
+export function wallPlanes2(seg,cam,Hc,maxRegions=3,maxPieces=3){
+  const {w,h}=seg;
+  const fp=(gx,gy)=>{const p=pixelFloorPoint(gx/w*cam.vw,gy/h*cam.vh,cam.R,cam.cx,cam.cy,cam.f,Hc);return p&&Math.hypot(p[0],p[1])<30?p:null;};
+  const fallbackFn=()=>{const f0=pixelToWorldRay(cam.vw/2,cam.vh/2,cam.R,cam.cx,cam.cy,cam.f),hd=Math.hypot(f0[0],f0[1])||1,fx=f0[0]/hd,fy=f0[1]/hd;return {p0:[fx*3.5,fy*3.5],u:[-fy,fx]};};
+  return wallPlanesGeneric(seg,fp,fallbackFn,maxRegions,maxPieces);
+}
+
+/* ======================= WebXR (6DoF) helpers: column-major 4x4 matrices as in WebGL/WebXR ======================= */
+export function mat4Mul(a,b){const o=new Float32Array(16);for(let c=0;c<4;c++)for(let r=0;r<4;r++){let s=0;for(let k=0;k<4;k++)s+=a[k*4+r]*b[c*4+k];o[c*4+r]=s;}return o;}
+export function mat4Inv(m){
+  const inv=new Float64Array(16),[a00,a01,a02,a03,a10,a11,a12,a13,a20,a21,a22,a23,a30,a31,a32,a33]=m;
+  const b00=a00*a11-a01*a10,b01=a00*a12-a02*a10,b02=a00*a13-a03*a10,b03=a01*a12-a02*a11,b04=a01*a13-a03*a11,b05=a02*a13-a03*a12,
+        b06=a20*a31-a21*a30,b07=a20*a32-a22*a30,b08=a20*a33-a23*a30,b09=a21*a32-a22*a31,b10=a21*a33-a23*a31,b11=a22*a33-a23*a32;
+  let det=b00*b11-b01*b10+b02*b09+b03*b08-b04*b07+b05*b06;if(Math.abs(det)<1e-12)return null;det=1/det;
+  inv[0]=(a11*b11-a12*b10+a13*b09)*det;inv[1]=(a02*b10-a01*b11-a03*b09)*det;inv[2]=(a31*b05-a32*b04+a33*b03)*det;inv[3]=(a22*b04-a21*b05-a23*b03)*det;
+  inv[4]=(a12*b08-a10*b11-a13*b07)*det;inv[5]=(a00*b11-a02*b08+a03*b07)*det;inv[6]=(a32*b02-a30*b05-a33*b01)*det;inv[7]=(a20*b05-a22*b02+a23*b01)*det;
+  inv[8]=(a10*b10-a11*b08+a13*b06)*det;inv[9]=(a01*b08-a00*b10-a03*b06)*det;inv[10]=(a30*b04-a31*b02+a33*b00)*det;inv[11]=(a21*b02-a20*b04-a23*b00)*det;
+  inv[12]=(a11*b07-a10*b09-a12*b06)*det;inv[13]=(a00*b09-a01*b07+a02*b06)*det;inv[14]=(a31*b01-a30*b03-a32*b00)*det;inv[15]=(a20*b03-a21*b01+a22*b00)*det;
+  return new Float32Array(inv);
+}
+const mulV4=(m,v)=>[m[0]*v[0]+m[4]*v[1]+m[8]*v[2]+m[12]*v[3],m[1]*v[0]+m[5]*v[1]+m[9]*v[2]+m[13]*v[3],m[2]*v[0]+m[6]*v[1]+m[10]*v[2]+m[14]*v[3],m[3]*v[0]+m[7]*v[1]+m[11]*v[2]+m[15]*v[3]];
+/* World ray through normalised device coordinates (nx,ny in -1..1), given the inverse of projection*view. */
+export function ndcRay(invVP,nx,ny){
+  const n=mulV4(invVP,[nx,ny,-1,1]),f=mulV4(invVP,[nx,ny,1,1]);
+  const a=[n[0]/n[3],n[1]/n[3],n[2]/n[3]],b=[f[0]/f[3],f[1]/f[3],f[2]/f[3]];
+  const d=[b[0]-a[0],b[1]-a[1],b[2]-a[2]],L=Math.hypot(d[0],d[1],d[2]);return {o:a,d:[d[0]/L,d[1]/L,d[2]/L]};
+}
+/* Project a world point with a view-projection matrix; returns [nx,ny] or null when behind the camera. */
+export function projectVP(VP,P){const c=mulV4(VP,[P[0],P[1],P[2],1]);return c[3]<=1e-6?null:[c[0]/c[3],c[1]/c[3]];}
+/* Floor point (x,z) under the ray, floor plane y = floorY; null if the ray does not go down. */
+export function rayFloorXZ(o,d,floorY){if(d[1]>-0.02)return null;const t=(floorY-o[1])/d[1];return [o[0]+d[0]*t,o[2]+d[2]*t];}

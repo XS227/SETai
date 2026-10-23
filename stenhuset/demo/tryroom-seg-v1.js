@@ -4,7 +4,7 @@
  * the runtime library are downloaded.
  * Licence note: the SegFormer weights are released by NVIDIA under a non-commercial research licence. Fine for this demo; a
  * commercial launch needs a licence from NVIDIA or a permissively licensed replacement model. */
-import {postprocess,majority3,boxBlur3} from './tryroom-math-v1.js?v=3';
+import {postprocess,majority3,boxBlur3} from './tryroom-math-v1.js?v=4';
 
 const ORT_BASE='https://cdn.jsdelivr.net/npm/onnxruntime-web@1.18.0/dist/';
 const MODEL_URL=new URL('models/segformer-b0-ade-q.onnx',import.meta.url).href;
