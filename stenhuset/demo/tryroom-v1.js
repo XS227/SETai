@@ -24,7 +24,7 @@ const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',
 const S={
   mode:null,caps:null,floorId:'bastide-beige',wallId:'carrara-c',
   fmt:'natural',rot:0,bond:false,grout:GROUTS[0][1],scale:1,
-  views:[],cur:0,sel:-1,mark:null,brush:null,brushR:34,tab:'surf',frozen:false,fit:'contain',matType:'floor',dark:false,xr:null,hc:1.4,hcAuto:true,hcMeasured:false,hcNote:'',pitch:20,autoBusy:false,aiBusy:false,live:true,autoSel:0,selKind:'manual',frozenR:null,lastError:null,
+  views:[],cur:0,sel:-1,mark:null,brush:null,brushR:34,tab:'surf',frozen:false,fit:'contain',zoom:1,zoomApplied:1,zoomCaps:null,dzoom:1,track:null,matType:'floor',dark:false,xr:null,hc:1.4,hcAuto:true,hcMeasured:false,hcNote:'',pitch:20,autoBusy:false,aiBusy:false,live:true,autoSel:0,selKind:'manual',frozenR:null,lastError:null,
   gyro:{on:false,ref:null,now:null,fov:65},busy:0,msg:''
 };
 let coach=null,segMod=null,root,cv,ov,gl,P={},tex={},stream,video,raf=0,lumCtx,lumData,lumT=0,lumAvgFrame=.5,drag=null,photoInput,catalogP=null,xrMod=null;
@@ -78,6 +78,10 @@ function injectCss(){
 .tr-thumbs{display:flex;gap:8px;overflow-x:auto;margin:14px 0}
 .tr-thumbs img,.tr-thumbs canvas{height:84px;width:auto;border:2px solid transparent;flex:none}
 .tr-thumbs .on{border-color:#fff}
+.tr-zoom{position:absolute;right:12px;top:50%;transform:translateY(-50%);z-index:6;display:flex;flex-direction:column;align-items:center;gap:6px;background:rgba(20,20,18,.55);border-radius:999px;padding:6px}
+.tr-zoom[hidden]{display:none}
+.tr-zoom button{width:44px;height:44px;border-radius:50%;border:0;background:#f7f5eee8;color:#242725;font:400 24px/1 var(--sans,system-ui);cursor:pointer}
+.tr-zoom span{color:#fff;font:700 11px/1 var(--sans,system-ui);padding:2px 0}
 .tr-busy{position:absolute;left:50%;top:84px;transform:translateX(-50%);z-index:6;background:#000c;padding:8px 14px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;display:none}
 .tr-busy.on{display:block}
 @media(min-width:900px){.tr-root{flex-direction:row}.tr-dock{width:380px;max-height:none;border-top:0;border-left:1px solid #ffffff22}}`;
@@ -87,6 +91,7 @@ function buildRoot(){
   root=document.createElement('div');root.className='tr-root';root.setAttribute('role','dialog');root.setAttribute('aria-modal','true');root.setAttribute('aria-label','Prøv i mitt rom');
   root.innerHTML='<div class="tr-stage"><canvas class="tr-gl"></canvas><canvas class="tr-ov"></canvas>'+
     '<div class="tr-top"><button class="tr-x" data-act="close" aria-label="Avslutt og lukk kamera">✕</button><div class="tr-hint" aria-live="polite"></div></div>'+
+    '<div class="tr-zoom" hidden><button type="button" data-act="zoom-in" aria-label="Zoom inn">+</button><span aria-live="polite">1×</span><button type="button" data-act="zoom-out" aria-label="Zoom ut">−</button></div>'+
     '<div class="tr-busy" role="status">Lager steinstruktur …</div><div class="tr-sheet"></div></div><div class="tr-dock" hidden></div>';
   document.body.appendChild(root);
   document.documentElement.style.overflow='hidden';
@@ -252,7 +257,8 @@ const curView=()=>S.views[S.cur];
 function source(){const v=curView();if(!v)return null;if(v.kind==='video')return video&&video.videoWidth?{w:video.videoWidth,h:video.videoHeight,el:video}:null;return {w:v.canvas.width,h:v.canvas.height,el:v.canvas};}
 function cover(){
   const s=source();if(!s)return [1,1];
-  const cw=cv.width,ch=cv.height,view=curView(),sc=view.kind==='video'&&S.fit==='fill'?Math.max(cw/s.w,ch/s.h):Math.min(cw/s.w,ch/s.h);
+  const cw=cv.width,ch=cv.height,view=curView();let sc=view.kind==='video'&&S.fit==='fill'?Math.max(cw/s.w,ch/s.h):Math.min(cw/s.w,ch/s.h);
+  if(view.kind==='video')sc*=S.dzoom||1;
   return [cw/(s.w*sc),ch/(s.h*sc)];
 }
 const toCanvas=(n,c)=>[((n[0]-.5)/c[0]+.5)*cv.width,((n[1]-.5)/c[1]+.5)*cv.height];
@@ -418,7 +424,19 @@ function drawOverlay(c){
 function evPt(e){const r=ov.getBoundingClientRect();return [e.clientX-r.left,e.clientY-r.top];}
 function bind(){
   if(ov._bound)return;ov._bound=true;
+  const pts=new Map();let pinch=null;
   ov.addEventListener('pointerdown',e=>{
+    pts.set(e.pointerId,[e.clientX,e.clientY]);
+    if(pts.size===2){const [a,b]=[...pts.values()];pinch={d0:Math.hypot(a[0]-b[0],a[1]-b[1])||1,z0:zoomValue(),t:0};drag=null;}
+  });
+  ov.addEventListener('pointermove',e=>{
+    if(!pts.has(e.pointerId))return;pts.set(e.pointerId,[e.clientX,e.clientY]);
+    if(pinch&&pts.size>=2){const [a,b]=[...pts.values()],now=performance.now();if(now-pinch.t>90){pinch.t=now;setZoom(pinch.z0*Math.hypot(a[0]-b[0],a[1]-b[1])/pinch.d0);}}
+  });
+  const endPt=e=>{pts.delete(e.pointerId);if(pts.size<2)pinch=null;};
+  ov.addEventListener('pointerup',endPt);ov.addEventListener('pointercancel',endPt);
+  ov.addEventListener('pointerdown',e=>{
+    if(e.isPrimary===false||pinch)return;
     if(!curView()||!source())return;
     const p=evPt(e),d=cv.width/ov.getBoundingClientRect().width,c=cover(),px=[p[0]*d,p[1]*d];
     ov.setPointerCapture(e.pointerId);
@@ -440,7 +458,7 @@ function bind(){
     if(hit>=0){S.sel=hit;S.selKind='manual';renderDock();}
   });
   ov.addEventListener('pointermove',e=>{
-    if(!drag)return;const p=evPt(e),d=cv.width/ov.getBoundingClientRect().width,c=cover(),px=[p[0]*d,p[1]*d];
+    if(!drag||pinch)return;const p=evPt(e),d=cv.width/ov.getBoundingClientRect().width,c=cover(),px=[p[0]*d,p[1]*d];
     if(drag.kind==='corner'){const s=curView().surfaces[S.sel];if(!s)return;s.pts[drag.i]=toNorm(px,c);anchorPoint(s,drag.i);}
     else if(drag.kind==='brush'){drag.x=p[0];drag.y=p[1];paintAny(px,p);}
   });
@@ -552,7 +570,8 @@ function onClick(e){
   if(t.dataset.grout){S.grout=t.dataset.grout;renderDock();return;}
   const a=t.dataset.act;if(!a)return;
   ({close,
-    start:()=>((S.caps.xr)?startXR():startCamera()),
+    start:()=>((S.caps.xr&&/[?&]ar\b/.test(location.search))?startXR():startCamera()),
+    'zoom-in':()=>setZoom(zoomValue()*1.25),'zoom-out':()=>setZoom(zoomValue()/1.25),
     auto:autoDetect,'hc-auto':()=>{S.hcAuto=true;S.hcMeasured=false;renderDock();autoDetect(false);},'brush-add':()=>{S.brush=S.brush==='add'?null:'add';brushHint();renderDock();},
     'mark-floor':()=>startMark('floor'),'mark-wall':()=>startMark('wall'),
     'mark-cancel':()=>{S.mark=null;S.msg='';hint('Markering avbrutt.');renderDock();},
@@ -689,6 +708,7 @@ async function startCamera(){
     hint('<b>Kamera er på.</b> Hold mobilen stående og vis gulv og vegger rolig. Rommet analyseres automatisk om et øyeblikk.'+(S.gyro.on?'':' <span class="tr-warn">Bevegelsessensor mangler eller er avslått: bildet følger ikke når du dreier mobilen. Bruk «Frys bilde» for å justere.</span>'));
     if(!raf)raf=requestAnimationFrame(frame);
     coach.set('hold','Hold mobilen stående og rolig mot rommet');
+    root.querySelector('.tr-zoom').hidden=false;zoomLabel();
     setTimeout(()=>{if(root&&S.mode==='camera'&&!S.autoBusy&&!curView().auto)autoDetect(false);},900);
   }catch(err){
     stopStream();
@@ -699,7 +719,44 @@ async function startCamera(){
     hint('Kamera ikke i bruk.');
   }
 }
-async function wideAngle(st){try{const t=st.getVideoTracks()[0],c=t.getCapabilities&&t.getCapabilities();if(c&&c.zoom&&c.zoom.min!=null)await t.applyConstraints({advanced:[{zoom:c.zoom.min}]});}catch(e){}}
+const fovForZoom=(fov,zOld,zNew)=>2*Math.atan(Math.tan(fov*Math.PI/360)*zOld/zNew)*180/Math.PI;
+async function wideAngle(st){
+  S.track=null;S.zoomCaps=null;S.zoom=S.zoomApplied=1;S.dzoom=1;
+  try{
+    const t=st.getVideoTracks()[0],c=t.getCapabilities&&t.getCapabilities();S.track=t;
+    if(c&&c.zoom&&c.zoom.max>c.zoom.min){
+      S.zoomCaps={min:c.zoom.min,max:Math.min(c.zoom.max,4)};
+      await t.applyConstraints({advanced:[{zoom:c.zoom.min}]});
+      S.gyro.fov=Math.min(110,fovForZoom(S.gyro.fov,1,c.zoom.min)); // the 65 degree default is for 1x
+      S.zoom=S.zoomApplied=c.zoom.min;
+    }
+  }catch(e){}
+}
+/* zoom: optical (camera zoom) when the phone allows it, otherwise digital (enlarges the picture on screen) */
+let zoomBusy=false,zoomT=0;
+const zoomValue=()=>S.zoomCaps?S.zoom:S.dzoom;
+function zoomLabel(){const el=root&&root.querySelector('.tr-zoom span');if(el)el.textContent=String(Math.round(zoomValue()*10)/10).replace('.',',')+'×';}
+async function setZoom(z){
+  if(S.zoomCaps&&S.track){
+    z=clamp(z,S.zoomCaps.min,S.zoomCaps.max);
+    if(Math.abs(z-S.zoom)<.02){if(z<=S.zoomCaps.min+.01)hint('Dette er det videste kameraet kan vise.');return;}
+    S.zoom=z;zoomLabel();
+    if(zoomBusy)return;zoomBusy=true;
+    for(;;){
+      const target=S.zoom;
+      try{await S.track.applyConstraints({advanced:[{zoom:target}]});S.gyro.fov=fovForZoom(S.gyro.fov,S.zoomApplied,target);S.zoomApplied=target;}catch(e){break;}
+      if(S.zoom===target)break;
+    }
+    zoomBusy=false;
+    // the picture itself changed: redo the analysis once the zoom has settled
+    clearTimeout(zoomT);
+    zoomT=setTimeout(()=>{const v=curView();if(root&&v&&v.kind==='video'){disposeAuto(v.auto);v.auto=null;v.surfaces=[];S.sel=-1;renderDock();autoDetect(false);}},600);
+  }else{
+    z=clamp(z,1,3);
+    if(Math.abs(z-S.dzoom)<.01){if(z<=1.001)hint('Dette er hele kamerabildet. Mobilen kan ikke zoome lenger ut.');return;}
+    S.dzoom=z;zoomLabel();
+  }
+}
 function stopStream(){if(stream){stream.getTracks().forEach(t=>t.stop());stream=null;}if(video){video.srcObject=null;}}
 /* gyro: relative rotation only. Needs portrait orientation. */
 let orientHandler=null;
@@ -778,7 +835,7 @@ export async function open(skipStart){
   if(root)return;
   injectCss();buildRoot();
   S.caps=await detect();
-  if(S.caps.xr&&!xrMod)import('./tryroom-ar-v1.js?v=10').then(m=>{xrMod=m;}).catch(()=>{});
+  if(S.caps.xr&&/[?&]ar\b/.test(location.search)&&!xrMod)import('./tryroom-ar-v1.js?v=10').then(m=>{xrMod=m;}).catch(()=>{});
   if(!skipStart)showStart();
 }
 export function close(keepRoot){
