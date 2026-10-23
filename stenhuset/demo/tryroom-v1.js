@@ -709,6 +709,7 @@ async function startCamera(){
       try{S.gyro.perm=await DeviceOrientationEvent.requestPermission();}catch(e){S.gyro.perm='denied';}
     }
     S.camErr=false;S.firstFrame=false;camLines.length=0;
+    try{const pst=navigator.permissions&&await navigator.permissions.query({name:'camera'});if(pst){camLog('kameratillatelse: '+pst.state);if(pst.state==='denied'){const e=new Error('Kameraet er blokkert i nettleserens innstillinger');e.name='NotAllowedError';throw e;}}}catch(e){if(e&&e.name==='NotAllowedError')throw e;}
     camLog('start: '+navigator.userAgent.replace(/.*\(([^)]*)\).*Chrome\/([\d.]+).*/,'$1 Chrome $2')+(window.isSecureContext?'':' (IKKE https)'));
     stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'},width:{ideal:1600},height:{ideal:1200},aspectRatio:{ideal:4/3}},audio:false});
     {const tr=stream.getVideoTracks()[0],se=tr&&tr.getSettings?tr.getSettings():{};camLog('kamera gitt: '+(tr?tr.label:'?')+' '+(se.width||'?')+'x'+(se.height||'?')+(se.zoom!=null?' zoom '+se.zoom:''));}
@@ -735,15 +736,15 @@ async function startCamera(){
   }catch(err){
     camLog('FEIL: '+(err&&(err.name+': '+err.message)||err));
     const denied=err&&(err.name==='NotAllowedError'||err.name==='SecurityError');
-    cameraError(denied?'Kameraet er ikke tillatt':'Fikk ikke tak i kameraet',denied?'Du har avslått kameratilgang. Slå den på i nettleserens innstillinger for siden (lås-ikonet ved adressen) og prøv igjen.':'Kameraet eller grafikken kunne ikke startes. Lukk andre apper som bruker kameraet, og prøv igjen.',err);
+    cameraError(denied?'Kameraet er blokkert for denne siden':'Fikk ikke tak i kameraet',denied?'Nettleseren har blokkert kameraet for setai.no, ofte fordi en tidligere forespørsel ble avvist. Slik slår du det på igjen:':'Kameraet eller grafikken kunne ikke startes. Lukk andre apper som bruker kameraet, og prøv igjen.',err,denied);
   }
 }
-function cameraError(title,text,err){
+function cameraError(title,text,err,denied){
   S.camErr=true;camLog('vist feilmelding: '+title);
   stopStream();stopGyro();
   if(!root)return;
   sheet().style.display='';dock().hidden=true;const z=root.querySelector('.tr-zoom');if(z)z.hidden=true;if(coach)coach.hide();
-  sheet().innerHTML=`<h2>${esc(title)}</h2><p>${esc(text)}</p>${err?`<p style="font-size:11px;color:#8a857c">Teknisk: ${esc(err.name+': '+err.message)}</p>`:''}
+  sheet().innerHTML=`<h2>${esc(title)}</h2><p>${esc(text)}</p>${denied?'<ol style="font-size:13.5px;line-height:1.7;color:#ddd8cf;padding-left:20px;max-width:560px"><li>Trykk på ikonet til venstre for adressen (lås eller innstillinger).</li><li>Velg <b>Tillatelser</b> eller <b>Nettstedsinnstillinger</b>.</li><li>Sett <b>Kamera</b> til <b>Tillat</b>.</li><li>Kom tilbake hit og trykk «Prøv kameraet igjen».</li></ol><p style="font-size:12px;color:#aaa49a">Får du ikke valget, sjekk også at Chrome har lov til å bruke kameraet: Innstillinger på telefonen → Apper → Chrome → Tillatelser → Kamera.</p>':''}${err?`<p style="font-size:11px;color:#8a857c">Teknisk: ${esc(err.name+': '+err.message)}</p>`:''}
     <button class="tr-btn pri" data-act="photo-retry-cam" style="min-height:50px">Prøv kameraet igjen</button>
     <details style="max-width:560px;margin-top:16px"><summary style="cursor:pointer;font-size:12px;color:#ffd9a0">Feilsøkingslogg</summary><pre class="tr-logpre" style="white-space:pre-wrap;font:10.5px/1.4 monospace;background:#000a;padding:8px;color:#bfe9d0;margin:8px 0">${esc(camLines.join('\n'))}</pre><button class="tr-btn" data-act="copy-log">Kopier loggen</button></details>`;
   hint('Kamera ikke i bruk.');

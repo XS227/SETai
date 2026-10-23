@@ -228,7 +228,7 @@ if(shell&&typeof window.getStudioMaterials==='function'){
   let tryP=null;
   const openTry=()=>{
     if(document.fullscreenElement)document.exitFullscreen&&document.exitFullscreen();
-    tryP=tryP||import('./tryroom-v1.js?v=15');
+    tryP=tryP||import('./tryroom-v1.js?v=16');
     tryP.then(m=>m.open()).catch(err=>{console.warn('Prøv i mitt rom feilet:',err);tryP=null;alert('Funksjonen kunne ikke lastes. Sjekk tilkoblingen og prøv igjen.');});
   };
   bottom.querySelector('#su-try').onclick=openTry;
