@@ -23,7 +23,7 @@ const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',
 const S={
   mode:null,caps:null,floorId:'bastide-beige',wallId:'carrara-c',
   fmt:'natural',rot:0,bond:false,grout:GROUTS[0][1],scale:1,
-  views:[],cur:0,sel:-1,mark:null,brush:null,brushR:34,tab:'surf',frozen:false,matType:'floor',dark:false,xr:null,hc:1.4,pitch:20,autoBusy:false,aiBusy:false,live:true,autoSel:0,selKind:'manual',frozenR:null,lastError:null,
+  views:[],cur:0,sel:-1,mark:null,brush:null,brushR:34,tab:'surf',frozen:false,fit:'contain',matType:'floor',dark:false,xr:null,hc:1.4,pitch:20,autoBusy:false,aiBusy:false,live:true,autoSel:0,selKind:'manual',frozenR:null,lastError:null,
   gyro:{on:false,ref:null,now:null,fov:65},busy:0,msg:''
 };
 let segMod=null,root,cv,ov,gl,P={},tex={},stream,video,raf=0,lumCtx,lumData,lumT=0,lumAvgFrame=.5,drag=null,photoInput,catalogP=null,xrMod=null;
@@ -252,7 +252,7 @@ const curView=()=>S.views[S.cur];
 function source(){const v=curView();if(!v)return null;if(v.kind==='video')return video&&video.videoWidth?{w:video.videoWidth,h:video.videoHeight,el:video}:null;return {w:v.canvas.width,h:v.canvas.height,el:v.canvas};}
 function cover(){
   const s=source();if(!s)return [1,1];
-  const cw=cv.width,ch=cv.height,view=curView(),sc=view.kind==='video'?Math.max(cw/s.w,ch/s.h):Math.min(cw/s.w,ch/s.h);
+  const cw=cv.width,ch=cv.height,view=curView(),sc=view.kind==='video'&&S.fit==='fill'?Math.max(cw/s.w,ch/s.h):Math.min(cw/s.w,ch/s.h);
   return [cw/(s.w*sc),ch/(s.h*sc)];
 }
 const toCanvas=(n,c)=>[((n[0]-.5)/c[0]+.5)*cv.width,((n[1]-.5)/c[1]+.5)*cv.height];
@@ -517,7 +517,7 @@ function renderDock(){
       <p style="font-size:11.5px;line-height:1.55;color:#aaa49a;margin:0 0 12px">Mal over vask, toalett, møbler eller dusjglass som skal vises foran materialet. Dette gjøres for hånd, ikke automatisk.</p>
       <div class="tr-row"><button class="tr-btn" data-act="del-surface">Slett flate</button></div>`;
     }
-    h+='<div class="tr-row">'+(v&&v.kind==='video'?`<button class="tr-btn ${S.frozen?'on':''}" data-act="freeze">${S.frozen?'Fortsett kamera':'Frys bilde'}</button>`:'')+'<button class="tr-btn" data-act="save-image">Last ned bilde</button><button class="tr-btn pri" data-act="quote">Be om tilbud</button></div>';
+    h+='<div class="tr-row">'+(v&&v.kind==='video'?`<button class="tr-btn ${S.frozen?'on':''}" data-act="freeze">${S.frozen?'Fortsett kamera':'Frys bilde'}</button><button class="tr-btn" data-act="fit">${S.fit==='fill'?'Vis hele bildet':'Fyll skjermen'}</button>`:'')+'<button class="tr-btn" data-act="save-image">Last ned bilde</button><button class="tr-btn pri" data-act="quote">Be om tilbud</button></div>';
     h+='<p style="font-size:10.5px;line-height:1.5;color:#8a857c;margin:6px 0 0">Systemsjekk: WebGL '+(gl?'ok':'nei')+' · bevegelsessensor '+(S.gyro.on?'ja':'nei')+' · video '+(source()?source().w+'×'+source().h:'–')+' · AI-modell '+(segMod&&segMod.isLoaded()?'lastet':'ikke lastet')+(S.lastError?' · feil: '+esc(S.lastError):'')+'</p>';
     if(S.views.length>1)h+='<span class="tr-lbl">Bilder</span><div class="tr-thumbs">'+S.views.map((x,i)=>`<button data-view="${i}" style="border:0;padding:0;background:none"><canvas class="${i===S.cur?'on':''}" data-thumb="${i}" width="120" height="84"></canvas></button>`).join('')+'</div>';
   }else if(S.tab==='mat'){
@@ -556,6 +556,7 @@ function onClick(e){
     'brush-show':()=>{S.brush=S.brush==='show'?null:'show';brushHint();renderDock();},
     'brush-clear':()=>{if(S.selKind==='auto'){const sf=curView().auto&&curView().auto.surfaces[S.autoSel];if(sf){const g=sf.userCanvas.getContext('2d');g.fillStyle='#000';g.fillRect(0,0,256,256);sf.userDirty=true;}return;}const s=curView().surfaces[S.sel];if(s){const g=s.mask.getContext('2d');g.fillStyle='#000';g.fillRect(0,0,256,256);s.maskDirty=true;}},
     'del-surface':()=>{const v=curView();v.surfaces.splice(S.sel,1);S.sel=v.surfaces.length-1;S.brush=null;renderDock();},
+    fit:()=>{S.fit=S.fit==='fill'?'contain':'fill';renderDock();},
     freeze:()=>{S.frozen=!S.frozen;S.frozenR=S.frozen&&S.gyro.now?S.gyro.now.slice():null;bgKey=null;if(!S.frozen)curView().surfaces.forEach(anchorRays);renderDock();},
     'save-image':saveImage,quote,'photos-done':photosDone,'photo-take':()=>photoInput.click(),'photo-snap':snapPhoto,'photo-redo':redoPhoto,'photo-retry-cam':startCamera,'copy-log':()=>{const el=root.querySelector('#tr-log');if(el&&navigator.clipboard)navigator.clipboard.writeText(el.textContent).then(()=>hint('Loggen er kopiert. Lim den inn i en melding til meg.')).catch(()=>hint('Kunne ikke kopiere. Ta et skjermbilde av loggen i stedet.'));},'photo-fallback':startPhotos
   })[a]?.();
@@ -662,7 +663,8 @@ async function startCamera(){
     if(S.caps.gyro&&typeof DeviceOrientationEvent!=='undefined'&&typeof DeviceOrientationEvent.requestPermission==='function'){
       try{S.gyro.perm=await DeviceOrientationEvent.requestPermission();}catch(e){S.gyro.perm='denied';}
     }
-    stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'},width:{ideal:1280},height:{ideal:720}},audio:false});
+    stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'},width:{ideal:1600},height:{ideal:1200},aspectRatio:{ideal:4/3}},audio:false});
+    await wideAngle(stream);
     video=document.createElement('video');video.playsInline=true;video.muted=true;video.srcObject=stream;
     await video.play();
     S.views=[{kind:'video',surfaces:[]}];S.cur=0;S.sel=-1;bgKey=null;
@@ -680,6 +682,7 @@ async function startCamera(){
     hint('Kamera ikke i bruk.');
   }
 }
+async function wideAngle(st){try{const t=st.getVideoTracks()[0],c=t.getCapabilities&&t.getCapabilities();if(c&&c.zoom&&c.zoom.min!=null)await t.applyConstraints({advanced:[{zoom:c.zoom.min}]});}catch(e){}}
 function stopStream(){if(stream){stream.getTracks().forEach(t=>t.stop());stream=null;}if(video){video.srcObject=null;}}
 /* gyro: relative rotation only. Needs portrait orientation. */
 let orientHandler=null;
@@ -709,7 +712,8 @@ async function startPhotos(){
     if(S.caps.gyro&&typeof DeviceOrientationEvent!=='undefined'&&typeof DeviceOrientationEvent.requestPermission==='function'){
       try{S.gyro.perm=await DeviceOrientationEvent.requestPermission();}catch(e){S.gyro.perm='denied';}
     }
-    stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'},width:{ideal:1920},height:{ideal:1080}},audio:false});
+    stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'},width:{ideal:1600},height:{ideal:1200},aspectRatio:{ideal:4/3}},audio:false});
+    await wideAngle(stream);
     startGyro();
   }catch(e){stream=null;}
   photoGuide();
@@ -765,7 +769,7 @@ function photosDone(){
 /* ---------------------------------------------------------------- mode: WebXR AR (separate module, loaded only when chosen) */
 async function startXR(){
   try{
-    xrMod=xrMod||await import('./tryroom-ar-v1.js?v=2');
+    xrMod=xrMod||await import('./tryroom-ar-v1.js?v=3');
     close(true);
     await xrMod.start({
       S,PREC,MATFN,FORMATS,GROUTS,STONES,generateStone,T,materials:MATS(),

@@ -49,6 +49,39 @@ void main(){
  float mpp=.01;if(q2.z>.5&&q3.z>.5)mpp=max(length(q2.xy-q.xy),length(q3.xy-q.xy));
  gl_FragColor=vec4(matColor(q.xy,mpp)*u_gain,alpha);}`;
 
+/* Plane mode (no camera picture): ARCore hit-test hits decide what is floor, wall or furniture top, and are accumulated into a map. */
+const FS_PL=(PREC,MATFN,wall)=>PREC+(wall?'#define WALL\n':'')+`uniform mat4 u_invVP;uniform vec3 u_o,u_mk;uniform vec4 u_vp;uniform vec2 u_n,u_s;uniform float u_floorY,u_gain,u_d,u_H;uniform sampler2D u_mask;`+MATFN+`
+vec3 rayDir(vec2 fc){
+ vec2 ndc=(fc-u_vp.xy)/u_vp.zw*2.-1.;
+ vec4 n=u_invVP*vec4(ndc,-1.,1.);vec4 f=u_invVP*vec4(ndc,1.,1.);
+ return normalize(f.xyz/f.w-n.xyz/n.w);}
+vec3 planeUV(vec3 d,out vec3 P){
+ P=u_o;
+#ifdef WALL
+ float den=dot(u_n,d.xz);if(abs(den)<1e-3)return vec3(0.);
+ float t=(u_d-dot(u_n,u_o.xz))/den;if(t<=0.)return vec3(0.);
+ P=u_o+d*t;vec2 tg=vec2(-u_n.y,u_n.x);
+ return vec3(dot(tg,P.xz),P.y-u_floorY,1.);
+#else
+ if(d.y>-.02)return vec3(0.);
+ float t=(u_floorY-u_o.y)/d.y;P=u_o+d*t;return vec3(P.xz,1.);
+#endif
+}
+void main(){
+ vec3 P;vec3 d=rayDir(gl_FragCoord.xy);vec3 q=planeUV(d,P);if(q.z<.5)discard;
+ float alpha;
+#ifdef WALL
+ alpha=smoothstep(0.,.12,q.x-u_s.x)*smoothstep(0.,.12,u_s.y-q.x)*smoothstep(-.03,.08,q.y)*smoothstep(0.,.15,u_H-q.y);
+#else
+ vec2 mu=(P.xz-u_mk.xy)/u_mk.z+.5;if(mu.x<0.||mu.x>1.||mu.y<0.||mu.y>1.)discard;
+ vec2 mb=texture2D(u_mask,mu).rg;
+ alpha=smoothstep(.3,.6,mb.r*(1.-mb.g))*(1.-smoothstep(9.,18.,length(P-u_o)));
+#endif
+ if(alpha<=.003)discard;
+ vec3 P2;vec3 q2=planeUV(rayDir(gl_FragCoord.xy+vec2(1.,0.)),P2);vec3 P3;vec3 q3=planeUV(rayDir(gl_FragCoord.xy+vec2(0.,1.)),P3);
+ float mpp=.01;if(q2.z>.5&&q3.z>.5)mpp=max(length(q2.xy-q.xy),length(q3.xy-q.xy));
+ gl_FragColor=vec4(matColor(q.xy,mpp)*u_gain,alpha);}`;
+
 export async function start(opt){
   const {S,PREC,MATFN,FORMATS,GROUTS,STONES,generateStone,T,materials}=opt;
   const T0=performance.now(),logLines=[];let dbgEl=null,userEnd=false,quoteEnd=false;
@@ -85,7 +118,7 @@ export async function start(opt){
   <div class="ar-busy" data-x="busy">Analyserer rommet …</div>
   <div class="ar-bot">
    <div class="ar-row"><button class="ar-b on" data-x="mf">Gulv</button><button class="ar-b" data-x="mw">Vegg</button>
-     <button class="ar-b" data-x="redo">Analyser på nytt</button><button class="ar-b on" data-x="live">Live</button><button class="ar-b pri" data-x="quote">Be om tilbud</button><button class="ar-b" data-x="cam" style="display:none">Bruk Live kamera</button><button class="ar-b" data-x="dbgt">Logg</button></div>
+     <button class="ar-b" data-x="redo">Analyser på nytt</button><button class="ar-b on" data-x="live">Live</button><button class="ar-b pri" data-x="quote">Be om tilbud</button><button class="ar-b" data-x="reset">Nullstill</button><button class="ar-b" data-x="cam" style="display:none">Bruk Live kamera</button><button class="ar-b" data-x="dbgt">Logg</button></div>
    <div class="ar-strip" data-x="strip"></div>
    <div class="ar-row"><select class="ar-sel" data-x="fmt"></select>
      ${[0,45,90].map(a=>`<button class="ar-b" data-rot="${a}">${a}°</button>`).join('')}
@@ -120,7 +153,7 @@ export async function start(opt){
     if(!gl.getProgramParameter(p,gl.LINK_STATUS))throw new Error('Program: '+gl.getProgramInfoLog(p));
     const u={};for(let i=0,n=gl.getProgramParameter(p,gl.ACTIVE_UNIFORMS);i<n;i++){const inf=gl.getActiveUniform(p,i);u[inf.name]=gl.getUniformLocation(p,inf.name);}return {p,u};};
   let P;
-  try{P={blit:program(FS_BLIT),floor:program(FS_AR(PREC,MATFN,false)),wall:program(FS_AR(PREC,MATFN,true))};}
+  try{P={blit:program(FS_BLIT),floor:program(FS_AR(PREC,MATFN,false)),wall:program(FS_AR(PREC,MATFN,true)),pfloor:program(FS_PL(PREC,MATFN,false)),pwall:program(FS_PL(PREC,MATFN,true))};}
   catch(e){log('Shader/program: '+e.message);ui.remove();canvas.remove();window.removeEventListener('error',onErr);window.removeEventListener('unhandledrejection',onErr);throw e;}
   log('WebGL ok, shadere kompilert');
   const buf=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,buf);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,1,1]),gl.STATIC_DRAW);gl.enableVertexAttribArray(0);gl.vertexAttribPointer(0,2,gl.FLOAT,false,0,0);
@@ -176,7 +209,7 @@ export async function start(opt){
     const x=gl.getExtension('WEBGL_lose_context');if(x)x.loseContext();
   };
   try{
-    session=await navigator.xr.requestSession('immersive-ar',{requiredFeatures:['local'],optionalFeatures:['camera-access','hit-test','dom-overlay'],domOverlay:{root:ui}});
+    session=await navigator.xr.requestSession('immersive-ar',{requiredFeatures:['local'],optionalFeatures:['camera-access','hit-test','dom-overlay','plane-detection','anchors'],domOverlay:{root:ui}});
     log('økt startet; aktiverte funksjoner: '+(session.enabledFeatures?Array.from(session.enabledFeatures).join(', '):'(kan ikke leses)'));
     session.addEventListener('end',()=>{
       const sec=(performance.now()-T0)/1000;
@@ -190,10 +223,12 @@ export async function start(opt){
     log('referanserom ok; XRWebGLBinding '+(binding?'ja':'NEI'));
     try{
       const viewer=await session.requestReferenceSpace('viewer');
-      for(const [pitch,yaw] of [[0,0],[12,0],[25,0],[25,16],[25,-16],[40,0]]){
+      // 5 columns x 8 rows of rays across the view; ARCore only answers where it has found a surface
+      const rays=[];for(const yaw of [-18,-9,0,9,18])for(const pitch of [22,11,0,-10,-20,-30,-40,-50])rays.push([pitch,yaw]);
+      hitSources=await Promise.all(rays.map(([pitch,yaw])=>{
         const pr=pitch*Math.PI/180,yr=yaw*Math.PI/180;
-        hitSources.push(await session.requestHitTestSource({space:viewer,offsetRay:new XRRay({x:0,y:0,z:0,w:1},{x:Math.sin(yr)*Math.cos(pr),y:-Math.sin(pr),z:-Math.cos(yr)*Math.cos(pr),w:0})}));
-      }
+        return session.requestHitTestSource({space:viewer,offsetRay:new XRRay({x:0,y:0,z:0,w:1},{x:Math.sin(yr)*Math.cos(pr),y:Math.sin(pr),z:-Math.cos(yr)*Math.cos(pr),w:0})});
+      }));
       log('hit-test: '+hitSources.length+' kilder');
     }catch(e){log('hit-test utilgjengelig: '+e.message);hitSources=[];}
   }catch(e){
@@ -207,8 +242,7 @@ export async function start(opt){
   const maskTexture=(prob,w,h)=>{const u8=new Uint8Array(w*h);for(let i=0;i<u8.length;i++)u8[i]=Math.round(clamp(prob[i],0,1)*255);
     const t=mkTex();gl.bindTexture(gl.TEXTURE_2D,t);gl.pixelStorei(gl.UNPACK_ALIGNMENT,1);gl.texImage2D(gl.TEXTURE_2D,0,gl.LUMINANCE,w,h,0,gl.LUMINANCE,gl.UNSIGNED_BYTE,u8);return t;};
   function dispose(list){for(const sf of list)gl.deleteTexture(sf.maskTex);}
-  function currentFloorY(camY){return st.floorSamples.length>=6?median(st.floorSamples):camY-1.45;}
-  const median=a=>{const b=a.slice().sort((x,y)=>x-y);return b[b.length>>1];};
+  function currentFloorY(camY){if(st.floorSamples.length<8)return camY-1.45;const b=st.floorSamples.slice().sort((x,y)=>x-y);return b[Math.floor(b.length*.15)];}
 
   function fitPlanes(cap,floorY){
     const {w,h}=cap.seg,fp=(gx,gy)=>{
@@ -287,6 +321,65 @@ export async function start(opt){
   }
   const angle=(a,b)=>Math.acos(clamp(a[0]*b[0]+a[1]*b[1]+a[2]*b[2],-1,1));
 
+  /* ---------------- plane mode: accumulate ARCore hits ---------------- */
+  const G=96,CELL=.12,pm={cx:null,cz:null,floor:new Float32Array(G*G),block:new Float32Array(G*G),tex:null,dirty:false,lastUp:0,walls:[],nFloor:0,nBlock:0,nWallHits:0};
+  pm.tex=mkTex();
+  const cellOf=(x,z)=>[Math.floor((x-pm.cx)/CELL+G/2),Math.floor((z-pm.cz)/CELL+G/2)];
+  function stamp(arr,x,z,r,v){
+    if(pm.cx==null)return;const [ix,iz]=cellOf(x,z),rc=Math.ceil(r/CELL);
+    for(let dz=-rc;dz<=rc;dz++)for(let dx=-rc;dx<=rc;dx++){
+      const cx=ix+dx,cz=iz+dz;if(cx<0||cz<0||cx>=G||cz>=G)continue;
+      const d=Math.hypot(dx,dz)*CELL;if(d>r)continue;
+      const w=v*(1-Math.min(1,Math.max(0,(d-r*.55)/(r*.45)))),k=cz*G+cx;if(w>arr[k])arr[k]=w;
+    }
+    pm.dirty=true;
+  }
+  function wallSample(px,py,pz,nx,nz){
+    const L=Math.hypot(nx,nz);if(L<.5)return;nx/=L;nz/=L;const d=nx*px+nz*pz;let best=null;
+    for(const w of pm.walls){if(w.nx*nx+w.nz*nz>Math.cos(12*Math.PI/180)&&Math.abs(w.d-d)<.15){best=w;break;}}
+    if(!best){if(pm.walls.length>=8)return;best={nx,nz,d,n:0,s0:1e9,s1:-1e9};pm.walls.push(best);}
+    const k=best.n/(best.n+1);best.nx=best.nx*k+nx/(best.n+1);best.nz=best.nz*k+nz/(best.n+1);
+    const nl=Math.hypot(best.nx,best.nz);best.nx/=nl;best.nz/=nl;best.d=best.d*k+d/(best.n+1);best.n++;
+    const s=-best.nz*px+best.nx*pz;if(s<best.s0)best.s0=s;if(s>best.s1)best.s1=s;pm.nWallHits++;
+  }
+  function processHits(frame,m,camY){
+    const horiz=[];
+    for(const hs of hitSources){
+      const r=frame.getHitTestResults(hs)[0];if(!r)continue;const hp=r.getPose(ref);if(!hp)continue;
+      const h=hp.transform.matrix,px=h[12],py=h[13],pz=h[14],ny=h[5],dist=Math.hypot(px-m[12],py-m[13],pz-m[14]);
+      if(ny>.9&&py<camY-.35){st.floorSamples.push(py);if(st.floorSamples.length>150)st.floorSamples.shift();horiz.push([px,py,pz,dist]);}
+      else if(Math.abs(ny)<.3&&py>camY-1.6)wallSample(px,py,pz,h[4],h[6]);
+    }
+    const fy=st.floorY==null?camY-1.45:st.floorY;
+    for(const [x,y,z,dist] of horiz){
+      if(pm.cx==null&&Math.abs(y-fy)<.12){pm.cx=x;pm.cz=z;}
+      if(Math.abs(y-fy)<.1)stamp(pm.floor,x,z,clamp(.1+.05*dist,.12,.4),1);
+      else if(y>fy+.15&&y<fy+1.2)stamp(pm.block,x,z,.3,1); // a table top / sofa seat: furniture footprint, no floor material under it
+    }
+    pm.nFloor=0;for(let i=0;i<pm.floor.length;i++)if(pm.floor[i]>.5)pm.nFloor++;
+    st.hasFloor=pm.nFloor>20;st.hasWall=pm.walls.some(w=>w.n>=8);
+  }
+  function uploadPm(now){
+    if(!pm.dirty||now-pm.lastUp<180)return;pm.lastUp=now;pm.dirty=false;
+    const u8=new Uint8Array(G*G*4);for(let i=0;i<G*G;i++){u8[i*4]=Math.round(clamp(pm.floor[i],0,1)*255);u8[i*4+1]=Math.round(clamp(pm.block[i],0,1)*255);u8[i*4+3]=255;}
+    gl.activeTexture(gl.TEXTURE2);gl.bindTexture(gl.TEXTURE_2D,pm.tex);gl.pixelStorei(gl.UNPACK_ALIGNMENT,4);gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,G,G,0,gl.RGBA,gl.UNSIGNED_BYTE,u8);
+  }
+  function drawPlanes(inv,m,vp){
+    const gain=.82;
+    if(pm.cx!=null&&pm.nFloor>20&&bindMaterialFor(P.pfloor,S.floorId)){
+      const u=P.pfloor.u;gl.activeTexture(gl.TEXTURE2);gl.bindTexture(gl.TEXTURE_2D,pm.tex);gl.uniform1i(u.u_mask,2);
+      gl.uniformMatrix4fv(u.u_invVP,false,inv);gl.uniform3f(u.u_o,m[12],m[13],m[14]);gl.uniform4f(u.u_vp,vp.x,vp.y,vp.width,vp.height);
+      gl.uniform3f(u.u_mk,pm.cx,pm.cz,G*CELL);gl.uniform1f(u.u_floorY,st.floorY);gl.uniform1f(u.u_gain,gain);quad();
+    }
+    for(const w of pm.walls){
+      if(w.n<8||w.s1-w.s0<.5||!bindMaterialFor(P.pwall,S.wallId))continue;
+      const u=P.pwall.u;gl.uniformMatrix4fv(u.u_invVP,false,inv);gl.uniform3f(u.u_o,m[12],m[13],m[14]);gl.uniform4f(u.u_vp,vp.x,vp.y,vp.width,vp.height);
+      gl.uniform2f(u.u_n,w.nx,w.nz);gl.uniform1f(u.u_d,w.d);gl.uniform2f(u.u_s,w.s0-.2,w.s1+.2);gl.uniform1f(u.u_H,2.5);
+      gl.uniform1f(u.u_floorY,st.floorY);gl.uniform1f(u.u_gain,gain);quad();
+    }
+  }
+  function bindMaterialFor(pr,id){gl.useProgram(pr.p);return bindMaterial(pr.u,id);}
+
   /* ---------------- frame loop ---------------- */
   const quad=()=>gl.drawArrays(gl.TRIANGLE_STRIP,0,4);
   let lastSum=0,camSeen=0,camMissing=0,reported=false;
@@ -303,18 +396,15 @@ export async function start(opt){
     const view=pose.views[0],vp=layer.getViewport(view),m=view.transform.matrix,camY=m[13];
     st.frames++;if(!st.t0)st.t0=time;
     if(view.camera){camSeen++;if(camSeen===1)log('kamerabilde mottatt: '+view.camera.width+'x'+view.camera.height);}else camMissing++;
-    if(!camSeen&&camMissing===60&&!reported){reported=true;log('INGEN kamerabilde (view.camera er null) etter 60 bilderuter');hint('<b>Denne telefonen eller nettleseren gir ikke kamerabildet til AR</b> (camera-access). Da kan vi ikke gjenkjenne rommet i AR.');$('cam').style.display='';}
-    if(time-lastSum>3000){lastSum=time;log('bilder='+st.frames+' kamera='+(view.camera?'ja':'nei')+' gulvprøver='+st.floorSamples.length+' gulvY='+(st.floorY==null?'-':st.floorY.toFixed(2))+' flater='+st.surfaces.length+(st.busy?' (analyserer)':''));}
+    if(!camSeen&&camMissing===60&&!reported){reported=true;log('INGEN kamerabilde (view.camera er null) etter 60 bilderuter');hint('<b>Plan-modus:</b> nettleseren gir ikke kamerabildet til AR, så AI-gjenkjenning er ikke mulig her. AR finner i stedet gulv og vegger selv: beveg mobilen rolig langs gulv og vegger så fylles flatene inn. Møbler og vinduer på veggen kan ikke utelukkes automatisk.');$('cam').style.display='';}
+    if(time-lastSum>3000){lastSum=time;log('bilder='+st.frames+' kamera='+(view.camera?'ja':'nei')+' gulvprøver='+st.floorSamples.length+' gulvY='+(st.floorY==null?'-':st.floorY.toFixed(2))+' flater='+st.surfaces.length+' gulvceller='+pm.nFloor+' møbelceller='+pm.nBlock+' vegger='+pm.walls.filter(w=>w.n>=8).length+(st.busy?' (analyserer)':''));}
 
-    // floor height from real hit-tests (horizontal surfaces below the phone)
-    for(const hs of hitSources){
-      const r=frame.getHitTestResults(hs)[0];if(!r)continue;const hp=r.getPose(ref);if(!hp)continue;
-      const hm=hp.transform.matrix;
-      if(hm[5]>.9&&hm[13]<camY-.6){st.floorSamples.push(hm[13]);if(st.floorSamples.length>60)st.floorSamples.shift();}
-    }
+    // floor / wall / furniture from ARCore hits
+    processHits(frame,m,camY);
     const fy=currentFloorY(camY);
-    if(st.floorSamples.length>=6&&!st.floorLocked){st.floorLocked=true;hint('Gulv målt: '+(camY-fy).toFixed(2)+' m under telefonen. Analyserer rommet …');}
+    if(st.floorSamples.length>=8&&!st.floorLocked){st.floorLocked=true;hint('Gulv målt: '+(camY-fy).toFixed(2)+' m under telefonen.'+(camSeen?' Analyserer rommet …':' Beveg mobilen rolig langs gulv og vegger, så fylles flatene inn.'));}
     if(st.floorY==null||(st.floorLocked&&Math.abs(fy-st.floorY)>.03)){st.floorY=fy;if(st.cap)refit();}else if(!st.floorLocked)st.floorY=fy;
+    uploadPm(time);
 
     // schedule analysis: first one after tracking has settled, then when the phone has moved/turned or the result is old
     const cam=view.camera;
@@ -328,10 +418,10 @@ export async function start(opt){
     }
 
     // draw
-    if(!st.cap||!st.surfaces.length)return;
     gl.bindFramebuffer(gl.FRAMEBUFFER,layer.framebuffer);gl.viewport(vp.x,vp.y,vp.width,vp.height);
     gl.enable(gl.BLEND);gl.blendFuncSeparate(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA,gl.ONE,gl.ONE_MINUS_SRC_ALPHA);
     const VPn=MA.mat4Mul(view.projectionMatrix,view.transform.inverse.matrix),inv=MA.mat4Inv(VPn);if(!inv)return;
+    if(!st.cap||!st.surfaces.length){if(camMissing>60&&!camSeen)drawPlanes(inv,m,vp);return;}
     for(const sf of st.surfaces){
       const wall=sf.type==='wall',pr=wall?P.wall:P.floor,u=pr.u;gl.useProgram(pr.p);
       if(!bindMaterial(u,wall?S.wallId:S.floorId))continue;
@@ -354,6 +444,7 @@ export async function start(opt){
     if(b.dataset.grout){S.grout=b.dataset.grout;renderUi();return;}
     switch(b.dataset.x){
       case 'end':userEnd=true;session.end().catch(()=>{});break;
+      case 'reset':pm.floor.fill(0);pm.block.fill(0);pm.walls.length=0;pm.cx=null;pm.cz=null;pm.dirty=true;st.floorSamples.length=0;st.floorLocked=false;hint('Nullstilt. Beveg mobilen rolig langs gulv og vegger.');break;
       case 'dbgt':dbgEl.style.display=dbgEl.style.display==='none'?'':'none';break;
       case 'cam':userEnd=true;session.end().catch(()=>{});setTimeout(()=>opt.onFallback&&opt.onFallback('bruker'),200);break;
       case 'mf':matFor='floor';renderUi();break;
