@@ -167,3 +167,77 @@ export function wallPlanes(seg,cam,Hc,maxWalls=3){
   }
   return {planes:out,labels};
 }
+
+/* ======================= v2: cleaner class maps, several wall planes per wall region (room corners) ======================= */
+
+/* 3x3 majority vote on a class map: removes speckle and ragged edges. */
+export function majority3(cls,w,h){
+  const out=new Uint8Array(cls.length),vals=new Uint8Array(9),cnts=new Uint8Array(9);
+  for(let y=0;y<h;y++)for(let x=0;x<w;x++){
+    let n=0;
+    for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++){
+      const xx=x+dx,yy=y+dy;if(xx<0||yy<0||xx>=w||yy>=h)continue;
+      const c=cls[yy*w+xx];let k=0;while(k<n&&vals[k]!==c)k++;
+      if(k===n){vals[n]=c;cnts[n]=0;n++;}cnts[k]++;
+    }
+    let bi=0;for(let k=1;k<n;k++)if(cnts[k]>cnts[bi])bi=k;
+    out[y*w+x]=cnts[bi]>=5?vals[bi]:cls[y*w+x];
+  }
+  return out;
+}
+export function boxBlur3(a,w,h){
+  const o=new Float32Array(a.length);
+  for(let y=0;y<h;y++)for(let x=0;x<w;x++){
+    let s=0,n=0;
+    for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++){const xx=x+dx,yy=y+dy;if(xx<0||yy<0||xx>=w||yy>=h)continue;s+=a[yy*w+xx];n++;}
+    o[y*w+x]=s/n;
+  }
+  return o;
+}
+/* Angle in radians between two orientation matrices. */
+export function rotAngle(A,B){
+  const M=mul3(transpose3(A),B),c=(M[0]+M[4]+M[8]-1)/2;return Math.acos(Math.max(-1,Math.min(1,c)));
+}
+
+/* Wall planes with corner support. One wall region can contain several walls (an inside corner). Its floor line is split into
+ * straight pieces; every image column is assigned to the piece whose floor points it holds. Returns
+ * {planes:[{key,comp,sub,p0,u,cols|null,inliers,fallback}],labels}. cols[x] = piece index for grid column x (or -1). */
+export function wallPlanes2(seg,cam,Hc,maxRegions=3,maxPieces=3){
+  const {cls,w,h}=seg,{labels,comps}=components(cls,w,h,0,.02),planes=[];
+  for(const c of comps.slice(0,maxRegions)){
+    const items=[];
+    for(const b of wallFloorBoundary(cls,labels,c.id,w,h)){
+      const p=pixelFloorPoint(b[0]/w*cam.vw,b[1]/h*cam.vh,cam.R,cam.cx,cam.cy,cam.f,Hc);
+      if(p&&Math.hypot(p[0],p[1])<30)items.push({b,p});
+    }
+    let rest=items.slice();const lines=[];
+    while(lines.length<maxPieces&&rest.length>=6){
+      const ln=fitLine(rest.map(i=>i.p));if(!ln)break;
+      const inl=[],out=[];
+      for(const it of rest){const d=Math.abs(ln.u[0]*(it.p[1]-ln.p0[1])-ln.u[1]*(it.p[0]-ln.p0[0]));(d<.15?inl:out).push(it);}
+      if(inl.length<Math.max(6,.18*items.length))break;
+      lines.push({ln,inl});rest=out;
+    }
+    // merge near-collinear pieces (same wall seen twice)
+    for(let i=0;i<lines.length;i++)for(let j=lines.length-1;j>i;j--){
+      const a=lines[i].ln,b=lines[j].ln,dot=Math.abs(a.u[0]*b.u[0]+a.u[1]*b.u[1]),off=Math.abs(a.u[0]*(b.p0[1]-a.p0[1])-a.u[1]*(b.p0[0]-a.p0[0]));
+      if(dot>Math.cos(8*Math.PI/180)&&off<.2){lines[i].inl=lines[i].inl.concat(lines[j].inl);lines.splice(j,1);}
+    }
+    if(!lines.length){
+      const f0=pixelToWorldRay(cam.vw/2,cam.vh/2,cam.R,cam.cx,cam.cy,cam.f),hd=Math.hypot(f0[0],f0[1])||1,fx=f0[0]/hd,fy=f0[1]/hd;
+      planes.push({key:c.id+'_0',comp:c.id,sub:0,p0:[fx*3.5,fy*3.5],u:[-fy,fx],cols:null,inliers:0,fallback:true});continue;
+    }
+    const cols=new Int8Array(w).fill(-1);
+    lines.forEach((L,idx)=>{for(const it of L.inl)cols[Math.min(w-1,Math.floor(it.b[0]))]=idx;});
+    // columns without a floor point (hidden by furniture) take the nearest assigned column
+    const last=new Int16Array(w).fill(-1);let prev=-1;
+    for(let x=0;x<w;x++){if(cols[x]>=0)prev=x;last[x]=prev;}
+    let nxt=-1;
+    for(let x=w-1;x>=0;x--){
+      if(cols[x]>=0)nxt=x;
+      if(cols[x]<0){const l=last[x],n=nxt;const pick=(l<0)?n:(n<0)?l:(x-l<=n-x?l:n);if(pick>=0)cols[x]=cols[pick];}
+    }
+    lines.forEach((L,idx)=>planes.push({key:c.id+'_'+idx,comp:c.id,sub:idx,p0:L.ln.p0,u:L.ln.u,cols,inliers:L.inl.length,fallback:false}));
+  }
+  return {planes,labels};
+}

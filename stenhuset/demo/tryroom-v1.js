@@ -9,7 +9,7 @@
  *  3. Guidede bilder: a few still photos of the room, each edited with the same marking tools and the same material choice.
  *     The result is separate edited images, not a reconstructed 3D model.
  * Inventory (sink, sofa ...) is kept visible with a manual "keep visible" brush painted in the surface's own coordinates. */
-import * as MA from './tryroom-math-v1.js?v=2';
+import * as MA from './tryroom-math-v1.js?v=3';
 import {STONES,generateStone,T} from './stone-textures-v1.js';
 
 const MOBILE=typeof matchMedia==='function'&&matchMedia('(pointer:coarse)').matches;
@@ -23,7 +23,7 @@ const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',
 const S={
   mode:null,caps:null,floorId:'bastide-beige',wallId:'carrara-c',
   fmt:'natural',rot:0,bond:false,grout:GROUTS[0][1],scale:1,
-  views:[],cur:0,sel:-1,mark:null,brush:null,brushR:34,tab:'surf',frozen:false,matType:'floor',dark:false,xr:null,hc:1.4,pitch:20,autoBusy:false,autoSel:0,selKind:'manual',frozenR:null,lastError:null,
+  views:[],cur:0,sel:-1,mark:null,brush:null,brushR:34,tab:'surf',frozen:false,matType:'floor',dark:false,xr:null,hc:1.4,pitch:20,autoBusy:false,aiBusy:false,live:true,autoSel:0,selKind:'manual',frozenR:null,lastError:null,
   gyro:{on:false,ref:null,now:null,fov:65},busy:0,msg:''
 };
 let segMod=null,root,cv,ov,gl,P={},tex={},stream,video,raf=0,lumCtx,lumData,lumT=0,lumAvgFrame=.5,drag=null,photoInput,catalogP=null,xrMod=null;
@@ -109,9 +109,9 @@ function showStart(){
   sheet().style.display='';dock().hidden=true;
   sheet().innerHTML=`<h2>Prøv i mitt rom</h2>
   <p>Se Stenhusets materialer på gulv og vegger i ditt eget rom. Alt skjer på din egen enhet. Bilder og video lastes ikke opp noe sted.</p>
-  <button class="tr-opt" data-act="start-xr" ${c.xr?'':'disabled'}><strong>Live AR <small>Beta</small></strong><span>${c.xr?'Materialet festes til gulv og vegg i rommet mens du beveger deg. Støttet på denne enheten. Ikke testet på alle mobiler ennå.':'Ikke tilgjengelig her. Krever WebXR AR (Chrome på en ARCore-støttet Android-telefon). iPhone og iPad støtter ikke dette i nettleseren.'}</span></button>
-  <button class="tr-opt" data-act="start-cam" ${c.cam&&c.secure?'':'disabled'}><strong>Kamera og markering</strong><span>Du ser rommet i kameraet. En AI-modell på mobilen din finner gulv, vegger og møbler, og materialet legges bare på gulv og vegg. Du kan rette opp med børste eller markere flaten selv. Materialet følger med når du dreier mobilen, men ikke når du går sidelengs. Første gang lastes en liten modell (4 MB) og et analysebibliotek ned.${c.cam&&c.secure?'':' Krever kamera og sikker (https) tilkobling.'}</span></button>
-  <button class="tr-opt" data-act="start-photo"><strong>Ta bilder av rommet</strong><span>Vi veileder deg gjennom noen bilder av rommet. Du markerer flatene i hvert bilde, og samme materialvalg brukes i alle. Resultatet er ferdige bilder du kan lagre og sende, ikke en 3D-modell av rommet.</span></button>
+  <button class="tr-opt" data-act="start-cam" ${c.cam&&c.secure?'':'disabled'}><strong>Live kamera <small>Automatisk</small></strong><span>Du ser rommet i kameraet, og en AI-modell på mobilen din finner gulv, vegger og møbler av seg selv. Materialet legges bare på gulv og vegg, følger perspektivet og holder seg på plass når du dreier mobilen. Oppdateres automatisk når du flytter deg. Første gang lastes en liten modell (4 MB) og et analysebibliotek ned.${c.cam&&c.secure?'':' Krever kamera og sikker (https) tilkobling.'}</span></button>
+  <button class="tr-opt" data-act="start-photo"><strong>Ta bilder av rommet</strong><span>Vi veileder deg gjennom noen bilder i appen. Hvert bilde tar vare på mobilens vinkel, og gulv og vegger gjenkjennes automatisk. Samme materialvalg brukes i alle bilder. Resultatet er ferdige bilder du kan lagre og sende, ikke en 3D-modell av rommet.</span></button>
+  <button class="tr-opt" data-act="start-xr" ${c.xr?'':'disabled'}><strong>Live AR <small>Beta</small></strong><span>${c.xr?'Materialet festes til gulv og vegg mens du går rundt. Her setter du punkter selv, og møbler holdes ikke utenfor. Ikke testet på alle telefoner. Bruk «Live kamera» hvis du vil ha automatikk.':'Ikke tilgjengelig her. Krever WebXR AR (Chrome på en ARCore-støttet Android-telefon). iPhone og iPad støtter ikke dette i nettleseren.'}</span></button>
   <p style="font-size:12px;color:#aaa49a">Tips: god belysning, hold mobilen stående, og ha gulv og vegger tydelig i bildet.</p>`;
   hint('Velg hvordan du vil prøve materialene.');
 }
@@ -238,7 +238,7 @@ function getMaterial(id,flat){
   };
   step();return null;
 }
-const busyUi=()=>{const b=root&&root.querySelector('.tr-busy');if(b)b.classList.toggle('on',S.busy>0);};
+const busyUi=()=>{const b=root&&root.querySelector('.tr-busy');if(!b)return;b.textContent=S.aiBusy?'Analyserer rommet …':'Lager steinstruktur …';b.classList.toggle('on',S.busy>0||S.aiBusy);};
 
 /* ---------------------------------------------------------------- views + coordinates */
 const curView=()=>S.views[S.cur];
@@ -364,6 +364,7 @@ function frame(now){
   const view=curView();if(!view||!gl)return;
   try{
   followGyro();
+  if(view.auto)autoTick(now,view);
   const c=cover();
   const src=source();if(src){if(view.kind==='video'&&!S.frozen)updateLum(now,false);else if(view.kind==='img'&&bgKey!==view)updateLum(0,true);}
   if(!drawBackground(view))return;
@@ -449,7 +450,7 @@ function paintAuto(px){
   const pc=MA.worldRayToPixel(d,cam.R,cam.cx,cam.cy,cam.f);if(!pc)return;
   const dpr=cv.width/ov.getBoundingClientRect().width,rpx=S.brushR*dpr,rx=rpx/cv.width*c[0]*cam.vw/cam.vw,ry=rpx/cv.height*c[1];
   const g=sf.userCanvas.getContext('2d');g.fillStyle=S.brush==='hide'?'#ff0000':S.brush==='add'?'#00ff00':'#000000';
-  g.beginPath();g.ellipse(pc[0]/cam.vw*256,pc[1]/cam.vh*256,Math.max(1,rx*256),Math.max(1,ry*256),0,0,7);g.fill();sf.userDirty=true;
+  g.beginPath();g.ellipse(pc[0]/cam.vw*256,pc[1]/cam.vh*256,Math.max(1,rx*256),Math.max(1,ry*256),0,0,7);g.fill();sf.userDirty=true;a.edited=true;
 }
 function paint(px,cssPt){
   const s=curView().surfaces[S.sel];if(!s||!s._Hinv)return;
@@ -482,10 +483,11 @@ function autoPane(v){
   const a=v&&v.auto;
   let h='<div class="tr-row"><button class="tr-btn pri" data-act="auto" '+(S.autoBusy?'disabled':'')+'>'+(S.autoBusy?'Analyserer …':a?'Finn flater på nytt':'Finn gulv og vegger automatisk')+'</button></div>';
   if(!a)return h+'<p style="font-size:12px;line-height:1.55;color:#aaa49a;margin:0 0 12px">Rett kameraet mot rommet og trykk. Bildet analyseres på mobilen din av en AI-modell (4 MB som lastes ned første gang, bildet sendes ikke noe sted). Gulv, vegger og møbler skilles fra hverandre.</p>';
+  if(v.kind==='video')h+=`<label style="display:flex;gap:10px;align-items:center;font-size:12px;margin:0 0 12px"><input type="checkbox" data-live ${S.live?'checked':''}> Live-oppdatering: analyserer på nytt når du flytter kameraet${a.edited?' <span style="color:#ffd9a0">(stoppet etter manuell retting)</span>':''}</label>`;
   h+='<span class="tr-lbl">Funnet</span><div class="tr-row">'+(a.surfaces.length?a.surfaces.map((x,i)=>`<button class="tr-btn ${S.selKind==='auto'&&S.autoSel===i?'on':''}" data-asel="${i}">${x.name}${x.fallback?' (anslag)':''}</button>`).join(''):'<span style="font-size:12px;color:#ffd9a0">Ingen gulv eller vegg funnet</span>')+'</div>';
   h+=`<span class="tr-lbl">Kamerahøyde: ${S.hc.toFixed(2)} m</span><input type="range" min="90" max="190" value="${Math.round(S.hc*100)}" data-hc style="width:100%;margin-bottom:10px">`;
   h+=`<span class="tr-lbl">Synsfelt: ${S.gyro.fov}°</span><input type="range" min="50" max="85" value="${S.gyro.fov}" data-fov style="width:100%;margin-bottom:10px">`;
-  if(v.kind!=='video'||!a.cap.gyro)h+=`<span class="tr-lbl">Kameravinkel nedover: ${S.pitch}°</span><input type="range" min="0" max="60" value="${S.pitch}" data-pitch style="width:100%;margin-bottom:10px">`;
+  if(!a.cap.gyro)h+=`<span class="tr-lbl">Kameravinkel nedover: ${S.pitch}°</span><input type="range" min="0" max="60" value="${S.pitch}" data-pitch style="width:100%;margin-bottom:10px">`;
   h+='<p style="font-size:11.5px;line-height:1.55;color:#aaa49a;margin:0 0 10px">Høyde og synsfelt styrer skala og perspektiv. De er anslag til du justerer dem selv.</p>';
   if(S.selKind==='auto'&&a.surfaces[S.autoSel])h+=`<span class="tr-lbl">Rett opp valgt flate</span><div class="tr-row"><button class="tr-btn ${S.brush==='hide'?'on':''}" data-act="brush-hide">Behold synlig</button><button class="tr-btn ${S.brush==='add'?'on':''}" data-act="brush-add">Legg til materiale</button><button class="tr-btn ${S.brush==='show'?'on':''}" data-act="brush-show">Viskelær</button><button class="tr-btn" data-act="brush-clear">Nullstill</button></div><label class="tr-lbl">Børstestørrelse</label><input type="range" min="14" max="80" value="${S.brushR}" data-brush-size style="width:100%;margin-bottom:12px">`;
   return h;
@@ -548,13 +550,14 @@ function onClick(e){
     'brush-clear':()=>{if(S.selKind==='auto'){const sf=curView().auto&&curView().auto.surfaces[S.autoSel];if(sf){const g=sf.userCanvas.getContext('2d');g.fillStyle='#000';g.fillRect(0,0,256,256);sf.userDirty=true;}return;}const s=curView().surfaces[S.sel];if(s){const g=s.mask.getContext('2d');g.fillStyle='#000';g.fillRect(0,0,256,256);s.maskDirty=true;}},
     'del-surface':()=>{const v=curView();v.surfaces.splice(S.sel,1);S.sel=v.surfaces.length-1;S.brush=null;renderDock();},
     freeze:()=>{S.frozen=!S.frozen;S.frozenR=S.frozen&&S.gyro.now?S.gyro.now.slice():null;bgKey=null;if(!S.frozen)curView().surfaces.forEach(anchorRays);renderDock();},
-    'save-image':saveImage,quote,'photos-done':photosDone,'photo-take':()=>photoInput.click(),'photo-redo':redoPhoto,'photo-retry-cam':startCamera,'photo-fallback':startPhotos
+    'save-image':saveImage,quote,'photos-done':photosDone,'photo-take':()=>photoInput.click(),'photo-snap':snapPhoto,'photo-redo':redoPhoto,'photo-retry-cam':startCamera,'photo-fallback':startPhotos
   })[a]?.();
 }
 function onChange(e){
   const t=e.target;
   if(t.dataset.fmt!==undefined){S.fmt=t.value;STONES[S.floorId]&&getMaterial(S.floorId,S.fmt!=='natural');STONES[S.wallId]&&getMaterial(S.wallId,S.fmt!=='natural');return;}
   if(t.dataset.bond!==undefined){S.bond=t.checked;return;}
+  if(t.dataset.live!==undefined){S.live=t.checked;return;}
   if(t.dataset.scale!==undefined){S.scale=clamp(+t.value/100,.5,2);return;}
   if(t.dataset.brushSize!==undefined){S.brushR=+t.value;return;}
   if(t.dataset.hc!==undefined||t.dataset.fov!==undefined||t.dataset.pitch!==undefined){
@@ -566,7 +569,7 @@ function onChange(e){
   if(t.dataset.dim){const s=curView().surfaces[S.sel];if(s){const v=clamp(parseFloat(String(t.value).replace(',','.'))||s[t.dataset.dim],.3,30);s[t.dataset.dim]=v;}}
 }
 function brushHint(){hint(S.brush?'<b>Børste</b>: mal over det som skal vises foran materialet. Bruk viskelær for å angre.':'Dra i hjørnene for å justere flaten.');}
-function switchView(i){S.cur=i;S.sel=curView().surfaces.length?0:-1;bgKey=null;S.mark=null;S.brush=null;renderDock();hint('Bilde '+(i+1)+' av '+S.views.length+'. Samme materialvalg gjelder alle bilder.');}
+function switchView(i){S.cur=i;S.sel=curView().surfaces.length?0:-1;S.selKind=curView().auto?'auto':'manual';bgKey=null;S.mark=null;S.brush=null;renderDock();hint('Bilde '+(i+1)+' av '+S.views.length+'. Samme materialvalg gjelder alle bilder.');if(!curView().auto)autoDetect(false);}
 
 /* ---------------------------------------------------------------- automatic recognition (AI on the device) */
 function maskTexture(prob,w,h){
@@ -576,20 +579,24 @@ function maskTexture(prob,w,h){
 }
 function userLayer(){const c=document.createElement('canvas');c.width=c.height=256;const g=c.getContext('2d');g.fillStyle='#000';g.fillRect(0,0,256,256);return c;}
 function regionAvg(prob,lum){let sum=0,n=0;for(let i=0;i<prob.length;i++)if(prob[i]>.5){sum+=lum[i];n++;}return n>20?sum/n/255:.5;}
-function buildAuto(seg,cam){
-  const {w,h}=seg,a={seg,cap:cam,Hc:S.hc,surfaces:[],t0:performance.now()};
+function disposeAuto(a){if(!a||!gl)return;for(const sf of a.surfaces){gl.deleteTexture(sf.maskTex);gl.deleteTexture(sf.userTex);}}
+function buildAuto(seg,cam,silent){
+  const {w,h}=seg,now=performance.now(),a={seg,cap:cam,Hc:S.hc,surfaces:[],born:now,t0:silent?-1e9:now,edited:false};
   const mk=(type,prob,extra)=>({type,maskTex:maskTexture(prob,w,h),userCanvas:userLayer(),userTex:mkTex(),userDirty:true,avg:regionAvg(prob,seg.lum),...extra});
   let nf=0;for(let i=0;i<seg.floor.length;i++)if(seg.floor[i]>.5)nf++;
   if(nf>.015*w*h)a.surfaces.push(mk('floor',seg.floor,{name:'Gulv'}));
-  const res=MA.wallPlanes(seg,cam,a.Hc),lab=res.labels;
+  const res=MA.wallPlanes2(seg,cam,a.Hc),lab=res.labels;
   res.planes.forEach((pl,i)=>{
     const prob=new Float32Array(w*h);
     for(let y=0;y<h;y++)for(let x=0;x<w;x++){
       let near=false;
-      for(let dy=-1;dy<=1&&!near;dy++)for(let dx=-1;dx<=1;dx++){const xx=x+dx,yy=y+dy;if(xx>=0&&yy>=0&&xx<w&&yy<h&&lab[yy*w+xx]===pl.label){near=true;break;}}
-      if(near)prob[y*w+x]=seg.wall[y*w+x];
+      for(let dy=-1;dy<=1&&!near;dy++)for(let dx=-1;dx<=1;dx++){const xx=x+dx,yy=y+dy;if(xx>=0&&yy>=0&&xx<w&&yy<h&&lab[yy*w+xx]===pl.comp){near=true;break;}}
+      if(!near)continue;
+      // inside a corner the wall region is split by image column between its planes
+      if(pl.cols&&pl.cols[x]!==pl.sub&&pl.cols[Math.max(0,x-1)]!==pl.sub&&pl.cols[Math.min(w-1,x+1)]!==pl.sub)continue;
+      prob[y*w+x]=seg.wall[y*w+x];
     }
-    a.surfaces.push(mk('wall',prob,{name:'Vegg '+(i+1),label:pl.label,p0:pl.p0,u:pl.u,fallback:pl.fallback}));
+    a.surfaces.push(mk('wall',prob,{name:'Vegg '+(i+1),key:pl.key,p0:pl.p0,u:pl.u,fallback:pl.fallback}));
   });
   const pv=document.createElement('canvas');pv.width=w;pv.height=h;const g=pv.getContext('2d'),im=g.createImageData(w,h);
   for(let i=0;i<w*h;i++){if(seg.floor[i]>.5)im.data.set([70,150,255,120],i*4);else if(seg.cls[i]===0)im.data.set([255,170,60,120],i*4);}
@@ -599,31 +606,44 @@ function buildAuto(seg,cam){
 function updatePlanes(){
   const v=curView(),a=v&&v.auto;if(!a)return;
   a.Hc=S.hc;a.cap.f=MA.focalPx(Math.max(a.cap.vw,a.cap.vh),S.gyro.fov);
-  if(v.kind!=='video'||!a.cap.gyro)a.cap.R=MA.orientationMatrix(0,90-S.pitch,0);
-  const res=MA.wallPlanes(a.seg,a.cap,a.Hc);
-  for(const sf of a.surfaces){if(sf.type!=='wall')continue;const pl=res.planes.find(x=>x.label===sf.label);if(pl){sf.p0=pl.p0;sf.u=pl.u;sf.fallback=pl.fallback;}}
+  if(!a.cap.gyro)a.cap.R=MA.orientationMatrix(0,90-S.pitch,0);
+  const res=MA.wallPlanes2(a.seg,a.cap,a.Hc);
+  for(const sf of a.surfaces){if(sf.type!=='wall')continue;const pl=res.planes.find(x=>x.key===sf.key);if(pl){sf.p0=pl.p0;sf.u=pl.u;sf.fallback=pl.fallback;}}
 }
-async function autoDetect(){
+async function autoDetect(silent){
+  silent=silent===true;
   const view=curView(),src=source();
-  if(!view||!src||S.autoBusy){hint('Kameraet er ikke klart ennå.');return;}
-  S.autoBusy=true;renderDock();
-  const status=m=>hint('<b>'+esc(m)+'</b>');
+  if(!view||!src||S.autoBusy){if(!silent&&!S.autoBusy)hint('Kameraet er ikke klart ennå.');return;}
+  S.autoBusy=true;S.aiBusy=true;busyUi();if(!silent)renderDock();
+  const status=m=>{if(!silent)hint('<b>'+esc(m)+'</b>');};
   try{
-    segMod=segMod||await import('./tryroom-seg-v1.js?v=1');
-    const useGyro=view.kind==='video'&&S.gyro.on&&!!S.gyro.now;
-    const R=useGyro?S.gyro.now.slice():MA.orientationMatrix(0,90-S.pitch,0);
+    segMod=segMod||await import('./tryroom-seg-v1.js?v=2');
+    const useGyro=view.kind==='video'?(S.gyro.on&&!!S.gyro.now):!!view.capR;
+    const R=view.kind==='video'?(useGyro?S.gyro.now.slice():MA.orientationMatrix(0,90-S.pitch,0)):(view.capR?view.capR.slice():MA.orientationMatrix(0,90-S.pitch,0));
     const snap=document.createElement('canvas');snap.width=src.w;snap.height=src.h;snap.getContext('2d').drawImage(src.el,0,0);
-    const seg=await segMod.segment(snap,MOBILE?384:512,status);
+    const seg=await segMod.segment(snap,src.w,src.h,MOBILE?672:768,status);
+    if(!root||!gl)return;
     const cam={R,cx:src.w/2,cy:src.h/2,f:MA.focalPx(Math.max(src.w,src.h),S.gyro.fov),vw:src.w,vh:src.h,gyro:useGyro};
-    view.auto=buildAuto(seg,cam);S.selKind='auto';S.autoSel=0;
-    const fl=view.auto.surfaces.some(x=>x.type==='floor'),nw=view.auto.surfaces.filter(x=>x.type==='wall').length,fb=view.auto.surfaces.some(x=>x.fallback);
-    if(!fl&&!nw)hint('<span class="tr-warn">Fant verken gulv eller vegg.</span> Rett kameraet slik at gulv og vegg er tydelig i bildet, med godt lys, og prøv igjen. Du kan også markere flaten selv.');
-    else hint('<b>Fant '+(fl?'gulv':'')+(fl&&nw?' og ':'')+(nw?nw+(nw>1?' vegger':' vegg'):'')+'</b> ('+(seg.ms/1000).toFixed(1)+' s). Blått er gulv, oransje er vegg. Møbler og inventar holdes utenfor.'+(fb?' <span class="tr-warn">Veggens plassering er et anslag fordi gulvlinjen ikke er synlig.</span>':'')+(useGyro?'':' <span class="tr-warn">Uten bevegelsessensor følger ikke bildet når du dreier mobilen.</span>'));
-    S.matType=fl?'floor':'wall';
+    const prev=view.auto;view.auto=buildAuto(seg,cam,silent);disposeAuto(prev);
+    S.autoSel=silent?clamp(S.autoSel,0,Math.max(0,view.auto.surfaces.length-1)):0;S.selKind='auto';
+    if(!view.auto.surfaces.some(x=>x.type===S.matType))S.matType=view.auto.surfaces.some(x=>x.type==='floor')?'floor':'wall';
+    if(!silent){
+      const fl=view.auto.surfaces.some(x=>x.type==='floor'),nw=view.auto.surfaces.filter(x=>x.type==='wall').length,fb=view.auto.surfaces.some(x=>x.fallback);
+      if(!fl&&!nw)hint('<span class="tr-warn">Fant verken gulv eller vegg.</span> Rett kameraet slik at gulv og vegg er tydelig i bildet, med godt lys, og trykk «Finn flater på nytt». Du kan også markere flaten selv.');
+      else hint('<b>Fant '+(fl?'gulv':'')+(fl&&nw?' og ':'')+(nw?nw+(nw>1?' vegger':' vegg'):'')+'</b> ('+(seg.ms/1000).toFixed(1)+' s). Blått er gulv, oransje er vegg. Møbler og inventar holdes utenfor.'+(fb?' <span class="tr-warn">Veggens plassering er et anslag fordi gulvlinjen ikke er synlig.</span>':'')+(useGyro?'':' <span class="tr-warn">Uten bevegelsessensor må du stille inn kameravinkelen selv.</span>'));
+    }
   }catch(err){
     console.error('Stenhuset AI-gjenkjenning feilet',err);
-    hint('<span class="tr-warn">Automatisk gjenkjenning feilet:</span> '+esc(err&&err.message||String(err))+'. Sjekk nettverket og prøv igjen, eller marker flaten selv.');
-  }finally{S.autoBusy=false;if(root)renderDock();}
+    if(!silent)hint('<span class="tr-warn">Automatisk gjenkjenning feilet:</span> '+esc(err&&err.message||String(err))+'. Sjekk nettverket og prøv igjen, eller marker flaten selv.');
+  }finally{S.autoBusy=false;S.aiBusy=false;S.lastAuto=performance.now();if(root){busyUi();renderDock();}}
+}
+/* live: re-analyse when the phone has turned noticeably or the result is old (never while frozen or after hand corrections) */
+function autoTick(now,view){
+  const a=view.auto;
+  if(!S.live||S.autoBusy||S.frozen||view.kind!=='video'||!a||a.edited||!segMod)return;
+  if(now-(S.lastAuto||0)<2500)return;
+  const turned=S.gyro.on&&S.gyro.now&&a.cap.gyro?MA.rotAngle(a.cap.R,S.gyro.now)>10*Math.PI/180:false;
+  if(turned||now-a.born>7000)autoDetect(true);
 }
 
 /* ---------------------------------------------------------------- mode: camera */
@@ -641,8 +661,9 @@ async function startCamera(){
     S.views=[{kind:'video',surfaces:[]}];S.cur=0;S.sel=-1;bgKey=null;
     startGyro();
     sheet().style.display='none';renderDock();
-    hint('<b>Kamera er på.</b> Hold mobilen stående og vis gulv og vegger rolig. Trykk så <b>Finn gulv og vegger automatisk</b>. Fungerer ikke det, kan du markere flaten selv.'+(S.gyro.on?'':' <span class="tr-warn">Bevegelsessensor mangler eller er avslått: bildet følger ikke når du dreier mobilen. Bruk «Frys bilde» for å justere.</span>'));
+    hint('<b>Kamera er på.</b> Hold mobilen stående og vis gulv og vegger rolig. Rommet analyseres automatisk om et øyeblikk.'+(S.gyro.on?'':' <span class="tr-warn">Bevegelsessensor mangler eller er avslått: bildet følger ikke når du dreier mobilen. Bruk «Frys bilde» for å justere.</span>'));
     if(!raf)raf=requestAnimationFrame(frame);
+    setTimeout(()=>{if(root&&S.mode==='camera'&&!S.autoBusy&&!curView().auto)autoDetect(false);},900);
   }catch(err){
     stopStream();
     const denied=err&&(err.name==='NotAllowedError'||err.name==='SecurityError');
@@ -669,12 +690,21 @@ function stopGyro(){if(orientHandler)window.removeEventListener('deviceorientati
 /* ---------------------------------------------------------------- mode: guided photos */
 const PHOTO_STEPS=['Oversiktsbilde fra døren','Bilde mot motsatt vegg eller vindu','Bilde mot venstre vegg','Bilde mot høyre vegg'];
 const BLUR_MIN=40;
-function startPhotos(){
+let pv=null;
+async function startPhotos(){
   S.mode='photo';
-  try{if(!gl)setupGL();bind();}catch(e){sheet().innerHTML='<h2>Enheten støtter ikke dette</h2><p>WebGL mangler, så materialene kan ikke vises i nettleseren her.</p>';return;}
+  try{if(!gl)setupGL();bind();}catch(e){sheet().innerHTML='<h2>Enheten støtter ikke dette</h2><p>WebGL mangler, så materialene kan ikke vises i nettleseren her.</p><p style="font-size:11px;color:#8a857c">Teknisk: '+esc(e&&e.message||'ukjent')+'</p>';return;}
   stopStream();stopGyro();
-  S.views=[];S.cur=0;S.sel=-1;
-  if(!photoInput){photoInput=document.createElement('input');photoInput.type='file';photoInput.accept='image/*';photoInput.setAttribute('capture','environment');photoInput.style.display='none';root.appendChild(photoInput);photoInput.addEventListener('change',onPhoto);}
+  S.views=[];S.cur=0;S.sel=-1;S.selKind='manual';
+  if(!photoInput){photoInput=document.createElement('input');photoInput.type='file';photoInput.accept='image/*';photoInput.style.display='none';root.appendChild(photoInput);photoInput.addEventListener('change',onPhoto);}
+  // in-app camera: each photo then carries the phone's orientation, which is what makes floor/wall perspective correct
+  try{
+    if(S.caps.gyro&&typeof DeviceOrientationEvent!=='undefined'&&typeof DeviceOrientationEvent.requestPermission==='function'){
+      try{S.gyro.perm=await DeviceOrientationEvent.requestPermission();}catch(e){S.gyro.perm='denied';}
+    }
+    stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'},width:{ideal:1920},height:{ideal:1080}},audio:false});
+    startGyro();
+  }catch(e){stream=null;}
   photoGuide();
   if(!raf)raf=requestAnimationFrame(frame);
 }
@@ -682,13 +712,25 @@ function photoGuide(extra){
   dock().hidden=true;sheet().style.display='';
   const n=S.views.length,step=PHOTO_STEPS[n]||'Ekstra bilde av områder som mangler';
   sheet().innerHTML=`<h2>Ta bilder av rommet</h2>
-  <p>Bildene lagres bare på enheten din og lastes ikke opp. Ta bildene stående og la hvert bilde overlappe litt med det forrige. Gulv og vegger skal være tydelig synlige.</p>
+  <p>Bildene lagres bare på enheten din og lastes ikke opp. Hold mobilen stående, la hvert bilde overlappe litt med det forrige, og ha gulv og vegger tydelig i bildet.</p>
   <p><strong style="color:#f0cf9a">Bilde ${n+1}: ${step}</strong></p>${extra||''}
+  ${stream?'<video class="tr-pv" playsinline muted autoplay style="width:100%;max-width:420px;max-height:46vh;object-fit:cover;background:#000;display:block;margin:0 0 12px"></video>':'<p class="tr-warn" style="font-size:13px">Kameraet er ikke tilgjengelig i appen. Du kan velge bilder fra galleriet i stedet. Da mangler informasjon om mobilens vinkel, og du justerer kameravinkelen selv.</p>'}
   <div class="tr-thumbs">${S.views.map((v,i)=>`<canvas data-pthumb="${i}" width="120" height="84"></canvas>`).join('')}</div>
-  <div class="tr-row"><button class="tr-btn pri" data-act="photo-take">${n?'Ta neste bilde':'Ta bilde'}</button>${n?`<button class="tr-btn" data-act="photo-redo">Ta siste på nytt</button>`:''}${n>=PHOTO_STEPS.length?'<button class="tr-btn pri" data-act="photos-done">Fortsett til materialer</button>':''}${n&&n<PHOTO_STEPS.length?'<button class="tr-btn" data-act="photos-done">Fortsett med '+n+' bilde'+(n>1?'r':'')+'</button>':''}</div>
+  <div class="tr-row">${stream?'<button class="tr-btn pri" data-act="photo-snap">Ta bilde</button>':''}<button class="tr-btn ${stream?'':'pri'}" data-act="photo-take">Velg fra galleri</button>${n?`<button class="tr-btn" data-act="photo-redo">Slett siste</button>`:''}${n?`<button class="tr-btn pri" data-act="photos-done">Fortsett med ${n} bilde${n>1?'r':''}</button>`:''}</div>
   <p style="font-size:12px;color:#aaa49a">${n>=PHOTO_STEPS.length?'Du kan ta flere bilder av områder som mangler. Vi kan ikke måle dekningen automatisk, så sjekk selv at alle vegger du vil endre er med.':'Fire bilder er et utgangspunkt. Ta flere hvis rommet er stort eller har kriker og kroker.'}</p>`;
   sheet().querySelectorAll('[data-pthumb]').forEach(c=>c.getContext('2d').drawImage(S.views[+c.dataset.pthumb].canvas,0,0,120,84));
+  pv=sheet().querySelector('.tr-pv');if(pv&&stream){pv.srcObject=stream;pv.play().catch(()=>{});}
   hint('Veiledet fotografering: bilde '+(n+1));
+}
+function pushPhoto(c,R){
+  const blur=blurScore(c);S.views.push({kind:'img',canvas:c,surfaces:[],blur,capR:R});
+  photoGuide(blur<BLUR_MIN?'<p class="tr-warn">Det siste bildet ser uskarpt ut. Hold mobilen stødig, eller trykk «Slett siste» og ta det på nytt.</p>':(R?'':'<p class="tr-warn" style="font-size:12.5px">Dette bildet mangler informasjon om mobilens vinkel. Juster «Kameravinkel» under Flater.</p>'));
+}
+function snapPhoto(){
+  if(!pv||!pv.videoWidth)return;
+  const sc=Math.min(1,1600/Math.max(pv.videoWidth,pv.videoHeight)),c=document.createElement('canvas');
+  c.width=Math.round(pv.videoWidth*sc);c.height=Math.round(pv.videoHeight*sc);c.getContext('2d').drawImage(pv,0,0,c.width,c.height);
+  pushPhoto(c,S.gyro.on&&S.gyro.now?S.gyro.now.slice():null);
 }
 async function onPhoto(){
   const f=photoInput.files&&photoInput.files[0];photoInput.value='';if(!f)return;
@@ -696,10 +738,7 @@ async function onPhoto(){
     const bmp=await createImageBitmap(f,{imageOrientation:'from-image'}).catch(()=>createImageBitmap(f));
     const sc=Math.min(1,1600/Math.max(bmp.width,bmp.height)),c=document.createElement('canvas');c.width=Math.round(bmp.width*sc);c.height=Math.round(bmp.height*sc);
     c.getContext('2d').drawImage(bmp,0,0,c.width,c.height);if(bmp.close)bmp.close();
-    const blur=blurScore(c);
-    S.views.push({kind:'img',canvas:c,surfaces:[],blur});
-    if(blur<BLUR_MIN)photoGuide('<p class="tr-warn">Det siste bildet ser uskarpt ut. Hold mobilen stødig, eller trykk «Ta siste på nytt».</p>');
-    else photoGuide();
+    pushPhoto(c,null);
   }catch(e){photoGuide('<p class="tr-warn">Kunne ikke lese bildet. Prøv igjen.</p>');}
 }
 function blurScore(c){
@@ -710,14 +749,16 @@ function blurScore(c){
 function redoPhoto(){S.views.pop();photoGuide();}
 function photosDone(){
   if(!S.views.length){photoGuide('<p class="tr-warn">Ta minst ett bilde først.</p>');return;}
-  S.cur=0;S.sel=-1;bgKey=null;sheet().style.display='none';renderDock();
-  hint('Trykk <b>+ Marker gulv</b> eller <b>+ Marker vegg</b> og deretter på fire hjørner i bildet. Bytt bilde nederst. Materialvalget er felles.');
+  stopStream();stopGyro();pv=null;
+  S.cur=0;S.sel=-1;S.selKind='manual';bgKey=null;sheet().style.display='none';renderDock();
+  hint('Gulv og vegger i bildet gjenkjennes automatisk. Bytt bilde nederst; materialvalget er felles.');
+  setTimeout(()=>{if(root&&curView()&&!curView().auto)autoDetect(false);},300);
 }
 
 /* ---------------------------------------------------------------- mode: WebXR AR (separate module, loaded only when chosen) */
 async function startXR(){
   try{
-    xrMod=xrMod||await import('./tryroom-xr-v1.js?v=1');
+    xrMod=xrMod||await import('./tryroom-xr-v1.js?v=2');
     close(true);
     await xrMod.start({
       stoneId:()=>S.floorId,wallId:()=>S.wallId,materials:MATS(),STONES,generateStone,T,

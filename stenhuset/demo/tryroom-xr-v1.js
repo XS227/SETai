@@ -11,7 +11,7 @@ const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',
 
 export async function start(opt){
   if(!navigator.xr||!(await navigator.xr.isSessionSupported('immersive-ar')))throw new Error('Live AR støttes ikke på denne enheten.');
-  const st={floorId:opt.stoneId(),wallId:opt.wallId(),mode:null,pts:[],scale:1,hasFloor:false,hasWall:false,wallH:2.4,items:[],tex:new Map(),lastHit:0};
+  const st={floorId:opt.stoneId(),wallId:opt.wallId(),mode:'floor',pts:[],scale:1,hasFloor:false,hasWall:false,wallH:2.4,items:[],tex:new Map(),lastHit:0};
 
   /* --- DOM overlay UI --- */
   const ui=document.createElement('div');
@@ -115,7 +115,7 @@ export async function start(opt){
   });
 
   /* --- UI actions --- */
-  const intro=()=>hint('<b>Live AR (beta).</b> Velg <b>Gulv</b> eller <b>Vegg</b>, sikt ringen mot en flate og trykk <b>Sett punkt</b>. Gulv: 4 hjørner. Vegg: 2 punkter nederst langs veggen.');
+  const intro=()=>hint('<b>Live AR (beta, manuell).</b> Sikt ringen mot gulvet og trykk <b>Sett punkt</b> på 4 hjørner av gulvet. Trykk <b>Vegg</b> for å legge til en vegg (2 punkter nederst langs veggen). For automatisk gjenkjenning, bruk «Live kamera».');
   intro();strip();
   ui.addEventListener('click',e=>{
     const b=e.target.closest('button');if(!b)return;
