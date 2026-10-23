@@ -37,6 +37,7 @@ function injectCss(){
 .tr-root{position:fixed;inset:0;z-index:2147483200;background:#111;color:#fff;font-family:var(--sans,system-ui,sans-serif);display:flex;flex-direction:column;overscroll-behavior:contain;-webkit-user-select:none;user-select:none}
 .tr-root *{box-sizing:border-box}
 .tr-stage{position:relative;flex:1;min-height:0;overflow:hidden}
+.tr-video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#111}
 .tr-stage canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none}
 .tr-top{position:absolute;left:0;right:0;top:0;z-index:5;display:flex;gap:10px;align-items:flex-start;padding:max(10px,env(safe-area-inset-top)) 12px 10px;pointer-events:none;background:linear-gradient(180deg,#000a,transparent)}
 .tr-top>*{pointer-events:auto}
@@ -101,6 +102,11 @@ function buildRoot(){
   root.addEventListener('change',onChange);root.addEventListener('input',onChange);
   window.addEventListener('keydown',onKey);window.addEventListener('resize',resize);
 }
+const camLines=[];
+function camLog(m){
+  camLines.push(new Date().toLocaleTimeString('nb-NO')+' '+m);if(camLines.length>40)camLines.shift();console.log('[kamera]',m);
+  try{sessionStorage.setItem('tr_cam_log',JSON.stringify({t:Date.now(),lines:camLines,err:!!S.camErr}));}catch(e){}
+}
 const sheet=()=>root.querySelector('.tr-sheet'),dock=()=>root.querySelector('.tr-dock'),hint=h=>{root.querySelector('.tr-hint').innerHTML=h;};
 const onKey=e=>{if(e.key==='Escape')close();};
 
@@ -119,13 +125,16 @@ function showStart(){
   ${ok?'<button class="tr-btn pri" data-act="start" style="font-size:13px;padding:16px 26px;min-height:54px">Start</button>':'<p class="tr-warn">Denne enheten eller nettleseren støtter ikke kamera her. Åpne siden i Chrome på en Android-telefon, eller i Safari på iPhone, over https.</p>'}
   <p style="font-size:12px;color:#aaa49a;margin-top:18px">Alt skjer på din egen mobil. Bilder og video lastes ikke opp noe sted. Nettleseren spør om tillatelse til kameraet.</p>`;
   hint('Trykk Start for å åpne kameraet.');
-  // log from the previous AR attempt (kept in sessionStorage), so a crash can be diagnosed afterwards
-  try{
-    const L=JSON.parse(sessionStorage.getItem('tr_ar_log')||'null');
-    if(L&&Date.now()-L.t<20*60*1000&&L.lines&&L.lines.length){
-      sheet().insertAdjacentHTML('beforeend','<details open style="max-width:560px;margin-top:14px"><summary style="cursor:pointer;font-size:12px;color:#ffd9a0">Feilsøkingslogg fra forrige AR-forsøk</summary><pre id="tr-log" style="white-space:pre-wrap;font:10.5px/1.4 monospace;background:#000a;padding:8px;color:#bfe9d0;margin:8px 0">'+esc(L.lines.join('\n'))+'</pre><button class="tr-btn" data-act="copy-log">Kopier loggen</button></details>');
-    }
-  }catch(e){}
+  // log from the previous attempt (kept in sessionStorage): shown when it failed, or always with ?debug
+  const dbg=/debug/.test(location.search);
+  for(const [key,title] of [['tr_cam_log','Feilsøkingslogg fra forrige kameraforsøk'],['tr_ar_log','Feilsøkingslogg fra forrige AR-forsøk']]){
+    try{
+      const L=JSON.parse(sessionStorage.getItem(key)||'null');
+      if(L&&Date.now()-L.t<20*60*1000&&L.lines&&L.lines.length&&(dbg||(key==='tr_cam_log'&&L.err))){
+        sheet().insertAdjacentHTML('beforeend','<details open style="max-width:560px;margin-top:14px"><summary style="cursor:pointer;font-size:12px;color:#ffd9a0">'+title+'</summary><pre class="tr-logpre" style="white-space:pre-wrap;font:10.5px/1.4 monospace;background:#000a;padding:8px;color:#bfe9d0;margin:8px 0">'+esc(L.lines.join('\n'))+'</pre><button class="tr-btn" data-act="copy-log">Kopier loggen</button></details>');
+      }
+    }catch(e){}
+  }
 }
 
 /* ---------------------------------------------------------------- GL */
@@ -315,7 +324,7 @@ let bgKey=null;
 function drawBackground(view){
   const s=source();if(!s){gl.clearColor(.07,.07,.07,1);gl.clear(gl.COLOR_BUFFER_BIT);return false;}
   gl.activeTexture(gl.TEXTURE0);gl.bindTexture(gl.TEXTURE_2D,tex.bg);
-  if(view.kind==='video'){if(!S.frozen||bgKey!=='frozen'){if(video.readyState>=2)gl.texImage2D(gl.TEXTURE_2D,0,gl.RGB,gl.RGB,gl.UNSIGNED_BYTE,video);bgKey=S.frozen?'frozen':'live';}}
+  if(view.kind==='video'){if(!S.frozen||bgKey!=='frozen'){if(video&&video.readyState>=2){gl.texImage2D(gl.TEXTURE_2D,0,gl.RGB,gl.RGB,gl.UNSIGNED_BYTE,video);if(!S.firstFrame){S.firstFrame=true;camLog('første kamerabilde tegnet: '+video.videoWidth+'x'+video.videoHeight);}}bgKey=S.frozen?'frozen':'live';}}
   else if(bgKey!==view){gl.pixelStorei(gl.UNPACK_ALIGNMENT,4);gl.texImage2D(gl.TEXTURE_2D,0,gl.RGB,gl.RGB,gl.UNSIGNED_BYTE,view.canvas);bgKey=view;}
   gl.useProgram(P.bg.p);gl.uniform1i(P.bg.u.u_bg,0);const c=cover();gl.uniform2f(P.bg.u.u_cover,c[0],c[1]);
   gl.disable(gl.BLEND);gl.drawArrays(gl.TRIANGLE_STRIP,0,4);gl.enable(gl.BLEND);return true;
@@ -581,7 +590,7 @@ function onClick(e){
     'del-surface':()=>{const v=curView();v.surfaces.splice(S.sel,1);S.sel=v.surfaces.length-1;S.brush=null;renderDock();},
     fit:()=>{S.fit=S.fit==='fill'?'contain':'fill';renderDock();},
     freeze:()=>{S.frozen=!S.frozen;S.frozenR=S.frozen&&S.gyro.now?S.gyro.now.slice():null;bgKey=null;if(!S.frozen)curView().surfaces.forEach(anchorRays);renderDock();},
-    'save-image':saveImage,quote,'photo-retry-cam':startCamera,'copy-log':()=>{const el=root.querySelector('#tr-log');if(el&&navigator.clipboard)navigator.clipboard.writeText(el.textContent).then(()=>hint('Loggen er kopiert. Lim den inn i en melding til meg.')).catch(()=>hint('Kunne ikke kopiere. Ta et skjermbilde av loggen i stedet.'));},
+    'save-image':saveImage,quote,'photo-retry-cam':startCamera,'copy-log':()=>{const el=root.querySelector('.tr-logpre');if(el&&navigator.clipboard)navigator.clipboard.writeText(el.textContent).then(()=>hint('Loggen er kopiert. Lim den inn i en melding til meg.')).catch(()=>hint('Kunne ikke kopiere. Ta et skjermbilde av loggen i stedet.'));},
   })[a]?.();
 }
 function onChange(e){
@@ -653,6 +662,7 @@ async function autoDetect(silent){
     const R=view.kind==='video'?(useGyro?S.gyro.now.slice():MA.orientationMatrix(0,90-S.pitch,0)):(view.capR?view.capR.slice():MA.orientationMatrix(0,90-S.pitch,0));
     const snap=document.createElement('canvas');snap.width=src.w;snap.height=src.h;snap.getContext('2d').drawImage(src.el,0,0);
     const seg=await segMod.segment(snap,src.w,src.h,MOBILE?672:768,status);
+    if(!silent)camLog('analyse: '+seg.ms+' ms, inndata '+(seg.input||[]).join('x'));
     if(!root||!gl)return;
     const cam={R,cx:src.w/2,cy:src.h/2,f:MA.focalPx(Math.max(src.w,src.h),S.gyro.fov),vw:src.w,vh:src.h,gyro:useGyro};
     // camera height from the picture itself (floor line + ceiling line, assumed ceiling 2.5 m): adapts when you sit, stand or bend
@@ -676,7 +686,7 @@ async function autoDetect(silent){
       else hint('<b>Fant '+(fl?'gulv':'')+(fl&&nw?' og ':'')+(nw?nw+(nw>1?' vegger':' vegg'):'')+'</b> ('+(seg.ms/1000).toFixed(1)+' s). Blått er gulv, oransje er vegg. Møbler og inventar holdes utenfor. Kamerahøyde: '+S.hc.toFixed(2)+' m ('+(S.hcAuto?S.hcNote:'satt av deg')+').'+(fb?' <span class="tr-warn">Veggens plassering er et anslag fordi gulvlinjen ikke er synlig.</span>':'')+(useGyro?'':' <span class="tr-warn">Uten bevegelsessensor må du stille inn kameravinkelen selv.</span>'));
     }
   }catch(err){
-    console.error('Stenhuset AI-gjenkjenning feilet',err);
+    console.error('Stenhuset AI-gjenkjenning feilet',err);camLog('AI-FEIL: '+(err&&err.message||err));
     if(!silent)hint('<span class="tr-warn">Automatisk gjenkjenning feilet:</span> '+esc(err&&err.message||String(err))+'. Sjekk nettverket og prøv igjen, eller marker flaten selv.');
   }finally{S.autoBusy=false;S.aiBusy=false;S.lastAuto=performance.now();if(root){busyUi();renderDock();}}
 }
@@ -698,10 +708,22 @@ async function startCamera(){
     if(S.caps.gyro&&typeof DeviceOrientationEvent!=='undefined'&&typeof DeviceOrientationEvent.requestPermission==='function'){
       try{S.gyro.perm=await DeviceOrientationEvent.requestPermission();}catch(e){S.gyro.perm='denied';}
     }
+    S.camErr=false;S.firstFrame=false;camLines.length=0;
+    camLog('start: '+navigator.userAgent.replace(/.*\(([^)]*)\).*Chrome\/([\d.]+).*/,'$1 Chrome $2')+(window.isSecureContext?'':' (IKKE https)'));
     stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'},width:{ideal:1600},height:{ideal:1200},aspectRatio:{ideal:4/3}},audio:false});
+    {const tr=stream.getVideoTracks()[0],se=tr&&tr.getSettings?tr.getSettings():{};camLog('kamera gitt: '+(tr?tr.label:'?')+' '+(se.width||'?')+'x'+(se.height||'?')+(se.zoom!=null?' zoom '+se.zoom:''));}
     await wideAngle(stream);
-    video=document.createElement('video');video.playsInline=true;video.muted=true;video.srcObject=stream;
-    await video.play();
+    camLog('zoom: '+(S.zoomCaps?'optisk '+S.zoomCaps.min+'–'+S.zoomCaps.max+', valgt '+S.zoom:'kun digital')+', synsfelt '+S.gyro.fov.toFixed(0)+'°');
+    video=document.createElement('video');video.className='tr-video';video.playsInline=true;video.muted=true;video.autoplay=true;
+    video.setAttribute('playsinline','');video.setAttribute('muted','');video.srcObject=stream;
+    root.querySelector('.tr-stage').prepend(video);
+    await Promise.race([video.play(),new Promise((_,rej)=>setTimeout(()=>rej(new Error('video.play() svarte ikke innen 5 s')),5000))]);
+    camLog('video spiller: '+video.videoWidth+'x'+video.videoHeight+' readyState '+video.readyState);
+    setTimeout(()=>{
+      if(!root||S.mode!=='camera'||S.firstFrame)return;
+      camLog('INGEN bilder fra kameraet etter 4 s (readyState '+(video?video.readyState:'-')+', '+(video?video.videoWidth+'x'+video.videoHeight:'-')+')');
+      cameraError('Kameraet viser ikke bilde','Kameraet startet, men det kommer ikke bilder. Lukk andre apper som bruker kameraet, og prøv igjen.',null);
+    },4000);
     S.views=[{kind:'video',surfaces:[]}];S.cur=0;S.sel=-1;bgKey=null;
     startGyro();
     sheet().style.display='none';renderDock();
@@ -711,13 +733,20 @@ async function startCamera(){
     root.querySelector('.tr-zoom').hidden=false;zoomLabel();
     setTimeout(()=>{if(root&&S.mode==='camera'&&!S.autoBusy&&!curView().auto)autoDetect(false);},900);
   }catch(err){
-    stopStream();
+    camLog('FEIL: '+(err&&(err.name+': '+err.message)||err));
     const denied=err&&(err.name==='NotAllowedError'||err.name==='SecurityError');
-    sheet().style.display='';dock().hidden=true;
-    sheet().innerHTML=`<h2>${denied?'Kameraet er ikke tillatt':'Fikk ikke tak i kameraet'}</h2><p>${denied?'Du har avslått kameratilgang. Slå den på i nettleserens innstillinger for siden og prøv igjen.':'Kameraet eller grafikken kunne ikke startes. Prøv igjen.'}</p><p style="font-size:11px;color:#8a857c">Teknisk: ${esc(err&&(err.name+': '+err.message)||'ukjent')}</p>
-    <button class="tr-opt" data-act="photo-retry-cam"><strong>Prøv kameraet igjen</strong></button>`;
-    hint('Kamera ikke i bruk.');
+    cameraError(denied?'Kameraet er ikke tillatt':'Fikk ikke tak i kameraet',denied?'Du har avslått kameratilgang. Slå den på i nettleserens innstillinger for siden (lås-ikonet ved adressen) og prøv igjen.':'Kameraet eller grafikken kunne ikke startes. Lukk andre apper som bruker kameraet, og prøv igjen.',err);
   }
+}
+function cameraError(title,text,err){
+  S.camErr=true;camLog('vist feilmelding: '+title);
+  stopStream();stopGyro();
+  if(!root)return;
+  sheet().style.display='';dock().hidden=true;const z=root.querySelector('.tr-zoom');if(z)z.hidden=true;if(coach)coach.hide();
+  sheet().innerHTML=`<h2>${esc(title)}</h2><p>${esc(text)}</p>${err?`<p style="font-size:11px;color:#8a857c">Teknisk: ${esc(err.name+': '+err.message)}</p>`:''}
+    <button class="tr-btn pri" data-act="photo-retry-cam" style="min-height:50px">Prøv kameraet igjen</button>
+    <details style="max-width:560px;margin-top:16px"><summary style="cursor:pointer;font-size:12px;color:#ffd9a0">Feilsøkingslogg</summary><pre class="tr-logpre" style="white-space:pre-wrap;font:10.5px/1.4 monospace;background:#000a;padding:8px;color:#bfe9d0;margin:8px 0">${esc(camLines.join('\n'))}</pre><button class="tr-btn" data-act="copy-log">Kopier loggen</button></details>`;
+  hint('Kamera ikke i bruk.');
 }
 const fovForZoom=(fov,zOld,zNew)=>2*Math.atan(Math.tan(fov*Math.PI/360)*zOld/zNew)*180/Math.PI;
 async function wideAngle(st){
@@ -757,7 +786,7 @@ async function setZoom(z){
     S.dzoom=z;zoomLabel();
   }
 }
-function stopStream(){if(stream){stream.getTracks().forEach(t=>t.stop());stream=null;}if(video){video.srcObject=null;}}
+function stopStream(){if(stream){stream.getTracks().forEach(t=>t.stop());stream=null;}if(video){video.srcObject=null;video.remove();video=null;}}
 /* gyro: relative rotation only. Needs portrait orientation. */
 let orientHandler=null;
 function startGyro(){
