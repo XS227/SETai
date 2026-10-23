@@ -11,6 +11,7 @@
  * Inventory (sink, sofa ...) is kept visible with a manual "keep visible" brush painted in the surface's own coordinates. */
 import * as MA from './tryroom-math-v1.js?v=5';
 import {STONES,generateStone,T} from './stone-textures-v1.js';
+import {createCoach} from './tryroom-coach-v1.js?v=1';
 
 const MOBILE=typeof matchMedia==='function'&&matchMedia('(pointer:coarse)').matches;
 const NTEX=MOBILE?512:1024;
@@ -26,7 +27,7 @@ const S={
   views:[],cur:0,sel:-1,mark:null,brush:null,brushR:34,tab:'surf',frozen:false,fit:'contain',matType:'floor',dark:false,xr:null,hc:1.4,hcAuto:true,hcMeasured:false,hcNote:'',pitch:20,autoBusy:false,aiBusy:false,live:true,autoSel:0,selKind:'manual',frozenR:null,lastError:null,
   gyro:{on:false,ref:null,now:null,fov:65},busy:0,msg:''
 };
-let segMod=null,root,cv,ov,gl,P={},tex={},stream,video,raf=0,lumCtx,lumData,lumT=0,lumAvgFrame=.5,drag=null,photoInput,catalogP=null,xrMod=null;
+let coach=null,segMod=null,root,cv,ov,gl,P={},tex={},stream,video,raf=0,lumCtx,lumData,lumT=0,lumAvgFrame=.5,drag=null,photoInput,catalogP=null,xrMod=null;
 
 /* ---------------------------------------------------------------- css + dom */
 function injectCss(){
@@ -90,6 +91,7 @@ function buildRoot(){
   document.body.appendChild(root);
   document.documentElement.style.overflow='hidden';
   cv=root.querySelector('.tr-gl');ov=root.querySelector('.tr-ov');
+  coach=createCoach(root.querySelector('.tr-stage'));
   root.addEventListener('click',onClick);
   root.addEventListener('change',onChange);root.addEventListener('input',onChange);
   window.addEventListener('keydown',onKey);window.addEventListener('resize',resize);
@@ -383,6 +385,9 @@ function frame(now){
 }
 function lowLightHint(){
   const v=curView();if(!v||S.mark||S.msg)return;
+  const land=MOBILE&&v.kind==='video'&&window.innerWidth>window.innerHeight;
+  if(land&&!S.landShown){S.landShown=true;hint('<span class="tr-warn">Hold mobilen stående.</span> Gjenkjenning og perspektiv forutsetter stående format.');}
+  if(!land)S.landShown=false;
   const dark=v.kind==='video'&&!S.frozen&&lumAvgFrame<.13;
   if(dark&&!S.dark)hint('<span class="tr-warn">Det er veldig mørkt.</span> Skru på lyset i rommet, ellers blir materialet vanskelig å vurdere.');
   S.dark=dark;
@@ -639,6 +644,12 @@ async function autoDetect(silent){
     }
     const prev=view.auto;view.auto=buildAuto(seg,cam,silent);disposeAuto(prev);
     S.autoSel=silent?clamp(S.autoSel,0,Math.max(0,view.auto.surfaces.length-1)):0;S.selKind='auto';
+    {const fl=view.auto.surfaces.some(x=>x.type==='floor'),nw=view.auto.surfaces.filter(x=>x.type==='wall').length;
+     coach.chips([['Gulv',fl],[nw?nw+(nw>1?' vegger':' vegg'):'Vegger',nw>0]]);
+     if(!fl&&!nw)coach.set('hold','Pek mot rommet, med godt lys');
+     else if(!fl)coach.set('floor','Pek litt mer ned mot gulvet');
+     else if(!nw)coach.set('up','Løft mobilen så veggen synes');
+     else if(coach.step&&coach.step!=='done')coach.set('done','Gulv og vegger funnet');}
     if(!view.auto.surfaces.some(x=>x.type===S.matType))S.matType=view.auto.surfaces.some(x=>x.type==='floor')?'floor':'wall';
     if(!silent){
       const fl=view.auto.surfaces.some(x=>x.type==='floor'),nw=view.auto.surfaces.filter(x=>x.type==='wall').length,fb=view.auto.surfaces.some(x=>x.fallback);
@@ -677,6 +688,7 @@ async function startCamera(){
     sheet().style.display='none';renderDock();
     hint('<b>Kamera er på.</b> Hold mobilen stående og vis gulv og vegger rolig. Rommet analyseres automatisk om et øyeblikk.'+(S.gyro.on?'':' <span class="tr-warn">Bevegelsessensor mangler eller er avslått: bildet følger ikke når du dreier mobilen. Bruk «Frys bilde» for å justere.</span>'));
     if(!raf)raf=requestAnimationFrame(frame);
+    coach.set('hold','Hold mobilen stående og rolig mot rommet');
     setTimeout(()=>{if(root&&S.mode==='camera'&&!S.autoBusy&&!curView().auto)autoDetect(false);},900);
   }catch(err){
     stopStream();
@@ -706,7 +718,7 @@ function stopGyro(){if(orientHandler)window.removeEventListener('deviceorientati
 /* ---------------------------------------------------------------- mode: WebXR AR (separate module, loaded only when chosen) */
 async function startXR(){
   try{
-    xrMod=xrMod||await import('./tryroom-ar-v1.js?v=7');
+    xrMod=xrMod||await import('./tryroom-ar-v1.js?v=8');
     close(true);
     await xrMod.start({
       S,PREC,MATFN,FORMATS,GROUTS,STONES,generateStone,T,materials:MATS(),
@@ -757,7 +769,7 @@ async function quote(){
   const label='Prøv i mitt rom – '+lines.join(' | ')+' | Innstillinger: '+(FORMATS.find(f=>f[0]===S.fmt)[1])+', legging '+S.rot+'°'+(S.bond?', forband':'')+'. Mengde må bekreftes med eget oppmål.';
   if(typeof window.addItem==='function')window.addItem({kind:'tryroom',id:'tryroom-'+Date.now(),label});
   try{localStorage.setItem('stenhuset_tryroom',JSON.stringify({floor:S.floorId,wall:S.wallId,fmt:S.fmt,rot:S.rot,bond:S.bond,grout:S.grout,scale:S.scale,saved:new Date().toISOString()}));}catch(e){}
-  close();
+  S.xr=null;close();
   if(typeof window.showContact==='function')window.showContact();
 }
 
@@ -766,7 +778,7 @@ export async function open(skipStart){
   if(root)return;
   injectCss();buildRoot();
   S.caps=await detect();
-  if(S.caps.xr&&!xrMod)import('./tryroom-ar-v1.js?v=7').then(m=>{xrMod=m;}).catch(()=>{});
+  if(S.caps.xr&&!xrMod)import('./tryroom-ar-v1.js?v=8').then(m=>{xrMod=m;}).catch(()=>{});
   if(!skipStart)showStart();
 }
 export function close(keepRoot){

@@ -11,6 +11,7 @@
  * three.js example webxr_ar_camera_access (per-frame getCameraImage). Rendering is plain WebGL, no three.js.
  * Not verified on a physical phone in this build. Needs Chrome on an ARCore-capable Android phone. */
 import * as MA from './tryroom-math-v1.js?v=5';
+import {createCoach} from './tryroom-coach-v1.js?v=1';
 
 const clamp=(v,a,b)=>Math.min(b,Math.max(a,v));
 const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -138,7 +139,8 @@ export async function start(opt){
   document.body.appendChild(ui);
   const $=k=>ui.querySelector('[data-x="'+k+'"]');
   const hint=h=>{$('hint').innerHTML=h;};
-  dbgEl=$('dbg');dbgEl.textContent=logLines.join('\n');
+  dbgEl=$('dbg');dbgEl.textContent=logLines.join('\n');if(!/debug/.test(location.search))dbgEl.style.display='none';
+  const coach=createCoach(ui);
   let matFor='floor';
   function renderUi(){
     $('strip').innerHTML=materials.filter(m=>matFor==='wall'||!m.plaster).map(m=>`<button class="ar-c ${m.id===(matFor==='floor'?S.floorId:S.wallId)?'on':''}" data-mat="${m.id}"><i style="--slab:${m.pattern}"></i><em>${esc(m.name)}</em></button>`).join('');
@@ -338,12 +340,12 @@ export async function start(opt){
   const FLIPS=[[0,0],[0,1],[1,0],[1,1]]; // [flipX, flipY] candidates for the view->depth coordinate mapping
   const dmap=(u,v,f)=>[FLIPS[f][0]?1-u:u,FLIPS[f][1]?1-v:v];
   function updateDepth(frame,view,time,inv,V,camPos){
-    if(time-dp.last<90)return;dp.last=time;
+    if(time-dp.last<150)return;dp.last=time;
     let di=null;try{di=frame.getDepthInformation(view);}catch(e){if(dp.err!==e.message){dp.err=e.message;log('dybde utilgjengelig: '+e.message);}dp.ok=false;return;}
     if(!di){dp.ok=false;return;}
     if(!dp.tried){dp.tried=1;log('dybdekart mottatt: '+di.width+'x'+di.height+' (meter/enhet '+di.rawValueToMeters+')');}
     // one-off calibration against the measured floor plane: which mapping from view coordinates gives depths that fit the floor?
-    if(dp.calib<45&&pm.floorYPlane!=null){
+    if(dp.calib<45&&pm.floorYPlane!=null&&(pm.floorArea||0)>=1){
       dp.calib++;
       for(let a=1;a<9;a++)for(let b=3;b<9;b++){
         const u=a/9,v=b/9,ray=MA.ndcRay(inv,u*2-1,1-v*2),hit=MA.rayFloorXZ(ray.o,ray.d,pm.floorYPlane);if(!hit)continue;
@@ -452,7 +454,9 @@ export async function start(opt){
       if(pm.floorYPlane==null||Math.abs(f.y-pm.floorYPlane)>.25){
         if(pm.floorYPlane!=null)log('gulv byttet: y='+f.y.toFixed(2)+' ('+f.area.toFixed(1)+' m², '+f.planes.length+' plan; var '+pm.floorYPlane.toFixed(2)+')');
         pm.floorYPlane=f.y;pm.cx=null; // re-centre the map on the new floor
+        dp.calib=0;dp.errs=[[],[],[],[]];dp.bad=false; // the depth calibration used the old floor
       }else pm.floorYPlane+=(f.y-pm.floorYPlane)*.4;
+      pm.floorArea=f.area;
       if(pm.cx==null){const big=f.planes.slice().sort((a,b)=>b.area-a.area)[0];let cx=0,cz=0;for(const q of big.xz){cx+=q[0];cz+=q[1];}pm.cx=cx/big.xz.length;pm.cz=cz/big.xz.length;}
     }
     if(pm.floorYPlane==null)return true;
@@ -489,14 +493,32 @@ export async function start(opt){
       gl.uniformMatrix4fv(u.u_invVP,false,inv);gl.uniform3f(u.u_o,m[12],m[13],m[14]);gl.uniform4f(u.u_vp,vp.x,vp.y,vp.width,vp.height);
       gl.uniform3f(u.u_mk,pm.cx,pm.cz,G*CELL);gl.uniform1f(u.u_floorY,st.floorY);gl.uniform1f(u.u_gain,gain);depthUniforms(u,V);quad();
     }
-    for(const w of pm.walls){
-      if(w.n<8||w.s1-w.s0<.5||st.floorY==null||!bindMaterialFor(P.pwall,S.wallId))continue;
+    const ws=pm.walls.filter(w=>w.n>=8&&w.s1-w.s0>=.5).map(w=>{const sm=(w.s0+w.s1)/2,px=w.nx*w.d-w.nz*sm,pz=w.nz*w.d+w.nx*sm;return {w,dist:Math.hypot(px-m[12],pz-m[14])};}).sort((a,b)=>b.dist-a.dist);
+    for(const {w} of ws){
+      if(st.floorY==null||!bindMaterialFor(P.pwall,S.wallId))continue;
       const u=P.pwall.u;gl.uniformMatrix4fv(u.u_invVP,false,inv);gl.uniform3f(u.u_o,m[12],m[13],m[14]);gl.uniform4f(u.u_vp,vp.x,vp.y,vp.width,vp.height);
       gl.uniform2f(u.u_n,w.nx,w.nz);gl.uniform1f(u.u_d,w.d);gl.uniform2f(u.u_s,w.s0-.2,w.s1+.2);gl.uniform1f(u.u_H,2.5);
       gl.uniform1f(u.u_floorY,st.floorY);gl.uniform1f(u.u_gain,gain);depthUniforms(u,V);quad();
     }
   }
   function bindMaterialFor(pr,id){gl.useProgram(pr.p);return bindMaterial(pr.u,id);}
+
+  /* ---------------- scan coach: tells the customer how to move ---------------- */
+  function coachTick(time,m){
+    const last=st.coachT||0;if(time-last<250)return;const dt=last?(time-last)/1000:0;st.coachT=time;
+    const fwd=[-m[8],-m[9],-m[10]];
+    if(st.prevFwd&&dt>0&&angle(fwd,st.prevFwd)/dt>1.3)coach.fast(); // turning faster than ~75 deg/s blurs tracking
+    st.prevFwd=fwd;
+    const camMode=!!(st.cap&&st.surfaces.length);
+    const floorOK=camMode?st.hasFloor:(pm.nFloor>20&&st.floorY!=null);
+    const nWalls=camMode?st.surfaces.filter(s=>s.type==='wall').length:pm.walls.filter(w=>w.n>=8&&w.s1-w.s0>=.5).length;
+    coach.chips([['Gulv',floorOK],[nWalls?nWalls+(nWalls>1?' vegger':' vegg'):'Vegger',nWalls>0]]);
+    const sec=(time-st.t0)/1000;
+    if(sec<1.5){coach.set('hold','Hold mobilen stående og rolig');return;}
+    if(!floorOK){coach.set('floor','Pek mobilen ned mot gulvet');return;}
+    if(!nWalls){coach.set('sweep',sec>25?'Gå litt nærmere veggen og sveip sakte':'Løft mobilen og sveip sakte langs veggene');return;}
+    if(!st.coachDone){st.coachDone=true;coach.set('done','Rommet er skannet');}
+  }
 
   /* ---------------- frame loop ---------------- */
   const quad=()=>gl.drawArrays(gl.TRIANGLE_STRIP,0,4);
@@ -509,12 +531,12 @@ export async function start(opt){
   function frameBody(time,frame){
     const pose=frame.getViewerPose(ref);
     gl.bindFramebuffer(gl.FRAMEBUFFER,layer.framebuffer);gl.clearColor(0,0,0,0);gl.clear(gl.COLOR_BUFFER_BIT);
-    if(!pose){if(!st.lost){st.lost=true;hint('<b>Mistet sporing.</b> Beveg mobilen rolig og se mot noe med mønster eller kanter, og med godt lys.');}return;}
+    if(!pose){if(!st.lost){st.lost=true;coach.set('hold','Beveg mobilen rolig');hint('<b>Mistet sporing.</b> Beveg mobilen rolig og se mot noe med mønster eller kanter, og med godt lys.');}return;}
     if(st.lost){st.lost=false;hint('Sporing er tilbake.');}
     const view=pose.views[0],vp=layer.getViewport(view),m=view.transform.matrix,camY=m[13];
     st.frames++;if(!st.t0)st.t0=time;
     if(view.camera){camSeen++;if(camSeen===1)log('kamerabilde mottatt: '+view.camera.width+'x'+view.camera.height);}else camMissing++;
-    if(!camSeen&&camMissing===60&&!reported){reported=true;log('INGEN kamerabilde (view.camera er null) etter 60 bilderuter');hint('<b>Plan-modus:</b> nettleseren gir ikke kamerabildet til AR, så AI-gjenkjenning er ikke mulig her. AR finner i stedet gulv og vegger selv: beveg mobilen rolig langs gulv og vegger så fylles flatene inn. Møbler og vinduer på veggen kan ikke utelukkes automatisk.');}
+    if(!camSeen&&camMissing===60&&!reported){reported=true;log('INGEN kamerabilde (view.camera er null) etter 60 bilderuter');$('live').style.display='none';$('redo').style.display='none';hint('AR finner gulv og vegger selv. Følg pilene: pek mot gulvet, og sveip sakte langs veggene.');}
     if(time-lastSum>3000){lastSum=time;log('bilder='+st.frames+' kamera='+(view.camera?'ja':'nei')+' gulvprøver='+st.floorSamples.length+' gulvY='+(st.floorY==null?'-':st.floorY.toFixed(2))+' flater='+st.surfaces.length+' dybde='+(dp.ok?(dp.calib>=999?(dp.bad?'avvist':'på'):'kalibrerer'):'nei')+' planer(v/h)='+pm.nv+'/'+pm.nh+(pm.sem?' etikett='+pm.sem:'')+' gulvceller='+pm.nFloor+' møbelceller='+pm.nBlock+' vegger='+pm.walls.filter(w=>w.n>=8).length+(st.busy?' (analyserer)':''));}
 
     // floor / wall / furniture: ARCore plane detection when the browser grants it, otherwise a grid of hit-tests
@@ -525,6 +547,7 @@ export async function start(opt){
     if(locked&&!st.floorLocked){st.floorLocked=true;hint('Gulv målt: '+(camY-fy).toFixed(2)+' m under telefonen.'+(camSeen?' Analyserer rommet …':' Beveg mobilen rolig langs gulv og vegger, så fylles flatene inn.'));}
     if(st.floorY==null||(st.floorLocked&&Math.abs(fy-st.floorY)>.02)){st.floorY=fy;if(st.cap)refit();}else if(!st.floorLocked)st.floorY=fy;
     uploadPm(time);
+    coachTick(time,m);
 
     // schedule analysis: first one after tracking has settled, then when the phone has moved/turned or the result is old
     const cam=view.camera;
@@ -541,7 +564,7 @@ export async function start(opt){
     gl.bindFramebuffer(gl.FRAMEBUFFER,layer.framebuffer);gl.viewport(vp.x,vp.y,vp.width,vp.height);
     gl.enable(gl.BLEND);gl.blendFuncSeparate(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA,gl.ONE,gl.ONE_MINUS_SRC_ALPHA);
     const VPn=MA.mat4Mul(view.projectionMatrix,view.transform.inverse.matrix),inv=MA.mat4Inv(VPn);if(!inv)return;
-    if(!st.cap||!st.surfaces.length){if(camMissing>60&&!camSeen){const Vm=view.transform.inverse.matrix;updateDepth(frame,view,time,inv,Vm,[m[12],m[13],m[14]]);drawPlanes(inv,m,vp,Vm);}return;}
+    if(!st.cap||!st.surfaces.length){const Vm=view.transform.inverse.matrix;updateDepth(frame,view,time,inv,Vm,[m[12],m[13],m[14]]);drawPlanes(inv,m,vp,Vm);return;}
     for(const sf of st.surfaces){
       const wall=sf.type==='wall',pr=wall?P.wall:P.floor,u=pr.u;gl.useProgram(pr.p);
       if(!bindMaterial(u,wall?S.wallId:S.floorId))continue;
@@ -564,7 +587,7 @@ export async function start(opt){
     if(b.dataset.grout){S.grout=b.dataset.grout;renderUi();return;}
     switch(b.dataset.x){
       case 'end':userEnd=true;session.end().catch(()=>{});break;
-      case 'reset':pm.floor.fill(0);pm.block.fill(0);pm.walls=[];pm.cx=null;pm.cz=null;pm.dirty=true;pm.sig=-1;pm.floorYPlane=null;st.floorSamples.length=0;st.floorLocked=false;st.floorY=null;hint('Nullstilt. Beveg mobilen rolig langs gulv og vegger.');break;
+      case 'reset':dp.calib=0;dp.errs=[[],[],[],[]];dp.bad=false;st.coachDone=false;pm.floorArea=0;pm.floor.fill(0);pm.block.fill(0);pm.walls=[];pm.cx=null;pm.cz=null;pm.dirty=true;pm.sig=-1;pm.floorYPlane=null;st.floorSamples.length=0;st.floorLocked=false;st.floorY=null;hint('Nullstilt. Beveg mobilen rolig langs gulv og vegger.');break;
       case 'dbgt':dbgEl.style.display=dbgEl.style.display==='none'?'':'none';break;
       case 'cam':userEnd=true;session.end().catch(()=>{});setTimeout(()=>opt.onFallback&&opt.onFallback('bruker'),200);break;
       case 'mf':matFor='floor';renderUi();break;
