@@ -365,6 +365,26 @@ export async function start(opt){
     gl.activeTexture(gl.TEXTURE5);gl.bindTexture(gl.TEXTURE_2D,dp.tex);gl.pixelStorei(gl.UNPACK_ALIGNMENT,1);
     gl.texImage2D(gl.TEXTURE_2D,0,gl.LUMINANCE_ALPHA,DW,DH,0,gl.LUMINANCE_ALPHA,gl.UNSIGNED_BYTE,dp.data);
     dp.ok=true;
+    // Grow the scanned floor and walls with the depth map: where the measured depth agrees with the floor plane (or a known wall
+    // plane), that spot IS floor (or wall), even if ARCore has not extended its plane there yet (plain, untextured surfaces).
+    if(dp.calib>=999&&!dp.bad&&pm.floorYPlane!=null&&pm.cx!=null){
+      const zOf=Q=>-(V[2]*Q[0]+V[6]*Q[1]+V[10]*Q[2]+V[14]);
+      for(let b=2;b<28;b++)for(let a=0;a<16;a++){
+        const u=(a+.5)/16,v=(b+.5)/28,[x,y]=dmap(u,v,dp.flip);let zm=0;try{zm=di.getDepthInMeters(x,y);}catch(e){}
+        if(!(zm>.2))continue;
+        const ray=MA.ndcRay(inv,u*2-1,1-v*2),tol=z=>.05+.03*z;
+        const fh=MA.rayFloorXZ(ray.o,ray.d,pm.floorYPlane);
+        if(fh){const zv=zOf([fh[0],pm.floorYPlane,fh[1]]);if(zv<5&&Math.abs(zm-zv)<tol(zv)){stamp(pm.floor,fh[0],fh[1],.14,1);continue;}}
+        for(const w of pm.walls){
+          if(w.n<8)continue;const den=w.nx*ray.d[0]+w.nz*ray.d[2];if(Math.abs(den)<1e-3)continue;
+          const t=(w.d-(w.nx*ray.o[0]+w.nz*ray.o[2]))/den;if(t<=0)continue;
+          const Q=[ray.o[0]+ray.d[0]*t,ray.o[1]+ray.d[1]*t,ray.o[2]+ray.d[2]*t],hh=Q[1]-pm.floorYPlane;if(hh<0||hh>2.6)continue;
+          const zv=zOf(Q);if(zv>6||Math.abs(zm-zv)>tol(zv))continue;
+          const sv=-w.nz*Q[0]+w.nx*Q[2];if(sv<w.s0-1.5||sv>w.s1+1.5)continue; // grow step by step next to what is already known
+          if(sv<w.s0)w.s0=sv;if(sv>w.s1)w.s1=sv;break;
+        }
+      }
+    }
   }
 
   /* ---------------- plane mode: accumulate ARCore hits ---------------- */

@@ -718,7 +718,7 @@ function stopGyro(){if(orientHandler)window.removeEventListener('deviceorientati
 /* ---------------------------------------------------------------- mode: WebXR AR (separate module, loaded only when chosen) */
 async function startXR(){
   try{
-    xrMod=xrMod||await import('./tryroom-ar-v1.js?v=9');
+    xrMod=xrMod||await import('./tryroom-ar-v1.js?v=10');
     close(true);
     await xrMod.start({
       S,PREC,MATFN,FORMATS,GROUTS,STONES,generateStone,T,materials:MATS(),
@@ -778,7 +778,7 @@ export async function open(skipStart){
   if(root)return;
   injectCss();buildRoot();
   S.caps=await detect();
-  if(S.caps.xr&&!xrMod)import('./tryroom-ar-v1.js?v=9').then(m=>{xrMod=m;}).catch(()=>{});
+  if(S.caps.xr&&!xrMod)import('./tryroom-ar-v1.js?v=10').then(m=>{xrMod=m;}).catch(()=>{});
   if(!skipStart)showStart();
 }
 export function close(keepRoot){
