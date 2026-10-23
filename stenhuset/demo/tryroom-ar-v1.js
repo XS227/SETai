@@ -514,7 +514,7 @@ export async function start(opt){
     const view=pose.views[0],vp=layer.getViewport(view),m=view.transform.matrix,camY=m[13];
     st.frames++;if(!st.t0)st.t0=time;
     if(view.camera){camSeen++;if(camSeen===1)log('kamerabilde mottatt: '+view.camera.width+'x'+view.camera.height);}else camMissing++;
-    if(!camSeen&&camMissing===60&&!reported){reported=true;log('INGEN kamerabilde (view.camera er null) etter 60 bilderuter');hint('<b>Plan-modus:</b> nettleseren gir ikke kamerabildet til AR, så AI-gjenkjenning er ikke mulig her. AR finner i stedet gulv og vegger selv: beveg mobilen rolig langs gulv og vegger så fylles flatene inn. Møbler og vinduer på veggen kan ikke utelukkes automatisk.');$('cam').style.display='';}
+    if(!camSeen&&camMissing===60&&!reported){reported=true;log('INGEN kamerabilde (view.camera er null) etter 60 bilderuter');hint('<b>Plan-modus:</b> nettleseren gir ikke kamerabildet til AR, så AI-gjenkjenning er ikke mulig her. AR finner i stedet gulv og vegger selv: beveg mobilen rolig langs gulv og vegger så fylles flatene inn. Møbler og vinduer på veggen kan ikke utelukkes automatisk.');}
     if(time-lastSum>3000){lastSum=time;log('bilder='+st.frames+' kamera='+(view.camera?'ja':'nei')+' gulvprøver='+st.floorSamples.length+' gulvY='+(st.floorY==null?'-':st.floorY.toFixed(2))+' flater='+st.surfaces.length+' dybde='+(dp.ok?(dp.calib>=999?(dp.bad?'avvist':'på'):'kalibrerer'):'nei')+' planer(v/h)='+pm.nv+'/'+pm.nh+(pm.sem?' etikett='+pm.sem:'')+' gulvceller='+pm.nFloor+' møbelceller='+pm.nBlock+' vegger='+pm.walls.filter(w=>w.n>=8).length+(st.busy?' (analyserer)':''));}
 
     // floor / wall / furniture: ARCore plane detection when the browser grants it, otherwise a grid of hit-tests

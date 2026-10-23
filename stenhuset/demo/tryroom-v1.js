@@ -105,15 +105,13 @@ async function detect(){
   return c;
 }
 function showStart(){
-  const c=S.caps;
+  const c=S.caps,ok=(c.xr||(c.cam&&c.secure));
   sheet().style.display='';dock().hidden=true;
   sheet().innerHTML=`<h2>Prøv i mitt rom</h2>
-  <p>Se Stenhusets materialer på gulv og vegger i ditt eget rom. Alt skjer på din egen enhet. Bilder og video lastes ikke opp noe sted.</p>
-  <button class="tr-opt" data-act="start-cam" ${c.cam&&c.secure?'':'disabled'}><strong>Live kamera <small>Automatisk</small></strong><span>Du ser rommet i kameraet, og en AI-modell på mobilen din finner gulv, vegger og møbler av seg selv. Materialet legges bare på gulv og vegg, følger perspektivet og holder seg på plass når du dreier mobilen. Oppdateres automatisk når du flytter deg. Første gang lastes en liten modell (4 MB) og et analysebibliotek ned.${c.cam&&c.secure?'':' Krever kamera og sikker (https) tilkobling.'}</span></button>
-  <button class="tr-opt" data-act="start-photo"><strong>Ta bilder av rommet</strong><span>Vi veileder deg gjennom noen bilder i appen. Hvert bilde tar vare på mobilens vinkel, og gulv og vegger gjenkjennes automatisk. Samme materialvalg brukes i alle bilder. Resultatet er ferdige bilder du kan lagre og sende, ikke en 3D-modell av rommet.</span></button>
-  <button class="tr-opt" data-act="start-xr" ${c.xr?'':'disabled'}><strong>Live AR + automatisk <small>Beta</small></strong><span>${c.xr?'Samme automatiske gjenkjenning, men med ekte AR-sporing: materialet holder seg på gulv og vegg også når du går rundt i rommet, og gulvhøyden måles. Møbler og inventar holdes utenfor. Krever kameratilgang i AR. Ikke testet på alle telefoner.':'Ikke tilgjengelig her. Krever WebXR AR (Chrome på en ARCore-støttet Android-telefon). iPhone og iPad støtter ikke dette i nettleseren.'}</span></button>
-  <p style="font-size:12px;color:#aaa49a">Tips: god belysning, hold mobilen stående, og ha gulv og vegger tydelig i bildet.</p>`;
-  hint('Velg hvordan du vil prøve materialene.');
+  <p>Se Stenhusets materialer på gulv og vegger i ditt eget rom. Rett mobilkameraet mot rommet og beveg deg rolig: gulv, vegger og møbler gjenkjennes automatisk, og materialet legges bare på gulv og vegg.</p>
+  ${ok?'<button class="tr-btn pri" data-act="start" style="font-size:13px;padding:16px 26px;min-height:54px">Start</button>':'<p class="tr-warn">Denne enheten eller nettleseren støtter ikke kamera her. Åpne siden i Chrome på en Android-telefon, eller i Safari på iPhone, over https.</p>'}
+  <p style="font-size:12px;color:#aaa49a;margin-top:18px">Alt skjer på din egen mobil. Bilder og video lastes ikke opp noe sted. Nettleseren spør om tillatelse til kameraet.</p>`;
+  hint('Trykk Start for å åpne kameraet.');
   // log from the previous AR attempt (kept in sessionStorage), so a crash can be diagnosed afterwards
   try{
     const L=JSON.parse(sessionStorage.getItem('tr_ar_log')||'null');
@@ -549,7 +547,7 @@ function onClick(e){
   if(t.dataset.grout){S.grout=t.dataset.grout;renderDock();return;}
   const a=t.dataset.act;if(!a)return;
   ({close,
-    'start-cam':startCamera,'start-photo':startPhotos,'start-xr':startXR,
+    start:()=>((S.caps.xr)?startXR():startCamera()),
     auto:autoDetect,'hc-auto':()=>{S.hcAuto=true;S.hcMeasured=false;renderDock();autoDetect(false);},'brush-add':()=>{S.brush=S.brush==='add'?null:'add';brushHint();renderDock();},
     'mark-floor':()=>startMark('floor'),'mark-wall':()=>startMark('wall'),
     'mark-cancel':()=>{S.mark=null;S.msg='';hint('Markering avbrutt.');renderDock();},
@@ -559,7 +557,7 @@ function onClick(e){
     'del-surface':()=>{const v=curView();v.surfaces.splice(S.sel,1);S.sel=v.surfaces.length-1;S.brush=null;renderDock();},
     fit:()=>{S.fit=S.fit==='fill'?'contain':'fill';renderDock();},
     freeze:()=>{S.frozen=!S.frozen;S.frozenR=S.frozen&&S.gyro.now?S.gyro.now.slice():null;bgKey=null;if(!S.frozen)curView().surfaces.forEach(anchorRays);renderDock();},
-    'save-image':saveImage,quote,'photos-done':photosDone,'photo-take':()=>photoInput.click(),'photo-snap':snapPhoto,'photo-redo':redoPhoto,'photo-retry-cam':startCamera,'copy-log':()=>{const el=root.querySelector('#tr-log');if(el&&navigator.clipboard)navigator.clipboard.writeText(el.textContent).then(()=>hint('Loggen er kopiert. Lim den inn i en melding til meg.')).catch(()=>hint('Kunne ikke kopiere. Ta et skjermbilde av loggen i stedet.'));},'photo-fallback':startPhotos
+    'save-image':saveImage,quote,'photo-retry-cam':startCamera,'copy-log':()=>{const el=root.querySelector('#tr-log');if(el&&navigator.clipboard)navigator.clipboard.writeText(el.textContent).then(()=>hint('Loggen er kopiert. Lim den inn i en melding til meg.')).catch(()=>hint('Kunne ikke kopiere. Ta et skjermbilde av loggen i stedet.'));},
   })[a]?.();
 }
 function onChange(e){
@@ -684,8 +682,8 @@ async function startCamera(){
     stopStream();
     const denied=err&&(err.name==='NotAllowedError'||err.name==='SecurityError');
     sheet().style.display='';dock().hidden=true;
-    sheet().innerHTML=`<h2>${denied?'Kameraet er ikke tillatt':'Fikk ikke tak i kameraet'}</h2><p>${denied?'Du har avslått kameratilgang. Slå den på i nettleserens innstillinger for siden og prøv igjen, eller ta bilder av rommet i stedet.':'Kameraet eller grafikken kunne ikke startes. Prøv igjen, eller ta bilder av rommet i stedet.'}</p><p style="font-size:11px;color:#8a857c">Teknisk: ${esc(err&&(err.name+': '+err.message)||'ukjent')}</p>
-    <button class="tr-opt" data-act="photo-retry-cam"><strong>Prøv kameraet igjen</strong></button><button class="tr-opt" data-act="photo-fallback"><strong>Ta bilder av rommet</strong><span>Fungerer uten live kamera.</span></button>`;
+    sheet().innerHTML=`<h2>${denied?'Kameraet er ikke tillatt':'Fikk ikke tak i kameraet'}</h2><p>${denied?'Du har avslått kameratilgang. Slå den på i nettleserens innstillinger for siden og prøv igjen.':'Kameraet eller grafikken kunne ikke startes. Prøv igjen.'}</p><p style="font-size:11px;color:#8a857c">Teknisk: ${esc(err&&(err.name+': '+err.message)||'ukjent')}</p>
+    <button class="tr-opt" data-act="photo-retry-cam"><strong>Prøv kameraet igjen</strong></button>`;
     hint('Kamera ikke i bruk.');
   }
 }
@@ -705,78 +703,10 @@ function startGyro(){
 function stopGyro(){if(orientHandler)window.removeEventListener('deviceorientation',orientHandler);orientHandler=null;S.gyro.on=false;S.gyro.now=null;}
 
 /* ---------------------------------------------------------------- mode: guided photos */
-const PHOTO_STEPS=['Oversiktsbilde fra døren','Bilde mot motsatt vegg eller vindu','Bilde mot venstre vegg','Bilde mot høyre vegg'];
-const BLUR_MIN=40;
-let pv=null;
-async function startPhotos(){
-  S.mode='photo';
-  try{if(!gl)setupGL();bind();}catch(e){sheet().innerHTML='<h2>Enheten støtter ikke dette</h2><p>WebGL mangler, så materialene kan ikke vises i nettleseren her.</p><p style="font-size:11px;color:#8a857c">Teknisk: '+esc(e&&e.message||'ukjent')+'</p>';return;}
-  stopStream();stopGyro();
-  S.views=[];S.cur=0;S.sel=-1;S.selKind='manual';
-  if(!photoInput){photoInput=document.createElement('input');photoInput.type='file';photoInput.accept='image/*';photoInput.style.display='none';root.appendChild(photoInput);photoInput.addEventListener('change',onPhoto);}
-  // in-app camera: each photo then carries the phone's orientation, which is what makes floor/wall perspective correct
-  try{
-    if(S.caps.gyro&&typeof DeviceOrientationEvent!=='undefined'&&typeof DeviceOrientationEvent.requestPermission==='function'){
-      try{S.gyro.perm=await DeviceOrientationEvent.requestPermission();}catch(e){S.gyro.perm='denied';}
-    }
-    stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'},width:{ideal:1600},height:{ideal:1200},aspectRatio:{ideal:4/3}},audio:false});
-    await wideAngle(stream);
-    startGyro();
-  }catch(e){stream=null;}
-  photoGuide();
-  if(!raf)raf=requestAnimationFrame(frame);
-}
-function photoGuide(extra){
-  dock().hidden=true;sheet().style.display='';
-  const n=S.views.length,step=PHOTO_STEPS[n]||'Ekstra bilde av områder som mangler';
-  sheet().innerHTML=`<h2>Ta bilder av rommet</h2>
-  <p>Bildene lagres bare på enheten din og lastes ikke opp. Hold mobilen stående, la hvert bilde overlappe litt med det forrige, og ha gulv og vegger tydelig i bildet.</p>
-  <p><strong style="color:#f0cf9a">Bilde ${n+1}: ${step}</strong></p>${extra||''}
-  ${stream?'<video class="tr-pv" playsinline muted autoplay style="width:100%;max-width:420px;max-height:46vh;object-fit:cover;background:#000;display:block;margin:0 0 12px"></video>':'<p class="tr-warn" style="font-size:13px">Kameraet er ikke tilgjengelig i appen. Du kan velge bilder fra galleriet i stedet. Da mangler informasjon om mobilens vinkel, og du justerer kameravinkelen selv.</p>'}
-  <div class="tr-thumbs">${S.views.map((v,i)=>`<canvas data-pthumb="${i}" width="120" height="84"></canvas>`).join('')}</div>
-  <div class="tr-row">${stream?'<button class="tr-btn pri" data-act="photo-snap">Ta bilde</button>':''}<button class="tr-btn ${stream?'':'pri'}" data-act="photo-take">Velg fra galleri</button>${n?`<button class="tr-btn" data-act="photo-redo">Slett siste</button>`:''}${n?`<button class="tr-btn pri" data-act="photos-done">Fortsett med ${n} bilde${n>1?'r':''}</button>`:''}</div>
-  <p style="font-size:12px;color:#aaa49a">${n>=PHOTO_STEPS.length?'Du kan ta flere bilder av områder som mangler. Vi kan ikke måle dekningen automatisk, så sjekk selv at alle vegger du vil endre er med.':'Fire bilder er et utgangspunkt. Ta flere hvis rommet er stort eller har kriker og kroker.'}</p>`;
-  sheet().querySelectorAll('[data-pthumb]').forEach(c=>c.getContext('2d').drawImage(S.views[+c.dataset.pthumb].canvas,0,0,120,84));
-  pv=sheet().querySelector('.tr-pv');if(pv&&stream){pv.srcObject=stream;pv.play().catch(()=>{});}
-  hint('Veiledet fotografering: bilde '+(n+1));
-}
-function pushPhoto(c,R){
-  const blur=blurScore(c);S.views.push({kind:'img',canvas:c,surfaces:[],blur,capR:R});
-  photoGuide(blur<BLUR_MIN?'<p class="tr-warn">Det siste bildet ser uskarpt ut. Hold mobilen stødig, eller trykk «Slett siste» og ta det på nytt.</p>':(R?'':'<p class="tr-warn" style="font-size:12.5px">Dette bildet mangler informasjon om mobilens vinkel. Juster «Kameravinkel» under Flater.</p>'));
-}
-function snapPhoto(){
-  if(!pv||!pv.videoWidth)return;
-  const sc=Math.min(1,1600/Math.max(pv.videoWidth,pv.videoHeight)),c=document.createElement('canvas');
-  c.width=Math.round(pv.videoWidth*sc);c.height=Math.round(pv.videoHeight*sc);c.getContext('2d').drawImage(pv,0,0,c.width,c.height);
-  pushPhoto(c,S.gyro.on&&S.gyro.now?S.gyro.now.slice():null);
-}
-async function onPhoto(){
-  const f=photoInput.files&&photoInput.files[0];photoInput.value='';if(!f)return;
-  try{
-    const bmp=await createImageBitmap(f,{imageOrientation:'from-image'}).catch(()=>createImageBitmap(f));
-    const sc=Math.min(1,1600/Math.max(bmp.width,bmp.height)),c=document.createElement('canvas');c.width=Math.round(bmp.width*sc);c.height=Math.round(bmp.height*sc);
-    c.getContext('2d').drawImage(bmp,0,0,c.width,c.height);if(bmp.close)bmp.close();
-    pushPhoto(c,null);
-  }catch(e){photoGuide('<p class="tr-warn">Kunne ikke lese bildet. Prøv igjen.</p>');}
-}
-function blurScore(c){
-  const w=320,h=Math.max(8,Math.round(320*c.height/c.width)),t=document.createElement('canvas');t.width=w;t.height=h;const g=t.getContext('2d');g.drawImage(c,0,0,w,h);
-  const d=g.getImageData(0,0,w,h).data,gray=new Float32Array(w*h);for(let i=0;i<w*h;i++)gray[i]=.299*d[i*4]+.587*d[i*4+1]+.114*d[i*4+2];
-  return MA.laplacianVariance(gray,w,h);
-}
-function redoPhoto(){S.views.pop();photoGuide();}
-function photosDone(){
-  if(!S.views.length){photoGuide('<p class="tr-warn">Ta minst ett bilde først.</p>');return;}
-  stopStream();stopGyro();pv=null;
-  S.cur=0;S.sel=-1;S.selKind='manual';bgKey=null;sheet().style.display='none';renderDock();
-  hint('Gulv og vegger i bildet gjenkjennes automatisk. Bytt bilde nederst; materialvalget er felles.');
-  setTimeout(()=>{if(root&&curView()&&!curView().auto)autoDetect(false);},300);
-}
-
 /* ---------------------------------------------------------------- mode: WebXR AR (separate module, loaded only when chosen) */
 async function startXR(){
   try{
-    xrMod=xrMod||await import('./tryroom-ar-v1.js?v=6');
+    xrMod=xrMod||await import('./tryroom-ar-v1.js?v=7');
     close(true);
     await xrMod.start({
       S,PREC,MATFN,FORMATS,GROUTS,STONES,generateStone,T,materials:MATS(),
@@ -792,7 +722,8 @@ async function startXR(){
   }catch(e){
     console.warn('Stenhuset AR:',e);
     if(!root)await open(true);
-    showStart();hint('<span class="tr-warn">AR kunne ikke startes: '+esc(e&&e.message||'ukjent feil')+'</span> Bruk «Live kamera» i stedet.');
+    if(S.caps.cam&&S.caps.secure){hint('<span class="tr-warn">AR kunne ikke startes ('+esc(e&&e.message||'ukjent feil')+'). Bruker vanlig kamera i stedet.</span>');await startCamera();}
+    else{showStart();hint('<span class="tr-warn">AR kunne ikke startes: '+esc(e&&e.message||'ukjent feil')+'</span>');}
   }
 }
 
@@ -835,6 +766,7 @@ export async function open(skipStart){
   if(root)return;
   injectCss();buildRoot();
   S.caps=await detect();
+  if(S.caps.xr&&!xrMod)import('./tryroom-ar-v1.js?v=7').then(m=>{xrMod=m;}).catch(()=>{});
   if(!skipStart)showStart();
 }
 export function close(keepRoot){
