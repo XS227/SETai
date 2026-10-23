@@ -354,7 +354,7 @@ export async function start(opt){
       }
       if(dp.calib===45||dp.errs.every(e=>e.length>60)){
         const med=a=>{if(!a.length)return 99;const b=a.slice().sort((x,y)=>x-y);return b[b.length>>1];},m4=dp.errs.map(med);
-        {const bi=m4.indexOf(Math.min(...m4));dp.flip=m4[bi]<m4[0]*.85?bi:0;}dp.calib=999;dp.bad=Math.min(...m4)>.6;if(dp.bad)log('dybdekartet passer ikke med gulvet (feil > 0,6 m): dybde-skjuling slått av');log('dybde-kalibrering (median feil m): '+m4.map(v=>v.toFixed(2)).join(' / ')+' -> valgt '+dp.flip);
+        {const bi=m4.indexOf(Math.min(...m4));dp.flip=m4[bi]<m4[0]*.85?bi:0;}dp.calib=999;dp.bad=Math.min(...m4)>.3;if(dp.bad)log('dybdekartet passer ikke med gulvet (feil > 0,3 m): dybde-skjuling slått av til neste kalibrering');log('dybde-kalibrering (median feil m): '+m4.map(v=>v.toFixed(2)).join(' / ')+' -> valgt '+dp.flip);
       }
     }
     let k=0;
@@ -448,36 +448,52 @@ export async function start(opt){
       let g=groups.find(g=>Math.abs(g.y-h.y)<.08);if(!g){g={y:h.y,area:0,sy:0,planes:[]};groups.push(g);}
       g.area+=h.area;g.sy+=h.y*h.area;g.y=g.sy/g.area;g.planes.push(h);
     }
-    groups.sort((a,b)=>b.area-a.area);
-    if(groups.length&&groups[0].area>.25){
-      const f=groups[0];
-      if(pm.floorYPlane==null||Math.abs(f.y-pm.floorYPlane)>.25){
-        if(pm.floorYPlane!=null)log('gulv byttet: y='+f.y.toFixed(2)+' ('+f.area.toFixed(1)+' m², '+f.planes.length+' plan; var '+pm.floorYPlane.toFixed(2)+')');
-        pm.floorYPlane=f.y;pm.cx=null; // re-centre the map on the new floor
-        dp.calib=0;dp.errs=[[],[],[],[]];dp.bad=false; // the depth calibration used the old floor
-      }else pm.floorYPlane+=(f.y-pm.floorYPlane)*.4;
-      pm.floorArea=f.area;
-      if(pm.cx==null){const big=f.planes.slice().sort((a,b)=>b.area-a.area)[0];let cx=0,cz=0;for(const q of big.xz){cx+=q[0];cz+=q[1];}pm.cx=cx/big.xz.length;pm.cz=cz/big.xz.length;}
+    // Floor choice with memory. First time: the largest group, unless a clearly lower group is at least half as big (a bed or sofa
+    // seen first). Afterwards the floor only moves DOWN to a big enough lower group, and only moves UP if the old floor height has
+    // not been seen for 15 s. Smoothing only follows the same group, never a different height.
+    const near=pm.floorYPlane==null?null:groups.find(g=>Math.abs(g.y-pm.floorYPlane)<.08);
+    let pick=null,why='';
+    if(pm.floorYPlane==null){
+      const big=groups.slice().sort((a,b)=>b.area-a.area)[0];
+      if(big&&big.area>.25){
+        pick=big;why='første gulv';
+        const lower=groups.filter(g=>g.y<big.y-.15&&g.area>=.5*big.area).sort((a,b)=>a.y-b.y)[0];if(lower)pick=lower;
+      }
+    }else{
+      if(near){pm.floorYPlane+=(near.y-pm.floorYPlane)*.3;pm.floorArea=Math.max(pm.floorArea||0,near.area);}
+      if(hor.some(h=>Math.abs(h.y-pm.floorYPlane)<.1))pm.floorSeen=now; // even a small piece of the old floor counts as seen
+      const cur=near?near.area:(pm.floorArea||0);
+      const lower=groups.filter(g=>g.y<pm.floorYPlane-.15&&g.area>=Math.max(1,.5*cur)).sort((a,b)=>a.y-b.y)[0];
+      if(lower){pick=lower;why='lavere flate, stor nok';}
+      else if(!near&&now-(pm.floorSeen||0)>30000){const up=groups.filter(g=>g.area>=1.5&&g.y<camY-.9).sort((a,b)=>b.area-a.area)[0];if(up){pick=up;why='gammelt gulv ikke sett på 30 s';}}
+    }
+    if(pick){
+      if(pm.floorYPlane!=null)log('gulv byttet: y='+pick.y.toFixed(2)+' ('+pick.area.toFixed(1)+' m², '+why+'; var '+pm.floorYPlane.toFixed(2)+')');
+      pm.floorYPlane=pick.y;pm.floorSeen=now;pm.floorArea=pick.area;
+      pm.cx=null;pm.floor.fill(0);pm.block.fill(0); // new floor height: start the map again
+      dp.calib=0;dp.errs=[[],[],[],[]];dp.bad=false;   // and the depth calibration, which uses the floor
+    }
+    if(pm.cx==null&&pm.floorYPlane!=null){
+      const fg=groups.find(g=>Math.abs(g.y-pm.floorYPlane)<.08);
+      if(fg){const big=fg.planes.slice().sort((a,b)=>b.area-a.area)[0];let cx=0,cz=0;for(const q of big.xz){cx+=q[0];cz+=q[1];}pm.cx=cx/big.xz.length;pm.cz=cz/big.xz.length;}
     }
     if(pm.floorYPlane==null)return true;
-    const fy=pm.floorYPlane;pm.floor.fill(0);pm.block.fill(0);
+    const fy=pm.floorYPlane;
     for(const h of hor){
       if(Math.abs(h.y-fy)<.08)rasterPoly(pm.floor,h.xz);
       else if(h.y>fy+.15&&h.y<fy+1.3&&h.y<camY-.15&&h.area<4)rasterPoly(pm.block,h.xz);
     }
     pm.dirty=true;pm.nFloor=0;pm.nBlock=0;for(let i=0;i<pm.floor.length;i++){if(pm.floor[i]>.5)pm.nFloor++;if(pm.block[i]>.5)pm.nBlock++;}
     // walls: vertical planes, pieces of the same wall merged
-    const walls=[];
     for(const v of ver){
       let nx=v.M[4],nz=v.M[6];const L=Math.hypot(nx,nz);if(L<.6)continue;nx/=L;nz/=L;
       let d=nx*v.M[12]+nz*v.M[14];
       let tgt=null;
-      for(const w of walls){const dot=w.nx*nx+w.nz*nz;if(Math.abs(dot)>Math.cos(10*Math.PI/180)){const dd=dot>0?d:-d;if(Math.abs(w.d-dd)<.2){tgt=w;break;}}}
-      if(!tgt){tgt={nx,nz,d,s0:1e9,s1:-1e9,n:99};walls.push(tgt);}
+      for(const w of pm.walls){const dot=w.nx*nx+w.nz*nz;if(Math.abs(dot)>Math.cos(10*Math.PI/180)){const dd=dot>0?d:-d;if(Math.abs(w.d-dd)<.2){tgt=w;break;}}}
+      if(!tgt){if(pm.walls.length>=12)continue;tgt={nx,nz,d,s0:1e9,s1:-1e9,n:99};pm.walls.push(tgt);}
       for(const q of v.world){const s=-tgt.nz*q[0]+tgt.nx*q[2];if(s<tgt.s0)tgt.s0=s;if(s>tgt.s1)tgt.s1=s;}
     }
-    pm.walls=walls;
-    st.hasFloor=pm.nFloor>20;st.hasWall=walls.some(w=>w.s1-w.s0>.5);
+    st.hasFloor=pm.nFloor>20;st.hasWall=pm.walls.some(w=>w.s1-w.s0>.5);
     return true;
   }
   function uploadPm(now){
