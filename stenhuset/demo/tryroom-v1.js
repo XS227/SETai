@@ -9,7 +9,7 @@
  *  3. Guidede bilder: a few still photos of the room, each edited with the same marking tools and the same material choice.
  *     The result is separate edited images, not a reconstructed 3D model.
  * Inventory (sink, sofa ...) is kept visible with a manual "keep visible" brush painted in the surface's own coordinates. */
-import * as MA from './tryroom-math-v1.js?v=5';
+import * as MA from './tryroom-math-v1.js?v=6';
 import {STONES,generateStone,T} from './stone-textures-v1.js';
 import {createCoach} from './tryroom-coach-v1.js?v=1';
 
@@ -24,7 +24,7 @@ const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',
 const S={
   mode:null,caps:null,floorId:'bastide-beige',wallId:'carrara-c',
   fmt:'natural',rot:0,bond:false,grout:GROUTS[0][1],scale:1,
-  views:[],cur:0,sel:-1,mark:null,brush:null,brushR:34,tab:'surf',frozen:false,fit:'contain',zoom:1,zoomApplied:1,zoomCaps:null,dzoom:1,track:null,matType:'floor',dark:false,xr:null,hc:1.4,hcAuto:true,hcMeasured:false,hcNote:'',pitch:20,autoBusy:false,aiBusy:false,live:true,autoSel:0,selKind:'manual',frozenR:null,lastError:null,
+  views:[],cur:0,sel:-1,mark:null,brush:null,brushR:34,tab:'surf',frozen:false,fit:'contain',zoom:1,zoomApplied:1,zoomCaps:null,dzoom:1,track:null,matType:'floor',dark:false,xr:null,corr:[],pick:null,refMode:null,refPts:[],loupe:null,dockMin:false,perf:{},refineReq:null,hcSource:'',hc:1.4,hcAuto:true,hcMeasured:false,hcNote:'',pitch:20,autoBusy:false,aiBusy:false,live:true,autoSel:0,selKind:'manual',frozenR:null,lastError:null,
   gyro:{on:false,ref:null,now:null,fov:65},busy:0,msg:''
 };
 let coach=null,segMod=null,root,cv,ov,gl,P={},tex={},stream,video,raf=0,lumCtx,lumData,lumT=0,lumAvgFrame=.5,drag=null,photoInput,catalogP=null,xrMod=null;
@@ -45,13 +45,13 @@ function injectCss(){
 .tr-hint{flex:1;background:#000b;padding:10px 12px;font-size:13px;line-height:1.45}
 .tr-hint b{color:#f0cf9a}
 .tr-warn{color:#ffd9a0}
-.tr-dock{flex:none;background:#1b1c1a;max-height:46vh;overflow:auto;padding:0 0 max(10px,env(safe-area-inset-bottom));border-top:1px solid #ffffff22}
+.tr-dock{flex:none;background:#1b1c1a;max-height:40vh;overflow:auto;padding:0 0 max(10px,env(safe-area-inset-bottom));border-top:1px solid #ffffff22}
 .tr-tabs{display:flex;position:sticky;top:0;background:#1b1c1a;z-index:2}
 .tr-tabs button{flex:1;border:0;background:transparent;color:#fff9;padding:13px 6px;font:700 11px/1 var(--sans,system-ui);letter-spacing:.1em;text-transform:uppercase;cursor:pointer;border-bottom:2px solid transparent;min-height:44px}
 .tr-tabs button.on{color:#fff;border-bottom-color:#e8d3ae}
 .tr-pane{padding:14px 14px 6px}
 .tr-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
-.tr-btn{border:1px solid #ffffff55;background:transparent;color:#fff;padding:11px 14px;font:700 11px/1 var(--sans,system-ui);letter-spacing:.08em;text-transform:uppercase;cursor:pointer;min-height:44px}
+.tr-btn{border:1px solid #ffffff55;background:transparent;color:#fff;padding:12px 14px;font:700 12px/1 var(--sans,system-ui);letter-spacing:.08em;text-transform:uppercase;cursor:pointer;min-height:44px}
 .tr-btn.pri{background:#f0e9de;color:#242725;border-color:#f0e9de}
 .tr-btn.on{background:#fff;color:#242725}
 .tr-btn:disabled{opacity:.4}
@@ -83,6 +83,8 @@ function injectCss(){
 .tr-zoom[hidden]{display:none}
 .tr-zoom button{width:44px;height:44px;border-radius:50%;border:0;background:#f7f5eee8;color:#242725;font:400 24px/1 var(--sans,system-ui);cursor:pointer}
 .tr-zoom span{color:#fff;font:700 11px/1 var(--sans,system-ui);padding:2px 0}
+.tr-dock.min{max-height:none}.tr-dock.min .tr-pane{display:none}
+.tr-tabs .tr-min{flex:0 0 52px;font-size:16px;color:#fff}
 .tr-busy{position:absolute;left:50%;top:84px;transform:translateX(-50%);z-index:6;background:#000c;padding:8px 14px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;display:none}
 .tr-busy.on{display:block}
 @media(min-width:900px){.tr-root{flex-direction:row}.tr-dock{width:380px;max-height:none;border-top:0;border-left:1px solid #ffffff22}}`;
@@ -179,7 +181,7 @@ void main(){
  gl_FragColor=vec4(col,alpha);}`;
 /* automatic surface: every screen pixel is turned into a world ray (phone rotation R, pinhole camera) and intersected with the
  * floor plane (z = -H) or a vertical wall plane. The segmentation mask lives in the capture frame; the ray is rotated back into it. */
-const FS_AUTO=wall=>PREC+(wall?'#define WALL\n':'')+`uniform mat3 u_R,u_RcT;uniform vec2 u_res,u_cover,u_vsize,u_c,u_P0,u_u;uniform float u_f,u_H,u_avg,u_gain;uniform sampler2D u_mask,u_user,u_lum;`+MATFN+`
+const FS_AUTO=wall=>PREC+(wall?'#define WALL\n':'')+`uniform mat3 u_R,u_RcT;uniform vec2 u_res,u_cover,u_vsize,u_c,u_P0,u_u;uniform float u_f,u_H,u_avg,u_gain,u_fade,u_hasD;uniform vec2 u_shift;uniform vec4 u_dRect;uniform sampler2D u_mask,u_user,u_lum,u_detail;`+MATFN+`
 vec3 rayAt(vec2 px){vec2 vuv=(px/u_res-.5)*u_cover+.5;vec2 vp=vuv*u_vsize;return u_R*vec3((vp.x-u_c.x)/u_f,-(vp.y-u_c.y)/u_f,-1.);}
 vec3 planeUV(vec3 d){
 #ifdef WALL
@@ -196,11 +198,13 @@ void main(){
  vec2 px=vec2(gl_FragCoord.x,u_res.y-gl_FragCoord.y);
  vec3 d=rayAt(px);vec3 q=planeUV(d);if(q.z<.5)discard;
  vec3 dd=u_RcT*d;float z=-dd.z;if(z<=.01)discard;
- vec2 mc=vec2(u_c.x+u_f*dd.x/z,u_c.y-u_f*dd.y/z)/u_vsize;
+ vec2 mc=vec2(u_c.x+u_f*dd.x/z,u_c.y-u_f*dd.y/z)/u_vsize+u_shift; // + residual image motion found by visual tracking
  if(mc.x<0.||mc.x>1.||mc.y<0.||mc.y>1.)discard;
- float prob=texture2D(u_mask,mc).r;vec4 usr=texture2D(u_user,mc);
+ float prob=texture2D(u_mask,mc).r;
+ if(u_hasD>.5){vec2 qd=(mc-u_dRect.xy)/(u_dRect.zw-u_dRect.xy);if(qd.x>0.&&qd.x<1.&&qd.y>0.&&qd.y<1.){float e=min(min(qd.x,1.-qd.x),min(qd.y,1.-qd.y));prob=mix(prob,texture2D(u_detail,qd).r,smoothstep(0.,.08,e));}}
+ vec4 usr=texture2D(u_user,mc);
  prob=max(prob,usr.g);
- float alpha=smoothstep(.42,.58,prob)*(1.-smoothstep(.3,.7,usr.r));
+ float alpha=smoothstep(.42,.58,prob)*(1.-smoothstep(.3,.7,usr.r))*u_fade; // narrow edge on an edge-aware mask, faded when tracking is lost
  if(alpha<=.003)discard;
 #ifndef WALL
  alpha*=1.-smoothstep(10.,22.,length(q.xy));
@@ -266,9 +270,8 @@ const curView=()=>S.views[S.cur];
 function source(){const v=curView();if(!v)return null;if(v.kind==='video')return video&&video.videoWidth?{w:video.videoWidth,h:video.videoHeight,el:video}:null;return {w:v.canvas.width,h:v.canvas.height,el:v.canvas};}
 function cover(){
   const s=source();if(!s)return [1,1];
-  const cw=cv.width,ch=cv.height,view=curView();let sc=view.kind==='video'&&S.fit==='fill'?Math.max(cw/s.w,ch/s.h):Math.min(cw/s.w,ch/s.h);
-  if(view.kind==='video')sc*=S.dzoom||1;
-  return [cw/(s.w*sc),ch/(s.h*sc)];
+  const view=curView(),vid=view.kind==='video';
+  return MA.coverFrac(cv.width,cv.height,s.w,s.h,vid&&S.fit==='fill',vid?(S.dzoom||1):1);
 }
 const toCanvas=(n,c)=>[((n[0]-.5)/c[0]+.5)*cv.width,((n[1]-.5)/c[1]+.5)*cv.height];
 const toNorm=(px,c)=>[((px[0]/cv.width)-.5)*c[0]+.5,((px[1]/cv.height)-.5)*c[1]+.5];
@@ -378,15 +381,59 @@ function drawAuto(view,c){
     gl.uniform1f(u.u_f,cam.f);gl.uniform1f(u.u_H,a.Hc);
     if(wall){gl.uniform2f(u.u_P0,sf.p0[0],sf.p0[1]);gl.uniform2f(u.u_u,sf.u[0],sf.u[1]);}
     gl.uniform1f(u.u_avg,sf.avg);gl.uniform1f(u.u_gain,clamp(.5+sf.avg*1.1,.55,1));
+    const vid=view.kind==='video';gl.uniform2f(u.u_shift,vid?TRK.shift[0]:0,vid?TRK.shift[1]:0);gl.uniform1f(u.u_fade,vid?TRK.fade:1);
+    gl.activeTexture(gl.TEXTURE5);
+    if(sf.detail&&sf.detail.tex){gl.bindTexture(gl.TEXTURE_2D,sf.detail.tex);const R=sf.detail.rect;gl.uniform4f(u.u_dRect,R[0],R[1],R[2],R[3]);gl.uniform1f(u.u_hasD,1);}
+    else{gl.bindTexture(gl.TEXTURE_2D,sf.maskTex);gl.uniform1f(u.u_hasD,0);}
+    gl.uniform1i(u.u_detail,5);
     gl.drawArrays(gl.TRIANGLE_STRIP,0,4);
   }
+}
+/* ---- visual tracking between analyses (key frame = the analysed picture) ----
+ * The gyro predicts rotation; the remaining image motion (sideways steps, gyro drift) is measured by matching a small grey image of
+ * the live video against the key frame. The residual shifts the mask; a poor match fades the material out until it is found again. */
+const TRK={shift:[0,0],fade:1,target:1,bad:0,n:0,score:1,lostAt:0,ctx:null,ms:0};
+function grayOf(el,sw,sh,tw,th){
+  if(!TRK.ctx){const c=document.createElement('canvas');TRK.ctx=c.getContext('2d',{willReadFrequently:true});}
+  const c=TRK.ctx.canvas;if(c.width!==tw||c.height!==th){c.width=tw;c.height=th;}
+  TRK.ctx.drawImage(el,0,0,sw,sh,0,0,tw,th);const d=TRK.ctx.getImageData(0,0,tw,th).data,g=new Uint8Array(tw*th);
+  for(let i=0;i<tw*th;i++)g[i]=(d[i*4]*54+d[i*4+1]*183+d[i*4+2]*19)>>8;return g;
+}
+function predictShift(a,R){ // where the key frame's centre is now, from the gyro alone, in key-image pixels
+  const cam=a.cap;if(!cam.gyro||!R)return [0,0];
+  const ray=MA.pixelToWorldRay(cam.cx,cam.cy,cam.R,cam.cx,cam.cy,cam.f),p=MA.worldRayToPixel(ray,R,cam.cx,cam.cy,cam.f);if(!p)return [0,0];
+  return [(p[0]-cam.cx)/cam.vw*a.kw,(p[1]-cam.cy)/cam.vh*a.kh];
+}
+function measureTrack(a,R){
+  const t0=performance.now(),C=grayOf(video,video.videoWidth,video.videoHeight,a.kw,a.kh),pr=predictShift(a,R);
+  const m=MA.trackShift(a.kgray,C,a.kw,a.kh,Math.round(pr[0]),Math.round(pr[1]),6,1);
+  TRK.ms=performance.now()-t0;
+  return {m,pr};
+}
+function trackTick(view,now){
+  const a=view.auto;
+  // nothing to track on (no key frame, frozen, or a plain surface without texture): rely on the gyro only, never fade
+  if(view.kind!=='video'||!a||!a.kgray||a.ktex<8||S.frozen||!video||video.readyState<2){TRK.target=1;TRK.fade+=(1-TRK.fade)*.2;return;}
+  if((++TRK.n)%3===0){
+    const {m,pr}=measureTrack(a,renderR(view));TRK.score=m.score;
+    if(m.score>=.6){
+      const rx=(m.dx-pr[0])/a.kw,ry=(m.dy-pr[1])/a.kh; // residual motion the gyro does not explain
+      TRK.shift[0]+=(-rx-TRK.shift[0])*.5;TRK.shift[1]+=(-ry-TRK.shift[1])*.5;TRK.bad=0;TRK.target=1;
+      if(TRK.lostAt){TRK.lostAt=0;coach.set('done','Posisjonen er funnet igjen');}
+    }else if(m.score<.45&&++TRK.bad>=3){
+      TRK.target=0;if(!TRK.lostAt){TRK.lostAt=now;coach.set('hold','Beveg mobilen rolig – finner posisjonen igjen');}
+    }
+  }
+  TRK.fade+=(TRK.target-TRK.fade)*.18;
+  // lost for a while: take a new key frame (re-analyse) instead of showing a result that no longer fits
+  if(TRK.lostAt&&now-TRK.lostAt>1500&&!S.autoBusy&&S.live&&segMod){TRK.lostAt=now;autoDetect(true);}
 }
 function frame(now){
   raf=requestAnimationFrame(frame);
   const view=curView();if(!view||!gl)return;
   try{
   followGyro();
-  if(view.auto)autoTick(now,view);
+  if(view.auto){trackTick(view,now);autoTick(now,view);}
   const c=cover();
   const src=source();if(src){if(view.kind==='video'&&!S.frozen)updateLum(now,false);else if(view.kind==='img'&&bgKey!==view)updateLum(0,true);}
   if(!drawBackground(view))return;
@@ -427,6 +474,17 @@ function drawOverlay(c){
     q.forEach((p,k)=>{g.fillStyle='#e8d3ae';g.beginPath();g.arc(p[0],p[1],12*d,0,7);g.fill();g.fillStyle='#242725';g.font=(13*d)+'px sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillText(String(k+1),p[0],p[1]);});
   }
   if(S.brush&&drag&&drag.kind==='brush'){g.strokeStyle=S.brush==='hide'?'#e8d3ae':'#9fd0ff';g.lineWidth=2*d;g.beginPath();g.arc(drag.x*d,drag.y*d,S.brushR*d,0,7);g.stroke();}
+  // reference-length points
+  if(S.refMode&&au)for(const q of S.refPts){const cn=[q[0]/au.cap.vw,q[1]/au.cap.vh],cp=toCanvas(cn,c);g.fillStyle='#e8a35f';g.beginPath();g.arc(cp[0],cp[1],9*d,0,7);g.fill();}
+  if(S.refMode&&au&&S.refPts.length===2){const a0=toCanvas([S.refPts[0][0]/au.cap.vw,S.refPts[0][1]/au.cap.vh],c),a1=toCanvas([S.refPts[1][0]/au.cap.vw,S.refPts[1][1]/au.cap.vh],c);g.strokeStyle='#e8a35f';g.lineWidth=3*d;g.beginPath();g.moveTo(a0[0],a0[1]);g.lineTo(a1[0],a1[1]);g.stroke();}
+  // magnifier above the finger while choosing a point
+  if(S.loupe){
+    const R=62*d,Z=2.4,fx=S.loupe.x*d,fy=S.loupe.y*d;let ly=fy-140*d;if(ly<R+6*d)ly=fy+140*d;
+    g.save();g.beginPath();g.arc(fx,ly,R,0,7);g.clip();g.fillStyle='#111';g.fillRect(fx-R,ly-R,2*R,2*R);
+    try{g.drawImage(cv,fx-R/Z,fy-R/Z,2*R/Z,2*R/Z,fx-R,ly-R,2*R,2*R);}catch(e){}
+    g.restore();g.strokeStyle='#fff';g.lineWidth=3*d;g.beginPath();g.arc(fx,ly,R,0,7);g.stroke();
+    g.strokeStyle=S.pick==='hide'?'#ff8a7a':'#e8d3ae';g.lineWidth=2*d;g.beginPath();g.moveTo(fx-12*d,ly);g.lineTo(fx+12*d,ly);g.moveTo(fx,ly-12*d);g.lineTo(fx,ly+12*d);g.stroke();
+  }
 }
 
 /* ---------------------------------------------------------------- pointer: marking, dragging corners, brush */
@@ -449,6 +507,7 @@ function bind(){
     if(!curView()||!source())return;
     const p=evPt(e),d=cv.width/ov.getBoundingClientRect().width,c=cover(),px=[p[0]*d,p[1]*d];
     ov.setPointerCapture(e.pointerId);
+    if(S.pick||S.refMode){S.loupe={x:p[0],y:p[1]};drag={kind:'pick'};return;}
     if(S.mark){
       const n=toNorm(px,c);S.mark.pts.push(n);
       if(S.mark.pts.length===4)finishMark();else markHint();
@@ -470,8 +529,9 @@ function bind(){
     if(!drag||pinch)return;const p=evPt(e),d=cv.width/ov.getBoundingClientRect().width,c=cover(),px=[p[0]*d,p[1]*d];
     if(drag.kind==='corner'){const s=curView().surfaces[S.sel];if(!s)return;s.pts[drag.i]=toNorm(px,c);anchorPoint(s,drag.i);}
     else if(drag.kind==='brush'){drag.x=p[0];drag.y=p[1];paintAny(px,p);}
+    else if(drag.kind==='pick'){S.loupe={x:p[0],y:p[1]};}
   });
-  const end=()=>{drag=null;};
+  const end=()=>{if(drag&&drag.kind==='pick'&&S.loupe)commitPick();if(drag&&drag.kind==='brush')S.stroke=null;drag=null;S.loupe=null;};
   ov.addEventListener('pointerup',end);ov.addEventListener('pointercancel',end);
 }
 function inside(s,px,c){
@@ -483,11 +543,19 @@ function paintAny(px,p){if(S.selKind==='auto')paintAuto(px);else paint(px,p);}
 /* auto surfaces: the brush paints in the capture frame (rotated back from the current view), so the correction stays in place */
 function paintAuto(px){
   const v=curView(),a=v.auto,sf=a&&a.surfaces[S.autoSel];if(!sf)return;
-  const c=cover(),cam=a.cap,vn=toNorm(px,c),d=MA.pixelToWorldRay(vn[0]*cam.vw,vn[1]*cam.vh,renderR(v),cam.cx,cam.cy,cam.f);
-  const pc=MA.worldRayToPixel(d,cam.R,cam.cx,cam.cy,cam.f);if(!pc)return;
-  const dpr=cv.width/ov.getBoundingClientRect().width,rpx=S.brushR*dpr,rx=rpx/cv.width*c[0]*cam.vw/cam.vw,ry=rpx/cv.height*c[1];
-  const g=sf.userCanvas.getContext('2d');g.fillStyle=S.brush==='hide'?'#ff0000':S.brush==='add'?'#00ff00':'#000000';
-  g.beginPath();g.ellipse(pc[0]/cam.vw*256,pc[1]/cam.vh*256,Math.max(1,rx*256),Math.max(1,ry*256),0,0,7);g.fill();sf.userDirty=true;a.edited=true;
+  const q=capFromCanvas(a,v,px);if(!q)return;
+  const c=cover(),dpr=cv.width/ov.getBoundingClientRect().width,rpx=S.brushR*dpr,rx=rpx/cv.width*c[0],ry=rpx/cv.height*c[1];
+  if(!S.stroke)S.stroke=Date.now();
+  const dab={src:'brush',ray:q.ray,r:[rx,ry],mode:S.brush,type:sf.type,key:sf.key||null,g:S.stroke};
+  S.corr.push(dab);drawDab(a,dab);
+}
+function drawDab(a,dab){
+  const n=capOfRay(a,dab.ray);if(!n)return;
+  for(const sf of a.surfaces){
+    if(sf.type!==dab.type)continue;
+    const g=sf.userCanvas.getContext('2d');g.fillStyle=dab.mode==='hide'?'#ff0000':dab.mode==='add'?'#00ff00':'#000000';
+    g.beginPath();g.ellipse(n[0]*256,n[1]*256,Math.max(1,dab.r[0]*256),Math.max(1,dab.r[1]*256),0,0,7);g.fill();sf.userDirty=true;
+  }
 }
 function paint(px,cssPt){
   const s=curView().surfaces[S.sel];if(!s||!s._Hinv)return;
@@ -520,10 +588,13 @@ function autoPane(v){
   const a=v&&v.auto;
   let h='<div class="tr-row"><button class="tr-btn pri" data-act="auto" '+(S.autoBusy?'disabled':'')+'>'+(S.autoBusy?'Analyserer …':a?'Finn flater på nytt':'Finn gulv og vegger automatisk')+'</button></div>';
   if(!a)return h+'<p style="font-size:12px;line-height:1.55;color:#aaa49a;margin:0 0 12px">Rett kameraet mot rommet og trykk. Bildet analyseres på mobilen din av en AI-modell (4 MB som lastes ned første gang, bildet sendes ikke noe sted). Gulv, vegger og møbler skilles fra hverandre.</p>';
-  if(v.kind==='video')h+=`<label style="display:flex;gap:10px;align-items:center;font-size:12px;margin:0 0 12px"><input type="checkbox" data-live ${S.live?'checked':''}> Live-oppdatering: analyserer på nytt når du flytter kameraet${a.edited?' <span style="color:#ffd9a0">(stoppet etter manuell retting)</span>':''}</label>`;
+  if(v.kind==='video')h+=`<label style="display:flex;gap:10px;align-items:center;font-size:12.5px;margin:0 0 6px"><input type="checkbox" data-live ${S.live?'checked':''}> Live-oppdatering: analyserer på nytt når du flytter kameraet</label><p style="font-size:11.5px;line-height:1.5;color:#aaa49a;margin:0 0 12px">Følger dreiing (bevegelsessensor) og bildebevegelse mellom analysene. Det er ikke full posisjonssporing: går du langt, analyseres rommet på nytt. Rettinger følger med.</p>`;
+  h+=`<span class="tr-lbl">Rett opp med et trykk</span><div class="tr-row"><button class="tr-btn ${S.pick==='add'?'on':''}" data-act="pick-add">+ Velg flate</button><button class="tr-btn ${S.pick==='hide'?'on':''}" data-act="pick-hide">− Behold synlig</button><button class="tr-btn" data-act="undo" ${S.corr.length?'':'disabled'}>Angre</button><button class="tr-btn" data-act="refine">Finjuster området</button></div>`;
+  if(S.pick)h+='<p style="font-size:11.5px;line-height:1.5;color:#e8d3ae;margin:-4px 0 12px">'+(S.pick==='add'?'Trykk på en liten flate som mangler materiale (for eksempel vegg mellom skap).':'Trykk på et objekt som skal vises foran materialet (vindu, teppe, radiator …).')+' Hold fingeren nede for forstørret visning.</p>';
   h+='<span class="tr-lbl">Funnet</span><div class="tr-row">'+(a.surfaces.length?a.surfaces.map((x,i)=>`<button class="tr-btn ${S.selKind==='auto'&&S.autoSel===i?'on':''}" data-asel="${i}">${x.name}${x.fallback?' (anslag)':''}</button>`).join(''):'<span style="font-size:12px;color:#ffd9a0">Ingen gulv eller vegg funnet</span>')+'</div>';
-  h+=`<span class="tr-lbl">Kamerahøyde: ${S.hc.toFixed(2)} m · ${S.hcAuto?'automatisk ('+esc(S.hcNote||'venter')+')':'satt av deg'}</span><input type="range" min="60" max="200" value="${Math.round(S.hc*100)}" data-hc style="width:100%;margin-bottom:6px">`;
-  if(!S.hcAuto)h+='<div class="tr-row"><button class="tr-btn" data-act="hc-auto">Mål høyden automatisk</button></div>';
+  h+=`<span class="tr-lbl">Kamerahøyde: ${S.hc.toFixed(2).replace('.',',')} m · ${S.hcSource==='ref'?'fra referansemål':S.hcAuto?esc(S.hcNote||'estimert'):'satt av deg'}</span><input type="range" min="60" max="200" value="${Math.round(S.hc*100)}" data-hc style="width:100%;margin-bottom:6px">`;
+  h+='<div class="tr-row">'+(S.hcAuto?'':'<button class="tr-btn" data-act="hc-auto">Estimer automatisk</button>')+`<button class="tr-btn ${S.refMode?'on':''}" data-act="ref">Bruk kjent mål</button></div>`;
+  if(S.refMode)h+=S.refPts.length<2?'<p style="font-size:11.5px;color:#e8d3ae;margin:-4px 0 12px">Trykk på to punkter på gulvet med kjent avstand, for eksempel kantene på en flis, et teppe eller en dør.</p>':`<div class="tr-row"><label style="display:flex;gap:8px;align-items:center;font-size:12.5px">Avstand <input class="tr-num" type="number" inputmode="decimal" min="10" max="2000" data-reflen placeholder="cm"> cm</label><button class="tr-btn pri" data-act="ref-apply">Bruk</button></div>`;
   h+=`<span class="tr-lbl">Synsfelt: ${S.gyro.fov}°</span><input type="range" min="50" max="85" value="${S.gyro.fov}" data-fov style="width:100%;margin-bottom:10px">`;
   if(!a.cap.gyro)h+=`<span class="tr-lbl">Kameravinkel nedover: ${S.pitch}°</span><input type="range" min="0" max="60" value="${S.pitch}" data-pitch style="width:100%;margin-bottom:10px">`;
   h+='<p style="font-size:11.5px;line-height:1.55;color:#aaa49a;margin:0 0 10px">Høyde og synsfelt styrer skala og perspektiv. De er anslag til du justerer dem selv.</p>';
@@ -533,7 +604,8 @@ function autoPane(v){
 function renderDock(){
   const d=dock();d.hidden=false;sheet().style.display='none';
   const v=curView(),s=v&&v.surfaces[S.sel],tabs=[['surf','Flater'],['mat','Materiale'],['lay','Legging']];
-  let h='<div class="tr-tabs" role="tablist">'+tabs.map(t=>`<button role="tab" aria-selected="${S.tab===t[0]}" class="${S.tab===t[0]?'on':''}" data-tab="${t[0]}">${t[1]}</button>`).join('')+'</div><div class="tr-pane">';
+  d.classList.toggle('min',!!S.dockMin);
+  let h='<div class="tr-tabs" role="tablist">'+tabs.map(t=>`<button role="tab" aria-selected="${S.tab===t[0]}" class="${S.tab===t[0]&&!S.dockMin?'on':''}" data-tab="${t[0]}">${t[1]}</button>`).join('')+`<button class="tr-min" data-act="dock-min" aria-expanded="${!S.dockMin}" aria-label="${S.dockMin?'Vis kontrollpanelet':'Skjul kontrollpanelet'}">${S.dockMin?'▴':'▾'}</button></div><div class="tr-pane">`;
   if(S.tab==='surf'){
     h+=autoPane(v);
     h+='<span class="tr-lbl" style="margin-top:6px">Eller marker selv</span><div class="tr-row"><button class="tr-btn pri" data-act="mark-floor">+ Marker gulv</button><button class="tr-btn pri" data-act="mark-wall">+ Marker vegg</button>'+(S.mark?'<button class="tr-btn" data-act="mark-cancel">Avbryt</button>':'')+'</div>';
@@ -549,7 +621,7 @@ function renderDock(){
       <div class="tr-row"><button class="tr-btn" data-act="del-surface">Slett flate</button></div>`;
     }
     h+='<div class="tr-row">'+(v&&v.kind==='video'?`<button class="tr-btn ${S.frozen?'on':''}" data-act="freeze">${S.frozen?'Fortsett kamera':'Frys bilde'}</button><button class="tr-btn" data-act="fit">${S.fit==='fill'?'Vis hele bildet':'Fyll skjermen'}</button>`:'')+'<button class="tr-btn" data-act="save-image">Last ned bilde</button><button class="tr-btn pri" data-act="quote">Be om tilbud</button></div>';
-    h+='<p style="font-size:10.5px;line-height:1.5;color:#8a857c;margin:6px 0 0">Systemsjekk: WebGL '+(gl?'ok':'nei')+' · bevegelsessensor '+(S.gyro.on?'ja':'nei')+' · video '+(source()?source().w+'×'+source().h:'–')+' · AI-modell '+(segMod&&segMod.isLoaded()?'lastet':'ikke lastet')+(S.lastError?' · feil: '+esc(S.lastError):'')+'</p>';
+    h+='<p style="font-size:10.5px;line-height:1.5;color:#8a857c;margin:6px 0 0">Systemsjekk: WebGL '+(gl?'ok':'nei')+' · bevegelsessensor '+(S.gyro.on?'ja':'nei')+' · video '+(source()?source().w+'×'+source().h:'–')+' · AI-modell '+(segMod&&segMod.isLoaded()?'lastet':'ikke lastet')+' · analyse '+(S.perf.seg??'–')+' ms, masker '+(S.perf.mask??'–')+' ms, detalj '+(S.perf.refine??'–')+' ms, sporing '+(TRK.ms?TRK.ms.toFixed(1):'–')+' ms (match '+TRK.score.toFixed(2)+')'+(S.lastError?' · feil: '+esc(S.lastError):'')+'</p>';
     if(S.views.length>1)h+='<span class="tr-lbl">Bilder</span><div class="tr-thumbs">'+S.views.map((x,i)=>`<button data-view="${i}" style="border:0;padding:0;background:none"><canvas class="${i===S.cur?'on':''}" data-thumb="${i}" width="120" height="84"></canvas></button>`).join('')+'</div>';
   }else if(S.tab==='mat'){
     const type=S.matType,cur=type==='floor'?S.floorId:S.wallId;
@@ -569,7 +641,7 @@ function renderDock(){
 }
 function onClick(e){
   const t=e.target.closest('button');if(!t)return;
-  if(t.dataset.tab){S.tab=t.dataset.tab;renderDock();return;}
+  if(t.dataset.tab){S.tab=t.dataset.tab;S.dockMin=false;renderDock();return;}
   if(t.dataset.asel!==undefined){S.autoSel=+t.dataset.asel;S.selKind='auto';const x=curView().auto.surfaces[S.autoSel];if(x)S.matType=x.type;renderDock();return;}
   if(t.dataset.sel!==undefined){S.sel=+t.dataset.sel;S.selKind='manual';const x=curView().surfaces[S.sel];if(x)S.matType=x.type;renderDock();return;}
   if(t.dataset.view!==undefined){switchView(+t.dataset.view);return;}
@@ -582,11 +654,18 @@ function onClick(e){
     start:()=>((S.caps.xr&&/[?&]ar\b/.test(location.search))?startXR():startCamera()),
     'zoom-in':()=>setZoom(zoomValue()*1.25),'zoom-out':()=>setZoom(zoomValue()/1.25),
     auto:autoDetect,'hc-auto':()=>{S.hcAuto=true;S.hcMeasured=false;renderDock();autoDetect(false);},'brush-add':()=>{S.brush=S.brush==='add'?null:'add';brushHint();renderDock();},
+    'dock-min':()=>{S.dockMin=!S.dockMin;renderDock();},
+    'pick-add':()=>{S.pick=S.pick==='add'?null:'add';S.brush=null;S.refMode=null;renderDock();},
+    'pick-hide':()=>{S.pick=S.pick==='hide'?null:'hide';S.brush=null;S.refMode=null;renderDock();},
+    undo:undoCorrection,
+    refine:()=>{const a=curView()&&curView().auto;if(!a){hint('Vent til rommet er analysert.');return;}const sf=a.surfaces[S.autoSel];let r=[.2,.25,.8,.75];if(sf&&sf.box){const b=sf.box,w=a.seg.w,h=a.seg.h;r=[b[0]/w-.08,b[1]/h-.06,(b[2]+1)/w+.08,(b[3]+1)/h+.06];}hint('Finjusterer '+(sf?sf.name.toLowerCase():'området')+' med en nærmere analyse …');refineAt(r,'valgt flate');},
+    ref:()=>{S.refMode=S.refMode?null:'pts';S.refPts=[];S.pick=null;S.brush=null;renderDock();if(S.refMode)hint('Trykk på to punkter på gulvet med kjent avstand.');},
+    'ref-apply':()=>{const el=root.querySelector('[data-reflen]');const cm=parseFloat(String(el&&el.value||'').replace(',','.'));if(!(cm>0)){hint('Skriv inn avstanden i cm.');return;}applyReference(cm);},
     'mark-floor':()=>startMark('floor'),'mark-wall':()=>startMark('wall'),
     'mark-cancel':()=>{S.mark=null;S.msg='';hint('Markering avbrutt.');renderDock();},
-    'brush-hide':()=>{S.brush=S.brush==='hide'?null:'hide';brushHint();renderDock();},
+    'brush-hide':()=>{S.pick=null;S.brush=S.brush==='hide'?null:'hide';brushHint();renderDock();},
     'brush-show':()=>{S.brush=S.brush==='show'?null:'show';brushHint();renderDock();},
-    'brush-clear':()=>{if(S.selKind==='auto'){const sf=curView().auto&&curView().auto.surfaces[S.autoSel];if(sf){const g=sf.userCanvas.getContext('2d');g.fillStyle='#000';g.fillRect(0,0,256,256);sf.userDirty=true;}return;}const s=curView().surfaces[S.sel];if(s){const g=s.mask.getContext('2d');g.fillStyle='#000';g.fillRect(0,0,256,256);s.maskDirty=true;}},
+    'brush-clear':()=>{if(S.selKind==='auto'){S.corr=S.corr.filter(c=>c.src!=='brush');const a=curView().auto;if(a)applyCorrections(a);renderDock();return;}const s=curView().surfaces[S.sel];if(s){const g=s.mask.getContext('2d');g.fillStyle='#000';g.fillRect(0,0,256,256);s.maskDirty=true;}},
     'del-surface':()=>{const v=curView();v.surfaces.splice(S.sel,1);S.sel=v.surfaces.length-1;S.brush=null;renderDock();},
     fit:()=>{S.fit=S.fit==='fill'?'contain':'fill';renderDock();},
     freeze:()=>{S.frozen=!S.frozen;S.frozenR=S.frozen&&S.gyro.now?S.gyro.now.slice():null;bgKey=null;if(!S.frozen)curView().surfaces.forEach(anchorRays);renderDock();},
@@ -619,36 +698,168 @@ function maskTexture(prob,w,h){
 }
 function userLayer(){const c=document.createElement('canvas');c.width=c.height=256;const g=c.getContext('2d');g.fillStyle='#000';g.fillRect(0,0,256,256);return c;}
 function regionAvg(prob,lum){let sum=0,n=0;for(let i=0;i<prob.length;i++)if(prob[i]>.5){sum+=lum[i];n++;}return n>20?sum/n/255:.5;}
-function disposeAuto(a){if(!a||!gl)return;for(const sf of a.surfaces){gl.deleteTexture(sf.maskTex);gl.deleteTexture(sf.userTex);}}
-function buildAuto(seg,cam,silent){
-  const {w,h}=seg,now=performance.now(),a={seg,cap:cam,Hc:S.hc,surfaces:[],born:now,t0:silent?-1e9:now,edited:false};
-  const mk=(type,prob,extra)=>({type,maskTex:maskTexture(prob,w,h),userCanvas:userLayer(),userTex:mkTex(),userDirty:true,avg:regionAvg(prob,seg.lum),...extra});
-  let nf=0;for(let i=0;i<seg.floor.length;i++)if(seg.floor[i]>.5)nf++;
-  if(nf>.015*w*h)a.surfaces.push(mk('floor',seg.floor,{name:'Gulv'}));
-  const res=MA.wallPlanes2(seg,cam,a.Hc),lab=res.labels;
+function disposeAuto(a){if(!a||!gl)return;for(const sf of a.surfaces){gl.deleteTexture(sf.maskTex);gl.deleteTexture(sf.userTex);if(sf.detail&&sf.detail.tex)gl.deleteTexture(sf.detail.tex);}}
+function setMask(tex,arr,w,h){
+  const u8=new Uint8Array(w*h);for(let i=0;i<u8.length;i++)u8[i]=Math.round(clamp(arr[i],0,1)*255);
+  gl.bindTexture(gl.TEXTURE_2D,tex);gl.pixelStorei(gl.UNPACK_ALIGNMENT,1);gl.texImage2D(gl.TEXTURE_2D,0,gl.LUMINANCE,w,h,0,gl.LUMINANCE,gl.UNSIGNED_BYTE,u8);
+}
+function wallPlanesFor(seg,cam,Hc){
+  const {w,h}=seg;
+  const fp=(gx,gy)=>{const p=MA.pixelFloorPoint(gx/w*cam.vw,gy/h*cam.vh,cam.R,cam.cx,cam.cy,cam.f,Hc);return p&&Math.hypot(p[0],p[1])<30?p:null;};
+  const fb=()=>{const f0=MA.pixelToWorldRay(cam.vw/2,cam.vh/2,cam.R,cam.cx,cam.cy,cam.f),hd=Math.hypot(f0[0],f0[1])||1;return {p0:[f0[0]/hd*3.5,f0[1]/hd*3.5],u:[-f0[1]/hd,f0[0]/hd]};};
+  const r=MA.wallPlanes3(seg,fp,fb);r.planes=r.planes.slice(0,8);return r;
+}
+/* Masks: probability of floor/wall times "not a protected object" (window, door, curtain, sofa, table, rug, radiator, plant,
+ * bath/sink/toilet/shower, mirror ...), kept by confidence and coherence (no area share), enlarged edge-aware to twice the grid. */
+function buildAuto(seg,cam,silent,snap){
+  const t0=performance.now(),{w,h,gw,gh}=seg,now=performance.now(),a={seg,cap:cam,Hc:S.hc,surfaces:[],born:now,t0:silent?-1e9:now,snap,detail:null};
+  const low=p=>{const o=new Float32Array(w*h);for(let i=0;i<w*h;i++)o[i]=p[i]*(1-seg.protect[i]);return o;};
+  const up=l=>MA.jointBilateralUpsample(l,w,h,seg.guide,gw,gh);
+  const mk=(type,lowP,extra)=>{const hi=up(lowP);const sf={type,lowBase:lowP,base:hi,final:hi,maskTex:maskTexture(hi,gw,gh),userCanvas:userLayer(),userTex:mkTex(),userDirty:true,avg:regionAvg(lowP,seg.lum),detail:null,...extra};return sf;};
+  const fk=MA.keepConfident(low(seg.floor),w,h);
+  const fkeep=fk.regions.filter(r=>r.keep);
+  if(fkeep.length)a.surfaces.push(mk('floor',fk.prob,{name:'Gulv',box:fkeep.reduce((b,r)=>[Math.min(b[0],r.box[0]),Math.min(b[1],r.box[1]),Math.max(b[2],r.box[2]),Math.max(b[3],r.box[3])],[w,h,0,0])}));
+  const res=wallPlanesFor(seg,cam,a.Hc),lab=res.labels,wl=low(seg.wall);
   res.planes.forEach((pl,i)=>{
     const prob=new Float32Array(w*h);
     for(let y=0;y<h;y++)for(let x=0;x<w;x++){
       let near=false;
       for(let dy=-1;dy<=1&&!near;dy++)for(let dx=-1;dx<=1;dx++){const xx=x+dx,yy=y+dy;if(xx>=0&&yy>=0&&xx<w&&yy<h&&lab[yy*w+xx]===pl.comp){near=true;break;}}
       if(!near)continue;
-      // inside a corner the wall region is split by image column between its planes
       if(pl.cols&&pl.cols[x]!==pl.sub&&pl.cols[Math.max(0,x-1)]!==pl.sub&&pl.cols[Math.min(w-1,x+1)]!==pl.sub)continue;
-      prob[y*w+x]=seg.wall[y*w+x];
+      prob[y*w+x]=wl[y*w+x];
     }
-    a.surfaces.push(mk('wall',prob,{name:'Vegg '+(i+1),key:pl.key,p0:pl.p0,u:pl.u,fallback:pl.fallback}));
+    a.surfaces.push(mk('wall',prob,{name:'Vegg '+(i+1)+(pl.borrowed?' (del)':''),key:pl.key,p0:pl.p0,u:pl.u,fallback:pl.fallback,box:pl.box}));
   });
   const pv=document.createElement('canvas');pv.width=w;pv.height=h;const g=pv.getContext('2d'),im=g.createImageData(w,h);
-  for(let i=0;i<w*h;i++){if(seg.floor[i]>.5)im.data.set([70,150,255,120],i*4);else if(seg.cls[i]===0)im.data.set([255,170,60,120],i*4);}
-  g.putImageData(im,0,0);a.preview=pv;return a;
+  for(let i=0;i<w*h;i++){if(seg.protect[i]>.5)im.data.set([220,90,80,90],i*4);else if(seg.floor[i]>.5)im.data.set([70,150,255,120],i*4);else if(seg.cls[i]===0)im.data.set([255,170,60,120],i*4);}
+  g.putImageData(im,0,0);a.preview=pv;
+  // key frame for visual tracking
+  a.kw=96;a.kh=Math.max(32,Math.round(96*cam.vh/cam.vw));a.kgray=snap?grayOf(snap,snap.width,snap.height,a.kw,a.kh):null;
+  if(a.kgray){let m=0,q=0;for(const v of a.kgray){m+=v;q+=v*v;}m/=a.kgray.length;a.ktex=Math.sqrt(Math.max(0,q/a.kgray.length-m*m));} // texture in the key frame
+  applyCorrections(a);
+  S.perf.mask=Math.round(performance.now()-t0);
+  return a;
+}
+/* ---- corrections (survive a new analysis because they are stored as directions in the room, not as pixels) ---- */
+function capOfRay(a,ray){const cam=a.cap,p=MA.worldRayToPixel(ray,cam.R,cam.cx,cam.cy,cam.f);return p?[p[0]/cam.vw,p[1]/cam.vh]:null;}
+function capFromCanvas(a,v,px){
+  const c=cover(),cam=a.cap,vn=toNorm(px,c),d=MA.pixelToWorldRay(vn[0]*cam.vw,vn[1]*cam.vh,renderR(v),cam.cx,cam.cy,cam.f);
+  const pc=MA.worldRayToPixel(d,cam.R,cam.cx,cam.cy,cam.f);if(!pc)return null;
+  const sh=v.kind==='video'?TRK.shift:[0,0],n=[pc[0]/cam.vw+sh[0],pc[1]/cam.vh+sh[1]];
+  return {n,ray:MA.pixelToWorldRay(n[0]*cam.vw,n[1]*cam.vh,cam.R,cam.cx,cam.cy,cam.f)};
+}
+function sampleHi(arr,gw,gh,nx,ny){const x=Math.min(gw-1,Math.max(0,Math.floor(nx*gw))),y=Math.min(gh-1,Math.max(0,Math.floor(ny*gh)));return arr[y*gw+x];}
+function wallOwner(a,lx){ // which wall surface owns grid column lx
+  let best=-1,bd=1e9;
+  a.surfaces.forEach((sf,i)=>{if(sf.type!=='wall'||!sf.box)return;const b=sf.box,d=lx<b[0]?b[0]-lx:lx>b[2]?lx-b[2]:0;const cdist=d*1000+Math.abs(lx-(b[0]+b[2])/2);if(cdist<bd){bd=cdist;best=i;}});
+  return best;
+}
+function applyCorrections(a){
+  const {w,h,gw,gh,cls,guide}=a.seg,hideL=new Float32Array(w*h),addL={floor:new Float32Array(w*h),wall:new Float32Array(w*h)};
+  let nh=0,na=0;
+  for(const c of S.corr){
+    if(c.src!=='point')continue;const n=capOfRay(a,c.ray);if(!n||n[0]<0||n[0]>1||n[1]<0||n[1]>1)continue;
+    const gx=n[0]*w,gy=n[1]*h,rr=MA.regionAt(cls,w,h,gx,gy,Math.floor(w*h*.5));
+    if(c.kind==='hide'&&(rr.cls===0||rr.cls===3)){ // tapped the wall/floor itself: keep a small spot visible, not the whole surface
+      for(let y=-3;y<=3;y++)for(let x=-3;x<=3;x++){if(x*x+y*y>9)continue;const X=Math.floor(gx)+x,Y=Math.floor(gy)+y;if(X>=0&&Y>=0&&X<w&&Y<h)hideL[Y*w+X]=1;}nh++;continue;
+    }
+    const tgt=c.kind==='hide'?hideL:addL[c.type];for(let i=0;i<w*h;i++)if(rr.mask[i])tgt[i]=1;c.kind==='hide'?nh++:na++;
+  }
+  a.hideHi=nh?MA.jointBilateralUpsample(hideL,w,h,guide,gw,gh):null;
+  a.addHi={floor:na?MA.jointBilateralUpsample(addL.floor,w,h,guide,gw,gh):null,wall:na?MA.jointBilateralUpsample(addL.wall,w,h,guide,gw,gh):null};
+  // a point added to a small piece of floor/wall that the analysis had no surface for yet: create it
+  if(na&&!a.surfaces.some(sf=>sf.type==='floor')&&addL.floor.some(v=>v>0)){const z=new Float32Array(w*h);a.surfaces.unshift({type:'floor',name:'Gulv',lowBase:z,base:new Float32Array(gw*gh),final:null,maskTex:maskTexture(z,w,h),userCanvas:userLayer(),userTex:mkTex(),userDirty:true,avg:.5,detail:null,box:[0,0,w,h]});}
+  for(const [si,sf] of a.surfaces.entries()){
+    const out=new Float32Array(gw*gh),add=a.addHi[sf.type];
+    for(let y=0;y<gh;y++){const lx0=0;for(let x=0;x<gw;x++){
+      const i=y*gw+x;let v=sf.base[i];
+      if(add&&add[i]>0){const own=sf.type==='floor'||wallOwner(a,Math.floor(x/gw*w))===si;if(own)v=Math.max(v,add[i]);}
+      if(a.hideHi)v*=1-a.hideHi[i];
+      out[i]=v;}}
+    sf.final=out;setMask(sf.maskTex,out,gw,gh);
+  }
+  // brush strokes, replayed into this analysis
+  for(const sf of a.surfaces){const g=sf.userCanvas.getContext('2d');g.fillStyle='#000';g.fillRect(0,0,256,256);sf.userDirty=true;}
+  for(const c of S.corr)if(c.src==='brush')drawDab(a,c);
+  composeDetail(a);
+}
+/* ---- local detail analysis: a second, closer analysis of the chosen area from the ORIGINAL camera picture (with context) ---- */
+async function refineAt(rect,why){
+  const v=curView(),a=v&&v.auto;if(!a||!a.snap||S.refining||!segMod)return;
+  S.refining=true;S.aiBusy=true;busyUi();
+  try{
+    rect=[clamp(rect[0],0,1),clamp(rect[1],0,1),clamp(rect[2],0,1),clamp(rect[3],0,1)];
+    if(rect[2]-rect[0]<.05||rect[3]-rect[1]<.05)return;
+    const W=a.snap.width,H=a.snap.height,t0=performance.now();
+    const cs=await segMod.segmentRect(a.snap,rect[0]*W,rect[1]*H,(rect[2]-rect[0])*W,(rect[3]-rect[1])*H,MOBILE?512:640,()=>{});
+    if(!root||curView().auto!==a)return; // a newer analysis replaced this one
+    a.detail={rect,cs};composeDetail(a);
+    S.perf.refine=Math.round(performance.now()-t0);camLog('detaljanalyse '+(why||'')+': '+S.perf.refine+' ms, utsnitt '+Math.round((rect[2]-rect[0])*W)+'x'+Math.round((rect[3]-rect[1])*H)+' px');
+  }catch(e){camLog('detaljanalyse feilet: '+(e&&e.message||e));}
+  finally{S.refining=false;S.aiBusy=false;busyUi();}
+}
+function composeDetail(a){
+  if(!a.detail)return;const {rect,cs}=a.detail,{w,h,gw,gh}=cs,RW=rect[2]-rect[0],RH=rect[3]-rect[1];
+  for(const [si,sf] of a.surfaces.entries()){
+    const lowC=new Float32Array(w*h);
+    for(let y=0;y<h;y++)for(let x=0;x<w;x++){
+      const i=y*w+x,p=(sf.type==='floor'?cs.floor[i]:cs.wall[i])*(1-cs.protect[i]);
+      const nx=rect[0]+(x+.5)/w*RW,ny=rect[1]+(y+.5)/h*RH;
+      // keep walls/planes apart: only where this surface (incl. corrections) exists nearby in the whole-room result
+      let m=0;for(let dy=-2;dy<=2;dy++)for(let dx=-2;dx<=2;dx++)m=Math.max(m,sampleHi(sf.final,a.seg.gw,a.seg.gh,nx+dx/a.seg.gw,ny+dy/a.seg.gh));
+      lowC[i]=m>.15?p:0;
+    }
+    const hi=MA.jointBilateralUpsample(lowC,w,h,cs.guide,gw,gh),add=a.addHi&&a.addHi[sf.type];
+    for(let y=0;y<gh;y++)for(let x=0;x<gw;x++){
+      const i=y*gw+x,nx=rect[0]+(x+.5)/gw*RW,ny=rect[1]+(y+.5)/gh*RH;
+      if(add){const av=sampleHi(add,a.seg.gw,a.seg.gh,nx,ny);if(av>0&&(sf.type==='floor'||wallOwner(a,Math.floor(nx*a.seg.w))===si))hi[i]=Math.max(hi[i],av);}
+      if(a.hideHi)hi[i]*=1-sampleHi(a.hideHi,a.seg.gw,a.seg.gh,nx,ny);
+    }
+    if(!sf.detail)sf.detail={tex:mkTex(),rect};sf.detail.rect=rect;setMask(sf.detail.tex,hi,gw,gh);
+  }
 }
 /* camera height / field of view / pitch changed: refit the wall planes from the stored segmentation (cheap, no new AI run) */
 function updatePlanes(){
   const v=curView(),a=v&&v.auto;if(!a)return;
   a.Hc=S.hc;a.cap.f=MA.focalPx(Math.max(a.cap.vw,a.cap.vh),S.gyro.fov);
   if(!a.cap.gyro)a.cap.R=MA.orientationMatrix(0,90-S.pitch,0);
-  const res=MA.wallPlanes2(a.seg,a.cap,a.Hc);
+  const res=wallPlanesFor(a.seg,a.cap,a.Hc);
   for(const sf of a.surfaces){if(sf.type!=='wall')continue;const pl=res.planes.find(x=>x.key===sf.key);if(pl){sf.p0=pl.p0;sf.u=pl.u;sf.fallback=pl.fallback;}}
+}
+/* ---- tap to choose: + include this (small) surface, - keep this object visible; with undo ---- */
+function commitPick(){
+  const v=curView(),a=v&&v.auto,dpr=cv.width/ov.getBoundingClientRect().width,px=[S.loupe.x*dpr,S.loupe.y*dpr];
+  if(S.refMode){refPoint(px);return;}
+  if(!a){hint('Vent til rommet er analysert.');return;}
+  const q=capFromCanvas(a,v,px);if(!q||q.n[0]<0||q.n[0]>1||q.n[1]<0||q.n[1]>1)return;
+  const c=a.seg.cls[Math.min(a.seg.h-1,Math.floor(q.n[1]*a.seg.h))*a.seg.w+Math.min(a.seg.w-1,Math.floor(q.n[0]*a.seg.w))];
+  const type=c===3?'floor':c===0?'wall':S.matType;
+  S.corr.push({src:'point',kind:S.pick,ray:q.ray,type,t:Date.now()});
+  applyCorrections(a);
+  hint(S.pick==='add'?'Tatt med som '+(type==='floor'?'gulv':'vegg')+'. Finjusterer kanten med en nærmere analyse …':'Holdes synlig. Finjusterer kanten med en nærmere analyse …');
+  const half=.17,hy=half*a.cap.vw/a.cap.vh;
+  S.refineReq={ray:q.ray,half};
+  refineAt([q.n[0]-half,q.n[1]-hy,q.n[0]+half,q.n[1]+hy],'rundt punktet');
+  renderDock();
+}
+function undoCorrection(){
+  const last=S.corr[S.corr.length-1];if(!last){hint('Ingenting å angre.');return;}
+  if(last.src==='brush'){const g=last.g;S.corr=S.corr.filter(c=>!(c.src==='brush'&&c.g===g));}else S.corr.pop();
+  const a=curView()&&curView().auto;if(a)applyCorrections(a);hint('Angret.');renderDock();
+}
+/* ---- known reference length on the floor -> camera height (scale) ---- */
+function refPoint(px){
+  const v=curView(),a=v&&v.auto;if(!a)return;const q=capFromCanvas(a,v,px);if(!q)return;
+  S.refPts.push([q.n[0]*a.cap.vw,q.n[1]*a.cap.vh]);if(S.refPts.length>2)S.refPts=S.refPts.slice(-2);
+  hint(S.refPts.length<2?'Trykk på det andre punktet på gulvet.':'Skriv inn den virkelige avstanden mellom punktene under «Flater».');renderDock();
+}
+function applyReference(cm){
+  const v=curView(),a=v&&v.auto;if(!a||S.refPts.length<2)return;
+  const Hc=MA.heightFromReference(S.refPts[0],S.refPts[1],cm/100,a.cap.R,a.cap.cx,a.cap.cy,a.cap.f);
+  if(!Hc||Hc<.3||Hc>3){hint('<span class="tr-warn">Kunne ikke bruke målet.</span> Velg to punkter som ligger på gulvet.');return;}
+  S.hc=Hc;S.hcAuto=false;S.hcSource='ref';S.refMode=null;S.refPts=[];updatePlanes();
+  hint('Skala satt fra referansemål: kamerahøyde '+Hc.toFixed(2).replace('.',',')+' m.');renderDock();
 }
 async function autoDetect(silent){
   silent=silent===true;
@@ -657,21 +868,29 @@ async function autoDetect(silent){
   S.autoBusy=true;S.aiBusy=true;busyUi();if(!silent)renderDock();
   const status=m=>{if(!silent)hint('<b>'+esc(m)+'</b>');};
   try{
-    segMod=segMod||await import('./tryroom-seg-v1.js?v=3');
+    segMod=segMod||await import('./tryroom-seg-v1.js?v=4');
     const useGyro=view.kind==='video'?(S.gyro.on&&!!S.gyro.now):!!view.capR;
     const R=view.kind==='video'?(useGyro?S.gyro.now.slice():MA.orientationMatrix(0,90-S.pitch,0)):(view.capR?view.capR.slice():MA.orientationMatrix(0,90-S.pitch,0));
     const snap=document.createElement('canvas');snap.width=src.w;snap.height=src.h;snap.getContext('2d').drawImage(src.el,0,0);
     const seg=await segMod.segment(snap,src.w,src.h,MOBILE?672:768,status);
-    if(!silent)camLog('analyse: '+seg.ms+' ms, inndata '+(seg.input||[]).join('x'));
+    S.perf.seg=seg.ms;if(!silent)camLog('analyse: '+seg.ms+' ms, inndata '+(seg.input||[]).join('x')+(seg.letterbox?' (letterbox)':''));
     if(!root||!gl)return;
     const cam={R,cx:src.w/2,cy:src.h/2,f:MA.focalPx(Math.max(src.w,src.h),S.gyro.fov),vw:src.w,vh:src.h,gyro:useGyro};
     // camera height from the picture itself (floor line + ceiling line, assumed ceiling 2.5 m): adapts when you sit, stand or bend
     if(S.hcAuto){
       const est=MA.estimateCameraHeight(seg,cam,2.5);
-      if(est&&est>.6&&est<2.4){S.hc=S.hcMeasured?S.hc*.5+est*.5:est;S.hcMeasured=true;S.hcNote='målt';}
-      else S.hcNote=S.hcMeasured?'siste måling':'ikke målt (gulv og tak må være i bildet)';
+      if(est&&est>.6&&est<2.4){S.hc=S.hcMeasured?S.hc*.5+est*.5:est;S.hcMeasured=true;S.hcNote='estimert fra gulv- og taklinje, antar takhøyde 2,5 m';}
+      else S.hcNote=S.hcMeasured?'siste estimat':'standardverdi, ikke målt';
     }
-    const prev=view.auto;view.auto=buildAuto(seg,cam,silent);disposeAuto(prev);
+    const na=buildAuto(seg,cam,silent,snap);
+    // stale result: the camera has moved so much while the AI worked that the result can no longer be aligned -> discard it
+    if(view.kind==='video'&&video&&video.readyState>=2&&na.kgray){
+      const {m}=measureTrack(na,S.gyro.on?S.gyro.now:cam.R);
+      if(m.score<.45){camLog('resultat forkastet: kameraet har flyttet seg for mye under analysen (match '+m.score.toFixed(2)+')');disposeAuto(na);S.lastAuto=0;return;}
+    }
+    const prev=view.auto;view.auto=na;disposeAuto(prev);TRK.shift=[0,0];TRK.bad=0;TRK.target=1;TRK.lostAt=0;
+    // redo the last local detail analysis on the new picture (only for analyses the user started)
+    if(S.refineReq&&!silent){const n=capOfRay(na,S.refineReq.ray);if(n){const hh=S.refineReq.half,hy=hh*cam.vw/cam.vh;setTimeout(()=>refineAt([n[0]-hh,n[1]-hy,n[0]+hh,n[1]+hy],'på nytt'),50);}}
     S.autoSel=silent?clamp(S.autoSel,0,Math.max(0,view.auto.surfaces.length-1)):0;S.selKind='auto';
     {const fl=view.auto.surfaces.some(x=>x.type==='floor'),nw=view.auto.surfaces.filter(x=>x.type==='wall').length;
      coach.chips([['Gulv',fl],[nw?nw+(nw>1?' vegger':' vegg'):'Vegger',nw>0]]);
@@ -683,7 +902,7 @@ async function autoDetect(silent){
     if(!silent){
       const fl=view.auto.surfaces.some(x=>x.type==='floor'),nw=view.auto.surfaces.filter(x=>x.type==='wall').length,fb=view.auto.surfaces.some(x=>x.fallback);
       if(!fl&&!nw)hint('<span class="tr-warn">Fant verken gulv eller vegg.</span> Rett kameraet slik at gulv og vegg er tydelig i bildet, med godt lys, og trykk «Finn flater på nytt». Du kan også markere flaten selv.');
-      else hint('<b>Fant '+(fl?'gulv':'')+(fl&&nw?' og ':'')+(nw?nw+(nw>1?' vegger':' vegg'):'')+'</b> ('+(seg.ms/1000).toFixed(1)+' s). Blått er gulv, oransje er vegg. Møbler og inventar holdes utenfor. Kamerahøyde: '+S.hc.toFixed(2)+' m ('+(S.hcAuto?S.hcNote:'satt av deg')+').'+(fb?' <span class="tr-warn">Veggens plassering er et anslag fordi gulvlinjen ikke er synlig.</span>':'')+(useGyro?'':' <span class="tr-warn">Uten bevegelsessensor må du stille inn kameravinkelen selv.</span>'));
+      else hint('<b>Fant '+(fl?'gulv':'')+(fl&&nw?' og ':'')+(nw?nw+(nw>1?' vegger':' vegg'):'')+'</b> ('+(seg.ms/1000).toFixed(1)+' s). Blått er gulv, oransje er vegg. Møbler og inventar holdes utenfor. Kamerahøyde: '+S.hc.toFixed(2).replace('.',',')+' m ('+(S.hcSource==='ref'?'fra referansemål':S.hcAuto?S.hcNote:'satt av deg')+').'+(fb?' <span class="tr-warn">Veggens plassering er et anslag fordi gulvlinjen ikke er synlig.</span>':'')+(useGyro?'':' <span class="tr-warn">Uten bevegelsessensor må du stille inn kameravinkelen selv.</span>'));
     }
   }catch(err){
     console.error('Stenhuset AI-gjenkjenning feilet',err);camLog('AI-FEIL: '+(err&&err.message||err));
@@ -693,7 +912,7 @@ async function autoDetect(silent){
 /* live: re-analyse when the phone has turned noticeably or the result is old (never while frozen or after hand corrections) */
 function autoTick(now,view){
   const a=view.auto;
-  if(!S.live||S.autoBusy||S.frozen||view.kind!=='video'||!a||a.edited||!segMod)return;
+  if(!S.live||S.autoBusy||S.refining||S.frozen||view.kind!=='video'||!a||!segMod||drag)return;
   if(now-(S.lastAuto||0)<2500)return;
   const turned=S.gyro.on&&S.gyro.now&&a.cap.gyro?MA.rotAngle(a.cap.R,S.gyro.now)>10*Math.PI/180:false;
   if(turned||now-a.born>7000)autoDetect(true);
@@ -809,7 +1028,7 @@ async function startXR(){
     close(true);
     await xrMod.start({
       S,PREC,MATFN,FORMATS,GROUTS,STONES,generateStone,T,materials:MATS(),
-      loadSeg:()=>import('./tryroom-seg-v1.js?v=3'),
+      loadSeg:()=>import('./tryroom-seg-v1.js?v=4'),
       onEnd:info=>{
         if(!info||info.userEnd||info.quote)return;
         // the system (or an error) ended the AR session: come back to the start screen and show why
@@ -874,5 +1093,6 @@ export function close(keepRoot){
   if(gl){const ext=gl.getExtension('WEBGL_lose_context');if(ext&&!keepRoot)ext.loseContext();}
   if(root){root.remove();root=null;}
   document.documentElement.style.overflow='';
+  S.corr=[];S.pick=null;S.refMode=null;S.refPts=[];S.loupe=null;S.refineReq=null;TRK.shift=[0,0];TRK.fade=1;TRK.target=1;TRK.lostAt=0;
   gl=null;P={};tex={};matCache.clear();bgKey=null;S.views=[];S.mark=null;S.brush=null;S.frozen=false;S.sel=-1;S.msg='';drag=null;photoInput=null;
 }

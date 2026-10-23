@@ -4,7 +4,7 @@
  * the runtime library are downloaded.
  * Licence note: the SegFormer weights are released by NVIDIA under a non-commercial research licence. Fine for this demo; a
  * commercial launch needs a licence from NVIDIA or a permissively licensed replacement model. */
-import {postprocess,majority3,boxBlur3} from './tryroom-math-v1.js?v=5';
+import {postprocess2,majority3,letterbox,cropResample,cropNearest,PROTECT_IDS} from './tryroom-math-v1.js?v=6';
 
 const ORT_BASE='https://cdn.jsdelivr.net/npm/onnxruntime-web@1.18.0/dist/';
 const MODEL_URL=new URL('models/segformer-b0-ade-q.onnx',import.meta.url).href;
@@ -45,14 +45,17 @@ export const isLoaded=()=>!!sessP;
 
 /* source: <video> or <canvas> with pixel size sw x sh. long: length of the longer input side (multiple of 32).
  * The input keeps the picture's aspect ratio (SegFormer accepts any size that is a multiple of 32), so a portrait phone frame is
- * not squashed into a square. Returns {w,h,cls,floor,wall,lum,ms} on the logits grid (input/4). lum = brightness 0..255 per cell. */
+ * not squashed into a square. If that fails, a square input is used WITH letterboxing (never stretched) and the result is
+ * cropped back to the picture. Returns on the logits grid (input/4): {w,h,cls,floor,wall,protect,lum}, plus a grey guide image
+ * at twice that resolution {guide,gw,gh} for edge-aware mask upsampling. No blurring of the probabilities. */
 function inputSize(sw,sh,long){
   const r=Math.min(sw,sh)/Math.max(sw,sh),short=Math.max(256,Math.round(long*r/32)*32);
   return sw>=sh?[long,short]:[short,long];
 }
-async function runOnce(sess,source,W,H){
+async function runOnce(sess,source,sx,sy,sw,sh,W,H,box){
   const c=document.createElement('canvas');c.width=W;c.height=H;const g=c.getContext('2d',{willReadFrequently:true});
-  g.drawImage(source,0,0,W,H);
+  g.fillStyle='#000';g.fillRect(0,0,W,H);
+  if(box)g.drawImage(source,sx,sy,sw,sh,box.ox,box.oy,box.w,box.h);else g.drawImage(source,sx,sy,sw,sh,0,0,W,H);
   const px=g.getImageData(0,0,W,H).data,n=W*H,data=new Float32Array(3*n);
   for(let i=0;i<n;i++){
     data[i]=(px[i*4]/255-MEAN[0])/STD[0];data[n+i]=(px[i*4+1]/255-MEAN[1])/STD[1];data[2*n+i]=(px[i*4+2]/255-MEAN[2])/STD[2];
@@ -60,20 +63,36 @@ async function runOnce(sess,source,W,H){
   const out=await sess.run({pixel_values:new window.ort.Tensor('float32',data,[1,3,H,W])});
   return {L:out.logits||out[Object.keys(out)[0]],px,W,H};
 }
-export async function segment(source,sw,sh,long,onStatus){
+/* Analyse the region (sx,sy,sw,sh) of source (pixels). Whole picture: segment(source,w,h,long). */
+export async function segmentRect(source,sx,sy,sw,sh,long,onStatus){
   const sess=await loadModel(onStatus);
   onStatus&&onStatus('Analyserer rommet …');
   await new Promise(r=>setTimeout(r,30)); // let the status text paint
   const t0=performance.now();
-  let [W,H]=inputSize(sw,sh,long),res;
-  try{res=await runOnce(sess,source,W,H);}
-  catch(e){console.warn('Stenhuset: ikke-kvadratisk input feilet, prøver kvadrat',e);W=H=384;res=await runOnce(sess,source,W,H);}
-  const [,C,h,w]=res.L.dims;
-  const seg=postprocess(res.L.data,C,h,w,CLASS.wall,CLASS.floor);
-  // clean-up: majority vote removes speckle, a light blur softens mask edges
-  seg.cls=majority3(seg.cls,w,h);seg.floor=boxBlur3(seg.floor,w,h);seg.wall=boxBlur3(seg.wall,w,h);
-  const lum=new Uint8Array(w*h),kx=W/w,ky=H/h;
-  for(let y=0;y<h;y++)for(let x=0;x<w;x++){const p=((((y*ky+ky/2)|0)*W)+((x*kx+kx/2)|0))*4;lum[y*w+x]=.2126*res.px[p]+.7152*res.px[p+1]+.0722*res.px[p+2];}
-  seg.lum=lum;seg.ms=Math.round(performance.now()-t0);seg.input=[W,H];
+  let [W,H]=inputSize(sw,sh,long),res,box=null;
+  try{res=await runOnce(sess,source,sx,sy,sw,sh,W,H,null);}
+  catch(e){
+    console.warn('Stenhuset: ikke-kvadratisk input feilet, bruker kvadrat med letterbox',e);
+    W=H=384;box=letterbox(sw,sh,384);res=await runOnce(sess,source,sx,sy,sw,sh,W,H,box);
+  }
+  const [,C,h0,w0]=res.L.dims;
+  let seg=postprocess2(res.L.data,C,h0,w0,CLASS.wall,CLASS.floor,PROTECT_IDS),w=w0,h=h0,px=res.px,PW=W,PH=H,pox=0,poy=0;
+  if(box){ // crop the letterboxed square back to the picture (inverse mapping), on the same grid density
+    const q=w0/W,tw=Math.max(8,Math.round(box.w*q)),th=Math.max(8,Math.round(box.h*q)),x0=box.ox*q,y0=box.oy*q,cw=box.w*q,ch=box.h*q;
+    seg={cls:cropNearest(seg.cls,w0,h0,x0,y0,cw,ch,tw,th),floor:cropResample(seg.floor,w0,h0,x0,y0,cw,ch,tw,th),wall:cropResample(seg.wall,w0,h0,x0,y0,cw,ch,tw,th),protect:cropResample(seg.protect,w0,h0,x0,y0,cw,ch,tw,th)};
+    w=tw;h=th;PW=box.w;PH=box.h;pox=box.ox;poy=box.oy;
+  }
+  seg.w=w;seg.h=h;
+  seg.cls=majority3(seg.cls,w,h); // the class map is only used for geometry (wall/floor lines, regions); masks are not blurred
+  // grey guide image (twice the grid resolution) from the analysed pixels, for edge-aware upsampling
+  const gw=w*2,gh=h*2,guide=new Uint8Array(gw*gh),lum=new Uint8Array(w*h);
+  const pix=(x,y)=>{const X=Math.min(W-1,Math.max(0,Math.round(pox+x))),Y=Math.min(H-1,Math.max(0,Math.round(poy+y))),p=(Y*W+X)*4;return .2126*px[p]+.7152*px[p+1]+.0722*px[p+2];};
+  for(let y=0;y<gh;y++)for(let x=0;x<gw;x++){
+    const fx=(x+.5)/gw*PW,fy=(y+.5)/gh*PH,dx=PW/gw/3,dy=PH/gh/3;
+    guide[y*gw+x]=(pix(fx-dx,fy-dy)+pix(fx+dx,fy-dy)+pix(fx-dx,fy+dy)+pix(fx+dx,fy+dy))/4;
+  }
+  for(let y=0;y<h;y++)for(let x=0;x<w;x++)lum[y*w+x]=pix((x+.5)/w*PW,(y+.5)/h*PH);
+  seg.guide=guide;seg.gw=gw;seg.gh=gh;seg.lum=lum;seg.ms=Math.round(performance.now()-t0);seg.input=[W,H];seg.letterbox=!!box;
   return seg;
 }
+export const segment=(source,sw,sh,long,onStatus)=>segmentRect(source,0,0,sw,sh,long,onStatus);

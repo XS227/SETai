@@ -294,3 +294,170 @@ export function estimateCameraHeight(seg,cam,ceilH=2.5){
   if(est.length<6)return null;
   est.sort((a,b)=>a-b);return est[est.length>>1];
 }
+
+/* ======================= v6: confidence instead of area limits, edge-aware masks, tracking, corrections ======================= */
+
+/* Classes that must stay visible (pixel masks from the model, ADE20K ids checked against the model config). */
+export const PROTECT_IDS=[8,14,18,23,15,28,146,17,37,47,65,145,27,81,10,19,7,30,64,44,36,22,24,62,63,35,33,31,69,57,39,49,71,50,73,89,58,141,143,130,82,85,134,121,53,59,40,41,45,70,107,129,110,97,99,125,66,135];
+
+/* Softmax as in postprocess(), plus `protect` = probability that a cell belongs to any protected object class. */
+export function postprocess2(logits,C,h,w,wallId=0,floorId=3,protectIds=PROTECT_IDS){
+  const hw=h*w,cls=new Uint8Array(hw),floor=new Float32Array(hw),wall=new Float32Array(hw),protect=new Float32Array(hw),isP=new Uint8Array(C);
+  for(const id of protectIds)if(id<C)isP[id]=1;
+  for(let i=0;i<hw;i++){
+    let mx=-1e30,arg=0;for(let c=0;c<C;c++){const v=logits[c*hw+i];if(v>mx){mx=v;arg=c;}}
+    let sum=0,pm=0;for(let c=0;c<C;c++){const e=Math.exp(logits[c*hw+i]-mx);sum+=e;if(isP[c]&&e>pm)pm=e;}
+    cls[i]=arg;floor[i]=Math.exp(logits[floorId*hw+i]-mx)/sum;wall[i]=Math.exp(logits[wallId*hw+i]-mx)/sum;protect[i]=pm/sum;
+  }
+  return {cls,floor,wall,protect,w,h};
+}
+
+/* Connected regions of prob>thr with their size and mean confidence. A region is kept when it is coherent and confident,
+ * not because it is big: tiny specks (< minCells) are noise; small regions are kept when their mean probability is high. */
+export function confidentRegions(prob,w,h,thr=.5,minCells=6,minMean=.62,bigCells=60){
+  const labels=new Int32Array(w*h).fill(-1),regions=[],stack=[];let next=0;
+  for(let s=0;s<w*h;s++){
+    if(prob[s]<=thr||labels[s]>=0)continue;
+    let size=0,sum=0,x0=w,y0=h,x1=0,y1=0;stack.push(s);labels[s]=next;
+    while(stack.length){
+      const i=stack.pop(),x=i%w,y=(i/w)|0;size++;sum+=prob[i];if(x<x0)x0=x;if(x>x1)x1=x;if(y<y0)y0=y;if(y>y1)y1=y;
+      const nb=[x>0?i-1:-1,x<w-1?i+1:-1,y>0?i-w:-1,y<h-1?i+w:-1];
+      for(const j of nb)if(j>=0&&prob[j]>thr&&labels[j]<0){labels[j]=next;stack.push(j);}
+    }
+    const mean=sum/size;
+    regions.push({id:next,size,mean,box:[x0,y0,x1,y1],keep:size>=minCells&&(mean>=minMean||size>=bigCells)});next++;
+  }
+  return {labels,regions};
+}
+/* prob with every non-kept region zeroed (cells at or below thr are left as they are: they only matter as soft edges). */
+export function keepConfident(prob,w,h,opts={}){
+  const {labels,regions}=confidentRegions(prob,w,h,opts.thr??.5,opts.minCells??6,opts.minMean??.62,opts.bigCells??60);
+  const out=Float32Array.from(prob);
+  for(let i=0;i<out.length;i++){const l=labels[i];if(l>=0&&!regions[l].keep)out[i]=0;}
+  return {prob:out,regions,labels};
+}
+
+/* Edge-aware (joint bilateral) upsampling: a coarse probability map is enlarged to the guide image's size so that the transition
+ * follows edges in the real picture instead of being blurred. guide: Uint8 grey image gw x gh; low: Float32 lw x lh. */
+export function jointBilateralUpsample(low,lw,lh,guide,gw,gh,sigmaR=14){
+  // mean guide value per coarse cell
+  const gl=new Float32Array(lw*lh),cnt=new Float32Array(lw*lh),sx=lw/gw,sy=lh/gh;
+  for(let y=0;y<gh;y++){const ly=Math.min(lh-1,(y*sy)|0);for(let x=0;x<gw;x++){const k=ly*lw+Math.min(lw-1,(x*sx)|0);gl[k]+=guide[y*gw+x];cnt[k]++;}}
+  for(let k=0;k<gl.length;k++)gl[k]/=cnt[k]||1;
+  const out=new Float32Array(gw*gh),inv=1/(2*sigmaR*sigmaR);
+  for(let y=0;y<gh;y++){
+    const fy=(y+.5)*sy-.5,cy=Math.floor(fy);
+    for(let x=0;x<gw;x++){
+      const fx=(x+.5)*sx-.5,cx=Math.floor(fx),g=guide[y*gw+x];let s=0,ws=0;
+      for(let dy=0;dy<=1;dy++)for(let dx=0;dx<=1;dx++){
+        const X=Math.min(lw-1,Math.max(0,cx+dx)),Y=Math.min(lh-1,Math.max(0,cy+dy)),k=Y*lw+X;
+        const wsp=(1-Math.abs(fx-(cx+dx)))*(1-Math.abs(fy-(cy+dy)));if(wsp<=0)continue;
+        const d=g-gl[k],wr=Math.exp(-d*d*inv)+1e-4;s+=low[k]*wsp*wr;ws+=wsp*wr;
+      }
+      out[y*gw+x]=ws>0?s/ws:0;
+    }
+  }
+  return out;
+}
+
+/* Square fallback without stretching: where the picture sits inside an S x S input (letterbox), and how to map back. */
+export function letterbox(sw,sh,S){
+  const k=Math.min(S/sw,S/sh),w=Math.round(sw*k),h=Math.round(sh*k);
+  return {k,w,h,ox:Math.floor((S-w)/2),oy:Math.floor((S-h)/2),S};
+}
+/* Take the content part [x0,y0,cw,ch] of a grid (gw wide) and resample it to tw x th (bilinear). */
+export function cropResample(a,gw,gh,x0,y0,cw,ch,tw,th){
+  const o=new Float32Array(tw*th);
+  for(let y=0;y<th;y++){const fy=y0+(y+.5)*ch/th-.5,iy=Math.max(0,Math.min(gh-2,Math.floor(fy))),vy=Math.min(1,Math.max(0,fy-iy));
+    for(let x=0;x<tw;x++){const fx=x0+(x+.5)*cw/tw-.5,ix=Math.max(0,Math.min(gw-2,Math.floor(fx))),vx=Math.min(1,Math.max(0,fx-ix));
+      const a00=a[iy*gw+ix],a10=a[iy*gw+ix+1],a01=a[(iy+1)*gw+ix],a11=a[(iy+1)*gw+ix+1];
+      o[y*tw+x]=(a00*(1-vx)+a10*vx)*(1-vy)+(a01*(1-vx)+a11*vx)*vy;}}
+  return o;
+}
+export function cropNearest(a,gw,gh,x0,y0,cw,ch,tw,th){
+  const o=new Uint8Array(tw*th);
+  for(let y=0;y<th;y++){const iy=Math.min(gh-1,Math.max(0,Math.floor(y0+(y+.5)*ch/th)));for(let x=0;x<tw;x++){const ix=Math.min(gw-1,Math.max(0,Math.floor(x0+(x+.5)*cw/tw)));o[y*tw+x]=a[iy*gw+ix];}}
+  return o;
+}
+
+/* Picture <-> screen mapping used by the renderer, touches and masks. fill: cover the screen; otherwise contain. zoom >= 1 enlarges.
+ * Returns the visible fraction [fx,fy] of the picture; >1 means letterbox bars. */
+export function coverFrac(cw,ch,sw,sh,fill,zoom=1){
+  const sc=(fill?Math.max(cw/sw,ch/sh):Math.min(cw/sw,ch/sh))*zoom;return [cw/(sw*sc),ch/(sh*sc)];
+}
+export const normToCanvas=(n,c,cw,ch)=>[((n[0]-.5)/c[0]+.5)*cw,((n[1]-.5)/c[1]+.5)*ch];
+export const canvasToNorm=(p,c,cw,ch)=>[((p[0]/cw)-.5)*c[0]+.5,((p[1]/ch)-.5)*c[1]+.5];
+
+/* Connected region of the same class around a cell (for "tap a surface" / "tap an object"). Returns Uint8 mask or null. */
+export function regionAt(cls,w,h,x,y,maxCells=1e9){
+  x=Math.max(0,Math.min(w-1,x|0));y=Math.max(0,Math.min(h-1,y|0));
+  const c=cls[y*w+x],m=new Uint8Array(w*h),st=[y*w+x];m[y*w+x]=1;let n=0;
+  while(st.length&&n<maxCells){const i=st.pop(),xx=i%w,yy=(i/w)|0;n++;
+    for(const j of [xx>0?i-1:-1,xx<w-1?i+1:-1,yy>0?i-w:-1,yy<h-1?i+w:-1])if(j>=0&&!m[j]&&cls[j]===c){m[j]=1;st.push(j);}}
+  return {mask:m,cls:c,cells:n};
+}
+
+/* Visual tracking between a key frame and the current frame (small grey images, same size). Searches the translation around a
+ * prediction (from the gyro) and returns {dx,dy,score} in pixels of these images; score = normalised correlation (1 = identical). */
+export function trackShift(K,C,w,h,px=0,py=0,range=10,step=1){
+  const m=Math.ceil(range+Math.max(Math.abs(px),Math.abs(py)))+2,x0=m,x1=w-m,y0=m,y1=h-m;
+  if(x1-x0<8||y1-y0<8)return {dx:px,dy:py,score:0};
+  const ncc=(dx,dy)=>{
+    let sk=0,sc=0,skk=0,scc=0,skc=0,n=0;
+    for(let y=y0;y<y1;y+=2)for(let x=x0;x<x1;x+=2){
+      const a=K[y*w+x],xx=Math.round(x+dx),yy=Math.round(y+dy);if(xx<0||yy<0||xx>=w||yy>=h)continue;const b=C[yy*w+xx];
+      sk+=a;sc+=b;skk+=a*a;scc+=b*b;skc+=a*b;n++;}
+    if(n<20)return -1;const cov=skc-sk*sc/n,va=skk-sk*sk/n,vb=scc-sc*sc/n;return va>1e-6&&vb>1e-6?cov/Math.sqrt(va*vb):-1;
+  };
+  let best={dx:px,dy:py,score:ncc(px,py)};
+  for(let dy=-range;dy<=range;dy+=step)for(let dx=-range;dx<=range;dx+=step){const s=ncc(px+dx,py+dy);if(s>best.score)best={dx:px+dx,dy:py+dy,score:s};}
+  // refine to one pixel
+  if(step>1){const b=best;for(let dy=-step;dy<=step;dy++)for(let dx=-step;dx<=step;dx++){const s=ncc(b.dx+dx,b.dy+dy);if(s>best.score)best={dx:b.dx+dx,dy:b.dy+dy,score:s};}}
+  return best;
+}
+
+/* Camera height from a known length on the floor: floor distances scale linearly with the camera height. */
+export function heightFromReference(a,b,lengthM,R,cx,cy,f){
+  const p=pixelFloorPoint(a[0],a[1],R,cx,cy,f,1),q=pixelFloorPoint(b[0],b[1],R,cx,cy,f,1);
+  if(!p||!q)return null;const d=Math.hypot(p[0]-q[0],p[1]-q[1]);return d>1e-4?lengthM/d:null;
+}
+
+/* Wall planes v3: small wall regions are not dropped. Regions are found by confidence (not by a share of the picture); a region
+ * that has no visible floor line of its own (e.g. the strip of wall between two cabinets) borrows the plane of the nearest wall
+ * that has one, instead of a guessed plane. */
+export function wallPlanes3(seg,fp,fallbackFn,maxPieces=3){
+  const {cls,w,h}=seg,wallP=seg.wall||Float32Array.from(cls,c=>c===0?1:0);
+  const prob=new Float32Array(w*h);for(let i=0;i<w*h;i++)prob[i]=cls[i]===0?Math.max(.51,wallP[i]):0;
+  const {labels,regions}=confidentRegions(prob,w,h,.5,6,.62,60);
+  const keep=regions.filter(r=>r.keep).sort((a,b)=>b.size-a.size),planes=[];
+  const cls2=Uint8Array.from(cls);
+  const lab=new Int16Array(w*h).fill(-1);for(let i=0;i<w*h;i++){const l=labels[i];if(l>=0&&regions[l].keep)lab[i]=l;}
+  const orphans=[];
+  for(const c of keep){
+    const items=[];
+    for(const b of wallFloorBoundary(cls2,lab,c.id,w,h)){const p=fp(b[0],b[1]);if(p)items.push({b,p});}
+    let rest=items.slice();const lines=[];
+    while(lines.length<maxPieces&&rest.length>=6){
+      const ln=fitLine(rest.map(i=>i.p));if(!ln)break;const inl=[],out=[];
+      for(const it of rest){const d=Math.abs(ln.u[0]*(it.p[1]-ln.p0[1])-ln.u[1]*(it.p[0]-ln.p0[0]));(d<.15?inl:out).push(it);}
+      if(inl.length<Math.max(6,.18*items.length))break;lines.push({ln,inl});rest=out;
+    }
+    for(let i=0;i<lines.length;i++)for(let j=lines.length-1;j>i;j--){
+      const a=lines[i].ln,b=lines[j].ln,dot=Math.abs(a.u[0]*b.u[0]+a.u[1]*b.u[1]),off=Math.abs(a.u[0]*(b.p0[1]-a.p0[1])-a.u[1]*(b.p0[0]-a.p0[0]));
+      if(dot>Math.cos(8*Math.PI/180)&&off<.2){lines[i].inl=lines[i].inl.concat(lines[j].inl);lines.splice(j,1);}
+    }
+    if(!lines.length){orphans.push(c);continue;}
+    const cols=new Int8Array(w).fill(-1);
+    lines.forEach((L,idx)=>{for(const it of L.inl)cols[Math.min(w-1,Math.floor(it.b[0]))]=idx;});
+    const last=new Int16Array(w).fill(-1);let prev=-1;for(let x=0;x<w;x++){if(cols[x]>=0)prev=x;last[x]=prev;}
+    let nxt=-1;for(let x=w-1;x>=0;x--){if(cols[x]>=0)nxt=x;if(cols[x]<0){const l=last[x],n=nxt,pick=l<0?n:n<0?l:(x-l<=n-x?l:n);if(pick>=0)cols[x]=cols[pick];}}
+    lines.forEach((L,idx)=>planes.push({key:c.id+'_'+idx,comp:c.id,sub:idx,p0:L.ln.p0,u:L.ln.u,cols,inliers:L.inl.length,fallback:false,box:c.box}));
+  }
+  for(const c of orphans){
+    const cxm=(c.box[0]+c.box[2])/2;let best=null,bd=1e9;
+    for(const p of planes){const pm=(p.box[0]+p.box[2])/2,d=Math.abs(pm-cxm);if(d<bd){bd=d;best=p;}}
+    if(best)planes.push({key:c.id+'_b',comp:c.id,sub:0,p0:best.p0,u:best.u,cols:null,inliers:0,fallback:false,borrowed:true,box:c.box});
+    else{const fb=fallbackFn();planes.push({key:c.id+'_0',comp:c.id,sub:0,p0:fb.p0,u:fb.u,cols:null,inliers:0,fallback:true,box:c.box});}
+  }
+  return {planes,labels:lab};
+}
