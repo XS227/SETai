@@ -274,3 +274,23 @@ export function ndcRay(invVP,nx,ny){
 export function projectVP(VP,P){const c=mulV4(VP,[P[0],P[1],P[2],1]);return c[3]<=1e-6?null:[c[0]/c[3],c[1]/c[3]];}
 /* Floor point (x,z) under the ray, floor plane y = floorY; null if the ray does not go down. */
 export function rayFloorXZ(o,d,floorY){if(d[1]>-0.02)return null;const t=(floorY-o[1])/d[1];return [o[0]+d[0]*t,o[2]+d[2]*t];}
+
+/* ======================= camera height from the picture =======================
+ * If a wall shows both its floor line and its ceiling line, and the ceiling height is known, the camera height follows from the two
+ * elevation angles (measured from the phone's orientation): Hc = Hceil * tan(a_floor) / (tan(a_floor) + tan(a_ceiling)).
+ * Returns the median over the image columns that show both lines, or null. */
+export function estimateCameraHeight(seg,cam,ceilH=2.5){
+  const {cls,w,h}=seg,est=[];
+  for(let x=0;x<w;x++){
+    let yc=-1,yf=-1;
+    for(let y=0;y<h-1;y++)if(cls[y*w+x]===5&&cls[(y+1)*w+x]===0)yc=y+1;           // ceiling -> wall
+    for(let y=h-2;y>=0;y--)if(cls[y*w+x]===0&&cls[(y+1)*w+x]===3){yf=y+1;break;}   // wall -> floor
+    if(yc<0||yf<0||yf<yc+4)continue;
+    const dc=pixelToWorldRay((x+.5)/w*cam.vw,yc/h*cam.vh,cam.R,cam.cx,cam.cy,cam.f),df=pixelToWorldRay((x+.5)/w*cam.vw,yf/h*cam.vh,cam.R,cam.cx,cam.cy,cam.f);
+    const ac=Math.asin(Math.max(-1,Math.min(1,dc[2]))),af=-Math.asin(Math.max(-1,Math.min(1,df[2])));
+    if(ac<.03||af<.03)continue;
+    est.push(ceilH*Math.tan(af)/(Math.tan(af)+Math.tan(ac)));
+  }
+  if(est.length<6)return null;
+  est.sort((a,b)=>a-b);return est[est.length>>1];
+}

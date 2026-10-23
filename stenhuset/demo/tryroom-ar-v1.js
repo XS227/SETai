@@ -10,7 +10,7 @@
  * Based on: W3C WebXR Raw Camera Access (XRView.camera, XRWebGLBinding.getCameraImage, image aligned with the view frustum) and the
  * three.js example webxr_ar_camera_access (per-frame getCameraImage). Rendering is plain WebGL, no three.js.
  * Not verified on a physical phone in this build. Needs Chrome on an ARCore-capable Android phone. */
-import * as MA from './tryroom-math-v1.js?v=4';
+import * as MA from './tryroom-math-v1.js?v=5';
 
 const clamp=(v,a,b)=>Math.min(b,Math.max(a,v));
 const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -352,7 +352,7 @@ export async function start(opt){
       }
       if(dp.calib===45||dp.errs.every(e=>e.length>60)){
         const med=a=>{if(!a.length)return 99;const b=a.slice().sort((x,y)=>x-y);return b[b.length>>1];},m4=dp.errs.map(med);
-        dp.flip=m4.indexOf(Math.min(...m4));dp.calib=999;dp.bad=Math.min(...m4)>.6;if(dp.bad)log('dybdekartet passer ikke med gulvet (feil > 0,6 m): dybde-skjuling slått av');log('dybde-kalibrering (median feil m): '+m4.map(v=>v.toFixed(2)).join(' / ')+' -> valgt '+dp.flip);
+        {const bi=m4.indexOf(Math.min(...m4));dp.flip=m4[bi]<m4[0]*.85?bi:0;}dp.calib=999;dp.bad=Math.min(...m4)>.6;if(dp.bad)log('dybdekartet passer ikke med gulvet (feil > 0,6 m): dybde-skjuling slått av');log('dybde-kalibrering (median feil m): '+m4.map(v=>v.toFixed(2)).join(' / ')+' -> valgt '+dp.flip);
       }
     }
     let k=0;
@@ -438,16 +438,28 @@ export async function start(opt){
     }
     pm.nh=hor.length;pm.nv=ver.length;
     // floor: lowest large horizontal plane below the phone
-    const below=hor.filter(h=>h.y<camY-.5&&h.area>.25).sort((a,b)=>a.y-b.y);
-    if(below.length){
-      const f=below[0];pm.floorYPlane=pm.floorYPlane==null?f.y:pm.floorYPlane+(f.y-pm.floorYPlane)*.5;
-      if(pm.cx==null){let cx=0,cz=0;for(const q of f.xz){cx+=q[0];cz+=q[1];}pm.cx=cx/f.xz.length;pm.cz=cz/f.xz.length;}
+    // group horizontal planes by height; the floor is the height group with the largest total area (a phantom plane below a
+    // glossy floor, or a bed/table top, is small compared with the real floor)
+    const groups=[];
+    for(const h of hor){
+      if(h.y>=camY-.4||h.y<camY-2.5||h.area<.15)continue;
+      let g=groups.find(g=>Math.abs(g.y-h.y)<.08);if(!g){g={y:h.y,area:0,sy:0,planes:[]};groups.push(g);}
+      g.area+=h.area;g.sy+=h.y*h.area;g.y=g.sy/g.area;g.planes.push(h);
+    }
+    groups.sort((a,b)=>b.area-a.area);
+    if(groups.length&&groups[0].area>.25){
+      const f=groups[0];
+      if(pm.floorYPlane==null||Math.abs(f.y-pm.floorYPlane)>.25){
+        if(pm.floorYPlane!=null)log('gulv byttet: y='+f.y.toFixed(2)+' ('+f.area.toFixed(1)+' m², '+f.planes.length+' plan; var '+pm.floorYPlane.toFixed(2)+')');
+        pm.floorYPlane=f.y;pm.cx=null; // re-centre the map on the new floor
+      }else pm.floorYPlane+=(f.y-pm.floorYPlane)*.4;
+      if(pm.cx==null){const big=f.planes.slice().sort((a,b)=>b.area-a.area)[0];let cx=0,cz=0;for(const q of big.xz){cx+=q[0];cz+=q[1];}pm.cx=cx/big.xz.length;pm.cz=cz/big.xz.length;}
     }
     if(pm.floorYPlane==null)return true;
     const fy=pm.floorYPlane;pm.floor.fill(0);pm.block.fill(0);
     for(const h of hor){
       if(Math.abs(h.y-fy)<.08)rasterPoly(pm.floor,h.xz);
-      else if(h.y>fy+.15&&h.y<fy+1.3&&h.y<camY-.15)rasterPoly(pm.block,h.xz);
+      else if(h.y>fy+.15&&h.y<fy+1.3&&h.y<camY-.15&&h.area<4)rasterPoly(pm.block,h.xz);
     }
     pm.dirty=true;pm.nFloor=0;pm.nBlock=0;for(let i=0;i<pm.floor.length;i++){if(pm.floor[i]>.5)pm.nFloor++;if(pm.block[i]>.5)pm.nBlock++;}
     // walls: vertical planes, pieces of the same wall merged

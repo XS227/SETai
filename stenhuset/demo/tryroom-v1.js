@@ -9,7 +9,7 @@
  *  3. Guidede bilder: a few still photos of the room, each edited with the same marking tools and the same material choice.
  *     The result is separate edited images, not a reconstructed 3D model.
  * Inventory (sink, sofa ...) is kept visible with a manual "keep visible" brush painted in the surface's own coordinates. */
-import * as MA from './tryroom-math-v1.js?v=4';
+import * as MA from './tryroom-math-v1.js?v=5';
 import {STONES,generateStone,T} from './stone-textures-v1.js';
 
 const MOBILE=typeof matchMedia==='function'&&matchMedia('(pointer:coarse)').matches;
@@ -23,7 +23,7 @@ const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',
 const S={
   mode:null,caps:null,floorId:'bastide-beige',wallId:'carrara-c',
   fmt:'natural',rot:0,bond:false,grout:GROUTS[0][1],scale:1,
-  views:[],cur:0,sel:-1,mark:null,brush:null,brushR:34,tab:'surf',frozen:false,fit:'contain',matType:'floor',dark:false,xr:null,hc:1.4,pitch:20,autoBusy:false,aiBusy:false,live:true,autoSel:0,selKind:'manual',frozenR:null,lastError:null,
+  views:[],cur:0,sel:-1,mark:null,brush:null,brushR:34,tab:'surf',frozen:false,fit:'contain',matType:'floor',dark:false,xr:null,hc:1.4,hcAuto:true,hcMeasured:false,hcNote:'',pitch:20,autoBusy:false,aiBusy:false,live:true,autoSel:0,selKind:'manual',frozenR:null,lastError:null,
   gyro:{on:false,ref:null,now:null,fov:65},busy:0,msg:''
 };
 let segMod=null,root,cv,ov,gl,P={},tex={},stream,video,raf=0,lumCtx,lumData,lumT=0,lumAvgFrame=.5,drag=null,photoInput,catalogP=null,xrMod=null;
@@ -492,7 +492,8 @@ function autoPane(v){
   if(!a)return h+'<p style="font-size:12px;line-height:1.55;color:#aaa49a;margin:0 0 12px">Rett kameraet mot rommet og trykk. Bildet analyseres på mobilen din av en AI-modell (4 MB som lastes ned første gang, bildet sendes ikke noe sted). Gulv, vegger og møbler skilles fra hverandre.</p>';
   if(v.kind==='video')h+=`<label style="display:flex;gap:10px;align-items:center;font-size:12px;margin:0 0 12px"><input type="checkbox" data-live ${S.live?'checked':''}> Live-oppdatering: analyserer på nytt når du flytter kameraet${a.edited?' <span style="color:#ffd9a0">(stoppet etter manuell retting)</span>':''}</label>`;
   h+='<span class="tr-lbl">Funnet</span><div class="tr-row">'+(a.surfaces.length?a.surfaces.map((x,i)=>`<button class="tr-btn ${S.selKind==='auto'&&S.autoSel===i?'on':''}" data-asel="${i}">${x.name}${x.fallback?' (anslag)':''}</button>`).join(''):'<span style="font-size:12px;color:#ffd9a0">Ingen gulv eller vegg funnet</span>')+'</div>';
-  h+=`<span class="tr-lbl">Kamerahøyde: ${S.hc.toFixed(2)} m</span><input type="range" min="90" max="190" value="${Math.round(S.hc*100)}" data-hc style="width:100%;margin-bottom:10px">`;
+  h+=`<span class="tr-lbl">Kamerahøyde: ${S.hc.toFixed(2)} m · ${S.hcAuto?'automatisk ('+esc(S.hcNote||'venter')+')':'satt av deg'}</span><input type="range" min="60" max="200" value="${Math.round(S.hc*100)}" data-hc style="width:100%;margin-bottom:6px">`;
+  if(!S.hcAuto)h+='<div class="tr-row"><button class="tr-btn" data-act="hc-auto">Mål høyden automatisk</button></div>';
   h+=`<span class="tr-lbl">Synsfelt: ${S.gyro.fov}°</span><input type="range" min="50" max="85" value="${S.gyro.fov}" data-fov style="width:100%;margin-bottom:10px">`;
   if(!a.cap.gyro)h+=`<span class="tr-lbl">Kameravinkel nedover: ${S.pitch}°</span><input type="range" min="0" max="60" value="${S.pitch}" data-pitch style="width:100%;margin-bottom:10px">`;
   h+='<p style="font-size:11.5px;line-height:1.55;color:#aaa49a;margin:0 0 10px">Høyde og synsfelt styrer skala og perspektiv. De er anslag til du justerer dem selv.</p>';
@@ -549,7 +550,7 @@ function onClick(e){
   const a=t.dataset.act;if(!a)return;
   ({close,
     'start-cam':startCamera,'start-photo':startPhotos,'start-xr':startXR,
-    auto:autoDetect,'brush-add':()=>{S.brush=S.brush==='add'?null:'add';brushHint();renderDock();},
+    auto:autoDetect,'hc-auto':()=>{S.hcAuto=true;S.hcMeasured=false;renderDock();autoDetect(false);},'brush-add':()=>{S.brush=S.brush==='add'?null:'add';brushHint();renderDock();},
     'mark-floor':()=>startMark('floor'),'mark-wall':()=>startMark('wall'),
     'mark-cancel':()=>{S.mark=null;S.msg='';hint('Markering avbrutt.');renderDock();},
     'brush-hide':()=>{S.brush=S.brush==='hide'?null:'hide';brushHint();renderDock();},
@@ -569,7 +570,7 @@ function onChange(e){
   if(t.dataset.scale!==undefined){S.scale=clamp(+t.value/100,.5,2);return;}
   if(t.dataset.brushSize!==undefined){S.brushR=+t.value;return;}
   if(t.dataset.hc!==undefined||t.dataset.fov!==undefined||t.dataset.pitch!==undefined){
-    if(t.dataset.hc!==undefined)S.hc=clamp(+t.value/100,.9,1.9);
+    if(t.dataset.hc!==undefined){S.hc=clamp(+t.value/100,.6,2);S.hcAuto=false;}
     if(t.dataset.fov!==undefined)S.gyro.fov=clamp(+t.value,50,85);
     if(t.dataset.pitch!==undefined)S.pitch=clamp(+t.value,0,60);
     updatePlanes();if(e.type==='change')renderDock();return;
@@ -625,20 +626,26 @@ async function autoDetect(silent){
   S.autoBusy=true;S.aiBusy=true;busyUi();if(!silent)renderDock();
   const status=m=>{if(!silent)hint('<b>'+esc(m)+'</b>');};
   try{
-    segMod=segMod||await import('./tryroom-seg-v1.js?v=2');
+    segMod=segMod||await import('./tryroom-seg-v1.js?v=3');
     const useGyro=view.kind==='video'?(S.gyro.on&&!!S.gyro.now):!!view.capR;
     const R=view.kind==='video'?(useGyro?S.gyro.now.slice():MA.orientationMatrix(0,90-S.pitch,0)):(view.capR?view.capR.slice():MA.orientationMatrix(0,90-S.pitch,0));
     const snap=document.createElement('canvas');snap.width=src.w;snap.height=src.h;snap.getContext('2d').drawImage(src.el,0,0);
     const seg=await segMod.segment(snap,src.w,src.h,MOBILE?672:768,status);
     if(!root||!gl)return;
     const cam={R,cx:src.w/2,cy:src.h/2,f:MA.focalPx(Math.max(src.w,src.h),S.gyro.fov),vw:src.w,vh:src.h,gyro:useGyro};
+    // camera height from the picture itself (floor line + ceiling line, assumed ceiling 2.5 m): adapts when you sit, stand or bend
+    if(S.hcAuto){
+      const est=MA.estimateCameraHeight(seg,cam,2.5);
+      if(est&&est>.6&&est<2.4){S.hc=S.hcMeasured?S.hc*.5+est*.5:est;S.hcMeasured=true;S.hcNote='målt';}
+      else S.hcNote=S.hcMeasured?'siste måling':'ikke målt (gulv og tak må være i bildet)';
+    }
     const prev=view.auto;view.auto=buildAuto(seg,cam,silent);disposeAuto(prev);
     S.autoSel=silent?clamp(S.autoSel,0,Math.max(0,view.auto.surfaces.length-1)):0;S.selKind='auto';
     if(!view.auto.surfaces.some(x=>x.type===S.matType))S.matType=view.auto.surfaces.some(x=>x.type==='floor')?'floor':'wall';
     if(!silent){
       const fl=view.auto.surfaces.some(x=>x.type==='floor'),nw=view.auto.surfaces.filter(x=>x.type==='wall').length,fb=view.auto.surfaces.some(x=>x.fallback);
       if(!fl&&!nw)hint('<span class="tr-warn">Fant verken gulv eller vegg.</span> Rett kameraet slik at gulv og vegg er tydelig i bildet, med godt lys, og trykk «Finn flater på nytt». Du kan også markere flaten selv.');
-      else hint('<b>Fant '+(fl?'gulv':'')+(fl&&nw?' og ':'')+(nw?nw+(nw>1?' vegger':' vegg'):'')+'</b> ('+(seg.ms/1000).toFixed(1)+' s). Blått er gulv, oransje er vegg. Møbler og inventar holdes utenfor.'+(fb?' <span class="tr-warn">Veggens plassering er et anslag fordi gulvlinjen ikke er synlig.</span>':'')+(useGyro?'':' <span class="tr-warn">Uten bevegelsessensor må du stille inn kameravinkelen selv.</span>'));
+      else hint('<b>Fant '+(fl?'gulv':'')+(fl&&nw?' og ':'')+(nw?nw+(nw>1?' vegger':' vegg'):'')+'</b> ('+(seg.ms/1000).toFixed(1)+' s). Blått er gulv, oransje er vegg. Møbler og inventar holdes utenfor. Kamerahøyde: '+S.hc.toFixed(2)+' m ('+(S.hcAuto?S.hcNote:'satt av deg')+').'+(fb?' <span class="tr-warn">Veggens plassering er et anslag fordi gulvlinjen ikke er synlig.</span>':'')+(useGyro?'':' <span class="tr-warn">Uten bevegelsessensor må du stille inn kameravinkelen selv.</span>'));
     }
   }catch(err){
     console.error('Stenhuset AI-gjenkjenning feilet',err);
@@ -769,11 +776,11 @@ function photosDone(){
 /* ---------------------------------------------------------------- mode: WebXR AR (separate module, loaded only when chosen) */
 async function startXR(){
   try{
-    xrMod=xrMod||await import('./tryroom-ar-v1.js?v=5');
+    xrMod=xrMod||await import('./tryroom-ar-v1.js?v=6');
     close(true);
     await xrMod.start({
       S,PREC,MATFN,FORMATS,GROUTS,STONES,generateStone,T,materials:MATS(),
-      loadSeg:()=>import('./tryroom-seg-v1.js?v=2'),
+      loadSeg:()=>import('./tryroom-seg-v1.js?v=3'),
       onEnd:info=>{
         if(!info||info.userEnd||info.quote)return;
         // the system (or an error) ended the AR session: come back to the start screen and show why
