@@ -769,7 +769,7 @@ function photosDone(){
 /* ---------------------------------------------------------------- mode: WebXR AR (separate module, loaded only when chosen) */
 async function startXR(){
   try{
-    xrMod=xrMod||await import('./tryroom-ar-v1.js?v=3');
+    xrMod=xrMod||await import('./tryroom-ar-v1.js?v=4');
     close(true);
     await xrMod.start({
       S,PREC,MATFN,FORMATS,GROUTS,STONES,generateStone,T,materials:MATS(),

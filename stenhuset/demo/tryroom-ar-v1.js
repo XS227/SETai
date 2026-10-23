@@ -322,7 +322,7 @@ export async function start(opt){
   const angle=(a,b)=>Math.acos(clamp(a[0]*b[0]+a[1]*b[1]+a[2]*b[2],-1,1));
 
   /* ---------------- plane mode: accumulate ARCore hits ---------------- */
-  const G=96,CELL=.12,pm={cx:null,cz:null,floor:new Float32Array(G*G),block:new Float32Array(G*G),tex:null,dirty:false,lastUp:0,walls:[],nFloor:0,nBlock:0,nWallHits:0};
+  const G=96,CELL=.12,pm={sig:-1,pcount:-1,planeT:0,floorYPlane:null,nh:0,nv:0,sem:null,cx:null,cz:null,floor:new Float32Array(G*G),block:new Float32Array(G*G),tex:null,dirty:false,lastUp:0,walls:[],nFloor:0,nBlock:0,nWallHits:0};
   pm.tex=mkTex();
   const cellOf=(x,z)=>[Math.floor((x-pm.cx)/CELL+G/2),Math.floor((z-pm.cz)/CELL+G/2)];
   function stamp(arr,x,z,r,v){
@@ -359,6 +359,67 @@ export async function start(opt){
     pm.nFloor=0;for(let i=0;i<pm.floor.length;i++)if(pm.floor[i]>.5)pm.nFloor++;
     st.hasFloor=pm.nFloor>20;st.hasWall=pm.walls.some(w=>w.n>=8);
   }
+  /* ARCore plane detection (XRFrame.detectedPlanes): real planes with polygons. Floor = lowest large horizontal plane,
+   * furniture = higher horizontal planes, walls = vertical planes (pieces of the same wall are merged). */
+  const polyArea=pts=>{let a=0;for(let i=0,j=pts.length-1;i<pts.length;j=i++)a+=pts[j][0]*pts[i][1]-pts[i][0]*pts[j][1];return Math.abs(a)/2;};
+  function rasterPoly(arr,poly){
+    if(pm.cx==null||poly.length<3)return;
+    let x0=1e9,x1=-1e9,z0=1e9,z1=-1e9;for(const q of poly){if(q[0]<x0)x0=q[0];if(q[0]>x1)x1=q[0];if(q[1]<z0)z0=q[1];if(q[1]>z1)z1=q[1];}
+    const [ia,ja]=cellOf(x0,z0),[ib,jb]=cellOf(x1,z1);
+    for(let j=Math.max(0,ja);j<=Math.min(G-1,jb);j++)for(let i=Math.max(0,ia);i<=Math.min(G-1,ib);i++){
+      const x=(i+.5-G/2)*CELL+pm.cx,z=(j+.5-G/2)*CELL+pm.cz;let inside=false;
+      for(let a=0,b=poly.length-1;a<poly.length;b=a++){
+        if((poly[a][1]>z)!==(poly[b][1]>z)&&x<(poly[b][0]-poly[a][0])*(z-poly[a][1])/(poly[b][1]-poly[a][1])+poly[a][0])inside=!inside;
+      }
+      if(inside)arr[j*G+i]=1;
+    }
+  }
+  function processPlanes(frame,m,camY,now){
+    const set=frame.detectedPlanes;if(!set)return false;
+    let sig=0,count=0;for(const pl of set){sig+=pl.lastChangedTime;count++;}
+    if(count===0&&now-st.t0>6000)return false; // no planes found for a while: use the hit-test grid instead
+    if(sig===pm.sig&&count===pm.pcount&&now-pm.planeT<1500){return true;}
+    pm.sig=sig;pm.pcount=count;pm.planeT=now;
+    const hor=[],ver=[];
+    for(const pl of set){
+      const pose=frame.getPose(pl.planeSpace,ref);if(!pose)continue;
+      const M=pose.transform.matrix,poly=Array.from(pl.polygon||[]);if(poly.length<3)continue;
+      const world=poly.map(q=>[M[0]*q.x+M[4]*q.y+M[8]*q.z+M[12],M[1]*q.x+M[5]*q.y+M[9]*q.z+M[13],M[2]*q.x+M[6]*q.y+M[10]*q.z+M[14]]);
+      if(pl.semanticLabel&&!pm.sem)pm.sem=pl.semanticLabel;
+      if(pl.orientation==='horizontal'||Math.abs(M[5])>.85){
+        hor.push({y:M[13],xz:world.map(w=>[w[0],w[2]]),area:polyArea(poly.map(q=>[q.x,q.z])),label:pl.semanticLabel});
+      }else if(pl.orientation==='vertical'||Math.abs(M[5])<.35){
+        ver.push({M,world});
+      }
+    }
+    pm.nh=hor.length;pm.nv=ver.length;
+    // floor: lowest large horizontal plane below the phone
+    const below=hor.filter(h=>h.y<camY-.5&&h.area>.25).sort((a,b)=>a.y-b.y);
+    if(below.length){
+      const f=below[0];pm.floorYPlane=pm.floorYPlane==null?f.y:pm.floorYPlane+(f.y-pm.floorYPlane)*.5;
+      if(pm.cx==null){let cx=0,cz=0;for(const q of f.xz){cx+=q[0];cz+=q[1];}pm.cx=cx/f.xz.length;pm.cz=cz/f.xz.length;}
+    }
+    if(pm.floorYPlane==null)return true;
+    const fy=pm.floorYPlane;pm.floor.fill(0);pm.block.fill(0);
+    for(const h of hor){
+      if(Math.abs(h.y-fy)<.08)rasterPoly(pm.floor,h.xz);
+      else if(h.y>fy+.15&&h.y<fy+1.3&&h.y<camY-.15)rasterPoly(pm.block,h.xz);
+    }
+    pm.dirty=true;pm.nFloor=0;pm.nBlock=0;for(let i=0;i<pm.floor.length;i++){if(pm.floor[i]>.5)pm.nFloor++;if(pm.block[i]>.5)pm.nBlock++;}
+    // walls: vertical planes, pieces of the same wall merged
+    const walls=[];
+    for(const v of ver){
+      let nx=v.M[4],nz=v.M[6];const L=Math.hypot(nx,nz);if(L<.6)continue;nx/=L;nz/=L;
+      let d=nx*v.M[12]+nz*v.M[14];
+      let tgt=null;
+      for(const w of walls){const dot=w.nx*nx+w.nz*nz;if(Math.abs(dot)>Math.cos(10*Math.PI/180)){const dd=dot>0?d:-d;if(Math.abs(w.d-dd)<.2){tgt=w;break;}}}
+      if(!tgt){tgt={nx,nz,d,s0:1e9,s1:-1e9,n:99};walls.push(tgt);}
+      for(const q of v.world){const s=-tgt.nz*q[0]+tgt.nx*q[2];if(s<tgt.s0)tgt.s0=s;if(s>tgt.s1)tgt.s1=s;}
+    }
+    pm.walls=walls;
+    st.hasFloor=pm.nFloor>20;st.hasWall=walls.some(w=>w.s1-w.s0>.5);
+    return true;
+  }
   function uploadPm(now){
     if(!pm.dirty||now-pm.lastUp<180)return;pm.lastUp=now;pm.dirty=false;
     const u8=new Uint8Array(G*G*4);for(let i=0;i<G*G;i++){u8[i*4]=Math.round(clamp(pm.floor[i],0,1)*255);u8[i*4+1]=Math.round(clamp(pm.block[i],0,1)*255);u8[i*4+3]=255;}
@@ -366,13 +427,13 @@ export async function start(opt){
   }
   function drawPlanes(inv,m,vp){
     const gain=.82;
-    if(pm.cx!=null&&pm.nFloor>20&&bindMaterialFor(P.pfloor,S.floorId)){
+    if(pm.cx!=null&&pm.nFloor>20&&st.floorY!=null&&bindMaterialFor(P.pfloor,S.floorId)){
       const u=P.pfloor.u;gl.activeTexture(gl.TEXTURE2);gl.bindTexture(gl.TEXTURE_2D,pm.tex);gl.uniform1i(u.u_mask,2);
       gl.uniformMatrix4fv(u.u_invVP,false,inv);gl.uniform3f(u.u_o,m[12],m[13],m[14]);gl.uniform4f(u.u_vp,vp.x,vp.y,vp.width,vp.height);
       gl.uniform3f(u.u_mk,pm.cx,pm.cz,G*CELL);gl.uniform1f(u.u_floorY,st.floorY);gl.uniform1f(u.u_gain,gain);quad();
     }
     for(const w of pm.walls){
-      if(w.n<8||w.s1-w.s0<.5||!bindMaterialFor(P.pwall,S.wallId))continue;
+      if(w.n<8||w.s1-w.s0<.5||st.floorY==null||!bindMaterialFor(P.pwall,S.wallId))continue;
       const u=P.pwall.u;gl.uniformMatrix4fv(u.u_invVP,false,inv);gl.uniform3f(u.u_o,m[12],m[13],m[14]);gl.uniform4f(u.u_vp,vp.x,vp.y,vp.width,vp.height);
       gl.uniform2f(u.u_n,w.nx,w.nz);gl.uniform1f(u.u_d,w.d);gl.uniform2f(u.u_s,w.s0-.2,w.s1+.2);gl.uniform1f(u.u_H,2.5);
       gl.uniform1f(u.u_floorY,st.floorY);gl.uniform1f(u.u_gain,gain);quad();
@@ -397,13 +458,15 @@ export async function start(opt){
     st.frames++;if(!st.t0)st.t0=time;
     if(view.camera){camSeen++;if(camSeen===1)log('kamerabilde mottatt: '+view.camera.width+'x'+view.camera.height);}else camMissing++;
     if(!camSeen&&camMissing===60&&!reported){reported=true;log('INGEN kamerabilde (view.camera er null) etter 60 bilderuter');hint('<b>Plan-modus:</b> nettleseren gir ikke kamerabildet til AR, så AI-gjenkjenning er ikke mulig her. AR finner i stedet gulv og vegger selv: beveg mobilen rolig langs gulv og vegger så fylles flatene inn. Møbler og vinduer på veggen kan ikke utelukkes automatisk.');$('cam').style.display='';}
-    if(time-lastSum>3000){lastSum=time;log('bilder='+st.frames+' kamera='+(view.camera?'ja':'nei')+' gulvprøver='+st.floorSamples.length+' gulvY='+(st.floorY==null?'-':st.floorY.toFixed(2))+' flater='+st.surfaces.length+' gulvceller='+pm.nFloor+' møbelceller='+pm.nBlock+' vegger='+pm.walls.filter(w=>w.n>=8).length+(st.busy?' (analyserer)':''));}
+    if(time-lastSum>3000){lastSum=time;log('bilder='+st.frames+' kamera='+(view.camera?'ja':'nei')+' gulvprøver='+st.floorSamples.length+' gulvY='+(st.floorY==null?'-':st.floorY.toFixed(2))+' flater='+st.surfaces.length+' planer(v/h)='+pm.nv+'/'+pm.nh+(pm.sem?' etikett='+pm.sem:'')+' gulvceller='+pm.nFloor+' møbelceller='+pm.nBlock+' vegger='+pm.walls.filter(w=>w.n>=8).length+(st.busy?' (analyserer)':''));}
 
-    // floor / wall / furniture from ARCore hits
-    processHits(frame,m,camY);
-    const fy=currentFloorY(camY);
-    if(st.floorSamples.length>=8&&!st.floorLocked){st.floorLocked=true;hint('Gulv målt: '+(camY-fy).toFixed(2)+' m under telefonen.'+(camSeen?' Analyserer rommet …':' Beveg mobilen rolig langs gulv og vegger, så fylles flatene inn.'));}
-    if(st.floorY==null||(st.floorLocked&&Math.abs(fy-st.floorY)>.03)){st.floorY=fy;if(st.cap)refit();}else if(!st.floorLocked)st.floorY=fy;
+    // floor / wall / furniture: ARCore plane detection when the browser grants it, otherwise a grid of hit-tests
+    const havePlanes=frame.detectedPlanes!==undefined&&processPlanes(frame,m,camY,time);
+    if(!havePlanes)processHits(frame,m,camY);
+    const fy=havePlanes&&pm.floorYPlane!=null?pm.floorYPlane:currentFloorY(camY);
+    const locked=havePlanes?pm.floorYPlane!=null:st.floorSamples.length>=8;
+    if(locked&&!st.floorLocked){st.floorLocked=true;hint('Gulv målt: '+(camY-fy).toFixed(2)+' m under telefonen.'+(camSeen?' Analyserer rommet …':' Beveg mobilen rolig langs gulv og vegger, så fylles flatene inn.'));}
+    if(st.floorY==null||(st.floorLocked&&Math.abs(fy-st.floorY)>.02)){st.floorY=fy;if(st.cap)refit();}else if(!st.floorLocked)st.floorY=fy;
     uploadPm(time);
 
     // schedule analysis: first one after tracking has settled, then when the phone has moved/turned or the result is old
@@ -444,7 +507,7 @@ export async function start(opt){
     if(b.dataset.grout){S.grout=b.dataset.grout;renderUi();return;}
     switch(b.dataset.x){
       case 'end':userEnd=true;session.end().catch(()=>{});break;
-      case 'reset':pm.floor.fill(0);pm.block.fill(0);pm.walls.length=0;pm.cx=null;pm.cz=null;pm.dirty=true;st.floorSamples.length=0;st.floorLocked=false;hint('Nullstilt. Beveg mobilen rolig langs gulv og vegger.');break;
+      case 'reset':pm.floor.fill(0);pm.block.fill(0);pm.walls=[];pm.cx=null;pm.cz=null;pm.dirty=true;pm.sig=-1;pm.floorYPlane=null;st.floorSamples.length=0;st.floorLocked=false;st.floorY=null;hint('Nullstilt. Beveg mobilen rolig langs gulv og vegger.');break;
       case 'dbgt':dbgEl.style.display=dbgEl.style.display==='none'?'':'none';break;
       case 'cam':userEnd=true;session.end().catch(()=>{});setTimeout(()=>opt.onFallback&&opt.onFallback('bruker'),200);break;
       case 'mf':matFor='floor';renderUi();break;
