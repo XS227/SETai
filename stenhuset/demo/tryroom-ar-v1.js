@@ -50,7 +50,7 @@ void main(){
  gl_FragColor=vec4(matColor(q.xy,mpp)*u_gain,alpha);}`;
 
 /* Plane mode (no camera picture): ARCore hit-test hits decide what is floor, wall or furniture top, and are accumulated into a map. */
-const FS_PL=(PREC,MATFN,wall)=>PREC+(wall?'#define WALL\n':'')+`uniform mat4 u_invVP;uniform vec3 u_o,u_mk;uniform vec4 u_vp;uniform vec2 u_n,u_s;uniform float u_floorY,u_gain,u_d,u_H;uniform sampler2D u_mask;`+MATFN+`
+const FS_PL=(PREC,MATFN,wall)=>PREC+(wall?'#define WALL\n':'')+`uniform mat4 u_invVP;uniform vec3 u_o,u_mk;uniform vec4 u_vp;uniform vec2 u_n,u_s;uniform float u_floorY,u_gain,u_d,u_H,u_dok;uniform mat4 u_V;uniform sampler2D u_mask,u_depth;`+MATFN+`
 vec3 rayDir(vec2 fc){
  vec2 ndc=(fc-u_vp.xy)/u_vp.zw*2.-1.;
  vec4 n=u_invVP*vec4(ndc,-1.,1.);vec4 f=u_invVP*vec4(ndc,1.,1.);
@@ -78,6 +78,16 @@ void main(){
  alpha=smoothstep(.3,.6,mb.r*(1.-mb.g))*(1.-smoothstep(9.,18.,length(P-u_o)));
 #endif
  if(alpha<=.003)discard;
+ // depth occlusion: where the measured depth is clearly nearer than this plane, something stands in front (furniture, curtain, person);
+ // clearly farther = a recess (window). Depth values are metres along the view axis, packed in two 8-bit channels.
+ if(u_dok>.5){
+  float zv=-(u_V*vec4(P,1.)).z;
+  vec2 sv=vec2((gl_FragCoord.x-u_vp.x)/u_vp.z,1.-(gl_FragCoord.y-u_vp.y)/u_vp.w);
+  vec2 dd=texture2D(u_depth,sv).ra;
+  float zm=(dd.x*255.+dd.y*255.*256.)/65535.*12.;
+  if(zm>.15){float tol=.12+.07*zv;float diff=zv-zm;alpha*=1.-smoothstep(tol*.7,tol*1.5,diff);alpha*=1.-smoothstep(tol*2.5,tol*5.,-diff);}
+  if(alpha<=.003)discard;
+ }
  vec3 P2;vec3 q2=planeUV(rayDir(gl_FragCoord.xy+vec2(1.,0.)),P2);vec3 P3;vec3 q3=planeUV(rayDir(gl_FragCoord.xy+vec2(0.,1.)),P3);
  float mpp=.01;if(q2.z>.5&&q3.z>.5)mpp=max(length(q2.xy-q.xy),length(q3.xy-q.xy));
  gl_FragColor=vec4(matColor(q.xy,mpp)*u_gain,alpha);}`;
@@ -209,8 +219,9 @@ export async function start(opt){
     const x=gl.getExtension('WEBGL_lose_context');if(x)x.loseContext();
   };
   try{
-    session=await navigator.xr.requestSession('immersive-ar',{requiredFeatures:['local'],optionalFeatures:['camera-access','hit-test','dom-overlay','plane-detection','anchors'],domOverlay:{root:ui}});
+    session=await navigator.xr.requestSession('immersive-ar',{requiredFeatures:['local'],optionalFeatures:['camera-access','hit-test','dom-overlay','plane-detection','anchors','depth-sensing'],domOverlay:{root:ui},depthSensing:{usagePreference:['cpu-optimized','gpu-optimized'],dataFormatPreference:['luminance-alpha','float32']}});
     log('økt startet; aktiverte funksjoner: '+(session.enabledFeatures?Array.from(session.enabledFeatures).join(', '):'(kan ikke leses)'));
+    try{if(session.depthUsage)log('dybde: '+session.depthUsage+' / '+session.depthDataFormat);}catch(e){}
     session.addEventListener('end',()=>{
       const sec=(performance.now()-T0)/1000;
       log('økten avsluttet etter '+sec.toFixed(1)+' s '+(userEnd?'(valgt av bruker)':'(IKKE av bruker: systemet eller en feil)'));
@@ -321,6 +332,39 @@ export async function start(opt){
   }
   const angle=(a,b)=>Math.acos(clamp(a[0]*b[0]+a[1]*b[1]+a[2]*b[2],-1,1));
 
+  /* ---------------- depth map (ARCore Depth API through WebXR depth-sensing) ---------------- */
+  const DW=64,DH=112,dp={tex:mkTex(),data:new Uint8Array(DW*DH*2),ok:false,flip:0,calib:0,errs:[[],[],[],[]],last:0,tried:0,err:null};
+  gl.bindTexture(gl.TEXTURE_2D,dp.tex);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.NEAREST);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.NEAREST);
+  const FLIPS=[[0,0],[0,1],[1,0],[1,1]]; // [flipX, flipY] candidates for the view->depth coordinate mapping
+  const dmap=(u,v,f)=>[FLIPS[f][0]?1-u:u,FLIPS[f][1]?1-v:v];
+  function updateDepth(frame,view,time,inv,V,camPos){
+    if(time-dp.last<90)return;dp.last=time;
+    let di=null;try{di=frame.getDepthInformation(view);}catch(e){if(dp.err!==e.message){dp.err=e.message;log('dybde utilgjengelig: '+e.message);}dp.ok=false;return;}
+    if(!di){dp.ok=false;return;}
+    if(!dp.tried){dp.tried=1;log('dybdekart mottatt: '+di.width+'x'+di.height+' (meter/enhet '+di.rawValueToMeters+')');}
+    // one-off calibration against the measured floor plane: which mapping from view coordinates gives depths that fit the floor?
+    if(dp.calib<45&&pm.floorYPlane!=null){
+      dp.calib++;
+      for(let a=1;a<9;a++)for(let b=3;b<9;b++){
+        const u=a/9,v=b/9,ray=MA.ndcRay(inv,u*2-1,1-v*2),hit=MA.rayFloorXZ(ray.o,ray.d,pm.floorYPlane);if(!hit)continue;
+        const P=[hit[0],pm.floorYPlane,hit[1]],zv=-(V[2]*P[0]+V[6]*P[1]+V[10]*P[2]+V[14]);if(zv<.6||zv>4.5)continue;
+        for(let f=0;f<4;f++){const [x,y]=dmap(u,v,f);let z=0;try{z=di.getDepthInMeters(x,y);}catch(e){}if(z>0)dp.errs[f].push(Math.abs(z-zv));}
+      }
+      if(dp.calib===45||dp.errs.every(e=>e.length>60)){
+        const med=a=>{if(!a.length)return 99;const b=a.slice().sort((x,y)=>x-y);return b[b.length>>1];},m4=dp.errs.map(med);
+        dp.flip=m4.indexOf(Math.min(...m4));dp.calib=999;dp.bad=Math.min(...m4)>.6;if(dp.bad)log('dybdekartet passer ikke med gulvet (feil > 0,6 m): dybde-skjuling slått av');log('dybde-kalibrering (median feil m): '+m4.map(v=>v.toFixed(2)).join(' / ')+' -> valgt '+dp.flip);
+      }
+    }
+    let k=0;
+    for(let j=0;j<DH;j++)for(let i=0;i<DW;i++){
+      const [x,y]=dmap((i+.5)/DW,(j+.5)/DH,dp.flip);let z=0;try{z=di.getDepthInMeters(x,y);}catch(e){}
+      const code=z>0&&z<12?Math.round(z/12*65535):0;dp.data[k++]=code&255;dp.data[k++]=code>>8;
+    }
+    gl.activeTexture(gl.TEXTURE5);gl.bindTexture(gl.TEXTURE_2D,dp.tex);gl.pixelStorei(gl.UNPACK_ALIGNMENT,1);
+    gl.texImage2D(gl.TEXTURE_2D,0,gl.LUMINANCE_ALPHA,DW,DH,0,gl.LUMINANCE_ALPHA,gl.UNSIGNED_BYTE,dp.data);
+    dp.ok=true;
+  }
+
   /* ---------------- plane mode: accumulate ARCore hits ---------------- */
   const G=96,CELL=.12,pm={sig:-1,pcount:-1,planeT:0,floorYPlane:null,nh:0,nv:0,sem:null,cx:null,cz:null,floor:new Float32Array(G*G),block:new Float32Array(G*G),tex:null,dirty:false,lastUp:0,walls:[],nFloor:0,nBlock:0,nWallHits:0};
   pm.tex=mkTex();
@@ -425,18 +469,19 @@ export async function start(opt){
     const u8=new Uint8Array(G*G*4);for(let i=0;i<G*G;i++){u8[i*4]=Math.round(clamp(pm.floor[i],0,1)*255);u8[i*4+1]=Math.round(clamp(pm.block[i],0,1)*255);u8[i*4+3]=255;}
     gl.activeTexture(gl.TEXTURE2);gl.bindTexture(gl.TEXTURE_2D,pm.tex);gl.pixelStorei(gl.UNPACK_ALIGNMENT,4);gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,G,G,0,gl.RGBA,gl.UNSIGNED_BYTE,u8);
   }
-  function drawPlanes(inv,m,vp){
+  function depthUniforms(u,V){gl.uniformMatrix4fv(u.u_V,false,V);gl.uniform1f(u.u_dok,dp.ok&&dp.calib>=999&&!dp.bad?1:0);gl.activeTexture(gl.TEXTURE5);gl.bindTexture(gl.TEXTURE_2D,dp.tex);gl.uniform1i(u.u_depth,5);}
+  function drawPlanes(inv,m,vp,V){
     const gain=.82;
     if(pm.cx!=null&&pm.nFloor>20&&st.floorY!=null&&bindMaterialFor(P.pfloor,S.floorId)){
       const u=P.pfloor.u;gl.activeTexture(gl.TEXTURE2);gl.bindTexture(gl.TEXTURE_2D,pm.tex);gl.uniform1i(u.u_mask,2);
       gl.uniformMatrix4fv(u.u_invVP,false,inv);gl.uniform3f(u.u_o,m[12],m[13],m[14]);gl.uniform4f(u.u_vp,vp.x,vp.y,vp.width,vp.height);
-      gl.uniform3f(u.u_mk,pm.cx,pm.cz,G*CELL);gl.uniform1f(u.u_floorY,st.floorY);gl.uniform1f(u.u_gain,gain);quad();
+      gl.uniform3f(u.u_mk,pm.cx,pm.cz,G*CELL);gl.uniform1f(u.u_floorY,st.floorY);gl.uniform1f(u.u_gain,gain);depthUniforms(u,V);quad();
     }
     for(const w of pm.walls){
       if(w.n<8||w.s1-w.s0<.5||st.floorY==null||!bindMaterialFor(P.pwall,S.wallId))continue;
       const u=P.pwall.u;gl.uniformMatrix4fv(u.u_invVP,false,inv);gl.uniform3f(u.u_o,m[12],m[13],m[14]);gl.uniform4f(u.u_vp,vp.x,vp.y,vp.width,vp.height);
       gl.uniform2f(u.u_n,w.nx,w.nz);gl.uniform1f(u.u_d,w.d);gl.uniform2f(u.u_s,w.s0-.2,w.s1+.2);gl.uniform1f(u.u_H,2.5);
-      gl.uniform1f(u.u_floorY,st.floorY);gl.uniform1f(u.u_gain,gain);quad();
+      gl.uniform1f(u.u_floorY,st.floorY);gl.uniform1f(u.u_gain,gain);depthUniforms(u,V);quad();
     }
   }
   function bindMaterialFor(pr,id){gl.useProgram(pr.p);return bindMaterial(pr.u,id);}
@@ -458,7 +503,7 @@ export async function start(opt){
     st.frames++;if(!st.t0)st.t0=time;
     if(view.camera){camSeen++;if(camSeen===1)log('kamerabilde mottatt: '+view.camera.width+'x'+view.camera.height);}else camMissing++;
     if(!camSeen&&camMissing===60&&!reported){reported=true;log('INGEN kamerabilde (view.camera er null) etter 60 bilderuter');hint('<b>Plan-modus:</b> nettleseren gir ikke kamerabildet til AR, så AI-gjenkjenning er ikke mulig her. AR finner i stedet gulv og vegger selv: beveg mobilen rolig langs gulv og vegger så fylles flatene inn. Møbler og vinduer på veggen kan ikke utelukkes automatisk.');$('cam').style.display='';}
-    if(time-lastSum>3000){lastSum=time;log('bilder='+st.frames+' kamera='+(view.camera?'ja':'nei')+' gulvprøver='+st.floorSamples.length+' gulvY='+(st.floorY==null?'-':st.floorY.toFixed(2))+' flater='+st.surfaces.length+' planer(v/h)='+pm.nv+'/'+pm.nh+(pm.sem?' etikett='+pm.sem:'')+' gulvceller='+pm.nFloor+' møbelceller='+pm.nBlock+' vegger='+pm.walls.filter(w=>w.n>=8).length+(st.busy?' (analyserer)':''));}
+    if(time-lastSum>3000){lastSum=time;log('bilder='+st.frames+' kamera='+(view.camera?'ja':'nei')+' gulvprøver='+st.floorSamples.length+' gulvY='+(st.floorY==null?'-':st.floorY.toFixed(2))+' flater='+st.surfaces.length+' dybde='+(dp.ok?(dp.calib>=999?(dp.bad?'avvist':'på'):'kalibrerer'):'nei')+' planer(v/h)='+pm.nv+'/'+pm.nh+(pm.sem?' etikett='+pm.sem:'')+' gulvceller='+pm.nFloor+' møbelceller='+pm.nBlock+' vegger='+pm.walls.filter(w=>w.n>=8).length+(st.busy?' (analyserer)':''));}
 
     // floor / wall / furniture: ARCore plane detection when the browser grants it, otherwise a grid of hit-tests
     const havePlanes=frame.detectedPlanes!==undefined&&processPlanes(frame,m,camY,time);
@@ -484,7 +529,7 @@ export async function start(opt){
     gl.bindFramebuffer(gl.FRAMEBUFFER,layer.framebuffer);gl.viewport(vp.x,vp.y,vp.width,vp.height);
     gl.enable(gl.BLEND);gl.blendFuncSeparate(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA,gl.ONE,gl.ONE_MINUS_SRC_ALPHA);
     const VPn=MA.mat4Mul(view.projectionMatrix,view.transform.inverse.matrix),inv=MA.mat4Inv(VPn);if(!inv)return;
-    if(!st.cap||!st.surfaces.length){if(camMissing>60&&!camSeen)drawPlanes(inv,m,vp);return;}
+    if(!st.cap||!st.surfaces.length){if(camMissing>60&&!camSeen){const Vm=view.transform.inverse.matrix;updateDepth(frame,view,time,inv,Vm,[m[12],m[13],m[14]]);drawPlanes(inv,m,vp,Vm);}return;}
     for(const sf of st.surfaces){
       const wall=sf.type==='wall',pr=wall?P.wall:P.floor,u=pr.u;gl.useProgram(pr.p);
       if(!bindMaterial(u,wall?S.wallId:S.floorId))continue;
