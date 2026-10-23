@@ -38,10 +38,10 @@ button.del{color:#9a3a2a;border-color:#e2c4bd}
 </style>
 </head>
 <body>
-<header><h1>Instagram · Shop the look</h1><div class="bar"><input id="token" type="password" placeholder="Adminnøkkel" autocomplete="off" aria-label="Adminnøkkel"><button class="pri" id="save">Lagre</button></div></header>
+<header><h1>Instagram og Facebook · Shop the look</h1><div class="bar"><input id="token" type="password" placeholder="Adminnøkkel" autocomplete="off" aria-label="Adminnøkkel"><button class="pri" id="save">Lagre</button></div></header>
 <main>
-<p class="hint">Lim inn lenken til et innlegg eller en reel fra Instagram, og velg produktene som vises i det. Kundene ser produktene under innlegget på <a href="./#inspirasjon">Inspirasjon-siden</a>, med 3D, showroom, produktark og kjøp. Endringene blir synlige når du trykker «Lagre».</p>
-<div class="add"><input id="newurl" placeholder="https://www.instagram.com/p/… eller /reel/…" aria-label="Instagram-lenke"><button id="addbtn">Legg til</button></div>
+<p class="hint">Lim inn lenken til et innlegg eller en reel fra Instagram, eller et innlegg eller en video fra Facebook-siden, og velg produktene som vises i det. Kundene ser produktene under innlegget på <a href="./#inspirasjon">Inspirasjon-siden</a>, med 3D, showroom, produktark og kjøp. Endringene blir synlige når du trykker «Lagre».</p>
+<div class="add"><input id="newurl" placeholder="Lenke til Instagram-innlegg/reel eller Facebook-innlegg/video" aria-label="Instagram-lenke"><button id="addbtn">Legg til</button></div>
 <div class="msg" id="msg" role="status"></div>
 <div id="list"></div>
 </main>
@@ -49,7 +49,7 @@ button.del{color:#9a3a2a;border-color:#e2c4bd}
 (()=>{
 const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const $=s=>document.querySelector(s),msg=(t,k)=>{const m=$('#msg');m.textContent=t;m.className='msg '+(k||'');};
-const RE=/^https:\/\/(www\.)?instagram\.com\/(p|reel|tv)\/([A-Za-z0-9_-]{5,40})/;
+const RE=/^https:\/\/(www\.)?instagram\.com\/(p|reel|tv)\/([A-Za-z0-9_-]{5,40})/,FBRE=/^https:\/\/(www\.|m\.|web\.)?facebook\.com\/([A-Za-z0-9._\-\/?=&%]+)$/;
 let looks=[],cat=new Map(),dirty=false;
 try{$('#token').value=sessionStorage.getItem('looks-token')||'';}catch(_){}
 $('#token').addEventListener('change',()=>{try{sessionStorage.setItem('looks-token',$('#token').value.trim());}catch(_){}});
@@ -58,14 +58,14 @@ const mark=()=>{dirty=true;msg('Ulagrede endringer.');};
 
 function render(){
   $('#list').innerHTML=looks.map((l,i)=>`<section class="look" data-i="${i}">
-    <div><div class="prev" data-prev>${l.kind==='reel'?'Reel':'Innlegg'} ${esc(l.id)}<br><button data-a="prev">Vis forhåndsvisning</button></div></div>
+    <div><div class="prev" data-prev>${l.source==='facebook'?'Facebook':'Instagram'} · ${l.kind==='reel'?'Reel':l.kind==='video'?'Video':'Innlegg'}<br><button data-a="prev">Vis forhåndsvisning</button></div></div>
     <div class="fields">
       <div class="row"><input data-f="title" placeholder="Overskrift (valgfri), f.eks. «Calacatta Viola på badet»" value="${esc(l.title)}" maxlength="120">
         <select data-f="room" aria-label="Rom"><option value="">Rom (valgfritt)</option>${[['bad','Bad'],['kjokken','Kjøkken'],['stue','Stue']].map(([v,n])=>`<option value="${v}"${l.room===v?' selected':''}>${n}</option>`).join('')}</select></div>
       <textarea data-f="text" placeholder="Kort tekst (valgfri)" maxlength="400">${esc(l.text)}</textarea>
       <div class="chips">${l.products.map(id=>{const p=cat.get(id);return `<span class="chip">${p?`<img src="${esc(p.i)}" alt="">`:''}${esc(p?p.n:'#'+id)}<button data-a="rm" data-id="${id}" aria-label="Fjern">×</button></span>`;}).join('')||'<span class="hint">Ingen produkter valgt ennå.</span>'}</div>
       <div class="search"><input data-a="search" placeholder="Søk produkt og legg til (navn) …" aria-label="Søk produkt"><div class="res" hidden></div></div>
-      <div class="tools"><button data-a="up" ${i?'':'disabled'}>↑ Flytt opp</button><button data-a="down" ${i<looks.length-1?'':'disabled'}>↓ Flytt ned</button><a href="${esc(l.url)}" target="_blank" rel="noopener"><button tabindex="-1">Åpne på Instagram ↗</button></a><button class="del" data-a="del">Slett</button></div>
+      <div class="tools"><button data-a="up" ${i?'':'disabled'}>↑ Flytt opp</button><button data-a="down" ${i<looks.length-1?'':'disabled'}>↓ Flytt ned</button><a href="${esc(l.url)}" target="_blank" rel="noopener"><button tabindex="-1">Åpne på ${l.source==='facebook'?'Facebook':'Instagram'} ↗</button></a><button class="del" data-a="del">Slett</button></div>
     </div></section>`).join('')||'<p class="hint">Ingen innlegg ennå.</p>';
 }
 $('#list').addEventListener('input',e=>{
@@ -82,7 +82,8 @@ $('#list').addEventListener('change',e=>{const sec=e.target.closest('.look');if(
 $('#list').addEventListener('click',e=>{
   const b=e.target.closest('[data-a]');if(!b||b.tagName==='INPUT')return;const sec=b.closest('.look'),i=+sec.dataset.i,l=looks[i];
   const a=b.dataset.a;
-  if(a==='prev'){sec.querySelector('[data-prev]').outerHTML=`<iframe src="https://www.instagram.com/p/${encodeURIComponent(l.id)}/embed/captioned/" title="Forhåndsvisning" loading="lazy"></iframe>`;return;}
+  if(a==='prev'){const src=l.source==='facebook'?'https://www.facebook.com/plugins/'+(l.kind==='video'?'video':'post')+'.php?show_text=true&width=500&href='+encodeURIComponent(l.url):'https://www.instagram.com/p/'+encodeURIComponent(l.id)+'/embed/captioned/';
+    sec.querySelector('[data-prev]').outerHTML=`<iframe src="${esc(src)}" title="Forhåndsvisning" loading="lazy"></iframe>`;return;}
   if(a==='pick'){if(l.products.length>=12){msg('Maks 12 produkter per innlegg.','err');return;}l.products.push(+b.dataset.id);}
   else if(a==='rm')l.products=l.products.filter(x=>x!==+b.dataset.id);
   else if(a==='up'&&i>0)[looks[i-1],looks[i]]=[looks[i],looks[i-1]];
@@ -92,11 +93,13 @@ $('#list').addEventListener('click',e=>{
   mark();render();
 });
 $('#addbtn').onclick=()=>{
-  const v=$('#newurl').value.trim(),m=RE.exec(v);
-  if(!m){msg('Det ser ikke ut som en Instagram-lenke til et innlegg eller en reel.','err');return;}
-  if(looks.some(l=>l.id===m[3])){msg('Dette innlegget er allerede i listen.','err');return;}
-  const kind=m[2]==='reel'?'reel':'p';
-  looks.unshift({id:m[3],kind,url:'https://www.instagram.com/'+kind+'/'+m[3]+'/',title:'',text:'',room:'',products:[]});
+  const v=$('#newurl').value.trim(),m=RE.exec(v),f=!m&&FBRE.exec(v);
+  if(!m&&!f){msg('Lim inn en lenke til et Instagram-innlegg/reel eller et Facebook-innlegg/video.','err');return;}
+  let item;
+  if(m){const kind=m[2]==='reel'?'reel':'p';item={id:m[3],source:'instagram',kind,url:'https://www.instagram.com/'+kind+'/'+m[3]+'/'};}
+  else{const url='https://www.facebook.com/'+f[2];item={id:'fb-ny-'+Date.now(),source:'facebook',kind:/\/(videos|reel|watch)/.test(url)?'video':'post',url};}
+  if(looks.some(l=>l.url===item.url)){msg('Dette innlegget er allerede i listen.','err');return;}
+  looks.unshift({...item,title:'',text:'',room:'',products:[]});
   $('#newurl').value='';mark();render();
 };
 $('#save').onclick=async()=>{

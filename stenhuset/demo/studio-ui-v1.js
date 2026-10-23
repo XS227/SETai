@@ -161,7 +161,7 @@ if(shell&&typeof window.getStudioMaterials==='function'){
     if(isModel()){
       const room=target==='sink'?'bad':target==='top'?'kjokken':'stue';
       if(window.getStudioState().room!==room){const tab=document.querySelector('#room-tabs [data-room="'+room+'"]');if(tab)tab.click();}
-      const S3=window.Studio3D;if(S3){if(target==='sink'&&S3.setSink)S3.setSink(+card.dataset.id||null);if(target==='table'&&S3.setTable)S3.setTable(+card.dataset.id||null);if(target==='top'&&S3.setTop)S3.setTop(card.dataset.id==='0'?null:{stone:card.dataset.id,t:.03});}
+      const S3=window.Studio3D;if(S3){if(target==='sink'&&S3.setSink)S3.setSink(+card.dataset.id||null);if(target==='table'&&S3.setTable)S3.setTable(+card.dataset.id||null);if(target==='top'&&S3.setTop){const cur=S3.getTop&&S3.getTop();S3.setTop(card.dataset.id==='0'?null:{...(cur||{t:.03}),stone:card.dataset.id});}}
       return;
     }
     window.setStudioMaterial(target,+card.dataset.i);
@@ -268,12 +268,12 @@ if(shell&&typeof window.getStudioMaterials==='function'){
   let tryP=null;
   const openTry=()=>{
     if(document.fullscreenElement)document.exitFullscreen&&document.exitFullscreen();
-    tryP=tryP||import('./tryroom-v1.js?v=17');
+    tryP=tryP||import('./tryroom-v1.js?v=18');
     tryP.then(m=>m.open()).catch(err=>{console.warn('Prøv i mitt rom feilet:',err);tryP=null;alert('Funksjonen kunne ikke lastes. Sjekk tilkoblingen og prøv igjen.');});
   };
   bottom.querySelector('#su-try').onclick=openTry;
   // sharing: picture + link to exactly this setup; a shared link (#studio?oppsett=…) is restored on arrival
-  const shareMod=()=>import('./share-v1.js?v=1');
+  const shareMod=()=>import('./share-v1.js?v=2');
   bottom.querySelector('#su-share').onclick=()=>{if(document.fullscreenElement)document.exitFullscreen&&document.exitFullscreen();shareMod().then(m=>m.openShare()).catch(e=>{console.warn(e);alert('Deling kunne ikke lastes.');});};
   const restore=()=>{if(/[?&]oppsett=/.test(location.hash))shareMod().then(m=>m.restoreFromHash());};
   window.addEventListener('hashchange',restore);restore();

@@ -64,7 +64,7 @@ export function open(id,product){
   try{renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});}
   catch(error){
     root.remove();document.documentElement.style.overflow=overflow;
-    import('./product-sheet-v1.js?v=1').then(m=>m.open({id,product})).then(view=>{view.dialog.querySelector('.sh10827-message').textContent='3D støttes ikke i denne nettleseren. Se originalbilder og produktark her.';});
+    import('./product-sheet-v1.js?v=2').then(m=>m.open({id,product})).then(view=>{view.dialog.querySelector('.sh10827-message').textContent='3D støttes ikke i denne nettleseren. Se originalbilder og produktark her.';});
     return;
   }
   renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));renderer.toneMapping=(THREE.NeutralToneMapping!==undefined?THREE.NeutralToneMapping:THREE.ACESFilmicToneMapping);renderer.toneMappingExposure=Number(id)===10827?.82:1.05;
@@ -94,7 +94,7 @@ export function open(id,product){
     const b=e.target.closest('[data-sv]');if(!b)return;
     if(b.dataset.sv==='x')close();
     else if(b.dataset.sv==='photos'){
-      close();import('./product-sheet-v1.js?v=1').then(m=>m.open({id,product,on3D:()=>open(id,product)})).catch(()=>{if(product&&product.u)window.open(product.u,'_blank','noopener');});
+      close();import('./product-sheet-v1.js?v=2').then(m=>m.open({id,product,on3D:()=>open(id,product)})).catch(()=>{if(product&&product.u)window.open(product.u,'_blank','noopener');});
     }
     else if(b.dataset.sv==='showroom'){
       close();

@@ -17,15 +17,22 @@ $d=read_json_body(200000);$in=$d['looks']??null;if(!is_array($in)||count($in)>80
 $looks=[];$seen=[];
 foreach($in as $l){
   if(!is_array($l))continue;
-  if(!preg_match('~^https://(www\.)?instagram\.com/(p|reel|tv)/([A-Za-z0-9_-]{5,40})/?~',(string)($l['url']??''),$m))out(400,['error'=>'Ugyldig Instagram-lenke: '.clean_str((string)($l['url']??''),80)]);
-  $code=$m[3];if(isset($seen[$code]))continue;$seen[$code]=1;
+  $u=trim((string)($l['url']??''));
+  if(preg_match('~^https://(www\.)?instagram\.com/(p|reel|tv)/([A-Za-z0-9_-]{5,40})/?~',$u,$m)){
+    $code=$m[3];$src='instagram';$kind=$m[2]==='reel'?'reel':'p';$url='https://www.instagram.com/'.$kind.'/'.$code.'/';
+  }elseif(strlen($u)<=300&&preg_match('~^https://(www\.|m\.|web\.)?facebook\.com/([A-Za-z0-9._\-/?=&%]+)$~',$u,$m)){
+    // Facebook post, photo or video from the page; embedded with Facebook's own post/video plugin
+    $url='https://www.facebook.com/'.$m[2];$code='fb'.substr(sha1($url),0,10);$src='facebook';
+    $kind=preg_match('~/(videos|reel|watch)~',$url)?'video':'post';
+  }else out(400,['error'=>'Ugyldig lenke (bruk et Instagram- eller Facebook-innlegg): '.clean_str($u,80)]);
+  if(isset($seen[$code]))continue;$seen[$code]=1;
   $prods=array_values(array_unique(array_filter(array_map('intval',is_array($l['products']??null)?$l['products']:[]),fn($x)=>$x>0)));
-  $looks[]=['id'=>$code,'kind'=>$m[2]==='reel'?'reel':'p','url'=>'https://www.instagram.com/'.($m[2]==='reel'?'reel':'p').'/'.$code.'/',
+  $looks[]=['id'=>$code,'source'=>$src,'kind'=>$kind,'url'=>$url,
     'title'=>clean_str($l['title']??'',120),'text'=>clean_str($l['text']??'',400),
     'room'=>in_array($l['room']??'',['bad','kjokken','stue'],true)?$l['room']:'',
     'products'=>array_slice($prods,0,12)];
 }
-$doc=['updated'=>gmdate('c'),'account'=>'stenhuset_no','looks'=>$looks];
+$doc=['updated'=>gmdate('c'),'account'=>'stenhuset_no','facebook'=>'https://www.facebook.com/stenhuset.no','looks'=>$looks];
 if(is_file($file))@copy($file,DATA_DIR.'/looks.backup-'.gmdate('Ymd-His').'.json');
 if(!write_atomic($file,json_encode($doc,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT)))out(500,['error'=>'Kunne ikke lagre']);
 out(200,['ok'=>true,'count'=>count($looks)]);

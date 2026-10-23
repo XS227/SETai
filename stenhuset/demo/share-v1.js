@@ -23,16 +23,19 @@ export function collectState(){
 }
 
 /* 1200×630 (the size Facebook and Messenger use for link previews), with the room and stones written on it */
-function makeImage(state){
+async function makeImage(state){
+  // the 3D picture is copied in the same task as it is rendered; the logo is added after
   const src=window.Studio3D&&window.Studio3D.snapshot?window.Studio3D.snapshot():null;
   const c=document.createElement('canvas');c.width=1200;c.height=630;const x=c.getContext('2d');
   x.fillStyle='#e9e3da';x.fillRect(0,0,1200,630);
   if(src&&src.width){const s=Math.max(1200/src.width,630/src.height),w=src.width*s,h=src.height*s;x.drawImage(src,(1200-w)/2,(630-h)/2,w,h);}
+  const W=await import('./watermark-v1.js?v=1');
   const g=x.createLinearGradient(0,400,0,630);g.addColorStop(0,'rgba(20,18,15,0)');g.addColorStop(1,'rgba(20,18,15,.72)');x.fillStyle=g;x.fillRect(0,380,1200,250);
-  x.fillStyle='#fff';x.font='500 15px Arial, sans-serif';x.fillText('STENHUSET · DIGITALT SHOWROOM',44,540);
+  x.fillStyle='#fff';x.font='500 15px Arial, sans-serif';x.fillText('DIGITALT SHOWROOM',44,540);
   x.font='34px Georgia, serif';x.fillText('Mitt '+(ROOM[state.room]||'rom').toLowerCase(),44,582);
   const n=state.names,line=[n.floor&&'Gulv: '+n.floor,n.wall&&'Vegg: '+n.wall,n.sink||n.table||n.top].filter(Boolean).join('  ·  ');
-  x.font='16px Arial, sans-serif';x.fillStyle='rgba(255,255,255,.88)';x.fillText(line.slice(0,110),44,610);
+  x.font='16px Arial, sans-serif';x.fillStyle='rgba(255,255,255,.88)';x.fillText(line.slice(0,80),44,610);
+  await W.stamp(c,{corner:'br',size:.2});
   let q=.86,url=c.toDataURL('image/jpeg',q);
   while(url.length>820000&&q>.5){q-=.1;url=c.toDataURL('image/jpeg',q);}
   return {url,canvas:c};
@@ -60,7 +63,7 @@ function styles(){
 
 export async function openShare(){
   styles();
-  const state=collectState(),{url:img}=makeImage(state);
+  const state=collectState(),{url:img}=await makeImage(state);
   const d=document.createElement('dialog');d.className='shr';d.setAttribute('aria-label','Del oppsettet');
   d.innerHTML=`<div class="shr-head"><h3>Del oppsettet ditt</h3><button class="shr-x" aria-label="Lukk">×</button></div>
   <img class="shr-img" src="${img}" alt="Bilde av oppsettet">

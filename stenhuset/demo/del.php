@@ -14,6 +14,13 @@ if(isset($_GET['o'])&&($s=load_share($_GET['o']))){
   foreach(['floor'=>'Gulv','wall'=>'Vegg','sink'=>'Servant','table'=>'Bord','top'=>'Benkeplate'] as $k=>$lab)if(!empty($n[$k]))$parts[]="$lab: ".$n[$k];
   $desc=($parts?implode(' · ',$parts).'. ':'').'Åpne oppsettet og se det i 3D.';
   $image=SITE.'api/img.php?id='.$id;$target='./#studio?oppsett='.$id;
+}elseif(isset($_GET['p'])&&ctype_digit((string)$_GET['p'])){
+  $pid=(int)$_GET['p'];$pd=json_decode(@file_get_contents(__DIR__.'/assets/products/products-v1.json'),true);
+  foreach(($pd['products']??[]) as $p)if($p['id']===$pid){
+    $title=$p['n'].' | Stenhuset';$desc=mb_substr($p['intro']?:'Natursten fra Stenhuset.',0,180).' Se i 3D og last ned produktark.';
+    if(!empty($p['photos'][0]['f'])){$image=SITE.$p['photos'][0]['f'];[$w,$hgt]=@getimagesize(__DIR__.'/'.$p['photos'][0]['f'])?:[1200,1200];}
+    $target='./?produkt='.$pid;break;
+  }
 }elseif(isset($_GET['l'])&&preg_match('/^[A-Za-z0-9_-]{5,40}$/',$_GET['l'])){
   $code=$_GET['l'];$f=DATA_DIR.'/looks.json';$doc=json_decode(@file_get_contents(is_file($f)?$f:__DIR__.'/looks-seed-v1.json'),true);
   foreach(($doc['looks']??[]) as $l)if($l['id']===$code){

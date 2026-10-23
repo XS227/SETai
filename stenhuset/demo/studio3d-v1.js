@@ -9,7 +9,7 @@ import {RoundedBoxGeometry} from 'three/addons/geometries/RoundedBoxGeometry.js'
 import {RectAreaLightUniformsLib} from 'three/addons/lights/RectAreaLightUniformsLib.js';
 import {generateStone,STONES,T} from './stone-textures-v1.js';
 import {SINKS,buildSink,sinkMaterial,TOP_STONES} from './sinks3d-v1.js?v=4';
-import {TABLES,buildTable} from './furniture3d-v1.js?v=2';
+import {TABLES,buildTable,buildCountertop} from './furniture3d-v1.js?v=2';
 
 /* selected stenvask in the bathroom (product id) or null for the generic basin; marmorbord in the living room;
  * made-to-measure countertop {stone,t,...} for the kitchen, or null to use the floor stone */
@@ -252,25 +252,62 @@ function wallFaucet(x,y,z){
   const knob=cyl(.018,.018,.03,MAT.brass,.09,0,.015,16);knob.rotation.x=Math.PI/2;g.add(knob);
   g.position.set(x,y,z);return g;
 }
+/* where the room's product stands, and where to look at it from (set while furnishing, used by the "product" view) */
+let FOCUS=null;
+const setFocus=(tx,ty,tz,px,py,pz,obj)=>{FOCUS={target:new THREE.Vector3(tx,ty,tz),pos:new THREE.Vector3(px,py,pz),obj:obj||null};};
+/* camera placement that is checked against the furniture: rooms come in many sizes, so fixed coordinates can end up
+ * looking at the back of a sofa or under an island */
+const ray=new THREE.Raycaster();
+function within(o,root){for(;o;o=o.parent)if(o===root)return true;return false;}
+function sightClear(group,pos,target,tol,own){
+  const d=target.clone().sub(pos),dist=d.length();ray.set(pos,d.multiplyScalar(1/dist));ray.near=.05;ray.far=dist+.1;
+  const h=ray.intersectObject(group,true).find(x=>x.object.visible&&x.object.name!=='sky'&&!(x.object.material&&x.object.material.side===THREE.BackSide));
+  return !h||h.distance>dist-tol||(own&&within(h.object,own));
+}
+export function productView(group,f,hz){
+  // raise the camera (and step back a little) until nothing stands between it and the product
+  for(let k=0;k<8;k++){
+    const pos=f.pos.clone();pos.y+=k*.12;pos.z=Math.min(hz-.25,pos.z+k*.04);
+    if(sightClear(group,pos,f.target,.08,f.obj))return {pos,target:f.target.clone()};
+  }
+  return {pos:f.pos.clone(),target:f.target.clone()};
+}
+export function floorView(group,dims,pos){
+  // the open piece of floor (stone, not rug or furniture) closest to 1.7 m in front of the camera
+  const {hx,hz}=dims;
+  // first ask for a generous free patch, then accept a smaller and closer one (small, furnished rooms)
+  for(const [dmin,pad] of [[1.1,.3],[.75,.18],[.5,.08]]){
+    let best=null;
+    for(let x=-hx+.35;x<=hx-.35;x+=.15)for(let z=-hz+.35;z<=hz-.35;z+=.15){
+      const t=new THREE.Vector3(x,0,z),dist=t.distanceTo(pos);if(dist<dmin||dist>2.8)continue;
+      if(!sightClear(group,pos,t,.04))continue;
+      if(![[pad,0],[-pad,0],[0,pad],[0,-pad]].every(([a,b])=>sightClear(group,pos,new THREE.Vector3(x+a,0,z+b),.04)))continue;
+      const score=Math.abs(dist-1.7)+.25*Math.abs(x);
+      if(!best||score<best.score)best={score,target:t};
+    }
+    if(best)return best.target;
+  }
+  return new THREE.Vector3(pos.x+.3,0,pos.z-.6);
+}
 function furnishBath(G,st,fm,lights,hx,hz){
   const sk=SINK_ID&&SINKS[SINK_ID]?SINKS[SINK_ID]:null;
   let vw=clamp(st.w*.34,.8,1.4),vd=.5;
   if(sk){vw=clamp(Math.max(vw,sk.W+.24),.8,Math.min(1.9,hx*2-.7));vd=Math.max(.5,sk.D+.06);}
   const vx=-hx*.18,vz=-hz+vd/2+.02,TOP=.91;
-  let rimY=TOP+.06;
+  let rimY=TOP+.06,own=null;
   if(sk&&sk.top){
     // the stone itself is the vanity top: a slim oak drawer under it
-    const s=buildSink(SINK_ID,()=>onTexture());s.position.set(vx,TOP-sk.H,vz);G.add(s);
+    const s=buildSink(SINK_ID,()=>onTexture());s.position.set(vx,TOP-sk.H,vz);G.add(s);own=s;
     G.add(rbox(Math.min(vw,sk.W)-.04,.24,sk.D-.04,.012,MAT.oak,vx,TOP-sk.H-.12,vz));
     G.add(wallFaucet(vx+(sk.offset||0),TOP+.16,-hz));rimY=TOP;
   }else{
     G.add(stoneBox(vw,.5,vd,.015,fm,vx,.66,vz));
     if(sk){
-      const s=buildSink(SINK_ID,()=>onTexture());s.position.set(vx,TOP,vz);G.add(s);rimY=TOP+sk.H;
+      const s=buildSink(SINK_ID,()=>onTexture());s.position.set(vx,TOP,vz);G.add(s);rimY=TOP+sk.H;own=s;
       if(sk.splash)G.add(wallFaucet(vx,TOP+sk.H+sk.splash.h*.62,vz-sk.D/2+.026));
       else G.add(wallFaucet(vx,TOP+sk.H+.13,-hz));
     }else{
-      G.add(cyl(.2,.16,.13,MAT.ceramic,vx,.97,vz));
+      own=cyl(.2,.16,.13,MAT.ceramic,vx,.97,vz);G.add(own);
       G.add(faucet(vx,.9,-hz+.12,0));
     }
   }
@@ -288,6 +325,7 @@ function furnishBath(G,st,fm,lights,hx,hz){
   G.add(rbox(.3,.08,.2,.03,MAT.linen,hx-.5,.49,-hz*.25));
   G.add(plant(hx-.4,-hz+.4,1));
   const l=lamp(Math.min(vx+vw/2+.5,hx-.35),-hz+.35,1.35,lights,2.2);G.add(l.g);
+  setFocus(vx,rimY-.06,vz,vx+.3,1.5,Math.min(hz-.3,vz+1.65),own);
 }
 function furnishKitchen(G,st,fm,lights,hx,hz){
   const len=clamp(st.w-.5,1.8,4.8),cx=-hx+.25+len/2,cz=-hz+.31;
@@ -299,9 +337,18 @@ function furnishKitchen(G,st,fm,lights,hx,hz){
     G.add(rbox(.2,.012,.016,.004,MAT.brass,x,.78,cz+.322));
   }
   const topM=TOP_CFG?sinkMaterial({stone:TOP_CFG.stone,surf:'honed'},()=>onTexture()):fm,tt=TOP_CFG?TOP_CFG.t:.04;
-  G.add(stoneBox(len+.02,tt,.66,.004,topM,cx,.92-tt/2,cz+.015));
-  const sink=rbox(.55,.02,.4,.01,MAT.steel,cx-len*.2,.92,cz+.02);G.add(sink);
-  G.add(faucet(cx-len*.2,.92,cz-.2,0));
+  let fx=cx-len*.2,ctObj=null;
+  if(TOP_CFG&&TOP_CFG.L){
+    // the countertop from the designer, with its own length, depth, edge, cut-outs and splash, against the back wall
+    const k=Math.min(1,(len+.02)/TOP_CFG.L),cfg={...TOP_CFG,L:Math.min(TOP_CFG.L,len+.02),sinkX:(TOP_CFG.sinkX||0)*k,hobX:(TOP_CFG.hobX||0)*k};
+    const ct=buildCountertop(cfg,()=>onTexture());ct.position.set(cx,.92-tt,-hz+cfg.D/2+.005);G.add(ct);ctObj=ct;
+    if(cfg.sink)G.add(faucet(cx+cfg.sinkX,.92,-hz+.1,0));
+    fx=cx+(cfg.hob?cfg.hobX:cfg.sink?cfg.sinkX:0);
+  }else{
+    G.add(stoneBox(len+.02,tt,.66,.004,topM,cx,.92-tt/2,cz+.015));
+    const sink=rbox(.55,.02,.4,.01,MAT.steel,cx-len*.2,.92,cz+.02);G.add(sink);
+    G.add(faucet(cx-len*.2,.92,cz-.2,0));
+  }
   // wall cabinets and shelf
   const un=Math.max(1,Math.floor(len*.5/.62));
   for(let i=0;i<un;i++)G.add(rbox(.6,.75,.34,.008,MAT.cabinet,cx+len/2-.32-i*.62,1.98,-hz+.18));
@@ -320,10 +367,19 @@ function furnishKitchen(G,st,fm,lights,hx,hz){
   }
   const l=lamp(hx-.45,-hz+.45,1.5,lights,2);G.add(l.g);
   G.add(plant(hx-.4,hz-.5,1.05));
+  // look at the counter you designed (between counter and island), otherwise at the island top
+  if(TOP_CFG&&TOP_CFG.L)setFocus(fx,.9,cz+.05,fx+.25,1.62,Math.min(iz-.45,cz+1.75),ctObj);
+  else setFocus(0,.92,iz,hx*.45,1.65,Math.min(hz-.3,iz+1.9));
 }
 function furnishLiving(G,st,fm,lights,hx,hz){
   const rw=clamp(st.w*.7,2,3.2),rl=clamp(st.l*.5,1.8,2.8);
-  const sw=clamp(st.w-.9,1.5,2.15),sx=-hx*.12,sz=-hz+.62,cw=(sw-.4)/3;
+  let sw=clamp(st.w-.9,1.5,2.15),sx=-hx*.12;const sz=-hz+.62;
+  if(TABLE_ID&&TABLES[TABLE_ID]){
+    // make room for the side table left of the sofa (in small rooms it used to end up inside the sofa arm)
+    const left=-hx+.62;sx=Math.max(sx,left+sw/2);
+    if(sx+sw/2>hx-.1){sw=Math.max(1.3,hx-.1-left);sx=(left+hx-.1)/2;}
+  }
+  const cw=(sw-.4)/3;
   // Persian rug under the coffee table, in front of the sofa, kept inside the room
   const prw=Math.min(rw,hx*2-.5),prl=Math.min(rl,hz*2-.8);
   G.add(persianRug(prw,prl,clamp(sx,-hx+prw/2+.1,hx-prw/2-.1),clamp(sz+1.25,-hz+prl/2+.35,hz-prl/2-.15)));
@@ -342,7 +398,9 @@ function furnishLiving(G,st,fm,lights,hx,hz){
   const l=lamp(Math.min(sx+sw/2+.5,hx-.35),sz-.1,1.45,lights,2.4);G.add(l.g);
   G.add(plant(-hx+.4,hz-.5,1.15));
   G.add(rbox(.7,.55,.5,.05,MAT.oak,hx-.5,.28,-hz+.4));
-  if(TABLE_ID&&TABLES[TABLE_ID]){const t=buildTable(TABLE_ID,()=>onTexture());t.position.set(Math.max(-hx+.32,sx-sw/2-.3),0,sz+.05);G.add(t);}
+  if(TABLE_ID&&TABLES[TABLE_ID]){const tx=Math.max(-hx+.32,sx-sw/2-.3),t=buildTable(TABLE_ID,()=>onTexture());t.position.set(tx,0,sz+.05);G.add(t);
+    setFocus(tx,.34,sz+.05,tx+.1,1.45,Math.min(hz-.3,sz+1.75),t);}
+  else setFocus(sx,.42,sz+1.2,sx+.6,1.5,Math.min(hz-.3,sz+2.8));
 }
 
 /* ---------- room content ---------- */
@@ -402,7 +460,7 @@ export function buildContent(st,fm,wm){
   // soft skylight: an area light in the window opening, so daylight wraps around objects like in a photo
   const win=new THREE.RectAreaLight('#dfeaff',0,ww,y1-y0);
   win.position.set(hx-.03,(y0+y1)/2,zc);win.lookAt(0,(y0+y1)/2-.35,zc);G.add(win);
-  return {group:G,walls,lights,win,dims:{W,L,hx,hz,zc,ww}};
+  return {group:G,walls,lights,win,dims:{W,L,hx,hz,zc,ww,room:st.room},focus:FOCUS};
 }
 
 /* ---------- viewer ---------- */
@@ -436,7 +494,7 @@ function init(){
   css.textContent='.scene-views{position:absolute;top:14px;right:14px;z-index:9;display:flex;flex-wrap:wrap;gap:6px;justify-content:flex-end;max-width:62%}.scene-views button{border:0;background:#f7f5eee8;color:#242725;padding:8px 11px;font:600 10px/1 var(--sans,system-ui);letter-spacing:.06em;text-transform:uppercase;cursor:pointer}.scene-views button.on{background:#242725;color:#fff}.scene-loading{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);z-index:9;background:#242725d9;color:#fff;padding:9px 14px;font:600 10px/1 var(--sans,system-ui);letter-spacing:.08em;text-transform:uppercase;opacity:0;transition:opacity .3s;pointer-events:none}.scene-loading.on{opacity:1}@media(max-width:700px){.scene-views{top:60px;max-width:calc(100% - 24px);left:12px;right:auto;justify-content:flex-start}.scene-views button{padding:7px 8px;font-size:9px}}';
   document.head.appendChild(css);
   const bar=document.createElement('div');bar.className='scene-views';
-  const VIEWS=[['door','Fra døren'],['window','Mot vinduet'],['floor','Gulvdetalj'],['wall','Veggdetalj'],['dollhouse','Oversikt']];
+  const VIEWS=[['door','Fra døren'],['product','Servanten'],['window','Mot vinduet'],['floor','Gulvdetalj'],['wall','Veggdetalj'],['dollhouse','Oversikt']];
   bar.innerHTML=VIEWS.map(v=>'<button type="button" data-v="'+v[0]+'">'+v[1]+'</button>').join('')+'<button type="button" data-z="-1" aria-label="Zoom ut">−</button><button type="button" data-z="1" aria-label="Zoom inn">＋</button>';
   shell.appendChild(bar);
   const loading=document.createElement('div');loading.className='scene-loading';loading.textContent='Lager steinstruktur …';shell.appendChild(loading);
@@ -450,7 +508,11 @@ function init(){
     const {W,L,hx,hz,zc}=dims;
     switch(name){
       case 'window':return {mode:'in',fov:64,pos:new THREE.Vector3(-hx+.55,1.5,hz*.55),target:new THREE.Vector3(hx,1.3,zc)};
-      case 'floor':return {mode:'in',fov:55,pos:new THREE.Vector3(-hx*.15,.95,hz*.55),target:new THREE.Vector3(hx*.2,0,-hz*.15)};
+      case 'product':{const f=content&&content.focus;if(f){content.group.updateMatrixWorld(true);const v=productView(content.group,f,hz);return {mode:'in',fov:58,...v};}return viewDef('door');}
+      case 'floor':{
+        // stand near the front of the room and look down at a free piece of floor (not under the island or on the rug)
+        const pos=new THREE.Vector3(-hx*.2,1.25,hz-.35);content.group.updateMatrixWorld(true);
+        return {mode:'in',fov:55,pos,target:floorView(content.group,dims,pos)};}
       case 'wall':return {mode:'in',fov:55,pos:new THREE.Vector3(0,1.55,Math.min(hz-.4,-hz+1.9)),target:new THREE.Vector3(-.1,1.35,-hz)};
       case 'dollhouse':{const d=Math.max(W,L);return {mode:'orbit',fov:42,pos:new THREE.Vector3(-W*.85,d*1.05+1.2,L*1.3),target:new THREE.Vector3(0,.7,0)};}
       default:return {mode:'in',fov:66,pos:new THREE.Vector3(hx*.35,1.55,hz-.32),target:new THREE.Vector3(-hx*.1,1.1,-hz)};
@@ -530,8 +592,11 @@ function init(){
     }
     content=buildContent(st,fm,wm);dims=content.dims;scene.add(content.group);
   }
+  const PRODUCT_LABEL={bad:'Servanten',kjokken:'Benkeplaten',stue:'Bordet'};
+  let focusNext=false;
   async function update(){
-    const st=window.getStudioState(),key=[st.room,st.w,st.l,st.floor.id,st.wall.id,SINK_ID,TABLE_ID,TOP_CFG?TOP_CFG.stone+TOP_CFG.t:''].join('|');
+    const st=window.getStudioState(),key=[st.room,st.w,st.l,st.floor.id,st.wall.id,SINK_ID,TABLE_ID,TOP_CFG?JSON.stringify(TOP_CFG):''].join('|');
+    const pb=bar.querySelector('[data-v=product]');if(pb)pb.textContent=PRODUCT_LABEL[st.room]||'Produktet';
     if(key===roomKey){applyLight(st);request();return;}
     roomKey=key;const my=++token;
     let fm,wm;
@@ -539,6 +604,8 @@ function init(){
     if(my!==token)return;
     const first=!content;
     rebuild(st,fm,wm);applyLight(st);goView(view,true);
+    // a new sink / table / countertop: turn the camera to it
+    if(focusNext){focusNext=false;if(!first)goView('product');else goView('product',true);}
     if(first){canvas.style.opacity='1';if(old)old.style.visibility='hidden';const tag=document.querySelector('.scene-tag');if(tag)tag.textContent='3D-ROMVISNING · FYSISK LYS';}
     request();
   }
@@ -561,10 +628,11 @@ function init(){
   }
   new ResizeObserver(resize).observe(shell);
   window.Studio3D={ready:true,update,goView,
-    setSink(id){SINK_ID=id&&SINKS[id]?Number(id):null;roomKey='';update();},getSink:()=>SINK_ID,sinks:SINKS,
-    setTable(id){TABLE_ID=id&&TABLES[id]?Number(id):null;roomKey='';update();},getTable:()=>TABLE_ID,tables:TABLES,
+    setSink(id){SINK_ID=id&&SINKS[id]?Number(id):null;roomKey='';focusNext=true;update();},getSink:()=>SINK_ID,sinks:SINKS,
+    setTable(id){TABLE_ID=id&&TABLES[id]?Number(id):null;roomKey='';focusNext=true;update();},getTable:()=>TABLE_ID,tables:TABLES,
     topStones:TOP_STONES.map(([id,n])=>({id,n,c0:STONES[id]?STONES[id].c0:[200,200,200]})),
-    setTop(cfg){TOP_CFG=cfg&&cfg.stone?{stone:cfg.stone,t:cfg.t||.03}:null;roomKey='';update();},getTop:()=>TOP_CFG,
+    // keeps the whole design from the countertop designer (length, depth, edge, sink and hob cut-outs, splash)
+    setTop(cfg){TOP_CFG=cfg&&cfg.stone?{...cfg,t:cfg.t||.03}:null;roomKey='';focusNext=true;update();},getTop:()=>TOP_CFG&&{...TOP_CFG},
     getView:()=>view,
     // picture of the current view for sharing: rendered and read back in the same task (no preserveDrawingBuffer needed)
     snapshot(){renderer.render(scene,camera);return renderer.domElement;}};

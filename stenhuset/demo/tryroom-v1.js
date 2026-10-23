@@ -1050,7 +1050,10 @@ function saveImage(){
   const v=curView();if(!v||!gl)return;
   try{
     frameNow();
-    cv.toBlob(b=>{if(!b)return;const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='stenhuset-mitt-rom.png';document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},1500);},'image/png');
+    // copy the WebGL picture now (same task as the draw), then put the Stenhuset logo on it
+    const c=document.createElement('canvas');c.width=cv.width;c.height=cv.height;c.getContext('2d').drawImage(cv,0,0);
+    import('./watermark-v1.js?v=1').then(async W=>{await W.stamp(c,{corner:'br',size:.24});const b=await W.toBlob(c,'image/jpeg',.92);if(b)W.download(b,'stenhuset-mitt-rom.jpg');})
+      .catch(()=>hint('<span class="tr-warn">Kunne ikke lagre bildet.</span>'));
     hint('Bildet er lagret på enheten din. Legg det ved e-posten når du ber om tilbud.');
   }catch(e){hint('<span class="tr-warn">Kunne ikke lagre bildet.</span>');}
 }

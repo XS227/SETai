@@ -6,6 +6,8 @@ const BASE=new URL('./',import.meta.url).href;
 const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const kr=n=>n>0?new Intl.NumberFormat('nb-NO',{maximumFractionDigits:0}).format(n)+' kr':'';
 const TABLE_IDS=new Set([10801,10753,10747,10635,10630,10625,10619,10612,10606]);
+const FB='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 8h3V4h-3a4 4 0 0 0-4 4v3H7v4h3v6h4v-6h3l1-4h-4V8z"/></svg>';
+const isFb=l=>l.source==='facebook';
 const IG='<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".8"/></svg>';
 
 function styles(){
@@ -13,7 +15,7 @@ function styles(){
   const el=document.createElement('style');el.id='looks-css';el.textContent=`
 .looks-head{display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap;margin-bottom:28px}
 .looks-follow{display:inline-flex;gap:8px;align-items:center;border:1px solid var(--line);padding:11px 15px;color:inherit;text-decoration:none;font:13px var(--sans)}
-.looks-follow svg,.lk-ig svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.7}
+.looks-follows{display:flex;gap:8px;flex-wrap:wrap}.looks-follow svg,.lk-ig svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.7}
 .looks-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:22px}
 .lk{background:var(--paper);border:1px solid var(--line);display:flex;flex-direction:column;min-width:0;scroll-margin-top:90px}
 .lk.hl{outline:2px solid var(--accent);outline-offset:3px}
@@ -63,21 +65,24 @@ function productRow(p,s){
 
 function card(l,s){
   const prods=l.products.map(id=>s.cat.get(id)).filter(Boolean),cover=prods[0];
-  const kind=l.kind==='reel'?'Reel':'Innlegg';
+  const fb=isFb(l),kind=fb?(l.kind==='video'?'Video':'Innlegg'):(l.kind==='reel'?'Reel':'Innlegg'),icon=fb?FB:IG;
   return '<article class="lk" id="look-'+esc(l.id)+'" data-code="'+esc(l.id)+'">'+
     '<div class="lk-media">'+(cover?'<img loading="lazy" src="'+esc(cover.i)+'" alt="">':'<div class="lk-empty">'+esc(l.title||'Fra @'+s.account)+'</div>')+
-    '<span class="lk-badge">Instagram · '+kind+'</span>'+
-    '<button class="lk-play" data-act="embed">'+IG+(l.kind==='reel'?'Spill av reelen':'Vis innlegget')+'</button></div>'+
+    '<span class="lk-badge">'+(fb?'Facebook':'Instagram')+' · '+kind+'</span>'+
+    '<button class="lk-play" data-act="embed">'+icon+(l.kind==='reel'?'Spill av reelen':l.kind==='video'?'Spill av videoen':'Vis innlegget')+'</button></div>'+
     '<div class="lk-body">'+(l.title?'<h3 class="lk-title">'+esc(l.title)+'</h3>':'')+(l.text?'<p class="lk-text">'+esc(l.text)+'</p>':'')+
     (prods.length?'<ul class="lk-prods">'+prods.map(p=>productRow(p,s)).join('')+'</ul>':'<p class="lk-none">Produktene fra dette innlegget kommer snart. <a href="#kolleksjon">Se nettbutikken</a>.</p>')+
-    '<div class="lk-foot"><button class="lk-a" data-act="share">Del</button><a class="lk-a lk-ig" href="'+esc(l.url)+'" target="_blank" rel="noopener">'+IG+'Åpne på Instagram</a></div>'+
+    '<div class="lk-foot"><button class="lk-a" data-act="share">Del</button><a class="lk-a lk-ig" href="'+esc(l.url)+'" target="_blank" rel="noopener">'+icon+'Åpne på '+(fb?'Facebook':'Instagram')+'</a></div>'+
     '</div></article>';
 }
 
 function embed(art){
   const media=art.querySelector('.lk-media');if(media.querySelector('iframe'))return;
-  const f=document.createElement('iframe');f.loading='lazy';f.allow='autoplay; encrypted-media; picture-in-picture';
-  f.title='Instagram-innlegg fra Stenhuset';f.src='https://www.instagram.com/p/'+encodeURIComponent(art.dataset.code)+'/embed/captioned/';
+  const l=state&&state.looks.find(x=>x.id===art.dataset.code),fb=l&&isFb(l);
+  const f=document.createElement('iframe');f.loading='lazy';f.allow='autoplay; encrypted-media; picture-in-picture; clipboard-write';
+  f.title=(fb?'Facebook':'Instagram')+'-innlegg fra Stenhuset';
+  f.src=fb?'https://www.facebook.com/plugins/'+(l.kind==='video'?'video':'post')+'.php?show_text=true&width=500&href='+encodeURIComponent(l.url)
+    :'https://www.instagram.com/p/'+encodeURIComponent(art.dataset.code)+'/embed/captioned/';
   media.append(f);media.querySelector('.lk-play').remove();
 }
 
@@ -85,7 +90,7 @@ async function act(b,art){
   const a=b.dataset.act,id=Number(b.dataset.id),s=await data(),p=s.cat.get(id);
   if(a==='embed')return embed(art);
   if(a==='3d'&&typeof openSink3D==='function')return openSink3D(p);
-  if(a==='sheet')return import('./product-sheet-v1.js?v=1').then(m=>m.open({id,product:p,on3D:typeof openSink3D==='function'?()=>openSink3D(p):undefined}));
+  if(a==='sheet')return import('./product-sheet-v1.js?v=2').then(m=>m.open({id,product:p,on3D:typeof openSink3D==='function'?()=>openSink3D(p):undefined}));
   if(a==='room'){
     const room=TABLE_IDS.has(id)?'stue':'bad';location.hash='#studio';
     for(let i=0;i<60&&!(window.Studio3D&&window.Studio3D.ready);i++)await new Promise(f=>setTimeout(f,120));
@@ -94,7 +99,7 @@ async function act(b,art){
   }
   if(a==='share'){
     const l=s.looks.find(x=>x.id===art.dataset.code),url=BASE+'del.php?l='+encodeURIComponent(art.dataset.code);
-    const title=(l&&l.title)||'Fra Stenhusets Instagram';
+    const title=(l&&l.title)||'Fra Stenhuset';
     if(navigator.share){navigator.share({title,url}).catch(()=>{});return;}
     try{await navigator.clipboard.writeText(url);b.textContent='Lenke kopiert';}catch(_){prompt('Kopier lenken',url);}
   }
@@ -104,7 +109,7 @@ export async function mount(root){
   styles();
   const grid=root.querySelector('.looks-grid');if(!grid||grid.dataset.ready)return;grid.dataset.ready='1';
   let s;try{s=await data();}catch(e){grid.innerHTML='<p class="lk-none">Kunne ikke laste innleggene.</p>';return;}
-  root.querySelector('.looks-follow').href='https://www.instagram.com/'+encodeURIComponent(s.account)+'/';
+  const ig=root.querySelector('.looks-follow');if(ig)ig.href='https://www.instagram.com/'+encodeURIComponent(s.account)+'/';
   grid.innerHTML=s.looks.map(l=>card(l,s)).join('')||'<p class="lk-none">Ingen innlegg ennå.</p>';
   grid.addEventListener('click',e=>{const b=e.target.closest('[data-act]');if(b){e.preventDefault();act(b,b.closest('.lk'));}});
   focusFromHash();
