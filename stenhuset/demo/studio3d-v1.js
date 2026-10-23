@@ -8,6 +8,10 @@ import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
 import {RoundedBoxGeometry} from 'three/addons/geometries/RoundedBoxGeometry.js';
 import {RectAreaLightUniformsLib} from 'three/addons/lights/RectAreaLightUniformsLib.js';
 import {generateStone,STONES,T} from './stone-textures-v1.js';
+import {SINKS,buildSink} from './sinks3d-v1.js?v=1';
+
+/* selected stenvask in the bathroom (product id) or null for the generic basin */
+let SINK_ID=null;
 
 const MOBILE=typeof matchMedia==='function'&&matchMedia('(pointer:coarse)').matches;
 const N_QUICK=512,N_FULL=MOBILE?1024:1280;
@@ -237,13 +241,39 @@ function persianRug(rw,rl,x,z){
   g.position.set(x,0,z);return g;
 }
 
+function wallFaucet(x,y,z){
+  // wall-mounted spout, as used with vessel sinks
+  const g=new THREE.Group();
+  const plate=cyl(.032,.032,.012,MAT.brass,0,0,0,24);plate.rotation.x=Math.PI/2;g.add(plate);
+  const sp=cyl(.011,.011,.17,MAT.brass,0,0,.085,16);sp.rotation.x=Math.PI/2;g.add(sp);
+  const tip=cyl(.013,.011,.02,MAT.brass,0,-.008,.168,16);g.add(tip);
+  const knob=cyl(.018,.018,.03,MAT.brass,.09,0,.015,16);knob.rotation.x=Math.PI/2;g.add(knob);
+  g.position.set(x,y,z);return g;
+}
 function furnishBath(G,st,fm,lights,hx,hz){
-  const vw=clamp(st.w*.34,.8,1.4);
-  const vx=-hx*.18;
-  G.add(stoneBox(vw,.5,.5,.015,fm,vx,.66,-hz+.27));
-  const basin=cyl(.2,.16,.13,MAT.ceramic,vx,.97,-hz+.27);G.add(basin);
-  G.add(faucet(vx,.9,-hz+.12,0));
-  const mir=new THREE.Mesh(new THREE.CircleGeometry(.44,48),MAT.mirror);mir.position.set(vx,1.62,-hz+.012);G.add(mir);
+  const sk=SINK_ID&&SINKS[SINK_ID]?SINKS[SINK_ID]:null;
+  let vw=clamp(st.w*.34,.8,1.4),vd=.5;
+  if(sk){vw=clamp(Math.max(vw,sk.W+.24),.8,Math.min(1.9,hx*2-.7));vd=Math.max(.5,sk.D+.06);}
+  const vx=-hx*.18,vz=-hz+vd/2+.02,TOP=.91;
+  let rimY=TOP+.06;
+  if(sk&&sk.top){
+    // the stone itself is the vanity top: a slim oak drawer under it
+    const s=buildSink(SINK_ID,()=>onTexture());s.position.set(vx,TOP-sk.H,vz);G.add(s);
+    G.add(rbox(Math.min(vw,sk.W)-.04,.24,sk.D-.04,.012,MAT.oak,vx,TOP-sk.H-.12,vz));
+    G.add(wallFaucet(vx+(sk.offset||0),TOP+.16,-hz));rimY=TOP;
+  }else{
+    G.add(stoneBox(vw,.5,vd,.015,fm,vx,.66,vz));
+    if(sk){
+      const s=buildSink(SINK_ID,()=>onTexture());s.position.set(vx,TOP,vz);G.add(s);rimY=TOP+sk.H;
+      if(sk.splash)G.add(wallFaucet(vx,TOP+sk.H+sk.splash.h*.62,vz-sk.D/2+.026));
+      else G.add(wallFaucet(vx,TOP+sk.H+.13,-hz));
+    }else{
+      G.add(cyl(.2,.16,.13,MAT.ceramic,vx,.97,vz));
+      G.add(faucet(vx,.9,-hz+.12,0));
+    }
+  }
+  const my=Math.max(1.62,rimY+.62);
+  const mir=new THREE.Mesh(new THREE.CircleGeometry(.44,48),MAT.mirror);mir.position.set(vx,my,-hz+.012);G.add(mir);
   const ring=new THREE.Mesh(new THREE.TorusGeometry(.44,.011,12,64),MAT.brass);ring.position.copy(mir.position);ring.position.z+=.004;G.add(ring);
   // freestanding bath
   const pts=[[0,.07],[.32,.07],[.45,.2],[.5,.5],[.485,.575],[.44,.585],[.41,.55],[.37,.46],[.3,.2],[.0,.17]].map(p=>new THREE.Vector2(p[0],p[1]));
@@ -255,7 +285,7 @@ function furnishBath(G,st,fm,lights,hx,hz){
   G.add(cyl(.17,.17,.45,MAT.oak,hx-.5,.225,-hz*.25));
   G.add(rbox(.3,.08,.2,.03,MAT.linen,hx-.5,.49,-hz*.25));
   G.add(plant(hx-.4,-hz+.4,1));
-  const l=lamp(vx+vw/2+.5,-hz+.35,1.35,lights,2.2);G.add(l.g);
+  const l=lamp(Math.min(vx+vw/2+.5,hx-.35),-hz+.35,1.35,lights,2.2);G.add(l.g);
 }
 function furnishKitchen(G,st,fm,lights,hx,hz){
   const len=clamp(st.w-.5,1.8,4.8),cx=-hx+.25+len/2,cz=-hz+.31;
@@ -483,7 +513,7 @@ function init(){
     content=buildContent(st,fm,wm);dims=content.dims;scene.add(content.group);
   }
   async function update(){
-    const st=window.getStudioState(),key=[st.room,st.w,st.l,st.floor.id,st.wall.id].join('|');
+    const st=window.getStudioState(),key=[st.room,st.w,st.l,st.floor.id,st.wall.id,SINK_ID].join('|');
     if(key===roomKey){applyLight(st);request();return;}
     roomKey=key;const my=++token;
     let fm,wm;
@@ -512,7 +542,8 @@ function init(){
     renderer.render(scene,camera);
   }
   new ResizeObserver(resize).observe(shell);
-  window.Studio3D={ready:true,update,goView};
+  window.Studio3D={ready:true,update,goView,
+    setSink(id){SINK_ID=id&&SINKS[id]?Number(id):null;roomKey='';update();},getSink:()=>SINK_ID,sinks:SINKS};
   window.addEventListener('hashchange',()=>setTimeout(()=>{resize();request();},50));
   resize();update();
 }
