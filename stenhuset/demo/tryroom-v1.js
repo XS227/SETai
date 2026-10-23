@@ -114,6 +114,13 @@ function showStart(){
   <button class="tr-opt" data-act="start-xr" ${c.xr?'':'disabled'}><strong>Live AR + automatisk <small>Beta</small></strong><span>${c.xr?'Samme automatiske gjenkjenning, men med ekte AR-sporing: materialet holder seg på gulv og vegg også når du går rundt i rommet, og gulvhøyden måles. Møbler og inventar holdes utenfor. Krever kameratilgang i AR. Ikke testet på alle telefoner.':'Ikke tilgjengelig her. Krever WebXR AR (Chrome på en ARCore-støttet Android-telefon). iPhone og iPad støtter ikke dette i nettleseren.'}</span></button>
   <p style="font-size:12px;color:#aaa49a">Tips: god belysning, hold mobilen stående, og ha gulv og vegger tydelig i bildet.</p>`;
   hint('Velg hvordan du vil prøve materialene.');
+  // log from the previous AR attempt (kept in sessionStorage), so a crash can be diagnosed afterwards
+  try{
+    const L=JSON.parse(sessionStorage.getItem('tr_ar_log')||'null');
+    if(L&&Date.now()-L.t<20*60*1000&&L.lines&&L.lines.length){
+      sheet().insertAdjacentHTML('beforeend','<details open style="max-width:560px;margin-top:14px"><summary style="cursor:pointer;font-size:12px;color:#ffd9a0">Feilsøkingslogg fra forrige AR-forsøk</summary><pre id="tr-log" style="white-space:pre-wrap;font:10.5px/1.4 monospace;background:#000a;padding:8px;color:#bfe9d0;margin:8px 0">'+esc(L.lines.join('\n'))+'</pre><button class="tr-btn" data-act="copy-log">Kopier loggen</button></details>');
+    }
+  }catch(e){}
 }
 
 /* ---------------------------------------------------------------- GL */
@@ -550,7 +557,7 @@ function onClick(e){
     'brush-clear':()=>{if(S.selKind==='auto'){const sf=curView().auto&&curView().auto.surfaces[S.autoSel];if(sf){const g=sf.userCanvas.getContext('2d');g.fillStyle='#000';g.fillRect(0,0,256,256);sf.userDirty=true;}return;}const s=curView().surfaces[S.sel];if(s){const g=s.mask.getContext('2d');g.fillStyle='#000';g.fillRect(0,0,256,256);s.maskDirty=true;}},
     'del-surface':()=>{const v=curView();v.surfaces.splice(S.sel,1);S.sel=v.surfaces.length-1;S.brush=null;renderDock();},
     freeze:()=>{S.frozen=!S.frozen;S.frozenR=S.frozen&&S.gyro.now?S.gyro.now.slice():null;bgKey=null;if(!S.frozen)curView().surfaces.forEach(anchorRays);renderDock();},
-    'save-image':saveImage,quote,'photos-done':photosDone,'photo-take':()=>photoInput.click(),'photo-snap':snapPhoto,'photo-redo':redoPhoto,'photo-retry-cam':startCamera,'photo-fallback':startPhotos
+    'save-image':saveImage,quote,'photos-done':photosDone,'photo-take':()=>photoInput.click(),'photo-snap':snapPhoto,'photo-redo':redoPhoto,'photo-retry-cam':startCamera,'copy-log':()=>{const el=root.querySelector('#tr-log');if(el&&navigator.clipboard)navigator.clipboard.writeText(el.textContent).then(()=>hint('Loggen er kopiert. Lim den inn i en melding til meg.')).catch(()=>hint('Kunne ikke kopiere. Ta et skjermbilde av loggen i stedet.'));},'photo-fallback':startPhotos
   })[a]?.();
 }
 function onChange(e){
@@ -758,12 +765,16 @@ function photosDone(){
 /* ---------------------------------------------------------------- mode: WebXR AR (separate module, loaded only when chosen) */
 async function startXR(){
   try{
-    xrMod=xrMod||await import('./tryroom-ar-v1.js?v=1');
+    xrMod=xrMod||await import('./tryroom-ar-v1.js?v=2');
     close(true);
     await xrMod.start({
       S,PREC,MATFN,FORMATS,GROUTS,STONES,generateStone,T,materials:MATS(),
       loadSeg:()=>import('./tryroom-seg-v1.js?v=2'),
-      onEnd:()=>{},
+      onEnd:info=>{
+        if(!info||info.userEnd||info.quote)return;
+        // the system (or an error) ended the AR session: come back to the start screen and show why
+        open(true).then(()=>{showStart();hint('<span class="tr-warn">AR-økten ble avsluttet etter '+(info.seconds||0).toFixed(1)+' s uten at du valgte det.</span> Loggen under viser hvorfor.');});
+      },
       onFallback:()=>{open(true).then(()=>startCamera());},
       onQuote:(info)=>{open(true).then(()=>{S.xr=info;S.floorId=info.floorId||S.floorId;S.wallId=info.wallId||S.wallId;quote();});}
     });

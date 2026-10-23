@@ -51,6 +51,15 @@ void main(){
 
 export async function start(opt){
   const {S,PREC,MATFN,FORMATS,GROUTS,STONES,generateStone,T,materials}=opt;
+  const T0=performance.now(),logLines=[];let dbgEl=null,userEnd=false,quoteEnd=false;
+  const log=m=>{
+    const line=((performance.now()-T0)/1000).toFixed(1)+'s '+m;logLines.push(line);if(logLines.length>60)logLines.shift();console.log('[AR]',m);
+    if(dbgEl)dbgEl.textContent=logLines.slice(-7).join('\n');
+    try{sessionStorage.setItem('tr_ar_log',JSON.stringify({t:Date.now(),lines:logLines}));}catch(e){}
+  };
+  const onErr=e=>log('FEIL: '+(e.message||e.reason&&e.reason.message||e.reason||'ukjent'));
+  window.addEventListener('error',onErr);window.addEventListener('unhandledrejection',onErr);
+  log('start; '+navigator.userAgent.replace(/.*\(([^)]*)\).*Chrome\/([\d.]+).*/,'$1 Chrome $2'));
   if(!navigator.xr||!(await navigator.xr.isSessionSupported('immersive-ar')))throw new Error('Live AR støttes ikke på denne enheten.');
 
   /* ---------------- DOM overlay UI ---------------- */
@@ -68,13 +77,15 @@ export async function start(opt){
   .ar-c i{display:block;aspect-ratio:1;background:var(--slab)}.ar-c em{display:block;font-style:normal;margin-top:3px;line-height:1.2}
   .ar-sel{pointer-events:auto;background:#2a2b29;color:#fff;border:1px solid #ffffff55;min-height:44px;padding:6px;font:inherit}
   .ar-g{display:flex;gap:6px}.ar-g button{width:36px;height:36px;border:3px solid transparent;padding:0;pointer-events:auto}.ar-g button.on{border-color:#fff}
+  .ar-dbg{position:absolute;left:10px;right:10px;top:max(72px,calc(env(safe-area-inset-top) + 64px));margin:0;font:10px/1.35 monospace;color:#bfe9d0;background:#000a;padding:6px;max-height:24vh;overflow:hidden;white-space:pre-wrap;pointer-events:none}
   .ar-busy{position:absolute;left:50%;top:84px;transform:translateX(-50%);background:#000c;padding:7px 12px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;display:none}
   </style>
   <div class="ar-top"><button class="ar-b" data-x="end" aria-label="Avslutt AR">✕</button><div class="ar-hint" data-x="hint"></div></div>
+  <pre class="ar-dbg" data-x="dbg"></pre>
   <div class="ar-busy" data-x="busy">Analyserer rommet …</div>
   <div class="ar-bot">
    <div class="ar-row"><button class="ar-b on" data-x="mf">Gulv</button><button class="ar-b" data-x="mw">Vegg</button>
-     <button class="ar-b" data-x="redo">Analyser på nytt</button><button class="ar-b on" data-x="live">Live</button><button class="ar-b pri" data-x="quote">Be om tilbud</button></div>
+     <button class="ar-b" data-x="redo">Analyser på nytt</button><button class="ar-b on" data-x="live">Live</button><button class="ar-b pri" data-x="quote">Be om tilbud</button><button class="ar-b" data-x="cam" style="display:none">Bruk Live kamera</button><button class="ar-b" data-x="dbgt">Logg</button></div>
    <div class="ar-strip" data-x="strip"></div>
    <div class="ar-row"><select class="ar-sel" data-x="fmt"></select>
      ${[0,45,90].map(a=>`<button class="ar-b" data-rot="${a}">${a}°</button>`).join('')}
@@ -84,6 +95,7 @@ export async function start(opt){
   document.body.appendChild(ui);
   const $=k=>ui.querySelector('[data-x="'+k+'"]');
   const hint=h=>{$('hint').innerHTML=h;};
+  dbgEl=$('dbg');dbgEl.textContent=logLines.join('\n');
   let matFor='floor';
   function renderUi(){
     $('strip').innerHTML=materials.filter(m=>matFor==='wall'||!m.plaster).map(m=>`<button class="ar-c ${m.id===(matFor==='floor'?S.floorId:S.wallId)?'on':''}" data-mat="${m.id}"><i style="--slab:${m.pattern}"></i><em>${esc(m.name)}</em></button>`).join('');
@@ -109,7 +121,8 @@ export async function start(opt){
     const u={};for(let i=0,n=gl.getProgramParameter(p,gl.ACTIVE_UNIFORMS);i<n;i++){const inf=gl.getActiveUniform(p,i);u[inf.name]=gl.getUniformLocation(p,inf.name);}return {p,u};};
   let P;
   try{P={blit:program(FS_BLIT),floor:program(FS_AR(PREC,MATFN,false)),wall:program(FS_AR(PREC,MATFN,true))};}
-  catch(e){ui.remove();canvas.remove();throw e;}
+  catch(e){log('Shader/program: '+e.message);ui.remove();canvas.remove();window.removeEventListener('error',onErr);window.removeEventListener('unhandledrejection',onErr);throw e;}
+  log('WebGL ok, shadere kompilert');
   const buf=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,buf);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,1,1]),gl.STATIC_DRAW);gl.enableVertexAttribArray(0);gl.vertexAttribPointer(0,2,gl.FLOAT,false,0,0);
   const mkTex=()=>{const t=gl.createTexture();gl.bindTexture(gl.TEXTURE_2D,t);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.LINEAR);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);return t;};
 
@@ -153,38 +166,40 @@ export async function start(opt){
   }
 
   /* ---------------- session ---------------- */
-  let session;
+  let session,layer,ref,binding=null,hitSources=[];
+  let ended=false;
+  const cleanup=()=>{
+    if(ended)return;ended=true;
+    window.removeEventListener('error',onErr);window.removeEventListener('unhandledrejection',onErr);
+    try{hitSources.forEach(h=>h.cancel());}catch(e){}
+    ui.remove();canvas.remove();
+    const x=gl.getExtension('WEBGL_lose_context');if(x)x.loseContext();
+  };
   try{
     session=await navigator.xr.requestSession('immersive-ar',{requiredFeatures:['local'],optionalFeatures:['camera-access','hit-test','dom-overlay'],domOverlay:{root:ui}});
-  }catch(e){ui.remove();canvas.remove();throw e;}
-  const layer=new XRWebGLLayer(session,gl,{alpha:true});
-  session.updateRenderState({baseLayer:layer});
-  const ref=await session.requestReferenceSpace('local');
-  const enabled=Array.from(session.enabledFeatures||[]);
-  const hasCamAccess=enabled.includes('camera-access');
-  const binding=typeof XRWebGLBinding!=='undefined'?new XRWebGLBinding(session,gl):null;
-  let hitSources=[];
-  if(enabled.includes('hit-test')||!session.enabledFeatures){
+    log('økt startet; aktiverte funksjoner: '+(session.enabledFeatures?Array.from(session.enabledFeatures).join(', '):'(kan ikke leses)'));
+    session.addEventListener('end',()=>{
+      const sec=(performance.now()-T0)/1000;
+      log('økten avsluttet etter '+sec.toFixed(1)+' s '+(userEnd?'(valgt av bruker)':'(IKKE av bruker: systemet eller en feil)'));
+      cleanup();opt.onEnd&&opt.onEnd({userEnd,quote:quoteEnd,seconds:sec,lines:logLines.slice()});
+    });
+    layer=new XRWebGLLayer(session,gl,{alpha:true});
+    session.updateRenderState({baseLayer:layer});
+    ref=await session.requestReferenceSpace('local');
+    binding=typeof XRWebGLBinding!=='undefined'?new XRWebGLBinding(session,gl):null;
+    log('referanserom ok; XRWebGLBinding '+(binding?'ja':'NEI'));
     try{
       const viewer=await session.requestReferenceSpace('viewer');
       for(const [pitch,yaw] of [[0,0],[12,0],[25,0],[25,16],[25,-16],[40,0]]){
         const pr=pitch*Math.PI/180,yr=yaw*Math.PI/180;
         hitSources.push(await session.requestHitTestSource({space:viewer,offsetRay:new XRRay({x:0,y:0,z:0,w:1},{x:Math.sin(yr)*Math.cos(pr),y:-Math.sin(pr),z:-Math.cos(yr)*Math.cos(pr),w:0})}));
       }
-    }catch(e){console.warn('AR: hit-test ikke tilgjengelig',e);hitSources=[];}
-  }
-  let ended=false;
-  const cleanup=()=>{
-    if(ended)return;ended=true;
-    try{hitSources.forEach(h=>h.cancel());}catch(e){}
-    ui.remove();canvas.remove();
-    const x=gl.getExtension('WEBGL_lose_context');if(x)x.loseContext();
-  };
-  session.addEventListener('end',()=>{cleanup();opt.onEnd&&opt.onEnd();});
-  if(!hasCamAccess){
-    hint('<b>Denne telefonen gir ikke kamerabildet til AR</b>, så automatisk gjenkjenning er ikke mulig her. Bruker «Live kamera» i stedet …');
-    setTimeout(()=>{session.end().catch(()=>{});opt.onFallback&&opt.onFallback('camera-access');},1800);
-    return {session};
+      log('hit-test: '+hitSources.length+' kilder');
+    }catch(e){log('hit-test utilgjengelig: '+e.message);hitSources=[];}
+  }catch(e){
+    log('FEIL ved oppstart: '+(e&&e.name?e.name+': ':'')+(e&&e.message||e));
+    try{if(session)await session.end();}catch(_){}
+    cleanup();throw e;
   }
 
   /* ---------------- segmentation -> surfaces ---------------- */
@@ -250,6 +265,7 @@ export async function start(opt){
   async function analyse(c,W,H,cap){
     st.busy=true;$('busy').style.display='block';
     try{
+      log('analyserer bilde '+W+'x'+H+(st.flip?' (snudd)':''));
       segMod=segMod||await opt.loadSeg();
       const seg=await segMod.segment(c,W,H,MOBILE?672:768,m=>{if(!st.cap)hint('<b>'+esc(m)+'</b>');});
       if(ended)return;
@@ -258,6 +274,7 @@ export async function start(opt){
       if(fn>20&&((cn>20&&fy/fn<cy/cn)||(cn<=20&&fy/fn/seg.h<.28))&&st.flips<2){
         st.flips++;st.flip=!st.flip;st.lastEnd=0;console.warn('AR: kamerabildet ser opp ned ut, snur og prøver på nytt');return;
       }
+      log('analyse ferdig på '+seg.ms+' ms, inndata '+(seg.input||[]).join('x'));
       cap.seg=seg;
       const old=st.surfaces;st.surfaces=buildSurfaces(cap,cap.floorY);dispose(old);st.cap=cap;
       st.hasFloor=st.surfaces.some(s=>s.type==='floor');st.hasWall=st.surfaces.some(s=>s.type==='wall');
@@ -272,15 +289,22 @@ export async function start(opt){
 
   /* ---------------- frame loop ---------------- */
   const quad=()=>gl.drawArrays(gl.TRIANGLE_STRIP,0,4);
+  let lastSum=0,camSeen=0,camMissing=0,reported=false;
   function onFrame(time,frame){
     if(ended)return;
     session.requestAnimationFrame(onFrame);
+    try{frameBody(time,frame);}catch(e){if(st.frameErr!==e.message){st.frameErr=e.message;log('FEIL i tegning: '+e.message);}}
+  }
+  function frameBody(time,frame){
     const pose=frame.getViewerPose(ref);
     gl.bindFramebuffer(gl.FRAMEBUFFER,layer.framebuffer);gl.clearColor(0,0,0,0);gl.clear(gl.COLOR_BUFFER_BIT);
     if(!pose){if(!st.lost){st.lost=true;hint('<b>Mistet sporing.</b> Beveg mobilen rolig og se mot noe med mønster eller kanter, og med godt lys.');}return;}
     if(st.lost){st.lost=false;hint('Sporing er tilbake.');}
     const view=pose.views[0],vp=layer.getViewport(view),m=view.transform.matrix,camY=m[13];
     st.frames++;if(!st.t0)st.t0=time;
+    if(view.camera){camSeen++;if(camSeen===1)log('kamerabilde mottatt: '+view.camera.width+'x'+view.camera.height);}else camMissing++;
+    if(!camSeen&&camMissing===60&&!reported){reported=true;log('INGEN kamerabilde (view.camera er null) etter 60 bilderuter');hint('<b>Denne telefonen eller nettleseren gir ikke kamerabildet til AR</b> (camera-access). Da kan vi ikke gjenkjenne rommet i AR.');$('cam').style.display='';}
+    if(time-lastSum>3000){lastSum=time;log('bilder='+st.frames+' kamera='+(view.camera?'ja':'nei')+' gulvprøver='+st.floorSamples.length+' gulvY='+(st.floorY==null?'-':st.floorY.toFixed(2))+' flater='+st.surfaces.length+(st.busy?' (analyserer)':''));}
 
     // floor height from real hit-tests (horizontal surfaces below the phone)
     for(const hs of hitSources){
@@ -329,12 +353,14 @@ export async function start(opt){
     if(b.dataset.rot){S.rot=+b.dataset.rot;renderUi();return;}
     if(b.dataset.grout){S.grout=b.dataset.grout;renderUi();return;}
     switch(b.dataset.x){
-      case 'end':session.end().catch(()=>{});break;
+      case 'end':userEnd=true;session.end().catch(()=>{});break;
+      case 'dbgt':dbgEl.style.display=dbgEl.style.display==='none'?'':'none';break;
+      case 'cam':userEnd=true;session.end().catch(()=>{});setTimeout(()=>opt.onFallback&&opt.onFallback('bruker'),200);break;
       case 'mf':matFor='floor';renderUi();break;
       case 'mw':matFor='wall';renderUi();break;
       case 'live':st.live=!st.live;renderUi();break;
       case 'redo':st.force=true;st.lastEnd=0;hint('Analyserer på nytt …');break;
-      case 'quote':{const info={floor:st.hasFloor,wall:st.hasWall,floorId:S.floorId,wallId:S.wallId};session.end().catch(()=>{});setTimeout(()=>opt.onQuote&&opt.onQuote(info),250);break;}
+      case 'quote':{const info={floor:st.hasFloor,wall:st.hasWall,floorId:S.floorId,wallId:S.wallId};userEnd=true;quoteEnd=true;session.end().catch(()=>{});setTimeout(()=>opt.onQuote&&opt.onQuote(info),250);break;}
     }
   });
   ui.addEventListener('change',e=>{const t=e.target;if(t.dataset.x==='fmt')S.fmt=t.value;});
