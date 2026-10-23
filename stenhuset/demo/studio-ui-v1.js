@@ -7,7 +7,9 @@
  * Room type and daylight are driven through the existing #room-tabs and #light-range controls. */
 const shell=document.querySelector('.scene-shell');
 if(shell&&typeof window.getStudioMaterials==='function'){
-  const LABEL={floor:'Gulv',wall:'Vegg',sink:'Servant',table:'Bord'};
+  const LABEL={floor:'Gulv',wall:'Vegg',sink:'Servant',table:'Bord',top:'Benkeplate'};
+  // each room only offers products that belong there
+  const ROOM_TARGETS={bad:['floor','wall','sink'],stue:['floor','wall','table'],kjokken:['floor','wall','top']};
   let target='floor',open=false,settleT=0,building=false;
 
   const css=document.createElement('style');
@@ -88,7 +90,7 @@ if(shell&&typeof window.getStudioMaterials==='function'){
 
   const dock=document.createElement('div');dock.className='su-dock';dock.setAttribute('role','region');dock.setAttribute('aria-label','Steinvelger');
   dock.innerHTML=
-    '<div class="su-head"><div class="su-seg" id="su-target"><button type="button" data-t="floor" class="on">Gulv</button><button type="button" data-t="wall">Vegg</button><button type="button" data-t="sink">Servant</button><button type="button" data-t="table">Bord</button></div>'+
+    '<div class="su-head"><div class="su-seg" id="su-target"><button type="button" data-t="floor" class="on">Gulv</button><button type="button" data-t="wall">Vegg</button><button type="button" data-t="sink">Servant</button><button type="button" data-t="table">Bord</button><button type="button" data-t="top">Benkeplate</button></div>'+
     '<div class="su-name" id="su-name" aria-live="polite"></div><button type="button" class="su-close" id="su-x" aria-label="Lukk steinvelger">×</button></div>'+
     '<div class="su-track-wrap"><button type="button" class="su-arr l" aria-label="Forrige stein">‹</button><div class="su-track" id="su-track" tabindex="0"></div><button type="button" class="su-arr r" aria-label="Neste stein">›</button></div>';
   shell.appendChild(dock);
@@ -104,21 +106,33 @@ if(shell&&typeof window.getStudioMaterials==='function'){
   let catMap=null;
   const loadCat=()=>{if(catMap)return;catMap=new Map();fetch('catalog-v1.json').then(r=>r.json()).then(d=>{d.products.forEach(p=>catMap.set(p.id,p));if(open&&target==='sink')render();}).catch(()=>{});};
   const cmv=v=>String(Math.round(v*1000)/10).replace('.',',');
-  const isModel=()=>target==='sink'||target==='table';
+  const isModel=()=>target==='sink'||target==='table'||target==='top';
   const modelList=()=>{
-    const S3=window.Studio3D,SK=S3&&(target==='sink'?S3.sinks:S3.tables);if(!SK)return [];
+    const S3=window.Studio3D;
+    if(target==='top'){
+      const TS=S3&&S3.topStones;if(!TS)return [];
+      return [{id:'0',name:'Samme stein som gulvet',pattern:'linear-gradient(135deg,#efebe2,#d5cdbf)'}].concat(TS.map(t=>({id:t.id,name:t.n,top:true,pattern:'linear-gradient(125deg,rgb('+t.c0.join(',')+') 0 55%,rgba('+t.c0.map(v=>Math.round(v*.82)).join(',')+') 56% 58%,rgb('+t.c0.join(',')+') 59%)'})));
+    }
+    const SK=S3&&(target==='sink'?S3.sinks:S3.tables);if(!SK)return [];
     return [{id:'0',name:target==='sink'?'Standard servant':'Uten bord',pattern:'linear-gradient(135deg,#f5f3ee,#d9d5cc)'}].concat(Object.entries(SK).map(([id,sp])=>{
       const p=catMap&&catMap.get(+id);return {id,name:sp.n,sp,pattern:p?"url('"+p.i+"') center/cover":'linear-gradient(135deg,#d8d2c6,#a9a294)'};}));
   };
   const sinkList=modelList;
   const list=()=>isModel()?modelList():window.getStudioMaterials().filter(m=>target==='wall'||!m.plaster);
   const current=()=>{
+    if(target==='top'){const t=window.Studio3D&&window.Studio3D.getTop&&window.Studio3D.getTop();return t?t.stone:'0';}
     if(target==='table')return String((window.Studio3D&&window.Studio3D.getTable&&window.Studio3D.getTable())||0);
     if(target==='sink')return String((window.Studio3D&&window.Studio3D.getSink&&window.Studio3D.getSink())||0);
     const s=window.getStudioState();return (target==='floor'?s.floor:s.wall).id;};
   const KIND={'bastide-beige':'Kalkstein','bastide-grey':'Kalkstein','provence-beige':'Kalkstein','provence-grey':'Kalkstein','carrara-c':'Marmor','calacatta-viola':'Marmor','zellige':'Håndlaget flis','terracotta':'Terracotta','kalkpuss-hvit':'Puss','leirpuss':'Puss'};
 
+  function syncTargets(){
+    const room=(window.getStudioState&&window.getStudioState().room)||'bad',ok=ROOM_TARGETS[room]||['floor','wall'];
+    dock.querySelectorAll('#su-target [data-t]').forEach(b=>{b.hidden=!ok.includes(b.dataset.t);});
+    if(!ok.includes(target)){target='floor';dock.querySelectorAll('#su-target [data-t]').forEach(b=>b.classList.toggle('on',b.dataset.t==='floor'));}
+  }
   function render(){
+    syncTargets();
     building=true;
     track.innerHTML=list().map(m=>'<button type="button" class="su-card" data-id="'+m.id+'" data-i="'+(m.i==null?'':m.i)+'" title="'+m.name+'" aria-label="'+m.name+'"><span style="--slab:'+m.pattern+'"></span></button>').join('');
     markCurrent(true);building=false;
@@ -129,6 +143,7 @@ if(shell&&typeof window.getStudioMaterials==='function'){
     if(el){showName(el);if(center)track.scrollTo({left:el.offsetLeft+el.offsetWidth/2-track.clientWidth/2,behavior:'auto'});}
   }
   function showName(card){
+    if(target==='top'){const it=modelList().find(x=>x.id===card.dataset.id);nameEl.innerHTML=(it?it.name:'')+'<small>Benkeplate · kjøkken og øy · '+(card.dataset.id==='0'?'som gulvet':'3 cm')+'</small>';return;}
     if(isModel()){const it=modelList().find(x=>x.id===card.dataset.id),sp=it&&it.sp;
       const dims=!sp?'':sp.kind==='round'?'Ø '+cmv(sp.R*2)+' × H '+cmv(sp.H)+' cm':cmv(sp.W)+' × '+cmv(sp.D)+' × '+cmv(sp.H)+' cm';
       nameEl.innerHTML=(it?it.name:'')+'<small>'+LABEL[target]+' · '+(dims||'standard')+'</small>';return;}
@@ -143,9 +158,9 @@ if(shell&&typeof window.getStudioMaterials==='function'){
   function apply(card){
     if(!card||card.dataset.id===current())return;
     if(isModel()){
-      const room=target==='sink'?'bad':'stue';
+      const room=target==='sink'?'bad':target==='top'?'kjokken':'stue';
       if(window.getStudioState().room!==room){const tab=document.querySelector('#room-tabs [data-room="'+room+'"]');if(tab)tab.click();}
-      const S3=window.Studio3D;if(S3){if(target==='sink'&&S3.setSink)S3.setSink(+card.dataset.id||null);if(target==='table'&&S3.setTable)S3.setTable(+card.dataset.id||null);}
+      const S3=window.Studio3D;if(S3){if(target==='sink'&&S3.setSink)S3.setSink(+card.dataset.id||null);if(target==='table'&&S3.setTable)S3.setTable(+card.dataset.id||null);if(target==='top'&&S3.setTop)S3.setTop(card.dataset.id==='0'?null:{stone:card.dataset.id,t:.03});}
       return;
     }
     window.setStudioMaterial(target,+card.dataset.i);
@@ -246,6 +261,7 @@ if(shell&&typeof window.getStudioMaterials==='function'){
       const h=pop.querySelector('h4');if(h){const v=+t.value;h.textContent='Dagslys · '+(v<40?'Kveld':v<70?'Ettermiddag':'Middag');}}
   });
   btnStones.addEventListener('click',()=>{if(popKind)setPop(popKind);});
+  document.addEventListener('click',e=>{if(e.target.closest('#room-tabs [data-room]'))setTimeout(()=>{syncTargets();if(open)render();},40);});
   bottom.querySelector('#su-calc').onclick=()=>{const b=real('scene-to-calc');if(b)b.click();};
   // "Prøv i mitt rom" is loaded on demand: no camera code is downloaded until the customer asks for it.
   let tryP=null;

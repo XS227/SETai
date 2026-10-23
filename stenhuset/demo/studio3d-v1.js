@@ -8,8 +8,8 @@ import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
 import {RoundedBoxGeometry} from 'three/addons/geometries/RoundedBoxGeometry.js';
 import {RectAreaLightUniformsLib} from 'three/addons/lights/RectAreaLightUniformsLib.js';
 import {generateStone,STONES,T} from './stone-textures-v1.js';
-import {SINKS,buildSink,sinkMaterial} from './sinks3d-v1.js?v=2';
-import {TABLES,buildTable} from './furniture3d-v1.js?v=1';
+import {SINKS,buildSink,sinkMaterial,TOP_STONES} from './sinks3d-v1.js?v=4';
+import {TABLES,buildTable} from './furniture3d-v1.js?v=2';
 
 /* selected stenvask in the bathroom (product id) or null for the generic basin; marmorbord in the living room;
  * made-to-measure countertop {stone,t,...} for the kitchen, or null to use the floor stone */
@@ -419,7 +419,8 @@ function init(){
   renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,MOBILE?1.5:2));
   RectAreaLightUniformsLib.init();
   renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
-  renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1;
+  // Khronos PBR Neutral keeps the base colour of the stone (ACES shifts hue and saturation); falls back to ACES on old three.js
+  renderer.toneMapping=THREE.NeutralToneMapping!==undefined?THREE.NeutralToneMapping:THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1;
   maxAniso=Math.min(8,renderer.capabilities.getMaxAnisotropy());
   const scene=new THREE.Scene();scene.background=new THREE.Color('#cfcac1');
   const pm=new THREE.PMREMGenerator(renderer);scene.environment=pm.fromScene(new RoomEnvironment(),.04).texture;
@@ -486,28 +487,41 @@ function init(){
     else if(b.dataset.z){camera.fov=clamp(camera.fov-Number(b.dataset.z)*7,28,88);camera.updateProjectionMatrix();request();}
   });
 
+  /* Light as it behaves in a real room: colour temperatures in kelvin, partly white-balanced the way the eye (or a phone camera)
+   * adapts, and an exposure that follows the light level, so a stone looks like the same stone at noon and in the evening. */
+  const kelvin=K=>{const t=K/100;let r,g,b;
+    if(t<=66){r=255;g=99.4708025861*Math.log(t)-161.1195681661;b=t<=19?0:138.5177312231*Math.log(t-10)-305.0447927307;}
+    else{r=329.698727446*Math.pow(t-60,-.1332047592);g=288.1221695283*Math.pow(t-60,-.0755148492);b=255;}
+    return new THREE.Color().setRGB(clamp(r,0,255)/255,clamp(g,0,255)/255,clamp(b,0,255)/255,THREE.SRGBColorSpace);};
+  const adapted=(K,adapt)=>new THREE.Color(1,1,1).lerp(kelvin(K),1-adapt); // adapt 1 = fully white-balanced
   function applyLight(st){
-    const Lf=clamp(st.light/100,.15,1),night=clamp((.55-Lf)/.4,0,1);
+    const Lf=clamp(st.light/100,.15,1),night=clamp((.55-Lf)/.4,0,1),day=THREE.MathUtils.smoothstep(Lf,.15,.75);
     const el=THREE.MathUtils.degToRad(6+(Lf-.15)/.85*46);
     const dir=new THREE.Vector3(Math.cos(el)*.92,Math.sin(el),Math.cos(el)*.4).normalize();
-    const c=dims?dims.hz:2;sun.position.copy(dir).multiplyScalar(24);sun.target.position.set(0,.8,0);
-    const warm=new THREE.Color('#ff9658'),day=new THREE.Color('#fff0da');
-    sun.color.copy(warm).lerp(day,THREE.MathUtils.smoothstep(Lf,.15,.65));
-    sun.intensity=.25+3.3*Math.pow(Lf,1.25);
+    sun.position.copy(dir).multiplyScalar(24);sun.target.position.set(0,.8,0);
+    // sun 2900 K (low, evening) .. 5600 K (midday); sky light through the window 4300 .. 7200 K
+    sun.color.copy(adapted(THREE.MathUtils.lerp(2900,5600,day),.62));
+    sun.intensity=.3+3.0*Math.pow(Lf,1.15);
     const ext=dims?Math.max(dims.W,dims.L)*.9:5;
     Object.assign(sun.shadow.camera,{left:-ext,right:ext,top:ext,bottom:-ext,near:1,far:60});sun.shadow.camera.updateProjectionMatrix();
-    scene.environmentIntensity=.30+.55*Lf;hemi.intensity=.30+.28*Lf;
-    renderer.toneMappingExposure=.92+.2*(1-night*.3);
+    const skyK=THREE.MathUtils.lerp(4300,7200,day);
+    scene.environmentIntensity=.32+.5*Lf;hemi.intensity=.3+.26*Lf;hemi.color.copy(adapted(skyK,.7));hemi.groundColor.copy(adapted(3800,.6)).multiplyScalar(.75);
+    // exposure follows the light (camera / eye adaptation): darker light -> longer exposure, but evenings still read as evenings
+    const level=.22+.78*Lf*(1-night*.55)+night*.3;
+    renderer.toneMappingExposure=clamp(.98/Math.pow(level,.5),.92,1.55);
     const skyMesh=content&&content.group.getObjectByName('sky');
-    if(skyMesh)skyMesh.material.color.setRGB(.25+.75*Lf*Lf+.08,.28+.72*Lf*Lf+.06,.4+.6*Lf*Lf);
+    if(skyMesh){const sc=adapted(skyK,.3);skyMesh.material.color.copy(sc).multiplyScalar(.35+.7*Lf);}
     scene.background.set(night>0?'#7d7a74':'#cfcac1');
     lampsOn=night;
     if(content&&content.win){
       content.win.intensity=(1.2+5.5*Math.pow(Lf,1.4))*(1-night*.75);
-      content.win.color.set('#ffc9a0').lerp(new THREE.Color('#dfeaff'),THREE.MathUtils.smoothstep(Lf,.2,.7));
+      content.win.color.copy(adapted(skyK,.55));
     }
+    // warm lamps (2700 K) in the evening, white-balanced like the eye does indoors
+    const lampC=adapted(2700,.55);
+    MAT.lampShade.emissive.copy(lampC);MAT.hang.emissive.copy(lampC);
     MAT.lampShade.emissiveIntensity=night*1.6;MAT.hang.emissiveIntensity=night*1.4;
-    if(content)for(const o of content.lights)o.l.intensity=o.power*night*14;
+    if(content)for(const o of content.lights){o.l.color.copy(lampC);o.l.intensity=o.power*night*14;}
   }
   function rebuild(st,fm,wm){
     if(content){
@@ -549,6 +563,7 @@ function init(){
   window.Studio3D={ready:true,update,goView,
     setSink(id){SINK_ID=id&&SINKS[id]?Number(id):null;roomKey='';update();},getSink:()=>SINK_ID,sinks:SINKS,
     setTable(id){TABLE_ID=id&&TABLES[id]?Number(id):null;roomKey='';update();},getTable:()=>TABLE_ID,tables:TABLES,
+    topStones:TOP_STONES.map(([id,n])=>({id,n,c0:STONES[id]?STONES[id].c0:[200,200,200]})),
     setTop(cfg){TOP_CFG=cfg&&cfg.stone?{stone:cfg.stone,t:cfg.t||.03}:null;roomKey='';update();},getTop:()=>TOP_CFG};
   window.addEventListener('hashchange',()=>setTimeout(()=>{resize();request();},50));
   resize();update();

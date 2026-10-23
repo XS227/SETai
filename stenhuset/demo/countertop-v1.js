@@ -6,8 +6,8 @@ import * as THREE from 'three';
 import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
 import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
 import {STONES} from './stone-textures-v1.js';
-import {TOP_STONES} from './sinks3d-v1.js?v=2';
-import {buildCountertop,EDGES} from './furniture3d-v1.js?v=1';
+import {TOP_STONES} from './sinks3d-v1.js?v=4';
+import {buildCountertop,EDGES} from './furniture3d-v1.js?v=2';
 
 const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const clamp=(v,a,b)=>Math.min(b,Math.max(a,v));
@@ -79,7 +79,7 @@ export function open(){
   const overflow=document.documentElement.style.overflow;document.documentElement.style.overflow='hidden';
   const stage=root.querySelector('.ct-stage'),canvas=document.createElement('canvas');stage.prepend(canvas);
   const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));renderer.toneMapping=(THREE.NeutralToneMapping!==undefined?THREE.NeutralToneMapping:THREE.ACESFilmicToneMapping);renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
   const scene=new THREE.Scene(),pm=new THREE.PMREMGenerator(renderer);scene.environment=pm.fromScene(new RoomEnvironment(),.04).texture;
   const cam=new THREE.PerspectiveCamera(35,1,.05,40),ctl=new OrbitControls(cam,canvas);ctl.enableDamping=true;ctl.enablePan=false;ctl.maxPolarAngle=Math.PI*.49;
   scene.add(new THREE.HemisphereLight('#fff8ee','#a89c8c',.55));

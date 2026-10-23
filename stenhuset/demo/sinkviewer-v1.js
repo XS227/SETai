@@ -4,8 +4,8 @@
 import * as THREE from 'three';
 import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
 import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
-import {SINKS,buildSink} from './sinks3d-v1.js?v=2';
-import {TABLES,buildTable,tableSize} from './furniture3d-v1.js?v=1';
+import {SINKS,buildSink} from './sinks3d-v1.js?v=4';
+import {TABLES,buildTable,tableSize} from './furniture3d-v1.js?v=2';
 
 const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const cm=v=>String(Math.round(v*1000)/10).replace('.',',');
@@ -52,16 +52,22 @@ export function open(id,product){
   const price=product&&(product.sp||product.p)?new Intl.NumberFormat('nb-NO',{style:'currency',currency:'NOK',maximumFractionDigits:0}).format(product.sp&&product.sp<product.p?product.sp:product.p):'';
   root.innerHTML=`<div class="sv-box">
     <div class="sv-head"><div><small>${isTable?'Marmorbord':'Stenvask'} · 3D-modell</small><h2>${esc(product&&product.n||sp.n)}</h2></div><button class="sv-x" data-sv="x" aria-label="Lukk 3D-visning">×</button></div>
-    <div class="sv-stage"><div class="sv-dims">${spec.kind==='round'?'Ø '+cm(sp.W)+' × H '+cm(sp.H):cm(sp.W)+' × '+cm(sp.D)+' × '+cm(sp.H)} cm${sp.approx?' (ca.)':''}${price?'<br>'+price:''}</div><div class="sv-tip">Dra for å snu · klyp eller rull for å zoome</div></div>
-    <div class="sv-foot"><p>3D-modellen er laget etter målene på produktsiden. Årer, farge og overflate er naturlige og varierer fra stein til stein.</p>
-      <div class="sv-btns"><button class="sv-btn" data-sv="showroom">Prøv i showroom ↗</button>${product&&product.u?`<a class="sv-btn soft" href="${esc(product.u)}" target="_blank" rel="noopener">Se i nettbutikken ↗</a>`:''}</div></div>
+    <div class="sv-stage"><div class="sv-dims">${Number(id)===10827?'70 × 40–42 × 15':spec.kind==='round'?'Ø '+cm(sp.W)+' × H '+cm(sp.H):cm(sp.W)+' × '+cm(sp.D)+' × '+cm(sp.H)} cm${sp.approx?' (ca.)':''}${price?'<br>'+price:''}</div><div class="sv-tip">Dra for å snu · klyp eller rull for å zoome</div></div>
+    <div class="sv-foot"><p>${Number(id)===10827?"Originalfoto brukes som overflatetekstur på en rekonstruert form. Se bildene for det faktiske produktet. Dette er ikke en 3D-skanning.":"3D-modellen er laget etter målene på produktsiden. Årer, farge og overflate er naturlige og varierer fra stein til stein."}</p>
+      <div class="sv-btns"><button class="sv-btn" data-sv="photos">Bilder og produktark ↗</button><button class="sv-btn" data-sv="showroom">Prøv i showroom ↗</button>${product&&product.u?`<a class="sv-btn soft" href="${esc(product.u)}" target="_blank" rel="noopener">Se i nettbutikken ↗</a>`:''}</div></div>
   </div>`;
   document.body.appendChild(root);
   const overflow=document.documentElement.style.overflow;document.documentElement.style.overflow='hidden';
   const stage=root.querySelector('.sv-stage'),canvas=document.createElement('canvas');stage.prepend(canvas);
 
-  const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.05;
+  let renderer;
+  try{renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});}
+  catch(error){
+    root.remove();document.documentElement.style.overflow=overflow;
+    import('./product-sheet-v1.js?v=1').then(m=>m.open({id,product})).then(view=>{view.dialog.querySelector('.sh10827-message').textContent='3D støttes ikke i denne nettleseren. Se originalbilder og produktark her.';});
+    return;
+  }
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));renderer.toneMapping=(THREE.NeutralToneMapping!==undefined?THREE.NeutralToneMapping:THREE.ACESFilmicToneMapping);renderer.toneMappingExposure=Number(id)===10827?.82:1.05;
   renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
   const scene=new THREE.Scene(),pm=new THREE.PMREMGenerator(renderer);scene.environment=pm.fromScene(new RoomEnvironment(),.04).texture;
   const cam=new THREE.PerspectiveCamera(32,1,.02,30);
@@ -74,7 +80,7 @@ export function open(id,product){
   const top=new THREE.Mesh(new THREE.BoxGeometry(topW,.04,topD),new THREE.MeshStandardMaterial({color:'#b89a78',roughness:.6}));
   top.position.set(0,-.02,0);top.receiveShadow=true;scene.add(top);
   const hemi=new THREE.HemisphereLight('#fff8ee','#a89c8c',.55);scene.add(hemi);
-  const sun=new THREE.DirectionalLight('#fff3e2',2.2);sun.position.set(1.2,2.2,1.4);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);
+  const sun=new THREE.DirectionalLight('#fff3e2',Number(id)===10827?1.7:2.2);sun.position.set(1.2,2.2,1.4);sun.castShadow=true;sun.shadow.mapSize.set(Number(id)===10827?1024:2048,Number(id)===10827?1024:2048);if(Number(id)===10827){sun.shadow.autoUpdate=false;sun.shadow.needsUpdate=true;}
   Object.assign(sun.shadow.camera,{left:-1,right:1,top:1,bottom:-1,near:.5,far:6});sun.shadow.bias=-.0004;sun.shadow.radius=4;scene.add(sun);
   let needs=true;const sink=(isTable?buildTable:buildSink)(id,()=>{needs=true;});scene.add(sink);
   if(isTable)Object.assign(sun.shadow.camera,{left:-1.2,right:1.2,top:1.2,bottom:-1.2});
@@ -87,6 +93,9 @@ export function open(id,product){
     if(e.target===root){close();return;}
     const b=e.target.closest('[data-sv]');if(!b)return;
     if(b.dataset.sv==='x')close();
+    else if(b.dataset.sv==='photos'){
+      close();import('./product-sheet-v1.js?v=1').then(m=>m.open({id,product,on3D:()=>open(id,product)})).catch(()=>{if(product&&product.u)window.open(product.u,'_blank','noopener');});
+    }
     else if(b.dataset.sv==='showroom'){
       close();
       const tab=document.querySelector('#room-tabs [data-room="'+(isTable?'stue':'bad')+'"]');if(tab)tab.click();

@@ -5,6 +5,7 @@
  * The models are faithful in size and type, not scans: veins and hewn edges are generated and differ from the real piece. */
 import * as THREE from 'three';
 import {STONES,generateStone,T} from './stone-textures-v1.js';
+import {buildTravertin10827} from './travertin-10827-photo3d-v1.js?v=1';
 
 /* monolithic stones for sinks (no tile joints) */
 const SOLID={rowH:T,widths:[T],jw:0,bevel:0,jitter:0,joint:[0,0,0]};
@@ -160,16 +161,26 @@ function boxUV(g,sp){
 const matCache=new Map();
 function dataTex(arr,N,srgb){const t=new THREE.DataTexture(new Uint8Array(arr.buffer),N,N,THREE.RGBAFormat);t.colorSpace=srgb?THREE.SRGBColorSpace:THREE.NoColorSpace;t.wrapS=t.wrapT=THREE.RepeatWrapping;t.magFilter=THREE.LinearFilter;t.minFilter=THREE.LinearMipmapLinearFilter;t.generateMipmaps=true;t.anisotropy=4;t.needsUpdate=true;return t;}
 function runGen(id,N){return new Promise((res,rej)=>{const g=generateStone(id,N);const step=()=>{try{const t0=performance.now();let r;do{r=g.next();}while(!r.done&&performance.now()-t0<8);if(r.done)res(r.value);else setTimeout(step,0);}catch(e){rej(e);}};step();});}
+/* Colour from the product's own photograph: a patch of clean stone cut from Stenhuset's original product photo
+ * (assets/products/<id>/tex.jpg). The generated texture still supplies the surface relief (normal map). */
+const PHOTO_PATCH=.24; // metres of stone the photo patch covers (approx.)
+function photoTexture(id,done){
+  const t=new THREE.TextureLoader().load(new URL('./assets/products/'+id+'/tex.jpg',import.meta.url).href,()=>done(t),undefined,()=>done(null));
+  t.colorSpace=THREE.SRGBColorSpace;t.wrapS=t.wrapT=THREE.MirroredRepeatWrapping;t.anisotropy=8;
+  const k=T/1.6/PHOTO_PATCH;t.repeat.set(k,k);return t;
+}
 export function sinkMaterial(sp,onReady){
-  const key=sp.stone+'|'+sp.surf;
+  const key=sp.stone+'|'+sp.surf+'|'+(sp.photo||'');
   if(matCache.has(key)){const m=matCache.get(key);if(m.userData.ready)onReady&&setTimeout(onReady,0);else if(onReady)m.userData.cbs.push(onReady);return m;}
   const st=STONES[sp.stone],base=new THREE.Color(`rgb(${st.c0.join(',')})`);
   const polished=sp.surf==='polished'||sp.surf==='organic';
   const m=new THREE.MeshPhysicalMaterial({color:base,roughness:polished?.18:sp.surf==='hewn'?.85:.45,metalness:0,clearcoat:polished?.5:.05,clearcoatRoughness:.15,envMapIntensity:.9});
   m.userData={ready:false,cbs:onReady?[onReady]:[]};matCache.set(key,m);
-  runGen(sp.stone,typeof matchMedia==='function'&&matchMedia('(pointer:coarse)').matches?512:1024).then(d=>{
-    m.color.set('#ffffff');m.map=dataTex(d.albedo,d.N,true);m.normalMap=dataTex(d.normal,d.N,false);
-    m.normalScale.set(sp.surf==='hewn'?1.4:.6,sp.surf==='hewn'?1.4:.6);m.needsUpdate=true;m.userData.ready=true;m.userData.cbs.splice(0).forEach(f=>f());
+  const photo=sp.photo?new Promise(res=>photoTexture(sp.photo,res)):Promise.resolve(null);
+  Promise.all([runGen(sp.stone,typeof matchMedia==='function'&&matchMedia('(pointer:coarse)').matches?512:1024),photo]).then(([d,pt])=>{
+    m.color.set('#ffffff');m.map=pt||dataTex(d.albedo,d.N,true);m.normalMap=dataTex(d.normal,d.N,false);
+    const ns=(sp.surf==='hewn'?1.4:.6)*(pt?.6:1);m.normalScale.set(ns,ns);m.userData.photo=!!pt;
+    m.needsUpdate=true;m.userData.ready=true;m.userData.cbs.splice(0).forEach(f=>f());
   }).catch(e=>console.warn('Stenvask: tekstur feilet',e));
   return m;
 }
@@ -179,8 +190,9 @@ const darkHole=()=>new THREE.MeshStandardMaterial({color:'#121212',roughness:.9}
 /* ---------------- model ---------------- */
 /* Returns a Group in metres, origin at the centre of the underside, front = +z. onReady is called when the stone texture is ready. */
 export function buildSink(id,onReady){
+  if(Number(id)===10827)return buildTravertin10827(onReady);
   const sp=SINKS[id];if(!sp)return null;
-  const G=new THREE.Group(),mat=sinkMaterial(sp,onReady);
+  const G=new THREE.Group(),mat=sinkMaterial({...sp,photo:id},onReady);
   const body=new THREE.Mesh(sinkGeometry(sp),mat);body.castShadow=body.receiveShadow=true;G.add(body);
   const bot=sp.H-sp.depth,cx=sp.offset||0;
   if(sp.drain==='ball'){const ball=new THREE.Mesh(new THREE.SphereGeometry(.03,32,16,0,Math.PI*2,0,Math.PI/2),mat);ball.position.set(cx,bot,0);G.add(ball);}

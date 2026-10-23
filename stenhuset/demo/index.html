@@ -281,8 +281,8 @@ function renderProducts(){
 }
 // stenvasker (sinks3d-v1.js) and marmorbord (furniture3d-v1.js) with a 3D model; the viewer is loaded only when asked for
 const SINK3D=new Set([10801,10753,10747,10635,10630,10625,10619,10612,10606,10858,10827,10780,10768,10719,10709,10706,8864,8751,8750,8749,8720,8679,583,576,575,574,573,571,569,568,567,565,564,562]);
-document.addEventListener('click',e=>{if(e.target.closest('[data-countertop]'))import('./countertop-v1.js?v=1').then(m=>m.open()).catch(()=>notify('3D-designeren kunne ikke lastes'))});
-function openSink3D(p){import('./sinkviewer-v1.js?v=3').then(m=>m.open(p.id,p)).catch(()=>notify('3D-visningen kunne ikke lastes'))}
+document.addEventListener('click',e=>{if(e.target.closest('[data-countertop]'))import('./countertop-v1.js?v=2').then(m=>m.open()).catch(()=>notify('3D-designeren kunne ikke lastes'))});
+function openSink3D(p){import('./sinkviewer-v1.js?v=5').then(m=>m.open(p.id,p)).catch(()=>notify('3D-visningen kunne ikke lastes'))}
 function openProduct(id){let p=shop.data&&shop.data.products.find(x=>x.id==id);if(!p)return;if(Number(id)===10827){import('./product-10827-v1.js?v=2').then(m=>m.open({product:p,on3D:()=>openSink3D(p),onAdd:()=>addItem({kind:'product',id:p.id,label:p.n})})).catch(()=>notify('Produktpresentasjonen kunne ikke lastes'));return;}$('#modal-kicker').textContent=shopLabel(p);$('#modal-content').innerHTML=`<img src="${p.i}" alt="${shopEsc(p.n)}" style="width:100%;max-height:340px;object-fit:cover;margin-top:20px;border:9px solid #eee8e0"><h2>${shopEsc(p.n)}</h2>${p.d?`<p>${shopEsc(p.d)}</p>`:''}<p><strong class="price">${shopPrice(p)}</strong>${p.st?'':' · Utsolgt'}</p><button class="btn" id="modal-add">Legg i materialliste ↗</button> ${SINK3D.has(p.id)?'<button class="btn" id="modal-3d">Se i 3D ↗</button> ':''}<a class="btn soft" href="${p.u}" target="_blank" rel="noopener">Se i nettbutikken ↗</a>`;{const b3=$('#modal-3d');if(b3)b3.onclick=()=>{closeModal();openSink3D(p)}};$('#modal-add').onclick=()=>{addItem({kind:'product',id:p.id,label:p.n+(p.p||p.sp?' – '+shopPrice(p).replace(/<[^>]+>/g,' ').trim():'')});closeModal()};$('#modal-shade').classList.add('open')}
 function renderCart(){let el=$('#drawer-items');if(!el)return;el.innerHTML=cart.length?cart.map((p,i)=>`<div class="drawer-item"><span>${p.label}</span><button class="remove" data-remove="${i}" aria-label="Fjern element">×</button></div>`).join(''):'<p style="font-size:13px;color:#777">Ingen materialer valgt ennå. Utforsk kolleksjonen og legg til dine favoritter.</p>'}
 function projectText(){return 'Stenhuset – prosjektforespørsel\n\n'+(cart.map((p,i)=>`${i+1}. ${p.label}`).join('\n')||'Ønsker veiledning om materialvalg')+'\n\nDenne listen er laget i en demonstrasjon av Stenhusets nye nettside. Priser, lagerstatus og levering må bekreftes.\n'}
@@ -375,4 +375,4 @@ for(const f of [renderProducts,saveCart,renderSwatches,studioArea,calcPrice,draw
  window.addEventListener('hashchange',setView);
  setView();
 })();
-</script><script type="module" src="studio3d-v1.js?v=5"></script><script type="module" src="studio-ui-v1.js?v=20"></script></body></html>
+</script><script type="module" src="studio3d-v1.js?v=6"></script><script type="module" src="studio-ui-v1.js?v=21"></script></body></html>

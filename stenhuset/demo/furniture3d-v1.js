@@ -4,7 +4,7 @@
  * Stones, materials and UV mapping are shared with the stenvasker (sinks3d-v1.js). */
 import * as THREE from 'three';
 import {RoundedBoxGeometry} from 'three/addons/geometries/RoundedBoxGeometry.js';
-import {sinkMaterial,boxUV} from './sinks3d-v1.js?v=2';
+import {sinkMaterial,boxUV} from './sinks3d-v1.js?v=4';
 
 /* kind 'round': R top radius, H height, tt top thickness, rb/rt column radius at bottom/top, rim: raised lip (top slightly sunk)
  * kind 'plinth': W x D x H block */
@@ -36,7 +36,7 @@ function roundProfile(sp){
 }
 export function buildTable(id,onReady){
   const sp=TABLES[id];if(!sp)return null;
-  const mat=sinkMaterial(sp,onReady),G=new THREE.Group();let geo;
+  const mat=sinkMaterial({...sp,photo:id},onReady),G=new THREE.Group();let geo;
   if(sp.kind==='round'){
     geo=new THREE.LatheGeometry(roundProfile(sp),96);
     geo.computeVertexNormals();
