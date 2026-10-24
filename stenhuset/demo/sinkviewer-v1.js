@@ -4,8 +4,8 @@
 import * as THREE from 'three';
 import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
 import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
-import {SINKS,buildSink} from './sinks3d-v1.js?v=4';
-import {TABLES,buildTable,tableSize} from './furniture3d-v1.js?v=2';
+import {SINKS,buildSink} from './sinks3d-v1.js?v=5';
+import {TABLES,buildTable,tableSize} from './furniture3d-v1.js?v=3';
 
 const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const cm=v=>String(Math.round(v*1000)/10).replace('.',',');

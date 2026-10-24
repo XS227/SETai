@@ -19,7 +19,7 @@ export function collectState(){
   if(st.room==='kjokken'&&top&&S3.topStones){const t=S3.topStones.find(x=>x.id===top.stone);if(t)names.top=t.n;}
   return {room:st.room,floor:st.floor&&st.floor.id,wall:st.wall&&st.wall.id,light:st.light,
     sink:st.room==='bad'?sink||0:0,table:st.room==='stue'?table||0:0,top:st.room==='kjokken'?top||null:null,
-    rug:S3.getRug?S3.getRug():'persisk',view:S3.getView?S3.getView():'door',names};
+    rug:S3.getRug?S3.getRug():'persisk',coffee:S3.getCoffee?S3.getCoffee()||'none':'',fire:S3.getFire?S3.getFire()||'none':'',kfloor:!!(S3.getKitchenFloor&&S3.getKitchenFloor()),view:S3.getView?S3.getView():'door',names};
 }
 
 /* 1200×630 (the size Facebook and Messenger use for link previews), with the room and stones written on it */
@@ -122,6 +122,9 @@ export function applyState(s){
     if(s.room==='stue'&&S3.setTable)S3.setTable(s.table||null);
     if(s.room==='kjokken'&&S3.setTop)S3.setTop(s.top||null);
     if(s.room==='stue'&&s.rug&&S3.setRug)S3.setRug(s.rug);
+    if(s.room==='stue'&&s.coffee&&S3.setCoffee)S3.setCoffee(s.coffee==='none'?null:s.coffee);
+    if(s.room==='stue'&&s.fire&&S3.setFire)S3.setFire(s.fire==='none'?null:s.fire);
+    if(s.room==='kjokken'&&S3.setKitchenFloor)S3.setKitchenFloor(!!s.kfloor);
     if(s.view&&S3.goView)setTimeout(()=>S3.goView(s.view),300);
   }
 }

@@ -7,9 +7,11 @@
  * Room type and daylight are driven through the existing #room-tabs and #light-range controls. */
 const shell=document.querySelector('.scene-shell');
 if(shell&&typeof window.getStudioMaterials==='function'){
-  const LABEL={floor:'Gulv',wall:'Vegg',sink:'Servant',table:'Bord',top:'Benkeplate',rug:'Teppe'};
+  const LABEL={floor:'Gulv',wall:'Vegg',sink:'Servant',table:'Sidebord',top:'Benkeplate',rug:'Teppe',coffee:'Stuebord',fire:'Peis'};
   // each room only offers products that belong there
-  const ROOM_TARGETS={bad:['floor','wall','sink'],stue:['floor','wall','table','rug'],kjokken:['floor','wall','top']};
+  // where stone is used in Nordic homes: bathroom floor + walls; kitchen countertop + splashback (stone floor optional);
+  // living room on oak with painted walls, stone in the coffee table, fireplace and side tables
+  const ROOM_TARGETS={bad:['floor','wall','sink'],stue:['coffee','fire','table','rug'],kjokken:['top','floor']};
   let target='floor',open=false,settleT=0,building=false;
 
   const css=document.createElement('style');
@@ -103,7 +105,7 @@ if(shell&&typeof window.getStudioMaterials==='function'){
 
   const dock=document.createElement('div');dock.className='su-dock';dock.setAttribute('role','region');dock.setAttribute('aria-label','Steinvelger');
   dock.innerHTML=
-    '<div class="su-head"><div class="su-seg" id="su-target"><button type="button" data-t="floor" class="on">Gulv</button><button type="button" data-t="wall">Vegg</button><button type="button" data-t="sink">Servant</button><button type="button" data-t="table">Bord</button><button type="button" data-t="top">Benkeplate</button><button type="button" data-t="rug">Teppe</button></div>'+
+    '<div class="su-head"><div class="su-seg" id="su-target"><button type="button" data-t="floor" class="on">Gulv</button><button type="button" data-t="wall">Vegg</button><button type="button" data-t="sink">Servant</button><button type="button" data-t="coffee">Stuebord</button><button type="button" data-t="fire">Peis</button><button type="button" data-t="table">Sidebord</button><button type="button" data-t="top">Benkeplate</button><button type="button" data-t="rug">Teppe</button></div>'+
     '<div class="su-name" id="su-name" aria-live="polite"></div><button type="button" class="su-close" id="su-x" aria-label="Lukk steinvelger">×</button></div>'+
     '<div class="su-track-wrap"><button type="button" class="su-arr l" aria-label="Forrige stein">‹</button><div class="su-track" id="su-track" tabindex="0"></div><button type="button" class="su-arr r" aria-label="Neste stein">›</button></div>';
   shell.appendChild(dock);
@@ -119,9 +121,13 @@ if(shell&&typeof window.getStudioMaterials==='function'){
   let catMap=null;
   const loadCat=()=>{if(catMap)return;catMap=new Map();fetch('catalog-v1.json').then(r=>r.json()).then(d=>{d.products.forEach(p=>catMap.set(p.id,p));if(open&&target==='sink')render();window.dispatchEvent(new Event('studio:changed'));}).catch(()=>{});};
   const cmv=v=>String(Math.round(v*1000)/10).replace('.',',');
-  const isModel=()=>target==='sink'||target==='table'||target==='top'||target==='rug';
+  const isModel=()=>['sink','table','top','rug','coffee','fire'].includes(target);
   const modelList=()=>{
     const S3=window.Studio3D;
+    if(target==='coffee'||target==='fire'){
+      const FS=S3&&S3.featureStones;if(!FS)return [];
+      return [{id:'none',name:target==='fire'?'Uten peis':'Stuebord i eik',pattern:target==='fire'?'linear-gradient(135deg,#efebe2,#d5cdbf)':'linear-gradient(90deg,#c9a57a,#b38b5d 40%,#caa778)'}].concat(FS.map(t=>({id:t.id,name:t.n,pattern:'linear-gradient(125deg,rgb('+t.c0.join(',')+') 0 55%,rgba('+t.c0.map(v=>Math.round(v*.82)).join(',')+') 56% 58%,rgb('+t.c0.join(',')+') 59%)'})));
+    }
     if(target==='rug'){
       const RG=S3&&S3.rugs;if(!RG)return [];
       return [{id:'none',name:'Uten teppe',pattern:'linear-gradient(135deg,#efebe2,#d5cdbf)'}].concat(Object.entries(RG).map(([id,r])=>({id,name:r.n,rug:r,pattern:"url('"+S3.rugThumb(id)+"') center/cover"})));
@@ -135,9 +141,17 @@ if(shell&&typeof window.getStudioMaterials==='function'){
       const p=catMap&&catMap.get(+id);return {id,name:sp.n,sp,pattern:p?"url('"+p.i+"') center/cover":'linear-gradient(135deg,#d8d2c6,#a9a294)'};}));
   };
   const sinkList=modelList;
-  const list=()=>isModel()?modelList():window.getStudioMaterials().filter(m=>target==='wall'||!m.plaster);
+  const OAK={id:'eik',name:'Eikeparkett',pattern:'repeating-linear-gradient(0deg,#c9a57a 0 15px,#b9925f 15px 16px,#d2b085 16px 31px,#a98153 31px 32px)'};
+  const list=()=>{
+    if(isModel())return modelList();
+    const m=window.getStudioMaterials().filter(x=>target==='wall'||!x.plaster);
+    return target==='floor'&&window.getStudioState().room==='kjokken'?[OAK].concat(m):m;
+  };
   const current=()=>{
     if(target==='top'){const t=window.Studio3D&&window.Studio3D.getTop&&window.Studio3D.getTop();return t?t.stone:'0';}
+    if(target==='coffee')return (window.Studio3D&&window.Studio3D.getCoffee&&window.Studio3D.getCoffee())||'none';
+    if(target==='fire')return (window.Studio3D&&window.Studio3D.getFire&&window.Studio3D.getFire())||'none';
+    if(target==='floor'&&window.getStudioState().room==='kjokken'&&!(window.Studio3D&&window.Studio3D.getKitchenFloor&&window.Studio3D.getKitchenFloor()))return 'eik';
     if(target==='rug')return String((window.Studio3D&&window.Studio3D.getRug&&window.Studio3D.getRug())||'none');
     if(target==='table')return String((window.Studio3D&&window.Studio3D.getTable&&window.Studio3D.getTable())||0);
     if(target==='sink')return String((window.Studio3D&&window.Studio3D.getSink&&window.Studio3D.getSink())||0);
@@ -147,7 +161,7 @@ if(shell&&typeof window.getStudioMaterials==='function'){
   function syncTargets(){
     const room=(window.getStudioState&&window.getStudioState().room)||'bad',ok=ROOM_TARGETS[room]||['floor','wall'];
     dock.querySelectorAll('#su-target [data-t]').forEach(b=>{b.hidden=!ok.includes(b.dataset.t);});
-    if(!ok.includes(target)){target='floor';dock.querySelectorAll('#su-target [data-t]').forEach(b=>b.classList.toggle('on',b.dataset.t==='floor'));}
+    if(!ok.includes(target)){target=ok[0];if(isModel())loadCat();dock.querySelectorAll('#su-target [data-t]').forEach(b=>b.classList.toggle('on',b.dataset.t===target));}
   }
   function render(){
     syncTargets();
@@ -161,6 +175,8 @@ if(shell&&typeof window.getStudioMaterials==='function'){
     if(el){showName(el);if(center)track.scrollTo({left:el.offsetLeft+el.offsetWidth/2-track.clientWidth/2,behavior:'auto'});}
   }
   function showName(card){
+    if(target==='coffee'||target==='fire'){const it=modelList().find(x=>x.id===card.dataset.id);nameEl.innerHTML=(it?it.name:'')+'<small>'+(target==='fire'?'Peis kledd i stein med gulvplate · på mål':'Stuebord 125 × 66 cm · plate og ben i stein · på mål')+'</small>';return;}
+    if(target==='floor'&&card.dataset.id==='eik'){nameEl.innerHTML='Eikeparkett<small>Gulv · det vanlige valget på kjøkken</small>';return;}
     if(target==='rug'){const it=modelList().find(x=>x.id===card.dataset.id),R=it&&it.rug;nameEl.innerHTML=(it?it.name:'')+'<small>Teppe · stue · '+(R?R.size?R.size[1]*100+' × '+R.size[0]*100+' cm':'tilpasset rommet':'bare stein')+'</small>';return;}
     if(target==='top'){const it=modelList().find(x=>x.id===card.dataset.id);nameEl.innerHTML=(it?it.name:'')+'<small>Benkeplate · kjøkken og øy · '+(card.dataset.id==='0'?'som gulvet':'3 cm')+'</small>';return;}
     if(isModel()){const it=modelList().find(x=>x.id===card.dataset.id),sp=it&&it.sp;
@@ -182,10 +198,17 @@ if(shell&&typeof window.getStudioMaterials==='function'){
   function applyNow(card){
     if(isModel()){
       const room=target==='sink'?'bad':target==='top'?'kjokken':'stue';
+      if(target==='coffee'||target==='fire'){if(window.getStudioState().room!=='stue'){const tab=document.querySelector('#room-tabs [data-room="stue"]');if(tab)tab.click();}
+        const S3=window.Studio3D,v=card.dataset.id==='none'?null:card.dataset.id;if(S3)(target==='fire'?S3.setFire:S3.setCoffee).call(S3,v);return;}
       if(target==='rug'){if(window.getStudioState().room!=='stue'){const tab=document.querySelector('#room-tabs [data-room="stue"]');if(tab)tab.click();}const S3=window.Studio3D;if(S3&&S3.setRug)S3.setRug(card.dataset.id);return;}
       if(window.getStudioState().room!==room){const tab=document.querySelector('#room-tabs [data-room="'+room+'"]');if(tab)tab.click();}
       const S3=window.Studio3D;if(S3){if(target==='sink'&&S3.setSink)S3.setSink(+card.dataset.id||null);if(target==='table'&&S3.setTable)S3.setTable(+card.dataset.id||null);if(target==='top'&&S3.setTop){const cur=S3.getTop&&S3.getTop();S3.setTop(card.dataset.id==='0'?null:{...(cur||{t:.03}),stone:card.dataset.id});}}
       return;
+    }
+    const S3=window.Studio3D,kitchen=window.getStudioState().room==='kjokken';
+    if(target==='floor'&&kitchen&&S3&&S3.setKitchenFloor){
+      if(card.dataset.id==='eik'){S3.setKitchenFloor(false);return;}
+      window.setStudioMaterial(target,+card.dataset.i);S3.setKitchenFloor(true);return;
     }
     window.setStudioMaterial(target,+card.dataset.i);
   }
@@ -304,6 +327,19 @@ if(shell&&typeof window.getStudioMaterials==='function'){
     const mats=window.getStudioMaterials(),fm=mats.find(m=>m.id===st.floor.id),wm=mats.find(m=>m.id===st.wall.id),S3=window.Studio3D||{};
     const floorA=st.w*st.l,wallA=Math.max(0,2*(st.w+st.l)*2.7-3.6); // walls minus door and window
     const lines=[];
+    if(st.room!=='bad'){
+      // kitchen and living room: oak and paint are not Stenhuset's; count the stone parts only
+      if(st.room==='kjokken'){
+        if(S3.getKitchenFloor&&S3.getKitchenFloor()&&fm&&fm.price){const r=stonePrice(floorA,fm.price);lines.push([fm.name+' · gulv, '+r.ordered+' m²'+(r.disc?' (−'+r.disc+' %)':''),r.total]);}
+        lines.push(['Benkeplate og bakvegg på mål','på forespørsel']);
+      }else{
+        const fs=S3.featureStones||[],nm=id=>(fs.find(x=>x.id===id)||{}).n||'';
+        if(S3.getCoffee&&S3.getCoffee())lines.push(['Stuebord i '+nm(S3.getCoffee()),'på forespørsel']);
+        if(S3.getFire&&S3.getFire())lines.push(['Peiskledning og gulvplate i '+nm(S3.getFire()),'på forespørsel']);
+        if(S3.getTable&&S3.getTable()){const p=catMap&&catMap.get(+S3.getTable());if(p){const v=p.sp&&p.sp<p.p?p.sp:p.p;lines.push([p.n,v||'på forespørsel']);}}
+      }
+      return {lines,total:lines.reduce((a,l)=>a+(typeof l[1]==='number'?l[1]:0),0),ask:lines.some(l=>typeof l[1]!=='number')};
+    }
     if(fm&&fm.price){if(wm&&wm.id===fm.id&&wm.price){const r=stonePrice(floorA+wallA,fm.price);lines.push([fm.name+' · gulv og vegg, '+r.ordered+' m²'+(r.disc?' (−'+r.disc+' %)':''),r.total]);}
       else{const r=stonePrice(floorA,fm.price);lines.push([fm.name+' · gulv, '+r.ordered+' m²'+(r.disc?' (−'+r.disc+' %)':''),r.total]);}}
     if(wm&&wm.price&&!(fm&&wm.id===fm.id)){const r=stonePrice(wallA,wm.price);lines.push([wm.name+' · vegg, '+r.ordered+' m²'+(r.disc?' (−'+r.disc+' %)':''),r.total]);}
@@ -345,7 +381,7 @@ if(shell&&typeof window.getStudioMaterials==='function'){
   };
   bottom.querySelector('#su-try').onclick=openTry;
   // sharing: picture + link to exactly this setup; a shared link (#studio?oppsett=…) is restored on arrival
-  const shareMod=()=>import('./share-v1.js?v=3');
+  const shareMod=()=>import('./share-v1.js?v=4');
   bottom.querySelector('#su-share').onclick=()=>{if(document.fullscreenElement)document.exitFullscreen&&document.exitFullscreen();shareMod().then(m=>m.openShare()).catch(e=>{console.warn(e);alert('Deling kunne ikke lastes.');});};
   const restore=()=>{if(/[?&]oppsett=/.test(location.hash))shareMod().then(m=>m.restoreFromHash());};
   window.addEventListener('hashchange',restore);restore();

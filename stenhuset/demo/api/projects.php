@@ -47,6 +47,7 @@ foreach($in as $p){
   if(is_array($p['studio']??null)){
     $s=$p['studio'];$studio=['room'=>in_array($s['room']??'',['bad','kjokken','stue'],true)?$s['room']:'bad'];
     foreach($MATS as $m)if(!empty($s[$m]))$studio[$m]=clean_str($s[$m],40);
+    foreach(['fire','coffee'] as $k)if(!empty($s[$k])&&preg_match('/^sk-[a-z]{2,20}$/',$s[$k]))$studio[$k]=$s[$k];
     if(is_array($s['top']??null))$studio['top']=['stone'=>clean_str($s['top']['stone']??'',40),'t'=>max(.02,min(.06,(float)($s['top']['t']??.03)))];
   }
   $outp[]=[

@@ -207,7 +207,10 @@
     ""
    ],
    "products": [],
-   "studio": null,
+   "studio": {
+    "room": "stue",
+    "fire": "sk-green"
+   },
    "photos": [
     {
      "f": "assets/projects/peis/01.jpg",
@@ -341,7 +344,10 @@
     ""
    ],
    "products": [],
-   "studio": null,
+   "studio": {
+    "room": "stue",
+    "coffee": "sk-emperador"
+   },
    "photos": [
     {
      "f": "assets/projects/emperador-bord/01.jpg",

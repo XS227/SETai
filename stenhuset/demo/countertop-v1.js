@@ -6,8 +6,8 @@ import * as THREE from 'three';
 import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
 import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
 import {STONES} from './stone-textures-v1.js';
-import {TOP_STONES} from './sinks3d-v1.js?v=4';
-import {buildCountertop,EDGES} from './furniture3d-v1.js?v=2';
+import {TOP_STONES} from './sinks3d-v1.js?v=5';
+import {buildCountertop,EDGES} from './furniture3d-v1.js?v=3';
 
 const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const clamp=(v,a,b)=>Math.min(b,Math.max(a,v));

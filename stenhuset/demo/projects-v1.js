@@ -121,7 +121,7 @@ export async function openProject(id){
     if(a==='close'){close();return;}
     if(a==='product'){close();if(typeof openProduct==='function')openProduct(+b.dataset.id);return;}
     if(a==='studio'){close();await toStudio(p.studio);return;}
-    if(a==='top'){close();import('./countertop-v1.js?v=3').then(m=>m.open({stone:p.countertop}));return;}
+    if(a==='top'){close();import('./countertop-v1.js?v=4').then(m=>m.open({stone:p.countertop}));return;}
     if(a==='ask'){close();if(typeof addItem==='function')addItem({kind:'project',id:'prosjekt-'+p.id,label:'Ønsker noe lignende som prosjektet «'+p.title+'»'});
       if(typeof showContact==='function')showContact();else location.hash='#kontakt';return;}
     if(a==='share'){
@@ -140,5 +140,8 @@ async function toStudio(s){
   const tab=document.querySelector('#room-tabs [data-room="'+s.room+'"]');if(tab&&window.getStudioState().room!==s.room)tab.click();
   const mats=window.getStudioMaterials?window.getStudioMaterials():[];
   for(const w of ['floor','wall']){if(!s[w])continue;const i=mats.findIndex(m=>m.id===s[w]);if(i>=0)window.setStudioMaterial(w,i);}
-  const S3=window.Studio3D;if(s.top&&S3&&S3.setTop)S3.setTop(s.top);else if(S3&&S3.update)S3.update();
+  const S3=window.Studio3D;if(!S3)return;
+  if(s.fire&&S3.setFire)S3.setFire(s.fire);
+  if(s.coffee&&S3.setCoffee)S3.setCoffee(s.coffee);
+  if(s.top&&S3.setTop)S3.setTop(s.top);else if(!s.fire&&!s.coffee&&S3.update)S3.update();
 }

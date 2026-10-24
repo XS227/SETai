@@ -4,7 +4,7 @@
  * Stones, materials and UV mapping are shared with the stenvasker (sinks3d-v1.js). */
 import * as THREE from 'three';
 import {RoundedBoxGeometry} from 'three/addons/geometries/RoundedBoxGeometry.js';
-import {sinkMaterial,boxUV} from './sinks3d-v1.js?v=4';
+import {sinkMaterial,boxUV} from './sinks3d-v1.js?v=5';
 
 /* kind 'round': R top radius, H height, tt top thickness, rb/rt column radius at bottom/top, rim: raised lip (top slightly sunk)
  * kind 'plinth': W x D x H block */

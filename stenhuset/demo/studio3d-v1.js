@@ -8,12 +8,16 @@ import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
 import {RoundedBoxGeometry} from 'three/addons/geometries/RoundedBoxGeometry.js';
 import {RectAreaLightUniformsLib} from 'three/addons/lights/RectAreaLightUniformsLib.js';
 import {generateStone,STONES,T} from './stone-textures-v1.js';
-import {SINKS,buildSink,sinkMaterial,TOP_STONES} from './sinks3d-v1.js?v=4';
-import {TABLES,buildTable,buildCountertop} from './furniture3d-v1.js?v=2';
+import {SINKS,buildSink,sinkMaterial,TOP_STONES,FEATURE_STONES} from './sinks3d-v1.js?v=5';
+import {TABLES,buildTable,buildCountertop} from './furniture3d-v1.js?v=3';
 
 /* selected stenvask in the bathroom (product id) or null for the generic basin; marmorbord in the living room;
  * made-to-measure countertop {stone,t,...} for the kitchen, or null to use the floor stone */
 let SINK_ID=null,TABLE_ID=null,TOP_CFG=null,RUG_ID='persisk';
+/* Where stone goes in a Nordic home: bathroom floor and walls; kitchen countertop and splashback (floor optional,
+ * oak by default); living room on oak with painted walls, stone only in the big pieces: coffee table and fireplace. */
+let COFFEE='sk-travvein',FIRE='sk-green',KFLOOR=false,LIVING_FOCUS='coffee';
+const KITCHEN_TOP='sk-carrara';
 /* rugs for the living room; size in metres (null = fitted to the room) */
 const RUGS={persisk:{n:'Persisk teppe, rødt',size:null,style:'persian'},balmoral:{n:'Vintage medaljong, mørk turkis 200×300',size:[3,2],style:'vintage'}};
 
@@ -82,8 +86,30 @@ const MAT={
   linen:std('#d6cbba',.97),wool:std('#dcd4c6',1),leaf:std('#566f48',.55),pot:std('#b8977c',.8),
   mirror:new THREE.MeshStandardMaterial({color:'#ffffff',metalness:1,roughness:.03,envMapIntensity:1.6}),
   dark:std('#2b2b29',.6),lampShade:new THREE.MeshStandardMaterial({color:'#f3e5c8',roughness:.9,emissive:'#ffcf8a',emissiveIntensity:0}),
-  hang:new THREE.MeshStandardMaterial({color:'#f6ebd5',roughness:.5,emissive:'#ffd391',emissiveIntensity:0})
+  hang:new THREE.MeshStandardMaterial({color:'#f6ebd5',roughness:.5,emissive:'#ffd391',emissiveIntensity:0}),
+  wallPaint:std('#ebe6dd',.93),glass:new THREE.MeshPhysicalMaterial({color:'#101010',roughness:.08,metalness:0,clearcoat:1,clearcoatRoughness:.05}),
+  ember:new THREE.MeshStandardMaterial({color:'#2a120a',emissive:'#ff7a2a',emissiveIntensity:.0,roughness:1})
 };
+/* oak parquet, planks along x: one texture covers T × T metres like the stone surfaces (bakeUV) */
+let oakM=null;
+function oakFloor(){
+  if(oakM)return oakM;
+  const N=1024,c=mk(N,N),g=c.getContext('2d'),px=N/T,pw=.18*px;let seed=5;const rnd=()=>{seed=(seed*16807)%2147483647;return seed/2147483647;};
+  for(let row=0;row*pw<N;row++){
+    let x=-rnd()*1.2*px;
+    while(x<N){const len=(1.1+rnd()*.7)*px,tone=rnd(),base=[198+tone*22,160+tone*20,112+tone*16];
+      const gr=g.createLinearGradient(0,row*pw,0,row*pw+pw);gr.addColorStop(0,`rgb(${base.map(v=>v-6).join(',')})`);gr.addColorStop(.5,`rgb(${base.join(',')})`);gr.addColorStop(1,`rgb(${base.map(v=>v-8).join(',')})`);
+      g.fillStyle=gr;g.fillRect(x,row*pw,len,pw);
+      // grain
+      for(let k=0;k<26;k++){g.strokeStyle=`rgba(110,74,40,${.05+rnd()*.09})`;g.lineWidth=.6+rnd()*1.4;const y=row*pw+rnd()*pw;g.beginPath();g.moveTo(x,y);
+        for(let s=0;s<=8;s++)g.lineTo(x+len*s/8,y+(rnd()-.5)*pw*.12);g.stroke();}
+      if(rnd()<.35){g.fillStyle='rgba(90,58,30,.25)';g.beginPath();g.ellipse(x+rnd()*len,row*pw+rnd()*pw,3+rnd()*5,2+rnd()*3,0,0,7);g.fill();}
+      g.fillStyle='rgba(60,40,22,.35)';g.fillRect(x,row*pw,1.5,pw);x+=len;}
+    g.fillStyle='rgba(60,40,22,.32)';g.fillRect(0,row*pw,N,1.2);
+  }
+  const map=new THREE.CanvasTexture(c);map.colorSpace=THREE.SRGBColorSpace;map.wrapS=map.wrapT=THREE.RepeatWrapping;map.anisotropy=maxAniso;
+  oakM=new THREE.MeshStandardMaterial({map,roughness:.48,metalness:0,envMapIntensity:.6});return oakM;
+}
 let gradAO=null;
 function aoTexture(){
   if(gradAO)return gradAO;
@@ -413,7 +439,9 @@ function furnishKitchen(G,st,fm,lights,hx,hz){
     G.add(rbox(dw-.006,.74,.022,.006,MAT.cabinet,x,.47,cz+.3));
     G.add(rbox(.2,.012,.016,.004,MAT.brass,x,.78,cz+.322));
   }
-  const topM=TOP_CFG?sinkMaterial({stone:TOP_CFG.stone,surf:'honed'},()=>onTexture()):fm,tt=TOP_CFG?TOP_CFG.t:.04;
+  const topM=sinkMaterial({stone:TOP_CFG?TOP_CFG.stone:KITCHEN_TOP,surf:'honed'},()=>onTexture()),tt=TOP_CFG?TOP_CFG.t:.03;
+  // splashback in the countertop stone, from the counter up to the wall cabinets (the usual Nordic choice)
+  G.add(stoneBox(len+.02,.6,.02,.003,topM,cx,.92+.3,-hz+.011));
   let fx=cx-len*.2,ctObj=null;
   if(TOP_CFG&&TOP_CFG.L){
     // the countertop from the designer, with its own length, depth, edge, cut-outs and splash, against the back wall
@@ -457,16 +485,31 @@ function furnishLiving(G,st,fm,lights,hx,hz){
     if(sx+sw/2>hx-.1){sw=Math.max(1.3,hx-.1-left);sx=(left+hx-.1)/2;}
   }
   const cw=(sw-.4)/3;
-  // Persian rug under the coffee table, in front of the sofa, kept inside the room
+  // fireplace clad in stone on the left wall, with a hearth plate in the same stone (like Stenhusets peis project)
+  // the hearth plate reaches .15 beyond the fireplace on each side, so keep that clear of the sofa
+  const fz0=sz+.65,fz1=hz-.95,fireOn=!!FIRE,fireRoom=fz1-fz0>=.85;let fireObj=null,fzc=(fz0+fz1)/2,leftClear=-hx+.1;
+  if(fireOn){
+    const fwid=clamp((fireRoom?fz1-fz0:hz-.3-fz0)-.05,.8,1.3);fzc=fireRoom?fzc:fz0+fwid/2+.02;
+    const fm2=sinkMaterial({stone:FIRE,surf:'honed'},()=>onTexture()),fg=new THREE.Group(),dep=.5,hh=.95,fx=-hx+dep/2;
+    fg.add(stoneBox(dep,hh,fwid,.004,fm2,fx,hh/2,fzc));
+    const glass=new THREE.Mesh(new THREE.PlaneGeometry(fwid*.62,.42),MAT.glass);glass.rotation.y=Math.PI/2;glass.position.set(-hx+dep+.002,.52,fzc);fg.add(glass);
+    const glow=new THREE.Mesh(new THREE.PlaneGeometry(fwid*.5,.12),MAT.ember);glow.rotation.y=Math.PI/2;glow.position.set(-hx+dep+.001,.38,fzc);fg.add(glow);
+    fg.add(stoneBox(.42,.02,fwid+.3,.003,fm2,-hx+dep+.21,.01,fzc));
+    fg.name='peis';G.add(fg);fireObj=fg;leftClear=-hx+dep+.42+.08;
+  }
+  // coffee table (and rug) move right when the hearth needs the space
+  const cxT=fireOn?Math.min(hx-.75,Math.max(sx,leftClear+.78)):sx;
+  // rug under the coffee table, in front of the sofa, inside the room and clear of the hearth
   const R=RUGS[RUG_ID];
   if(R){
-    let prw=Math.min(rw,hx*2-.5),prl=Math.min(rl,hz*2-.8);
+    const availW=hx-.1-leftClear;
+    let prw=Math.min(rw,availW),prl=Math.min(rl,hz*2-.8);
     if(R.size){
       // real size; turned if the room is too narrow for the long side along the sofa
-      [prw,prl]=R.size;if(prw>hx*2-.3&&prl<=hx*2-.3&&prw<=hz*2-.5)[prw,prl]=[prl,prw];
-      prw=Math.min(prw,hx*2-.2);prl=Math.min(prl,hz*2-.3);
+      [prw,prl]=R.size;if(prw>availW&&prl<=availW&&prw<=hz*2-.5)[prw,prl]=[prl,prw];
+      prw=Math.min(prw,availW);prl=Math.min(prl,hz*2-.3);
     }
-    G.add(persianRug(prw,prl,clamp(sx,-hx+prw/2+.1,hx-prw/2-.1),clamp(sz+1.25,-hz+prl/2+.3,hz-prl/2-.1),R.style));
+    G.add(persianRug(prw,prl,clamp(cxT,leftClear+prw/2,hx-prw/2-.1),clamp(sz+1.25,-hz+prl/2+.3,hz-prl/2-.1),R.style));
   }
   G.add(rbox(sw,.38,.95,.06,MAT.linen,sx,.26,sz));
   G.add(rbox(sw,.48,.22,.08,MAT.linen,sx,.64,sz-.37));
@@ -476,16 +519,24 @@ function furnishLiving(G,st,fm,lights,hx,hz){
     const b=rbox(cw-.04,.38,.16,.06,MAT.linen,sx+i*cw,.76,sz-.2);b.rotation.x=-.18;G.add(b);
   }
   G.add(rbox(.42,.42,.1,.04,std('#a58f76',.95),sx+sw/2-.5,.66,sz+.18));
-  G.add(stoneBox(.95,.05,.95,.012,fm,sx,.42,sz+1.2));
-  for(const [a,b] of [[-.3,-.3],[.3,-.3],[-.3,.3],[.3,.3]])G.add(cyl(.02,.02,.4,MAT.dark,sx+a,.2,sz+1.2+b,10));
+  // the big coffee table: a slab top on two slab legs, all in one stone (like Stenhusets Emperador table)
+  let coffeeObj=null;
+  if(COFFEE){const cm=sinkMaterial({stone:COFFEE,surf:'honed'},()=>onTexture()),ct=new THREE.Group(),L2=1.25,D2=.66,Ht=.38,tk=.035;
+    ct.add(stoneBox(L2,tk,D2,.004,cm,cxT,Ht-tk/2,sz+1.2));
+    for(const s of [-1,1])ct.add(stoneBox(tk,Ht-tk,D2-.04,.003,cm,cxT+s*(L2/2-.12),(Ht-tk)/2,sz+1.2));
+    ct.name='stuebord';G.add(ct);coffeeObj=ct;}
+  else{G.add(rbox(1.1,.05,.6,.012,MAT.oak,cxT,.4,sz+1.2));for(const [a,b] of [[-.45,-.22],[.45,-.22],[-.45,.22],[.45,.22]])G.add(cyl(.02,.02,.38,MAT.dark,cxT+a,.19,sz+1.2+b,10));}
   const frame=rbox(1.2,.9,.04,.006,MAT.darkWood,sx,1.58,-hz+.03);G.add(frame);
   const art=new THREE.Mesh(new THREE.PlaneGeometry(1.1,.8),new THREE.MeshStandardMaterial({map:artCanvas(),roughness:.9}));art.position.set(sx,1.58,-hz+.054);G.add(art);
   const l=lamp(Math.min(sx+sw/2+.5,hx-.35),sz-.1,1.45,lights,2.4);G.add(l.g);
-  G.add(plant(-hx+.4,hz-.5,1.15));
+  if(!fireOn||fireRoom)G.add(plant(-hx+.4,hz-.5,1.15));
   G.add(rbox(.7,.55,.5,.05,MAT.oak,hx-.5,.28,-hz+.4));
-  if(TABLE_ID&&TABLES[TABLE_ID]){const tx=Math.max(-hx+.32,sx-sw/2-.3),t=buildTable(TABLE_ID,()=>onTexture());t.position.set(tx,0,sz+.05);G.add(t);
-    setFocus(tx,.34,sz+.05,tx+.1,1.45,Math.min(hz-.3,sz+1.75),t);}
-  else setFocus(sx,.42,sz+1.2,sx+.6,1.5,Math.min(hz-.3,sz+2.8));
+  let tableObj=null,tx=0;
+  if(TABLE_ID&&TABLES[TABLE_ID]){tx=Math.max(-hx+.32,sx-sw/2-.3);tableObj=buildTable(TABLE_ID,()=>onTexture());tableObj.position.set(tx,0,sz+.05);G.add(tableObj);}
+  // the camera's "product" view looks at what was chosen last
+  if(LIVING_FOCUS==='fire'&&fireObj)setFocus(-hx+.3,.5,fzc,Math.min(hx-.4,-hx+2.3),1.35,Math.min(hz-.3,fzc+.6),fireObj);
+  else if(LIVING_FOCUS==='table'&&tableObj)setFocus(tx,.34,sz+.05,tx+.1,1.45,Math.min(hz-.3,sz+1.75),tableObj);
+  else setFocus(cxT,.38,sz+1.2,cxT+.5,1.45,Math.min(hz-.3,sz+2.7),coffeeObj);
 }
 
 /* ---------- room content ---------- */
@@ -667,6 +718,7 @@ function init(){
     // warm lamps (2700 K) in the evening, white-balanced like the eye does indoors
     const lampC=adapted(2700,.55);
     MAT.lampShade.emissive.copy(lampC);MAT.hang.emissive.copy(lampC);
+    MAT.ember.emissiveIntensity=.5+night*1.6;
     MAT.lampShade.emissiveIntensity=night*1.6;MAT.hang.emissiveIntensity=night*1.4;
     if(content)for(const o of content.lights){o.l.color.copy(lampC);o.l.intensity=o.power*night*14;}
   }
@@ -680,12 +732,16 @@ function init(){
   const PRODUCT_LABEL={bad:'Servanten',kjokken:'Benkeplaten',stue:'Bordet'};
   let focusNext=false;
   async function update(){
-    const st=window.getStudioState(),key=[st.room,st.w,st.l,st.floor.id,st.wall.id,SINK_ID,TABLE_ID,TOP_CFG?JSON.stringify(TOP_CFG):'',RUG_ID].join('|');
+    const st=window.getStudioState(),key=[st.room,st.w,st.l,st.floor.id,st.wall.id,SINK_ID,TABLE_ID,TOP_CFG?JSON.stringify(TOP_CFG):'',RUG_ID,COFFEE,FIRE,KFLOOR,LIVING_FOCUS].join('|');
     const pb=bar.querySelector('[data-v=product]');if(pb)pb.textContent=PRODUCT_LABEL[st.room]||'Produktet';
     if(key===roomKey){applyLight(st);request();return;}
     roomKey=key;const my=++token;
     let fm,wm;
-    try{[fm,wm]=await Promise.all([ensureSurface(st.floor.id),ensureSurface(st.wall.id)]);}catch(e){console.warn('Stenhuset studio:',e);return;}
+    try{
+      // bathroom: the chosen stones; kitchen: oak (or the chosen floor stone) with painted walls; living room: oak and paint
+      const stoneFloor=st.room==='bad'||(st.room==='kjokken'&&KFLOOR);
+      [fm,wm]=await Promise.all([stoneFloor?ensureSurface(st.floor.id):oakFloor(),st.room==='bad'?ensureSurface(st.wall.id):MAT.wallPaint]);
+    }catch(e){console.warn('Stenhuset studio:',e);return;}
     if(my!==token)return;
     const first=!content;
     rebuild(st,fm,wm);applyLight(st);goView(view,true);
@@ -715,7 +771,11 @@ function init(){
   new ResizeObserver(resize).observe(shell);
   window.Studio3D={ready:true,update,goView,
     setSink(id){SINK_ID=id&&SINKS[id]?Number(id):null;roomKey='';focusNext=true;update();},getSink:()=>SINK_ID,sinks:SINKS,
-    setTable(id){TABLE_ID=id&&TABLES[id]?Number(id):null;roomKey='';focusNext=true;update();},getTable:()=>TABLE_ID,tables:TABLES,
+    setTable(id){TABLE_ID=id&&TABLES[id]?Number(id):null;LIVING_FOCUS='table';roomKey='';focusNext=true;update();},getTable:()=>TABLE_ID,tables:TABLES,
+    featureStones:FEATURE_STONES.map(([id,n])=>({id,n,c0:STONES[id]?STONES[id].c0:[200,200,200]})),
+    setCoffee(id){COFFEE=id&&STONES[id]?id:null;LIVING_FOCUS='coffee';roomKey='';focusNext=true;update();},getCoffee:()=>COFFEE,
+    setFire(id){FIRE=id&&STONES[id]?id:null;LIVING_FOCUS='fire';roomKey='';focusNext=!!FIRE;update();},getFire:()=>FIRE,
+    setKitchenFloor(stone){KFLOOR=!!stone;roomKey='';update();},getKitchenFloor:()=>KFLOOR,
     topStones:TOP_STONES.map(([id,n])=>({id,n,c0:STONES[id]?STONES[id].c0:[200,200,200]})),
     // keeps the whole design from the countertop designer (length, depth, edge, sink and hob cut-outs, splash)
     setTop(cfg){TOP_CFG=cfg&&cfg.stone?{...cfg,t:cfg.t||.03}:null;roomKey='';focusNext=true;update();},getTop:()=>TOP_CFG&&{...TOP_CFG},

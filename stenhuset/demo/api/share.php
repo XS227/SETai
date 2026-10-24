@@ -31,6 +31,9 @@ $state=[
   'sink'=>max(0,(int)($s['sink']??0)),'table'=>max(0,(int)($s['table']??0)),
   'top'=>is_array($s['top']??null)?clean_top($s['top']):null,
   'rug'=>in_array($s['rug']??'',['persisk','balmoral','none'],true)?$s['rug']:'persisk',
+  'coffee'=>preg_match('/^(none|sk-[a-z]{2,20})$/',(string)($s['coffee']??''))?$s['coffee']:'',
+  'fire'=>preg_match('/^(none|sk-[a-z]{2,20})$/',(string)($s['fire']??''))?$s['fire']:'',
+  'kfloor'=>!empty($s['kfloor']),
   'view'=>in_array($s['view']??'',$views,true)?$s['view']:'door',
   'names'=>[],'created'=>gmdate('c'),
 ];

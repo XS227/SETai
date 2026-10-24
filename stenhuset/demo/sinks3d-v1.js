@@ -25,8 +25,11 @@ const SINK_STONES={
   'sk-white':{kind:'marble',c0:[240,238,234],vein:[204,204,202],th:[.97,.985],rough:.3,bump:.4,seed:277,patch:null},
   'sk-black':{kind:'limestone',c0:[40,40,42],c1:[30,30,32],rough:.4,bump:1,seed:281},
   'sk-rosso':{kind:'marble',c0:[104,32,36],vein:[232,226,220],th:[.93,.96],rough:.3,bump:.5,seed:283,patch:[84,24,30]},
-  'sk-travvein':{kind:'marble',c0:[216,198,168],vein:[172,146,110],th:[.84,.9],rough:.5,bump:.9,seed:293,patch:[200,180,148]}
+  'sk-travvein':{kind:'marble',c0:[216,198,168],vein:[172,146,110],th:[.84,.9],rough:.5,bump:.9,seed:293,patch:[200,180,148]},
+  'sk-emperador':{kind:'marble',c0:[94,66,50],vein:[214,198,174],th:[.9,.95],rough:.25,bump:.5,seed:307,patch:[72,50,38]}
 };
+/* stones for the big pieces in a living room: coffee table and fireplace cladding (made to measure) */
+export const FEATURE_STONES=[['sk-travvein','Travertin'],['sk-emperador','Emperador'],['sk-green','Grågrønn marmor'],['sk-carrara','Carrara'],['sk-viola','Calacatta Viola'],['sk-arabescato','Arabescato'],['sk-nero','Sort marmor'],['sk-rosso','Rosso Levanto'],['sk-belgian','Belgian blue'],['sk-beige','Beige marmor']];
 /* stones offered for made-to-measure countertops (name shown to the customer) */
 export const TOP_STONES=[['sk-carrara','Carrara'],['sk-viola','Calacatta Viola'],['sk-arabescato','Arabescato'],['sk-nero','Sort marmor'],['sk-travvein','Travertin'],['sk-botticino','Botticino'],['sk-belgian','Belgian blue'],['sk-beige','Beige marmor'],['sk-rosso','Rosso Levanto']];
 for(const [k,v] of Object.entries(SINK_STONES))if(!STONES[k])STONES[k]={...SOLID,...v};
