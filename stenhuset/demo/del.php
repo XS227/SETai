@@ -21,6 +21,13 @@ if(isset($_GET['o'])&&($s=load_share($_GET['o']))){
     if(!empty($p['photos'][0]['f'])){$image=SITE.$p['photos'][0]['f'];[$w,$hgt]=@getimagesize(__DIR__.'/'.$p['photos'][0]['f'])?:[1200,1200];}
     $target='./?produkt='.$pid;break;
   }
+}elseif(isset($_GET['pr'])&&preg_match('/^[a-z0-9-]{2,60}$/',$_GET['pr'])){
+  $f=DATA_DIR.'/projects.json';$doc=json_decode(@file_get_contents(is_file($f)?$f:__DIR__.'/projects-seed-v1.json'),true);
+  foreach(($doc['projects']??[]) as $p)if($p['id']===$_GET['pr']&&!empty($p['photos'])){
+    $title=$p['title'].' | Stenhuset';$desc=mb_substr($p['text']?:'Prosjekt i natursten fra Stenhuset.',0,190);
+    $ph=$p['photos'][$p['cover']??0]??$p['photos'][0];$image=SITE.$ph['f'];$w=$ph['w']?:1200;$hgt=$ph['h']?:1200;
+    $target='./#prosjekter?p='.$p['id'];break;
+  }
 }elseif(isset($_GET['l'])&&preg_match('/^[A-Za-z0-9_-]{5,40}$/',$_GET['l'])){
   $code=$_GET['l'];$f=DATA_DIR.'/looks.json';$doc=json_decode(@file_get_contents(is_file($f)?$f:__DIR__.'/looks-seed-v1.json'),true);
   foreach(($doc['looks']??[]) as $l)if($l['id']===$code){

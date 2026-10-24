@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Prosjekter | Stenhuset admin</title>
+<style>
+:root{--cream:#f6f2eb;--paper:#fffdfa;--dark:#242725;--line:#ddd7cf;--mute:#7e817d}
+*{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:var(--dark);font:14px/1.5 Arial,sans-serif}
+header{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:14px 18px;border-bottom:1px solid var(--line);background:var(--paper);position:sticky;top:0;z-index:5}
+h1{font:400 22px Georgia,serif;margin:0}
+main{max-width:1000px;margin:0 auto;padding:18px 14px 80px}
+input,select,textarea{font:inherit;color:inherit;border:1px solid var(--line);background:#fff;padding:9px 10px;min-width:0}
+textarea{width:100%;min-height:76px;resize:vertical}
+button,.btn{font:13px Arial,sans-serif;border:1px solid #c9bdab;background:transparent;color:inherit;padding:9px 13px;cursor:pointer;min-height:40px;text-decoration:none;display:inline-flex;align-items:center}
+button.pri{background:#30382e;border-color:#30382e;color:#fff}button.del{color:#9a3a2a;border-color:#e2c4bd}
+.bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.pr{background:var(--paper);border:1px solid var(--line);padding:16px;margin:0 0 14px}
+.pr h2{font:400 19px Georgia,serif;margin:0 0 10px;display:flex;justify-content:space-between;gap:10px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.full{grid-column:1/-1}
+label{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--mute)}
+.rooms{display:flex;gap:10px;flex-wrap:wrap;font-size:13px;color:var(--dark)}.rooms label{flex-direction:row;align-items:center;color:var(--dark);font-size:13px}
+.photos{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+.ph{position:relative;width:110px}.ph img{width:110px;height:110px;object-fit:cover;display:block;border:3px solid transparent}
+.ph.cover img{border-color:#30382e}.ph .t{display:flex;gap:2px}.ph .t button{min-height:28px;padding:2px 6px;font-size:11px;flex:1}
+.chips{display:flex;flex-wrap:wrap;gap:6px}.chip{display:inline-flex;gap:6px;align-items:center;border:1px solid var(--line);background:#fff;padding:3px;font-size:12px}
+.chip img{width:28px;height:28px;object-fit:cover}.chip button{min-height:24px;padding:0 6px;border:0;font-size:15px}
+.search{position:relative}.search input{width:100%}
+.res{position:absolute;left:0;right:0;top:100%;background:#fff;border:1px solid var(--line);z-index:3;max-height:280px;overflow:auto}
+.res button{display:flex;gap:8px;width:100%;text-align:left;border:0;border-bottom:1px solid #eee;min-height:42px}.res img{width:32px;height:32px;object-fit:cover}
+.msg{min-height:20px;font-size:13px;margin:8px 0}.msg.err{color:#9a3a2a}.msg.ok{color:#355438}
+.hint{color:var(--mute);font-size:12px}
+@media(max-width:700px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header><h1>Prosjekter</h1><div class="bar"><input id="token" type="password" placeholder="Adminnøkkel" autocomplete="off" aria-label="Adminnøkkel"><button class="pri" id="save">Lagre</button></div></header>
+<main>
+<p class="hint">Legg til ferdige prosjekter med bilder, rom, tekst, stein og produkter. Bildene skaleres ned på enheten din før opplasting. Første bilde med mørk ramme er forsidebildet. Endringer blir synlige på <a href="./#prosjekter">Prosjekter</a> når du trykker «Lagre». Tekstene i de første prosjektene er utkast laget fra bildene. Kontroller dem.</p>
+<div class="bar"><input id="newtitle" placeholder="Navn på nytt prosjekt" style="flex:1"><button id="add">Nytt prosjekt</button></div>
+<div class="msg" id="msg" role="status"></div>
+<div id="list"></div>
+</main>
+<script>
+(()=>{
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const $=s=>document.querySelector(s),msg=(t,k)=>{const m=$('#msg');m.textContent=t;m.className='msg '+(k||'');};
+const ROOMS=[['bad','Bad'],['kjokken','Kjøkken'],['stue','Stue'],['ute','Uterom'],['produksjon','Produksjon']];
+const MATS=[['','Steintype (bibliotek)'],['marmor','Marmor'],['kalksten','Kalksten'],['travertin','Travertin'],['terracotta','Terracotta'],['terrazzo','Terrazzo'],['handlaget','Zellige / håndlagde'],['uterom','Sten til uterom']];
+const TOPS=[['','Ingen'],['sk-carrara','Carrara'],['sk-viola','Calacatta Viola'],['sk-arabescato','Arabescato'],['sk-nero','Sort marmor'],['sk-travvein','Travertin'],['sk-botticino','Botticino'],['sk-belgian','Belgian blue'],['sk-beige','Beige marmor'],['sk-rosso','Rosso Levanto']];
+let P=[],cat=new Map(),dirty=false;
+try{$('#token').value=sessionStorage.getItem('looks-token')||'';}catch(_){}
+const token=()=>$('#token').value.trim();
+$('#token').addEventListener('change',()=>{try{sessionStorage.setItem('looks-token',token());}catch(_){}});
+window.addEventListener('beforeunload',e=>{if(dirty){e.preventDefault();e.returnValue='';}});
+const mark=()=>{dirty=true;msg('Ulagrede endringer.');};
+const opt=(list,v)=>list.map(([k,n])=>`<option value="${k}"${k===(v||'')?' selected':''}>${n}</option>`).join('');
+function render(){
+  $('#list').innerHTML=P.map((p,i)=>`<section class="pr" data-i="${i}">
+    <h2><span>${esc(p.title||'Uten navn')}</span><span class="bar"><button data-a="up" ${i?'':'disabled'}>↑</button><button data-a="down" ${i<P.length-1?'':'disabled'}>↓</button><button class="del" data-a="del">Slett</button></span></h2>
+    <div class="grid">
+      <label class="full">Navn<input data-f="title" value="${esc(p.title)}" maxlength="120"></label>
+      <label class="full">Tekst<textarea data-f="text" maxlength="900">${esc(p.text)}</textarea></label>
+      <div class="rooms full">${ROOMS.map(([k,n])=>`<label><input type="checkbox" data-room="${k}"${p.rooms.includes(k)?' checked':''}> ${n}</label>`).join('')}<label><input type="checkbox" data-f="hidden"${p.hidden?' checked':''}> Skjul</label></div>
+      <label>Steintype<select data-stone="0">${opt(MATS,p.stone[0])}</select></label>
+      <label>Steinfamilie (valgfri, f.eks. Carrara)<input data-stone="1" value="${esc(p.stone[1])}" maxlength="40"></label>
+      <label>Benkeplate-knapp (stein)<select data-f="countertop">${opt(TOPS,p.countertop)}</select></label>
+      <label>«Bygg lignende» i showroom<select data-studio>${opt([['','Av'],['bad','Bad'],['kjokken','Kjøkken'],['stue','Stue']],p.studio&&p.studio.room)}</select></label>
+    </div>
+    <div class="photos">${p.photos.map((ph,k)=>`<div class="ph${k===(p.cover||0)?' cover':''}"><img src="${esc(ph.s||ph.f)}" alt=""><div class="t"><button data-a="cover" data-k="${k}" title="Forsidebilde">★</button><button data-a="pl" data-k="${k}" ${k?'':'disabled'}>‹</button><button data-a="pr" data-k="${k}" ${k<p.photos.length-1?'':'disabled'}>›</button><button data-a="rmph" data-k="${k}">×</button></div></div>`).join('')}
+      <label class="btn" style="flex-direction:row;color:var(--dark)">+ Legg til bilder<input type="file" accept="image/*" multiple data-upload hidden></label></div>
+    <div class="chips">${p.products.map(id=>{const c=cat.get(id);return `<span class="chip">${c?`<img src="${esc(c.i)}" alt="">`:''}${esc(c?c.n:'#'+id)}<button data-a="rm" data-id="${id}" aria-label="Fjern">×</button></span>`;}).join('')||'<span class="hint">Ingen produkter koblet.</span>'}</div>
+    <div class="search" style="margin-top:8px"><input data-search placeholder="Koble produkt (søk på navn) …"><div class="res" hidden></div></div>
+  </section>`).join('');
+}
+const slugify=t=>t.toLowerCase().replace(/æ/g,'ae').replace(/ø/g,'o').replace(/å/g,'a').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,50)||'prosjekt';
+$('#add').onclick=()=>{const t=$('#newtitle').value.trim();if(!t){msg('Skriv et navn først.','err');return;}
+  let id=slugify(t),n=2;while(P.some(p=>p.id===id))id=slugify(t)+'-'+n++;
+  P.unshift({id,title:t,text:'',rooms:[],stone:['',''],products:[],studio:null,countertop:null,cover:0,hidden:false,photos:[]});$('#newtitle').value='';mark();render();};
+const L=$('#list');
+L.addEventListener('input',e=>{
+  const sec=e.target.closest('.pr');if(!sec)return;const p=P[+sec.dataset.i],t=e.target;
+  if(t.dataset.f==='title'||t.dataset.f==='text'){p[t.dataset.f]=t.value;mark();}
+  else if(t.dataset.stone){p.stone[+t.dataset.stone]=t.value;mark();}
+  else if(t.dataset.search!==undefined){const q=t.value.trim().toLowerCase(),res=sec.querySelector('.res');if(q.length<2){res.hidden=true;return;}
+    const hits=[...cat.values()].filter(x=>x.n.toLowerCase().includes(q)&&!p.products.includes(x.id)).slice(0,10);
+    res.innerHTML=hits.map(x=>`<button data-a="pick" data-id="${x.id}"><img src="${esc(x.i)}" alt="">${esc(x.n)}</button>`).join('')||'<div class="hint" style="padding:10px">Ingen treff</div>';res.hidden=false;}
+});
+L.addEventListener('change',async e=>{
+  const sec=e.target.closest('.pr');if(!sec)return;const p=P[+sec.dataset.i],t=e.target;
+  if(t.dataset.room){p.rooms=ROOMS.map(r=>r[0]).filter(k=>sec.querySelector(`[data-room="${k}"]`).checked);mark();}
+  else if(t.dataset.f==='hidden'){p.hidden=t.checked;mark();}
+  else if(t.dataset.f==='countertop'){p.countertop=t.value||null;mark();}
+  else if(t.dataset.studio!==undefined){p.studio=t.value?{...(p.studio||{}),room:t.value}:null;mark();}
+  else if(t.dataset.upload!==undefined){await upload(p,[...t.files]);render();}
+});
+L.addEventListener('click',e=>{
+  const b=e.target.closest('[data-a]');if(!b)return;const sec=b.closest('.pr'),i=+sec.dataset.i,p=P[i],k=+b.dataset.k,a=b.dataset.a;
+  if(a==='pick'){if(p.products.length<12)p.products.push(+b.dataset.id);}
+  else if(a==='rm')p.products=p.products.filter(x=>x!==+b.dataset.id);
+  else if(a==='up'&&i>0)[P[i-1],P[i]]=[P[i],P[i-1]];
+  else if(a==='down'&&i<P.length-1)[P[i+1],P[i]]=[P[i],P[i+1]];
+  else if(a==='del'){if(!confirm('Slette prosjektet «'+p.title+'»?'))return;P.splice(i,1);}
+  else if(a==='cover')p.cover=k;
+  else if(a==='pl'&&k>0){[p.photos[k-1],p.photos[k]]=[p.photos[k],p.photos[k-1]];if(p.cover===k)p.cover--;else if(p.cover===k-1)p.cover++;}
+  else if(a==='pr'&&k<p.photos.length-1){[p.photos[k+1],p.photos[k]]=[p.photos[k],p.photos[k+1]];if(p.cover===k)p.cover++;else if(p.cover===k+1)p.cover--;}
+  else if(a==='rmph'){p.photos.splice(k,1);if(p.cover>=p.photos.length)p.cover=0;}
+  else return;
+  mark();render();
+});
+// resize on the device (keeps every request well under the server's 1 MB limit)
+async function jpeg(file,max,q){
+  const bmp=await createImageBitmap(file,{imageOrientation:'from-image'}).catch(()=>null);
+  let src=bmp,w,h;if(!bmp){const u=URL.createObjectURL(file),im=new Image();im.src=u;await im.decode();src=im;w=im.naturalWidth;h=im.naturalHeight;}else{w=bmp.width;h=bmp.height;}
+  const s=Math.min(1,max/Math.max(w,h)),c=document.createElement('canvas');c.width=Math.round(w*s);c.height=Math.round(h*s);
+  c.getContext('2d').drawImage(src,0,0,c.width,c.height);
+  let out=c.toDataURL('image/jpeg',q);while(out.length>900000&&q>.5){q-=.08;out=c.toDataURL('image/jpeg',q);}
+  return out;
+}
+async function upload(p,files){
+  if(!token()){msg('Skriv inn adminnøkkelen før du laster opp.','err');return;}
+  for(const [n,f] of files.entries()){
+    msg('Laster opp bilde '+(n+1)+' av '+files.length+' …');
+    try{
+      const image=await jpeg(f,1600,.82),thumb=await jpeg(f,640,.78);
+      const r=await fetch('api/projects.php',{method:'POST',headers:{'Content-Type':'application/json','X-Admin-Token':token()},body:JSON.stringify({action:'upload',project:p.id,image,thumb})});
+      const j=await r.json().catch(()=>({}));if(!r.ok)throw new Error(j.error||('HTTP '+r.status));
+      p.photos.push(j);mark();
+    }catch(e){msg('Bilde '+(n+1)+' feilet: '+e.message,'err');return;}
+  }
+  msg('Bildene er lastet opp. Husk å trykke «Lagre».');
+}
+$('#save').onclick=async()=>{
+  if(!token()){msg('Skriv inn adminnøkkelen først.','err');$('#token').focus();return;}
+  try{sessionStorage.setItem('looks-token',token());}catch(_){}
+  msg('Lagrer …');
+  try{const r=await fetch('api/projects.php',{method:'POST',headers:{'Content-Type':'application/json','X-Admin-Token':token()},body:JSON.stringify({action:'save',projects:P})});
+    const j=await r.json().catch(()=>({}));if(!r.ok)throw new Error(j.error||('HTTP '+r.status));dirty=false;msg('Lagret ('+j.count+' prosjekter).','ok');}
+  catch(e){msg('Kunne ikke lagre: '+e.message,'err');}
+};
+Promise.all([fetch('api/projects.php',{cache:'no-cache'}).then(r=>r.json()).catch(()=>fetch('projects-seed-v1.json').then(r=>r.json())),fetch('catalog-v1.json').then(r=>r.json())])
+  .then(([d,c])=>{P=(d.projects||[]).map(p=>({stone:['',''],products:[],rooms:[],photos:[],...p}));c.products.forEach(x=>cat.set(x.id,x));render();})
+  .catch(()=>msg('Kunne ikke laste data.','err'));
+})();
+</script>
+</body>
+</html>

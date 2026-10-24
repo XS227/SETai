@@ -58,8 +58,10 @@ export function close(){
   c.renderer.setAnimationLoop(null);c.ro.disconnect();window.removeEventListener('keydown',c.onKey);
   c.scene.traverse(o=>{if(o.geometry)o.geometry.dispose();});c.renderer.dispose();c.root.remove();document.documentElement.style.overflow=c.overflow;
 }
-export function open(){
+export function open(opts={}){
   close();css();
+  // start in a given stone (from a project or the stone library)
+  if(opts&&opts.stone&&TOP_STONES.some(t=>t[0]===opts.stone))cfg.stone=opts.stone;
   const root=document.createElement('div');root.className='ct';root.setAttribute('role','dialog');root.setAttribute('aria-modal','true');root.setAttribute('aria-label','Benkeplate på mål i 3D');
   root.innerHTML=`<div class="ct-box">
    <div class="ct-head"><div><small>Bestill på mål · 3D</small><h2>Design benkeplaten din</h2></div><button class="ct-x" data-ct="x" aria-label="Lukk">×</button></div>

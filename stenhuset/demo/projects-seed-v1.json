@@ -1,0 +1,490 @@
+{
+ "updated": "2026-10-24",
+ "source": "Stenhusets mediebibliotek (stenhuset.no)",
+ "projects": [
+  {
+   "id": "bad-calacatta-ottagono",
+   "title": "Bad med Calacatta Ottagono på gulvet",
+   "rooms": [
+    "bad"
+   ],
+   "cover": 0,
+   "text": "Åttekantede marmorfliser med små sorte innleggsfliser gir et klassisk, lyst bad. Gulvet møter frittstående badekar og innredning i dempet grått.",
+   "stone": [
+    "marmor",
+    "Calacatta"
+   ],
+   "products": [
+    10654
+   ],
+   "studio": {
+    "room": "bad",
+    "floor": "calacatta-viola",
+    "wall": "kalkpuss-hvit"
+   },
+   "photos": [
+    {
+     "f": "assets/projects/bad-calacatta-ottagono/01.jpg",
+     "s": "assets/projects/bad-calacatta-ottagono/01-s.jpg",
+     "w": 360,
+     "h": 480
+    },
+    {
+     "f": "assets/projects/bad-calacatta-ottagono/02.jpg",
+     "s": "assets/projects/bad-calacatta-ottagono/02-s.jpg",
+     "w": 360,
+     "h": 480
+    },
+    {
+     "f": "assets/projects/bad-calacatta-ottagono/03.jpg",
+     "s": "assets/projects/bad-calacatta-ottagono/03-s.jpg",
+     "w": 360,
+     "h": 480
+    },
+    {
+     "f": "assets/projects/bad-calacatta-ottagono/04.jpg",
+     "s": "assets/projects/bad-calacatta-ottagono/04-s.jpg",
+     "w": 360,
+     "h": 480
+    },
+    {
+     "f": "assets/projects/bad-calacatta-ottagono/05.jpg",
+     "s": "assets/projects/bad-calacatta-ottagono/05-s.jpg",
+     "w": 360,
+     "h": 480
+    }
+   ],
+   "draft": true
+  },
+  {
+   "id": "leilighet-marmor",
+   "title": "Leilighet med marmor på kjøkken og bad",
+   "rooms": [
+    "kjokken",
+    "bad"
+   ],
+   "cover": 1,
+   "text": "Kjøkkenet har benkeplate og bakvegg i mørk, året marmor med nedfelt kum. På badet er veggene kledd i varm beige marmor med store plater.",
+   "stone": [
+    "marmor",
+    ""
+   ],
+   "products": [],
+   "studio": {
+    "room": "kjokken",
+    "top": {
+     "stone": "sk-nero",
+     "t": 0.03
+    }
+   },
+   "countertop": "sk-nero",
+   "photos": [
+    {
+     "f": "assets/projects/leilighet-marmor/01.jpg",
+     "s": "assets/projects/leilighet-marmor/01-s.jpg",
+     "w": 1200,
+     "h": 800
+    },
+    {
+     "f": "assets/projects/leilighet-marmor/02.jpg",
+     "s": "assets/projects/leilighet-marmor/02-s.jpg",
+     "w": 1200,
+     "h": 1221
+    },
+    {
+     "f": "assets/projects/leilighet-marmor/03.jpg",
+     "s": "assets/projects/leilighet-marmor/03-s.jpg",
+     "w": 1200,
+     "h": 800
+    },
+    {
+     "f": "assets/projects/leilighet-marmor/04.jpg",
+     "s": "assets/projects/leilighet-marmor/04-s.jpg",
+     "w": 1200,
+     "h": 800
+    },
+    {
+     "f": "assets/projects/leilighet-marmor/05.jpg",
+     "s": "assets/projects/leilighet-marmor/05-s.jpg",
+     "w": 1200,
+     "h": 800
+    },
+    {
+     "f": "assets/projects/leilighet-marmor/06.jpg",
+     "s": "assets/projects/leilighet-marmor/06-s.jpg",
+     "w": 1200,
+     "h": 800
+    },
+    {
+     "f": "assets/projects/leilighet-marmor/07.jpg",
+     "s": "assets/projects/leilighet-marmor/07-s.jpg",
+     "w": 1200,
+     "h": 800
+    },
+    {
+     "f": "assets/projects/leilighet-marmor/08.jpg",
+     "s": "assets/projects/leilighet-marmor/08-s.jpg",
+     "w": 1067,
+     "h": 1600
+    },
+    {
+     "f": "assets/projects/leilighet-marmor/09.jpg",
+     "s": "assets/projects/leilighet-marmor/09-s.jpg",
+     "w": 1067,
+     "h": 1600
+    },
+    {
+     "f": "assets/projects/leilighet-marmor/10.jpg",
+     "s": "assets/projects/leilighet-marmor/10-s.jpg",
+     "w": 1200,
+     "h": 800
+    }
+   ],
+   "draft": true
+  },
+  {
+   "id": "bad-travertin",
+   "title": "Bad med travertin i dusjen",
+   "rooms": [
+    "bad"
+   ],
+   "cover": 0,
+   "text": "Dusjveggen er kledd i travertin med vannrett åretegning, med en nisje i samme stein. Resten av badet har lys natursten på gulv og vegg og innredning i eik.",
+   "stone": [
+    "travertin",
+    ""
+   ],
+   "products": [],
+   "studio": {
+    "room": "bad",
+    "floor": "provence-beige",
+    "wall": "provence-beige"
+   },
+   "photos": [
+    {
+     "f": "assets/projects/bad-travertin/01.jpg",
+     "s": "assets/projects/bad-travertin/01-s.jpg",
+     "w": 1200,
+     "h": 1600
+    },
+    {
+     "f": "assets/projects/bad-travertin/02.jpg",
+     "s": "assets/projects/bad-travertin/02-s.jpg",
+     "w": 1200,
+     "h": 1600
+    },
+    {
+     "f": "assets/projects/bad-travertin/03.jpg",
+     "s": "assets/projects/bad-travertin/03-s.jpg",
+     "w": 1200,
+     "h": 1600
+    },
+    {
+     "f": "assets/projects/bad-travertin/04.jpg",
+     "s": "assets/projects/bad-travertin/04-s.jpg",
+     "w": 1200,
+     "h": 1600
+    },
+    {
+     "f": "assets/projects/bad-travertin/05.jpg",
+     "s": "assets/projects/bad-travertin/05-s.jpg",
+     "w": 1200,
+     "h": 1600
+    }
+   ],
+   "draft": true
+  },
+  {
+   "id": "peis",
+   "title": "Peis kledd i grågrønn natursten",
+   "rooms": [
+    "stue"
+   ],
+   "cover": 0,
+   "text": "Peisen er kledd i store plater med tydelig åretegning, med en gulvplate i samme stein foran. Steinen binder peisen sammen med det lyse eikegulvet.",
+   "stone": [
+    "marmor",
+    ""
+   ],
+   "products": [],
+   "studio": null,
+   "photos": [
+    {
+     "f": "assets/projects/peis/01.jpg",
+     "s": "assets/projects/peis/01-s.jpg",
+     "w": 1200,
+     "h": 1600
+    },
+    {
+     "f": "assets/projects/peis/02.jpg",
+     "s": "assets/projects/peis/02-s.jpg",
+     "w": 1200,
+     "h": 1600
+    },
+    {
+     "f": "assets/projects/peis/03.jpg",
+     "s": "assets/projects/peis/03-s.jpg",
+     "w": 1200,
+     "h": 1600
+    },
+    {
+     "f": "assets/projects/peis/04.jpg",
+     "s": "assets/projects/peis/04-s.jpg",
+     "w": 1200,
+     "h": 1600
+    },
+    {
+     "f": "assets/projects/peis/05.jpg",
+     "s": "assets/projects/peis/05-s.jpg",
+     "w": 1200,
+     "h": 1600
+    },
+    {
+     "f": "assets/projects/peis/06.jpg",
+     "s": "assets/projects/peis/06-s.jpg",
+     "w": 1200,
+     "h": 1600
+    },
+    {
+     "f": "assets/projects/peis/07.jpg",
+     "s": "assets/projects/peis/07-s.jpg",
+     "w": 1200,
+     "h": 1600
+    },
+    {
+     "f": "assets/projects/peis/08.jpg",
+     "s": "assets/projects/peis/08-s.jpg",
+     "w": 1200,
+     "h": 1600
+    }
+   ],
+   "draft": true
+  },
+  {
+   "id": "kjokken-carrara",
+   "title": "Kjøkken med Carrara og stenvask",
+   "rooms": [
+    "kjokken"
+   ],
+   "cover": 0,
+   "text": "Lys benkeplate i Carrara-marmor og en frittstående stenvask med front, i et kjøkken med lyse fronter og messingarmatur.",
+   "stone": [
+    "marmor",
+    "Carrara"
+   ],
+   "products": [],
+   "studio": {
+    "room": "kjokken",
+    "top": {
+     "stone": "sk-carrara",
+     "t": 0.03
+    }
+   },
+   "countertop": "sk-carrara",
+   "photos": [
+    {
+     "f": "assets/projects/kjokken-carrara/01.jpg",
+     "s": "assets/projects/kjokken-carrara/01-s.jpg",
+     "w": 1600,
+     "h": 1067
+    }
+   ],
+   "draft": true
+  },
+  {
+   "id": "kjokkenoy-marmor",
+   "title": "Kjøkkenøy kledd i marmor",
+   "rooms": [
+    "kjokken"
+   ],
+   "cover": 0,
+   "text": "En kjøkkenøy der marmoren går over toppen og ned på sidene, slik at åretegningen fortsetter rundt hjørnene.",
+   "stone": [
+    "marmor",
+    ""
+   ],
+   "products": [],
+   "studio": {
+    "room": "kjokken",
+    "top": {
+     "stone": "sk-arabescato",
+     "t": 0.03
+    }
+   },
+   "countertop": "sk-arabescato",
+   "photos": [
+    {
+     "f": "assets/projects/kjokkenoy-marmor/01.jpg",
+     "s": "assets/projects/kjokkenoy-marmor/01-s.jpg",
+     "w": 1600,
+     "h": 1067
+    },
+    {
+     "f": "assets/projects/kjokkenoy-marmor/02.jpg",
+     "s": "assets/projects/kjokkenoy-marmor/02-s.jpg",
+     "w": 1600,
+     "h": 1067
+    }
+   ],
+   "draft": true
+  },
+  {
+   "id": "emperador-bord",
+   "title": "Bord i Emperador-marmor",
+   "rooms": [
+    "stue"
+   ],
+   "cover": 0,
+   "text": "Et lavt bord i mørkbrun Emperador-marmor med lyse årer, laget med gjennomgående stein i topp og ben.",
+   "stone": [
+    "marmor",
+    ""
+   ],
+   "products": [],
+   "studio": null,
+   "photos": [
+    {
+     "f": "assets/projects/emperador-bord/01.jpg",
+     "s": "assets/projects/emperador-bord/01-s.jpg",
+     "w": 1200,
+     "h": 1600
+    },
+    {
+     "f": "assets/projects/emperador-bord/02.jpg",
+     "s": "assets/projects/emperador-bord/02-s.jpg",
+     "w": 1200,
+     "h": 1600
+    },
+    {
+     "f": "assets/projects/emperador-bord/03.jpg",
+     "s": "assets/projects/emperador-bord/03-s.jpg",
+     "w": 1200,
+     "h": 1600
+    }
+   ],
+   "draft": true
+  },
+  {
+   "id": "uteplass-kalksten",
+   "title": "Uteplass i antikk kalksten",
+   "rooms": [
+    "ute"
+   ],
+   "cover": 0,
+   "text": "Rektangulære heller i antikk kalksten, lagt i forband. Den slitte overflaten og de varierte fargene gir et gammelt, europeisk preg.",
+   "stone": [
+    "kalksten",
+    ""
+   ],
+   "products": [
+    8661
+   ],
+   "studio": null,
+   "photos": [
+    {
+     "f": "assets/projects/uteplass-kalksten/01.jpg",
+     "s": "assets/projects/uteplass-kalksten/01-s.jpg",
+     "w": 800,
+     "h": 800
+    },
+    {
+     "f": "assets/projects/uteplass-kalksten/02.jpg",
+     "s": "assets/projects/uteplass-kalksten/02-s.jpg",
+     "w": 800,
+     "h": 800
+    },
+    {
+     "f": "assets/projects/uteplass-kalksten/03.jpg",
+     "s": "assets/projects/uteplass-kalksten/03-s.jpg",
+     "w": 800,
+     "h": 800
+    },
+    {
+     "f": "assets/projects/uteplass-kalksten/04.jpg",
+     "s": "assets/projects/uteplass-kalksten/04-s.jpg",
+     "w": 800,
+     "h": 800
+    },
+    {
+     "f": "assets/projects/uteplass-kalksten/05.jpg",
+     "s": "assets/projects/uteplass-kalksten/05-s.jpg",
+     "w": 800,
+     "h": 800
+    },
+    {
+     "f": "assets/projects/uteplass-kalksten/06.jpg",
+     "s": "assets/projects/uteplass-kalksten/06-s.jpg",
+     "w": 800,
+     "h": 800
+    }
+   ],
+   "draft": true
+  },
+  {
+   "id": "produksjon",
+   "title": "Fra plate til ferdig produkt",
+   "rooms": [
+    "produksjon"
+   ],
+   "cover": 0,
+   "text": "På Fossum har Stenhuset egen stenproduksjon. Her kappes og freses hele plater på mål til benkeplater og skreddersydde løsninger, og du kan se steinen i store flater før du velger.",
+   "stone": [
+    "",
+    ""
+   ],
+   "products": [],
+   "studio": null,
+   "photos": [
+    {
+     "f": "assets/projects/produksjon/01.jpg",
+     "s": "assets/projects/produksjon/01-s.jpg",
+     "w": 1200,
+     "h": 1600
+    },
+    {
+     "f": "assets/projects/produksjon/02.jpg",
+     "s": "assets/projects/produksjon/02-s.jpg",
+     "w": 1200,
+     "h": 1600
+    },
+    {
+     "f": "assets/projects/produksjon/03.jpg",
+     "s": "assets/projects/produksjon/03-s.jpg",
+     "w": 1200,
+     "h": 1600
+    },
+    {
+     "f": "assets/projects/produksjon/04.jpg",
+     "s": "assets/projects/produksjon/04-s.jpg",
+     "w": 1200,
+     "h": 1600
+    },
+    {
+     "f": "assets/projects/produksjon/05.jpg",
+     "s": "assets/projects/produksjon/05-s.jpg",
+     "w": 1200,
+     "h": 1600
+    },
+    {
+     "f": "assets/projects/produksjon/06.jpg",
+     "s": "assets/projects/produksjon/06-s.jpg",
+     "w": 1200,
+     "h": 1600
+    },
+    {
+     "f": "assets/projects/produksjon/07.jpg",
+     "s": "assets/projects/produksjon/07-s.jpg",
+     "w": 1200,
+     "h": 1600
+    },
+    {
+     "f": "assets/projects/produksjon/08.jpg",
+     "s": "assets/projects/produksjon/08-s.jpg",
+     "w": 1200,
+     "h": 1600
+    }
+   ],
+   "draft": true
+  }
+ ]
+}
