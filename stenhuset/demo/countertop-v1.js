@@ -48,7 +48,7 @@ function css(){
 const stoneName=id=>(TOP_STONES.find(s=>s[0]===id)||[0,id])[1];
 const rgb=id=>{const c=STONES[id]&&STONES[id].c0||[200,200,200];return `rgb(${c.join(',')})`;};
 function summary(){
-  const p=[Math.round(cfg.L*100)+' × '+Math.round(cfg.D*100)+' × '+Math.round(cfg.t*100)+' cm',stoneName(cfg.stone),(EDGES.find(e=>e[0]===cfg.edge)||[0,''])[1]];
+  const p=[Math.round(cfg.L*100)+' × '+Math.round(cfg.D*100)+' × '+Math.round(cfg.t*100)+' cm',cfg.slab?'plate fra lager: '+cfg.slabName:stoneName(cfg.stone),(EDGES.find(e=>e[0]===cfg.edge)||[0,''])[1]];
   if(cfg.sink)p.push('utsparing for kum');if(cfg.hob)p.push('utsparing for koketopp');if(cfg.splash>0)p.push('opplett '+Math.round(cfg.splash*100)+' cm');
   return p.join(' · ')+' · ca. '+(cfg.L*cfg.D).toFixed(2).replace('.',',')+' m²';
 }
@@ -61,13 +61,15 @@ export function close(){
 export function open(opts={}){
   close();css();
   // start in a given stone (from a project or the stone library)
-  if(opts&&opts.stone&&TOP_STONES.some(t=>t[0]===opts.stone))cfg.stone=opts.stone;
+  if(opts&&opts.stone&&TOP_STONES.some(t=>t[0]===opts.stone)){cfg.stone=opts.stone;cfg.slab=null;}
+  // a slab from Stenhusets stock: its photo becomes the surface, thickness from the slab
+  if(opts&&opts.slab){const b=opts.slab;cfg.slab=b.id;cfg.slabName=b.name+' ('+b.type.toLowerCase()+', '+b.finish.toLowerCase()+')';cfg.slabW=b.texW||2.2;cfg.stone=b.near||cfg.stone;cfg.t=b.t||cfg.t;}
   const root=document.createElement('div');root.className='ct';root.setAttribute('role','dialog');root.setAttribute('aria-modal','true');root.setAttribute('aria-label','Benkeplate på mål i 3D');
   root.innerHTML=`<div class="ct-box">
    <div class="ct-head"><div><small>Bestill på mål · 3D</small><h2>Design benkeplaten din</h2></div><button class="ct-x" data-ct="x" aria-label="Lukk">×</button></div>
    <div class="ct-stage"><div class="ct-sum" aria-live="polite"></div></div>
    <div class="ct-panel">
-    <h4>Stein</h4><div class="ct-stones">${TOP_STONES.map(s=>`<button type="button" data-stone="${s[0]}"><i style="background:${rgb(s[0])}"></i>${esc(s[1])}</button>`).join('')}</div>
+    <h4>Stein</h4>${cfg.slab?`<p class="ct-slab" style="margin:0 0 8px;font-size:12px">Plate fra lager: <b>${esc(cfg.slabName)}</b>. Velg en stein under for å bytte.</p>`:''}<div class="ct-stones">${TOP_STONES.map(s=>`<button type="button" data-stone="${s[0]}"><i style="background:${rgb(s[0])}"></i>${esc(s[1])}</button>`).join('')}</div>
     <h4>Mål</h4><div class="ct-two"><label>Lengde (cm)<input type="number" data-k="L" min="40" max="420" step="1" inputmode="numeric"></label><label>Dybde (cm)<input type="number" data-k="D" min="30" max="130" step="1" inputmode="numeric"></label></div>
     <div class="ct-two" style="margin-top:8px"><label>Tykkelse<select data-k="t">${[2,3,4,6].map(v=>`<option value="${v/100}">${v} cm</option>`).join('')}</select></label><label>Kantprofil<select data-k="edge">${EDGES.map(e=>`<option value="${e[0]}">${e[1]}</option>`).join('')}</select></label></div>
     <h4>Utsparinger</h4>
@@ -105,7 +107,7 @@ export function open(opts={}){
   // panel <-> cfg
   const rng=k=>root.querySelector(`input[type=range][data-k="${k}"]`);
   function syncPanel(){
-    root.querySelectorAll('[data-stone]').forEach(b=>b.classList.toggle('on',b.dataset.stone===cfg.stone));
+    root.querySelectorAll('[data-stone]').forEach(b=>b.classList.toggle('on',!cfg.slab&&b.dataset.stone===cfg.stone));
     root.querySelector('[data-k="L"]').value=Math.round(cfg.L*100);root.querySelector('[data-k="D"]').value=Math.round(cfg.D*100);
     root.querySelector('select[data-k="t"]').value=String(cfg.t);root.querySelector('select[data-k="edge"]').value=cfg.edge;root.querySelector('select[data-k="splash"]').value=String(cfg.splash);
     root.querySelector('input[type=checkbox][data-k="sink"]').checked=cfg.sink;root.querySelector('input[type=checkbox][data-k="hob"]').checked=cfg.hob;
@@ -118,7 +120,7 @@ export function open(opts={}){
   }
   root.addEventListener('click',e=>{
     if(e.target===root){close();return;}
-    const st=e.target.closest('[data-stone]');if(st){cfg.stone=st.dataset.stone;syncPanel();build(false);return;}
+    const st=e.target.closest('[data-stone]');if(st){cfg.stone=st.dataset.stone;cfg.slab=null;root.querySelector('.ct-slab')?.remove();syncPanel();build(false);return;}
     const b=e.target.closest('[data-ct]');if(!b)return;
     if(b.dataset.ct==='x')close();
     else if(b.dataset.ct==='showroom'){
@@ -129,7 +131,9 @@ export function open(opts={}){
     }else if(b.dataset.ct==='quote'){
       const label='Benkeplate på mål – '+summary()+'. Pris på forespørsel, mål bekreftes ved oppmåling.';
       close();if(typeof window.addItem==='function')window.addItem({kind:'countertop',id:'benk-'+Date.now(),label});
-      if(typeof window.showContact==='function')window.showContact();
+      // continue in the made-to-measure request with this design filled in
+      try{sessionStorage.setItem('ct-quote',JSON.stringify({...cfg}));}catch(_){}
+      location.hash='#bestill-pa-mal?skjema';
     }
   });
   root.addEventListener('change',e=>{

@@ -439,7 +439,7 @@ function furnishKitchen(G,st,fm,lights,hx,hz){
     G.add(rbox(dw-.006,.74,.022,.006,MAT.cabinet,x,.47,cz+.3));
     G.add(rbox(.2,.012,.016,.004,MAT.brass,x,.78,cz+.322));
   }
-  const topM=sinkMaterial({stone:TOP_CFG?TOP_CFG.stone:KITCHEN_TOP,surf:'honed'},()=>onTexture()),tt=TOP_CFG?TOP_CFG.t:.03;
+  const topM=sinkMaterial(TOP_CFG&&TOP_CFG.slab?{stone:TOP_CFG.stone,surf:'honed',photo:'assets/slabs/'+TOP_CFG.slab+'-tex.jpg',patch:TOP_CFG.slabW||2.2}:{stone:TOP_CFG?TOP_CFG.stone:KITCHEN_TOP,surf:'honed'},()=>onTexture()),tt=TOP_CFG?TOP_CFG.t:.03;
   // splashback in the countertop stone, from the counter up to the wall cabinets (the usual Nordic choice)
   G.add(stoneBox(len+.02,.6,.02,.003,topM,cx,.92+.3,-hz+.011));
   let fx=cx-len*.2,ctObj=null;

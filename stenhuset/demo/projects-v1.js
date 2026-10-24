@@ -121,7 +121,7 @@ export async function openProject(id){
     if(a==='close'){close();return;}
     if(a==='product'){close();if(typeof openProduct==='function')openProduct(+b.dataset.id);return;}
     if(a==='studio'){close();await toStudio(p.studio);return;}
-    if(a==='top'){close();import('./countertop-v1.js?v=4').then(m=>m.open({stone:p.countertop}));return;}
+    if(a==='top'){close();import('./countertop-v1.js?v=5').then(m=>m.open({stone:p.countertop}));return;}
     if(a==='ask'){close();if(typeof addItem==='function')addItem({kind:'project',id:'prosjekt-'+p.id,label:'Ønsker noe lignende som prosjektet «'+p.title+'»'});
       if(typeof showContact==='function')showContact();else location.hash='#kontakt';return;}
     if(a==='share'){

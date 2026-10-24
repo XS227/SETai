@@ -167,10 +167,14 @@ function runGen(id,N){return new Promise((res,rej)=>{const g=generateStone(id,N)
 /* Colour from the product's own photograph: a patch of clean stone cut from Stenhuset's original product photo
  * (assets/products/<id>/tex.jpg). The generated texture still supplies the surface relief (normal map). */
 const PHOTO_PATCH=.24; // metres of stone the photo patch covers (approx.)
-function photoTexture(id,done){
-  const t=new THREE.TextureLoader().load(new URL('./assets/products/'+id+'/tex.jpg',import.meta.url).href,()=>done(t),undefined,()=>done(null));
+// id: a product id (its tex.jpg) or a path to a photo, e.g. a slab from Stenhusets stock; patch: metres of stone across the photo
+function photoTexture(id,done,patch){
+  const url=typeof id==='string'&&id.includes('/')?id:'./assets/products/'+id+'/tex.jpg';
+  const t=new THREE.TextureLoader().load(new URL(url.startsWith('.')?url:'./'+url,import.meta.url).href,()=>{
+    // keep the photo's aspect: a slab strip is much wider than tall
+    const a=t.image&&t.image.width?t.image.height/t.image.width:1,k=T/1.6/(patch||PHOTO_PATCH);t.repeat.set(k,k/a);done(t);},undefined,()=>done(null));
   t.colorSpace=THREE.SRGBColorSpace;t.wrapS=t.wrapT=THREE.MirroredRepeatWrapping;t.anisotropy=8;
-  const k=T/1.6/PHOTO_PATCH;t.repeat.set(k,k);return t;
+  const k=T/1.6/(patch||PHOTO_PATCH);t.repeat.set(k,k);return t;
 }
 export function sinkMaterial(sp,onReady){
   const key=sp.stone+'|'+sp.surf+'|'+(sp.photo||'');
@@ -179,7 +183,7 @@ export function sinkMaterial(sp,onReady){
   const polished=sp.surf==='polished'||sp.surf==='organic';
   const m=new THREE.MeshPhysicalMaterial({color:base,roughness:polished?.18:sp.surf==='hewn'?.85:.45,metalness:0,clearcoat:polished?.5:.05,clearcoatRoughness:.15,envMapIntensity:.9});
   m.userData={ready:false,cbs:onReady?[onReady]:[]};matCache.set(key,m);
-  const photo=sp.photo?new Promise(res=>photoTexture(sp.photo,res)):Promise.resolve(null);
+  const photo=sp.photo?new Promise(res=>photoTexture(sp.photo,res,sp.patch)):Promise.resolve(null);
   Promise.all([runGen(sp.stone,typeof matchMedia==='function'&&matchMedia('(pointer:coarse)').matches?512:1024),photo]).then(([d,pt])=>{
     m.color.set('#ffffff');m.map=pt||dataTex(d.albedo,d.N,true);m.normalMap=dataTex(d.normal,d.N,false);
     const ns=(sp.surf==='hewn'?1.4:.6)*(pt?.6:1);m.normalScale.set(ns,ns);m.userData.photo=!!pt;

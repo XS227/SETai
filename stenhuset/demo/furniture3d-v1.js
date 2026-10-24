@@ -58,7 +58,8 @@ export const EDGES=[['rett','Rett kant'],['fas','Fas'],['avrundet','Avrundet'],[
 const steel=()=>new THREE.MeshStandardMaterial({color:'#c9cdd0',metalness:1,roughness:.25});
 const glass=()=>new THREE.MeshPhysicalMaterial({color:'#0d0e10',roughness:.08,metalness:0,clearcoat:1,clearcoatRoughness:.05});
 export function buildCountertop(cfg,onReady){
-  const {L,D,t}=cfg,mat=sinkMaterial({stone:cfg.stone,surf:'honed'},onReady),G=new THREE.Group();
+  // a slab from stock: its own photo as the surface; otherwise the generated stone
+  const {L,D,t}=cfg,mat=sinkMaterial(cfg.slab?{stone:cfg.stone,surf:'honed',photo:'assets/slabs/'+cfg.slab+'-tex.jpg',patch:cfg.slabW||2.2}:{stone:cfg.stone,surf:'honed'},onReady),G=new THREE.Group();
   let bt=0,bs=0,seg=1;
   if(cfg.edge==='fas'){bt=bs=.003;seg=1;}
   else if(cfg.edge==='avrundet'){bt=bs=.005;seg=4;}

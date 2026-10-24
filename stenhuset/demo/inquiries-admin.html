@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Forespørsler | Stenhuset admin</title>
+<style>
+:root{--cream:#f6f2eb;--paper:#fffdfa;--dark:#242725;--line:#ddd7cf;--mute:#7e817d}
+*{box-sizing:border-box}body{margin:0;background:var(--cream);color:var(--dark);font:14px/1.5 Arial,sans-serif}
+header{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:14px 18px;border-bottom:1px solid var(--line);background:var(--paper);position:sticky;top:0}
+h1{font:400 22px Georgia,serif;margin:0}main{max-width:900px;margin:0 auto;padding:18px 14px 60px}
+input{font:inherit;border:1px solid var(--line);padding:9px 10px}button{font:13px Arial;border:1px solid #30382e;background:#30382e;color:#fff;padding:9px 13px;cursor:pointer;min-height:40px}
+.q{background:var(--paper);border:1px solid var(--line);padding:16px;margin-bottom:12px}.q h2{font:400 19px Georgia,serif;margin:0 0 4px}
+.meta{color:var(--mute);font-size:12px}.q dl{display:grid;grid-template-columns:150px 1fr;gap:4px 12px;margin:10px 0}.q dt{color:var(--mute)}.q dd{margin:0;white-space:pre-wrap}
+.ph{display:flex;gap:8px;flex-wrap:wrap}.ph img{width:140px;height:140px;object-fit:cover}.msg{color:#9a3a2a}
+@media(max-width:600px){.q dl{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header><h1>Forespørsler · Bestill på mål</h1><div><input id="token" type="password" placeholder="Adminnøkkel" aria-label="Adminnøkkel"> <button id="load">Vis</button></div></header>
+<main><p class="msg" id="msg" role="status"></p><div id="list"></div></main>
+<script>
+(()=>{
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const $=s=>document.querySelector(s);
+try{$('#token').value=sessionStorage.getItem('looks-token')||'';}catch(_){}
+async function load(){
+  const k=$('#token').value.trim();if(!k){$('#msg').textContent='Skriv inn adminnøkkelen.';return;}
+  try{sessionStorage.setItem('looks-token',k);}catch(_){}
+  try{
+    const r=await fetch('api/inquiry.php',{headers:{'X-Admin-Token':k},cache:'no-store'}),j=await r.json();if(!r.ok)throw new Error(j.error||r.status);
+    $('#msg').textContent=j.inquiries.length?'':'Ingen forespørsler ennå.';
+    $('#list').innerHTML=j.inquiries.map(q=>{const c=q.config;const rows=[['Hva',q.kinds.join(', ')],['Mål',q.measure+(q.size?' · '+q.size:'')],['3D-design',c?Math.round(c.L*100)+' × '+Math.round(c.D*100)+' × '+Math.round(c.t*100)+' cm, '+(c.slabName||c.stone)+', kant '+c.edge+(c.sink?', kum':'')+(c.hob?', koketopp':'')+(c.splash?', opplett '+Math.round(c.splash*100)+' cm':''):''],['Plate fra lager',q.slab],['Ønsket stein',q.stone],['Når',q.timeframe],['Telefon',q.phone],['E-post',q.email],['Bedrift',q.company],['Postnr.',q.postcode],['Melding',q.message]].filter(r=>r[1]);
+      return `<section class="q"><h2>${esc(q.name)}</h2><div class="meta">${esc(new Date(q.created).toLocaleString('nb-NO'))} · ref ${esc(q.ref)}</div><dl>${rows.map(r=>`<dt>${esc(r[0])}</dt><dd>${esc(r[1])}</dd>`).join('')}</dl>
+      <div class="ph">${(q.photos||[]).map(p=>`<a href="api/inquiry.php?photo=${encodeURIComponent(p)}&k=${encodeURIComponent(k)}" target="_blank" rel="noopener"><img src="api/inquiry.php?photo=${encodeURIComponent(p)}&k=${encodeURIComponent(k)}" alt=""></a>`).join('')}</div></section>`;}).join('');
+  }catch(e){$('#msg').textContent='Kunne ikke hente: '+e.message;}
+}
+$('#load').onclick=load;if($('#token').value)load();
+})();
+</script>
+</body>
+</html>

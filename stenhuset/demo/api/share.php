@@ -19,6 +19,7 @@ function clean_top($t){
       'sink'=>!empty($t['sink']),'sinkX'=>max(-2,min(2,(float)($t['sinkX']??0))),
       'hob'=>!empty($t['hob']),'hobX'=>max(-2,min(2,(float)($t['hobX']??0))),
       'splash'=>max(0,min(.7,(float)($t['splash']??0)))];
+    if(!empty($t['slab'])&&preg_match('/^[0-9]{2}-[a-z0-9-]{3,60}$/',$t['slab']))$o['slab']=$t['slab'];
   }
   return $o;
 }
