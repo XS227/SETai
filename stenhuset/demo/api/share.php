@@ -30,6 +30,7 @@ $state=[
   'light'=>max(15,min(100,(int)($s['light']??80))),
   'sink'=>max(0,(int)($s['sink']??0)),'table'=>max(0,(int)($s['table']??0)),
   'top'=>is_array($s['top']??null)?clean_top($s['top']):null,
+  'rug'=>in_array($s['rug']??'',['persisk','balmoral','none'],true)?$s['rug']:'persisk',
   'view'=>in_array($s['view']??'',$views,true)?$s['view']:'door',
   'names'=>[],'created'=>gmdate('c'),
 ];

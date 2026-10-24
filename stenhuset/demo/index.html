@@ -299,7 +299,7 @@ const materials=[
 {name:'Bastide Beige',id:'bastide-beige',idx:0},{name:'Bastide Grey',id:'bastide-grey',idx:1},{name:'Provence Beige',id:'provence-beige',idx:2},{name:'Provence Grey',id:'provence-grey',idx:3},
 {name:'Carrara C',id:'carrara-c',idx:4},{name:'Calacatta Viola',id:'calacatta-viola',idx:5},{name:'Zellige',id:'zellige',idx:6},{name:'Terracotta',id:'terracotta',idx:7},
 {name:'Kalkpuss hvit',id:'kalkpuss-hvit',idx:-1,plaster:true,pattern:'linear-gradient(135deg,#efebe2,#ddd5c6)'},{name:'Leirpuss',id:'leirpuss',idx:-1,plaster:true,pattern:'linear-gradient(135deg,#d2bfa3,#bba283)'}];
-window.getStudioMaterials=()=>materials.map((m,i)=>({i,id:m.id,name:m.name,plaster:!!m.plaster,pattern:m.pattern||products[m.idx].pattern}));window.setStudioMaterial=(which,i)=>selectMaterial(which,i);
+window.getStudioMaterials=()=>materials.map((m,i)=>({i,id:m.id,name:m.name,plaster:!!m.plaster,pattern:m.pattern||products[m.idx].pattern,price:m.idx>=0?products[m.idx].price:0,rate:m.idx>=0?products[m.idx].rate:''}));window.getStudioWaste=()=>waste;window.setStudioMaterial=(which,i)=>selectMaterial(which,i);
 window.getStudioState=()=>({floor:materials[floorIdx],wall:materials[wallIdx],room:roomType,light,w:Math.max(1,Math.min(20,Number($('#room-width').value)||4)),l:Math.max(1,Math.min(20,Number($('#room-length').value)||5))});
 function selectMaterial(which,i){if(which==='floor')floorIdx=i;else wallIdx=i;renderSwatches();drawRoom()};function renderSwatches(){for(const which of ['floor','wall']){$('#'+which+'-swatches').innerHTML=materials.map((m,i)=>which==='floor'&&m.plaster?'':`<button type="button" class="swatch ${(which==='floor'?floorIdx:wallIdx)===i?'selected':''}" title="${m.name}" aria-label="${which==='floor'?'Gulv':'Vegg'}: ${m.name}" data-which="${which}" data-index="${i}"><span style="--slab:${(m.pattern||products[m.idx].pattern)}"></span></button>`).join('');$('#'+which+'-name').textContent=materials[which==='floor'?floorIdx:wallIdx].name}}
 for(let which of ['floor','wall'])$('#'+which+'-swatches').onclick=e=>{let t=e.target.closest('[data-index]');if(t)selectMaterial(t.dataset.which,+t.dataset.index)};$$('#room-tabs button').forEach(b=>b.onclick=()=>{roomType=b.dataset.room;$$('#room-tabs button').forEach(x=>x.classList.toggle('active',x===b));drawRoom()});$('#light-range').oninput=e=>{light=+e.target.value;$('#light-label').textContent=light<40?'Kveld':light<70?'Ettermiddag':'Middag';drawRoom()};
@@ -380,4 +380,4 @@ for(const f of [renderProducts,saveCart,renderSwatches,studioArea,calcPrice,draw
  window.addEventListener('hashchange',setView);
  setView();
 })();
-</script><script type="module" src="studio3d-v1.js?v=7"></script><script type="module" src="studio-ui-v1.js?v=22"></script></body></html>
+</script><script type="module" src="studio3d-v1.js?v=8"></script><script type="module" src="studio-ui-v1.js?v=23"></script></body></html>

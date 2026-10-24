@@ -7,9 +7,9 @@
  * Room type and daylight are driven through the existing #room-tabs and #light-range controls. */
 const shell=document.querySelector('.scene-shell');
 if(shell&&typeof window.getStudioMaterials==='function'){
-  const LABEL={floor:'Gulv',wall:'Vegg',sink:'Servant',table:'Bord',top:'Benkeplate'};
+  const LABEL={floor:'Gulv',wall:'Vegg',sink:'Servant',table:'Bord',top:'Benkeplate',rug:'Teppe'};
   // each room only offers products that belong there
-  const ROOM_TARGETS={bad:['floor','wall','sink'],stue:['floor','wall','table'],kjokken:['floor','wall','top']};
+  const ROOM_TARGETS={bad:['floor','wall','sink'],stue:['floor','wall','table','rug'],kjokken:['floor','wall','top']};
   let target='floor',open=false,settleT=0,building=false;
 
   const css=document.createElement('style');
@@ -35,6 +35,7 @@ if(shell&&typeof window.getStudioMaterials==='function'){
 .su-card{flex:0 0 auto;width:96px;height:96px;scroll-snap-align:center;border:3px solid transparent;background:transparent;padding:0;cursor:pointer;opacity:.55;transform:scale(.82);transition:transform .25s,opacity .25s,border-color .25s;position:relative}
 .su-card span{display:block;width:100%;height:100%;background:var(--slab);box-shadow:inset 0 0 0 1px #0002,0 6px 14px #0006}
 .su-card.cur{opacity:1;transform:scale(1.12);border-color:#fff}
+.su-card.cur::after{content:'';position:absolute;right:-7px;top:-7px;width:20px;height:20px;border-radius:50%;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5' fill='none' stroke='%23242725' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/14px no-repeat;box-shadow:0 2px 6px #0005}
 .su-arr{position:absolute;top:50%;transform:translateY(-60%);z-index:2;width:38px;height:38px;border:1px solid #ffffff66;background:#00000066;color:#fff;font-size:18px;cursor:pointer}
 .su-arr.l{left:10px}.su-arr.r{right:10px}
 .studio-grid{grid-template-columns:1fr!important}.scene-shell{height:auto!important;min-height:clamp(470px,76vh,780px)!important}
@@ -50,6 +51,17 @@ if(shell&&typeof window.getStudioMaterials==='function'){
 .su-pop label{font-size:11px;display:flex;flex-direction:column;gap:5px}
 .su-pop input[type=number]{min-height:42px;padding:8px;border:1px solid #d8d2c8;background:#fff;font:inherit}
 .su-bottom{position:absolute;right:14px;bottom:14px;z-index:9;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.su-sum{position:absolute;left:14px;bottom:14px;z-index:9;font:13px/1.25 var(--sans,system-ui)}
+.su-sum>button{display:flex;flex-direction:column;align-items:flex-start;gap:1px;border:0;background:#f7f5eeeb;color:#242725;padding:8px 13px;cursor:pointer;backdrop-filter:blur(6px);box-shadow:0 4px 14px #0002;min-height:46px;justify-content:center}
+.su-sum b{font:600 16px var(--sans,system-ui)}.su-sum small{font-size:10.5px;color:#6b6e69;letter-spacing:.02em}
+.su-sum-p{position:absolute;left:0;bottom:calc(100% + 8px);width:min(300px,calc(100vw - 28px));background:#faf8f3;color:#242725;padding:12px 14px;box-shadow:0 10px 30px #0004}
+.su-sum-p[hidden]{display:none}.su-sum-p div{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px solid #e3ddd3;font-size:12.5px}
+.su-sum-p div span:last-child{white-space:nowrap}.su-sum-p .tot{font-weight:600;border-bottom:0;font-size:14px}
+.su-sum-p p{margin:6px 0 10px;font-size:11px;color:#6b6e69}.su-sum-p .acts{display:flex;gap:6px;border:0;padding:0}
+.su-sum-p .acts button{flex:1;min-height:38px;border:1px solid #242725;background:#242725;color:#fff;font:12px var(--sans,system-ui);cursor:pointer}.su-sum-p .acts button+button{background:transparent;color:inherit}
+@media(max-width:560px){.su-sum{bottom:72px}}
+.su-dock.on~.su-sum{display:none}
+.su-dsum{border:1px solid #ffffff55;background:transparent;color:#fff;font:12px var(--sans,system-ui);padding:6px 10px;margin-right:8px;cursor:pointer;white-space:nowrap}
 .su-bottom .su-ib{height:46px}
 .su-hud{position:absolute;left:14px;right:14px;top:14px;z-index:9;display:none;gap:10px;align-items:center;pointer-events:none}
 .su-hud>*{pointer-events:auto}
@@ -91,7 +103,7 @@ if(shell&&typeof window.getStudioMaterials==='function'){
 
   const dock=document.createElement('div');dock.className='su-dock';dock.setAttribute('role','region');dock.setAttribute('aria-label','Steinvelger');
   dock.innerHTML=
-    '<div class="su-head"><div class="su-seg" id="su-target"><button type="button" data-t="floor" class="on">Gulv</button><button type="button" data-t="wall">Vegg</button><button type="button" data-t="sink">Servant</button><button type="button" data-t="table">Bord</button><button type="button" data-t="top">Benkeplate</button></div>'+
+    '<div class="su-head"><div class="su-seg" id="su-target"><button type="button" data-t="floor" class="on">Gulv</button><button type="button" data-t="wall">Vegg</button><button type="button" data-t="sink">Servant</button><button type="button" data-t="table">Bord</button><button type="button" data-t="top">Benkeplate</button><button type="button" data-t="rug">Teppe</button></div>'+
     '<div class="su-name" id="su-name" aria-live="polite"></div><button type="button" class="su-close" id="su-x" aria-label="Lukk steinvelger">×</button></div>'+
     '<div class="su-track-wrap"><button type="button" class="su-arr l" aria-label="Forrige stein">‹</button><div class="su-track" id="su-track" tabindex="0"></div><button type="button" class="su-arr r" aria-label="Neste stein">›</button></div>';
   shell.appendChild(dock);
@@ -105,11 +117,15 @@ if(shell&&typeof window.getStudioMaterials==='function'){
 
   // stenvasker (3D models of the shop's sinks): photos from the catalogue, models from sinks3d-v1.js via Studio3D
   let catMap=null;
-  const loadCat=()=>{if(catMap)return;catMap=new Map();fetch('catalog-v1.json').then(r=>r.json()).then(d=>{d.products.forEach(p=>catMap.set(p.id,p));if(open&&target==='sink')render();}).catch(()=>{});};
+  const loadCat=()=>{if(catMap)return;catMap=new Map();fetch('catalog-v1.json').then(r=>r.json()).then(d=>{d.products.forEach(p=>catMap.set(p.id,p));if(open&&target==='sink')render();window.dispatchEvent(new Event('studio:changed'));}).catch(()=>{});};
   const cmv=v=>String(Math.round(v*1000)/10).replace('.',',');
-  const isModel=()=>target==='sink'||target==='table'||target==='top';
+  const isModel=()=>target==='sink'||target==='table'||target==='top'||target==='rug';
   const modelList=()=>{
     const S3=window.Studio3D;
+    if(target==='rug'){
+      const RG=S3&&S3.rugs;if(!RG)return [];
+      return [{id:'none',name:'Uten teppe',pattern:'linear-gradient(135deg,#efebe2,#d5cdbf)'}].concat(Object.entries(RG).map(([id,r])=>({id,name:r.n,rug:r,pattern:"url('"+S3.rugThumb(id)+"') center/cover"})));
+    }
     if(target==='top'){
       const TS=S3&&S3.topStones;if(!TS)return [];
       return [{id:'0',name:'Samme stein som gulvet',pattern:'linear-gradient(135deg,#efebe2,#d5cdbf)'}].concat(TS.map(t=>({id:t.id,name:t.n,top:true,pattern:'linear-gradient(125deg,rgb('+t.c0.join(',')+') 0 55%,rgba('+t.c0.map(v=>Math.round(v*.82)).join(',')+') 56% 58%,rgb('+t.c0.join(',')+') 59%)'})));
@@ -122,6 +138,7 @@ if(shell&&typeof window.getStudioMaterials==='function'){
   const list=()=>isModel()?modelList():window.getStudioMaterials().filter(m=>target==='wall'||!m.plaster);
   const current=()=>{
     if(target==='top'){const t=window.Studio3D&&window.Studio3D.getTop&&window.Studio3D.getTop();return t?t.stone:'0';}
+    if(target==='rug')return String((window.Studio3D&&window.Studio3D.getRug&&window.Studio3D.getRug())||'none');
     if(target==='table')return String((window.Studio3D&&window.Studio3D.getTable&&window.Studio3D.getTable())||0);
     if(target==='sink')return String((window.Studio3D&&window.Studio3D.getSink&&window.Studio3D.getSink())||0);
     const s=window.getStudioState();return (target==='floor'?s.floor:s.wall).id;};
@@ -144,6 +161,7 @@ if(shell&&typeof window.getStudioMaterials==='function'){
     if(el){showName(el);if(center)track.scrollTo({left:el.offsetLeft+el.offsetWidth/2-track.clientWidth/2,behavior:'auto'});}
   }
   function showName(card){
+    if(target==='rug'){const it=modelList().find(x=>x.id===card.dataset.id),R=it&&it.rug;nameEl.innerHTML=(it?it.name:'')+'<small>Teppe · stue · '+(R?R.size?R.size[1]*100+' × '+R.size[0]*100+' cm':'tilpasset rommet':'bare stein')+'</small>';return;}
     if(target==='top'){const it=modelList().find(x=>x.id===card.dataset.id);nameEl.innerHTML=(it?it.name:'')+'<small>Benkeplate · kjøkken og øy · '+(card.dataset.id==='0'?'som gulvet':'3 cm')+'</small>';return;}
     if(isModel()){const it=modelList().find(x=>x.id===card.dataset.id),sp=it&&it.sp;
       const dims=!sp?'':sp.kind==='round'?'Ø '+cmv(sp.R*2)+' × H '+cmv(sp.H)+' cm':cmv(sp.W)+' × '+cmv(sp.D)+' × '+cmv(sp.H)+' cm';
@@ -157,9 +175,14 @@ if(shell&&typeof window.getStudioMaterials==='function'){
     return best;
   }
   function apply(card){
-    if(!card||card.dataset.id===current())return;
+    if(!card)return;
+    if(card.dataset.id!==current())applyNow(card);
+    markCurrent(false);window.dispatchEvent(new Event('studio:changed'));
+  }
+  function applyNow(card){
     if(isModel()){
       const room=target==='sink'?'bad':target==='top'?'kjokken':'stue';
+      if(target==='rug'){if(window.getStudioState().room!=='stue'){const tab=document.querySelector('#room-tabs [data-room="stue"]');if(tab)tab.click();}const S3=window.Studio3D;if(S3&&S3.setRug)S3.setRug(card.dataset.id);return;}
       if(window.getStudioState().room!==room){const tab=document.querySelector('#room-tabs [data-room="'+room+'"]');if(tab)tab.click();}
       const S3=window.Studio3D;if(S3){if(target==='sink'&&S3.setSink)S3.setSink(+card.dataset.id||null);if(target==='table'&&S3.setTable)S3.setTable(+card.dataset.id||null);if(target==='top'&&S3.setTop){const cur=S3.getTop&&S3.getTop();S3.setTop(card.dataset.id==='0'?null:{...(cur||{t:.03}),stone:card.dataset.id});}}
       return;
@@ -180,7 +203,7 @@ if(shell&&typeof window.getStudioMaterials==='function'){
   // browsing like a game: whatever settles in the centre of the track is applied live
   track.addEventListener('scroll',()=>{
     if(building)return;
-    const c=centered();if(c)showName(c);
+    const c=centered();if(c){showName(c);track.querySelectorAll('.su-card.cur').forEach(x=>{if(x!==c)x.classList.remove('cur');});c.classList.add('cur');}
     clearTimeout(settleT);settleT=setTimeout(()=>{const k=centered();if(k)apply(k);},220);
   },{passive:true});
   track.addEventListener('click',e=>{const c=e.target.closest('.su-card');if(c){goto(c,true);apply(c);}});
@@ -264,6 +287,55 @@ if(shell&&typeof window.getStudioMaterials==='function'){
   btnStones.addEventListener('click',()=>{if(popKind)setPop(popKind);});
   document.addEventListener('click',e=>{if(e.target.closest('#room-tabs [data-room]'))setTimeout(()=>{syncTargets();if(open)render();},40);});
   bottom.querySelector('#su-calc').onclick=()=>{const b=real('scene-to-calc');if(b)b.click();};
+
+  /* running total while you build: stone by m² (same rules as the price calculator: waste, at least 5 m², volume
+   * discount) and the chosen product at the shop's price. Indicative, incl. VAT, before delivery. */
+  const sum=document.createElement('div');sum.className='su-sum';
+  sum.innerHTML='<div class="su-sum-p" hidden></div><button type="button" aria-expanded="false"><b>–</b><small>ca. totalt · se detaljer</small></button>';
+  shell.appendChild(sum);
+  // while the stone picker is open the total sits in its header
+  const dsum=document.createElement('button');dsum.type='button';dsum.className='su-dsum';dsum.title='Se prisdetaljer';
+  dock.querySelector('#su-x').before(dsum);
+  dsum.onclick=()=>{setOpen(false);const p=sum.querySelector('.su-sum-p');p.hidden=false;sum.querySelector('button').setAttribute('aria-expanded','true');refreshSum();};
+  const kr=n=>new Intl.NumberFormat('nb-NO',{maximumFractionDigits:0}).format(Math.round(n/10)*10)+' kr';
+  const stonePrice=(m2,price)=>{const gross=m2*(1+((window.getStudioWaste&&window.getStudioWaste())||10)/100),ordered=Math.max(5,Math.ceil(gross)),disc=ordered>=60?30:ordered>=40?20:ordered>=20?10:0;return {ordered,total:ordered*price*(1-disc/100),disc};};
+  function totals(){
+    const st=window.getStudioState&&window.getStudioState();if(!st)return null;
+    const mats=window.getStudioMaterials(),fm=mats.find(m=>m.id===st.floor.id),wm=mats.find(m=>m.id===st.wall.id),S3=window.Studio3D||{};
+    const floorA=st.w*st.l,wallA=Math.max(0,2*(st.w+st.l)*2.7-3.6); // walls minus door and window
+    const lines=[];
+    if(fm&&fm.price){if(wm&&wm.id===fm.id&&wm.price){const r=stonePrice(floorA+wallA,fm.price);lines.push([fm.name+' · gulv og vegg, '+r.ordered+' m²'+(r.disc?' (−'+r.disc+' %)':''),r.total]);}
+      else{const r=stonePrice(floorA,fm.price);lines.push([fm.name+' · gulv, '+r.ordered+' m²'+(r.disc?' (−'+r.disc+' %)':''),r.total]);}}
+    if(wm&&wm.price&&!(fm&&wm.id===fm.id)){const r=stonePrice(wallA,wm.price);lines.push([wm.name+' · vegg, '+r.ordered+' m²'+(r.disc?' (−'+r.disc+' %)':''),r.total]);}
+    else if(wm&&!wm.price)lines.push([wm.name+' · vegg','på forespørsel']);
+    const prod=(id,label)=>{const p=catMap&&catMap.get(+id);if(p){const v=p.sp&&p.sp<p.p?p.sp:p.p;lines.push([p.n,v||'på forespørsel']);}else if(id)lines.push([label,'–']);};
+    if(st.room==='bad'&&S3.getSink&&S3.getSink())prod(S3.getSink(),'Servant');
+    if(st.room==='stue'&&S3.getTable&&S3.getTable())prod(S3.getTable(),'Bord');
+    if(st.room==='kjokken'&&S3.getTop&&S3.getTop())lines.push(['Benkeplate på mål','på forespørsel']);
+    return {lines,total:lines.reduce((a,l)=>a+(typeof l[1]==='number'?l[1]:0),0),ask:lines.some(l=>typeof l[1]!=='number')};
+  }
+  function refreshSum(){
+    const t=totals();if(!t)return;
+    const txt=(t.total?kr(t.total):'Pris på forespørsel')+(t.total&&t.ask?' +':'');
+    sum.querySelector('b').textContent=txt;dsum.textContent='Ca. '+txt;
+    const p=sum.querySelector('.su-sum-p');if(p.hidden)return;
+    p.innerHTML=t.lines.map(l=>'<div><span>'+l[0]+'</span><span>'+(typeof l[1]==='number'?kr(l[1]):l[1])+'</span></div>').join('')+
+      '<div class="tot"><span>Ca. totalt</span><span>'+kr(t.total)+(t.ask?' +':'')+'</span></div><p>Veiledende, inkl. mva., før levering. Vegg regnet som alle vegger minus dør og vindu.</p>'+
+      '<div class="acts"><button type="button" data-sum="add">Legg i materiallisten</button><button type="button" data-sum="calc">Kalkulator</button></div>';
+  }
+  sum.querySelector('button').onclick=()=>{const p=sum.querySelector('.su-sum-p');p.hidden=!p.hidden;sum.querySelector('button').setAttribute('aria-expanded',String(!p.hidden));loadCat();refreshSum();};
+  sum.addEventListener('click',e=>{
+    const b=e.target.closest('[data-sum]');if(!b)return;
+    if(b.dataset.sum==='calc'){const c=real('scene-to-calc');if(c)c.click();return;}
+    const t=totals(),st=window.getStudioState();
+    if(t&&typeof window.addItem==='function')window.addItem({kind:'estimate',id:'showroom-'+Date.now(),label:'Showroom ('+({bad:'bad',kjokken:'kjøkken',stue:'stue'}[st.room])+', '+st.w+' × '+st.l+' m): '+t.lines.map(l=>l[0]+' – '+(typeof l[1]==='number'?kr(l[1]):l[1])).join('; ')+'. Ca. '+kr(t.total)+' inkl. mva. (veiledende).'});
+    sum.querySelector('.su-sum-p').hidden=true;
+  });
+  const later=()=>setTimeout(refreshSum,80);
+  document.addEventListener('click',e=>{if(e.target.closest('#room-tabs [data-room],#floor-swatches,#wall-swatches,.su-card'))later();});
+  document.addEventListener('input',e=>{if(e.target.closest('#room-width,#room-length,[data-size]'))later();});
+  window.addEventListener('studio:changed',later);
+  loadCat();setTimeout(refreshSum,400);
   // "Prøv i mitt rom" is loaded on demand: no camera code is downloaded until the customer asks for it.
   let tryP=null;
   const openTry=()=>{
@@ -273,7 +345,7 @@ if(shell&&typeof window.getStudioMaterials==='function'){
   };
   bottom.querySelector('#su-try').onclick=openTry;
   // sharing: picture + link to exactly this setup; a shared link (#studio?oppsett=…) is restored on arrival
-  const shareMod=()=>import('./share-v1.js?v=2');
+  const shareMod=()=>import('./share-v1.js?v=3');
   bottom.querySelector('#su-share').onclick=()=>{if(document.fullscreenElement)document.exitFullscreen&&document.exitFullscreen();shareMod().then(m=>m.openShare()).catch(e=>{console.warn(e);alert('Deling kunne ikke lastes.');});};
   const restore=()=>{if(/[?&]oppsett=/.test(location.hash))shareMod().then(m=>m.restoreFromHash());};
   window.addEventListener('hashchange',restore);restore();

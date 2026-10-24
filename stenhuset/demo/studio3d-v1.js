@@ -13,7 +13,9 @@ import {TABLES,buildTable,buildCountertop} from './furniture3d-v1.js?v=2';
 
 /* selected stenvask in the bathroom (product id) or null for the generic basin; marmorbord in the living room;
  * made-to-measure countertop {stone,t,...} for the kitchen, or null to use the floor stone */
-let SINK_ID=null,TABLE_ID=null,TOP_CFG=null;
+let SINK_ID=null,TABLE_ID=null,TOP_CFG=null,RUG_ID='persisk';
+/* rugs for the living room; size in metres (null = fitted to the room) */
+const RUGS={persisk:{n:'Persisk teppe, rødt',size:null,style:'persian'},balmoral:{n:'Vintage medaljong, mørk turkis 200×300',size:[3,2],style:'vintage'}};
 
 const MOBILE=typeof matchMedia==='function'&&matchMedia('(pointer:coarse)').matches;
 const N_QUICK=512,N_FULL=MOBILE?1024:1280;
@@ -161,8 +163,83 @@ function artCanvas(){
 
 /* Persian rug: medallion field, floral border, wool grain and fringe, all drawn procedurally (no image files) */
 const rugCache=new Map();
-function rugTextures(W,H){
-  const key=W+'x'+H;if(rugCache.has(key))return rugCache.get(key);
+/* vintage medallion rug (machine-woven look, no fringe): turquoise field, a dense cream / burgundy / navy medallion and
+ * corner spandrels, faded and worn pile (multi-scale noise) the way "vintage" rugs are printed */
+function vintageRugCanvas(W,H){
+  const c=mk(W,H),g=c.getContext('2d'),S=Math.min(W,H);
+  const TQ='#3a8ea6',NAVY='#21405f',CREAM='#e4d8c2',WINE='#8b3040',PLUM='#5e3358',OCHRE='#cf9a42',SKY='#93c4cf',ROSE='#b8656f';
+  let seed=11;const rnd=()=>{seed=(seed*16807)%2147483647;return seed/2147483647;};
+  const pick=a=>a[Math.floor(rnd()*a.length)];
+  // field: turquoise, darker towards the edges, cloudy
+  const gr=g.createRadialGradient(W/2,H/2,S*.15,W/2,H/2,Math.hypot(W,H)*.55);gr.addColorStop(0,'#3f97b0');gr.addColorStop(.6,'#2f7d98');gr.addColorStop(1,'#1d4f6e');
+  g.fillStyle=gr;g.fillRect(0,0,W,H);
+  for(let i=0;i<90;i++){g.fillStyle=rnd()>.4?'rgba(20,50,80,.16)':'rgba(120,190,205,.12)';g.beginPath();g.ellipse(rnd()*W,rnd()*H,S*(.05+rnd()*.18),S*(.03+rnd()*.1),rnd()*3,0,7);g.fill();}
+  // small ornaments
+  const flower=(x,y,r,a,b,n=6)=>{for(let k=0;k<n;k++){g.save();g.translate(x,y);g.rotate(k*Math.PI*2/n);g.fillStyle=k%2?a:b;g.beginPath();g.ellipse(0,-r*.55,r*.24,r*.45,0,0,7);g.fill();g.restore();}g.fillStyle=pick([OCHRE,WINE,NAVY]);g.beginPath();g.arc(x,y,r*.22,0,7);g.fill();};
+  const leaf=(x,y,r,col)=>{g.save();g.translate(x,y);g.rotate(rnd()*Math.PI*2);g.fillStyle=col;g.beginPath();g.moveTo(0,-r);g.quadraticCurveTo(r*.6,0,0,r);g.quadraticCurveTo(-r*.6,0,0,-r);g.fill();g.restore();};
+  const curl=(x,y,r,col)=>{g.strokeStyle=col;g.lineWidth=Math.max(1,S*.0035);g.beginPath();g.arc(x,y,r,rnd()*6,rnd()*6+2.5);g.stroke();};
+  // rounded-lobed shape (smooth scallops)
+  const lobed=(cx,cy,rx,ry,n,depth,rot=0)=>{g.beginPath();for(let k=0;k<=n*24;k++){const a=k/(n*24)*Math.PI*2,w=1-depth*(.5-.5*Math.cos(a*n+rot));const x=cx+Math.cos(a)*rx*w,y=cy+Math.sin(a)*ry*w;k?g.lineTo(x,y):g.moveTo(x,y);}g.closePath();};
+  // dense filigree inside the current path
+  // ornaments are placed in one quarter and mirrored four ways, like a woven design
+  const fill=(cx,cy,rx,ry,base,cols,count,size)=>{g.save();g.clip();g.fillStyle=base;g.fillRect(cx-rx*1.1,cy-ry*1.1,rx*2.2,ry*2.2);
+    for(let k=0;k<count/4;k++){const a=rnd()*Math.PI/2,d=Math.sqrt(rnd()),dx=Math.cos(a)*rx*d,dy=Math.sin(a)*ry*d,r=size*(.5+rnd()*.8),t=rnd(),c1=pick(cols),c2=pick(cols),n=rnd()>.5?6:8,s0=seed;
+      for(const [mx,my] of [[1,1],[-1,1],[1,-1],[-1,-1]]){seed=s0;const x=cx+mx*dx,y=cy+my*dy;
+        if(t<.45)flower(x,y,r,c1,c2,n);else if(t<.8)leaf(x,y,r*.8,c1);else curl(x,y,r*.7,c1);}}
+    g.restore();};
+  // borders: navy, cream with tiny motif, turquoise, wine line, cream
+  const band=(i,w,col)=>{g.strokeStyle=col;g.lineWidth=w;g.strokeRect(i+w/2,i+w/2,W-2*i-w,H-2*i-w);};
+  band(0,S*.014,NAVY);band(S*.014,S*.034,'#c9c3b1');band(S*.048,S*.006,WINE);band(S*.054,S*.02,TQ);band(S*.074,S*.005,CREAM);band(S*.079,S*.005,NAVY);
+  const bi=S*.031;
+  for(let x=bi;x<W-bi;x+=S*.034){flower(x,bi,S*.012,pick([WINE,NAVY,TQ]),pick([SKY,ROSE]));flower(x,H-bi,S*.012,pick([WINE,NAVY,TQ]),pick([SKY,ROSE]));}
+  for(let y=bi;y<H-bi;y+=S*.034){flower(bi,y,S*.012,pick([WINE,NAVY,TQ]),pick([SKY,ROSE]));flower(W-bi,y,S*.012,pick([WINE,NAVY,TQ]),pick([SKY,ROSE]));}
+  const f0=S*.084;
+  g.save();g.beginPath();g.rect(f0,f0,W-2*f0,H-2*f0);g.clip();
+  // corner spandrels: cream lace with wine / navy cores
+  for(const [sx,sy] of [[0,0],[1,0],[0,1],[1,1]]){
+    const cx=sx?W-f0:f0,cy=sy?H-f0:f0;
+    lobed(cx,cy,S*.27,S*.23,9,.24);g.strokeStyle=WINE;g.lineWidth=S*.007;g.stroke();lobed(cx,cy,S*.27,S*.23,9,.24);
+    fill(cx,cy,S*.27,S*.23,CREAM,[WINE,NAVY,TQ,SKY,OCHRE,ROSE,WINE,NAVY],220,S*.02);
+    lobed(cx,cy,S*.15,S*.13,7,.25);fill(cx,cy,S*.15,S*.13,WINE,[CREAM,SKY,OCHRE,NAVY],60,S*.018);
+  }
+  for(const sx of [0,1]){const cx=sx?W-f0:f0;lobed(cx,H/2,S*.08,S*.16,8,.25);fill(cx,H/2,S*.08,S*.16,CREAM,[WINE,NAVY,PLUM,SKY],80,S*.018);}
+  // central medallion: cream lace star, navy / wine / plum layers, dense ornament
+  const fx=W/2,fy=H/2,mr=S*.36;
+  for(const d of [-1,1]){const py=fy+d*mr*1.02;lobed(fx,py,S*.08,S*.065,6,.3);fill(fx,py,S*.08,S*.065,CREAM,[WINE,NAVY,SKY],22,S*.018);}
+  lobed(fx,fy,mr*1.06,mr*.86,12,.14);g.strokeStyle=WINE;g.lineWidth=S*.008;g.stroke();lobed(fx,fy,mr*1.06,mr*.86,12,.14);
+  fill(fx,fy,mr*1.06,mr*.86,CREAM,[WINE,NAVY,TQ,SKY,OCHRE,PLUM,ROSE,NAVY,WINE],760,S*.022);
+  lobed(fx,fy,mr*.8,mr*.65,12,.22,.3);fill(fx,fy,mr*.8,mr*.65,NAVY,[CREAM,SKY,WINE,OCHRE,TQ],420,S*.02);
+  lobed(fx,fy,mr*.44,mr*.36,8,.25);fill(fx,fy,mr*.44,mr*.36,WINE,[CREAM,OCHRE,SKY,PLUM],120,S*.018);
+  lobed(fx,fy,mr*.2,mr*.17,6,.25);fill(fx,fy,mr*.2,mr*.17,PLUM,[OCHRE,CREAM,SKY],24,S*.016);
+  g.restore();
+  // vintage wear: multi-scale noise fades the colours towards the pale backing, plus pile streaks and grain
+  const img=g.getImageData(0,0,W,H),px=img.data,G0=8,gw=Math.ceil(W/G0)+2,gh=Math.ceil(H/G0)+2;
+  const grid=sc=>{const n=new Float32Array((Math.ceil(W/sc)+2)*(Math.ceil(H/sc)+2));for(let i=0;i<n.length;i++)n[i]=rnd();return n;};
+  const scales=[[S*.25,.5],[S*.07,.3],[S*.018,.2]].map(([sc,w])=>({sc,w,n:grid(sc),cw:Math.ceil(W/sc)+2}));
+  const at=(o,x,y)=>{const fx=x/o.sc,fy=y/o.sc,ix=fx|0,iy=fy|0,u=fx-ix,v=fy-iy,n=o.n,cw=o.cw;
+    const a=n[iy*cw+ix],b=n[iy*cw+ix+1],c2=n[(iy+1)*cw+ix],d=n[(iy+1)*cw+ix+1];return (a*(1-u)+b*u)*(1-v)+(c2*(1-u)+d*u)*v;};
+  for(let y=0;y<H;y++){const streak=Math.sin(y*.9+rnd()*.3)*.04;
+    for(let x=0;x<W;x++){
+      let n=0;for(const o of scales)n+=at(o,x,y)*o.w;
+      const wear=Math.max(0,Math.min(.62,(n-.42)*1.6+streak+(rnd()-.5)*.18)),i=(y*W+x)*4;
+      // faded pile shows a pale grey-beige backing
+      px[i]=px[i]+(206-px[i])*wear;px[i+1]=px[i+1]+(201-px[i+1])*wear;px[i+2]=px[i+2]+(188-px[i+2])*wear;
+      const gr2=(rnd()-.5)*26;px[i]+=gr2;px[i+1]+=gr2;px[i+2]+=gr2;
+    }}
+  g.putImageData(img,0,0);
+  for(let i=0;i<260;i++){const y=rnd()*H,x=rnd()*W,w=S*(.04+rnd()*.3),h=1+rnd()*S*.006;g.fillStyle=rnd()>.5?'rgba(230,222,205,'+(.05+rnd()*.12)+')':'rgba(15,30,45,'+(.04+rnd()*.1)+')';g.fillRect(x,y,w,h);}
+  g.fillStyle='rgba(10,20,30,.05)';for(let y=0;y<H;y+=3)g.fillRect(0,y,W,1);
+  return c;
+}
+function rugTextures(W,H,style){
+  const key=W+'x'+H+(style||'');if(rugCache.has(key))return rugCache.get(key);
+  if(style==='vintage'){
+    const c=vintageRugCanvas(W,H),map=new THREE.CanvasTexture(c);map.colorSpace=THREE.SRGBColorSpace;map.anisotropy=maxAniso;map.needsUpdate=true;
+    const b=mk(16,16),bg=b.getContext('2d');bg.fillStyle='#808080';bg.fillRect(0,0,16,16);
+    for(let y=0;y<16;y+=2)for(let x=0;x<16;x+=2){bg.fillStyle=((x+y)/2)%2?'#949494':'#707070';bg.fillRect(x,y,2,2);}
+    const bump=new THREE.CanvasTexture(b);bump.wrapS=bump.wrapT=THREE.RepeatWrapping;bump.anisotropy=maxAniso;
+    const res={map,bump,fringe:null,canvas:c};rugCache.set(key,res);return res;
+  }
   const c=mk(W,H),g=c.getContext('2d'),S=Math.min(W,H);
   const RED='#7a1d1e',DEEP='#561315',IVORY='#e9dcbd',INDIGO='#1d2c52',GOLD='#c7a04c',TEAL='#2e5a5a',BLUE='#34528a';
   let seed=7;const rnd=()=>{seed=(seed*16807)%2147483647;return seed/2147483647;};
@@ -227,16 +304,16 @@ function rugTextures(W,H){
   const fr=mk(512,48),fg=fr.getContext('2d');fg.strokeStyle='#efe6d2';fg.lineWidth=2.2;
   for(let x=2;x<512;x+=5){fg.beginPath();fg.moveTo(x,0);fg.bezierCurveTo(x+(rnd()-.5)*6,16,x+(rnd()-.5)*10,32,x+(rnd()-.5)*12,47);fg.stroke();}
   const fringe=new THREE.CanvasTexture(fr);fringe.colorSpace=THREE.SRGBColorSpace;
-  const res={map,bump,fringe};rugCache.set(key,res);return res;
+  const res={map,bump,fringe,canvas:c};rugCache.set(key,res);return res;
 }
-function persianRug(rw,rl,x,z){
+function persianRug(rw,rl,x,z,style){
   const W=1024,H=Math.max(512,Math.round(1024*rl/rw));
-  const t=rugTextures(W,H),g=new THREE.Group();
+  const t=rugTextures(W,H,style),g=new THREE.Group();
   const top=new THREE.Mesh(new THREE.PlaneGeometry(rw,rl),new THREE.MeshStandardMaterial({map:t.map,bumpMap:t.bump,bumpScale:1.4,roughness:1,metalness:0,envMapIntensity:.4}));
   t.bump.repeat.set(rw*55,rl*55);
   top.rotation.x=-Math.PI/2;top.position.set(0,.022,0);top.receiveShadow=true;g.add(top);
   const pad=rbox(rw-.004,.018,rl-.004,.006,MAT.wool,0,.011,0);g.add(pad);
-  for(const s of [-1,1]){
+  if(t.fringe)for(const s of [-1,1]){
     const f=new THREE.Mesh(new THREE.PlaneGeometry(rw,.1),new THREE.MeshStandardMaterial({map:t.fringe,transparent:true,alphaTest:.3,roughness:1,side:THREE.DoubleSide}));
     f.rotation.x=-Math.PI/2;f.position.set(0,.012,s*(rl/2+.05));f.receiveShadow=true;g.add(f);
   }
@@ -381,8 +458,16 @@ function furnishLiving(G,st,fm,lights,hx,hz){
   }
   const cw=(sw-.4)/3;
   // Persian rug under the coffee table, in front of the sofa, kept inside the room
-  const prw=Math.min(rw,hx*2-.5),prl=Math.min(rl,hz*2-.8);
-  G.add(persianRug(prw,prl,clamp(sx,-hx+prw/2+.1,hx-prw/2-.1),clamp(sz+1.25,-hz+prl/2+.35,hz-prl/2-.15)));
+  const R=RUGS[RUG_ID];
+  if(R){
+    let prw=Math.min(rw,hx*2-.5),prl=Math.min(rl,hz*2-.8);
+    if(R.size){
+      // real size; turned if the room is too narrow for the long side along the sofa
+      [prw,prl]=R.size;if(prw>hx*2-.3&&prl<=hx*2-.3&&prw<=hz*2-.5)[prw,prl]=[prl,prw];
+      prw=Math.min(prw,hx*2-.2);prl=Math.min(prl,hz*2-.3);
+    }
+    G.add(persianRug(prw,prl,clamp(sx,-hx+prw/2+.1,hx-prw/2-.1),clamp(sz+1.25,-hz+prl/2+.3,hz-prl/2-.1),R.style));
+  }
   G.add(rbox(sw,.38,.95,.06,MAT.linen,sx,.26,sz));
   G.add(rbox(sw,.48,.22,.08,MAT.linen,sx,.64,sz-.37));
   for(const dx of [-1,1])G.add(rbox(.2,.56,.95,.07,MAT.linen,sx+dx*(sw/2-.1),.32,sz));
@@ -595,7 +680,7 @@ function init(){
   const PRODUCT_LABEL={bad:'Servanten',kjokken:'Benkeplaten',stue:'Bordet'};
   let focusNext=false;
   async function update(){
-    const st=window.getStudioState(),key=[st.room,st.w,st.l,st.floor.id,st.wall.id,SINK_ID,TABLE_ID,TOP_CFG?JSON.stringify(TOP_CFG):''].join('|');
+    const st=window.getStudioState(),key=[st.room,st.w,st.l,st.floor.id,st.wall.id,SINK_ID,TABLE_ID,TOP_CFG?JSON.stringify(TOP_CFG):'',RUG_ID].join('|');
     const pb=bar.querySelector('[data-v=product]');if(pb)pb.textContent=PRODUCT_LABEL[st.room]||'Produktet';
     if(key===roomKey){applyLight(st);request();return;}
     roomKey=key;const my=++token;
@@ -606,6 +691,7 @@ function init(){
     rebuild(st,fm,wm);applyLight(st);goView(view,true);
     // a new sink / table / countertop: turn the camera to it
     if(focusNext){focusNext=false;if(!first)goView('product');else goView('product',true);}
+    window.dispatchEvent(new Event('studio:changed'));
     if(first){canvas.style.opacity='1';if(old)old.style.visibility='hidden';const tag=document.querySelector('.scene-tag');if(tag)tag.textContent='3D-ROMVISNING · FYSISK LYS';}
     request();
   }
@@ -634,6 +720,9 @@ function init(){
     // keeps the whole design from the countertop designer (length, depth, edge, sink and hob cut-outs, splash)
     setTop(cfg){TOP_CFG=cfg&&cfg.stone?{...cfg,t:cfg.t||.03}:null;roomKey='';focusNext=true;update();},getTop:()=>TOP_CFG&&{...TOP_CFG},
     getView:()=>view,
+    rugs:RUGS,getRug:()=>RUG_ID,setRug(id){RUG_ID=RUGS[id]?id:'none';roomKey='';update();},
+    // small picture of a rug for the carousel
+    rugThumb(id){const R=RUGS[id];if(!R)return '';const t=rugTextures(256,R.size?Math.round(256*R.size[1]/R.size[0]):170,R.style);return t.canvas.toDataURL('image/jpeg',.8);},
     // picture of the current view for sharing: rendered and read back in the same task (no preserveDrawingBuffer needed)
     snapshot(){renderer.render(scene,camera);return renderer.domElement;}};
   window.addEventListener('hashchange',()=>setTimeout(()=>{resize();request();},50));
