@@ -1,7 +1,7 @@
 <?php
 /* Shared helpers for the Stenhuset demo API. Data lives outside the web root. */
 const DATA_DIR='/var/www/setai-data/stenhuset';
-const SITE='https://setai.no/stenhuset/demo/';
+const SITE='https://setai.no/stenhuset/';
 if(basename($_SERVER['SCRIPT_FILENAME']??'')==='_lib.php'){http_response_code(404);exit;}
 function out($code,$data){http_response_code($code);header('Content-Type: application/json; charset=utf-8');header('Cache-Control: no-store');echo json_encode($data,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);exit;}
 function valid_id($id){return is_string($id)&&preg_match('/^[A-Za-z0-9]{8}$/',$id);}
