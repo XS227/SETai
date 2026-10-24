@@ -1,7 +1,7 @@
 /* Stenhuset digital showroom: real-time 3D room with physically based stone materials.
  * Real walls, floor, ceiling, window with a sun shadow, per-room furnishing (bath, kitchen, living room).
  * Stone surfaces come from stone-textures-v1.js (tiled layout, joints, pores, veining, glaze).
- * If WebGL or the module fails, the old 2D canvas in index.html keeps working. */
+ * If WebGL or the module fails, the old 2D canvas in app.html keeps working. */
 import * as THREE from 'three';
 import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
 import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
