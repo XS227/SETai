@@ -629,11 +629,19 @@ function init(){
   const hemi=new THREE.HemisphereLight('#fff6ea','#b9a88f',.4);scene.add(hemi);
   // UI: view buttons + loading label
   const css=document.createElement('style');
-  css.textContent='.scene-views{position:absolute;top:14px;right:14px;z-index:9;display:flex;flex-wrap:wrap;gap:6px;justify-content:flex-end;max-width:62%}.scene-views button{border:0;background:#f7f5eee8;color:#242725;padding:8px 11px;font:600 10px/1 var(--sans,system-ui);letter-spacing:.06em;text-transform:uppercase;cursor:pointer}.scene-views button.on{background:#242725;color:#fff}.scene-loading{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);z-index:9;background:#242725d9;color:#fff;padding:9px 14px;font:600 10px/1 var(--sans,system-ui);letter-spacing:.08em;text-transform:uppercase;opacity:0;transition:opacity .3s;pointer-events:none}.scene-loading.on{opacity:1}@media(max-width:700px){.scene-views{top:60px;max-width:calc(100% - 24px);left:12px;right:auto;justify-content:flex-start}.scene-views button{padding:7px 8px;font-size:9px}}';
+  css.textContent='.scene-views{position:absolute;top:14px;right:14px;z-index:9;display:flex;flex-wrap:wrap;gap:6px;justify-content:flex-end;max-width:62%}.scene-views button{border:0;background:#f7f5eee8;color:#242725;padding:8px 11px;font:600 10px/1 var(--sans,system-ui);letter-spacing:.06em;text-transform:uppercase;cursor:pointer}.scene-views button.on{background:#242725;color:#fff}.scene-views{align-items:flex-start;flex-wrap:nowrap}.scene-views .sv-cam{display:flex;align-items:center;gap:7px;min-height:34px}.sv-cam svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}.sv-cam .sv-car{font-size:9px;opacity:.7}.scene-views [data-z]{min-width:34px;min-height:34px}.sv-menu{position:absolute;top:calc(100% + 6px);right:0;display:flex;flex-direction:column;min-width:190px;background:#f7f5eef7;box-shadow:0 10px 26px #0003;padding:6px;backdrop-filter:blur(6px)}.sv-menu[hidden]{display:none}.scene-views .sv-menu button{background:transparent;text-align:left;padding:11px 12px;font-size:11px}.scene-views .sv-menu button.on{background:#242725;color:#fff}.scene-loading{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);z-index:9;background:#242725d9;color:#fff;padding:9px 14px;font:600 10px/1 var(--sans,system-ui);letter-spacing:.08em;text-transform:uppercase;opacity:0;transition:opacity .3s;pointer-events:none}.scene-loading.on{opacity:1}@media(max-width:700px){.scene-views{top:60px;max-width:calc(100% - 24px);left:12px;right:auto;justify-content:flex-start}.scene-views button{padding:7px 8px;font-size:9px}.sv-menu{left:0;right:auto}}';
   document.head.appendChild(css);
   const bar=document.createElement('div');bar.className='scene-views';
   const VIEWS=[['door','Fra døren'],['product','Servanten'],['window','Mot vinduet'],['floor','Gulvdetalj'],['wall','Veggdetalj'],['dollhouse','Oversikt']];
-  bar.innerHTML=VIEWS.map(v=>'<button type="button" data-v="'+v[0]+'">'+v[1]+'</button>').join('')+'<button type="button" data-z="-1" aria-label="Zoom ut">−</button><button type="button" data-z="1" aria-label="Zoom inn">＋</button>';
+  // one camera button opens the list of camera angles (keeps the top of the room free); zoom stays beside it
+  bar.innerHTML='<button type="button" class="sv-cam" aria-haspopup="true" aria-expanded="false" aria-label="Velg kameravinkel"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><span class="sv-cur">Fra døren</span><span class="sv-car" aria-hidden="true">▾</span></button>'+
+    '<div class="sv-menu" role="menu" hidden>'+VIEWS.map(v=>'<button type="button" role="menuitem" data-v="'+v[0]+'">'+v[1]+'</button>').join('')+'</div>'+
+    '<button type="button" data-z="-1" aria-label="Zoom ut">−</button><button type="button" data-z="1" aria-label="Zoom inn">＋</button>';
+  const svMenu=bar.querySelector('.sv-menu'),svCam=bar.querySelector('.sv-cam');
+  const svOpen=v=>{svMenu.hidden=!v;svCam.setAttribute('aria-expanded',String(v));};
+  const svLabel=()=>{const b=bar.querySelector('[data-v].on');bar.querySelector('.sv-cur').textContent=b?b.textContent:'Kamera';};
+  document.addEventListener('click',e=>{if(!bar.contains(e.target))svOpen(false);});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')svOpen(false);});
   shell.appendChild(bar);
   const loading=document.createElement('div');loading.className='scene-loading';loading.textContent='Lager steinstruktur …';shell.appendChild(loading);
   let busy=0;onBusy=d=>{busy=Math.max(0,busy+d);loading.classList.toggle('on',busy>0);};
@@ -673,7 +681,7 @@ function init(){
   }
   function goView(name,instant){
     if(!dims)return;
-    view=name;bar.querySelectorAll('[data-v]').forEach(b=>b.classList.toggle('on',b.dataset.v===name));
+    view=name;bar.querySelectorAll('[data-v]').forEach(b=>b.classList.toggle('on',b.dataset.v===name));svLabel();
     showWalls(name);
     const v=viewDef(name);
     if(instant){tween=null;snap(v);request();return;}
@@ -683,7 +691,8 @@ function init(){
   }
   bar.addEventListener('click',e=>{
     const b=e.target.closest('button');if(!b)return;
-    if(b.dataset.v)goView(b.dataset.v);
+    if(b===svCam){svOpen(svMenu.hidden);return;}
+    if(b.dataset.v){goView(b.dataset.v);svOpen(false);}
     else if(b.dataset.z){camera.fov=clamp(camera.fov-Number(b.dataset.z)*7,28,88);camera.updateProjectionMatrix();request();}
   });
 
@@ -735,7 +744,7 @@ function init(){
   let focusNext=false;
   async function update(){
     const st=window.getStudioState(),key=[st.room,st.w,st.l,st.floor.id,st.wall.id,SINK_ID,TABLE_ID,TOP_CFG?JSON.stringify(TOP_CFG):'',RUG_ID,COFFEE,FIRE,KFLOOR,LIVING_FOCUS,SPLASH].join('|');
-    const pb=bar.querySelector('[data-v=product]');if(pb)pb.textContent=PRODUCT_LABEL[st.room]||'Produktet';
+    const pb=bar.querySelector('[data-v=product]');if(pb)pb.textContent=PRODUCT_LABEL[st.room]||'Produktet';svLabel();
     if(key===roomKey){applyLight(st);request();return;}
     roomKey=key;const my=++token;
     let fm,wm;

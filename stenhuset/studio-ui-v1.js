@@ -52,17 +52,18 @@ if(shell&&typeof window.getStudioMaterials==='function'){
 .su-pop .two{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
 .su-pop label{font-size:11px;display:flex;flex-direction:column;gap:5px}
 .su-pop input[type=number]{min-height:42px;padding:8px;border:1px solid #d8d2c8;background:#fff;font:inherit}
-.su-bottom{position:absolute;right:14px;bottom:14px;z-index:9;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
-.su-sum{position:absolute;left:14px;bottom:14px;z-index:9;font:13px/1.25 var(--sans,system-ui)}
-.su-sum>button{display:flex;flex-direction:column;align-items:flex-start;gap:1px;border:0;background:#f7f5eeeb;color:#242725;padding:8px 13px;cursor:pointer;backdrop-filter:blur(6px);box-shadow:0 4px 14px #0002;min-height:46px;justify-content:center}
+.su-br{position:absolute;right:14px;bottom:14px;z-index:9;display:flex;flex-direction:column;align-items:flex-end;gap:8px;max-width:calc(100% - 28px);pointer-events:none}.su-br>*{pointer-events:auto}
+.su-bottom{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.su-sum{position:relative;font:13px/1.25 var(--sans,system-ui)}
+.su-sum>button{display:flex;flex-direction:column;align-items:flex-end;text-align:right;gap:1px;border:0;background:#f7f5eeeb;color:#242725;padding:8px 13px;cursor:pointer;backdrop-filter:blur(6px);box-shadow:0 4px 14px #0002;min-height:46px;justify-content:center}
 .su-sum b{font:600 16px var(--sans,system-ui)}.su-sum small{font-size:10.5px;color:#6b6e69;letter-spacing:.02em}
-.su-sum-p{position:absolute;left:0;bottom:calc(100% + 8px);width:min(300px,calc(100vw - 28px));background:#faf8f3;color:#242725;padding:12px 14px;box-shadow:0 10px 30px #0004}
+.su-sum-p{position:absolute;right:0;bottom:calc(100% + 8px);width:min(300px,calc(100vw - 28px));background:#faf8f3;color:#242725;padding:12px 14px;box-shadow:0 10px 30px #0004}
 .su-sum-p[hidden]{display:none}.su-sum-p div{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px solid #e3ddd3;font-size:12.5px}
 .su-sum-p div span:last-child{white-space:nowrap}.su-sum-p .tot{font-weight:600;border-bottom:0;font-size:14px}
 .su-sum-p p{margin:6px 0 10px;font-size:11px;color:#6b6e69}.su-sum-p .acts{display:flex;gap:6px;border:0;padding:0}
 .su-sum-p .acts button{flex:1;min-height:38px;border:1px solid #242725;background:#242725;color:#fff;font:12px var(--sans,system-ui);cursor:pointer}.su-sum-p .acts button+button{background:transparent;color:inherit}
-@media(max-width:560px){.su-sum{bottom:72px}}
-.su-dock.on~.su-sum{display:none}
+
+.su-dock.on~.su-br .su-sum{display:none}
 .su-dsum{border:1px solid #ffffff55;background:transparent;color:#fff;font:12px var(--sans,system-ui);padding:6px 10px;margin-right:8px;cursor:pointer;white-space:nowrap}
 .su-bottom .su-ib{height:46px}
 .su-hud{position:absolute;left:14px;right:14px;top:14px;z-index:9;display:none;gap:10px;align-items:center;pointer-events:none}
@@ -101,7 +102,6 @@ if(shell&&typeof window.getStudioMaterials==='function'){
   const pop=document.createElement('div');pop.className='su-pop';pop.setAttribute('role','group');shell.appendChild(pop);
   const bottom=document.createElement('div');bottom.className='su-bottom';
   bottom.innerHTML='<button type="button" class="su-ib txt" id="su-try">'+ICON.cam+'Prøv i mitt rom <small style="font:700 8px/1 Arial,sans-serif;letter-spacing:.1em;background:#e8a35f;color:#242725;padding:3px 4px;margin-left:5px">BETA</small></button><button type="button" class="su-ib txt" id="su-calc">'+ICON.calc+'Beregn materialpris</button><button type="button" class="su-ib txt" id="su-share">'+ICON.share+'Del</button>';
-  shell.appendChild(bottom);
 
   const dock=document.createElement('div');dock.className='su-dock';dock.setAttribute('role','region');dock.setAttribute('aria-label','Steinvelger');
   dock.innerHTML=
@@ -321,7 +321,8 @@ if(shell&&typeof window.getStudioMaterials==='function'){
    * discount) and the chosen product at the shop's price. Indicative, incl. VAT, before delivery. */
   const sum=document.createElement('div');sum.className='su-sum';
   sum.innerHTML='<div class="su-sum-p" hidden></div><button type="button" aria-expanded="false"><b>–</b><small>ca. totalt · se detaljer</small></button>';
-  shell.appendChild(sum);
+  // the running total sits on top of the bottom buttons (Prøv i mitt rom, Beregn materialpris, Del), so they never overlap
+  const br=document.createElement('div');br.className='su-br';br.append(sum,bottom);shell.appendChild(br);
   // while the stone picker is open the total sits in its header
   const dsum=document.createElement('button');dsum.type='button';dsum.className='su-dsum';dsum.title='Se prisdetaljer';
   dock.querySelector('#su-x').before(dsum);
