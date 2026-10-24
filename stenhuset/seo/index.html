@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>SEO-status – Stenhuset</title>
+<meta name="description" content="Intern SEO-analyse for Stenhuset: status, søkeord, konkurrenter, inntektsmodell og 3-månedersplan.">
+<style>
+:root{--bg:#f7f4ee;--paper:#fff;--ink:#2f2b26;--muted:#6d655a;--line:#e4ddd1;--accent:#8a5a33;--ok:#3f6b4a;--warn:#a8741e;--bad:#a2412f;--soft:#efe9df;--serif:Georgia,'Times New Roman',serif;--sans:Arial,Helvetica,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1d1b18;--paper:#262320;--ink:#efe9df;--muted:#b3a99b;--line:#3a352f;--accent:#d49a66;--ok:#7fb48c;--warn:#e0b25e;--bad:#e2826e;--soft:#2e2a25}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 var(--sans)}
+a{color:var(--accent)}
+.wrap{max-width:1100px;margin:0 auto;padding:28px 16px 80px}
+header.top{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:18px}
+.k{font:700 10.5px/1.3 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+h1{font:400 clamp(32px,5vw,52px)/1.05 var(--serif);margin:8px 0 0}
+h2{font:400 clamp(24px,3.2vw,34px)/1.15 var(--serif);margin:48px 0 6px}
+h3{font:600 16px/1.3 var(--sans);margin:0 0 6px}
+.lead{color:var(--muted);max-width:760px}
+nav.toc{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 0}
+nav.toc a{border:1px solid var(--line);background:var(--paper);padding:6px 10px;font-size:12px;text-decoration:none;color:var(--ink)}
+.verdict{margin-top:26px;display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:center;background:var(--paper);border:1px solid var(--line);border-left:5px solid var(--warn);padding:20px}
+.verdict .big{font:400 44px/1 var(--serif);color:var(--warn)}
+.verdict p{margin:4px 0 0;color:var(--muted)}
+.grid{display:grid;gap:12px}
+.g3{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.card{background:var(--paper);border:1px solid var(--line);padding:16px}
+.card p{margin:0;color:var(--muted);font-size:14px}
+.num{font:400 30px/1.1 var(--serif)}
+.tbl{width:100%;border-collapse:collapse;background:var(--paper);border:1px solid var(--line);font-size:14px}
+.tbl th,.tbl td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.tbl th{font:700 10.5px/1.3 var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);background:var(--soft)}
+.tbl td small{display:block;color:var(--muted)}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:14px}
+.pill{display:inline-block;padding:2px 8px;font:700 10.5px/1.6 var(--sans);letter-spacing:.06em;text-transform:uppercase;white-space:nowrap}
+.ok{background:color-mix(in srgb,var(--ok) 16%,transparent);color:var(--ok)}
+.warn{background:color-mix(in srgb,var(--warn) 18%,transparent);color:var(--warn)}
+.bad{background:color-mix(in srgb,var(--bad) 16%,transparent);color:var(--bad)}
+.note{font-size:13px;color:var(--muted);margin-top:10px}
+.calc{display:grid;grid-template-columns:minmax(260px,360px) 1fr;gap:16px;margin-top:14px}
+.inputs{background:var(--paper);border:1px solid var(--line);padding:16px;display:grid;gap:12px}
+.inputs label{display:grid;gap:4px;font-size:13px;color:var(--muted)}
+.inputs input,.inputs select{font:15px var(--sans);padding:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink);width:100%}
+.seg{display:flex;gap:6px;flex-wrap:wrap}
+.seg button{border:1px solid var(--line);background:var(--bg);color:var(--ink);padding:7px 10px;font:700 11px var(--sans);letter-spacing:.06em;text-transform:uppercase;cursor:pointer}
+.seg button.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.out{display:grid;gap:12px;align-content:start}
+.month{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));margin-top:14px}
+.month .card h3{font:400 22px var(--serif);margin-bottom:2px}
+.month ul{margin:10px 0 0;padding-left:18px}
+.month li{margin:6px 0;font-size:14px}
+.month li b{font-weight:600}
+.owner{font-size:11.5px;color:var(--muted)}
+footer{margin-top:56px;border-top:1px solid var(--line);padding-top:16px;font-size:13px;color:var(--muted)}
+@media (max-width:720px){.calc{grid-template-columns:1fr}.verdict{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top">
+  <div><div class="k">Stenhuset · intern side · ikke indeksert</div><h1>SEO-status og vekstplan</h1></div>
+  <div class="k">Analyse 24. oktober 2026</div>
+</header>
+<p class="lead">Status for den nye Stenhuset-siden (setai.no/stenhuset) og dagens nettbutikk (stenhuset.no): hva som er klart, hva som stopper lansering, hvilke søk som gir salg, hvem vi konkurrerer med, og hva en 3-månedersplan kan gi.</p>
+<nav class="toc"><a href="#svar">Kort svar</a><a href="#sjekk">Sjekkliste</a><a href="#ord">Søkeord</a><a href="#konk">Konkurrenter</a><a href="#inntekt">Mulig inntekt</a><a href="#plan">3-månedersplan</a><a href="#kilder">Kilder og forbehold</a></nav>
+
+<section id="svar">
+<div class="verdict">
+  <div class="big">Ikke ennå</div>
+  <div><h3>Grunnmuren er god, men siden er ikke klar for lansering i søk</h3>
+  <p>Titler, beskrivelser, kanoniske adresser, delingsbilder, strukturerte data, sitemap og fart er på plass (sidene svarer på rundt 0,03 sekunder). Siden er med vilje satt til <i>noindex</i> på setai.no, fordi en indeksert kopi ville konkurrert med stenhuset.no. Før lansering må fire ting løses: hver side må sende sitt eget innhold fra serveren, produktene må få egne adresser, Product-data må på plass, og flyttingen til stenhuset.no trenger et 301-kart.</p></div>
+</div>
+<div class="grid g3" style="margin-top:12px">
+  <div class="card"><div class="k">Produkter i katalogen</div><div class="num">273</div><p>257 kan nå åpnes i riktig rom i 3D-showroomet.</p></div>
+  <div class="card"><div class="k">Indekserte produktsider i dag</div><div class="num">201</div><p>stenhuset.no har 201 produktadresser i sitemap. Disse rangeringene må tas vare på ved flytting.</p></div>
+  <div class="card"><div class="k">Blogginnlegg på stenhuset.no</div><div class="num">1</div><p>Nesten ingen innholdssider for spørsmål som «hvordan rengjøre marmor» eller «kalkstein på bad».</p></div>
+</div>
+</section>
+
+<section id="sjekk">
+<h2>Sjekkliste</h2>
+<p class="lead">Testet mot de ekte adressene 24.10.2026. «Ny side» er setai.no/stenhuset, «Nettbutikk» er stenhuset.no.</p>
+<div class="scroll"><table class="tbl">
+<thead><tr><th>Punkt</th><th>Ny side</th><th>Nettbutikk</th><th>Hva det betyr</th></tr></thead>
+<tbody>
+<tr><td>Egen tittel og beskrivelse per side</td><td><span class="pill ok">OK</span></td><td><span class="pill ok">OK</span></td><td>13 sider på den nye siden har egne titler og beskrivelser.</td></tr>
+<tr><td>Kanonisk adresse</td><td><span class="pill warn">Midlertidig</span></td><td><span class="pill ok">OK</span></td><td>Peker til setai.no. Byttes til stenhuset.no ved lansering (CANONICAL_BASE i seo-config.php).</td></tr>
+<tr><td>Indeksering</td><td><span class="pill warn">noindex med vilje</span></td><td><span class="pill ok">index</span></td><td>Riktig nå. Slås på (INDEXABLE=true) først når siden ligger på stenhuset.no.</td></tr>
+<tr><td>Sitemap og robots.txt</td><td><span class="pill ok">OK</span></td><td><span class="pill ok">OK</span></td><td>sitemap.php lister sidene. Sendes inn i Search Console ved lansering.</td></tr>
+<tr><td>Strukturerte data for bedriften</td><td><span class="pill ok">OK</span></td><td><span class="pill warn">Delvis</span></td><td>Ny side har HomeAndConstructionBusiness med adresse og telefon, brødsmuler og FAQ. Nettbutikken har bare Organization.</td></tr>
+<tr><td>Unikt innhold per adresse</td><td><span class="pill bad">Mangler</span></td><td><span class="pill ok">OK</span></td><td>Alle adresser sender den samme siden på 93 kB med alle seksjoner, og den samme H1 («Se steinen før du velger»). Først JavaScript viser riktig seksjon. Google kan se sidene som duplikater. Løsning: page.php skjuler de andre seksjonene og setter riktig H1 allerede på serveren.</td></tr>
+<tr><td>Produkter som egne sider</td><td><span class="pill bad">Mangler</span></td><td><span class="pill ok">OK</span></td><td>Produktlisten bygges i nettleseren fra JSON, og produktene har bare ?produkt=ID. Hvert produkt trenger en egen adresse med tekst, bilde og pris i HTML-en.</td></tr>
+<tr><td>Product-data (pris, lager)</td><td><span class="pill bad">Mangler</span></td><td><span class="pill bad">Mangler</span></td><td>Produktsidene på stenhuset.no har pris i siden, men ingen Product-blokk. Uten den får de ikke pris og lagerstatus i Google-resultatene eller gratisoppføringer i Google Shopping.</td></tr>
+<tr><td>H1 på forsiden</td><td><span class="pill ok">OK</span></td><td><span class="pill warn">Svak</span></td><td>Nettbutikkens forside har H1 «Rustikke favoritter», som ikke sier hva Stenhuset selger.</td></tr>
+<tr><td>Fart</td><td><span class="pill ok">0,03 s</span></td><td><span class="pill ok">0,15 s</span></td><td>Serverens svartid. Nettbutikkens forside er 370 kB HTML (Elementor), noe tung på mobil.</td></tr>
+<tr><td>Bilder med alt-tekst</td><td><span class="pill ok">OK</span></td><td><span class="pill warn">Ikke sjekket</span></td><td>Alle bilder i den nye sidens HTML har alt-tekst.</td></tr>
+<tr><td>Flytteplan (301-kart)</td><td colspan="2"><span class="pill bad">Mangler</span></td><td>Hver gamle adresse (/produkt/…, /produkt-kategori/…) må sendes til ny adresse med 301. Uten det mister nettbutikken rangeringene den har bygget opp.</td></tr>
+</tbody></table></div>
+</section>
+
+<section id="ord">
+<h2>Søkeord som gir salg</h2>
+<p class="lead">Søkene er gruppert etter hva kunden vil gjøre. Søkevolumene er anslag, ikke målt. Bytt dem ut med tall fra Google Keyword Planner og Search Console før dere tar beslutninger på dem.</p>
+<div class="scroll"><table class="tbl">
+<thead><tr><th>Gruppe</th><th>Eksempler på søk</th><th>Hensikt</th><th>Anslått søk/mnd</th><th>Side som skal rangere</th><th>Produkter</th></tr></thead>
+<tbody id="kw"></tbody></table></div>
+<p class="note">Sterkest for Stenhuset: smale søk der få norske butikker har ekte naturstein, som sjakkfliser i marmor, zellige, marmorservant og terracotta. 3D-showroomet og «Se i badet» er en fordel ingen konkurrent har i dag.</p>
+</section>
+
+<section id="konk">
+<h2>Konkurrenter</h2>
+<p class="lead">Fra søk etter marmor-, kalkstein-, zellige- og benkeplate-søk i Norge, 24.10.2026. Søkeresultatene var tynne, og mange søk ble dominert av FINN og kataloger (1881, Gulesider). Det betyr at feltet er åpent.</p>
+<div class="scroll"><table class="tbl">
+<thead><tr><th>Aktør</th><th>Hva de selger</th><th>Styrke</th><th>Svakhet / Stenhusets mulighet</th></tr></thead>
+<tbody>
+<tr><td><a href="https://www.lenngrennaturstein.no/naturstein-fliser" rel="noopener">Lenngren Naturstein</a><small>Oslo/Bærum</small></td><td>Marmor, kalkstein, travertin, skifer, benkeplater</td><td>Lager lokalt, samme kunder</td><td>Lite produktinnhold på nett. Ingen 3D eller romvisning.</td></tr>
+<tr><td><a href="https://stenprosjekt.no/" rel="noopener">Stenprosjekt AS</a><small>Sørkedalsveien 238, Oslo</small></td><td>Naturstein, fliser og benkeplater på mål</td><td>Egen produksjon</td><td>Har samme adresse som Stenhuset, så de er trolig en samarbeidspartner. Unngå at de to sidene konkurrerer om de samme søkene.</td></tr>
+<tr><td><a href="https://www.saethre-sten.no/naturstein" rel="noopener">Sæthre Sten</a></td><td>Naturstein, marmor- og granittflis</td><td>Gratis frakt i hele Norge</td><td>Bredt og generelt, svakt på kalkstein og travertin.</td></tr>
+<tr><td><a href="https://undrbygg.no/produkter/flis-marmor" rel="noopener">Undr Bygg og Innredning</a><small>Oslo</small></td><td>Marmorfliser, spesialbestilling</td><td>Leverer i hele landet</td><td>Leveringstid 4–8 uker. Stenhuset har lager.</td></tr>
+<tr><td><a href="https://mosafil.no/naturstein-fliser.html" rel="noopener">Mosafil</a></td><td>Mosaikk og fliser i steinlook, nettbutikk</td><td>Stort utvalg, mye innhold</td><td>Mye er porselen som ser ut som stein. Ekte naturstein og rådgivning er Stenhusets argument.</td></tr>
+<tr><td><a href="https://www.norfloor.no/steinlook--kjokkenfliser" rel="noopener">Norfloor</a>, Flisekompaniet, Megaflis, Modena</td><td>Keramiske fliser, også i steinlook</td><td>Kjeder, mange butikker, sterke domener</td><td>Vinner brede søk som «fliser bad». Stenhuset bør satse på søk med steinnavn og «ekte naturstein».</td></tr>
+<tr><td>Granitop AS<small>Oslo</small></td><td>Benkeplater i marmor og stein</td><td>Synlig i kataloger for «marmor benkeplate Oslo»</td><td>Stenhusets «Bestill på mål» med lagerplater og 3D-design er sterkere enn en ren katalogoppføring.</td></tr>
+</tbody></table></div>
+</section>
+
+<section id="inntekt">
+<h2>Mulig inntekt å hente</h2>
+<p class="lead">Regnestykket er enkelt og alle tallene kan endres: ekstra klikk fra Google × andel som kjøper × snittordre, pluss forespørsler om benkeplater og prosjekter. Gjennomsnittsprisene kommer fra katalogen: fliser koster rundt 2 000–4 700 kr/m² (median 2 300–2 700), servanter har median 14 000 kr og marmorbord 14 800 kr.</p>
+<div class="calc">
+  <div class="inputs">
+    <div class="seg" role="group" aria-label="Scenario"><button type="button" data-s="lav">Forsiktig</button><button type="button" data-s="mid" class="on">Middels</button><button type="button" data-s="hoy">Ambisiøs</button></div>
+    <label>Ekstra klikk fra Google per måned (etter full effekt)<input id="clicks" type="number" min="0" step="50"></label>
+    <label>Andel som bestiller i nettbutikken (%)<input id="conv" type="number" min="0" step="0.1"></label>
+    <label>Snittordre i nettbutikken (kr)<input id="aov" type="number" min="0" step="500"></label>
+    <label>Andel som sender forespørsel om benkeplate/prosjekt (%)<input id="lead" type="number" min="0" step="0.1"></label>
+    <label>Andel forespørsler som blir salg (%)<input id="close" type="number" min="0" step="5"></label>
+    <label>Snittverdi per prosjekt (kr)<input id="pval" type="number" min="0" step="1000"></label>
+    <label>Bruttomargin (%)<input id="margin" type="number" min="0" max="100" step="5"></label>
+  </div>
+  <div class="out">
+    <div class="grid g3">
+      <div class="card"><div class="k">Måned 3</div><div class="num" id="m3">–</div><p>Omsetning per måned når planen er ferdig. Typisk 30–40 % av full effekt.</p></div>
+      <div class="card"><div class="k">Måned 6–12</div><div class="num" id="full">–</div><p>Omsetning per måned ved full effekt.</p></div>
+      <div class="card"><div class="k">Første 12 måneder</div><div class="num" id="year">–</div><p>Samlet ekstra omsetning, med gradvis oppbygging.</p></div>
+    </div>
+    <div class="card"><div class="k">Dekningsbidrag første 12 måneder</div><div class="num" id="db">–</div><p id="split">–</p></div>
+    <p class="note">Snittordren er satt til et bad med ca. 6–8 m² fliser, lim, fug og vedlikehold. Klikktallene bygger på de anslåtte søkevolumene over, med 5–15 % klikkandel når Stenhuset ligger på topp 3 for smale søk. Tallene er et regneeksempel og ingen garanti. Etter 4–6 uker gir Search Console de ekte tallene.</p>
+  </div>
+</div>
+</section>
+
+<section id="plan">
+<h2>3-månedersplan</h2>
+<p class="lead">Planen gjelder stenhuset.no, der rangeringene ligger. Den nye siden flyttes dit når punktene i måned 1 er gjort. Ansvar: <b>S</b> = SETAEI, <b>SH</b> = Stenhuset.</p>
+<div class="month">
+  <div class="card"><div class="k">Måned 1 · uke 1–4</div><h3>Fundament og flytting</h3>
+  <ul>
+    <li><b>Search Console og GA4 med kjøp som mål.</b> Mål dagens tall før noe endres. <span class="owner">S + SH (tilgang)</span></li>
+    <li><b>Hver side sender sitt eget innhold og sin egen H1 fra serveren</b> (page.php). <span class="owner">S</span></li>
+    <li><b>Egne produktsider</b> med tekst, bilder, pris, Product-data, «Se i badet» og forslag. <span class="owner">S</span></li>
+    <li><b>301-kart</b> fra alle 201 produktadresser og alle kategorier til nye adresser. <span class="owner">S</span></li>
+    <li><b>Google Business Profile:</b> showroomet i Sørkedalsveien, bilder, åpningstider, kategorier og første anmeldelser. <span class="owner">SH</span></li>
+    <li><b>Google Merchant Center</b> med produktfeed fra katalogen (gratisoppføringer i Shopping). <span class="owner">S</span></li>
+  </ul></div>
+  <div class="card"><div class="k">Måned 2 · uke 5–8</div><h3>Innhold som svarer på søkene</h3>
+  <ul>
+    <li><b>Landingssider:</b> sjakkfliser i marmor, zellige til kjøkken, terracotta gulv, kalkstein på bad, marmorservant og marmor benkeplate Oslo. Hver med produkter og 3D-knapp. <span class="owner">S</span></li>
+    <li><b>Steinbiblioteket servert fra serveren</b>, én side per stein (Carrara, Calacatta, Nero Marquina, travertin osv.). <span class="owner">S</span></li>
+    <li><b>Fire guider:</b> Slik rengjør og impregnerer du marmor (selger Stensåpe, impregnering og Stone P), Marmor eller kalkstein på badet, Zellige: legging og fuging, og Hva koster en benkeplate i marmor. <span class="owner">S skriver, SH kvalitetssikrer</span></li>
+    <li><b>Prosjektgalleriet med ekte steintyper</b> og kundecase. <span class="owner">SH bekrefter</span></li>
+  </ul></div>
+  <div class="card"><div class="k">Måned 3 · uke 9–12</div><h3>Autoritet og konvertering</h3>
+  <ul>
+    <li><b>Lenker:</b> 3D-showroomet som pressesak til Bonytt, Bo Bedre og Nordiske Hjem, og samarbeid med interiørarkitekter. <span class="owner">S + SH</span></li>
+    <li><b>Instagram og Facebook peker til produktsidene</b> via inspirasjonssiden. <span class="owner">SH</span></li>
+    <li><b>Anmeldelser</b> etter hvert kjøp (Google), og vurderinger på produktsidene. <span class="owner">SH</span></li>
+    <li><b>Konvertering:</b> prøveforespørsel («Bestill vareprøve»), tydelig frakt og leveringstid, og påminnelse om tilbehør i kassen. <span class="owner">S</span></li>
+    <li><b>Gjennomgang:</b> søk som ligger på plass 5–15 får forbedret tekst og flere interne lenker. <span class="owner">S</span></li>
+  </ul></div>
+</div>
+</section>
+
+<section id="kilder">
+<h2>Kilder og forbehold</h2>
+<ul class="note">
+  <li>Teknisk sjekk: egne forespørsler mot setai.no/stenhuset og stenhuset.no 24.10.2026 (titler, robots, kanoniske adresser, strukturerte data, sitemap, svartid).</li>
+  <li>Katalog og priser: Stenhusets WooCommerce-API, hentet 23.10.2026 (273 produkter).</li>
+  <li>Konkurrenter: nettsøk 24.10.2026, med lenker i tabellen over. Ingen trafikkdata for konkurrentene er brukt.</li>
+  <li>Søkevolum og klikktall er anslag, fordi vi ikke har tilgang til Keyword Planner eller Search Console. Når dataene finnes, oppdateres tabellen og kalkulatoren med dem.</li>
+</ul>
+</section>
+
+<footer>Laget av SETAEI for Stenhuset · intern side, ikke indeksert · <a href="/stenhuset/">Til den nye siden</a></footer>
+</div>
+<script>
+// keyword groups: example searches, intent, estimated monthly searches (low–high; estimates, not measured), page, product count
+const KW=[
+ ['Marmorfliser og sjakkmønster','marmorfliser, marmorfliser bad, sjakkfliser, sjakkmønster fliser, carrara fliser','Kjøp',[1500,3500],'/marmorfliser/ + /sjakkfliser/','68'],
+ ['Kalkstein og travertin','kalkstein fliser, kalksten gulv, travertin fliser, belgisk blåsten','Kjøp',[800,2000],'/kalkstein/','58'],
+ ['Benkeplater i stein','marmor benkeplate, benkeplate naturstein, benkeplate på mål oslo','Forespørsel',[1000,2500],'/bestill-pa-mal/','19 plater'],
+ ['Stell av naturstein','rengjøre marmor, impregnere marmor, flekker på marmor, stensåpe','Lære → kjøpe tilbehør',[800,2000],'/guider/stell-av-marmor/','5'],
+ ['Zellige','zellige fliser, zellige kjøkken, marokkanske fliser','Kjøp',[400,1200],'/zellige/','32'],
+ ['Terracotta','terracotta fliser, terracotta gulv kjøkken, cotto fliser','Kjøp',[500,1300],'/terracotta/','10'],
+ ['Servanter','marmorservant, steinservant, travertin servant, stenvask','Kjøp',[400,1000],'/stenvasker/','27'],
+ ['Lokalt','natursten oslo, flisbutikk oslo, showroom fliser oslo','Besøk',[600,1500],'Forside + Google Business Profile','–'],
+ ['Terrazzo','terrazzo fliser, terrazzo gulv','Kjøp',[300,800],'/terrazzo/','20'],
+ ['Glaserte fliser','håndlagde fliser, glaserte fliser bad','Kjøp',[300,900],'/handlagde-fliser/','32']
+];
+const nf=new Intl.NumberFormat('nb-NO');
+document.getElementById('kw').innerHTML=KW.map(r=>`<tr><td><b>${r[0]}</b></td><td>${r[1]}</td><td>${r[2]}</td><td>${nf.format(r[3][0])}–${nf.format(r[3][1])}</td><td>${r[4]}</td><td>${r[5]}</td></tr>`).join('')+
+ `<tr><td><b>Sum</b></td><td></td><td></td><td><b>${nf.format(KW.reduce((a,r)=>a+r[3][0],0))}–${nf.format(KW.reduce((a,r)=>a+r[3][1],0))}</b></td><td></td><td></td></tr>`;
+
+const S={lav:{clicks:600,conv:.6,aov:15000,lead:.4,close:25,pval:30000,margin:40},
+         mid:{clicks:1500,conv:1,aov:18000,lead:.6,close:30,pval:35000,margin:40},
+         hoy:{clicks:3000,conv:1.4,aov:20000,lead:.8,close:35,pval:40000,margin:40}};
+const ids=['clicks','conv','aov','lead','close','pval','margin'],$=id=>document.getElementById(id);
+const kr=v=>nf.format(Math.round(v/1000)*1000)+' kr';
+function set(s){ids.forEach(k=>$(k).value=S[s][k]);document.querySelectorAll('.seg button').forEach(b=>b.classList.toggle('on',b.dataset.s===s));calc();}
+function calc(){
+  const v=Object.fromEntries(ids.map(k=>[k,Math.max(0,Number($(k).value)||0)]));
+  const shop=v.clicks*v.conv/100*v.aov,proj=v.clicks*v.lead/100*v.close/100*v.pval,full=shop+proj;
+  // ramp-up: month 1–12 share of full effect (SEO builds slowly)
+  const ramp=[.05,.15,.35,.5,.6,.7,.8,.85,.9,.95,1,1],year=ramp.reduce((a,r)=>a+r*full,0);
+  $('m3').textContent=kr(full*.35);$('full').textContent=kr(full);$('year').textContent=kr(year);
+  $('db').textContent=kr(year*v.margin/100);
+  $('split').textContent=`Ved full effekt: ${kr(shop)} fra nettbutikken (${nf.format(Math.round(v.clicks*v.conv/100))} ordre/mnd) og ${kr(proj)} fra prosjekter (${nf.format(Math.round(v.clicks*v.lead/100))} forespørsler/mnd).`;
+}
+document.querySelector('.seg').addEventListener('click',e=>{const b=e.target.closest('[data-s]');if(b)set(b.dataset.s);});
+ids.forEach(k=>$(k).addEventListener('input',()=>{document.querySelectorAll('.seg button').forEach(b=>b.classList.remove('on'));calc();}));
+set('mid');
+</script>
+</body>
+</html>
