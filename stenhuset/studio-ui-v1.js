@@ -7,11 +7,11 @@
  * Room type and daylight are driven through the existing #room-tabs and #light-range controls. */
 const shell=document.querySelector('.scene-shell');
 if(shell&&typeof window.getStudioMaterials==='function'){
-  const LABEL={floor:'Gulv',wall:'Vegg',sink:'Servant',table:'Sidebord',top:'Benkeplate',rug:'Teppe',coffee:'Stuebord',fire:'Peis'};
+  const LABEL={floor:'Gulv',wall:'Vegg',splash:'Bakvegg',sink:'Servant',table:'Sidebord',top:'Benkeplate',rug:'Teppe',coffee:'Stuebord',fire:'Peis'};
   // each room only offers products that belong there
   // where stone is used in Nordic homes: bathroom floor + walls; kitchen countertop + splashback (stone floor optional);
   // living room on oak with painted walls, stone in the coffee table, fireplace and side tables
-  const ROOM_TARGETS={bad:['floor','wall','sink'],stue:['coffee','fire','table','rug'],kjokken:['top','floor']};
+  const ROOM_TARGETS={bad:['floor','wall','sink'],stue:['coffee','fire','table','rug'],kjokken:['top','splash','floor']};
   let target='floor',open=false,settleT=0,building=false;
 
   const css=document.createElement('style');
@@ -100,12 +100,12 @@ if(shell&&typeof window.getStudioMaterials==='function'){
   shell.appendChild(tools);
   const pop=document.createElement('div');pop.className='su-pop';pop.setAttribute('role','group');shell.appendChild(pop);
   const bottom=document.createElement('div');bottom.className='su-bottom';
-  bottom.innerHTML='<button type="button" class="su-ib txt" id="su-try">'+ICON.cam+'Prøv i mitt rom</button><button type="button" class="su-ib txt" id="su-calc">'+ICON.calc+'Beregn materialpris</button><button type="button" class="su-ib txt" id="su-share">'+ICON.share+'Del</button>';
+  bottom.innerHTML='<button type="button" class="su-ib txt" id="su-try">'+ICON.cam+'Prøv i mitt rom <small style="font:700 8px/1 Arial,sans-serif;letter-spacing:.1em;background:#e8a35f;color:#242725;padding:3px 4px;margin-left:5px">BETA</small></button><button type="button" class="su-ib txt" id="su-calc">'+ICON.calc+'Beregn materialpris</button><button type="button" class="su-ib txt" id="su-share">'+ICON.share+'Del</button>';
   shell.appendChild(bottom);
 
   const dock=document.createElement('div');dock.className='su-dock';dock.setAttribute('role','region');dock.setAttribute('aria-label','Steinvelger');
   dock.innerHTML=
-    '<div class="su-head"><div class="su-seg" id="su-target"><button type="button" data-t="floor" class="on">Gulv</button><button type="button" data-t="wall">Vegg</button><button type="button" data-t="sink">Servant</button><button type="button" data-t="coffee">Stuebord</button><button type="button" data-t="fire">Peis</button><button type="button" data-t="table">Sidebord</button><button type="button" data-t="top">Benkeplate</button><button type="button" data-t="rug">Teppe</button></div>'+
+    '<div class="su-head"><div class="su-seg" id="su-target"><button type="button" data-t="floor" class="on">Gulv</button><button type="button" data-t="wall">Vegg</button><button type="button" data-t="sink">Servant</button><button type="button" data-t="coffee">Stuebord</button><button type="button" data-t="fire">Peis</button><button type="button" data-t="table">Sidebord</button><button type="button" data-t="top">Benkeplate</button><button type="button" data-t="splash">Bakvegg</button><button type="button" data-t="rug">Teppe</button></div>'+
     '<div class="su-name" id="su-name" aria-live="polite"></div><button type="button" class="su-close" id="su-x" aria-label="Lukk steinvelger">×</button></div>'+
     '<div class="su-track-wrap"><button type="button" class="su-arr l" aria-label="Forrige stein">‹</button><div class="su-track" id="su-track" tabindex="0"></div><button type="button" class="su-arr r" aria-label="Neste stein">›</button></div>';
   shell.appendChild(dock);
@@ -144,11 +144,13 @@ if(shell&&typeof window.getStudioMaterials==='function'){
   const OAK={id:'eik',name:'Eikeparkett',pattern:'repeating-linear-gradient(0deg,#c9a57a 0 15px,#b9925f 15px 16px,#d2b085 16px 31px,#a98153 31px 32px)'};
   const list=()=>{
     if(isModel())return modelList();
+    if(target==='splash')return [{id:'0',name:'Samme stein som benkeplaten',pattern:'linear-gradient(135deg,#efebe2,#d5cdbf)'}].concat(window.getStudioMaterials().filter(x=>!x.plaster));
     const m=window.getStudioMaterials().filter(x=>target==='wall'||!x.plaster);
     return target==='floor'&&window.getStudioState().room==='kjokken'?[OAK].concat(m):m;
   };
   const current=()=>{
     if(target==='top'){const t=window.Studio3D&&window.Studio3D.getTop&&window.Studio3D.getTop();return t?t.stone:'0';}
+    if(target==='splash')return (window.Studio3D&&window.Studio3D.getSplash&&window.Studio3D.getSplash())||'0';
     if(target==='coffee')return (window.Studio3D&&window.Studio3D.getCoffee&&window.Studio3D.getCoffee())||'none';
     if(target==='fire')return (window.Studio3D&&window.Studio3D.getFire&&window.Studio3D.getFire())||'none';
     if(target==='floor'&&window.getStudioState().room==='kjokken'&&!(window.Studio3D&&window.Studio3D.getKitchenFloor&&window.Studio3D.getKitchenFloor()))return 'eik';
@@ -176,6 +178,7 @@ if(shell&&typeof window.getStudioMaterials==='function'){
   }
   function showName(card){
     if(target==='coffee'||target==='fire'){const it=modelList().find(x=>x.id===card.dataset.id);nameEl.innerHTML=(it?it.name:'')+'<small>'+(target==='fire'?'Peis kledd i stein med gulvplate · på mål':'Stuebord 125 × 66 cm · plate og ben i stein · på mål')+'</small>';return;}
+    if(target==='splash'){const m=card.dataset.id==='0'?null:window.getStudioMaterials().find(x=>x.id===card.dataset.id);nameEl.innerHTML=(m?m.name:'Samme stein som benkeplaten')+'<small>Bakvegg · kjøkken'+(m&&m.kind?' · '+m.kind:'')+'</small>';return;}
     if(target==='floor'&&card.dataset.id==='eik'){nameEl.innerHTML='Eikeparkett<small>Gulv · det vanlige valget på kjøkken</small>';return;}
     if(target==='rug'){const it=modelList().find(x=>x.id===card.dataset.id),R=it&&it.rug;nameEl.innerHTML=(it?it.name:'')+'<small>Teppe · stue · '+(R?R.size?R.size[1]*100+' × '+R.size[0]*100+' cm':'tilpasset rommet':'bare stein')+'</small>';return;}
     if(target==='top'){const it=modelList().find(x=>x.id===card.dataset.id);nameEl.innerHTML=(it?it.name:'')+'<small>Benkeplate · kjøkken og øy · '+(card.dataset.id==='0'?'som gulvet':'3 cm')+'</small>';return;}
@@ -183,7 +186,7 @@ if(shell&&typeof window.getStudioMaterials==='function'){
       const dims=!sp?'':sp.kind==='round'?'Ø '+cmv(sp.R*2)+' × H '+cmv(sp.H)+' cm':cmv(sp.W)+' × '+cmv(sp.D)+' × '+cmv(sp.H)+' cm';
       nameEl.innerHTML=(it?it.name:'')+'<small>'+LABEL[target]+' · '+(dims||'standard')+'</small>';return;}
     const m=window.getStudioMaterials().find(x=>x.id===card.dataset.id);
-    nameEl.innerHTML=(m?m.name:'')+'<small>'+LABEL[target]+' · '+(KIND[card.dataset.id]||'')+'</small>';
+    nameEl.innerHTML=(m?m.name:'')+'<small>'+LABEL[target]+' · '+(KIND[card.dataset.id]||(m&&m.kind)||'')+'</small>';
   }
   function centered(){
     const mid=track.scrollLeft+track.clientWidth/2;let best=null,bd=1e9;
@@ -206,6 +209,7 @@ if(shell&&typeof window.getStudioMaterials==='function'){
       return;
     }
     const S3=window.Studio3D,kitchen=window.getStudioState().room==='kjokken';
+    if(target==='splash'){if(S3&&S3.setSplash)S3.setSplash(card.dataset.id==='0'?null:card.dataset.id);return;}
     if(target==='floor'&&kitchen&&S3&&S3.setKitchenFloor){
       if(card.dataset.id==='eik'){S3.setKitchenFloor(false);return;}
       window.setStudioMaterial(target,+card.dataset.i);S3.setKitchenFloor(true);return;
@@ -247,6 +251,8 @@ if(shell&&typeof window.getStudioMaterials==='function'){
     if(v){render();setTimeout(()=>track.focus({preventScroll:true}),350);}
   }
   btnStones.onclick=()=>setOpen(!open);
+  // a product opened from the shop (product-room-v1.js) points the carousel at the surface it was put on
+  window.StudioUI={sync(t){if(t&&LABEL[t])target=t;dock.querySelectorAll('#su-target [data-t]').forEach(b=>b.classList.toggle('on',b.dataset.t===target));if(open)render();}};
   dock.querySelector('#su-x').onclick=()=>setOpen(false);
 
   // keep the carousel in sync when the page's own swatches change the material
@@ -331,7 +337,11 @@ if(shell&&typeof window.getStudioMaterials==='function'){
       // kitchen and living room: oak and paint are not Stenhuset's; count the stone parts only
       if(st.room==='kjokken'){
         if(S3.getKitchenFloor&&S3.getKitchenFloor()&&fm&&fm.price){const r=stonePrice(floorA,fm.price);lines.push([fm.name+' · gulv, '+r.ordered+' m²'+(r.disc?' (−'+r.disc+' %)':''),r.total]);}
-        lines.push(['Benkeplate og bakvegg på mål','på forespørsel']);
+        // tiles from the shop (no m² price in the catalogue): listed, priced in the shop
+        if(S3.getKitchenFloor&&S3.getKitchenFloor()&&fm&&!fm.price&&fm.product)lines.push([fm.name+' · gulv','pris i nettbutikken']);
+        const sp=S3.getSplash&&S3.getSplash(),sm=sp&&mats.find(m=>m.id===sp);
+        if(sm)lines.push([sm.name+' · bakvegg','pris i nettbutikken']);
+        lines.push([sm?'Benkeplate på mål':'Benkeplate og bakvegg på mål','på forespørsel']);
       }else{
         const fs=S3.featureStones||[],nm=id=>(fs.find(x=>x.id===id)||{}).n||'';
         if(S3.getCoffee&&S3.getCoffee())lines.push(['Stuebord i '+nm(S3.getCoffee()),'på forespørsel']);
@@ -342,6 +352,7 @@ if(shell&&typeof window.getStudioMaterials==='function'){
     }
     if(fm&&fm.price){if(wm&&wm.id===fm.id&&wm.price){const r=stonePrice(floorA+wallA,fm.price);lines.push([fm.name+' · gulv og vegg, '+r.ordered+' m²'+(r.disc?' (−'+r.disc+' %)':''),r.total]);}
       else{const r=stonePrice(floorA,fm.price);lines.push([fm.name+' · gulv, '+r.ordered+' m²'+(r.disc?' (−'+r.disc+' %)':''),r.total]);}}
+    else if(fm&&fm.product)lines.push([fm.name+' · gulv','pris i nettbutikken']);
     if(wm&&wm.price&&!(fm&&wm.id===fm.id)){const r=stonePrice(wallA,wm.price);lines.push([wm.name+' · vegg, '+r.ordered+' m²'+(r.disc?' (−'+r.disc+' %)':''),r.total]);}
     else if(wm&&!wm.price)lines.push([wm.name+' · vegg','på forespørsel']);
     const prod=(id,label)=>{const p=catMap&&catMap.get(+id);if(p){const v=p.sp&&p.sp<p.p?p.sp:p.p;lines.push([p.n,v||'på forespørsel']);}else if(id)lines.push([label,'–']);};
@@ -376,12 +387,12 @@ if(shell&&typeof window.getStudioMaterials==='function'){
   let tryP=null;
   const openTry=()=>{
     if(document.fullscreenElement)document.exitFullscreen&&document.exitFullscreen();
-    tryP=tryP||import('./tryroom-v1.js?v=18');
+    tryP=tryP||import('./tryroom-v1.js?v=19');
     tryP.then(m=>m.open()).catch(err=>{console.warn('Prøv i mitt rom feilet:',err);tryP=null;alert('Funksjonen kunne ikke lastes. Sjekk tilkoblingen og prøv igjen.');});
   };
   bottom.querySelector('#su-try').onclick=openTry;
   // sharing: picture + link to exactly this setup; a shared link (#studio?oppsett=…) is restored on arrival
-  const shareMod=()=>import('./share-v1.js?v=4');
+  const shareMod=()=>import('./share-v1.js?v=5');
   bottom.querySelector('#su-share').onclick=()=>{if(document.fullscreenElement)document.exitFullscreen&&document.exitFullscreen();shareMod().then(m=>m.openShare()).catch(e=>{console.warn(e);alert('Deling kunne ikke lastes.');});};
   const restore=()=>{if(/[?&]oppsett=/.test(location.hash))shareMod().then(m=>m.restoreFromHash());};
   window.addEventListener('hashchange',restore);restore();

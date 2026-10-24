@@ -19,7 +19,7 @@ export function collectState(){
   if(st.room==='kjokken'&&top&&S3.topStones){const t=S3.topStones.find(x=>x.id===top.stone);if(t)names.top=t.n;}
   return {room:st.room,floor:st.floor&&st.floor.id,wall:st.wall&&st.wall.id,light:st.light,
     sink:st.room==='bad'?sink||0:0,table:st.room==='stue'?table||0:0,top:st.room==='kjokken'?top||null:null,
-    rug:S3.getRug?S3.getRug():'persisk',coffee:S3.getCoffee?S3.getCoffee()||'none':'',fire:S3.getFire?S3.getFire()||'none':'',kfloor:!!(S3.getKitchenFloor&&S3.getKitchenFloor()),view:S3.getView?S3.getView():'door',names};
+    rug:S3.getRug?S3.getRug():'persisk',coffee:S3.getCoffee?S3.getCoffee()||'none':'',fire:S3.getFire?S3.getFire()||'none':'',kfloor:!!(S3.getKitchenFloor&&S3.getKitchenFloor()),splash:st.room==='kjokken'&&S3.getSplash?S3.getSplash()||'':'',view:S3.getView?S3.getView():'door',names};
 }
 
 /* 1200×630 (the size Facebook and Messenger use for link previews), with the room and stones written on it */
@@ -110,9 +110,11 @@ export async function openShare(){
 }
 
 /* ---------- restore a shared setup ---------- */
-export function applyState(s){
+export async function applyState(s){
   const tab=document.querySelector('#room-tabs [data-room="'+s.room+'"]');
   if(tab&&window.getStudioState().room!==s.room)tab.click();
+  // shop products tried in the showroom (stone ids p-<product id>) are registered before they can be picked
+  for(const id of [s.floor,s.wall,s.splash])if(/^p-\d+$/.test(id||'')&&window.ensureProductStone)await window.ensureProductStone(id).catch(()=>{});
   const mats=window.getStudioMaterials(),fi=mats.findIndex(m=>m.id===s.floor),wi=mats.findIndex(m=>m.id===s.wall);
   if(fi>=0)window.setStudioMaterial('floor',fi);if(wi>=0)window.setStudioMaterial('wall',wi);
   const r=document.getElementById('light-range');if(r&&s.light){r.value=s.light;r.dispatchEvent(new Event('input',{bubbles:true}));}
@@ -125,6 +127,7 @@ export function applyState(s){
     if(s.room==='stue'&&s.coffee&&S3.setCoffee)S3.setCoffee(s.coffee==='none'?null:s.coffee);
     if(s.room==='stue'&&s.fire&&S3.setFire)S3.setFire(s.fire==='none'?null:s.fire);
     if(s.room==='kjokken'&&S3.setKitchenFloor)S3.setKitchenFloor(!!s.kfloor);
+    if(s.room==='kjokken'&&S3.setSplash)S3.setSplash(s.splash||null);
     if(s.view&&S3.goView)setTimeout(()=>S3.goView(s.view),300);
   }
 }
@@ -140,7 +143,7 @@ export async function restoreFromHash(){
   try{
     const r=await fetch(API+'share.php?id='+m[1]);if(!r.ok)throw new Error('HTTP '+r.status);const s=await r.json();
     for(let i=0;i<60&&!(window.Studio3D&&window.Studio3D.ready&&window.getStudioState);i++)await new Promise(f=>setTimeout(f,150));
-    applyState(s);banner();
+    await applyState(s);banner();
   }catch(e){console.warn('Delt oppsett kunne ikke lastes',e);}
 }
 export {esc};

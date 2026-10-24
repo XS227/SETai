@@ -35,6 +35,7 @@ $state=[
   'coffee'=>preg_match('/^(none|sk-[a-z]{2,20})$/',(string)($s['coffee']??''))?$s['coffee']:'',
   'fire'=>preg_match('/^(none|sk-[a-z]{2,20})$/',(string)($s['fire']??''))?$s['fire']:'',
   'kfloor'=>!empty($s['kfloor']),
+  'splash'=>preg_match('/^p-[0-9]{1,7}$/',(string)($s['splash']??''))?$s['splash']:'',
   'view'=>in_array($s['view']??'',$views,true)?$s['view']:'door',
   'names'=>[],'created'=>gmdate('c'),
 ];

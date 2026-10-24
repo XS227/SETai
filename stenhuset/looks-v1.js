@@ -57,12 +57,19 @@ function productRow(p,s){
   const has3d=typeof SINK3D!=='undefined'&&SINK3D.has(p.id),isTable=TABLE_IDS.has(p.id);
   const acts=[];
   if(has3d)acts.push('<button class="lk-a" data-act="3d" data-id="'+p.id+'">Se i 3D</button>');
-  if(has3d)acts.push('<button class="lk-a" data-act="room" data-id="'+p.id+'">Prøv i '+(isTable?'stuen':'badet')+'</button>');
+  // every product with a place in the showroom (tiles too: floor, wall, kitchen splashback) opens in its own room
+  const a=window.PR&&window.PR.analyze(p),room=a&&a.room?window.PR.ROOM_NAME[a.room]:has3d?(isTable?'stuen':'badet'):null;
+  if(room)acts.push('<button class="lk-a" data-act="room" data-id="'+p.id+'">Prøv i '+room+'</button>');
   if(s.sheets.has(p.id)||p.id===10827)acts.push('<button class="lk-a" data-act="sheet" data-id="'+p.id+'">Produktark</button>');
   acts.push('<a class="lk-a" href="'+esc(p.u)+'" target="_blank" rel="noopener">Kjøp ↗</a>');
   return '<li class="lk-p"><img loading="lazy" src="'+esc(p.i)+'" alt=""><div><div class="lk-pn">'+esc(p.n)+'<small>'+(kr(p.sp||p.p)||'Pris på forespørsel')+'</small></div><div class="lk-acts">'+acts.join('')+'</div></div></li>';
 }
 
+function careRows(prods,s){
+  if(prods.length>1||!window.PR)return '';
+  const all=[...s.cat.values()],c=window.PR.complete(prods[0],all).filter(x=>[2396,3834,10820].includes(x.p.id)).slice(0,2);
+  return c.map(x=>'<li class="lk-p lk-care"><img loading="lazy" src="'+esc(x.p.i)+'" alt=""><div><div class="lk-pn">'+esc(x.p.n)+'<small>'+esc(x.why)+'</small></div><div class="lk-acts"><a class="lk-a" href="'+esc(x.p.u)+'" target="_blank" rel="noopener">Kjøp ↗</a></div></div></li>').join('');
+}
 function card(l,s){
   const prods=l.products.map(id=>s.cat.get(id)).filter(Boolean),cover=prods[0];
   const fb=isFb(l),kind=fb?(l.kind==='video'?'Video':'Innlegg'):(l.kind==='reel'?'Reel':'Innlegg'),icon=fb?FB:IG;
@@ -71,7 +78,7 @@ function card(l,s){
     '<span class="lk-badge">'+(fb?'Facebook':'Instagram')+' · '+kind+'</span>'+
     '<button class="lk-play" data-act="embed">'+icon+(l.kind==='reel'?'Spill av reelen':l.kind==='video'?'Spill av videoen':'Vis innlegget')+'</button></div>'+
     '<div class="lk-body">'+(l.title?'<h3 class="lk-title">'+esc(l.title)+'</h3>':'')+(l.text?'<p class="lk-text">'+esc(l.text)+'</p>':'')+
-    (prods.length?'<ul class="lk-prods">'+prods.map(p=>productRow(p,s)).join('')+'</ul>':'<p class="lk-none">Produktene fra dette innlegget kommer snart. <a href="#kolleksjon">Se nettbutikken</a>.</p>')+
+    (prods.length?'<ul class="lk-prods">'+prods.map(p=>productRow(p,s)).join('')+careRows(prods,s)+'</ul>':'<p class="lk-none">Produktene fra dette innlegget kommer snart. <a href="#kolleksjon">Se nettbutikken</a>.</p>')+
     '<div class="lk-foot"><button class="lk-a" data-act="share">Del</button><a class="lk-a lk-ig" href="'+esc(l.url)+'" target="_blank" rel="noopener">'+icon+'Åpne på '+(fb?'Facebook':'Instagram')+'</a></div>'+
     '</div></article>';
 }
@@ -91,6 +98,7 @@ async function act(b,art){
   if(a==='embed')return embed(art);
   if(a==='3d'&&typeof openSink3D==='function')return openSink3D(p);
   if(a==='sheet')return import('./product-sheet-v1.js?v=2').then(m=>m.open({id,product:p,on3D:typeof openSink3D==='function'?()=>openSink3D(p):undefined}));
+  if(a==='room'&&window.PR&&window.PR.analyze(p).room)return window.PR.openInShowroom(p);
   if(a==='room'){
     const room=TABLE_IDS.has(id)?'stue':'bad';location.hash='#studio';
     for(let i=0;i<60&&!(window.Studio3D&&window.Studio3D.ready);i++)await new Promise(f=>setTimeout(f,120));

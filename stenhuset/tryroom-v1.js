@@ -122,7 +122,7 @@ async function detect(){
 function showStart(){
   const c=S.caps,ok=(c.xr||(c.cam&&c.secure));
   sheet().style.display='';dock().hidden=true;
-  sheet().innerHTML=`<h2>Prøv i mitt rom</h2>
+  sheet().innerHTML=`<h2>Prøv i mitt rom <small style="font:700 10px/1 Arial,sans-serif;letter-spacing:.1em;background:#e8a35f;color:#242725;padding:4px 6px;vertical-align:middle">BETA</small></h2>
   <p>Se Stenhusets materialer på gulv og vegger i ditt eget rom. Rett mobilkameraet mot rommet og beveg deg rolig: gulv, vegger og møbler gjenkjennes automatisk, og materialet legges bare på gulv og vegg.</p>
   ${ok?'<button class="tr-btn pri" data-act="start" style="font-size:13px;padding:16px 26px;min-height:54px">Start</button>':'<p class="tr-warn">Denne enheten eller nettleseren støtter ikke kamera her. Åpne siden i Chrome på en Android-telefon, eller i Safari på iPhone, over https.</p>'}
   <p style="font-size:12px;color:#aaa49a;margin-top:18px">Alt skjer på din egen mobil. Bilder og video lastes ikke opp noe sted. Nettleseren spør om tillatelse til kameraet.</p>`;

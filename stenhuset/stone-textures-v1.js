@@ -55,28 +55,116 @@ function makeLayout(m){
   return {rows,segs};
 }
 
+/* Laid patterns for the shop's tiles, all periodic over T (sizes are rounded so a whole number fits):
+ * 'grid' (straight, running bond with bond:true, two-colour chess with chess:true), 'diag' (chess turned 45°),
+ * 'octagon' (ottagono / cassettone: octagons with a small insert where four meet), 'hex', 'basket' (basket weave,
+ * small dots with dots:true). A cell function fills o with tid, local position, size, edge distance and alt (2nd colour). */
+function makeCells(m){
+  const fit=(s,even)=>{let k=Math.max(1,Math.round(T/s));if(even&&k%2)k++;return T/k;};
+  const p=m.pattern;
+  if(p==='grid'){
+    const tw=fit(m.tw||.3,m.chess),th=fit(m.th2||m.tw||.3,m.chess||m.bond),cols=Math.round(T/tw),rows=Math.round(T/th);
+    return (X,Y,o)=>{
+      const r=Math.min(rows-1,Math.floor(Y/th));let x=X;if(m.bond&&(r&1))x=(X+tw/2)%T;
+      const c=Math.min(cols-1,Math.floor(x/tw));
+      o.lx=x-c*tw;o.ly=Y-r*th;o.w=tw;o.h=th;o.tid=r*cols+c+1;o.alt=!!m.chess&&((r+c)&1)===1;
+      o.dE=Math.min(o.lx,tw-o.lx,o.ly,th-o.ly);
+    };
+  }
+  if(p==='diag'){
+    const s=fit(m.tw||.2,true),k=Math.round(T/s);
+    return (X,Y,o)=>{
+      const a=X+Y,b=X-Y+T*4,ia=Math.floor(a/s),ib=Math.floor(b/s),fa=a-ia*s,fb=b-ib*s;
+      o.lx=fa/Math.SQRT2;o.ly=fb/Math.SQRT2;o.w=o.h=s/Math.SQRT2;
+      o.tid=(ia%k)*k+(ib%k)+1;o.alt=((ia+ib)&1)===1;o.dE=Math.min(fa,s-fa,fb,s-fb)/Math.SQRT2;
+    };
+  }
+  if(p==='octagon'){
+    const tw=fit(m.tw||.3),n=Math.round(T/tw),c=tw*(m.insert||.29);
+    return (X,Y,o)=>{
+      const ci=Math.min(n-1,Math.floor(X/tw)),ri=Math.min(n-1,Math.floor(Y/tw)),lx=X-ci*tw,ly=Y-ri*tw;
+      const dx=Math.min(lx,tw-lx),dy=Math.min(ly,tw-ly),k=dx+dy;
+      if(k<c){
+        const vx=(ci+(lx>tw/2?1:0))%n,vy=(ri+(ly>tw/2?1:0))%n;
+        o.tid=100000+vy*n+vx;o.alt=true;o.dE=(c-k)/Math.SQRT2;o.lx=dx;o.ly=dy;o.w=o.h=c;
+      }else{o.tid=ri*n+ci+1;o.alt=false;o.lx=lx;o.ly=ly;o.w=o.h=tw;o.dE=Math.min(dx,dy,(k-c)/Math.SQRT2);}
+    };
+  }
+  if(p==='frame'){
+    // cassettone: squares (inner share of the cell) framed by strips in the second stone, small square where strips cross
+    const S=fit(m.tw||.4),n=Math.round(T/S),q=S*(m.inner||.75);
+    return (X,Y,o)=>{
+      const ci=Math.min(n-1,Math.floor(X/S)),ri=Math.min(n-1,Math.floor(Y/S)),lx=X-ci*S,ly=Y-ri*S;
+      if(lx<q&&ly<q){o.tid=ri*n+ci+1;o.alt=false;o.lx=lx;o.ly=ly;o.w=o.h=q;o.dE=Math.min(lx,q-lx,ly,q-ly);return;}
+      const a=lx>=q,b=ly>=q,x0=a?q:0,x1=a?S:q,y0=b?q:0,y1=b?S:q;
+      o.alt=true;o.tid=100000+(ri*n+ci)*3+(a&&b?2:a?1:0);o.lx=lx-x0;o.ly=ly-y0;o.w=x1-x0;o.h=y1-y0;
+      o.dE=Math.min(lx-x0,x1-lx,ly-y0,y1-ly);
+    };
+  }
+  if(p==='hex'){
+    const r0=(m.tw||.2)/2,cols=Math.max(1,Math.round(T/(Math.sqrt(3)*r0))),rows=2*Math.max(1,Math.round(T/(3*r0))),sx=T/cols,sy=T/rows;
+    return (X,Y,o)=>{
+      const j0=Math.floor(Y/sy);let d1=1e9,d2=1e9,ax=0,ay=0,bx=0,by=0,ti=0,tj=0;
+      for(let j=j0-1;j<=j0+1;j++){
+        const off=(j&1)?sx/2:0,i0=Math.round((X-off)/sx),cy=(j+.5)*sy;
+        for(let i=i0-1;i<=i0+1;i++){
+          const cx=i*sx+off,d=(X-cx)*(X-cx)+(Y-cy)*(Y-cy);
+          if(d<d1){d2=d1;bx=ax;by=ay;d1=d;ax=cx;ay=cy;ti=i;tj=j;}else if(d<d2){d2=d;bx=cx;by=cy;}
+        }
+      }
+      o.tid=(((tj%rows)+rows)%rows)*cols+(((ti%cols)+cols)%cols)+1;o.alt=false;
+      o.lx=X-ax+sx/2;o.ly=Y-ay+sy*.67;o.w=sx;o.h=sy*1.33;o.dE=(d2-d1)/(2*Math.hypot(ax-bx,ay-by));
+    };
+  }
+  if(p==='basket'){
+    const B=fit(m.tw||.1,true),n=Math.round(T/B),d=B*(m.dot||.2);
+    return (X,Y,o)=>{
+      const bi=Math.min(n-1,Math.floor(X/B)),bj=Math.min(n-1,Math.floor(Y/B)),bx=X-bi*B,by=Y-bj*B;
+      const dx=Math.min(bx,B-bx),dy=Math.min(by,B-by);
+      if(m.dots&&dx<d/2&&dy<d/2){
+        const vx=(bi+(bx>B/2?1:0))%n,vy=(bj+(by>B/2?1:0))%n;
+        o.tid=100000+vy*n+vx;o.alt=true;o.lx=dx;o.ly=dy;o.w=o.h=d;o.dE=Math.min(d/2-dx,d/2-dy);return;
+      }
+      const vert=((bi+bj)&1)===0,half=vert?(bx<B/2?0:1):(by<B/2?0:1);
+      o.lx=vert?bx-half*B/2:bx;o.ly=vert?by:by-half*B/2;o.w=vert?B/2:B;o.h=vert?B:B/2;
+      o.tid=(bj*n+bi)*2+half+1;o.alt=false;
+      let e=Math.min(o.lx,o.w-o.lx,o.ly,o.h-o.ly);if(m.dots)e=Math.min(e,Math.max(dx-d/2,dy-d/2));
+      o.dE=e;
+    };
+  }
+  return null;
+}
+
 /* Generator: yields progress 0..1 about every 24 rows; returns {N,albedo,normal,rough} (RGBA bytes). */
 export function* generateStone(id,N){
   const m=STONES[id];if(!m)throw new Error('Ukjent stein: '+id);
   const {n,fbm,fbmA,speck}=makeNoise(m.seed);
   const plaster=m.kind==='plaster';
-  const lay=plaster?null:makeLayout(m);
-  const segOf=plaster?null:lay.segs.map(arr=>{const a=new Uint16Array(N);let s=0;for(let x=0;x<N;x++){const X=(x+.5)/N*T;while(s<arr.length-2&&X>=arr[s+1])s++;a[x]=s;}return a;});
+  const cell=plaster||!m.pattern?null:makeCells(m),o={};
+  const lay=plaster||cell?null:makeLayout(m);
+  const segFor=shift=>lay.segs.map(arr=>{const a=new Uint16Array(N);let s=0;for(let x=0;x<N;x++){const X=((x+.5)/N*T+shift)%T;s=0;while(s<arr.length-2&&X>=arr[s+1])s++;a[x]=s;}return a;});
+  const segOf=lay?segFor(0):null,segOfB=lay&&m.bond?segFor(m.widths[0]/2):null;
   const albedo=new Uint8ClampedArray(N*N*4),rough=new Uint8ClampedArray(N*N*4),H=new Float32Array(N*N);
   const dx=T/N,tr=(tid,k)=>hashf(tid,k*977+13,m.seed);
-  const c0=m.c0,c1=m.c1||m.c0,J=m.joint;
+  const J=m.joint,ALT=m.alt||m;
   for(let y=0;y<N;y++){
     const v=(y+.5)/N,Y=(y+.5)*dx;
     for(let x=0;x<N;x++){
       const u=(x+.5)/N,X=(x+.5)*dx;
-      let R,G,B,h=0,Rg=m.rough,tid=0,dE=1,dEj=1,lx=0,ly=0,w=1;
-      if(!plaster){
+      let R,G,B,h=0,Rg=m.rough,tid=0,dE=1,dEj=1,lx=0,ly=0,w=1,hh=m.rowH,alt=false;
+      if(cell){
+        cell(X,Y,o);tid=o.tid;lx=o.lx;ly=o.ly;w=o.w;hh=o.h;dE=o.dE;alt=o.alt;
+        dEj=dE+(n(u*180,v*180,180)-.5)*m.jitter;
+      }else if(!plaster){
         let r=Math.floor(Y/m.rowH);if(r>=lay.rows)r=lay.rows-1;
-        const arr=lay.segs[r],s=segOf[r][x],x0=arr[s];w=arr[s+1]-x0;
-        tid=r*64+s;lx=X-x0;ly=Y-r*m.rowH;
+        const bond=segOfB&&(r&1),Xr=bond?(X+m.widths[0]/2)%T:X;
+        const arr=lay.segs[r],s=(bond?segOfB:segOf)[r][x],x0=arr[s];w=arr[s+1]-x0;
+        tid=r*64+s;lx=Xr-x0;ly=Y-r*m.rowH;
         dE=Math.min(lx,w-lx,ly,m.rowH-ly);
         dEj=dE+(n(u*180,v*180,180)-.5)*m.jitter;
       }
+      // second colour of a two-tone pattern (chess, the inserts of an ottagono, the dots of a basket weave)
+      const P=alt?ALT:m,c0=P.c0,c1=P.c1||P.c0,VE=P.vein||m.vein,PA=P.patch!==undefined?P.patch:m.patch;
       if(m.kind==='limestone'){
         const lo=fbm(u,v,4,3),mid=fbm(u+.31,v+.17,5,9),fine=fbm(u+.7,v+.2,3,64),gr=n(u*340,v*340,340);
         const t=clamp01((lo-.5)*1.9+.5+(tr(tid,2)-.5)*.5);
@@ -91,28 +179,38 @@ export function* generateStone(id,N){
         const f1=(fbmA(sa,ta,5,1,4)-.5)*2.1+.5,f2=(fbmA(sa+.37,ta+.55,6,2,7)-.5)*2.4+.5;
         const r1=1-Math.abs(2*f1-1),r2=1-Math.abs(2*f2-1);
         const body=smooth(.30,.72,fbm(u+.2,v+.8,3,3));
-        const v1=smooth(m.th[0],1,r1)*(.35+.65*body),v2=smooth(m.th[1],1,r2)*.6*(.4+.6*body);
+        const TH=P.th||m.th,v1=smooth(TH[0],1,r1)*(.35+.65*body),v2=smooth(TH[1],1,r2)*.6*(.4+.6*body);
         const halo=Math.pow(r1,6)*.14+Math.pow(r2,8)*.06;
-        const cloud=fbm(u+.2,v+.5,5,4),tone=1+(cloud-.5)*.06+(tr(tid,0)-.5)*.025;
-        let R0=m.c0[0],G0=m.c0[1],B0=m.c0[2];
-        if(m.patch){const p=smooth(.52,.8,fbm(u+.4,v+.9,3,3))*.5;R0+=(m.patch[0]-R0)*p;G0+=(m.patch[1]-G0)*p;B0+=(m.patch[2]-B0)*p;}
+        const cloud=fbm(u+.2,v+.5,5,4),tone=1+(cloud-.5)*.06+(tr(tid,0)-.5)*(m.tileTone||.025);
+        let R0=c0[0],G0=c0[1],B0=c0[2];
+        if(PA){const p=smooth(.52,.8,fbm(u+.4,v+.9,3,3))*.5;R0+=(PA[0]-R0)*p;G0+=(PA[1]-G0)*p;B0+=(PA[2]-B0)*p;}
         const a=clamp01(v1*.9+v2*.7+halo);
-        R=(R0+(m.vein[0]-R0)*a)*tone;G=(G0+(m.vein[1]-G0)*a)*tone;B=(B0+(m.vein[2]-B0)*a)*tone;
+        R=(R0+(VE[0]-R0)*a)*tone;G=(G0+(VE[1]-G0)*a)*tone;B=(B0+(VE[2]-B0)*a)*tone;
         h=(n(u*300,v*300,300)-.5)*.12;Rg+=(cloud-.5)*.10+a*.10;
       }else if(m.kind==='zellige'){
-        const tone=(tr(tid,0)-.5)*.30,tint=(tr(tid,1)-.5)*20,mot=fbm(u,v,3,24),k=clamp01(tr(tid,3)*.8+(mot-.5)*.5);
+        const tone=(tr(tid,0)-.5)*(m.tileTone||.30),tint=(tr(tid,1)-.5)*20,mot=fbm(u,v,3,24),k=clamp01(tr(tid,3)*.8+(mot-.5)*.5);
         let rr=(c0[0]+(c1[0]-c0[0])*k)*(1+tone)+tint*.5,gg=(c0[1]+(c1[1]-c0[1])*k)*(1+tone)+tint,bb=(c0[2]+(c1[2]-c0[2])*k)*(1+tone)-tint*.4;
         const pool=1-smooth(0,.014,dE);
         rr+=(222-rr)*pool*.45;gg+=(214-gg)*pool*.45;bb+=(188-bb)*pool*.45;
         const sp=n(u*400,v*400,400);rr*=.97+sp*.05;gg*=.97+sp*.05;bb*=.97+sp*.05;
         R=rr;G=gg;B=bb;
-        h=smooth(0,.03,dE)*.55+(mot-.5)*.35+((lx/w-.5)*(tr(tid,4)-.5)+(ly/m.rowH-.5)*(tr(tid,5)-.5))*1.5;
+        h=smooth(0,.03,dE)*.55+(mot-.5)*.35+((lx/w-.5)*(tr(tid,4)-.5)+(ly/hh-.5)*(tr(tid,5)-.5))*1.5;
         Rg+=(mot-.5)*.12+pool*.18;
       }else if(m.kind==='terracotta'){
         const tk=tr(tid,0)*.85+(fbm(u,v,3,18)-.5)*.5,gr=n(u*300,v*300,300),sp=speck(u,v,220,.85,.4);
         const k=clamp01(tk),dark=1-sp*.35,tone=1+(gr-.5)*.10;
         R=(c0[0]+(c1[0]-c0[0])*k)*tone*dark;G=(c0[1]+(c1[1]-c0[1])*k)*tone*dark;B=(c0[2]+(c1[2]-c0[2])*k)*tone*dark;
         h=(fbm(u,v,4,24)-.5)*.8+(gr-.5)*.6;Rg+=(gr-.5)*.1;
+      }else if(m.kind==='terrazzo'){
+        // cement ground with marble chips in two sizes (c1 = main chip colour, vein = second chip colour)
+        const base=fbm(u,v,3,6),gr=n(u*360,v*360,360),C2=VE||c1;
+        const a=speck(u,v,150,.45,.42),b=speck(u+.37,v+.11,70,.8,.5),f=speck(u+.61,v+.29,280,.55,.36);
+        const tone=1+(base-.5)*.07+(gr-.5)*.04+(tr(tid,0)-.5)*.03;
+        let rr=c0[0]*tone,gg=c0[1]*tone,bb=c0[2]*tone;
+        if(f>0){const k=smooth(0,.3,f)*.7;rr+=(C2[0]-rr)*k;gg+=(C2[1]-gg)*k;bb+=(C2[2]-bb)*k;}
+        if(a>0){const k=smooth(0,.25,a);rr+=(c1[0]-rr)*k;gg+=(c1[1]-gg)*k;bb+=(c1[2]-bb)*k;}
+        if(b>0){const k=smooth(0,.22,b);rr+=(C2[0]-rr)*k;gg+=(C2[1]-gg)*k;bb+=(C2[2]-bb)*k;}
+        R=rr;G=gg;B=bb;h=(gr-.5)*.12;Rg+=(gr-.5)*.06;
       }else{ // plaster
         const lo=fbm(u,v,5,5),gr=n(u*380,v*380,380),streak=n(u*10,v*46,46);
         const k=clamp01((lo-.5)*3+.5),tone=1+(gr-.5)*.04+(streak-.5)*.025;

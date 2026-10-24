@@ -14,6 +14,8 @@ import {TABLES,buildTable,buildCountertop} from './furniture3d-v1.js?v=3';
 /* selected stenvask in the bathroom (product id) or null for the generic basin; marmorbord in the living room;
  * made-to-measure countertop {stone,t,...} for the kitchen, or null to use the floor stone */
 let SINK_ID=null,TABLE_ID=null,TOP_CFG=null,RUG_ID='persisk';
+/* kitchen splashback in a tile from the shop (stone id, e.g. zellige 'p-3360'); null = the countertop stone */
+let SPLASH=null,splashM=null;
 /* Where stone goes in a Nordic home: bathroom floor and walls; kitchen countertop and splashback (floor optional,
  * oak by default); living room on oak with painted walls, stone only in the big pieces: coffee table and fireplace. */
 let COFFEE='sk-travvein',FIRE='sk-green',KFLOOR=false,LIVING_FOCUS='coffee';
@@ -441,7 +443,7 @@ function furnishKitchen(G,st,fm,lights,hx,hz){
   }
   const topM=sinkMaterial(TOP_CFG&&TOP_CFG.slab?{stone:TOP_CFG.stone,surf:'honed',photo:'assets/slabs/'+TOP_CFG.slab+'-tex.jpg',patch:TOP_CFG.slabW||2.2}:{stone:TOP_CFG?TOP_CFG.stone:KITCHEN_TOP,surf:'honed'},()=>onTexture()),tt=TOP_CFG?TOP_CFG.t:.03;
   // splashback in the countertop stone, from the counter up to the wall cabinets (the usual Nordic choice)
-  G.add(stoneBox(len+.02,.6,.02,.003,topM,cx,.92+.3,-hz+.011));
+  G.add(stoneBox(len+.02,.6,.02,.003,splashM||topM,cx,.92+.3,-hz+.011));
   let fx=cx-len*.2,ctObj=null;
   if(TOP_CFG&&TOP_CFG.L){
     // the countertop from the designer, with its own length, depth, edge, cut-outs and splash, against the back wall
@@ -732,7 +734,7 @@ function init(){
   const PRODUCT_LABEL={bad:'Servanten',kjokken:'Benkeplaten',stue:'Bordet'};
   let focusNext=false;
   async function update(){
-    const st=window.getStudioState(),key=[st.room,st.w,st.l,st.floor.id,st.wall.id,SINK_ID,TABLE_ID,TOP_CFG?JSON.stringify(TOP_CFG):'',RUG_ID,COFFEE,FIRE,KFLOOR,LIVING_FOCUS].join('|');
+    const st=window.getStudioState(),key=[st.room,st.w,st.l,st.floor.id,st.wall.id,SINK_ID,TABLE_ID,TOP_CFG?JSON.stringify(TOP_CFG):'',RUG_ID,COFFEE,FIRE,KFLOOR,LIVING_FOCUS,SPLASH].join('|');
     const pb=bar.querySelector('[data-v=product]');if(pb)pb.textContent=PRODUCT_LABEL[st.room]||'Produktet';
     if(key===roomKey){applyLight(st);request();return;}
     roomKey=key;const my=++token;
@@ -740,7 +742,7 @@ function init(){
     try{
       // bathroom: the chosen stones; kitchen: oak (or the chosen floor stone) with painted walls; living room: oak and paint
       const stoneFloor=st.room==='bad'||(st.room==='kjokken'&&KFLOOR);
-      [fm,wm]=await Promise.all([stoneFloor?ensureSurface(st.floor.id):oakFloor(),st.room==='bad'?ensureSurface(st.wall.id):MAT.wallPaint]);
+      [fm,wm,splashM]=await Promise.all([stoneFloor?ensureSurface(st.floor.id):oakFloor(),st.room==='bad'?ensureSurface(st.wall.id):MAT.wallPaint,st.room==='kjokken'&&SPLASH&&STONES[SPLASH]?ensureSurface(SPLASH):null]);
     }catch(e){console.warn('Stenhuset studio:',e);return;}
     if(my!==token)return;
     const first=!content;
@@ -776,6 +778,7 @@ function init(){
     setCoffee(id){COFFEE=id&&STONES[id]?id:null;LIVING_FOCUS='coffee';roomKey='';focusNext=true;update();},getCoffee:()=>COFFEE,
     setFire(id){FIRE=id&&STONES[id]?id:null;LIVING_FOCUS='fire';roomKey='';focusNext=!!FIRE;update();},getFire:()=>FIRE,
     setKitchenFloor(stone){KFLOOR=!!stone;roomKey='';update();},getKitchenFloor:()=>KFLOOR,
+    setSplash(id){SPLASH=id&&STONES[id]?id:null;roomKey='';focusNext=!!SPLASH;update();},getSplash:()=>SPLASH,
     topStones:TOP_STONES.map(([id,n])=>({id,n,c0:STONES[id]?STONES[id].c0:[200,200,200]})),
     // keeps the whole design from the countertop designer (length, depth, edge, sink and hob cut-outs, splash)
     setTop(cfg){TOP_CFG=cfg&&cfg.stone?{...cfg,t:cfg.t||.03}:null;roomKey='';focusNext=true;update();},getTop:()=>TOP_CFG&&{...TOP_CFG},
