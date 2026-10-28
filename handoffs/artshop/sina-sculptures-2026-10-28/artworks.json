@@ -1,0 +1,125 @@
+{
+  "artist": "Sina Soleimani",
+  "target_url": "https://setai.no/artshop/artists/sina-soleimani",
+  "date": "2026-10-28",
+  "status": "Prepared; not integrated or deployed. Artshop device 1431514 is offline.",
+  "works": [
+    {
+      "title": "Icarus",
+      "year": 2025,
+      "material": {
+        "en": "Iron sheets",
+        "no": "Jernplater",
+        "fa": "ورق آهن"
+      },
+      "weight_kg": 6.5,
+      "dimensions_cm": [
+        75,
+        70,
+        25
+      ],
+      "dimension_source": "Printed caption on 45726.jpg; axis order unspecified.",
+      "gallery": [
+        "originals/45726.jpg",
+        "originals/45727.jpg",
+        "originals/45729.jpg"
+      ],
+      "duplicate_excluded": "originals/45728.jpg is byte-identical to 45729.jpg."
+    },
+    {
+      "title": "Icarus III",
+      "year": 2025,
+      "material": {
+        "en": "Iron sheets",
+        "no": "Jernplater",
+        "fa": "ورق آهن"
+      },
+      "weight_kg": 6.5,
+      "dimensions_cm": [
+        75,
+        70,
+        25
+      ],
+      "dimension_source": "Printed caption on 45725.jpg; axis order unspecified.",
+      "gallery": [
+        "originals/45725.jpg"
+      ],
+      "candidate_process_photos": [
+        "originals/45741.jpg",
+        "originals/45740.jpg",
+        "originals/45739.jpg",
+        "originals/45738.jpg"
+      ],
+      "process_photo_note": "Visual match to raised-wing sculpture; verify work identity before attaching. 45739 shows an unfinished state."
+    },
+    {
+      "title": "Daedalus",
+      "type": "Portrait sculpture",
+      "material": {
+        "en": "Bronze",
+        "no": "Bronse",
+        "fa": "برنز"
+      },
+      "weight_kg": 6.5,
+      "photo_in_this_upload": false,
+      "note": "User explicitly says the Daedalus portrait is bronze. The Persian message contains a contradictory iron-sheets fragment but starts and ends with bronze for this portrait. Match the existing portrait; do not relabel a full-body Icarus image as Daedalus."
+    }
+  ],
+  "photos": [
+    {
+      "file": "originals/45741.jpg",
+      "sha256": "a23964606d8218d363c1cbb9b48b62a3db4be3774ba2e33d32d49615c61f0337",
+      "width": 786,
+      "height": 1536
+    },
+    {
+      "file": "originals/45740.jpg",
+      "sha256": "3538361f185e19e074d036e88c385c9a67c3f01b2e6bdf23c1247df9006cdca2",
+      "width": 865,
+      "height": 1536
+    },
+    {
+      "file": "originals/45739.jpg",
+      "sha256": "d037de870cdce12f69917a60e2af1be17c02da74896c7c72ec32aef24d54b7a7",
+      "width": 865,
+      "height": 1536
+    },
+    {
+      "file": "originals/45738.jpg",
+      "sha256": "1ad40b0c61d6396d2830731384a5e8bf5a3e30892eea4358acb6e81695c7842d",
+      "width": 1174,
+      "height": 1536
+    },
+    {
+      "file": "originals/45726.jpg",
+      "sha256": "2da615e26aced57ee0850da5d34dd79d36a9d8b8aa180f1af40396c4a0ba5a45",
+      "width": 1086,
+      "height": 1536
+    },
+    {
+      "file": "originals/45727.jpg",
+      "sha256": "4b3cef4bb1f59e4592825bdb70cea2bdbccf4db0a33385f54230ce2035756187",
+      "width": 1152,
+      "height": 1536
+    },
+    {
+      "file": "originals/45729.jpg",
+      "sha256": "894fc10ff57f6ef9e7d7eaffa394a1c18db3d70c88cd52f24e9692188b3ba605",
+      "width": 1062,
+      "height": 1536
+    },
+    {
+      "file": "originals/45728.jpg",
+      "sha256": "894fc10ff57f6ef9e7d7eaffa394a1c18db3d70c88cd52f24e9692188b3ba605",
+      "width": 1062,
+      "height": 1536
+    },
+    {
+      "file": "originals/45725.jpg",
+      "sha256": "9e80ebfaf5661a08d4734f62b272116a1aae8ccb037d20fa5cf672fd0cd31544",
+      "width": 1086,
+      "height": 1536
+    }
+  ],
+  "user_original_text": "مجسمه پرتره که ددالوس هست برنزه ولی مابقی مجسمه ها ورق آهن است\nوزن این ایکاروس ‌ه از سه زاویه دیدین وزن ۶.۵ kgr متریال iron sheets\nپرتره هم که ددا لوس مجسمه متریال iron sheets وزن ۶.۵ kgr متریال برنز\nایکاروس اول که تنها یک عکس هست ۶.۵kgr متریال iron sheets"
+}
