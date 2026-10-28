@@ -1,0 +1,125 @@
+--- a/app/artists/sina-soleimani/page.tsx
++++ b/app/artists/sina-soleimani/page.tsx
+@@ -2,2 +2,4 @@
+ import {T,LangSwitch} from "../../i18n";
++import CvButton from "../../CvButton";
++import Sculptures from "./Sculptures";
+ 
+@@ -9,3 +11,3 @@
+ {title:"Suspended Between Control and Flight",type:["Painting","Maleri","نقاشی"],image:"/artshop/sina-suspended.webp"},
+-{title:"Icarus",type:["Sculpture · metal","Skulptur · metall","مجسمه · فلز"],image:"/artshop/sina-icarus.webp"},
++
+ ];
+@@ -15,3 +17,3 @@
+ <header className="profile-nav"><a href="/artshop/"><ArrowLeft size={17}/> Setai Art</a><span><T en="ARTIST 01 / TEHRAN" no="KUNSTNER 01 / TEHERAN" fa="هنرمند ۰۱ / تهران"/></span><LangSwitch/><a href="mailto:art@setai.no?subject=Sina%20Soleimani%20enquiry"><T en="Private enquiry" no="Privat henvendelse" fa="درخواست خصوصی"/> <ArrowUpRight size={16}/></a></header>
+-<section className="profile-hero"><div className="portrait"><img src="/artshop/sina-portrait.jpg" alt="Artist Sina Soleimani"/><span lang="fa" dir="rtl">سینا سلیمانی</span></div><div className="profile-title"><span className="eyebrow"><T en="MULTIDISCIPLINARY ARTIST & EDUCATOR" no="TVERRFAGLIG KUNSTNER OG PEDAGOG" fa="هنرمند چندرشته‌ای و مدرس"/></span><h1><T en={<>Sina<br/><em>Soleimani</em></>} no={<>Sina<br/><em>Soleimani</em></>} fa={<>سینا<br/><em>سلیمانی</em></>}/></h1><p><T en="His paintings and sculptures move between observed reality, myth and psychological tension—often placing the human figure inside narratives that feel both intimate and unsettled." no="Maleriene og skulpturene hans beveger seg mellom observert virkelighet, myte og psykologisk spenning, og plasserer ofte menneskefiguren i fortellinger som føles både intime og urolige." fa="نقاشی‌ها و مجسمه‌های او میان واقعیتِ مشاهده‌شده، اسطوره و تنش روانی در حرکت‌اند و اغلب پیکرهٔ انسان را در روایت‌هایی می‌نشانند که هم صمیمی‌اند و هم ناآرام."/></p><a href="#works"><T en="View selected works" no="Se utvalgte verk" fa="دیدن آثار منتخب"/> <ArrowUpRight size={17}/></a></div></section>
++<section className="profile-hero"><div className="portrait"><img src="/artshop/sina-portrait.jpg" alt="Artist Sina Soleimani"/><span lang="fa" dir="rtl">سینا سلیمانی</span></div><div className="profile-title"><span className="eyebrow"><T en="MULTIDISCIPLINARY ARTIST & EDUCATOR" no="TVERRFAGLIG KUNSTNER OG PEDAGOG" fa="هنرمند چندرشته‌ای و مدرس"/></span><h1><T en={<>Sina<br/><em>Soleimani</em></>} no={<>Sina<br/><em>Soleimani</em></>} fa={<>سینا<br/><em>سلیمانی</em></>}/></h1><p><T en="His paintings and sculptures move between observed reality, myth and psychological tension—often placing the human figure inside narratives that feel both intimate and unsettled." no="Maleriene og skulpturene hans beveger seg mellom observert virkelighet, myte og psykologisk spenning, og plasserer ofte menneskefiguren i fortellinger som føles både intime og urolige." fa="نقاشی‌ها و مجسمه‌های او میان واقعیتِ مشاهده‌شده، اسطوره و تنش روانی در حرکت‌اند و اغلب پیکرهٔ انسان را در روایت‌هایی می‌نشانند که هم صمیمی‌اند و هم ناآرام."/></p><a href="#works"><T en="View selected works" no="Se utvalgte verk" fa="دیدن آثار منتخب"/> <ArrowUpRight size={17}/></a><CvButton artist="sina-soleimani" className="cv-hero"/></div></section>
+ <section className="profile-story"><aside><span><T en="BASED IN" no="BOSATT I" fa="محل کار"/></span><strong><T en="Tehran, Iran" no="Teheran, Iran" fa="تهران، ایران"/></strong><span><T en="DISCIPLINES" no="DISIPLINER" fa="رشته‌ها"/></span><strong><T en={<>Painting, sculpture,<br/>caricature & design</>} no={<>Maleri, skulptur,<br/>karikatur og design</>} fa={<>نقاشی، مجسمه‌سازی،<br/>کاریکاتور و طراحی</>}/></strong><span><T en="REPRESENTATION" no="REPRESENTASJON" fa="نمایندگی"/></span><strong><T en="Setai Art · Scandinavia" no="Setai Art · Skandinavia" fa="ستای آرت · اسکاندیناوی"/></strong></aside><article><span className="eyebrow"><T en="THE ARTIST" no="KUNSTNEREN" fa="هنرمند"/></span><h2><T en={<>Stories held<br/>inside the figure.</>} no={<>Fortellinger båret<br/>inne i figuren.</>} fa={<>روایت‌هایی که<br/>در پیکره نهفته‌اند.</>}/></h2>
+@@ -21,4 +23,5 @@
+ <section className="profile-works" id="works"><div className="works-head"><div><span className="eyebrow"><T en="CURATOR'S SELECTION" no="KURATORENS UTVALG" fa="گزینش کیوریتور"/></span><h2><T en="Available works" no="Tilgjengelige verk" fa="آثار موجود"/></h2></div><p><T en="Price on request. Final price, dimensions, framing and availability are confirmed in the collector enquiry." no="Pris på forespørsel. Endelig pris, mål, innramming og tilgjengelighet bekreftes i samlerhenvendelsen." fa="قیمت در صورت درخواست. قیمت نهایی، ابعاد، قاب و موجودی در درخواست مجموعه‌دار تأیید می‌شود."/></p></div><div className="works-grid">{selected.map((w,i)=><article key={w.title} className={i===3?"wide":""}><div className="work-img"><img src={w.image} alt={`${w.title} by Sina Soleimani`}/><span>0{i+1}</span></div><div><h3>{w.title}</h3><p><T en={w.type[0]} no={w.type[1]} fa={w.type[2]}/></p><strong><T en="Price on request" no="Pris på forespørsel" fa="قیمت در صورت درخواست"/></strong></div></article>)}</div></section>
+-<section className="profile-career"><span className="eyebrow"><T en="SELECTED MILESTONES" no="UTVALGTE MILEPÆLER" fa="نقاط عطف منتخب"/></span><div><b><T en="2024—NOW" no="2024—NÅ" fa={faNum(2024)+" تاکنون"}/></b><p><T en="Fine arts educator, Tehran" no="Kunstpedagog (billedkunst), Teheran" fa="مدرس هنرهای تجسمی، تهران"/></p></div><div><b><T en="2023" fa={faNum(2023)}/></b><p><T en="M.A. Painting, University of Art, Tehran · Contemporary Artist Grand Prize Exhibition" no="Mastergrad i maleri, University of Art, Teheran · Contemporary Artist Grand Prize Exhibition" fa="کارشناسی ارشد نقاشی، دانشگاه هنر تهران · نمایشگاه جایزهٔ بزرگ هنرمند معاصر"/></p></div><div><b><T en="2022" fa={faNum(2022)}/></b><p><T en="Group exhibition, Sarai Pour Gallery, Khur" no="Samlingsutstilling, Sarai Pour Gallery, Khur" fa="نمایشگاه گروهی، گالری سرای پور، خور"/></p></div><div><b><T en="2008" fa={faNum(2008)}/></b><p><T en="Honorable Diploma, Election Caricature Competition, Romania" no="Hederlig omtale (diplom), karikaturkonkurranse om valg, Romania" fa="دیپلم افتخار، مسابقهٔ کاریکاتور انتخابات، رومانی"/></p></div><div><b><T en="2005" fa={faNum(2005)}/></b><p><T en="Solo exhibition, Mat Gallery, Tehran" no="Separatutstilling, Mat Gallery, Teheran" fa="نمایشگاه انفرادی، گالری مات، تهران"/></p></div></section>
+-<section className="profile-cta"><span lang="fa" dir="rtl">اثری برای زندگی با آن</span><h2><T en="Interested in a work?" no="Interessert i et verk?" fa="به یک اثر علاقه‌مندید؟"/></h2><p><T en="We arrange a private video viewing, condition details, certificate of authenticity and insured delivery to Scandinavia within approximately 4–8 weeks." no="Vi ordner privat videovisning, tilstandsdetaljer, ektehetssertifikat og forsikret levering til Skandinavia innen ca. 4–8 uker." fa="ما نمایش خصوصی ویدیویی، جزئیات وضعیت اثر، گواهی اصالت و تحویل بیمه‌شده به اسکاندیناوی را ظرف حدود ۴ تا ۸ هفته ترتیب می‌دهیم."/></p><a href="mailto:art@setai.no?subject=Sina%20Soleimani%20artwork%20enquiry"><T en="Request a private viewing" no="Be om privat visning" fa="درخواست بازدید خصوصی"/> <ArrowUpRight/></a></section>
++<Sculptures/>
++<section className="profile-career"><span className="eyebrow"><T en="SELECTED MILESTONES" no="UTVALGTE MILEPÆLER" fa="نقاط عطف منتخب"/></span><div><b><T en="2024—NOW" no="2024—NÅ" fa={faNum(2024)+" تاکنون"}/></b><p><T en="Fine arts educator, Tehran" no="Kunstpedagog (billedkunst), Teheran" fa="مدرس هنرهای تجسمی، تهران"/></p></div><div><b><T en="2023" fa={faNum(2023)}/></b><p><T en="M.A. Painting, University of Art, Tehran · Contemporary Artist Grand Prize Exhibition" no="Mastergrad i maleri, University of Art, Teheran · Contemporary Artist Grand Prize Exhibition" fa="کارشناسی ارشد نقاشی، دانشگاه هنر تهران · نمایشگاه جایزهٔ بزرگ هنرمند معاصر"/></p></div><div><b><T en="2022" fa={faNum(2022)}/></b><p><T en="Group exhibition, Sarai Pour Gallery, Khur" no="Samlingsutstilling, Sarai Pour Gallery, Khur" fa="نمایشگاه گروهی، گالری سرای پور، خور"/></p></div><div><b><T en="2008" fa={faNum(2008)}/></b><p><T en="Honorable Diploma, Election Caricature Competition, Romania" no="Hederlig omtale (diplom), karikaturkonkurranse om valg, Romania" fa="دیپلم افتخار، مسابقهٔ کاریکاتور انتخابات، رومانی"/></p></div><div><b><T en="2005" fa={faNum(2005)}/></b><p><T en="Solo exhibition, Mat Gallery, Tehran" no="Separatutstilling, Mat Gallery, Teheran" fa="نمایشگاه انفرادی، گالری مات، تهران"/></p></div><div className="cv-row"><CvButton artist="sina-soleimani"/></div></section>
++<section className="profile-cta"><span lang="fa" dir="rtl">اثری برای زندگی با آن</span><h2><T en="Interested in a work?" no="Interessert i et verk?" fa="به یک اثر علاقه‌مندید؟"/></h2><p><T en="We arrange a private video viewing, condition details, certificate of authenticity and insured delivery to Scandinavia within approximately 4–8 weeks." no="Vi ordner privat videovisning, tilstandsdetaljer, ektehetssertifikat og forsikret levering til Skandinavia innen ca. 4–8 uker." fa="ما نمایش خصوصی ویدیویی، جزئیات وضعیت اثر، گواهی اصالت و تحویل بیمه‌شده به اسکاندیناوی را ظرف حدود ۴ تا ۸ هفته ترتیب می‌دهیم."/></p><a href="mailto:art@setai.no?subject=Sina%20Soleimani%20artwork%20enquiry"><T en="Request a private viewing" no="Be om privat visning" fa="درخواست بازدید خصوصی"/> <ArrowUpRight/></a><span className="cta-gap"/><CvButton artist="sina-soleimani"/></section>
+ <div className="related-artist"><a href="/artshop/artists/khashayar-shahrokhi"><T en="Also showing at Setai Art — Khashayar Shahrokhi, sculptor & visual artist" no="Vises også hos Setai Art — Khashayar Shahrokhi, skulptør og billedkunstner" fa="در ستای آرت همچنین: خاشایار شاهرخی، مجسمه‌ساز و هنرمند تجسمی"/> <ArrowUpRight size={16}/></a></div>
+--- a/app/page.tsx
++++ b/app/page.tsx
+@@ -8,3 +8,3 @@
+ {id:2,title:"Under the Skin",artist:"Sina Soleimani",place:"Tehran",medium:"Painting",size:"Dimensions on request",edition:"Original · 1 of 1",image:"/artshop/sina-under-skin.webp",kind:"PAINTING",featured:false},
+-{id:3,title:"Icarus",artist:"Sina Soleimani",place:"Tehran",medium:"Sculpture · metal",size:"Dimensions on request",edition:"Unique work",image:"/artshop/sina-icarus.webp",kind:"SCULPTURE",featured:false},
++{id:3,title:"Icarus",artist:"Sina Soleimani",place:"Tehran",medium:"Sculpture · iron sheets",size:"Dimensions on request",edition:"Unique work",image:"/artshop/sina-icarus.webp",kind:"SCULPTURE",featured:false},
+ {id:5,title:"Ceramic, 2026",artist:"Khashayar Shahrokhi",place:"Iran",medium:"Triple-fired ceramic · 2026",size:"Dimensions on request",edition:"Details on request",image:"/artshop/khashayar-works/KS-S-2026-001-angle-02.webp",kind:"SCULPTURE",featured:false},
+@@ -18,3 +18,3 @@
+ const tr:Record<string,[string,string]>={
+-"Painting":["Maleri","نقاشی"],"Sculpture · metal":["Skulptur · metall","مجسمه · فلز"],"Drawing on paper":["Tegning på papir","طراحی روی کاغذ"],
++"Painting":["Maleri","نقاشی"],"Sculpture · iron sheets":["Skulptur · jernplater","مجسمه · ورق آهن"],"Drawing on paper":["Tegning på papir","طراحی روی کاغذ"],
+ "Triple-fired ceramic · 2026":["Trippelbrent keramikk · 2026","سرامیکِ سه‌بار پخته‌شده · ۲۰۲۶"],"210 × 270 cm":["210 × 270 cm","۲۱۰ × ۲۷۰ سانتی‌متر"],
+--- /dev/null
++++ b/app/artists/sina-soleimani/Sculptures.tsx
+@@ -0,0 +1,42 @@
++import {ArrowUpRight} from "lucide-react";
++import {T} from "../../i18n";
++import SculptureGallery from "./SculptureGallery";
++import type {View} from "./SculptureGallery";
++import "./sculptures.css";
++
++const base="/artshop/sina-sculptures/";
++const works:{id:string;title:string;year?:number;material:[string,string,string];size?:[string,string,string];weight?:[string,string,string];views:View[]}[]=[
++ {id:"icarus-standing",title:"Icarus",material:["Iron sheets","Jernplater","ورق آهن"],weight:["6.5 kg","6,5 kg","۶٫۵ کیلوگرم"],views:[{src:"/artshop/sina-icarus.webp",alt:"Icarus by Sina Soleimani — standing lower-body sculpture in iron sheets",label:["Standing figure","Stående figur","پیکرهٔ ایستاده"]}]},
++ {id:"icarus-2025",title:"Icarus",year:2025,material:["Iron sheets","Jernplater","ورق آهن"],size:["75 × 70 × 25 cm","75 × 70 × 25 cm","۷۵ × ۷۰ × ۲۵ سانتی‌متر"],weight:["6.5 kg","6,5 kg","۶٫۵ کیلوگرم"],views:[
++  {src:base+"45726.jpg",alt:"Icarus, 2025 by Sina Soleimani — catalogue photograph with lowered wings",label:["Catalogue view","Katalogbilde","نمای کاتالوگ"]},
++  {src:base+"45727.jpg",alt:"Icarus, 2025 by Sina Soleimani — exhibited on a pedestal",label:["Exhibition view","Utstillingsbilde","نمای نمایشگاه"]},
++  {src:base+"45729.jpg",alt:"Icarus, 2025 by Sina Soleimani — side view",label:["Side view","Sett fra siden","نمای جانبی"]}
++ ]},
++ {id:"icarus-iii",title:"Icarus III",year:2025,material:["Iron sheets","Jernplater","ورق آهن"],size:["75 × 70 × 25 cm","75 × 70 × 25 cm","۷۵ × ۷۰ × ۲۵ سانتی‌متر"],weight:["6.5 kg","6,5 kg","۶٫۵ کیلوگرم"],views:[
++  {src:base+"45725.jpg",alt:"Icarus III, 2025 by Sina Soleimani — sculpture with raised wings",label:["Catalogue view","Katalogbilde","نمای کاتالوگ"]}
++ ]},
++ {id:"daedalus",title:"Daedalus",year:2025,material:["Bronze","Bronse","برنز"],size:["50 × 25 × 20 cm","50 × 25 × 20 cm","۵۰ × ۲۵ × ۲۰ سانتی‌متر"],weight:["6.5 kg","6,5 kg","۶٫۵ کیلوگرم"],views:[
++  {src:base+"Daedalus-Copy.webp",alt:"Daedalus by Sina Soleimani — bronze portrait sculpture",label:["Portrait sculpture","Portrettskulptur","مجسمهٔ پرتره"]},
++  {src:base+"Daedalus.webp",alt:"Daedalus, 2025 by Sina Soleimani — catalogue photograph and dimensions",label:["Catalogue view","Katalogbilde","نمای کاتالوگ"]}
++ ]}
++];
++const studio:View[]=[
++ {src:base+"45738.jpg",alt:"Sina Soleimani's winged iron sculpture in the studio alongside other works",label:["In the studio","Fra atelieret","در کارگاه"]},
++ {src:base+"45740.jpg",alt:"Raised-wing iron sculpture viewed from the front in the workshop",label:["Front view in the workshop","Sett forfra i verkstedet","نمای روبه‌رو در کارگاه"]},
++ {src:base+"45741.jpg",alt:"Raised-wing iron sculpture viewed from the side in the workshop",label:["Side view in the workshop","Sett fra siden i verkstedet","نمای جانبی در کارگاه"]},
++ {src:base+"45739.jpg",alt:"Iron figure during construction, before its wings are attached",label:["Work in progress","Under arbeid","در حال ساخت"]}
++];
++export default function Sculptures(){return <section className="sina-sculptures" id="sculptures">
++ <div className="sina-sculpture-heading"><span className="eyebrow"><T en="SCULPTURE" no="SKULPTUR" fa="مجسمه"/></span><h2><T en="Icarus & Daedalus" no="Ikaros og Daidalos" fa="ایکاروس و ددالوس"/></h2><p><T en="Iron sheets and bronze. Explore the sculptures from the available viewpoints." no="Jernplater og bronse. Se skulpturene fra de tilgjengelige vinklene." fa="ورق آهن و برنز. مجسمه‌ها را از زاویه‌های موجود ببینید."/></p></div>
++ <div className="sina-sculpture-grid">{works.map(w=><article id={w.id} key={w.id} className="sina-sculpture-card">
++  <SculptureGallery title={w.title+(w.year?", "+w.year:"")} views={w.views}/>
++  <div className="sina-sculpture-meta"><h3>{w.title}{w.year&&<small>{w.year}</small>}</h3>
++   <dl><div><dt><T en="Material" no="Materiale" fa="متریال"/></dt><dd><T en={w.material[0]} no={w.material[1]} fa={w.material[2]}/></dd></div>
++    {w.size&&<div><dt><T en="Dimensions" no="Mål" fa="ابعاد"/></dt><dd><T en={w.size[0]} no={w.size[1]} fa={w.size[2]}/></dd></div>}
++    {w.weight&&<div><dt><T en="Weight" no="Vekt" fa="وزن"/></dt><dd><T en={w.weight[0]} no={w.weight[1]} fa={w.weight[2]}/></dd></div>}
++   </dl>
++   <div className="sina-sculpture-enquiry"><strong><T en="Price on request" no="Pris på forespørsel" fa="قیمت در صورت درخواست"/></strong><a href={"mailto:art@setai.no?subject="+encodeURIComponent("Sina Soleimani — "+w.title+(w.year?", "+w.year:" — standing figure"))}><T en="Enquire" no="Send forespørsel" fa="درخواست اطلاعات"/><ArrowUpRight size={17}/></a></div>
++  </div>
++ </article>)}</div>
++ <details className="sina-studio"><summary><T en="From the studio · 4 photographs" no="Fra atelieret · 4 bilder" fa="از کارگاه · ۴ تصویر"/></summary><p><T en="Workshop photographs, including a work in progress." no="Bilder fra verkstedet, inkludert et verk under arbeid." fa="تصاویری از کارگاه، از جمله اثری در حال ساخت."/></p><SculptureGallery title="Sina Soleimani — studio" views={studio}/></details>
++</section>}
+--- /dev/null
++++ b/app/artists/sina-soleimani/SculptureGallery.tsx
+@@ -0,0 +1,34 @@
++"use client";
++import {useRef,useState} from "react";
++import {ChevronLeft,ChevronRight,Maximize2,X} from "lucide-react";
++import {T} from "../../i18n";
++
++export type View={src:string;alt:string;label:[string,string,string]};
++export default function SculptureGallery({title,views}:{title:string;views:View[]}){
++ const [index,setIndex]=useState(0);
++ const dialog=useRef<HTMLDialogElement>(null);
++ const view=views[index];
++ const step=(direction:number)=>setIndex(i=>(i+direction+views.length)%views.length);
++ const open=()=>dialog.current?.showModal();
++ return <div className="sina-gallery">
++  <button type="button" className="sina-gallery-main" onClick={open} aria-label={`View ${title} in detail`}>
++   <img src={view.src} alt={view.alt} loading="lazy"/>
++   <span className="sina-expand"><Maximize2 size={15}/><T en="View in detail" no="Se detaljer" fa="مشاهدهٔ جزئیات"/></span>
++  </button>
++  {views.length>1&&<div className="sina-thumbnails" role="group" aria-label={`${title} photographs`}>
++   {views.map((v,i)=><button type="button" key={v.src} aria-pressed={index===i} aria-label={v.alt} onClick={()=>setIndex(i)}><img src={v.src} alt="" loading="lazy"/><span>{i+1}</span></button>)}
++  </div>}
++  <p className="sina-view-caption" aria-live="polite"><T en={view.label[0]} no={view.label[1]} fa={view.label[2]}/>{views.length>1&&<bdi dir="ltr"> · {index+1} / {views.length}</bdi>}</p>
++  <dialog ref={dialog} className="sina-lightbox" aria-label={title} onClick={e=>{if(e.target===e.currentTarget)dialog.current?.close();}} onKeyDown={e=>{if(e.key==="ArrowRight"){e.preventDefault();step(1);}if(e.key==="ArrowLeft"){e.preventDefault();step(-1);}}}>
++   <div className="sina-lightbox-content">
++    <header><h3>{title}</h3><button type="button" autoFocus onClick={()=>dialog.current?.close()} aria-label="Close / Lukk / بستن"><X/><T en="Close" no="Lukk" fa="بستن"/></button></header>
++    <img className="sina-lightbox-image" src={view.src} alt={view.alt}/>
++    <footer>
++     {views.length>1&&<button type="button" onClick={()=>step(-1)} aria-label="Previous photograph / Forrige bilde / تصویر قبلی"><ChevronLeft/></button>}
++     <p aria-live="polite"><T en={view.label[0]} no={view.label[1]} fa={view.label[2]}/><bdi dir="ltr"> · {index+1} / {views.length}</bdi></p>
++     {views.length>1&&<button type="button" onClick={()=>step(1)} aria-label="Next photograph / Neste bilde / تصویر بعدی"><ChevronRight/></button>}
++    </footer>
++   </div>
++  </dialog>
++ </div>;
++}
+--- /dev/null
++++ b/app/artists/sina-soleimani/sculptures.css
+@@ -0,0 +1,3 @@
++.sina-sculptures{padding:100px 6vw;background:#061b22;color:#eee9df}.sina-sculpture-heading{max-width:750px;margin-bottom:55px}.sina-sculpture-heading h2{font:400 clamp(2.8rem,5vw,5.4rem)/1.05 Georgia,serif;letter-spacing:-.04em;margin:1.2rem 0}.sina-sculpture-heading p{color:#b5c1c2;line-height:1.7}.sina-sculpture-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:70px 4vw}.sina-sculpture-card{min-width:0;scroll-margin-top:30px}.sina-gallery-main{display:block;width:100%;height:560px;position:relative;overflow:hidden;border:0;background:#d4d5d5;padding:0;cursor:zoom-in;color:#eee9df}.sina-gallery-main>img{width:100%;height:100%;object-fit:contain;display:block}.sina-expand{position:absolute;bottom:14px;inset-inline-end:14px;display:flex;align-items:center;gap:8px;background:#061b22ed;padding:10px 13px;font-size:.7rem;letter-spacing:.04em}.sina-thumbnails{display:flex;gap:9px;padding-top:12px;flex-wrap:wrap}.sina-thumbnails button{position:relative;width:62px;height:76px;border:2px solid transparent;padding:2px;background:#b9b5af;cursor:pointer}.sina-thumbnails button[aria-pressed=true]{border-color:#d5b574}.sina-thumbnails img{width:100%;height:100%;object-fit:contain;display:block}.sina-thumbnails span{position:absolute;bottom:2px;inset-inline-end:2px;background:#061b22;color:#fff;font-size:.65rem;padding:2px 5px}.sina-view-caption{font-size:.76rem;color:#a8babb;line-height:1.5;margin:12px 0 0;min-height:1.5em}.sina-sculpture-meta{padding-top:20px}.sina-sculpture-meta h3{display:flex;align-items:baseline;gap:16px;font:400 2rem Georgia,serif;margin:0 0 20px}.sina-sculpture-meta h3 small{font:400 .85rem system-ui;color:#a8babb}.sina-sculpture-meta dl{margin:0}.sina-sculpture-meta dl>div{display:flex;justify-content:space-between;gap:16px;padding:11px 0;border-top:1px solid #ffffff20;line-height:1.5;font-size:.85rem}.sina-sculpture-meta dt{color:#a8babb}.sina-sculpture-meta dd{margin:0;text-align:end}.sina-sculpture-enquiry{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-top:22px}.sina-sculpture-enquiry strong{font:400 1rem Georgia,serif}.sina-sculpture-enquiry a{display:flex;align-items:center;gap:9px;border-bottom:1px solid #d5b574;color:#d5b574;padding:8px 0;font-size:.8rem}.sina-studio{margin-top:75px;border-top:1px solid #ffffff30;padding-top:28px;max-width:820px}.sina-studio summary{cursor:pointer;font:400 1.25rem Georgia,serif;color:#d5b574;padding:12px 0}.sina-studio>p{color:#b5c1c2;line-height:1.6;margin:12px 0 25px}.sina-lightbox{position:fixed;inset:0;width:min(96vw,1250px);max-width:96vw;height:94dvh;max-height:94dvh;padding:20px;background:#061b22;color:#eee9df;border:1px solid #ffffff30;margin:auto;box-sizing:border-box}.sina-lightbox::backdrop{background:#000d}.sina-lightbox-content{display:flex;flex-direction:column;height:100%;min-height:0}.sina-lightbox header{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-shrink:0;padding-bottom:14px}.sina-lightbox h3{font:400 1.3rem Georgia,serif;margin:0}.sina-lightbox button{display:flex;align-items:center;gap:7px;background:transparent;border:1px solid #ffffff45;padding:10px;color:inherit;cursor:pointer;min-width:44px;min-height:44px;justify-content:center}.sina-lightbox-image{display:block;width:100%;flex:1;min-height:0;object-fit:contain}.sina-lightbox footer{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:15px 0 0;background:transparent;flex-shrink:0}.sina-lightbox footer p{margin:0;font:400 .85rem/1.5 system-ui;text-align:center;flex:1;color:#c0cbcc}.sina-gallery button:focus-visible,.sina-studio summary:focus-visible,.sina-sculpture-enquiry a:focus-visible{outline:3px solid #e8c98e;outline-offset:4px}
++@media(max-width:850px){.sina-gallery-main{height:440px}}
++@media(max-width:600px){.sina-sculptures{padding:75px 6vw}.sina-sculpture-grid{grid-template-columns:1fr;gap:60px}.sina-gallery-main{height:min(125vw,560px)}.sina-sculpture-meta h3{font-size:1.7rem}.sina-lightbox{padding:12px;width:96vw}.sina-lightbox h3{font-size:1.05rem}.sina-lightbox footer p{font-size:.75rem}.sina-lightbox header button{font-size:.75rem}}

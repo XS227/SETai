@@ -1,22 +1,29 @@
 # Sina Soleimani — sculpture update, 28 October 2026
 
-Prepared source assets and artist-provided corrections for the EXISTING page:
-https://setai.no/artshop/artists/sina-soleimani
+Published on the existing page: https://setai.no/artshop/artists/sina-soleimani
 
-## Status
-Not integrated, built or deployed. The live page was checked and returns HTTP 200. It currently lists five paintings and one Icarus sculpture, labelled generically as metal. The active source is reported at `/var/www/setai-artshop` on Desktop Commander device `1431514`, currently offline. This folder is a handoff, not the active application source.
+## Result
+- Existing paintings and lower-body Icarus preserved.
+- Two new winged sculptures shown separately: Icarus (2025) and Icarus III (2025).
+- Icarus material: Iron sheets / Jernplater / ورق آهن. Supplied weight: 6.5 kg.
+- Daedalus portrait added from the artist’s official site: Bronze / Bronse / برنز, supplied weight 6.5 kg. Its catalogue identifies 2025 and 50 × 25 × 20 cm.
+- New winged Icarus works: catalogue dimensions 75 × 70 × 25 cm, 2025.
+- Three finished-work views for lowered-wing Icarus; four workshop photographs in a separate expandable studio gallery.
+- Full-image dialogs, thumbnails, arrow-key navigation, Escape dismissal and focus return. Native dialog behavior supports keyboard focus containment.
+- Price on request retained in English, Norwegian and Persian.
+- Duplicate 45728.jpg is archived but excluded from the visible gallery.
 
-## Content to apply
-- Icarus: Iron sheets / Jernplater / ورق آهن; 6.5 kg; 2025; 75 × 70 × 25 cm as printed in its supplied catalogue image.
-- Icarus III: same material, weight, year and printed dimensions. Preserve the Roman numeral III from the supplied caption; do not invent Icarus II.
-- Daedalus portrait: Bronze / Bronse / برنز; supplied weight 6.5 kg. Its photo is absent from this upload. Locate the existing portrait before editing or adding it; do not substitute any of the full-body Icarus photos.
-- Keep “Price on request” and the existing English/Norwegian/Persian presentation. No new price, edition, provenance, finish, certification or availability claims.
+## Source and recovery
+The active application is /var/www/setai-artshop on server 1431514. This GitHub directory stores its update handoff; it is not the active application's root.
+implementation.patch records only this update relative to the captured working-tree baseline, preserving earlier uncommitted work. Apply from the application root only after reviewing the current source. The application imports the new sculpture components from app/artists/sina-soleimani/page.tsx; its /artshop route re-exports that page. The homepage medium for the existing Icarus was also corrected to iron sheets.
 
-See artworks.json for exact image grouping, provenance and SHA-256 checksums. All nine original uploads are preserved unmodified. 45728.jpg and 45729.jpg are byte-identical: only show one in the gallery. Four workshop photographs appear to show the raised-wing Icarus; their association is provisional, and 45739.jpg shows a work in progress. Keep process photos separate from finished-work views. Do not create separate artworks from alternate angles.
+Copy the nine original JPEGs to public/artshop/sina-sculptures/. Daedalus images come from:
+- https://sinasoleimani.com/wp-content/uploads/2025/09/Daedalus-Copy.webp
+- https://sinasoleimani.com/wp-content/uploads/2025/09/Daedalus.webp
 
-## Integration and validation
-1. Inspect the current source, applicable AGENTS.md instructions and uncommitted changes on the actual Artshop server. Match the existing Icarus image to the correct sculpture before replacing records. Preserve other artists, paintings and functionality.
-2. Back up the source files to be changed and current dist to a new timestamped path; do not overwrite the previous backup.
-3. Integrate the supplied originals and exact metadata into the existing components/data model. Use the existing gallery mechanism, or add accessible thumbnails/lightbox if needed. Do not use generated substitutions for artwork photographs.
-4. Build with the established Node 22 Artshop workflow, staging output so a failed build cannot remove the working dist. Only switch dist after a successful build, then restart only PM2 setai-artshop (reported port 3027). Do not alter nginx or unrelated apps.
-5. Verify the live artist page, image responses, EN/NO/FA text and mobile layout. Confirm the two Icarus records are distinct, the duplicate is absent from the gallery, and Daedalus is attached to the correct portrait. Report deployment separately from this prepared handoff.
+Build was performed in an isolated staging copy using the established Node 22 workflow. The working production dist was retained until a successful build and browser verification, then only PM2 setai-artshop was restarted. Nginx was not changed.
+Production dist backup: /var/www/setai-artshop/dist.before-sina-20261028-135843
+Modified-source baseline: /root/sina-update-20261028/baseline-20261028-135843
+
+## Validation
+Production build passed. Preview browser checks passed for 4 sculpture cards, 5 paintings, gallery selection, dialogs, keyboard navigation, focus return, EN/NO/FA switches, image loading, duplicate exclusion and 390px mobile layout without horizontal overflow. Desktop and mobile screenshots inspected. Local production HTTP 200 and new sculpture markup verified after deployment. The same browser checks were then run against the public URL; see deployment-validation.json.

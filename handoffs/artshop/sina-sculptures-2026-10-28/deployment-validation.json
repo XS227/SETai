@@ -1,0 +1,18 @@
+{
+  "date": "2026-10-28",
+  "status": "PASS",
+  "origin": "https://setai.no",
+  "cards": 4,
+  "paintings": 5,
+  "galleries": true,
+  "keyboard": true,
+  "focusReturn": true,
+  "languages": [
+    "EN",
+    "NO",
+    "FA"
+  ],
+  "mobileWidth": 390,
+  "loadedImages": 9,
+  "pageErrors": []
+}

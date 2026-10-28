@@ -2,7 +2,7 @@
   "artist": "Sina Soleimani",
   "target_url": "https://setai.no/artshop/artists/sina-soleimani",
   "date": "2026-10-28",
-  "status": "Prepared; not integrated or deployed. Artshop device 1431514 is offline.",
+  "status": "Deployed to the existing Artshop page on 2026-10-28; production build and browser checks passed.",
   "works": [
     {
       "title": "Icarus",
@@ -62,7 +62,19 @@
       },
       "weight_kg": 6.5,
       "photo_in_this_upload": false,
-      "note": "User explicitly says the Daedalus portrait is bronze. The Persian message contains a contradictory iron-sheets fragment but starts and ends with bronze for this portrait. Match the existing portrait; do not relabel a full-body Icarus image as Daedalus."
+      "note": "User explicitly says the Daedalus portrait is bronze. The Persian message contains a contradictory iron-sheets fragment but starts and ends with bronze for this portrait. Match the existing portrait; do not relabel a full-body Icarus image as Daedalus.",
+      "year": 2025,
+      "dimensions_cm": [
+        50,
+        25,
+        20
+      ],
+      "gallery": [
+        "Daedalus-Copy.webp",
+        "Daedalus.webp"
+      ],
+      "image_source": "https://sinasoleimani.com/portfolio/daedalus/",
+      "dimension_source": "Official Daedalus.webp catalogue photograph, visually verified."
     }
   ],
   "photos": [
