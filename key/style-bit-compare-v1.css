@@ -1,0 +1,33 @@
+/* Known-pair bit verification; responsive 256-bit matrix. */
+.guess-tools{display:grid;grid-template-columns:1fr;gap:9px;margin-top:11px}
+.guess-tools .secondary{width:100%;margin:0}
+.guess-bit-lab{margin:19px 0 5px;padding:18px 16px 15px;background:linear-gradient(145deg,#132a29,#0d1b28 65%);border:1px solid #395b5e;border-radius:13px}
+.guess-bit-top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+.guess-bit-title{font-size:12px;font-weight:700;color:#edf7f5}
+.guess-bit-tag{font-family:ui-monospace,monospace;color:#96cbd1;font-size:9px;letter-spacing:1px}
+.guess-bit-count{font-family:ui-monospace,monospace;font-size:13px;font-weight:750;color:#c5f479;margin:12px 0 5px}
+.guess-bit-meter{height:8px;border-radius:999px;background:#263644;overflow:hidden;margin:8px 0 13px}
+.guess-bit-meter span{display:block;width:0;height:100%;background:linear-gradient(90deg,#65d5a8,#c5f479);border-radius:inherit;transition:width .35s}
+.guess-bit-legend{font-size:10px;line-height:1.8;color:#b0c5c7;margin-bottom:14px}
+.guess-bit-grid{display:grid;gap:5px;overflow-x:auto;padding:2px 0}
+.guess-bit-row{display:grid;grid-template-columns:55px minmax(0,1fr) 30px;gap:5px;align-items:center}
+.guess-bit-index,.guess-bit-hits{font-family:ui-monospace,monospace;font-size:9px;color:#a8bdca;font-variant-numeric:tabular-nums}
+.guess-bit-hits{text-align:right}
+.guess-bit-cells{display:grid;grid-template-columns:repeat(16,minmax(0,1fr));gap:3px}
+.guess-bit-chip{display:grid;place-items:center;min-width:0;height:23px;border:1px solid transparent;border-radius:4px;font:600 10px ui-monospace,monospace;user-select:none}
+.guess-bit-chip.correct{background:#244b38;border-color:#3c8658;color:#c5f479}
+.guess-bit-chip.incorrect{background:#24313d;border-color:#3b4754;color:#8493a2}
+.guess-bit-chip.unknown{background:#183043;border-color:#2e4a60;color:#a7c1d5}
+.guess-bit-note{font-size:10px;line-height:1.8;color:#b0c1ce;margin:14px 0 0}
+.guess-benchmark-result{font-size:11px;line-height:1.8;color:#b6d2d3;min-height:24px;margin:6px 0 0}
+@media(max-width:580px){
+ .guess-bit-lab{padding:14px 9px}
+ .guess-bit-row{grid-template-columns:46px minmax(0,1fr) 26px;gap:3px}
+ .guess-bit-cells{gap:2px}
+ .guess-bit-chip{height:19px;font-size:9px;border-radius:2px}
+ .guess-bit-index,.guess-bit-hits{font-size:8px}
+}
+@media(max-width:360px){
+ .guess-bit-row{grid-template-columns:42px minmax(0,1fr) 24px;gap:2px}
+ .guess-bit-chip{height:17px;font-size:8px}
+}

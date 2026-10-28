@@ -1,0 +1,35 @@
+/* Additions for hologram-v2: learning lab, measured coupling map, missing-bit list. */
+.bit-holo-panel .holo-lab{margin:16px 0 4px;border-top:1px solid #284c57;padding-top:14px}
+.bit-holo-panel .holo-lab h4{margin:0 0 9px;font:800 13px system-ui,sans-serif;color:#4bebf1;letter-spacing:-.2px}
+.bit-holo-panel .holo-pipe{list-style:none;margin:0 0 10px;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px;counter-reset:s}
+.bit-holo-panel .holo-pipe li{position:relative;background:#0e2b38;border:1px solid #2c5866;border-radius:8px;padding:8px 6px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.bit-holo-panel .holo-pipe li+li::before{content:"→";position:absolute;left:-9px;top:50%;transform:translateY(-50%);color:#c5f479;font-size:11px;background:#081922;border-radius:50%;line-height:1;z-index:1}
+.bit-holo-panel .holo-pipe b{font:700 11px ui-monospace,monospace;color:#c5f479}
+.bit-holo-panel .holo-pipe span{font-size:9px;line-height:1.45;color:#a6c4c9;overflow-wrap:anywhere}
+.bit-holo-panel .holo-lesson{font-size:11px;line-height:1.7;color:#c3dde2;margin:0 0 12px}
+.bit-holo-panel .holo-lesson em{color:#c5f479;font-style:normal;font-weight:700}
+.bit-holo-panel .holo-lesson strong{color:#ffd666}
+.bit-holo-panel .holo-measure button{width:100%;padding:11px 10px;border:1px solid #6b9b68;border-radius:9px;background:#183e42;color:#c5f479;font-size:12px}
+.bit-holo-panel .holo-measure button:disabled{opacity:.5;border-color:#315765;color:#9ac4c8}
+.bit-holo-panel .holo-measure p{font-size:10px;line-height:1.65;color:#a6c4c9;margin:8px 0 0}
+.bit-holo-panel .holo-matrix-wrap{margin:12px 0}
+.bit-holo-panel .holo-matrix-title{font:700 10px ui-monospace,monospace;color:#7cf7fa;margin:0 0 6px}
+.bit-holo-panel #holo-matrix{position:static;display:block;width:100%;height:auto;aspect-ratio:160/256;max-height:420px;image-rendering:pixelated;border:1px solid #2c5866;border-radius:7px;cursor:crosshair;touch-action:manipulation;background:#0f2c38}
+.bit-holo-panel .holo-matrix-legend{font-size:9px;color:#9dbac2;margin:6px 0 0;display:flex;gap:7px;align-items:center;flex-wrap:wrap}
+.bit-holo-panel .holo-matrix-legend i{display:inline-block;width:10px;height:10px;border-radius:2px}
+.bit-holo-panel .holo-matrix-legend .flip{background:#c5f479}
+.bit-holo-panel .holo-matrix-legend .same{background:#0f2c38;border:1px solid #2c5866}
+.bit-holo-panel .holo-matrix-readout{font-size:11px;line-height:1.6;color:#ffd666;margin:6px 0 0;min-height:1em}
+.bit-holo-panel .holo-missing{margin:12px 0;border:1px solid #315764;border-radius:9px;background:#0d2733;padding:0 10px}
+.bit-holo-panel .holo-missing summary{padding:10px 0;font:700 11px system-ui,sans-serif;color:#ffb8a2;cursor:pointer}
+.bit-holo-panel .holo-missing ul{list-style:none;margin:0 0 8px;padding:0}
+.bit-holo-panel .holo-missing li{font-size:10px;line-height:1.6;color:#c3dde2;padding:3px 0;border-top:1px solid #1d4150}
+.bit-holo-panel .holo-missing li span{color:#7cf7fa;font-family:ui-monospace,monospace;margin-right:4px}
+.bit-holo-panel .holo-missing code{font:10px ui-monospace,monospace;color:#ffb8a2;overflow-wrap:anywhere}
+.bit-holo-panel .holo-miss-h{font:700 10px system-ui,sans-serif;color:#9ac4c8;margin:8px 0 4px}
+.bit-holo-panel .holo-missing p{font-size:10px;color:#a6c4c9}
+.bit-holo-panel .holo-quantum{margin-top:12px;border-left:3px solid #8e7bd6;background:#14223a;border-radius:0 9px 9px 0;padding:10px 12px}
+.bit-holo-panel .holo-quantum h4{color:#c3b6ff;margin-bottom:6px}
+.bit-holo-panel .holo-quantum p{font-size:10px;line-height:1.7;color:#c3cde0;margin:0}
+.bit-holo-panel .holo-quantum strong{color:#ffd666}
+@media(max-width:430px){.bit-holo-panel .holo-pipe{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.bit-holo-panel .holo-pipe li:nth-child(3)::before{content:"↓";left:50%;top:-10px;transform:translateX(-50%)}.bit-holo-panel .holo-pipe li:nth-child(2)::before{left:-9px}.bit-holo-panel .holo-pipe li:nth-child(4)::before{left:-9px}}

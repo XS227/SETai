@@ -16,7 +16,7 @@ const faMap={
 "Let's talk":"گفتگو کنیم",
 "01 / Where every story starts":"۰۱ / جایی که هر داستان آغاز می‌شود",
 "Every idea<br>needs a place<br>to <em>begin.</em>":"هر ایده‌ای<br>به جایی برای<br><em>شروع نیاز دارد.</em>",
-"I'm Khabat. Come behind the scenes of SETAEI — from the first line of a story to the systems, products and worlds I build.":"من خباط هستم. پشت صحنه SETAEI را ببینید — از نخستین خط یک داستان تا سیستم‌ها، محصولات و جهان‌هایی که می‌سازم.",
+"I'm SETAEI. Come behind the scenes of SETAEI — from the first line of a story to the systems, products and worlds I build.":"من خباط هستم. پشت صحنه SETAEI را ببینید — از نخستین خط یک داستان تا سیستم‌ها، محصولات و جهان‌هایی که می‌سازم.",
 "Enter the Shahnameh project ↗":"ورود به پروژه شاهنامه ↗",
 "Project imagery / Shahnameh film":"تصویر پروژه / فیلم شاهنامه",
 "02 / Behind the scenes":"۰۲ / پشت صحنه",
@@ -201,8 +201,8 @@ document.addEventListener('visibilitychange',requestUpdate);
 configure();
 const initial=scenes.findIndex(s=>'#'+s.id===location.hash);if(initial>=0)goTo(initial);
 const metaByLang={
- no:{title:'CTO, AI-ekspert & SaaS-utvikler i Oslo, Norge | SETAEI',desc:'Khabat Setaei er CTO, AI-ekspert, SaaS-utvikler, fullstack-utvikler og SEO-ekspert i Oslo. SETAEI bygger AI-systemer og SaaS-produkter for kunder i hele Norge.'},
- en:{title:'CTO, AI Expert & SaaS Developer | SETAEI',desc:'Khabat Setaei builds AI systems, SaaS products, websites and growth infrastructure for companies and founders.'},
+ no:{title:'CTO, AI-ekspert & SaaS-utvikler i Oslo, Norge | SETAEI',desc:'SETAEI er CTO, AI-ekspert, SaaS-utvikler, fullstack-utvikler og SEO-ekspert i Oslo. SETAEI bygger AI-systemer og SaaS-produkter for kunder i hele Norge.'},
+ en:{title:'CTO, AI Expert & SaaS Developer | SETAEI',desc:'SETAEI builds AI systems, SaaS products, websites and growth infrastructure for companies and founders.'},
  fa:{title:'توسعه‌دهنده هوش مصنوعی، SaaS و CTO | SETAEI',desc:'SETAEI سیستم‌های هوش مصنوعی، محصولات SaaS، وب‌سایت و زیرساخت رشد برای کسب‌وکارها و بنیان‌گذاران می‌سازد.'}
 };
 function setLanguage(lang,persist=true){

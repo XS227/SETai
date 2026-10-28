@@ -1,0 +1,22 @@
+/* SETAEI key-recovery science panel — controlled synthetic evaluation */
+.research-agent-panel{border-color:#4f756b;background:linear-gradient(155deg,#152c2b,#10212b)}
+.research-agent-panel .research-agent-stage{display:flex;gap:12px;align-items:center;justify-content:space-between;padding:12px;border:1px solid #3d5757;border-radius:9px;margin:15px 0 12px}
+.research-agent-stage span{font-size:13px;color:#c5f479;font-weight:700}
+.research-agent-stage strong{font-size:12px;color:#d2e7de;font-variant-numeric:tabular-nums}
+.research-agent-panel #research-agent-progress{width:100%;height:12px;accent-color:#c5f479;margin:4px 0 10px;display:block}
+.research-agent-panel .research-agent-metrics{display:grid;grid-template-columns:1fr;gap:9px;margin:13px 0}
+.research-agent-metrics>div{background:#0b1b27;border:1px solid #3d5555;border-radius:9px;padding:13px;min-width:0}
+.research-agent-metrics small{font-size:10px;letter-spacing:.55px;display:block;color:#9bb2b8;margin-bottom:7px}
+.research-agent-metrics strong{display:block;font-size:14px;color:#d5f2dc;line-height:1.5;overflow-wrap:anywhere}
+.research-agent-panel label{display:block;color:#becfd0;font-size:11px;line-height:1.5;margin:16px 0 12px}
+.research-agent-panel label input{display:block;width:100%;box-sizing:border-box;margin-top:7px;background:#08161e;border:1px solid #3e5e61;color:#e3eee9;padding:12px;border-radius:7px;font:12px ui-monospace,monospace}
+.research-agent-panel #research-agent-assessment{background:#172e2e;padding:11px;border-radius:8px;color:#bed5cb}
+.research-agent-panel #research-agent-feedback{margin-top:10px;color:#c9e8d5}
+.research-agent-panel .server-agent-playback{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+@media(max-width:440px){.research-agent-panel .server-agent-playback{grid-template-columns:1fr}}
+
+.server-agent-dashboard-link{margin:20px 0 16px;border:1px solid #58765e;border-radius:12px;padding:17px;background:linear-gradient(125deg,#18352c,#17303a)}
+.server-agent-dashboard-link>span{font-weight:750;color:#d7edda;font-size:13px;display:block;margin-bottom:10px}
+.server-agent-dashboard-link>a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;background:#c6f87a;color:#132219;padding:10px 17px;border-radius:9px;font-weight:850;font-size:12px;text-decoration:none}
+.server-agent-dashboard-link>a:hover{background:#e0ffab}
+.server-agent-dashboard-link>small{display:block;margin-top:11px;color:#adbbc0;font-size:11px;line-height:1.55}

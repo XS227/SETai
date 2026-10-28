@@ -137,3 +137,11 @@ Alle 10 P0-artikler i planen er nå skrevet og live. **Runde 3 (P1) — påbegyn
 7. fractional CTO vs. teknisk co-founder — hva er forskjellen (Klynge F)
 
 Ca. 1–2 artikler/uke for jevn crawl-frekvens fremover, ikke en ny stor dump (Google foretrekker jevn utgivelsestakt) — denne runden (27. juli) var 2 artikler, i tråd med det.
+
+## Kontroll 19. oktober 2026
+- Lokal SEO-sjekkliste: publisert 8. oktober; kort i bloggoversikten reparert 19. oktober.
+- SaaS-prismodeller: publisert 15. oktober; sammenligning, regneeksempel og beslutningssjekkliste utvidet 19. oktober. Kort i bloggoversikten reparert.
+- Kundeservice-automatisering: fortsatt planlagt 22. oktober i den eksisterende køen, ikke fremskyndet.
+- Autopubliseringsskriptet er tilpasset den nåværende kategoribaserte bloggoversikten. Manglende sideoppsett stopper publisering og bevarer køen; vellykket publisert kilde arkiveres.
+- Sitemap og robots.txt svarte HTTP 200. Alle 135 sitemap-adresser svarte HTTP 200. Dette bekrefter ikke indeksering hos Google.
+- Nye Search Console-tall kan ikke bekreftes: Windsor returnerte en abonnementsbegrensning. Historiske Google-tall beholdes med den opprinnelige måleperioden.

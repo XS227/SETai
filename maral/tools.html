@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="theme-color" content="#0c2240">
+  <meta name="description" content="پیشنهاد طراحی اختصاصی SETAEI برای مارال تریلر؛ از کارخانه تا بار بعدی شما. نمایشگاه تعاملی محصولات و مهندسی حمل‌ونقل.">
+  <title>MARAL — از کارخانه تا بار بعدی شما</title>
+  <link rel="icon" href="assets/logo.png">
+  <link rel="preload" href="assets/YekanBakh-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="alternate" hreflang="fa" href="https://setai.no/maral/tools.html?lang=fa">
+  <link rel="alternate" hreflang="en" href="https://setai.no/maral/tools.html?lang=en">
+  <link rel="alternate" hreflang="ru" href="https://setai.no/maral/tools.html?lang=ru">
+  <link rel="alternate" hreflang="ar" href="https://setai.no/maral/tools.html?lang=ar">
+  <link rel="stylesheet" href="style.css?v=20261026q">
+  <script src="shell.js?v=20261026q" defer></script>
+  <script src="ru.js?v=20261026q" defer></script>
+  <script src="ar.js?v=20261026q" defer></script>
+  <script src="app.js?v=20261026q" defer></script>
+</head>
+<body data-page="tools">
+  <a class="skip" href="#main" data-i="skip">رفتن به محتوا</a>
+  <div class="scroll-progress" aria-hidden="true"></div>
+  <main id="main">
+    <section class="page-head">
+      <div class="page-head-inner"><nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">MARAL</a><span aria-hidden="true">/</span><span data-i="navPlanner"></span></nav><h1 data-i="phPlannerTitle"></h1><p data-i="phPlannerDesc"></p></div>
+    </section>
+    <section id="planner" class="planner section-pad">
+      <div class="section-heading reveal"><div><p class="eyebrow dark"><span class="index">01</span><span data-i="plannerEyebrow">ابزارهایی برای تصمیم درست</span></p><h2 data-i="plannerTitle">پیش از خرید،<br>حساب کنید.</h2></div><p data-i="plannerDesc">حجم کار ماهانه را وارد کنید تا ببینید چند تریلر لازم دارید؛ یا برای تریلری که دارید پرونده خدمات آماده کنید. نتیجه مستقیم به درخواست شما اضافه می‌شود.</p></div>
+      <div class="tool-tabs" role="tablist" aria-label="Tools"><button id="tool-tab-fleet" role="tab" aria-selected="true" aria-controls="tool-fleet" data-tool="fleet"><b data-i="toolFleet">برنامه‌ریز ناوگان</b><small data-i="toolFleetSub">چند تریلر لازم دارم؟</small></button><button id="tool-tab-service" role="tab" aria-selected="false" aria-controls="tool-service" data-tool="service" tabindex="-1"><b data-i="toolService">پرونده خدمات</b><small data-i="toolServiceSub">آماده برای تماس با خدمات پس از فروش</small></button></div>
+      <div id="tool-fleet" class="tool-panel" role="tabpanel" aria-labelledby="tool-tab-fleet">
+        <form id="fleet-form" class="tool-form">
+          <label><span data-i="plModel">خانواده محصول</span><select id="pl-model"><option value="tipper" data-i="optionTipper">کمپرسی</option><option value="fuel" data-i="optionFuel">تانکر سوخت</option><option value="reefer" data-i="optionReefer">یخچالی</option><option value="flatbed" data-i="optionFlatbed">کفی</option></select></label>
+          <label data-show="tipper"><span data-i="plMaterial">نوع مصالح</span><select id="pl-material"><option value="1.6" data-i="matSand">ماسه (حدود ۱٫۶ تن در متر مکعب)</option><option value="1.7" data-i="matGravel">شن (حدود ۱٫۷ تن در متر مکعب)</option><option value="1.5" data-i="matStone">سنگ شکسته (حدود ۱٫۵ تن در متر مکعب)</option><option value="1.4" data-i="matSoil">خاک (حدود ۱٫۴ تن در متر مکعب)</option></select></label>
+          <label data-show="tipper fuel reefer"><span data-i="plFill">درصد پرشدگی هر سفر</span><span class="range-row"><input type="range" id="pl-fill" min="50" max="100" value="90"><output id="pl-fill-out" for="pl-fill">90%</output></span></label>
+          <label data-show="tipper flatbed"><span data-i="plPayload">سقف بار مجاز هر سفر (تن)</span><input id="pl-payload" type="number" min="1" max="80" step="0.5" value="25"></label>
+          <label class="span-2"><span id="pl-amount-label">حجم کار ماهانه (تن)</span><input id="pl-amount" type="number" min="0" step="any" value="12000"></label>
+          <label><span data-i="plDays">روز کاری در ماه</span><input id="pl-days" type="number" min="1" max="31" value="24"></label>
+          <label><span data-i="plTrips">رفت‌وبرگشت هر تریلر در روز</span><input id="pl-trips" type="number" min="0.1" max="12" step="0.1" value="2"></label>
+        </form>
+        <div class="tool-result" aria-live="polite">
+          <span class="tool-result-label" data-i="plResult">نتیجه برنامه‌ریزی</span>
+          <div class="result-main"><b id="pl-fleet">0</b><span data-i="plFleetLabel">تریلر موردنیاز</span></div>
+          <dl class="result-list"><div><dt data-i="plPerTrip">بار هر سفر</dt><dd id="pl-per-trip"></dd></div><div><dt data-i="plTripsMonth">سفر در ماه</dt><dd id="pl-trips-month"></dd></div><div><dt data-i="plUtil">استفاده از ظرفیت ناوگان</dt><dd id="pl-util"></dd></div></dl>
+          <p id="pl-limit" class="result-flag"></p>
+          <button type="button" id="pl-use" class="button full" data-i="plUse">افزودن به درخواست من <span>↗</span></button>
+          <p class="result-note" data-i="plNote">محاسبه تقریبی و فقط برای برنامه‌ریزی است. چگالی مصالح، بار مجاز محور و مقررات مسیر باید توسط تیم فنی مارال و مراجع ذی‌صلاح تأیید شوند.</p>
+        </div>
+      </div>
+      <div id="tool-service" class="tool-panel" role="tabpanel" aria-labelledby="tool-tab-service" hidden>
+        <form id="service-form" class="tool-form">
+          <label><span data-i="svModel">مدل تریلر</span><select id="sv-model"><option data-i="optionTipper">کمپرسی</option><option data-i="optionFuel">تانکر سوخت</option><option data-i="optionReefer">یخچالی</option><option data-i="optionFlatbed">کفی</option><option data-i="optionOther">مدل دیگر</option></select></label>
+          <label><span data-i="svNeed">نوع نیاز</span><select id="sv-need"><option value="parts" data-i="needParts">قطعه یدکی (TSP)</option><option value="periodic" data-i="needPeriodic">سرویس دوره‌ای</option><option value="repair" data-i="needRepair">تعمیر و عیب‌یابی</option><option value="axle" data-i="needAxle">محور و ترمز (FOX)</option><option value="docs" data-i="needDocs">مدارک و راهنمای فنی</option></select></label>
+          <label><span data-i="svChassis">شماره شاسی (VIN)</span><input id="sv-chassis" maxlength="40" dir="ltr" autocomplete="off"></label>
+          <label><span data-i="svYear">سال خرید</span><input id="sv-year" inputmode="numeric" maxlength="4"></label>
+          <label class="span-2"><span data-i="svCity">شهر / محل فعلی تریلر</span><input id="sv-city" maxlength="80"></label>
+          <label class="span-2"><span data-i="svDesc">شرح کوتاه</span><textarea id="sv-desc" rows="3" maxlength="600"></textarea></label>
+        </form>
+        <div class="tool-result" aria-live="polite">
+          <span class="tool-result-label" data-i="svResult">پرونده آماده تماس</span>
+          <pre id="sv-message"></pre>
+          <div class="result-actions"><button type="button" id="sv-copy" class="button full" data-i="svCopy">کپی متن <span>⧉</span></button><a class="outline-button" href="tel:+984433381821"><span data-i="svCall">تماس با خدمات مارال</span><b dir="ltr">+98 44 3338 1821</b></a></div>
+          <p class="result-note" data-i="svNote">این متن فقط در مرورگر شما ساخته می‌شود و برای مارال ارسال نمی‌شود. هنگام تماس آن را بخوانید یا بفرستید.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+  <div id="toast" role="status"></div><div id="print-sheet"></div>
+</body>
+</html>

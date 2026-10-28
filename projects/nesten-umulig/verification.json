@@ -1,0 +1,24 @@
+{
+  "testedUtc": "2026-10-24T16:04:57.088Z",
+  "javascriptErrors": [],
+  "localPreviewUsesHistoricalLabel": true,
+  "visitorSimulationNeverChangesRealCounter": true,
+  "probabilityScenariosChecked": [
+    8,
+    16,
+    24,
+    160,
+    256
+  ],
+  "viewportWidthsChecked": [
+    390,
+    412,
+    768,
+    1440
+  ],
+  "mobileNoDocumentOverflow": true,
+  "reducedMotionHonored": true,
+  "freshAndStaleFeedStatesCheckedWithIsolatedFixtures": true,
+  "liveRateNotClaimedForStaleData": true,
+  "agentStatusVisible": true
+}

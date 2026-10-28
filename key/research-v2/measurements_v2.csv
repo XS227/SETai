@@ -1,0 +1,1081 @@
+bits,n,method,trial,status,event,group_ops,walk_steps,setup_ops,elapsed_seconds,timing_mode,note
+16,48799,exhaustive,1,found,True,44549,44549,0,0.070056,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+16,48799,exhaustive,2,found,True,23109,23109,0,0.040571,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+16,48799,exhaustive,3,found,True,37965,37965,0,0.061523,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+16,48799,exhaustive,4,found,True,18544,18544,0,0.033665,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+16,48799,exhaustive,5,found,True,11309,11309,0,0.019655,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+16,48799,exhaustive,6,found,True,3180,3180,0,0.005333,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+16,48799,exhaustive,7,found,True,15833,15833,0,0.028178,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+16,48799,exhaustive,8,found,True,15103,15103,0,0.026585,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+16,48799,exhaustive,9,found,True,15373,15373,0,0.027292,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+16,48799,exhaustive,10,found,True,192,192,0,0.000254,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+16,48799,exhaustive,11,found,True,46771,46771,0,0.073564,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+16,48799,exhaustive,12,found,True,35835,35835,0,0.058752,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+16,48799,exhaustive,13,found,True,8630,8630,0,0.015133,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+16,48799,exhaustive,14,found,True,3873,3873,0,0.006771,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+16,48799,exhaustive,15,found,True,13032,13032,0,0.022759,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+16,48799,exhaustive,16,found,True,12675,12675,0,0.022032,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+16,48799,exhaustive,17,found,True,20221,20221,0,0.036337,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+16,48799,exhaustive,18,found,True,41887,41887,0,0.066679,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+16,48799,exhaustive,19,found,True,46010,46010,0,0.072577,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+16,48799,exhaustive,20,found,True,43101,43101,0,0.0682,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+16,48799,exhaustive,21,found,True,40830,40830,0,0.065202,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+16,48799,exhaustive,22,found,True,6987,6987,0,0.012371,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+16,48799,exhaustive,23,found,True,48509,48509,0,0.075758,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+16,48799,exhaustive,24,found,True,12677,12677,0,0.022037,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+16,48799,exhaustive,25,found,True,9850,9850,0,0.017179,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+16,48799,exhaustive,26,found,True,33299,33299,0,0.055534,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+16,48799,exhaustive,27,found,True,7591,7591,0,0.013398,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+16,48799,exhaustive,28,found,True,14189,14189,0,0.024761,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+16,48799,exhaustive,29,found,True,38682,38682,0,0.062451,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+16,48799,exhaustive,30,found,True,29556,29556,0,0.049781,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+16,48799,BSGS,1,found,True,317,,,0.000538,independent_run,
+16,48799,BSGS,2,found,True,309,,,0.000426,independent_run,
+16,48799,BSGS,3,found,True,322,,,0.000451,independent_run,
+16,48799,BSGS,4,found,True,292,,,0.000403,independent_run,
+16,48799,BSGS,5,found,True,471,,,0.000663,independent_run,
+16,48799,BSGS,6,found,True,457,,,0.000629,independent_run,
+16,48799,BSGS,7,found,True,317,,,0.000432,independent_run,
+16,48799,BSGS,8,found,True,342,,,0.000477,independent_run,
+16,48799,BSGS,9,found,True,453,,,0.000763,independent_run,
+16,48799,BSGS,10,found,True,488,,,0.000674,independent_run,
+16,48799,BSGS,11,found,True,379,,,0.000527,independent_run,
+16,48799,BSGS,12,found,True,323,,,0.000474,independent_run,
+16,48799,BSGS,13,found,True,405,,,0.000588,independent_run,
+16,48799,BSGS,14,found,True,356,,,0.000487,independent_run,
+16,48799,BSGS,15,found,True,418,,,0.000575,independent_run,
+16,48799,BSGS,16,found,True,376,,,0.000509,independent_run,
+16,48799,BSGS,17,found,True,311,,,0.000429,independent_run,
+16,48799,BSGS,18,found,True,402,,,0.000548,independent_run,
+16,48799,BSGS,19,found,True,377,,,0.00052,independent_run,
+16,48799,BSGS,20,found,True,481,,,0.000666,independent_run,
+16,48799,BSGS,21,found,True,444,,,0.000624,independent_run,
+16,48799,BSGS,22,found,True,481,,,0.00066,independent_run,
+16,48799,BSGS,23,found,True,363,,,0.000502,independent_run,
+16,48799,BSGS,24,found,True,321,,,0.000439,independent_run,
+16,48799,BSGS,25,found,True,299,,,0.000418,independent_run,
+16,48799,BSGS,26,found,True,349,,,0.000525,independent_run,
+16,48799,BSGS,27,found,True,466,,,0.000642,independent_run,
+16,48799,BSGS,28,found,True,397,,,0.000644,independent_run,
+16,48799,BSGS,29,found,True,491,,,0.000669,independent_run,
+16,48799,BSGS,30,found,True,489,,,0.000729,independent_run,
+16,48799,rho3_Floyd,1,found,True,306,,,0.000471,independent_run,
+16,48799,rho3_Floyd,2,found,True,290,,,0.000445,independent_run,
+16,48799,rho3_Floyd,3,found,True,1219,,,0.001832,independent_run,
+16,48799,rho3_Floyd,4,found,True,1294,,,0.002037,independent_run,
+16,48799,rho3_Floyd,5,found,True,353,,,0.000529,independent_run,
+16,48799,rho3_Floyd,6,found,True,1230,,,0.001818,independent_run,
+16,48799,rho3_Floyd,7,found,True,1263,,,0.001863,independent_run,
+16,48799,rho3_Floyd,8,found,True,1696,,,0.002871,independent_run,
+16,48799,rho3_Floyd,9,found,True,920,,,0.001404,independent_run,
+16,48799,rho3_Floyd,10,found,True,1796,,,0.00274,independent_run,
+16,48799,rho3_Floyd,11,found,True,555,,,0.000866,independent_run,
+16,48799,rho3_Floyd,12,found,True,554,,,0.000828,independent_run,
+16,48799,rho3_Floyd,13,found,True,950,,,0.001507,independent_run,
+16,48799,rho3_Floyd,14,found,True,766,,,0.001318,independent_run,
+16,48799,rho3_Floyd,15,found,True,1504,,,0.002245,independent_run,
+16,48799,rho3_Floyd,16,found,True,2867,,,0.004432,independent_run,
+16,48799,rho3_Floyd,17,found,True,346,,,0.000583,independent_run,
+16,48799,rho3_Floyd,18,found,True,1551,,,0.002498,independent_run,
+16,48799,rho3_Floyd,19,found,True,936,,,0.001436,independent_run,
+16,48799,rho3_Floyd,20,found,True,624,,,0.001134,independent_run,
+16,48799,rho3_Floyd,21,found,True,1289,,,0.001962,independent_run,
+16,48799,rho3_Floyd,22,found,True,595,,,0.000931,independent_run,
+16,48799,rho3_Floyd,23,found,True,1658,,,0.002629,independent_run,
+16,48799,rho3_Floyd,24,found,True,1643,,,0.002655,independent_run,
+16,48799,rho3_Floyd,25,found,True,980,,,0.001512,independent_run,
+16,48799,rho3_Floyd,26,found,True,597,,,0.000977,independent_run,
+16,48799,rho3_Floyd,27,found,True,498,,,0.000781,independent_run,
+16,48799,rho3_Floyd,28,found,True,1226,,,0.001869,independent_run,
+16,48799,rho3_Floyd,29,found,True,1527,,,0.002418,independent_run,
+16,48799,rho3_Floyd,30,found,True,1151,,,0.001827,independent_run,
+16,48799,rho20_Brent,1,found,True,1485,522,897,0.002244,independent_run,
+16,48799,rho20_Brent,2,found,True,1305,310,916,0.001967,independent_run,
+16,48799,rho20_Brent,3,found,True,1399,394,940,0.002033,independent_run,
+16,48799,rho20_Brent,4,found,True,1268,302,899,0.001845,independent_run,
+16,48799,rho20_Brent,5,found,True,1364,410,887,0.001979,independent_run,
+16,48799,rho20_Brent,6,found,True,1472,502,902,0.002121,independent_run,
+16,48799,rho20_Brent,7,found,True,1770,775,926,0.002616,independent_run,
+16,48799,rho20_Brent,8,found,True,1505,503,935,0.002189,independent_run,
+16,48799,rho20_Brent,9,found,True,1416,433,911,0.002067,independent_run,
+16,48799,rho20_Brent,10,found,True,1382,387,924,0.002081,independent_run,
+16,48799,rho20_Brent,11,found,True,1360,371,922,0.002024,independent_run,
+16,48799,rho20_Brent,12,found,True,1441,437,935,0.006437,independent_run,
+16,48799,rho20_Brent,13,found,True,1490,488,930,0.002179,independent_run,
+16,48799,rho20_Brent,14,found,True,1447,466,912,0.002796,independent_run,
+16,48799,rho20_Brent,15,found,True,1145,204,864,0.001613,independent_run,
+16,48799,rho20_Brent,16,found,True,1166,208,887,0.002895,independent_run,
+16,48799,rho20_Brent,17,found,True,1845,872,914,0.002779,independent_run,
+16,48799,rho20_Brent,18,found,True,1346,400,879,0.001935,independent_run,
+16,48799,rho20_Brent,19,found,True,1349,390,897,0.001948,independent_run,
+16,48799,rho20_Brent,20,found,True,1197,233,895,0.001712,independent_run,
+16,48799,rho20_Brent,21,found,True,1662,673,920,0.002678,independent_run,
+16,48799,rho20_Brent,22,found,True,1375,388,913,0.00204,independent_run,
+16,48799,rho20_Brent,23,found,True,1434,445,920,0.002115,independent_run,
+16,48799,rho20_Brent,24,found,True,1999,1033,908,0.003123,independent_run,
+16,48799,rho20_Brent,25,found,True,1202,200,935,0.001877,independent_run,
+16,48799,rho20_Brent,26,found,True,1204,232,901,0.001765,independent_run,
+16,48799,rho20_Brent,27,found,True,1514,525,920,0.002316,independent_run,
+16,48799,rho20_Brent,28,found,True,1342,383,899,0.00194,independent_run,
+16,48799,rho20_Brent,29,found,True,1056,107,885,0.001571,independent_run,
+16,48799,rho20_Brent,30,found,True,1238,260,903,0.002503,independent_run,
+20,784897,exhaustive,1,found,True,5342,5342,0,0.008684,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+20,784897,exhaustive,2,found,True,617523,617523,0,1.050978,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+20,784897,exhaustive,3,found,True,120499,120499,0,0.190746,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+20,784897,exhaustive,4,found,True,385414,385414,0,0.645134,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+20,784897,exhaustive,5,found,True,147778,147778,0,0.238228,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+20,784897,exhaustive,6,found,True,613242,613242,0,1.044214,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+20,784897,exhaustive,7,found,True,364595,364595,0,0.615209,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+20,784897,exhaustive,8,found,True,498046,498046,0,0.857699,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+20,784897,exhaustive,9,found,True,59823,59823,0,0.092595,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+20,784897,exhaustive,10,found,True,64612,64612,0,0.099725,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+20,784897,exhaustive,11,found,True,155542,155542,0,0.249865,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+20,784897,exhaustive,12,found,True,154079,154079,0,0.247511,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+20,784897,exhaustive,13,found,True,479642,479642,0,0.819737,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+20,784897,exhaustive,14,found,True,68428,68428,0,0.105247,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+20,784897,exhaustive,15,found,True,113490,113490,0,0.180286,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+20,784897,exhaustive,16,found,True,590246,590246,0,1.00135,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+20,784897,exhaustive,17,found,True,234912,234912,0,0.384655,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+20,784897,exhaustive,18,found,True,537958,537958,0,0.92198,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+20,784897,exhaustive,19,found,True,538599,538599,0,0.922904,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+20,784897,exhaustive,20,found,True,350029,350029,0,0.585043,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+20,784897,exhaustive,21,found,True,99573,99573,0,0.159257,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+20,784897,exhaustive,22,found,True,186319,186319,0,0.301242,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+20,784897,exhaustive,23,found,True,457957,457957,0,0.772708,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+20,784897,exhaustive,24,found,True,645168,645168,0,1.094352,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+20,784897,exhaustive,25,found,True,436635,436635,0,0.736083,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+20,784897,exhaustive,26,found,True,93223,93223,0,0.147955,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+20,784897,exhaustive,27,found,True,446956,446956,0,0.755267,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+20,784897,exhaustive,28,found,True,479057,479057,0,0.818126,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+20,784897,exhaustive,29,found,True,745421,745421,0,1.258525,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+20,784897,exhaustive,30,found,True,48037,48037,0,0.075223,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+20,784897,BSGS,1,found,True,1546,,,0.002798,independent_run,
+20,784897,BSGS,2,found,True,970,,,0.001641,independent_run,
+20,784897,BSGS,3,found,True,1003,,,0.001622,independent_run,
+20,784897,BSGS,4,found,True,1450,,,0.002516,independent_run,
+20,784897,BSGS,5,found,True,1657,,,0.002767,independent_run,
+20,784897,BSGS,6,found,True,1057,,,0.001702,independent_run,
+20,784897,BSGS,7,found,True,1692,,,0.002701,independent_run,
+20,784897,BSGS,8,found,True,1204,,,0.001909,independent_run,
+20,784897,BSGS,9,found,True,1102,,,0.001901,independent_run,
+20,784897,BSGS,10,found,True,1582,,,0.002489,independent_run,
+20,784897,BSGS,11,found,True,1790,,,0.002874,independent_run,
+20,784897,BSGS,12,found,True,1452,,,0.00384,independent_run,
+20,784897,BSGS,13,found,True,1469,,,0.002999,independent_run,
+20,784897,BSGS,14,found,True,1225,,,0.001941,independent_run,
+20,784897,BSGS,15,found,True,1008,,,0.001846,independent_run,
+20,784897,BSGS,16,found,True,1412,,,0.002301,independent_run,
+20,784897,BSGS,17,found,True,991,,,0.001586,independent_run,
+20,784897,BSGS,18,found,True,1726,,,0.004314,independent_run,
+20,784897,BSGS,19,found,True,1232,,,0.003117,independent_run,
+20,784897,BSGS,20,found,True,1450,,,0.002433,independent_run,
+20,784897,BSGS,21,found,True,1087,,,0.001781,independent_run,
+20,784897,BSGS,22,found,True,1063,,,0.00191,independent_run,
+20,784897,BSGS,23,found,True,944,,,0.001652,independent_run,
+20,784897,BSGS,24,found,True,1502,,,0.004268,independent_run,
+20,784897,BSGS,25,found,True,1702,,,0.004182,independent_run,
+20,784897,BSGS,26,found,True,1516,,,0.004021,independent_run,
+20,784897,BSGS,27,found,True,1281,,,0.002542,independent_run,
+20,784897,BSGS,28,found,True,1784,,,0.002996,independent_run,
+20,784897,BSGS,29,found,True,1639,,,0.002673,independent_run,
+20,784897,BSGS,30,found,True,1185,,,0.002127,independent_run,
+20,784897,rho3_Floyd,1,found,True,1250,,,0.002299,independent_run,
+20,784897,rho3_Floyd,2,found,True,5960,,,0.011321,independent_run,
+20,784897,rho3_Floyd,3,found,True,4092,,,0.009201,independent_run,
+20,784897,rho3_Floyd,4,found,True,3006,,,0.010151,independent_run,
+20,784897,rho3_Floyd,5,found,True,2032,,,0.00634,independent_run,
+20,784897,rho3_Floyd,6,found,True,5176,,,0.009925,independent_run,
+20,784897,rho3_Floyd,7,found,True,1126,,,0.002217,independent_run,
+20,784897,rho3_Floyd,8,found,True,4871,,,0.009402,independent_run,
+20,784897,rho3_Floyd,9,found,True,6547,,,0.012742,independent_run,
+20,784897,rho3_Floyd,10,found,True,2566,,,0.006049,independent_run,
+20,784897,rho3_Floyd,11,found,True,3667,,,0.00726,independent_run,
+20,784897,rho3_Floyd,12,found,True,1948,,,0.004076,independent_run,
+20,784897,rho3_Floyd,13,found,True,2483,,,0.005168,independent_run,
+20,784897,rho3_Floyd,14,found,True,2685,,,0.005402,independent_run,
+20,784897,rho3_Floyd,15,found,True,2525,,,0.005085,independent_run,
+20,784897,rho3_Floyd,16,found,True,1796,,,0.003259,independent_run,
+20,784897,rho3_Floyd,17,found,True,2267,,,0.003989,independent_run,
+20,784897,rho3_Floyd,18,found,True,2457,,,0.004653,independent_run,
+20,784897,rho3_Floyd,19,found,True,869,,,0.001438,independent_run,
+20,784897,rho3_Floyd,20,found,True,2199,,,0.004177,independent_run,
+20,784897,rho3_Floyd,21,found,True,6944,,,0.012004,independent_run,
+20,784897,rho3_Floyd,22,found,True,1317,,,0.003538,independent_run,
+20,784897,rho3_Floyd,23,found,True,4954,,,0.008346,independent_run,
+20,784897,rho3_Floyd,24,found,True,2203,,,0.003725,independent_run,
+20,784897,rho3_Floyd,25,found,True,6581,,,0.01141,independent_run,
+20,784897,rho3_Floyd,26,found,True,3511,,,0.006339,independent_run,
+20,784897,rho3_Floyd,27,found,True,4582,,,0.008926,independent_run,
+20,784897,rho3_Floyd,28,found,True,3979,,,0.007116,independent_run,
+20,784897,rho3_Floyd,29,found,True,2012,,,0.003565,independent_run,
+20,784897,rho3_Floyd,30,found,True,4612,,,0.007816,independent_run,
+20,784897,rho20_Brent,1,found,True,5517,4309,1121,0.017007,independent_run,
+20,784897,rho20_Brent,2,found,True,4316,3071,1155,0.008016,independent_run,
+20,784897,rho20_Brent,3,found,True,2450,1176,1183,0.005713,independent_run,
+20,784897,rho20_Brent,4,found,True,4008,2773,1148,0.010384,independent_run,
+20,784897,rho20_Brent,5,found,True,2150,892,1168,0.005854,independent_run,
+20,784897,rho20_Brent,6,found,True,2832,1616,1125,0.004822,independent_run,
+20,784897,rho20_Brent,7,found,True,2893,1683,1123,0.006082,independent_run,
+20,784897,rho20_Brent,8,found,True,2135,875,1172,0.003428,independent_run,
+20,784897,rho20_Brent,9,found,True,2980,1689,1208,0.005247,independent_run,
+20,784897,rho20_Brent,10,found,True,1813,571,1160,0.003026,independent_run,
+20,784897,rho20_Brent,11,found,True,2799,1549,1161,0.004822,independent_run,
+20,784897,rho20_Brent,12,found,True,4622,3388,1144,0.008425,independent_run,
+20,784897,rho20_Brent,13,found,True,2173,947,1148,0.003559,independent_run,
+20,784897,rho20_Brent,14,found,True,2371,1097,1185,0.004007,independent_run,
+20,784897,rho20_Brent,15,found,True,3295,2053,1162,0.005886,independent_run,
+20,784897,rho20_Brent,16,found,True,2283,1056,1136,0.004001,independent_run,
+20,784897,rho20_Brent,17,found,True,2511,1321,1108,0.004554,independent_run,
+20,784897,rho20_Brent,18,found,True,1827,576,1158,0.002997,independent_run,
+20,784897,rho20_Brent,19,found,True,2601,1362,1149,0.004715,independent_run,
+20,784897,rho20_Brent,20,found,True,3048,1813,1156,0.005616,independent_run,
+20,784897,rho20_Brent,21,found,True,2298,1059,1160,0.004189,independent_run,
+20,784897,rho20_Brent,22,found,True,1692,440,1165,0.003279,independent_run,
+20,784897,rho20_Brent,23,found,True,3071,1805,1178,0.008675,independent_run,
+20,784897,rho20_Brent,24,found,True,4313,3072,1160,0.011916,independent_run,
+20,784897,rho20_Brent,25,found,True,2981,1735,1165,0.008219,independent_run,
+20,784897,rho20_Brent,26,found,True,2893,1648,1160,0.008349,independent_run,
+20,784897,rho20_Brent,27,found,True,2527,1338,1101,0.007286,independent_run,
+20,784897,rho20_Brent,28,found,True,2997,1747,1152,0.008645,independent_run,
+20,784897,rho20_Brent,29,found,True,4945,3707,1142,0.021718,independent_run,
+20,784897,rho20_Brent,30,found,True,2440,1188,1165,0.006481,independent_run,
+24,12587563,exhaustive,1,found,True,2117389,2117389,0,3.847841,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+24,12587563,exhaustive,2,found,True,6475695,6475695,0,11.638845,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+24,12587563,exhaustive,3,found,True,8857021,8857021,0,15.732129,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+24,12587563,exhaustive,4,found,True,3489517,3489517,0,6.320175,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+24,12587563,exhaustive,5,found,True,970736,970736,0,1.780422,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+24,12587563,exhaustive,6,found,True,1211319,1211319,0,2.248941,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+24,12587563,exhaustive,7,found,True,6222138,6222138,0,11.208321,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+24,12587563,exhaustive,8,found,True,1608964,1608964,0,2.951947,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+24,12587563,exhaustive,9,found,True,4991726,4991726,0,9.030386,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+24,12587563,exhaustive,10,found,True,8467245,8467245,0,15.023062,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+24,12587563,exhaustive,11,found,True,3214939,3214939,0,5.842623,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+24,12587563,exhaustive,12,found,True,96715,96715,0,0.164404,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+24,12587563,exhaustive,13,found,True,1690432,1690432,0,3.096807,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+24,12587563,exhaustive,14,found,True,1260734,1260734,0,2.338606,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+24,12587563,exhaustive,15,found,True,6537570,6537570,0,11.750767,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+24,12587563,exhaustive,16,found,True,3690460,3690460,0,6.680168,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+24,12587563,exhaustive,17,found,True,9549179,9549179,0,16.952016,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+24,12587563,exhaustive,18,found,True,8162238,8162238,0,14.495537,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+24,12587563,exhaustive,19,found,True,8045006,8045006,0,14.301167,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+24,12587563,exhaustive,20,found,True,10499487,10499487,0,18.630697,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+24,12587563,exhaustive,21,found,True,1248636,1248636,0,2.317802,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+24,12587563,exhaustive,22,found,True,12402681,12402681,0,22.018781,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+24,12587563,exhaustive,23,found,True,8942108,8942108,0,15.883291,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+24,12587563,exhaustive,24,found,True,1001408,1001408,0,1.840401,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+24,12587563,exhaustive,25,found,True,6134354,6134354,0,11.063665,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+24,12587563,exhaustive,26,found,True,692553,692553,0,1.264449,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+24,12587563,exhaustive,27,found,True,9950942,9950942,0,17.671844,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+24,12587563,exhaustive,28,found,True,6353307,6353307,0,11.43413,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+24,12587563,exhaustive,29,found,True,89497,89497,0,0.148719,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+24,12587563,exhaustive,30,found,True,12221373,12221373,0,21.687449,shared_prefix_not_independent,30 independently selected targets; one shared full walk; timestamps correlated
+24,12587563,BSGS,1,found,True,6382,,,0.011438,independent_run,
+24,12587563,BSGS,2,found,True,6650,,,0.011719,independent_run,
+24,12587563,BSGS,3,found,True,5985,,,0.010732,independent_run,
+24,12587563,BSGS,4,found,True,5990,,,0.010943,independent_run,
+24,12587563,BSGS,5,found,True,4173,,,0.007264,independent_run,
+24,12587563,BSGS,6,found,True,4252,,,0.007722,independent_run,
+24,12587563,BSGS,7,found,True,5501,,,0.009658,independent_run,
+24,12587563,BSGS,8,found,True,6022,,,0.01107,independent_run,
+24,12587563,BSGS,9,found,True,5218,,,0.009369,independent_run,
+24,12587563,BSGS,10,found,True,5463,,,0.010402,independent_run,
+24,12587563,BSGS,11,found,True,6422,,,0.011371,independent_run,
+24,12587563,BSGS,12,found,True,4505,,,0.0081,independent_run,
+24,12587563,BSGS,13,found,True,3934,,,0.010785,independent_run,
+24,12587563,BSGS,14,found,True,5256,,,0.010963,independent_run,
+24,12587563,BSGS,15,found,True,5665,,,0.013066,independent_run,
+24,12587563,BSGS,16,found,True,4827,,,0.009196,independent_run,
+24,12587563,BSGS,17,found,True,6478,,,0.011925,independent_run,
+24,12587563,BSGS,18,found,True,5872,,,0.010636,independent_run,
+24,12587563,BSGS,19,found,True,3921,,,0.007421,independent_run,
+24,12587563,BSGS,20,found,True,5605,,,0.010005,independent_run,
+24,12587563,BSGS,21,found,True,5814,,,0.010788,independent_run,
+24,12587563,BSGS,22,found,True,6217,,,0.011023,independent_run,
+24,12587563,BSGS,23,found,True,3632,,,0.006873,independent_run,
+24,12587563,BSGS,24,found,True,4495,,,0.008244,independent_run,
+24,12587563,BSGS,25,found,True,5429,,,0.009929,independent_run,
+24,12587563,BSGS,26,found,True,4902,,,0.008848,independent_run,
+24,12587563,BSGS,27,found,True,4533,,,0.008122,independent_run,
+24,12587563,BSGS,28,found,True,4048,,,0.00737,independent_run,
+24,12587563,BSGS,29,found,True,6369,,,0.010693,independent_run,
+24,12587563,BSGS,30,found,True,6503,,,0.011163,independent_run,
+24,12587563,rho3_Floyd,1,found,True,15949,,,0.033444,independent_run,
+24,12587563,rho3_Floyd,2,found,True,3009,,,0.005363,independent_run,
+24,12587563,rho3_Floyd,3,found,True,16690,,,0.030161,independent_run,
+24,12587563,rho3_Floyd,4,found,True,15268,,,0.028055,independent_run,
+24,12587563,rho3_Floyd,5,found,True,15013,,,0.028699,independent_run,
+24,12587563,rho3_Floyd,6,found,True,19381,,,0.034068,independent_run,
+24,12587563,rho3_Floyd,7,found,True,17582,,,0.0326,independent_run,
+24,12587563,rho3_Floyd,8,found,True,23894,,,0.054062,independent_run,
+24,12587563,rho3_Floyd,9,found,True,16329,,,0.030915,independent_run,
+24,12587563,rho3_Floyd,10,found,True,29338,,,0.055369,independent_run,
+24,12587563,rho3_Floyd,11,found,True,21162,,,0.038215,independent_run,
+24,12587563,rho3_Floyd,12,found,True,17250,,,0.037932,independent_run,
+24,12587563,rho3_Floyd,13,found,True,3408,,,0.006468,independent_run,
+24,12587563,rho3_Floyd,14,found,True,20612,,,0.04187,independent_run,
+24,12587563,rho3_Floyd,15,found,True,20264,,,0.043957,independent_run,
+24,12587563,rho3_Floyd,16,found,True,5986,,,0.01227,independent_run,
+24,12587563,rho3_Floyd,17,found,True,24517,,,0.04478,independent_run,
+24,12587563,rho3_Floyd,18,found,True,12047,,,0.026961,independent_run,
+24,12587563,rho3_Floyd,19,found,True,8708,,,0.015717,independent_run,
+24,12587563,rho3_Floyd,20,found,True,11207,,,0.020066,independent_run,
+24,12587563,rho3_Floyd,21,found,True,14389,,,0.02664,independent_run,
+24,12587563,rho3_Floyd,22,found,True,43862,,,0.081125,independent_run,
+24,12587563,rho3_Floyd,23,found,True,49113,,,0.096402,independent_run,
+24,12587563,rho3_Floyd,24,found,True,11080,,,0.031038,independent_run,
+24,12587563,rho3_Floyd,25,found,True,12287,,,0.023717,independent_run,
+24,12587563,rho3_Floyd,26,found,True,3563,,,0.006695,independent_run,
+24,12587563,rho3_Floyd,27,found,True,11308,,,0.021384,independent_run,
+24,12587563,rho3_Floyd,28,found,True,4910,,,0.009062,independent_run,
+24,12587563,rho3_Floyd,29,found,True,13893,,,0.027023,independent_run,
+24,12587563,rho3_Floyd,30,found,True,28952,,,0.056729,independent_run,
+24,12587563,rho20_Brent,1,found,True,2385,875,1412,0.004613,independent_run,
+24,12587563,rho20_Brent,2,found,True,6640,5122,1411,0.014597,independent_run,
+24,12587563,rho20_Brent,3,found,True,7455,5954,1390,0.015304,independent_run,
+24,12587563,rho20_Brent,4,found,True,16068,14577,1390,0.037508,independent_run,
+24,12587563,rho20_Brent,5,found,True,13969,12459,1416,0.03388,independent_run,
+24,12587563,rho20_Brent,6,found,True,10700,9190,1411,0.033089,independent_run,
+24,12587563,rho20_Brent,7,found,True,4277,2775,1392,0.010837,independent_run,
+24,12587563,rho20_Brent,8,found,True,7770,6271,1397,0.017138,independent_run,
+24,12587563,rho20_Brent,9,found,True,7290,5790,1391,0.015387,independent_run,
+24,12587563,rho20_Brent,10,found,True,7508,6052,1347,0.015217,independent_run,
+24,12587563,rho20_Brent,11,found,True,5229,3747,1385,0.009641,independent_run,
+24,12587563,rho20_Brent,12,found,True,7494,5988,1403,0.015105,independent_run,
+24,12587563,rho20_Brent,13,found,True,8415,6931,1381,0.017008,independent_run,
+24,12587563,rho20_Brent,14,found,True,3356,1842,1403,0.006093,independent_run,
+24,12587563,rho20_Brent,15,found,True,5796,4282,1401,0.011693,independent_run,
+24,12587563,rho20_Brent,16,found,True,11786,10281,1387,0.028417,independent_run,
+24,12587563,rho20_Brent,17,found,True,8012,6495,1417,0.018631,independent_run,
+24,12587563,rho20_Brent,18,found,True,4160,2660,1395,0.007789,independent_run,
+24,12587563,rho20_Brent,19,found,True,6019,4504,1415,0.011319,independent_run,
+24,12587563,rho20_Brent,20,found,True,11566,10071,1394,0.022345,independent_run,
+24,12587563,rho20_Brent,21,found,True,7805,6296,1405,0.014264,independent_run,
+24,12587563,rho20_Brent,22,found,True,10079,8560,1414,0.018828,independent_run,
+24,12587563,rho20_Brent,23,found,True,14301,12757,1436,0.027506,independent_run,
+24,12587563,rho20_Brent,24,found,True,9189,7719,1366,0.017648,independent_run,
+24,12587563,rho20_Brent,25,found,True,5019,3531,1384,0.010116,independent_run,
+24,12587563,rho20_Brent,26,found,True,8318,6801,1410,0.015556,independent_run,
+24,12587563,rho20_Brent,27,found,True,8557,7093,1365,0.020491,independent_run,
+24,12587563,rho20_Brent,28,found,True,8440,6928,1408,0.0185,independent_run,
+24,12587563,rho20_Brent,29,found,True,3258,1767,1383,0.005789,independent_run,
+24,12587563,rho20_Brent,30,found,True,8491,7016,1375,0.015675,independent_run,
+28,201298843,exhaustive,1,not_run,False,,,,,not_run,Resource limit: this is not a failure
+28,201298843,exhaustive,2,not_run,False,,,,,not_run,Resource limit: this is not a failure
+28,201298843,exhaustive,3,not_run,False,,,,,not_run,Resource limit: this is not a failure
+28,201298843,exhaustive,4,not_run,False,,,,,not_run,Resource limit: this is not a failure
+28,201298843,exhaustive,5,not_run,False,,,,,not_run,Resource limit: this is not a failure
+28,201298843,exhaustive,6,not_run,False,,,,,not_run,Resource limit: this is not a failure
+28,201298843,exhaustive,7,not_run,False,,,,,not_run,Resource limit: this is not a failure
+28,201298843,exhaustive,8,not_run,False,,,,,not_run,Resource limit: this is not a failure
+28,201298843,exhaustive,9,not_run,False,,,,,not_run,Resource limit: this is not a failure
+28,201298843,exhaustive,10,not_run,False,,,,,not_run,Resource limit: this is not a failure
+28,201298843,exhaustive,11,not_run,False,,,,,not_run,Resource limit: this is not a failure
+28,201298843,exhaustive,12,not_run,False,,,,,not_run,Resource limit: this is not a failure
+28,201298843,exhaustive,13,not_run,False,,,,,not_run,Resource limit: this is not a failure
+28,201298843,exhaustive,14,not_run,False,,,,,not_run,Resource limit: this is not a failure
+28,201298843,exhaustive,15,not_run,False,,,,,not_run,Resource limit: this is not a failure
+28,201298843,exhaustive,16,not_run,False,,,,,not_run,Resource limit: this is not a failure
+28,201298843,exhaustive,17,not_run,False,,,,,not_run,Resource limit: this is not a failure
+28,201298843,exhaustive,18,not_run,False,,,,,not_run,Resource limit: this is not a failure
+28,201298843,exhaustive,19,not_run,False,,,,,not_run,Resource limit: this is not a failure
+28,201298843,exhaustive,20,not_run,False,,,,,not_run,Resource limit: this is not a failure
+28,201298843,exhaustive,21,not_run,False,,,,,not_run,Resource limit: this is not a failure
+28,201298843,exhaustive,22,not_run,False,,,,,not_run,Resource limit: this is not a failure
+28,201298843,exhaustive,23,not_run,False,,,,,not_run,Resource limit: this is not a failure
+28,201298843,exhaustive,24,not_run,False,,,,,not_run,Resource limit: this is not a failure
+28,201298843,exhaustive,25,not_run,False,,,,,not_run,Resource limit: this is not a failure
+28,201298843,exhaustive,26,not_run,False,,,,,not_run,Resource limit: this is not a failure
+28,201298843,exhaustive,27,not_run,False,,,,,not_run,Resource limit: this is not a failure
+28,201298843,exhaustive,28,not_run,False,,,,,not_run,Resource limit: this is not a failure
+28,201298843,exhaustive,29,not_run,False,,,,,not_run,Resource limit: this is not a failure
+28,201298843,exhaustive,30,not_run,False,,,,,not_run,Resource limit: this is not a failure
+28,201298843,BSGS,1,found,True,18645,,,0.036188,independent_run,
+28,201298843,BSGS,2,found,True,20073,,,0.036776,independent_run,
+28,201298843,BSGS,3,found,True,26342,,,0.05592,independent_run,
+28,201298843,BSGS,4,found,True,23817,,,0.045871,independent_run,
+28,201298843,BSGS,5,found,True,26326,,,0.048786,independent_run,
+28,201298843,BSGS,6,found,True,21013,,,0.040179,independent_run,
+28,201298843,BSGS,7,found,True,23587,,,0.05671,independent_run,
+28,201298843,BSGS,8,found,True,28426,,,0.05709,independent_run,
+28,201298843,BSGS,9,found,True,28302,,,0.052702,independent_run,
+28,201298843,BSGS,10,found,True,17004,,,0.032549,independent_run,
+28,201298843,BSGS,11,found,True,23627,,,0.047909,independent_run,
+28,201298843,BSGS,12,found,True,22130,,,0.040848,independent_run,
+28,201298843,BSGS,13,found,True,28062,,,0.050133,independent_run,
+28,201298843,BSGS,14,found,True,19317,,,0.035624,independent_run,
+28,201298843,BSGS,15,found,True,15844,,,0.034007,independent_run,
+28,201298843,BSGS,16,found,True,17709,,,0.033118,independent_run,
+28,201298843,BSGS,17,found,True,21083,,,0.039163,independent_run,
+28,201298843,BSGS,18,found,True,16000,,,0.032528,independent_run,
+28,201298843,BSGS,19,found,True,27480,,,0.049242,independent_run,
+28,201298843,BSGS,20,found,True,20337,,,0.04259,independent_run,
+28,201298843,BSGS,21,found,True,20349,,,0.03774,independent_run,
+28,201298843,BSGS,22,found,True,20002,,,0.037059,independent_run,
+28,201298843,BSGS,23,found,True,23475,,,0.043948,independent_run,
+28,201298843,BSGS,24,found,True,21934,,,0.049944,independent_run,
+28,201298843,BSGS,25,found,True,15134,,,0.027678,independent_run,
+28,201298843,BSGS,26,found,True,22851,,,0.041916,independent_run,
+28,201298843,BSGS,27,found,True,19323,,,0.037207,independent_run,
+28,201298843,BSGS,28,found,True,25692,,,0.046913,independent_run,
+28,201298843,BSGS,29,found,True,18658,,,0.040273,independent_run,
+28,201298843,BSGS,30,found,True,25948,,,0.05146,independent_run,
+28,201298843,rho3_Floyd,1,found,True,38675,,,0.084088,independent_run,
+28,201298843,rho3_Floyd,2,found,True,27284,,,0.063779,independent_run,
+28,201298843,rho3_Floyd,3,found,True,79241,,,0.172145,independent_run,
+28,201298843,rho3_Floyd,4,found,True,7806,,,0.01529,independent_run,
+28,201298843,rho3_Floyd,5,found,True,119325,,,0.258469,independent_run,
+28,201298843,rho3_Floyd,6,found,True,26281,,,0.056051,independent_run,
+28,201298843,rho3_Floyd,7,found,True,49223,,,0.091563,independent_run,
+28,201298843,rho3_Floyd,8,found,True,37349,,,0.069999,independent_run,
+28,201298843,rho3_Floyd,9,found,True,133442,,,0.27541,independent_run,
+28,201298843,rho3_Floyd,10,found,True,47808,,,0.102932,independent_run,
+28,201298843,rho3_Floyd,11,found,True,33834,,,0.068847,independent_run,
+28,201298843,rho3_Floyd,12,found,True,68592,,,0.165306,independent_run,
+28,201298843,rho3_Floyd,13,found,True,35147,,,0.073008,independent_run,
+28,201298843,rho3_Floyd,14,found,True,82985,,,0.171782,independent_run,
+28,201298843,rho3_Floyd,15,found,True,27591,,,0.061369,independent_run,
+28,201298843,rho3_Floyd,16,found,True,86113,,,0.185453,independent_run,
+28,201298843,rho3_Floyd,17,found,True,43775,,,0.094734,independent_run,
+28,201298843,rho3_Floyd,18,found,True,66536,,,0.148786,independent_run,
+28,201298843,rho3_Floyd,19,found,True,5623,,,0.012157,independent_run,
+28,201298843,rho3_Floyd,20,found,True,70179,,,0.152231,independent_run,
+28,201298843,rho3_Floyd,21,found,True,79263,,,0.156079,independent_run,
+28,201298843,rho3_Floyd,22,found,True,41392,,,0.081398,independent_run,
+28,201298843,rho3_Floyd,23,found,True,18496,,,0.052675,independent_run,
+28,201298843,rho3_Floyd,24,found,True,33951,,,0.071217,independent_run,
+28,201298843,rho3_Floyd,25,found,True,106194,,,0.220774,independent_run,
+28,201298843,rho3_Floyd,26,found,True,11940,,,0.025188,independent_run,
+28,201298843,rho3_Floyd,27,found,True,43562,,,0.10018,independent_run,
+28,201298843,rho3_Floyd,28,found,True,84188,,,0.165209,independent_run,
+28,201298843,rho3_Floyd,29,found,True,62162,,,0.125973,independent_run,
+28,201298843,rho3_Floyd,30,found,True,13404,,,0.026235,independent_run,
+28,201298843,rho20_Brent,1,found,True,29420,27650,1642,0.06254,independent_run,
+28,201298843,rho20_Brent,2,found,True,17933,16197,1614,0.043438,independent_run,
+28,201298843,rho20_Brent,3,found,True,42419,40637,1656,0.116379,independent_run,
+28,201298843,rho20_Brent,4,found,True,30245,28483,1638,0.083085,independent_run,
+28,201298843,rho20_Brent,5,found,True,24469,22738,1625,0.061753,independent_run,
+28,201298843,rho20_Brent,6,found,True,102185,100417,1643,0.233197,independent_run,
+28,201298843,rho20_Brent,7,found,True,36571,34824,1634,0.13,independent_run,
+28,201298843,rho20_Brent,8,found,True,19087,17354,1618,0.063297,independent_run,
+28,201298843,rho20_Brent,9,found,True,8043,6296,1626,0.027644,independent_run,
+28,201298843,rho20_Brent,10,found,True,36542,34818,1602,0.087463,independent_run,
+28,201298843,rho20_Brent,11,found,True,38888,37141,1620,0.08848,independent_run,
+28,201298843,rho20_Brent,12,found,True,38116,36367,1620,0.096537,independent_run,
+28,201298843,rho20_Brent,13,found,True,34292,32538,1626,0.080497,independent_run,
+28,201298843,rho20_Brent,14,found,True,27159,25422,1618,0.065256,independent_run,
+28,201298843,rho20_Brent,15,found,True,26728,24948,1661,0.058696,independent_run,
+28,201298843,rho20_Brent,16,found,True,26867,25143,1605,0.059516,independent_run,
+28,201298843,rho20_Brent,17,found,True,7708,5960,1628,0.017171,independent_run,
+28,201298843,rho20_Brent,18,found,True,51033,49260,1642,0.120202,independent_run,
+28,201298843,rho20_Brent,19,found,True,15828,14074,1636,0.031619,independent_run,
+28,201298843,rho20_Brent,20,found,True,31418,29679,1609,0.068566,independent_run,
+28,201298843,rho20_Brent,21,found,True,42870,41122,1627,0.087618,independent_run,
+28,201298843,rho20_Brent,22,found,True,19588,17866,1596,0.043209,independent_run,
+28,201298843,rho20_Brent,23,found,True,16485,14723,1634,0.03992,independent_run,
+28,201298843,rho20_Brent,24,found,True,55814,54121,1575,0.124403,independent_run,
+28,201298843,rho20_Brent,25,found,True,24976,23192,1659,0.063501,independent_run,
+28,201298843,rho20_Brent,26,found,True,110622,108849,1650,0.267166,independent_run,
+28,201298843,rho20_Brent,27,found,True,13973,12235,1621,0.034734,independent_run,
+28,201298843,rho20_Brent,28,found,True,24782,23009,1650,0.079525,independent_run,
+28,201298843,rho20_Brent,29,found,True,26353,24618,1619,0.053106,independent_run,
+28,201298843,rho20_Brent,30,found,True,4453,2714,1609,0.008657,independent_run,
+32,3221180089,exhaustive,1,not_run,False,,,,,not_run,Resource limit: this is not a failure
+32,3221180089,exhaustive,2,not_run,False,,,,,not_run,Resource limit: this is not a failure
+32,3221180089,exhaustive,3,not_run,False,,,,,not_run,Resource limit: this is not a failure
+32,3221180089,exhaustive,4,not_run,False,,,,,not_run,Resource limit: this is not a failure
+32,3221180089,exhaustive,5,not_run,False,,,,,not_run,Resource limit: this is not a failure
+32,3221180089,exhaustive,6,not_run,False,,,,,not_run,Resource limit: this is not a failure
+32,3221180089,exhaustive,7,not_run,False,,,,,not_run,Resource limit: this is not a failure
+32,3221180089,exhaustive,8,not_run,False,,,,,not_run,Resource limit: this is not a failure
+32,3221180089,exhaustive,9,not_run,False,,,,,not_run,Resource limit: this is not a failure
+32,3221180089,exhaustive,10,not_run,False,,,,,not_run,Resource limit: this is not a failure
+32,3221180089,exhaustive,11,not_run,False,,,,,not_run,Resource limit: this is not a failure
+32,3221180089,exhaustive,12,not_run,False,,,,,not_run,Resource limit: this is not a failure
+32,3221180089,exhaustive,13,not_run,False,,,,,not_run,Resource limit: this is not a failure
+32,3221180089,exhaustive,14,not_run,False,,,,,not_run,Resource limit: this is not a failure
+32,3221180089,exhaustive,15,not_run,False,,,,,not_run,Resource limit: this is not a failure
+32,3221180089,exhaustive,16,not_run,False,,,,,not_run,Resource limit: this is not a failure
+32,3221180089,exhaustive,17,not_run,False,,,,,not_run,Resource limit: this is not a failure
+32,3221180089,exhaustive,18,not_run,False,,,,,not_run,Resource limit: this is not a failure
+32,3221180089,exhaustive,19,not_run,False,,,,,not_run,Resource limit: this is not a failure
+32,3221180089,exhaustive,20,not_run,False,,,,,not_run,Resource limit: this is not a failure
+32,3221180089,exhaustive,21,not_run,False,,,,,not_run,Resource limit: this is not a failure
+32,3221180089,exhaustive,22,not_run,False,,,,,not_run,Resource limit: this is not a failure
+32,3221180089,exhaustive,23,not_run,False,,,,,not_run,Resource limit: this is not a failure
+32,3221180089,exhaustive,24,not_run,False,,,,,not_run,Resource limit: this is not a failure
+32,3221180089,exhaustive,25,not_run,False,,,,,not_run,Resource limit: this is not a failure
+32,3221180089,exhaustive,26,not_run,False,,,,,not_run,Resource limit: this is not a failure
+32,3221180089,exhaustive,27,not_run,False,,,,,not_run,Resource limit: this is not a failure
+32,3221180089,exhaustive,28,not_run,False,,,,,not_run,Resource limit: this is not a failure
+32,3221180089,exhaustive,29,not_run,False,,,,,not_run,Resource limit: this is not a failure
+32,3221180089,exhaustive,30,not_run,False,,,,,not_run,Resource limit: this is not a failure
+32,3221180089,BSGS,1,found,True,91363,,,0.21709,independent_run,
+32,3221180089,BSGS,2,found,True,106493,,,0.269213,independent_run,
+32,3221180089,BSGS,3,found,True,105576,,,0.274872,independent_run,
+32,3221180089,BSGS,4,found,True,87541,,,0.201505,independent_run,
+32,3221180089,BSGS,5,found,True,65985,,,0.163941,independent_run,
+32,3221180089,BSGS,6,found,True,90829,,,0.234422,independent_run,
+32,3221180089,BSGS,7,found,True,111539,,,0.259638,independent_run,
+32,3221180089,BSGS,8,found,True,92611,,,0.21327,independent_run,
+32,3221180089,BSGS,9,found,True,59908,,,0.141805,independent_run,
+32,3221180089,BSGS,10,found,True,81459,,,0.203758,independent_run,
+32,3221180089,BSGS,11,found,True,62902,,,0.161219,independent_run,
+32,3221180089,BSGS,12,found,True,91404,,,0.203744,independent_run,
+32,3221180089,BSGS,13,found,True,64799,,,0.172788,independent_run,
+32,3221180089,BSGS,14,found,True,97020,,,0.214704,independent_run,
+32,3221180089,BSGS,15,found,True,61616,,,0.140736,independent_run,
+32,3221180089,BSGS,16,found,True,99496,,,0.247567,independent_run,
+32,3221180089,BSGS,17,found,True,81345,,,0.194012,independent_run,
+32,3221180089,BSGS,18,found,True,70802,,,0.193156,independent_run,
+32,3221180089,BSGS,19,found,True,66190,,,0.161783,independent_run,
+32,3221180089,BSGS,20,found,True,94901,,,0.245707,independent_run,
+32,3221180089,BSGS,21,found,True,80868,,,0.34764,independent_run,
+32,3221180089,BSGS,22,found,True,75632,,,0.267381,independent_run,
+32,3221180089,BSGS,23,found,True,88326,,,0.244928,independent_run,
+32,3221180089,BSGS,24,found,True,82189,,,0.224287,independent_run,
+32,3221180089,BSGS,25,found,True,93839,,,0.301418,independent_run,
+32,3221180089,BSGS,26,found,True,95673,,,0.260078,independent_run,
+32,3221180089,BSGS,27,found,True,95962,,,0.243809,independent_run,
+32,3221180089,BSGS,28,found,True,95948,,,0.290772,independent_run,
+32,3221180089,BSGS,29,found,True,59360,,,0.170872,independent_run,
+32,3221180089,BSGS,30,found,True,65705,,,0.205288,independent_run,
+32,3221180089,rho3_Floyd,1,found,True,62197,,,0.184685,independent_run,
+32,3221180089,rho3_Floyd,2,found,True,192976,,,0.573621,independent_run,
+32,3221180089,rho3_Floyd,3,found,True,374839,,,1.113983,independent_run,
+32,3221180089,rho3_Floyd,4,found,True,385730,,,1.18391,independent_run,
+32,3221180089,rho3_Floyd,5,found,True,44138,,,0.121509,independent_run,
+32,3221180089,rho3_Floyd,6,found,True,148058,,,0.417704,independent_run,
+32,3221180089,rho3_Floyd,7,found,True,220717,,,0.748096,independent_run,
+32,3221180089,rho3_Floyd,8,found,True,235599,,,0.63564,independent_run,
+32,3221180089,rho3_Floyd,9,found,True,288208,,,1.027732,independent_run,
+32,3221180089,rho3_Floyd,10,found,True,139749,,,0.620127,independent_run,
+32,3221180089,rho3_Floyd,11,found,True,223490,,,0.948952,independent_run,
+32,3221180089,rho3_Floyd,12,found,True,236991,,,0.877888,independent_run,
+32,3221180089,rho3_Floyd,13,found,True,117423,,,0.455308,independent_run,
+32,3221180089,rho3_Floyd,14,found,True,220231,,,0.985095,independent_run,
+32,3221180089,rho3_Floyd,15,found,True,564950,,,2.570895,independent_run,
+32,3221180089,rho3_Floyd,16,found,True,104781,,,0.474394,independent_run,
+32,3221180089,rho3_Floyd,17,found,True,402544,,,1.735704,independent_run,
+32,3221180089,rho3_Floyd,18,found,True,456416,,,2.251853,independent_run,
+32,3221180089,rho3_Floyd,19,found,True,442679,,,2.143571,independent_run,
+32,3221180089,rho3_Floyd,20,found,True,180967,,,0.955873,independent_run,
+32,3221180089,rho3_Floyd,21,found,True,207586,,,1.163493,independent_run,
+32,3221180089,rho3_Floyd,22,found,True,283847,,,1.477176,independent_run,
+32,3221180089,rho3_Floyd,23,found,True,298545,,,1.189222,independent_run,
+32,3221180089,rho3_Floyd,24,found,True,279733,,,1.178451,independent_run,
+32,3221180089,rho3_Floyd,25,found,True,256680,,,0.712707,independent_run,
+32,3221180089,rho3_Floyd,26,found,True,558072,,,1.441399,independent_run,
+32,3221180089,rho3_Floyd,27,found,True,276536,,,0.693007,independent_run,
+32,3221180089,rho3_Floyd,28,found,True,338956,,,0.815921,independent_run,
+32,3221180089,rho3_Floyd,29,found,True,230532,,,0.548742,independent_run,
+32,3221180089,rho3_Floyd,30,found,True,137904,,,0.320349,independent_run,
+32,3221180089,rho20_Brent,1,found,True,64537,62529,1875,0.177005,independent_run,
+32,3221180089,rho20_Brent,2,found,True,67592,65568,1886,0.162996,independent_run,
+32,3221180089,rho20_Brent,3,found,True,117829,115801,1891,0.291124,independent_run,
+32,3221180089,rho20_Brent,4,found,True,93103,91090,1872,0.231278,independent_run,
+32,3221180089,rho20_Brent,5,found,True,149887,147891,1855,0.396515,independent_run,
+32,3221180089,rho20_Brent,6,found,True,40340,38297,1890,0.109809,independent_run,
+32,3221180089,rho20_Brent,7,found,True,101309,99308,1864,0.270706,independent_run,
+32,3221180089,rho20_Brent,8,found,True,213059,211047,1867,0.534775,independent_run,
+32,3221180089,rho20_Brent,9,found,True,66765,64748,1878,0.189296,independent_run,
+32,3221180089,rho20_Brent,10,found,True,11474,9468,1865,0.026949,independent_run,
+32,3221180089,rho20_Brent,11,found,True,120378,118387,1861,0.31891,independent_run,
+32,3221180089,rho20_Brent,12,found,True,229546,227543,1863,0.5591,independent_run,
+32,3221180089,rho20_Brent,13,found,True,39979,37978,1856,0.099677,independent_run,
+32,3221180089,rho20_Brent,14,found,True,58122,56164,1816,0.142215,independent_run,
+32,3221180089,rho20_Brent,15,found,True,67027,64999,1890,0.168016,independent_run,
+32,3221180089,rho20_Brent,16,found,True,68661,66696,1827,0.190588,independent_run,
+32,3221180089,rho20_Brent,17,found,True,177439,175427,1865,0.486372,independent_run,
+32,3221180089,rho20_Brent,18,found,True,88442,86424,1872,0.233808,independent_run,
+32,3221180089,rho20_Brent,19,found,True,85590,83581,1874,0.261848,independent_run,
+32,3221180089,rho20_Brent,20,found,True,104783,102775,1873,0.274535,independent_run,
+32,3221180089,rho20_Brent,21,found,True,202048,200030,1882,0.539299,independent_run,
+32,3221180089,rho20_Brent,22,found,True,38069,36082,1856,0.092298,independent_run,
+32,3221180089,rho20_Brent,23,found,True,138317,136353,1829,0.359558,independent_run,
+32,3221180089,rho20_Brent,24,found,True,161042,159009,1891,0.401408,independent_run,
+32,3221180089,rho20_Brent,25,found,True,105012,103020,1858,0.258527,independent_run,
+32,3221180089,rho20_Brent,26,found,True,227278,225269,1871,0.564928,independent_run,
+32,3221180089,rho20_Brent,27,found,True,32527,30490,1898,0.084043,independent_run,
+32,3221180089,rho20_Brent,28,found,True,108380,106366,1877,0.287232,independent_run,
+32,3221180089,rho20_Brent,29,found,True,112751,110733,1876,0.33749,independent_run,
+32,3221180089,rho20_Brent,30,found,True,75369,73359,1867,0.187714,independent_run,
+36,51539513437,exhaustive,1,not_run,False,,,,,not_run,Resource limit: this is not a failure
+36,51539513437,exhaustive,2,not_run,False,,,,,not_run,Resource limit: this is not a failure
+36,51539513437,exhaustive,3,not_run,False,,,,,not_run,Resource limit: this is not a failure
+36,51539513437,exhaustive,4,not_run,False,,,,,not_run,Resource limit: this is not a failure
+36,51539513437,exhaustive,5,not_run,False,,,,,not_run,Resource limit: this is not a failure
+36,51539513437,exhaustive,6,not_run,False,,,,,not_run,Resource limit: this is not a failure
+36,51539513437,exhaustive,7,not_run,False,,,,,not_run,Resource limit: this is not a failure
+36,51539513437,exhaustive,8,not_run,False,,,,,not_run,Resource limit: this is not a failure
+36,51539513437,exhaustive,9,not_run,False,,,,,not_run,Resource limit: this is not a failure
+36,51539513437,exhaustive,10,not_run,False,,,,,not_run,Resource limit: this is not a failure
+36,51539513437,exhaustive,11,not_run,False,,,,,not_run,Resource limit: this is not a failure
+36,51539513437,exhaustive,12,not_run,False,,,,,not_run,Resource limit: this is not a failure
+36,51539513437,exhaustive,13,not_run,False,,,,,not_run,Resource limit: this is not a failure
+36,51539513437,exhaustive,14,not_run,False,,,,,not_run,Resource limit: this is not a failure
+36,51539513437,exhaustive,15,not_run,False,,,,,not_run,Resource limit: this is not a failure
+36,51539513437,exhaustive,16,not_run,False,,,,,not_run,Resource limit: this is not a failure
+36,51539513437,exhaustive,17,not_run,False,,,,,not_run,Resource limit: this is not a failure
+36,51539513437,exhaustive,18,not_run,False,,,,,not_run,Resource limit: this is not a failure
+36,51539513437,exhaustive,19,not_run,False,,,,,not_run,Resource limit: this is not a failure
+36,51539513437,exhaustive,20,not_run,False,,,,,not_run,Resource limit: this is not a failure
+36,51539513437,exhaustive,21,not_run,False,,,,,not_run,Resource limit: this is not a failure
+36,51539513437,exhaustive,22,not_run,False,,,,,not_run,Resource limit: this is not a failure
+36,51539513437,exhaustive,23,not_run,False,,,,,not_run,Resource limit: this is not a failure
+36,51539513437,exhaustive,24,not_run,False,,,,,not_run,Resource limit: this is not a failure
+36,51539513437,exhaustive,25,not_run,False,,,,,not_run,Resource limit: this is not a failure
+36,51539513437,exhaustive,26,not_run,False,,,,,not_run,Resource limit: this is not a failure
+36,51539513437,exhaustive,27,not_run,False,,,,,not_run,Resource limit: this is not a failure
+36,51539513437,exhaustive,28,not_run,False,,,,,not_run,Resource limit: this is not a failure
+36,51539513437,exhaustive,29,not_run,False,,,,,not_run,Resource limit: this is not a failure
+36,51539513437,exhaustive,30,not_run,False,,,,,not_run,Resource limit: this is not a failure
+36,51539513437,BSGS,1,not_run,False,,,,,not_run,Resource limit: this is not a failure
+36,51539513437,BSGS,2,not_run,False,,,,,not_run,Resource limit: this is not a failure
+36,51539513437,BSGS,3,not_run,False,,,,,not_run,Resource limit: this is not a failure
+36,51539513437,BSGS,4,not_run,False,,,,,not_run,Resource limit: this is not a failure
+36,51539513437,BSGS,5,not_run,False,,,,,not_run,Resource limit: this is not a failure
+36,51539513437,BSGS,6,not_run,False,,,,,not_run,Resource limit: this is not a failure
+36,51539513437,BSGS,7,not_run,False,,,,,not_run,Resource limit: this is not a failure
+36,51539513437,BSGS,8,not_run,False,,,,,not_run,Resource limit: this is not a failure
+36,51539513437,BSGS,9,not_run,False,,,,,not_run,Resource limit: this is not a failure
+36,51539513437,BSGS,10,not_run,False,,,,,not_run,Resource limit: this is not a failure
+36,51539513437,BSGS,11,not_run,False,,,,,not_run,Resource limit: this is not a failure
+36,51539513437,BSGS,12,not_run,False,,,,,not_run,Resource limit: this is not a failure
+36,51539513437,BSGS,13,not_run,False,,,,,not_run,Resource limit: this is not a failure
+36,51539513437,BSGS,14,not_run,False,,,,,not_run,Resource limit: this is not a failure
+36,51539513437,BSGS,15,not_run,False,,,,,not_run,Resource limit: this is not a failure
+36,51539513437,BSGS,16,not_run,False,,,,,not_run,Resource limit: this is not a failure
+36,51539513437,BSGS,17,not_run,False,,,,,not_run,Resource limit: this is not a failure
+36,51539513437,BSGS,18,not_run,False,,,,,not_run,Resource limit: this is not a failure
+36,51539513437,BSGS,19,not_run,False,,,,,not_run,Resource limit: this is not a failure
+36,51539513437,BSGS,20,not_run,False,,,,,not_run,Resource limit: this is not a failure
+36,51539513437,BSGS,21,not_run,False,,,,,not_run,Resource limit: this is not a failure
+36,51539513437,BSGS,22,not_run,False,,,,,not_run,Resource limit: this is not a failure
+36,51539513437,BSGS,23,not_run,False,,,,,not_run,Resource limit: this is not a failure
+36,51539513437,BSGS,24,not_run,False,,,,,not_run,Resource limit: this is not a failure
+36,51539513437,BSGS,25,not_run,False,,,,,not_run,Resource limit: this is not a failure
+36,51539513437,BSGS,26,not_run,False,,,,,not_run,Resource limit: this is not a failure
+36,51539513437,BSGS,27,not_run,False,,,,,not_run,Resource limit: this is not a failure
+36,51539513437,BSGS,28,not_run,False,,,,,not_run,Resource limit: this is not a failure
+36,51539513437,BSGS,29,not_run,False,,,,,not_run,Resource limit: this is not a failure
+36,51539513437,BSGS,30,not_run,False,,,,,not_run,Resource limit: this is not a failure
+36,51539513437,rho3_Floyd,1,capped,False,160001,,,0.463129,independent_run,
+36,51539513437,rho3_Floyd,2,capped,False,160002,,,0.39451,independent_run,
+36,51539513437,rho3_Floyd,3,capped,False,160000,,,0.383497,independent_run,
+36,51539513437,rho3_Floyd,4,capped,False,160000,,,0.393799,independent_run,
+36,51539513437,rho3_Floyd,5,capped,False,160001,,,0.403264,independent_run,
+36,51539513437,rho3_Floyd,6,capped,False,160000,,,0.393116,independent_run,
+36,51539513437,rho3_Floyd,7,capped,False,160002,,,0.404781,independent_run,
+36,51539513437,rho3_Floyd,8,capped,False,160000,,,0.416127,independent_run,
+36,51539513437,rho3_Floyd,9,capped,False,160000,,,0.414207,independent_run,
+36,51539513437,rho3_Floyd,10,capped,False,160001,,,0.406953,independent_run,
+36,51539513437,rho3_Floyd,11,capped,False,160002,,,0.40478,independent_run,
+36,51539513437,rho3_Floyd,12,capped,False,160002,,,0.427449,independent_run,
+36,51539513437,rho3_Floyd,13,capped,False,160002,,,0.410473,independent_run,
+36,51539513437,rho3_Floyd,14,capped,False,160001,,,0.422456,independent_run,
+36,51539513437,rho3_Floyd,15,found,True,107090,,,0.282324,independent_run,
+36,51539513437,rho3_Floyd,16,capped,False,160001,,,0.402988,independent_run,
+36,51539513437,rho3_Floyd,17,capped,False,160001,,,0.392364,independent_run,
+36,51539513437,rho3_Floyd,18,capped,False,160001,,,0.384963,independent_run,
+36,51539513437,rho3_Floyd,19,capped,False,160002,,,0.409801,independent_run,
+36,51539513437,rho3_Floyd,20,capped,False,160000,,,0.413941,independent_run,
+36,51539513437,rho3_Floyd,21,capped,False,160001,,,0.413296,independent_run,
+36,51539513437,rho3_Floyd,22,capped,False,160001,,,0.407447,independent_run,
+36,51539513437,rho3_Floyd,23,capped,False,160000,,,0.385439,independent_run,
+36,51539513437,rho3_Floyd,24,capped,False,160002,,,0.39759,independent_run,
+36,51539513437,rho3_Floyd,25,capped,False,160001,,,0.428662,independent_run,
+36,51539513437,rho3_Floyd,26,capped,False,160002,,,0.414439,independent_run,
+36,51539513437,rho3_Floyd,27,capped,False,160002,,,0.437264,independent_run,
+36,51539513437,rho3_Floyd,28,capped,False,160001,,,0.404727,independent_run,
+36,51539513437,rho3_Floyd,29,capped,False,160001,,,0.410403,independent_run,
+36,51539513437,rho3_Floyd,30,capped,False,160000,,,0.396077,independent_run,
+36,51539513437,rho20_Brent,1,capped,False,160000,157795,2100,0.411656,independent_run,
+36,51539513437,rho20_Brent,2,found,True,132060,129768,2126,0.34238,independent_run,
+36,51539513437,rho20_Brent,3,found,True,54349,52071,2120,0.135219,independent_run,
+36,51539513437,rho20_Brent,4,capped,False,160000,157765,2134,0.428134,independent_run,
+36,51539513437,rho20_Brent,5,capped,False,160000,157816,2088,0.440766,independent_run,
+36,51539513437,rho20_Brent,6,capped,False,160000,157777,2112,0.4295,independent_run,
+36,51539513437,rho20_Brent,7,capped,False,160000,157779,2119,0.460359,independent_run,
+36,51539513437,rho20_Brent,8,capped,False,160000,157773,2130,0.459206,independent_run,
+36,51539513437,rho20_Brent,9,capped,False,160000,157754,2138,0.427294,independent_run,
+36,51539513437,rho20_Brent,10,capped,False,160000,157773,2124,0.474469,independent_run,
+36,51539513437,rho20_Brent,11,capped,False,160000,157777,2122,0.433124,independent_run,
+36,51539513437,rho20_Brent,12,capped,False,160000,157777,2118,0.427741,independent_run,
+36,51539513437,rho20_Brent,13,capped,False,160000,157749,2141,0.456777,independent_run,
+36,51539513437,rho20_Brent,14,capped,False,160000,157819,2078,0.438133,independent_run,
+36,51539513437,rho20_Brent,15,capped,False,160000,157786,2109,0.454368,independent_run,
+36,51539513437,rho20_Brent,16,capped,False,160000,157766,2129,0.428447,independent_run,
+36,51539513437,rho20_Brent,17,capped,False,160000,157769,2123,0.423581,independent_run,
+36,51539513437,rho20_Brent,18,capped,False,160000,157770,2120,0.463428,independent_run,
+36,51539513437,rho20_Brent,19,capped,False,160000,157772,2131,0.469858,independent_run,
+36,51539513437,rho20_Brent,20,capped,False,160000,157787,2098,0.473518,independent_run,
+36,51539513437,rho20_Brent,21,capped,False,160000,157769,2121,0.439152,independent_run,
+36,51539513437,rho20_Brent,22,capped,False,160000,157798,2094,0.429521,independent_run,
+36,51539513437,rho20_Brent,23,capped,False,160000,157790,2100,0.427598,independent_run,
+36,51539513437,rho20_Brent,24,capped,False,160000,157784,2105,0.440393,independent_run,
+36,51539513437,rho20_Brent,25,capped,False,160000,157794,2104,0.438936,independent_run,
+36,51539513437,rho20_Brent,26,capped,False,160000,157803,2088,0.436752,independent_run,
+36,51539513437,rho20_Brent,27,capped,False,160000,157792,2106,0.456652,independent_run,
+36,51539513437,rho20_Brent,28,capped,False,160000,157797,2095,0.438536,independent_run,
+36,51539513437,rho20_Brent,29,capped,False,160000,157805,2088,0.436046,independent_run,
+36,51539513437,rho20_Brent,30,capped,False,160000,157810,2087,0.417163,independent_run,
+40,824635470601,exhaustive,1,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,exhaustive,2,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,exhaustive,3,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,exhaustive,4,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,exhaustive,5,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,exhaustive,6,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,exhaustive,7,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,exhaustive,8,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,exhaustive,9,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,exhaustive,10,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,exhaustive,11,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,exhaustive,12,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,exhaustive,13,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,exhaustive,14,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,exhaustive,15,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,exhaustive,16,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,exhaustive,17,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,exhaustive,18,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,exhaustive,19,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,exhaustive,20,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,exhaustive,21,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,exhaustive,22,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,exhaustive,23,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,exhaustive,24,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,exhaustive,25,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,exhaustive,26,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,exhaustive,27,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,exhaustive,28,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,exhaustive,29,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,exhaustive,30,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,BSGS,1,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,BSGS,2,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,BSGS,3,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,BSGS,4,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,BSGS,5,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,BSGS,6,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,BSGS,7,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,BSGS,8,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,BSGS,9,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,BSGS,10,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,BSGS,11,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,BSGS,12,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,BSGS,13,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,BSGS,14,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,BSGS,15,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,BSGS,16,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,BSGS,17,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,BSGS,18,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,BSGS,19,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,BSGS,20,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,BSGS,21,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,BSGS,22,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,BSGS,23,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,BSGS,24,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,BSGS,25,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,BSGS,26,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,BSGS,27,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,BSGS,28,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,BSGS,29,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,BSGS,30,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,rho3_Floyd,1,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,rho3_Floyd,2,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,rho3_Floyd,3,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,rho3_Floyd,4,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,rho3_Floyd,5,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,rho3_Floyd,6,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,rho3_Floyd,7,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,rho3_Floyd,8,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,rho3_Floyd,9,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,rho3_Floyd,10,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,rho3_Floyd,11,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,rho3_Floyd,12,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,rho3_Floyd,13,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,rho3_Floyd,14,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,rho3_Floyd,15,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,rho3_Floyd,16,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,rho3_Floyd,17,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,rho3_Floyd,18,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,rho3_Floyd,19,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,rho3_Floyd,20,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,rho3_Floyd,21,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,rho3_Floyd,22,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,rho3_Floyd,23,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,rho3_Floyd,24,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,rho3_Floyd,25,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,rho3_Floyd,26,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,rho3_Floyd,27,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,rho3_Floyd,28,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,rho3_Floyd,29,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,rho3_Floyd,30,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,rho20_Brent,1,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,rho20_Brent,2,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,rho20_Brent,3,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,rho20_Brent,4,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,rho20_Brent,5,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,rho20_Brent,6,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,rho20_Brent,7,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,rho20_Brent,8,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,rho20_Brent,9,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,rho20_Brent,10,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,rho20_Brent,11,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,rho20_Brent,12,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,rho20_Brent,13,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,rho20_Brent,14,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,rho20_Brent,15,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,rho20_Brent,16,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,rho20_Brent,17,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,rho20_Brent,18,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,rho20_Brent,19,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,rho20_Brent,20,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,rho20_Brent,21,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,rho20_Brent,22,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,rho20_Brent,23,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,rho20_Brent,24,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,rho20_Brent,25,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,rho20_Brent,26,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,rho20_Brent,27,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,rho20_Brent,28,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,rho20_Brent,29,not_run,False,,,,,not_run,Resource limit: this is not a failure
+40,824635470601,rho20_Brent,30,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,exhaustive,1,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,exhaustive,2,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,exhaustive,3,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,exhaustive,4,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,exhaustive,5,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,exhaustive,6,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,exhaustive,7,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,exhaustive,8,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,exhaustive,9,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,exhaustive,10,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,exhaustive,11,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,exhaustive,12,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,exhaustive,13,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,exhaustive,14,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,exhaustive,15,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,exhaustive,16,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,exhaustive,17,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,exhaustive,18,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,exhaustive,19,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,exhaustive,20,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,exhaustive,21,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,exhaustive,22,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,exhaustive,23,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,exhaustive,24,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,exhaustive,25,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,exhaustive,26,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,exhaustive,27,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,exhaustive,28,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,exhaustive,29,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,exhaustive,30,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,BSGS,1,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,BSGS,2,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,BSGS,3,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,BSGS,4,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,BSGS,5,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,BSGS,6,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,BSGS,7,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,BSGS,8,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,BSGS,9,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,BSGS,10,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,BSGS,11,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,BSGS,12,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,BSGS,13,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,BSGS,14,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,BSGS,15,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,BSGS,16,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,BSGS,17,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,BSGS,18,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,BSGS,19,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,BSGS,20,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,BSGS,21,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,BSGS,22,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,BSGS,23,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,BSGS,24,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,BSGS,25,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,BSGS,26,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,BSGS,27,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,BSGS,28,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,BSGS,29,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,BSGS,30,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,rho3_Floyd,1,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,rho3_Floyd,2,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,rho3_Floyd,3,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,rho3_Floyd,4,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,rho3_Floyd,5,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,rho3_Floyd,6,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,rho3_Floyd,7,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,rho3_Floyd,8,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,rho3_Floyd,9,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,rho3_Floyd,10,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,rho3_Floyd,11,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,rho3_Floyd,12,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,rho3_Floyd,13,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,rho3_Floyd,14,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,rho3_Floyd,15,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,rho3_Floyd,16,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,rho3_Floyd,17,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,rho3_Floyd,18,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,rho3_Floyd,19,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,rho3_Floyd,20,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,rho3_Floyd,21,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,rho3_Floyd,22,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,rho3_Floyd,23,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,rho3_Floyd,24,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,rho3_Floyd,25,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,rho3_Floyd,26,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,rho3_Floyd,27,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,rho3_Floyd,28,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,rho3_Floyd,29,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,rho3_Floyd,30,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,rho20_Brent,1,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,rho20_Brent,2,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,rho20_Brent,3,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,rho20_Brent,4,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,rho20_Brent,5,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,rho20_Brent,6,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,rho20_Brent,7,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,rho20_Brent,8,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,rho20_Brent,9,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,rho20_Brent,10,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,rho20_Brent,11,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,rho20_Brent,12,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,rho20_Brent,13,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,rho20_Brent,14,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,rho20_Brent,15,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,rho20_Brent,16,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,rho20_Brent,17,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,rho20_Brent,18,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,rho20_Brent,19,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,rho20_Brent,20,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,rho20_Brent,21,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,rho20_Brent,22,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,rho20_Brent,23,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,rho20_Brent,24,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,rho20_Brent,25,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,rho20_Brent,26,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,rho20_Brent,27,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,rho20_Brent,28,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,rho20_Brent,29,not_run,False,,,,,not_run,Resource limit: this is not a failure
+44,13194144388501,rho20_Brent,30,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,exhaustive,1,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,exhaustive,2,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,exhaustive,3,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,exhaustive,4,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,exhaustive,5,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,exhaustive,6,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,exhaustive,7,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,exhaustive,8,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,exhaustive,9,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,exhaustive,10,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,exhaustive,11,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,exhaustive,12,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,exhaustive,13,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,exhaustive,14,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,exhaustive,15,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,exhaustive,16,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,exhaustive,17,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,exhaustive,18,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,exhaustive,19,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,exhaustive,20,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,exhaustive,21,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,exhaustive,22,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,exhaustive,23,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,exhaustive,24,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,exhaustive,25,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,exhaustive,26,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,exhaustive,27,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,exhaustive,28,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,exhaustive,29,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,exhaustive,30,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,BSGS,1,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,BSGS,2,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,BSGS,3,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,BSGS,4,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,BSGS,5,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,BSGS,6,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,BSGS,7,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,BSGS,8,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,BSGS,9,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,BSGS,10,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,BSGS,11,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,BSGS,12,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,BSGS,13,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,BSGS,14,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,BSGS,15,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,BSGS,16,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,BSGS,17,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,BSGS,18,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,BSGS,19,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,BSGS,20,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,BSGS,21,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,BSGS,22,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,BSGS,23,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,BSGS,24,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,BSGS,25,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,BSGS,26,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,BSGS,27,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,BSGS,28,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,BSGS,29,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,BSGS,30,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,rho3_Floyd,1,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,rho3_Floyd,2,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,rho3_Floyd,3,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,rho3_Floyd,4,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,rho3_Floyd,5,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,rho3_Floyd,6,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,rho3_Floyd,7,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,rho3_Floyd,8,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,rho3_Floyd,9,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,rho3_Floyd,10,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,rho3_Floyd,11,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,rho3_Floyd,12,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,rho3_Floyd,13,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,rho3_Floyd,14,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,rho3_Floyd,15,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,rho3_Floyd,16,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,rho3_Floyd,17,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,rho3_Floyd,18,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,rho3_Floyd,19,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,rho3_Floyd,20,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,rho3_Floyd,21,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,rho3_Floyd,22,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,rho3_Floyd,23,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,rho3_Floyd,24,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,rho3_Floyd,25,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,rho3_Floyd,26,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,rho3_Floyd,27,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,rho3_Floyd,28,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,rho3_Floyd,29,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,rho3_Floyd,30,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,rho20_Brent,1,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,rho20_Brent,2,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,rho20_Brent,3,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,rho20_Brent,4,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,rho20_Brent,5,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,rho20_Brent,6,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,rho20_Brent,7,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,rho20_Brent,8,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,rho20_Brent,9,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,rho20_Brent,10,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,rho20_Brent,11,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,rho20_Brent,12,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,rho20_Brent,13,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,rho20_Brent,14,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,rho20_Brent,15,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,rho20_Brent,16,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,rho20_Brent,17,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,rho20_Brent,18,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,rho20_Brent,19,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,rho20_Brent,20,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,rho20_Brent,21,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,rho20_Brent,22,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,rho20_Brent,23,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,rho20_Brent,24,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,rho20_Brent,25,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,rho20_Brent,26,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,rho20_Brent,27,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,rho20_Brent,28,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,rho20_Brent,29,not_run,False,,,,,not_run,Resource limit: this is not a failure
+48,211106205190693,rho20_Brent,30,not_run,False,,,,,not_run,Resource limit: this is not a failure

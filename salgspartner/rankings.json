@@ -1,0 +1,11 @@
+{
+  "updated": "9. oktober 2026",
+  "source": "Google Search Console",
+  "note": "Snittplassering vektet etter visninger. Før: hele juni eller august 2026. Nå: 11. september–8. oktober 2026. Rangeringer varierer, og få visninger gir usikre snitt. Kundenavn er utelatt av hensyn til kundene.",
+  "items": [
+    { "who": "Hudklinikk · Sandnes", "kw": "laserfjerning tatovering", "from": 40.1, "to": 5.0, "when": "Juni → siste målevindu", "stats": "4 visninger, 0 klikk" },
+    { "who": "Hudklinikk · Sandnes", "kw": "botox sandnes", "from": 36.7, "to": 6.6, "when": "Juni → siste målevindu", "stats": "5 visninger, 3 klikk" },
+    { "who": "Karriererådgiver · helt ny nettside", "kw": "karriere rådgivning", "from": 31.0, "to": 18.3, "when": "August → siste målevindu", "stats": "7 visninger, 0 klikk" },
+    { "who": "SETAEI · egen side", "kw": "ai drevet seo", "from": 17.8, "to": 7.8, "when": "August → siste målevindu", "stats": "47 visninger, 0 klikk" }
+  ]
+}

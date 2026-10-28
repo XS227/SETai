@@ -1,0 +1,47 @@
+/* True canvas-projected 3D bit planes; no third-party libraries or network requests. */
+.bit-holo-panel{margin:23px 0 17px;padding:15px 14px 16px;border:1px solid #14879a;border-radius:14px;background:radial-gradient(circle at 60% 55%,#0b405150,transparent 69%),linear-gradient(158deg,#0d2530,#081922 65%);box-shadow:inset 0 0 15px #08ccef0d,0 0 18px #00d4ef18;overflow:hidden;color:#d9f1f4}
+.bit-holo-panel .holo-head{display:flex;align-items:flex-start;justify-content:space-between;gap:9px;margin-bottom:12px}
+.bit-holo-panel .holo-eyebrow{font:700 9px ui-monospace,monospace;letter-spacing:1.5px;color:#70c6cf;margin:0 0 6px}
+.bit-holo-panel h3{font-size:19px;line-height:1.23;font-weight:800;letter-spacing:-.45px;color:#4bebf1;margin:0 0 6px}
+.bit-holo-panel h3 span{color:#c5f479}
+.bit-holo-subtitle,.bit-holo-panel .holo-subtitle{font-size:10px;line-height:1.6;color:#a6c4c9;margin:0}
+.bit-holo-panel .holo-tag{white-space:nowrap;font:700 9px ui-monospace,monospace;letter-spacing:.4px;border:1px solid #316771;border-radius:6px;padding:8px 7px;color:#7cf7fa}
+.bit-holo-panel button{font:650 11px system-ui,sans-serif;transition:border-color .2s,background .2s,color .2s}
+.bit-holo-panel button:focus-visible,.bit-holo-panel input:focus-visible,.bit-holo-panel canvas:focus-visible{outline:2px solid #c5f479;outline-offset:3px}
+.bit-holo-panel .holo-modes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin:12px 0 8px}
+.bit-holo-panel .holo-modes button{border:1px solid #315765;background:#122732;color:#9ac4c8;padding:9px 3px;border-radius:7px;font-size:10px}
+.bit-holo-panel .holo-modes button.active{background:#183e42;color:#c5f479;border-color:#6b9b68}
+.bit-holo-panel .holo-canvas-shell{position:relative;width:100%;min-height:280px;aspect-ratio:1.1/1;border:1px solid #184a60;border-radius:11px;overflow:hidden;background:radial-gradient(ellipse at 48% 50%,#0e374b 0,#081922 53%,#07131d 100%)}
+.bit-holo-panel canvas{display:block;touch-action:none;width:100%;height:100%;position:absolute;inset:0;cursor:grab;outline:none}
+.bit-holo-panel canvas:active{cursor:grabbing}
+.bit-holo-panel .holo-overlay-label{position:absolute;left:8px;top:13px;pointer-events:none;display:flex;flex-direction:column;gap:4px;background:#041724b8;border:1px solid #2957699e;border-radius:7px;padding:6px 7px;max-width:103px}
+.bit-holo-panel .holo-overlay-label strong{font-size:9px;color:#7fe7f5}
+.bit-holo-panel .holo-overlay-label small{font:600 10px ui-monospace,monospace;color:#b8deef}
+.bit-holo-panel .holo-label-key{top:auto;bottom:28px}
+.bit-holo-panel .holo-label-key strong{color:#c5f479}
+.bit-holo-panel .holo-light{display:none}
+.bit-holo-panel .holo-orbit-hint{position:absolute;bottom:5px;right:8px;background:#071c28c9;border-radius:5px;padding:4px 7px;font-size:9px;color:#8faebd;pointer-events:none}
+.bit-holo-panel .holo-key-line{display:flex;flex-wrap:wrap;gap:7px;align-items:center;margin:11px 0}
+.bit-holo-panel .holo-key-line span{font:600 10px ui-monospace,monospace;color:#b7e4d5;background:#092531;border:1px solid #2e5260;padding:6px 8px;border-radius:6px;overflow-wrap:anywhere}
+.bit-holo-panel .holo-key-line #holo-selection{color:#8bbbcf}
+.bit-holo-panel .holo-toolbar{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:5px;margin:10px 0}
+.bit-holo-panel .holo-toolbar button{display:flex;align-items:center;justify-content:center;flex-direction:column;gap:3px;padding:7px 2px;min-height:53px;background:#102b38;border:1px solid #315b67;border-radius:8px;color:#d0e6ee;font-size:9px;line-height:1.25}
+.bit-holo-panel .holo-toolbar button span{font-size:21px;line-height:1}
+.bit-holo-panel .holo-toolbar button[aria-pressed=true]{background:#1b4c3e;border-color:#8cc971;color:#c5f479}
+.bit-holo-panel .holo-sliders{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin:13px 0}
+.bit-holo-panel .holo-sliders label{min-width:0;font-size:10px;color:#b9d3d9;display:grid;gap:7px}
+.bit-holo-panel .holo-sliders label span{line-height:1.5}
+.bit-holo-panel .holo-sliders output{display:block;min-height:0;padding:0;font:700 10px ui-monospace,monospace;color:#c5f479}
+.bit-holo-panel input[type=range]{width:100%;margin:0;accent-color:#96e987;height:21px}
+.bit-holo-panel .holo-toggles{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;border-top:1px solid #284c57;padding:12px 0 0}
+.bit-holo-panel .holo-toggles label{display:flex;align-items:center;gap:5px;font-size:10px;color:#c5dbe0}
+.bit-holo-panel .holo-toggles input{width:15px;height:15px;accent-color:#c5f479;margin:0;flex-shrink:0}
+.bit-holo-panel .holo-timeline{display:flex;align-items:center;justify-content:space-between;gap:8px;border:1px solid #315764;border-radius:9px;background:#102d3a;padding:8px;margin:11px 0}
+.bit-holo-panel .holo-timeline button{border:1px solid #386c74;border-radius:6px;background:#153c44;color:#dcf5f7;padding:9px 7px;font-size:10px}
+.bit-holo-panel .holo-timeline span{color:#b6f1cc;font:600 10px ui-monospace,monospace}
+.bit-holo-panel .holo-note{font-size:10px;color:#9dbac2;line-height:1.7;margin:9px 0 0}
+.bit-holo-panel .holo-note strong{color:#dcebbd}
+@media(max-width:430px){.bit-holo-panel{padding:12px 8px}.bit-holo-panel h3{font-size:17px}.bit-holo-panel .holo-tag{font-size:8px;padding:6px 4px}.bit-holo-panel .holo-canvas-shell{aspect-ratio:0.88/1;min-height:290px}.bit-holo-panel .holo-overlay-label{left:4px;padding:5px;max-width:86px}.bit-holo-panel .holo-overlay-label strong{font-size:8px}.bit-holo-panel .holo-toolbar button{font-size:8px}.bit-holo-panel .holo-sliders{gap:9px}}
+@media(prefers-reduced-motion:reduce){.bit-holo-panel *{transition:none!important}}
+
+@media(max-width:480px){.bit-holo-panel .holo-toolbar{grid-template-columns:repeat(3,minmax(0,1fr))}}

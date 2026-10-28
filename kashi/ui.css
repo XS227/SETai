@@ -1,0 +1,59 @@
+/* floating dock: menu · language · WhatsApp */
+.dock{position:fixed;bottom:18px;inset-inline-end:18px;z-index:9998;display:flex;align-items:center;gap:10px;direction:ltr}
+.dkb{width:50px;height:50px;border-radius:50%;display:grid;place-items:center;border:1px solid #ffffff2b;background:#0e1612d9;backdrop-filter:blur(14px) saturate(1.4);color:var(--gold,#d9b88c);cursor:pointer;padding:0;box-shadow:0 10px 30px #0006;transition:transform .3s cubic-bezier(.2,.7,.1,1),background .3s,color .3s;-webkit-tap-highlight-color:transparent}
+.dkb:hover{transform:translateY(-3px);background:#d9b88c;color:#17241d}
+.dkb svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.dkb.wa{background:#168d58;border-color:#168d58;color:#fff;animation:dkwa 3.5s ease-in-out infinite}
+.dkb.wa:hover{background:#0b7044;color:#fff}
+.dkb.wa svg{fill:currentColor;stroke:none;width:24px;height:24px}
+@keyframes dkwa{0%,100%{box-shadow:0 10px 30px #0006,0 0 0 0 #168d5880}50%{box-shadow:0 10px 30px #0006,0 0 0 12px #168d5800}}
+.dkb.menu{display:none}
+.dkb.menu .x{display:none}.dkb.menu.on .x{display:block}.dkb.menu.on .b{display:none}
+.langbox{position:relative}
+.lang-pop{position:absolute;bottom:62px;inset-inline-end:0;min-width:170px;background:#0e1612f2;backdrop-filter:blur(16px);border:1px solid #ffffff22;border-radius:14px;padding:8px;box-shadow:0 20px 50px #0008;opacity:0;visibility:hidden;transform:translateY(8px);transition:.3s cubic-bezier(.2,.7,.1,1)}
+.lang-pop.open{opacity:1;visibility:visible;transform:none}
+.lang-pop button{display:flex;align-items:center;justify-content:space-between;gap:14px;width:100%;background:none;border:0;color:#e9ece7;padding:12px 14px;border-radius:9px;cursor:pointer;font:600 14px Manrope,sans-serif;text-align:start}
+.lang-pop button:hover{background:#ffffff14}
+.lang-pop button.cur{color:var(--gold,#d9b88c)}
+.lang-pop button.cur:after{content:"✓"}
+.lang-pop small{opacity:.6;font-size:11px;letter-spacing:.1em}
+@media(max-width:1200px){.dkb.menu{display:grid}}
+@media(max-width:480px){.dock{bottom:14px;inset-inline-end:12px;gap:8px}.dkb{width:46px;height:46px}}
+body.menu-open{overflow:hidden}
+
+/* ---- Icelandic ---- */
+html[lang=is] h1,html[lang=is] h2,html[lang=is] h3,html[lang=is] p{overflow-wrap:break-word;hyphens:auto}
+html[lang=is] .hero h1{font-size:clamp(46px,7.6vw,118px)}
+html[lang=is] .phero h1{font-size:clamp(44px,7vw,108px)}
+
+/* ---- Persian / RTL ---- */
+html[lang=fa] body,html[lang=fa] button,html[lang=fa] input,html[lang=fa] select,html[lang=fa] textarea,html[lang=fa] .serif,html[lang=fa] .lang-pop button{font-family:Vazirmatn,Tahoma,sans-serif!important}
+html[lang=fa] *{letter-spacing:0!important}
+html[lang=fa] .serif{font-style:normal;font-weight:600}
+html[lang=fa] p{line-height:2}
+html[lang=fa] h1,html[lang=fa] h2,html[lang=fa] h3{line-height:1.35}
+html[lang=fa] .hero h1{font-size:clamp(42px,6.6vw,104px)}
+html[lang=fa] .phero h1{font-size:clamp(40px,6.2vw,98px)}
+html[lang=fa] .hero h1 .ln,html[lang=fa] .phero h1 .ln{padding-bottom:.3em}
+html[lang=fa] h2{font-size:clamp(30px,4.2vw,58px)}
+html[lang=fa] .eyebrow{font-size:12px}
+html[lang=fa] .logo,html[lang=fa] .logo *{font-family:Manrope,sans-serif!important;letter-spacing:.25em!important}
+html[lang=fa] .hero p.lead{font-size:16px}
+[dir=rtl] .scroll{left:auto;right:7%}
+[dir=rtl] .stats{right:auto;left:6%}
+[dir=rtl] .hero:before{background:linear-gradient(270deg,#0b130fe8 8%,#0b130f80 55%,#0b130f40),linear-gradient(0deg,#0e1612 0,transparent 35%)}
+[dir=rtl] .phero:before{background:linear-gradient(270deg,#0b130fe8 10%,#0b130f70),linear-gradient(0deg,var(--bg) 0,transparent 45%)}
+[dir=rtl] .story:before{background:linear-gradient(270deg,#0e1612f0,#0e161255)}
+[dir=rtl] .ptile{right:auto;left:7%}
+[dir=rtl] .ptile.t2{left:20%;right:auto}
+[dir=rtl] .pchip{left:auto;right:14px}
+[dir=rtl] td,[dir=rtl] th,[dir=rtl] .choice,[dir=rtl] .surface-chip,[dir=rtl] .country{text-align:right}
+[dir=rtl] .sliders label b,[dir=rtl] .daylight label b,[dir=rtl] .model label span{float:left}
+[dir=rtl] .snap{margin-left:0;margin-inline-start:auto}
+[dir=rtl] .features:before,[dir=rtl] .section.dark:before{right:auto;left:-200px}
+[dir=rtl] .calculator-section:before{left:auto;right:-250px}
+[dir=rtl] a.more:hover{transform:translateX(-6px)}
+[dir=rtl] nav a:not(.ncta):after{left:auto;right:0;transform-origin:right}
+[dir=rtl] .designer-caption{direction:rtl}
+[dir=rtl] .line{direction:rtl}
+@media(max-width:1100px){[dir=rtl] .stats{left:auto}}

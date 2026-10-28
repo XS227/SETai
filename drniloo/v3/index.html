@@ -9,8 +9,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="preload" href="./assets/portrait-hq.webp" as="image" fetchpriority="high">
 <link rel="stylesheet" href="./v3.css?v=5.2">
+<style>#page-bg{position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none}</style>
 </head>
 <body>
+<canvas id="page-bg" data-theme="wave" data-accent="#937341" data-layout="center" data-bg="#f4f1ea" data-mode="light" aria-hidden="true"></canvas>
 <a class="skip" href="#main">رفتن به محتوای اصلی</a><div class="reading-progress" aria-hidden="true"></div>
 <header class="header"><a href="#home" class="brand" aria-label="دکتر نیلوفر غفوری — خانه"><span class="brand-logo" aria-hidden="true"><span class="logo-n">N</span><span class="logo-profile"></span><span class="logo-orbit"></span></span><span>دکتر نیلوفر غفوری<small>زیبایی، با نگاه به شما</small></span></a><nav aria-label="منوی اصلی"><a href="#philosophy">نگاه ما</a><a href="#journey">زیبایی در جزئیات</a><a href="#services">خدمات</a><a href="./blog/">ویدیو بلاگ</a><a href="#location">موقعیت</a></nav><div class="header-actions"><a class="header-book" href="#contact">درخواست مشاوره <span>↗</span></a><button class="menu-toggle" aria-label="باز کردن منو" aria-haspopup="dialog"><span></span><span></span></button></div></header>
 <main id="main">
@@ -73,4 +75,5 @@
 </main><footer><a class="brand" href="#home"><span class="brand-logo" aria-hidden="true"><span class="logo-n">N</span><span class="logo-profile"></span><span class="logo-orbit"></span></span><span>دکتر نیلوفر غفوری</span></a><span>زیبایی، در تعادل.</span><a href="#home">بازگشت به بالا ↑</a></footer>
 <dialog class="menu-dialog" aria-label="منوی سایت"><button class="close-dialog" aria-label="بستن منو">×</button><nav><a href="#philosophy">نگاه ما</a><a href="#journey">زیبایی در جزئیات</a><a href="#services">خدمات</a><a href="./blog/">ویدیو بلاگ</a><a href="#location">موقعیت</a><a href="#doctor">دکتر غفوری</a><a href="#contact">ارتباط با ما</a></nav></dialog>
 <dialog class="service-dialog" aria-labelledby="service-title"><button class="close-dialog" aria-label="بستن جزئیات">×</button><span class="eyebrow">انتخاب شما، آغاز یک گفت‌وگو</span><h2 id="service-title"></h2><p id="service-description"></p><p class="modal-note">برای بررسی تناسب این خدمت با شرایط شما و اطلاع از هزینه و زمان، مشاوره لازم است.</p><a class="button dark" href="tel:+989106142161">تماس برای مشاوره <span>↗</span></a></dialog>
-<script async src="https://www.instagram.com/embed.js"></script><script src="./v3.js?v=5.2" defer></script></body></html>
+<script async src="https://www.instagram.com/embed.js"></script><script src="./v3.js?v=5.2" defer></script><script src="/assets/home/page-bg.js?v=4" defer></script>
+</body></html>

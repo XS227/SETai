@@ -52,3 +52,12 @@ html{scroll-padding-top:150px}
   .posts .meta{grid-column:1;grid-row:auto;text-align:left;order:-1}
   .filterbar{top:64px}
 }
+.book-banner{padding:0 6vw 40px}
+.bb{display:grid;grid-template-columns:160px 1fr;gap:24px;align-items:center;max-width:48rem;padding:18px;border:1px solid var(--line);border-radius:20px;background:rgba(5,5,5,.85);text-decoration:none;color:var(--ink);transition:border-color .2s}
+.bb:hover{border-color:var(--accent)}
+.bb img{width:160px;height:160px;border-radius:14px;object-fit:cover;display:block}
+.bb-k{margin:0 0 .4rem;color:var(--accent);font-size:.85rem;font-weight:500}
+.bb h2{margin:0 0 .5rem;font-family:var(--display);font-size:clamp(1.5rem,3vw,2.1rem);letter-spacing:-.02em;line-height:1.05}
+.bb p{margin:0;color:var(--muted);font-size:.98rem;line-height:1.5}
+.bb-cta{display:inline-flex;margin-top:.9rem;font-weight:600;border-bottom:1px solid var(--accent)}
+@media (max-width:640px){.bb{grid-template-columns:1fr}.bb img{width:100%;height:auto;aspect-ratio:1}}

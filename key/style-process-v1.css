@@ -1,0 +1,68 @@
+
+.tool-tabs{max-width:760px;flex-wrap:wrap}
+.tool-tabs button{min-width:125px}
+.process-panel{max-width:760px}
+.process-panel .card-top h2{font-size:18px}
+.process-panel p{line-height:1.8}
+.process-intro{font-size:13px;color:#becddd;margin:0 0 13px}
+.process-note{margin:15px 0 22px;padding:12px 14px;border-left:3px solid var(--lime);background:#223033;border-radius:4px;color:#cfdccf;font-size:11px}
+.process-roadmap{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:20px 0 27px}
+.process-roadmap>div{border:1px solid #3a5363;background:#0b1a27;text-align:center;border-radius:12px;padding:14px 8px}
+.process-roadmap small{display:block;color:#92a9b9;font-size:10px;margin-bottom:8px}
+.process-roadmap strong{color:#c5f479;font-size:14px}
+.process-section-title{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:12px}
+.process-section-title h3{font-size:14px;margin:0}
+.process-section-title span{font-size:10px;color:var(--lime)}
+.process-bit-buttons{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:6px}
+.pbit{min-height:68px;border:1px solid #3a4e60;border-radius:9px;background:#10202e;color:#d8e4ea;display:flex;justify-content:center;align-items:center;flex-direction:column;gap:8px}
+.pbit strong{font-family:ui-monospace,monospace;font-size:22px;line-height:1}
+.pbit small{font-size:9px;color:#8ba0af}
+.pbit.used{border-color:#739d77;background:#263f32;color:#c5f479}
+.pbit.selected{outline:2px solid #c5f479;outline-offset:2px}
+.process-track{margin-top:15px;background:#3b4d5c;border-radius:9px;height:5px;overflow:hidden}
+#process-fill{background:linear-gradient(90deg,#77ad8c,#c5f479);height:100%;width:0;transition:width .25s}
+.process-stage{margin-top:22px;background:linear-gradient(145deg,#0d1c29,#1a3030);border:1px solid #526e5c;border-radius:13px;padding:19px}
+.process-terms{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) auto minmax(0,1fr);gap:7px;align-items:stretch;margin:14px 0}
+.process-term{border:1px solid #3a5263;background:#122331;padding:12px 5px;border-radius:10px;text-align:center;min-width:0}
+.process-term small{font-size:9px;color:#9fb2bf}
+.process-term strong{display:block;color:#e0ebf1;font-size:20px;font-family:ui-monospace,monospace;margin-top:8px;overflow-wrap:anywhere}
+.process-term.result{background:#284434;border-color:#97b87c}
+.process-term.result strong{color:var(--lime)}
+.process-op{display:grid;place-items:center;color:#c5f479;font-size:19px}
+#process-equation{font-family:ui-monospace,monospace;text-align:center;color:#c5f479;font-size:16px;background:#0b1926;border-radius:8px;padding:12px}
+#process-text{font-size:13px;color:#d7e4eb;min-height:48px}
+.process-controls{display:flex;gap:9px}
+.process-controls .secondary{margin:0;flex:0.65}
+.process-controls .primary{width:auto;flex:1;margin:0;padding:13px 11px;justify-content:center;font-size:12px}
+.process-coords{border:1px solid #394f60;background:#0d1a29;padding:18px;border-radius:11px;margin-top:19px}
+.process-coords h3{margin:0 0 10px}
+.process-panel code{display:block;white-space:normal;overflow-wrap:anywhere;word-break:break-all;line-height:1.8;color:#d6f0d8;font-size:12px;font-family:ui-monospace,Consolas,monospace;margin:6px 0 13px}
+.process-coords small,.process-finish small{font-size:10px;color:#94abba}
+.process-math{padding:17px;border-radius:11px;border:1px solid #3b5366;background:#142533;margin-top:22px}
+.process-math p{color:#becdd8;font-size:12px;margin:9px 0}
+.process-math h3{font-size:15px;margin:0 0 12px}
+.process-formula{padding:12px;background:#0c1b27;color:#d7f2ce;border-radius:8px;line-height:2;font-family:ui-monospace,monospace;font-size:12px;overflow-wrap:anywhere}
+.process-math details{padding:12px 0 0}
+.process-math summary{font-size:12px;color:var(--lime);cursor:pointer}
+.process-finish{border:1px solid #65916c;background:#163329;padding:17px;border-radius:11px;margin-top:20px}
+.process-finish h3{font-size:15px;margin:0 0 12px}
+.process-finish #process-demo-address{color:#c5f479;font-size:14px;font-weight:700}
+.process-finish p{font-size:11px;color:#c5d9cc}
+@media(max-width:580px){
+ .tool-tabs button{min-width:calc(50% - 6px);font-size:11px}
+ .process-panel{padding:16px}
+ .process-roadmap{grid-template-columns:1fr;gap:6px}
+ .process-roadmap>div{padding:9px}
+ .process-bit-buttons{gap:4px}
+ .pbit{min-height:60px;gap:5px}
+ .pbit strong{font-size:18px}
+ .pbit small{font-size:8px}
+ .process-stage{padding:11px}
+ .process-terms{gap:4px}
+ .process-term{padding:12px 2px}
+ .process-term small{font-size:8px}
+ .process-term strong{font-size:15px}
+ .process-controls .primary{font-size:11px}
+ .process-coords,.process-math,.process-finish{padding:12px}
+}
+@media(prefers-reduced-motion:reduce){#process-fill{transition:none}}

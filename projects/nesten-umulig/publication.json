@@ -1,0 +1,20 @@
+{
+  "publishedUtc": "2026-10-24T16:05:54.395615+00:00",
+  "url": "https://setai.no/projects/nesten-umulig/",
+  "sourceSha256": "8f4dd92c90fd49e5d3ddac2868133031f52c5154f07d12132ea22688130fd108",
+  "blogListed": true,
+  "projectsListed": true,
+  "sitemapIncluded": true,
+  "publicFeedAllowlistCheckedAgainstActualJob": true,
+  "originalAgentStateBefore": "MainPID=709\nNRestarts=0\nCPUQuotaPerSecUSec=110ms\nActiveState=active\n",
+  "originalAgentStateAfter": "MainPID=709\nNRestarts=0\nCPUQuotaPerSecUSec=110ms\nActiveState=active\n",
+  "blogCounts": {
+    "tanker": 1,
+    "prosjekter": 4,
+    "bedrift": 21,
+    "alle": 26
+  },
+  "instrumentsUpdatedUtc": "2026-10-24T16:35:59.139465+00:00",
+  "counterPresentation": "Bounded interpolation between confirmed observations; never extrapolates beyond the confirmed count.",
+  "originalAgentUnchangedDuringInstrumentUpdate": true
+}

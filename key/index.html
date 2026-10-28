@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Generer en ny 64-tegns Ethereum/EVM-privatnøkkel lokalt i nettleseren. Ingen lagring eller sending av nøkler.">
+<meta name="robots" content="noindex,nofollow">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; worker-src 'self'; style-src 'self'; connect-src 'self' https://ethereum-rpc.publicnode.com https://api.coingecko.com; img-src 'self' data:; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta name="referrer" content="no-referrer"><title>Privatnøkkelgenerator · SETAEI</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23c5f479'/%3E%3Cpath d='M10 16l4 4 8-9' fill='none' stroke='%23112032' stroke-width='3'/%3E%3C/svg%3E"><link rel="stylesheet" href="style-binary-v7.css"><link rel="stylesheet" href="style-process-v1.css"><link rel="stylesheet" href="style-reverse-v1.css"><script src="crypto-public-v2.js" defer></script><script src="balance-usd-v5.js" defer></script><script src="model-experiment-v5.js" defer></script><script src="guess-experiment-v5.js" defer></script><script src="binary-v7.js" defer></script><script src="app-binary-v11.js" defer></script><script src="process-v2.js" defer></script><script src="reverse-v1.js" defer></script><script src="batch-v2.js" defer></script><script src="vanity-v7.js" defer></script><script src="server-agent-v1.js" defer></script><script src="research-agent-v1.js" defer></script><link rel="stylesheet" href="style-server-agent-v1.css"><link rel="stylesheet" href="style-research-agent-v1.css"><script src="watchlist-v1.js" defer></script><link rel="stylesheet" href="style-watchlist-v1.css"><link rel="stylesheet" href="style-vanity-v2.css"><link rel="stylesheet" href="style-vanity-v3.css"><link rel="stylesheet" href="style-vanity-v4.css"><link rel="stylesheet" href="style-batch-v2.css">
+<link rel="stylesheet" href="experience-v1.css"><script src="learning-motion-v1.js" defer></script>
+<link rel="stylesheet" href="style-bit-compare-v1.css"><script src="bit-compare-v3.js" defer></script><link rel="stylesheet" href="style-hologram-v1.css"><link rel="stylesheet" href="style-hologram-v2.css"><script src="hologram-v2.js" defer></script><link rel="stylesheet" href="style-pipeline3d-v1.css"><script src="pipeline3d-v1.js" defer></script>
+</head>
+<body>
+<header><a class="brand" href="./" aria-label="SETAEI hjem"><span class="brand-icon">S</span> SETAEI<span class="brand-sub"> / TOOLS</span></a><span class="local"><i></i> Nøkkelen blir på din enhet</span></header>
+<main>
+<section class="intro"><p class="eyebrow">DIN NØKKEL. DIN KONTROLL.</p><h1>En ny nøkkel.<br><span>Ett trykk.</span></h1><p class="lead">Generer en privatnøkkel for Ethereum og EVM-nettverk i Trust Wallet. Tilfeldig generert, lokalt i nettleseren din.</p></section>
+<div class="tool-tabs grouped-menu" role="tablist" aria-label="Wallet-verktøy og læring"><div class="tool-group tool-group-wallets" role="presentation"><span class="tool-group-title" aria-hidden="true">Lag en wallet</span><div class="tool-group-buttons" role="presentation"><button id="tool-generate" type="button" role="tab" aria-selected="true" aria-controls="generator-tool" tabindex="0">Ny nøkkel</button><button id="tool-vanity" type="button" role="tab" aria-selected="false" aria-controls="vanity-tool" tabindex="-1">Eget prefiks · 500</button></div></div><div class="tool-group tool-group-balances" role="presentation"><span class="tool-group-title" aria-hidden="true">Mine wallets</span><div class="tool-group-buttons" role="presentation"><button id="tool-watch" type="button" role="tab" aria-selected="false" aria-controls="watch-tool" tabindex="-1">Adresser og saldo</button></div></div><div class="tool-group tool-group-learning" role="presentation"><span class="tool-group-title" aria-hidden="true">Lær og utforsk</span><div class="tool-group-buttons" role="presentation"><button id="tool-process" type="button" role="tab" aria-selected="false" aria-controls="process-tool" tabindex="-1">Adresse-reisen</button><button id="tool-binary" type="button" role="tab" aria-selected="false" aria-controls="binary-tool" tabindex="-1">Biter og hex</button><button id="tool-reverse" type="button" role="tab" aria-selected="false" aria-controls="reverse-tool" tabindex="-1">Baklengs-test</button><button id="tool-lookup" type="button" role="tab" aria-selected="false" aria-controls="lookup-tool" tabindex="-1">Modelltest</button></div></div></div>
+<details class="research-menu"><summary>Forskningslab · hypoteser, målinger og symmetri</summary><div class="research-links"><a href="/projects/nesten-umulig/">Nesten umulig · live forskningsprosjekt ↗</a><a href="./learning-lab/">Feillab · nattlig læring ↗</a><a href="./research-v4/">Bekreftede eksperimenter (v4) ↗</a><a href="./research-v3/">Hypoteser (v3) ↗</a><a href="./research-v2/">Målinger (v2)</a><a href="./symmetry-lab/">Symmetritest ↗</a><a href="./research/">Tidligere forsøk (v1)</a></div></details>
+<section id="generator-tool" class="generator" role="tabpanel" aria-labelledby="tool-generate"><div class="card-top"><h2 id="generator-title"><span class="key-icon" aria-hidden="true">⌘</span> Privatnøkkel</h2><span class="format">64 HEX · 256 BIT</span></div>
+<div class="keybox"><span class="label">DIN NYE NØKKEL</span><output id="key" aria-label="Generert privatnøkkel">Nøkkelen din vises her</output><div class="key-bottom"><span id="key-state">Klar til å generere</span><button id="toggle" class="text-button" disabled aria-pressed="false">Vis nøkkel</button></div></div>
+<div class="addressbox"><span class="label">WALLET-ADRESSE · ETHEREUM / EVM</span><output id="address" aria-label="Tilhørende Ethereum/EVM-adresse">Adressen din vises her</output><div class="address-bottom"><span>Offentlig adresse · kan deles</span><button id="copy-address" class="text-button" disabled>Kopier adresse</button></div><p>Adressen beregnes fra nøkkelen over. Den gjelder Ethereum/EVM; andre nettverk kan ha andre adresser.</p></div>
+<div class="asset-tabs" role="tablist" aria-label="Velg valuta"><button id="tab-usdt" role="tab" aria-selected="true" aria-controls="balance-panel" tabindex="0">USDT <span>ERC-20</span></button><button id="tab-eth" role="tab" aria-selected="false" aria-controls="balance-panel" tabindex="-1">Ethereum <span>ETH</span></button></div>
+<div id="balance-panel" class="balancebox" role="tabpanel" aria-labelledby="tab-usdt" tabindex="0"><div class="balance-top"><span id="balance-title" class="label">USDT-SALDO · ETHEREUM / ERC-20</span><span id="balance-tag" class="balance-tag">USDT</span></div><output id="balance" aria-label="USDT-verdi i USD">— USD</output><p id="balance-quantity" class="quantity">Ingen saldo hentet.</p><div class="balance-bottom"><span id="balance-state" role="status" aria-live="polite">Generer en nøkkel for å hente saldo.</span><button id="refresh-balance" class="text-button" disabled>Oppdater saldo</button></div><p id="balance-note">Viser USDT (ERC-20) på Ethereum, ikke USDT på TRON eller andre nettverk. Kun offentlig adresse sendes til PublicNode.</p></div>
+<button id="generate" class="primary"><span aria-hidden="true">↻</span> Generer ny nøkkel <span class="arrow" aria-hidden="true">↗</span></button>
+<div class="secondary-row"><button id="copy" class="secondary" disabled>Kopier nøkkel</button><button id="clear" class="secondary" disabled>Fjern nøkkel</button></div>
+<p id="status" class="status" role="status" aria-live="polite">Trykk på knappen for å lage din første nøkkel.</p>
+<section class="wallet-batch" aria-labelledby="batch-title">
+<h3 id="batch-title">100 nye wallets med ett klikk</h3>
+<p class="help">Nye, tilfeldig genererte Ethereum/EVM-wallets. Listen beholder de siste 100 fra denne økten. Du kan sortere tabellen etter navn, saldo og opprettelsesdato. Saldo hentes for ETH og USDT (ERC-20) på Ethereum.</p>
+<button id="generate-100" class="primary" type="button">↻ Generer 100 nye wallets</button>
+<button id="show-wallet-history" class="secondary" type="button" aria-expanded="false" aria-controls="wallet-history">Vis siste 100 (0)</button>
+<p id="batch-status" class="status" role="status" aria-live="polite">Klar til å generere 100 nye wallets.</p>
+<progress id="batch-progress" max="100" value="0" aria-label="Fremdrift for generering og saldo" hidden></progress>
+<div id="wallet-history" hidden>
+<span id="wallet-history-count">0 / 100 wallets</span>
+<div class="history-actions"><button id="reveal-wallet-keys" class="secondary" type="button" aria-pressed="false" disabled>Vis privatnøkler</button><button id="retry-wallet-balances" class="secondary" type="button" disabled>Prøv saldo på nytt</button><button id="clear-wallet-history" class="secondary" type="button" disabled>Tøm listen / stopp</button></div>
+<p class="help">Privatnøkler finnes kun i sidens minne og forsvinner ved omlasting. Kun offentlige adresser sendes til PublicNode. «Ukjent» betyr at saldoen ikke kunne bekreftes. ETH og USDT på andre nettverk inngår ikke. Sveip tabellen sidelengs for å se nøkkel og saldo.</p>
+<div class="wallet-sort-controls"><label for="wallet-sort">Sorter etter<select id="wallet-sort"><option value="createdAt">Dato opprettet</option><option value="name">Navn</option><option value="eth">ETH-saldo</option><option value="usdt">USDT-saldo</option><option value="address">Wallet-adresse</option></select></label><button id="wallet-sort-direction" type="button" class="secondary">↓ Synkende</button></div>
+<p id="wallet-sort-status" role="status" aria-live="polite"></p>
+<p id="wallet-history-empty" class="help">Ingen wallets generert i denne økten.</p>
+<div class="table-scroll" role="region" aria-label="Siste 100 genererte wallets, rull sidelengs for alle kolonner" tabindex="0">
+<table><caption>Siste 100 genererte wallets · Ethereum mainnet</caption><thead><tr><th scope="col">Nr.</th><th scope="col">Navn</th><th scope="col">Wallet-adresse</th><th scope="col">Privatnøkkel</th><th scope="col">ETH-saldo</th><th scope="col">USDT-saldo</th><th scope="col">Dato opprettet</th><th scope="col">Saldosvar kl.</th></tr></thead><tbody id="wallet-history-rows"></tbody></table>
+</div></div></section>
+<div class="note"><span aria-hidden="true">ⓘ</span><p>Enkeltgeneratoren viser siste nøkkel. Tabellen beholder de siste 100 i denne økten. Ta en sikker kopi hvis du skal beholde den. Alle som har nøkkelen, har full tilgang til lommeboken.</p></div></section>
+<section id="lookup-tool" class="generator lookup" role="tabpanel" aria-labelledby="tool-lookup" hidden>
+<div class="card-top"><h2>Gjett og kontroller nøkkel</h2><span class="format">LOKAL TEST</span></div>
+<label class="label" for="lookup-address">DIN ETHEREUM / EVM-WALLETADRESSE</label>
+<input id="lookup-address" type="text" placeholder="0x…" maxlength="42" autocomplete="off" autocapitalize="none" spellcheck="false" aria-describedby="lookup-help">
+<p id="lookup-help" class="help">Modellen gjetter en nøkkel og beregner wallet-adressen den gir. Vi sammenligner deretter alle 160 adressebiter med adressen du oppgir. Riktige adressebiter er ikke det samme som riktige privatnøkkelbiter. Beregningen kjøres lokalt.</p>
+<button id="guess-check" class="primary">Gjett og kontroller nøkkel <span class="arrow" aria-hidden="true">↗</span></button>
+<div class="guess-tools"><button id="guess-demo" type="button" class="secondary">◈ Test med kjent eksempel · se begge bitmatrisene</button><button id="guess-benchmark" type="button" class="secondary">↻ Forsk på treff og feil · 1 000 nye testpar</button></div>
+<p id="guess-benchmark-result" class="guess-benchmark-result" role="status" aria-live="polite">Forsk på om riktige adressebiter henger sammen med riktige nøkkelbiter. Nye testpar sammenlignes mot tilfeldige kontrolladresser og en-bit-endringer. Kun samlet statistikk kan lagres i nettleseren; modellen endres ikke uten en dokumentert forbedring.</p>
+<p id="guess-status" class="status" role="status" aria-live="polite">Klar til å teste adressen din.</p>
+<div id="guess-result" class="guess-result" hidden>
+<span class="label">ADRESSEN DU TESTER</span><output id="guess-target" aria-label="Oppgitt wallet-adresse"></output>
+<span class="label">MODELLENS NØKKELGJETNING</span><output id="guess-candidate" aria-label="Uverifisert modellgjetning"></output>
+<span class="label">ADRESSEN GJETNINGEN GIR</span><output id="guess-address" aria-label="Adresse beregnet fra modellgjetningen"></output>
+<p id="guess-verdict" role="status" aria-live="polite"></p><p id="guess-bits" class="help"></p>
+<div id="guess-address-lab" class="guess-bit-lab" hidden><div class="guess-bit-top"><span class="guess-bit-title">Offentlige wallet-adresser · sammenligning</span><span class="guess-bit-tag">160 BIT · 10 RADER</span></div><p id="guess-address-count" class="guess-bit-count"></p><div class="guess-bit-meter" aria-hidden="true"><span id="guess-address-meter"></span></div><p class="guess-bit-legend">Grønn = samme adressebit · Grå = forskjellig adressebit</p><div id="guess-address-grid" class="guess-bit-grid" aria-label="Sammenligning av 160 offentlige adressebiter"></div><p id="guess-address-explanation" class="guess-bit-note"></p></div>
+<div id="guess-bit-lab" class="guess-bit-lab" hidden><div class="guess-bit-top"><span class="guess-bit-title">Privatnøkkelbiter · kun når fasit er kjent</span><span class="guess-bit-tag">256 BIT · 16 RADER</span></div><p id="guess-bit-count" class="guess-bit-count"></p><div class="guess-bit-meter" aria-hidden="true"><span id="guess-bit-progress"></span></div><p id="guess-bit-legend" class="guess-bit-legend"></p><div id="guess-bit-grid" class="guess-bit-grid" aria-label="Bitoversikt med seksten biter per rad"></div><p id="guess-bit-note" class="guess-bit-note"></p></div>
+<section id="bit-holo-panel" class="bit-holo-panel" aria-labelledby="bit-holo-title">
+<div class="holo-head"><div><p class="holo-eyebrow">SETAEI · VISUELL ANALYSELAB</p><h3 id="bit-holo-title">3D / 4D / 5D lagvisning <span aria-hidden="true">✧</span></h3><p class="holo-subtitle">160 adressebiter + 256 nøkkelbiter i én bevegelig, romlig visning</p></div><span class="holo-tag">416 BIT · 2 LAG</span></div>
+<div class="holo-modes" role="group" aria-label="Visualiseringsmoduser">
+<button id="holo-mode-3d" type="button" class="active" aria-pressed="true">3D · Lag</button>
+<button id="holo-mode-4d" type="button" aria-pressed="false">4D · Historikk</button>
+<button id="holo-mode-5d" type="button" aria-pressed="false">5D · Mønster</button>
+</div>
+<div class="holo-canvas-shell">
+<canvas id="holo-canvas" width="820" height="600" tabindex="0" aria-label="Dra for å rotere de to bittabellene i et tredimensjonalt rom. Bruk kontrollene under til å zoome, flytte og legge lagene oppå hverandre."></canvas>
+<div class="holo-overlay-label holo-label-address"><span class="holo-light"></span><strong>ADRESSEBITER</strong><small>160 · 10 × 16</small></div>
+<div class="holo-overlay-label holo-label-key"><span class="holo-light green"></span><strong>NØKKELBITER</strong><small>256 · 16 × 16</small></div>
+<div class="holo-orbit-hint">↔ Dra for å rotere · Klyp for å zoome</div>
+</div>
+<div class="holo-key-line" role="status" aria-live="polite"><span id="holo-address-total">Adresse: —/160</span><span id="holo-key-total">Nøkkel: —/256</span><span id="holo-selection">Ingen bit valgt</span></div>
+<div class="holo-toolbar" role="group" aria-label="3D-kontroller">
+<button type="button" id="holo-spin" aria-pressed="false"><span aria-hidden="true">⟳</span> Snurr</button>
+<button type="button" id="holo-rotate-left"><span aria-hidden="true">↶</span> Vri</button><button type="button" id="holo-move" aria-pressed="false"><span aria-hidden="true">✥</span> Flytt lag</button>
+<button type="button" id="holo-zoom-in"><span aria-hidden="true">＋</span> Zoom inn</button>
+<button type="button" id="holo-zoom-out"><span aria-hidden="true">−</span> Zoom ut</button>
+<button type="button" id="holo-reset"><span aria-hidden="true">↺</span> Nullstill</button>
+</div>
+<div class="holo-sliders">
+<label for="holo-separation"><span>Avstand mellom lag</span><output id="holo-separation-label">65 %</output><input id="holo-separation" type="range" min="0" max="120" value="65"></label>
+<label for="holo-shift"><span>Flytt øvre lag sidelengs</span><output id="holo-shift-label">0</output><input id="holo-shift" type="range" min="-80" max="80" value="0"></label>
+</div>
+<div class="holo-toggles">
+<label><input id="holo-connections" type="checkbox" checked> Vis koblingslinjer</label>
+<label><input id="holo-values" type="checkbox" checked> Vis 0 / 1</label>
+<label><input id="holo-glass" type="checkbox" checked> Gjennomsiktig</label>
+</div>
+<div id="holo-timeline" class="holo-timeline" hidden><button type="button" id="holo-previous">← Forrige</button><span id="holo-frame-label">Historikk: 1 / 1</span><button type="button" id="holo-next">Neste →</button></div>
+<p id="holo-note" class="holo-note">Grønt = bitlikhet mot kjent fasit; grått = ulikhet. Blått = fasit ukjent. Linjene viser bare romlig plassering, <strong>ikke</strong> en bevist kryptografisk kobling. Bitverdier behandles kun lokalt.</p>
+</section>
+<p class="help">Dette er eksperimentelle testdata. Modellgjetningen er ikke sikkert tilfeldig og bør ikke brukes til å oppbevare penger.</p>
+</div>
+<details class="model-details"><summary>Om modellen og testresultatene</summary><p id="guess-model-stats" class="help">Modellens testresultater lastes lokalt.</p><p class="help"><strong>Ny uavhengig studie, 23.10.2026:</strong> 2 000 syntetiske testpar ga 49,94 % riktige adressebiter med modellen, mot 50,04 % ved tilfeldige adresser. Korrekt nøkkelbitandel var 50,15 %, og sammenhengen mellom adresse- og nøkkelbitreff var r=0,028. Ved 500 tester der én nøkkelbit ble snudd, var 50,19 % av adressebitene fortsatt like. Ingen hele nøkler ble funnet. <a href="./research-v3/address_overlap_study_20261023.json">Se råmålinger</a> · <a href="./research-v3/address_overlap_methodology_20261023.md">Metode og tolkning</a>.</p><p class="help">Omtrent 50 % riktige enkeltbiter tilsvarer tilfeldig gjetting. Det er ikke 50 % sjanse for å finne hele nøkkelen. Ingen kjent praktisk metode finner privatnøkkelen fra bare en wallet-adresse. Flere testpar gir bedre målinger, ikke automatisk en klokere modell.</p></details>
+</section>
+<section id="binary-tool" class="generator lookup binary-tool" role="tabpanel" aria-labelledby="tool-binary" hidden>
+<div class="card-top"><h2>Tegn for tegn. Bit for bit.</h2><span class="format">HEX → BINÆR</span></div><section class="bit-playground" aria-labelledby="bit-play-title">
+<div class="playground-heading"><div><span class="lesson-eyebrow">LEK MED ÉN HEX-VERDI</span><h3 id="bit-play-title">Fire brytere. Ett tegn.</h3></div><div class="hex-orb"><small>HEX</small><output id="play-hex">D</output></div></div>
+<p>Klikk på bryterne. Hver bit slår sin verdi av eller på. Summen bestemmer hex-tegnet.</p>
+<div id="play-bits" class="play-bits" role="group" aria-label="Fire bitbrytere"></div>
+<div class="bit-sum"><span id="play-sum">8 + 4 + 1 = 13</span><strong id="play-binary">1101</strong></div>
+<div id="play-hex-bank" class="hex-bank" role="group" aria-label="Velg hex-tegn"></div>
+<div class="challenge-row"><button id="play-challenge" class="secondary" type="button">Gi meg en utfordring ✦</button><p id="play-feedback" role="status" aria-live="polite">D = 13 = 1101. Prøv å endre én bit!</p></div>
+</section>
+<p class="help">Hvert heksadesimalt tegn er fire biter. For eksempel: <code>b = 1011</code> og <code>9 = 1001</code>.</p>
+<label class="label" for="binary-input">TESTNØKKEL ELLER WALLET-ADRESSE</label>
+<input id="binary-input" type="password" maxlength="66" placeholder="64 tegn, eller 0x + 40 tegn" autocomplete="off" autocapitalize="none" spellcheck="false" aria-describedby="binary-help">
+<div class="input-bottom"><p id="binary-help" class="help">Konverteringen skjer lokalt, uten nettverkskall eller lagring.</p><button id="binary-toggle" class="text-button" aria-pressed="false">Vis inndata</button></div>
+<button id="binary-show" class="primary">Vis binært <span class="arrow" aria-hidden="true">↗</span></button>
+<div class="secondary-row"><button id="binary-use" class="secondary" disabled>Bruk generert nøkkel</button><button id="binary-clear" class="secondary">Tøm</button></div>
+<p id="binary-status" class="status" role="status" aria-live="polite">Lim inn testdata eller bruk en nøkkel fra generatoren.</p>
+<div id="binary-result" hidden>
+<p id="binary-summary" class="help"></p><span class="label">WALLET-ADRESSE</span><output id="binary-address" aria-label="Adresse i binærvisning"></output>
+<p class="binary-note">Tabellene viser hvordan tegnene skrives binært. Samme radnummer betyr ikke at nøkkeltegnet bestemmer adressetegnet.</p>
+<section id="binary-key-section" class="binary-table-section" aria-label="Privatnøkkel i binærkode"><h3>Privatnøkkel · 64 tegn · 256 biter</h3><div class="table-scroll" role="region" aria-label="Rullbar nøkkeltabell" tabindex="0"><table><caption>Privatnøkkel: fire biter per tegn</caption><thead><tr><th scope="col">Nr.</th><th scope="col">Hex</th><th scope="col">Binærkode</th><th scope="col">Bitnr.</th></tr></thead><tbody id="binary-key-rows"></tbody></table></div></section>
+<section class="binary-table-section" aria-label="Wallet-adresse i binærkode"><h3>Wallet-adresse · 40 tegn · 160 biter</h3><p class="help">Prefikset <code>0x</code> telles ikke med. Store og små bokstaver har samme binærverdi.</p><div class="table-scroll" role="region" aria-label="Rullbar adressetabell" tabindex="0"><table><caption>Wallet-adresse: fire biter per tegn</caption><thead><tr><th scope="col">Nr.</th><th scope="col">Hex</th><th scope="col">Binærkode</th><th scope="col">Bitnr.</th></tr></thead><tbody id="binary-address-rows"></tbody></table></div></section>
+</div>
+</section>
+<section id="process-tool" class="generator lookup process-panel" role="tabpanel" aria-labelledby="tool-process" hidden>
+<div class="card-top"><h2>Fra bit til Ethereum-adresse</h2><span class="format">INTERAKTIV LÆRING</span></div>
+<p class="process-intro">Trykk «Neste bit» for å se nøyaktig hva som skjer med <strong>11010111</strong>. Vi viser virkelig punktregning på Ethereum-kurven secp256k1, ikke en omgjøring av ett tegn til et annet.</p>
+<div class="process-note"><strong>Trygt læreeksempel:</strong> vi bruker bare tallet 215 (hex d7), ikke hele privatnøkkelen din. Dette er en usikker demonstrasjonsnøkkel og må aldri brukes til penger. De første åtte bitene i en 256-biters nøkkel er kun starten på beregningen.</div>
+<div class="process-roadmap"><div><small>1 · Heksadesimalt</small><strong>d7</strong></div><div><small>2 · Binærkode</small><strong>11010111</strong></div><div><small>3 · Matematisk</small><strong>215 × G</strong></div></div>
+<section class="process-journey" aria-labelledby="journey-title">
+<div class="journey-heading"><div><span class="lesson-eyebrow">FØLG BITENS REISE</span><h3 id="journey-title">En bit går inn. Et nytt punkt kommer ut.</h3></div><button id="process-play" class="secondary" type="button" aria-pressed="false">▶ Spill av</button></div>
+<div id="journey-track" class="journey-track" aria-hidden="true"><div class="journey-line"></div><span id="journey-token">1</span><span class="journey-dot dot-one"></span><span class="journey-dot dot-two"></span><span class="journey-dot dot-three"></span></div>
+<div class="journey-cards"><div><small>1 · LES BIT</small><strong id="journey-bit">—</strong><span id="journey-bit-caption">Start reisen</span></div><div id="journey-operation-card"><small>2 · DOBLE, EVENTUELT +G</small><strong id="journey-operation">× 2</strong><span id="journey-operation-caption">Punktregning på kurven</span></div><div id="journey-result-card"><small>3 · NYTT PUNKT</small><strong id="journey-point">0G</strong><span id="journey-result-caption">Klar for neste bit</span></div></div>
+<p id="journey-story" class="journey-story" aria-live="polite">Trykk «Spill av», eller velg neste bit selv. Vi følger det offentlige læreeksemplet 11010111.</p>
+</section>
+<div class="process-section-title"><h3>Velg én bit om gangen</h3><span id="process-count">STEG 0 AV 8</span></div>
+<div id="process-bit-buttons" class="process-bit-buttons" role="group" aria-label="Velg bit"></div>
+<div class="process-track" aria-hidden="true"><div id="process-fill"></div></div>
+<div class="process-stage" aria-live="polite">
+<span class="label">DOBLE → EVENTUELT LEGGE TIL G</span>
+<div class="process-terms">
+<div class="process-term"><small>Før</small><strong id="process-previous">0G</strong></div>
+<div class="process-op">→</div>
+<div class="process-term"><small>Doblet</small><strong id="process-doubled">0G</strong></div>
+<div class="process-op" id="process-added">—</div>
+<div class="process-term result"><small>Resultat</small><strong id="process-result">0G</strong></div>
+</div>
+<div id="process-equation">Start: 0G</div>
+<p id="process-text">Vi starter med 0G.</p>
+<div class="process-controls"><button type="button" id="process-previous-button" class="secondary">← Tilbake</button><button type="button" id="process-next-button" class="primary">Neste bit →</button><button type="button" id="process-restart" class="secondary">Start på nytt</button></div>
+</div>
+<div class="process-coords"><h3>Det faktiske punktet på kurven</h3><small>X-KOORDINAT</small><code id="process-x">—</code><small>Y-KOORDINAT</small><code id="process-y">—</code><p class="help">Disse koordinatene regnes ut fra alle bitene vi har behandlet så langt. De blir ikke kopiert fra adressebokstavene.</p></div>
+<div class="process-math"><h3>Neste steg: Hva betyr G + G?</h3><p>Ethereum bruker kurven <strong>y² = x³ + 7 (mod p)</strong>. Når vi dobler et punkt G=(x,y), regner vi først helningen:</p>
+<div class="process-formula">λ = (3 × x²) × (2 × y)⁻¹ mod p<br>x₂ = (λ² − 2x) mod p<br>y₂ = (λ × (x − x₂) − y) mod p</div>
+<p>Her er «deling» en modulær invers: vi finner tallet som ganger nevneren til 1 (mod p). Det er derfor ikke vanlig desimaldivisjon.</p>
+<details><summary>Se et lite eksempel med tall du kan følge</summary><p>På kurven y² = x³ + 7 (mod 17) velger vi G=(1,5). Da er inversen av 10 lik 12, siden 10 × 12 = 120 ≡ 1 (mod 17).</p><div class="process-formula">λ = (3 × 1²) × 12 mod 17 = 2<br>x₂ = 2² − 2 × 1 = 2<br>y₂ = 2 × (1−2) − 5 = −7 ≡ 10 mod 17<br>Altså: G + G = (2,10)</div><p>Dette er en <strong>egen liten øvelseskurve</strong>, ikke punkt G som brukes av Ethereum.</p></details>
+<details><summary>Vis faktiske Ethereum-koordinater for 2G</summary><small>X FOR 2G</small><code id="process-2gx"></code><small>Y FOR 2G</small><code id="process-2gy"></code></details></div>
+<div id="process-finish" class="process-finish" hidden><h3>Ferdig: 11010111 = 215G</h3><p>Vi legger 215 inn som et 256-biters tall (62 nuller og hex d7). Punktet ovenfor er da den offentlige nøkkelen. Ethereum bruker <strong>Keccak-256 av X og Y</strong> og beholder de siste 20 bytene av hashen.</p><small>DEMONSTRASJONSNØKKEL (IKKE BRUK DEN)</small><code id="process-demo-key"></code><small>ETHEREUM-ADRESSE SOM DEN GIR</small><code id="process-demo-address"></code><p id="process-verified"></p><p><strong>Viktig:</strong> 215G er kun resultatet av disse åtte bitene. Den ekte nøkkelen har ytterligere 248 biter. De fortsetter med å doble og legge til punkter og gir et helt annet sluttpunkt.</p></div>
+</section>
+<section id="reverse-tool" class="generator lookup reverse-panel" role="tabpanel" aria-labelledby="tool-reverse" hidden>
+<div class="card-top"><h2>Baklengs-test · Kan vi finne nøkkelen?</h2><span class="format">EKSPERIMENT</span></div>
+<p class="reverse-intro">Her får du demonstrert at vi <strong>faktisk kan regne baklengs på en liten elliptisk kurve</strong>. Vi skjuler et tall, viser bare det offentlige punktet, og lar datamaskinen finne tallet uten å lese fasiten.</p>
+<div class="reverse-notice"><strong>Kun læring:</strong> Dette er en liten testkurve med 9 630 mulige ikke-null-nøkler, ikke ekte Ethereum-kryptografi. Ikke lim inn eller test virkelige privatnøkler. Den korte «adressen» er en enkel 8-biters kontrollkode, ikke Keccak-256.</div>
+<div class="reverse-facts"><div><small>Testkurve</small><strong>mod 9739</strong></div><div><small>Offentlig punkt</small><strong>k × G</strong></div><div><small>Nøkkelmuligheter</small><strong>9 630</strong></div></div>
+<div class="reverse-source">
+<h3>1. Vi låser en privat verdi og viser bare resultatet</h3>
+<span class="label">OFFENTLIG PUNKT Q = k × G</span><div id="reverse-point" class="reverse-big">(…)</div>
+<span class="label">KORT DEMONSTRASJONSADRESSE (8 BIT)</span><div id="reverse-toy-address" class="reverse-tiny">0x…</div>
+<p class="help">Den skjulte verdien k finnes i testkurvens gruppe. Vi viser ikke k før søket er ferdig.</p>
+<button id="reverse-random" type="button" class="secondary">↻ Generer ny, skjult testnøkkel</button>
+<div class="reverse-inline"><input id="reverse-input" inputmode="numeric" type="number" min="1" max="9630" step="1" placeholder="Eller velg eget testtall: 1–9630" aria-label="Valgfritt hemmelig testtall" autocomplete="off"><button id="reverse-choose" type="button" class="secondary">Bruk testtall</button></div>
+</div>
+<div class="reverse-section">
+<h3>2. Prøv å regne baklengs</h3><p class="help">Begge søkene bruker samme skjulte testnøkkel. De forsøker kandidatene etter tur og kontrollerer hva de faktisk gir — uten å lese den skjulte fasiten.</p>
+<div class="reverse-two-btn"><button id="reverse-run-point" type="button" class="primary">Finn fra offentlig punkt →</button><button id="reverse-run-short" type="button" class="secondary">Finn fra kort adresse →</button></div>
+<div class="reverse-progress-shell"><div id="reverse-progress"></div></div><div class="reverse-numerics"><span>Testede muligheter</span><span id="reverse-checked">0 / 9 630</span></div>
+<p id="reverse-result" class="reverse-result" role="status" aria-live="polite">Start en test for å finne den skjulte verdien.</p>
+<p id="reverse-hit" class="reverse-hit">Fasit holdes skjult til søket er ferdig.</p><div id="reverse-trace" class="reverse-trace" aria-label="Siste testede nøkkelkandidater"></div>
+<button id="reverse-cancel" type="button" class="secondary" disabled>Stopp søket</button>
+</div>
+<div class="reverse-summary">
+<h3>3. Hvorfor blir Ethereum vanskeligere?</h3>
+<p>På denne lille kurven finner vi nøkkelen ved å teste ett punkt om gangen. Med et <strong>offentlig secp256k1-punkt</strong> er den beste kjente generelle klassiske angrepskompleksiteten omtrent 2¹²⁸ gruppeoperasjoner. <strong>Med bare Ethereum-adressen</strong> må man i stedet finne en privatnøkkel som gir riktig 160-biters adresse, og en generisk prøv-og-kontroller-metode forventes å kreve omtrent 2¹⁶⁰ forsøk.</p>
+<table aria-label="Sammenligning av størrelser"><thead><tr><th>Scenario</th><th>Arbeid</th><th>Praktisk resultat</th></tr></thead><tbody>
+<tr><td>Liten testkurve</td><td>Maks 9 630 forsøk</td><td>Gjennomførbart her</td></tr>
+<tr><td>Offentlig Ethereum-punkt</td><td>Ca. 2¹²⁸ operasjoner</td><td>Upraktisk med kjente klassiske metoder</td></tr>
+<tr><td>Kun Ethereum-adresse</td><td>Ca. 2¹⁶⁰ nøkkelforsøk</td><td>Upraktisk med kjente generiske metoder</td></tr></tbody></table>
+<details><summary>Hvorfor får den korte adressen flere treff?</summary><p>I vår test gir vi hvert offentlig punkt bare én av 256 mulige 8-biters kontrollkoder. Det finnes 9 630 mulige private tall, så mange tall må få samme kode. Selv om et av treffene er den skjulte nøkkelen, identifiserer ikke kontrollkoden hvilken kandidat som var den opprinnelige.</p><p>Ethereum bruker en kryptografisk hash og 160-biters adresser, ikke denne enkle koden. Poenget er bare å vise hvordan informasjon går tapt når et stort nøkkelrom presses ned til færre mulige adresser.</p></details>
+<details><summary>Kan AI lære en snarvei?</summary><p>En AI kan lære systematiske svakheter i dårlig genererte nøkler, men det er noe annet enn å reversere en kryptografisk sterk, tilfeldig generert nøkkel. Vi må derfor teste eventuelle AI-påstander på helt nye, tilfeldig genererte testnøkler den ikke har sett før.</p></details>
+</div></section>
+<section id="vanity-tool" class="generator vanity-panel" role="tabpanel" aria-labelledby="tool-vanity" hidden>
+<div class="card-top"><h2>500 nye wallets · eget prefiks</h2><span class="format">LOKAL GENERERING</span></div>
+<p class="help">Lag nye Ethereum/EVM-wallets på enheten din. Velg eventuelt 1–40 heksadesimale tegn i starten av adressen etter <code>0x</code>, for eksempel <code>0x123456789…</code>. Lengden gjenkjennes automatisk. Store og små bokstaver i selve adressen følger Ethereum-kontrollsummen.</p>
+<div class="vanity-fields"><label for="vanity-prefix">Adresseprefiks · 1–40 tegn, valgfritt<div class="vanity-prefix-field"><span>0x</span><input id="vanity-prefix" type="text" maxlength="42" placeholder="123456789" autocomplete="off" autocapitalize="characters" spellcheck="false" aria-describedby="vanity-estimate"></div></label>
+<label for="vanity-count">Nye wallets per omgang<select id="vanity-count"><option value="1">1</option><option value="10">10</option><option value="100">100</option><option value="500" selected>500</option></select></label></div>
+<div class="vanity-performance-controls"><label for="vanity-workers">Arbeidsmengde · opptil 1 000 søkejobber<select id="vanity-workers" aria-describedby="vanity-parallel-help"></select></label><p id="vanity-parallel-help" class="help">Antall arbeidere begrenses etter enheten. Hver arbeider kan undersøke opptil 1 000 kandidater per bolk. Dette er ikke 1 000 uavhengige CPU-kjerner.</p></div>
+<p id="vanity-estimate" class="help">Uten prefiks lages nye tilfeldige wallets direkte. Skriv 1–40 tegn for å velge starten på adressen og se forventet antall forsøk.</p>
+<button id="vanity-start" class="primary" type="button">Generer nye wallets →</button>
+<div class="secondary-row"><button id="vanity-stop" class="secondary" type="button" disabled>Stopp</button><button id="vanity-clear" class="secondary" type="button" disabled>Tøm listen</button></div>
+<p id="vanity-status" class="status" role="status" aria-live="polite">Velg antall og eventuelt et prefiks. Trykk deretter «Generer nye wallets».</p>
+<progress id="vanity-progress" max="500" value="0" aria-label="Antall nye wallets generert"></progress>
+<div class="vanity-metrics"><div class="vanity-metric"><small>FULLFØRTE FORSØK</small><strong id="vanity-attempts">0</strong></div><div class="vanity-metric"><small>MÅLT GJENNOMSNITTSFART</small><strong id="vanity-speed">0 forsøk/s</strong></div><div class="vanity-metric vanity-eta-metric"><small id="vanity-eta-label">ESTIMERT RESTTID</small><strong id="vanity-eta" aria-live="off">–</strong></div></div><p id="vanity-eta-note" class="help">Start et søk for å beregne resttid. Estimater er ikke garanterte sluttider.</p><p id="vanity-engine">Klar til parallell kjøring</p><p id="vanity-session">0 forsøksnumre reservert i denne økten</p><p class="help"><span id="vanity-stored">0 / 500 wallets i denne økten</span></p>
+<p class="help">Denne fanen gjør ingen saldooppslag. Søket fortsetter ved fanebytte så lenge nettleseren tillater det. Mobilens strømsparing kan pause kjøringen; en lukket eller forkastet fane kan ikke fortsette. Nøkler og treff beholdes bare i sidens minne og forsvinner ved omlasting.</p>
+<p class="help">Arbeiderne får ulike forsøksnumre og lagrede treff vises ikke dobbelt. Etter omlasting starter en ny tilfeldig økt; full historikk over alle gamle forsøk lagres ikke.</p>
+<details id="server-agent-panel" class="server-agent-panel">
+<summary><span><strong><icon aria-hidden="true">◉</icon> Serveragent · søk også når nettleseren er lukket</strong><small>Med begrenset CPU-bruk · stopper ved første treff</small></span><span aria-hidden="true">⌄</span></summary>
+<div class="server-agent-content">
+<p class="help">Denne varianten søker på VPS-en etter <strong>ett</strong> wallet-prefiks. Startnøkkelen opprettes lokalt, og <strong>sendes aldri til serveren</strong>. Serveren søker kun fra den offentlige elliptiske kurvenøkkelen. Du må lagre den private startnøkkelen sikkert før søket starter, ellers kan du ikke bruke adressen når den blir funnet.</p>
+<div class="server-agent-actions">
+<button id="server-agent-create" class="secondary" type="button">1. Opprett privat startnøkkel på denne enheten</button>
+<div id="server-agent-secret-box" class="server-agent-secret-box" hidden>
+<label class="label" for="server-agent-secret">HEMMELIG STARTNØKKEL · KUN PÅ DENNE ENHETEN</label>
+<output id="server-agent-secret" aria-label="Din private startnøkkel som må oppbevares sikkert"></output>
+<button id="server-agent-copy" class="secondary" type="button">Kopier startnøkkel</button>
+<p id="server-agent-secret-warning" class="help">Lagre denne i en sikker passordbehandler eller offline. Den kan ikke gjenopprettes fra serveren.</p>
+<label class="server-agent-confirm"><input id="server-agent-saved" type="checkbox"> Jeg har lagret den private startnøkkelen sikkert</label>
+</div>
+<label for="server-agent-code">Serverens tilgangskode
+<input id="server-agent-code" type="password" maxlength="64" autocomplete="off" spellcheck="false" placeholder="Lim inn privat tilgangskode"></label>
+<button id="server-agent-start" class="primary" type="button">2. Start serveragenten med prefikset ovenfor <span class="arrow" aria-hidden="true">↗</span></button>
+</div>
+<p id="server-agent-status" class="status" role="status" aria-live="polite">Ingen serverjobb startet i denne nettleseren. Lag startnøkkel og oppgi et prefiks først.</p>
+<p id="server-agent-progress" class="help"></p>
+<p id="server-agent-estimate" class="help"></p>
+<div class="secondary-row server-agent-playback"><button id="server-agent-stop" class="secondary" type="button" disabled aria-label="Pause søket og frigjør CPU på VPS-en">⏸ Pause · frigjør CPU</button><button id="server-agent-resume" class="secondary" type="button" disabled aria-label="Fortsett søket fra sist lagrede forsøksnummer">▶ Play · fortsett søk</button></div><p class="help">Du kan pause og fortsette når du vil, også etter en serveromstart. Serveren lagrer forsøksnummeret og hopper ikke tilbake til begynnelsen.</p>
+<div id="server-agent-found" class="server-agent-found" hidden>
+<h3>✓ Prefikstreff funnet av VPS-agenten</h3>
+<a id="server-agent-found-link" href="https://etherscan.io/" target="_blank" rel="noopener noreferrer"><output id="server-agent-found-address"></output>Åpne på Etherscan ↗</a>
+<p class="help">Treffnummer: <span id="server-agent-found-index"></span>. Skriv inn din opprinnelige private startnøkkel for å avlede privatnøkkelen lokalt. Den sendes aldri til VPS-en.</p>
+<input id="server-agent-recovery" type="password" maxlength="66" autocomplete="off" spellcheck="false" placeholder="Din private startnøkkel, 64 hex-tegn" aria-label="Privat startnøkkel, behandles kun lokalt">
+<button id="server-agent-reveal" type="button" class="secondary">Gjenopprett og kontroller privatnøkkel lokalt</button>
+<div id="server-agent-private-box" class="server-agent-secret-box" hidden><span class="label">LOKALT AVLEDET PRIVATNØKKEL · HEMMELIG</span><output id="server-agent-private"></output><p class="help">Kopier denne til en betrodd wallet. Den forsvinner fra visningen når du forlater siden.</p></div>
+</div>
+<p class="help">Viktig: Du får ikke automatisk privatnøkkelen fra serveren; den har den aldri. Kort prefiks er raskere. Lengre prefiks kan kreve måneder eller år med serverens begrensede regnekraft.</p>
+</div>
+</details>
+<div class="server-agent-dashboard-link"><span>◈ Følg begge agentene fra én oversikt</span><a href="/key/agent/" target="_self">Åpne agentoversikt ↗</a><small>Live antall forsøk · hastighet · forskning · serverbelastning</small></div>
+<details id="research-agent-panel" class="server-agent-panel research-agent-panel" open>
+<summary><span><strong>◈ Forskningsagent · kan vi forutsi den riktige nøkkelen?</strong><small>Syntetiske testnøkler · tre hypoteser · automatisk statistisk evaluering</small></span><span aria-hidden="true">⌄</span></summary>
+<div class="server-agent-content">
+<p class="help">Denne agenten undersøker om en algoritme klarer å gjette <strong>den opprinnelige privatnøkkelen</strong> bedre enn tilfeldigheter. Den tester på egne syntetiske nøkkelpar med kjent fasit. Ingen privatnøkler eller startnøkler fra deg sendes til serveren.</p>
+<div class="research-agent-stage"><span id="research-agent-state">Henter status …</span><strong id="research-agent-counter">0 / 1200</strong></div>
+<progress id="research-agent-progress" max="1200" value="0" aria-label="Fremdrift for forskningsagent"></progress>
+<p id="research-agent-phase" class="help">Venter på forskningsresultater …</p>
+<div class="research-agent-metrics">
+ <div><small>MODELL VS. TILFELDIG · 256 NØKKELBITER</small><strong id="research-agent-model">Måles …</strong></div>
+ <div><small>BEDRE ADRESSE-LIKHET → BEDRE NØKKEL?</small><strong id="research-agent-ranking">Måles …</strong></div>
+ <div><small>ÉN NØKKELBIT ENDRET · ADRESSEBITER LIKE</small><strong id="research-agent-avalanche">Måles …</strong></div>
+</div>
+<p id="research-agent-assessment" class="help">Et resultat må slå tilfeldig søk på uavhengige testdata, med usikkerhet vist, før vi kan kalle det en forbedring.</p>
+<label for="research-agent-code">Tilgangskode for Pause / Play (bare hvis du ikke allerede har startet en serverjobb)
+<input id="research-agent-code" type="password" autocomplete="off" spellcheck="false" placeholder="Serverens tilgangskode"></label>
+<div class="secondary-row server-agent-playback"><button id="research-agent-pause" class="secondary" type="button" disabled>⏸ Pause forskning</button><button id="research-agent-play" class="secondary" type="button" disabled>▶ Play · fortsett forskning</button></div>
+<p id="research-agent-feedback" class="help" role="status" aria-live="polite"></p>
+<p class="help">Dette er en måling, ikke en påstand om at krypteringen kan knekkes. Forsøket avsluttes etter forhåndsdefinerte tester; det starter ikke ubegrenset arbeid på VPS-en.</p>
+</div></details>
+<section id="vanity-results" aria-label="Genererte resultater og sortering" hidden><div class="vanity-controls"><label for="vanity-sort">Sorter etter<select id="vanity-sort"><option value="number">Nummer</option><option value="address">Wallet-adresse</option></select></label><button id="vanity-direction" type="button" class="secondary">↓ Synkende</button><button id="vanity-reveal" type="button" class="secondary" aria-pressed="false" disabled>Vis privatnøkler</button></div>
+<p class="help">Trykk på en offentlig wallet-adresse for å åpne informasjon, saldo og transaksjoner på Etherscan i en ny fane. Kun adressen deles med Etherscan – aldri privatnøkkelen.</p>
+<div class="table-scroll" role="region" tabindex="0" aria-label="Inntil 500 nye wallets: nummer, klikkbar Ethereum-adresse og privatnøkkel"><table><caption>Genererte wallets · trykk på adressen for Etherscan</caption><thead><tr><th scope="col">Nr.</th><th scope="col">Wallet-adresse ↗</th><th scope="col">Privatnøkkel</th></tr></thead><tbody id="vanity-rows"></tbody></table></div></section>
+<details class="model-details"><summary>Er disse adressene garantert unike og trygge?</summary><p class="help">Wallet-adresser blir ikke registrert eller reservert når de genereres. Det er teoretisk mulig at ulike privatnøkler gir samme adresse, men tilfeldig kollisjon er ekstremt usannsynlig når en sikker kryptografisk generator brukes. Etherscan kan vise aktivitet for en adresse, men kan ikke bevise at ingen andre har generert den. Privatnøkler må aldri deles. Dette er et eksperimentelt verktøy, ikke en uavhengig sikkerhetsrevidert løsning for oppbevaring av store verdier.</p></details>
+</section>
+<section id="watch-tool" class="generator watch-panel" role="tabpanel" aria-labelledby="tool-watch" hidden>
+<div class="card-top"><h2>Mine adresser · automatisk saldo</h2><span class="format">ETH + USDT</span></div>
+<p class="help">Lim inn dine offentlige Ethereum/EVM-adresser, én per linje. Du kan skrive et navn foran adressen, adskilt med semikolon: <code>Min wallet;0x…</code>. Maksimalt 100 forskjellige adresser.</p>
+<label for="watch-input">Dine offentlige wallet-adresser</label>
+<textarea id="watch-input" rows="5" maxlength="15000" spellcheck="false" autocomplete="off" autocapitalize="none" placeholder="Min wallet;0x…&#10;0x…" aria-describedby="watch-privacy"></textarea>
+<button id="watch-start" class="primary" type="button">Hent saldo for adresselisten →</button>
+<div class="watch-settings"><label class="watch-auto-label"><input id="watch-auto" type="checkbox" checked> Oppdater automatisk</label><label for="watch-interval">Intervall<select id="watch-interval"><option value="30">30 sekunder</option><option value="60" selected>1 minutt</option><option value="300">5 minutter</option></select></label></div>
+<div class="secondary-row"><button id="watch-refresh" class="secondary" type="button" disabled>Oppdater nå</button><button id="watch-pause" class="secondary" type="button">Stopp oppdatering</button><button id="watch-clear" class="secondary" type="button" disabled>Tøm listen</button></div>
+<p id="watch-status" class="status" role="status" aria-live="polite">Lim inn adressene og trykk «Hent saldo for adresselisten».</p>
+<p id="watch-mode" class="help"></p>
+<p id="watch-privacy" class="help">Viser ETH og USDT (ERC-20) på Ethereum mainnet. Andre tokens og nettverk inngår ikke. Bare offentlige adresser sendes til PublicNode. Listen beholdes i denne økten og tømmes ved omlasting. Oppdatering pauses når denne fanen eller nettleseren er i bakgrunnen.</p>
+<div class="watch-sort-controls"><label for="watch-sort">Sorter etter<select id="watch-sort"><option value="eth">ETH-saldo</option><option value="usdt">USDT-saldo</option><option value="name">Navn</option><option value="address">Wallet-adresse</option><option value="createdAt">Dato lagt til</option></select></label><button id="watch-direction" class="secondary" type="button">↓ Synkende</button></div>
+<p class="help"><span id="watch-count">0 / 100 adresser</span> · Ukjent saldo vises sist i begge retninger.</p>
+<p id="watch-empty" class="help">Ingen adresser lagt til ennå.</p>
+<div class="table-scroll" role="region" tabindex="0" aria-label="Adresseoversikt med ETH- og USDT-saldo"><table><caption>Dine adresser · sveip sidelengs for alle kolonner</caption><thead><tr><th scope="col">Navn</th><th scope="col">Wallet-adresse</th><th scope="col">ETH-saldo</th><th scope="col">USDT-saldo</th><th scope="col">Saldosvar kl.</th></tr></thead><tbody id="watch-rows"></tbody></table></div>
+</section>
+<section class="details" aria-label="Slik fungerer generatoren"><div><span class="number">01 / FORMAT</span><h3>Riktig tegnsett</h3><p>64 heksadesimale tegn: 0–9 og a–f. Dette er en privatnøkkel, ikke en gjenopprettingsfrase.</p></div><div><span class="number">02 / TILFELDIGHET</span><h3>Sikker generering</h3><p>Nettleserens kryptografiske generator lager 32 tilfeldige byte. Gyldig nøkkelområde kontrolleres.</p></div><div><span class="number">03 / PERSONVERN</span><h3>Blir hos deg</h3><p>Privatnøkkelen lagres eller sendes aldri. Kun den offentlige adressen sendes til PublicNode for å hente saldo. CoinGecko leverer USD-kurser uten å motta wallet-adressen.</p></div></section>
+<p class="scope">For Ethereum/EVM. Andre nettverk kan kreve et annet nøkkelformat. Uavhengig verktøy; ikke tilknyttet Trust Wallet.</p>
+</main><footer><span>SETAEI</span><span>Enkelt. Lokalt. Privat.</span></footer>
+</body></html>

@@ -1,0 +1,71 @@
+{
+  "study": "SETAEI independent synthetic-key replication",
+  "version": "audit-v1",
+  "id": "20261024T142456Z",
+  "lockedAtUtc": "2026-10-24T14:24:56.501Z",
+  "originalCohort": {
+    "model": 1200,
+    "ranking": 1200,
+    "avalanche": 256
+  },
+  "freshCohort": {
+    "model": 2000,
+    "ranking": 2000,
+    "avalanche": 512
+  },
+  "freshSeedHex": "18322f4797fb9d7bd1be363149e1394f6b80f14fad3ac9d0366d7fe7a6a8ba04",
+  "sourceHashes": [
+    {
+      "source": "/opt/setai-key-agent/research.js",
+      "name": "research.js",
+      "sha256": "b12605cb611ee3eee0bec30848491d31b7fc720e19c0ec122563c91c78b11182",
+      "bytes": 7894,
+      "mtime": "2026-10-23T00:11:33.742Z"
+    },
+    {
+      "source": "/var/www/setai/key/crypto-public-v1.js",
+      "name": "crypto-public-v1.js",
+      "sha256": "2505ca402ef577e59932a386b5575147b739eddc24821cd8dffcf661922779a0",
+      "bytes": 41658,
+      "mtime": "2026-10-22T23:32:39.378Z"
+    },
+    {
+      "source": "/var/www/setai/key/crypto-address-v2.js",
+      "name": "crypto-address-v2.js",
+      "sha256": "92cb91b67766205ba7b6ed5644b677a87ee43dcb393652ffee4ceb804a3f9a5d",
+      "bytes": 40911,
+      "mtime": "2026-10-21T19:29:12.243Z"
+    },
+    {
+      "source": "/var/www/setai/key/model-experiment-v5.js",
+      "name": "model-experiment-v5.js",
+      "sha256": "f1142ca11bfe3ffd16f45d7e7b19f89d4f3d868ac3f249531f449701e775b0e5",
+      "bytes": 554219,
+      "mtime": "2026-10-21T20:07:46.791Z"
+    },
+    {
+      "source": "/var/www/setai/key/guess-experiment-v5.js",
+      "name": "guess-experiment-v5.js",
+      "sha256": "377862d59843aa17d8958516e5fc7f12b5f2b3040daee86b25e40af5b4d2c597",
+      "bytes": 1539,
+      "mtime": "2026-10-21T20:07:46.791Z"
+    }
+  ],
+  "primary": "Paired mean correct private-key bits: frozen ridge prediction minus independent random baseline.",
+  "secondary": [
+    "Paired mean key-bit benefit from choosing the more similar address of two candidates.",
+    "Mean changed address bits after one private-key bit flip; reference 80/160."
+  ],
+  "inference": "Per-trial paired two-sided Student-t 95% CI; no treating 256 bits as independent subjects. Holm-adjusted p values across the three contrasts. No outcome-driven stopping.",
+  "fixedStop": "Exactly 2000, 2000 and 512 fresh trials. No model training, weight updates or target-wallet input.",
+  "exclusion": "Only a candidate scalar outside 1 <= k < secp256k1 order is rejected by deterministic rejection sampling.",
+  "timing": "Fresh and replay wall-clock UTC and monotonic elapsed times plus process CPU time are recorded. Original per-trial times are unavailable.",
+  "evidence": "Original deterministic replay is a reproducibility check, not a fresh replication. Fresh cohort uses a seed drawn after freezing current model files. The protocol is internally timestamped, not externally preregistered.",
+  "privacy": "Synthetic private keys exist only in process memory and are never written. No wallet balance/network requests. Public observation contains only aggregate Hamming-distance statistics.",
+  "limitations": [
+    "Original training keys are unavailable; explicit training/holdout set-overlap cannot be audited. Fresh seed generation is independent of the frozen training process.",
+    "Original individual rows and timestamps were not recorded; reconstructed rows must not be presented as original logs.",
+    "Observational point-stream samples are not controlled AI trials and will not be pooled with them.",
+    "Statistical consistency with randomness is not proof of cryptographic security or impossibility of future methods."
+  ]
+}

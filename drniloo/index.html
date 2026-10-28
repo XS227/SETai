@@ -11,8 +11,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./styles.css?v=1">
+<style>#page-bg{position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none}</style>
 </head>
 <body>
+<canvas id="page-bg" data-theme="wave" data-accent="#c99a48" data-layout="center" data-bg="#071426" aria-hidden="true"></canvas>
   <div class="scroll-progress" aria-hidden="true"><span id="scrollProgress"></span></div>
   <div class="ambient ambient-a"></div><div class="ambient ambient-b"></div>
   <header class="topbar glass">
@@ -149,5 +151,6 @@
     </section>
   </main>
   <script src="./app.js?v=1" defer></script>
+<script src="/assets/home/page-bg.js?v=4" defer></script>
 </body>
 </html>

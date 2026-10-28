@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-22T22:52:27.342Z",
+  "method": "independent cross-correlation linear bit classifier; 160 address-bit input, 256 secret-bit labels",
+  "training_samples": 4096,
+  "holdout_samples": 2048,
+  "candidate_holdout_bit_accuracy": 0.5008258819580078,
+  "existing_ridge_holdout_bit_accuracy": 0.5003280639648438,
+  "random_baseline_bit_accuracy": 0.5,
+  "candidate_full_secret_matches": 0,
+  "decision": "do_not_deploy_no_validated_gain",
+  "total_runtime_ms": 3453
+}

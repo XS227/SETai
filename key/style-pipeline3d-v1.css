@@ -1,0 +1,43 @@
+/* Pipeline 3D lab: warm violet palette, one colour per stage (violet key, orange public key, cyan hash, green address). */
+.pipe3d{margin:20px 0;padding:15px 13px 16px;border:1px solid #5a3fa6;border-radius:14px;background:radial-gradient(circle at 50% 0,#3a2a7033,transparent 60%),linear-gradient(160deg,#1a1236,#0e0a22 70%);color:#e6e0fa;overflow:hidden;box-shadow:0 0 22px #7b5cff1f}
+.pipe3d .p3-head{display:flex;justify-content:space-between;align-items:flex-start;gap:9px;margin-bottom:12px}
+.pipe3d .p3-eyebrow{font:700 9px ui-monospace,monospace;letter-spacing:1.4px;color:#b69cff;margin:0 0 6px}
+.pipe3d h3{font-size:18px;line-height:1.25;font-weight:800;letter-spacing:-.4px;color:#fff;margin:0 0 5px}
+.pipe3d .p3-sub{font-size:11px;line-height:1.5;color:#b9b0e6;margin:0}
+.pipe3d .p3-tag{white-space:nowrap;font:700 9px ui-monospace,monospace;border:1px solid #6b4fc4;border-radius:6px;padding:7px 7px;color:#d9c9ff}
+.pipe3d button{font:650 11px system-ui,sans-serif;color:#e6e0fa;background:#22194a;border:1px solid #4b3a8f;border-radius:8px;padding:9px 6px;cursor:pointer;transition:background .2s,border-color .2s}
+.pipe3d button:disabled{opacity:.45;cursor:default}
+.pipe3d button:focus-visible,.pipe3d input:focus-visible,.pipe3d canvas:focus-visible{outline:2px solid #ffe678;outline-offset:2px}
+.pipe3d .p3-steps{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:5px;margin-bottom:10px}
+.pipe3d .p3-steps button{--c:230,224,250;padding:8px 2px;font-size:10px;border-color:rgb(var(--c) / .45);color:rgb(var(--c))}
+.pipe3d .p3-steps button[aria-pressed=true]{background:rgb(var(--c) / .22);border-color:rgb(var(--c));color:#fff}
+.pipe3d .p3-shell{position:relative;border:1px solid #4b3a8f;border-radius:11px;overflow:hidden;aspect-ratio:1/1.05;min-height:340px;background:#0c0919}
+.pipe3d #p3-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:grab;outline:none}
+.pipe3d #p3-canvas:active{cursor:grabbing}
+.pipe3d .p3-hint{position:absolute;bottom:5px;right:7px;background:#0c0919cc;border-radius:5px;padding:4px 7px;font-size:9px;color:#a79cd8;pointer-events:none}
+.pipe3d .p3-card{margin:11px 0 6px;padding:10px 12px;border-left:3px solid #ffe678;background:#1d1540;border-radius:0 9px 9px 0;font-size:12px;line-height:1.65;color:#ddd6f7}
+.pipe3d .p3-card b{color:#fff}
+.pipe3d .p3-pick{font:600 10px ui-monospace,monospace;color:#ffe678;margin:6px 0 10px;min-height:1.3em;overflow-wrap:anywhere}
+.pipe3d .p3-actions{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin:6px 0}
+.pipe3d .p3-actions.small{grid-template-columns:44px 44px 1fr 1.4fr;align-items:center}
+.pipe3d .p3-actions button[aria-pressed=true]{background:#3a2a7a;border-color:#ffe678;color:#ffe678}
+.pipe3d .p3-slide{display:flex;align-items:center;gap:7px;font-size:10px;color:#b9b0e6}
+.pipe3d .p3-slide input{flex:1;min-width:0;accent-color:#ffe678}
+.pipe3d .p3-toggles{display:flex;gap:14px;flex-wrap:wrap;margin:8px 0 2px}
+.pipe3d .p3-toggles label{display:flex;gap:5px;align-items:center;font-size:10px;color:#cfc7f0}
+.pipe3d .p3-toggles input{accent-color:#ffe678;margin:0}
+.pipe3d .p3-chart{margin-top:14px;padding:12px;border:1px solid #3c2e78;border-radius:10px;background:#130d2b}
+.pipe3d .p3-chart h4{margin:0 0 10px;font:800 12px system-ui,sans-serif;color:#fff}
+.pipe3d .p3-bar{display:grid;grid-template-columns:96px 1fr;grid-template-areas:"l t" "l v";gap:2px 8px;align-items:center;margin-bottom:9px}
+.pipe3d .p3-bl{grid-area:l;font:700 10px system-ui,sans-serif;line-height:1.3}
+.pipe3d .p3-track{grid-area:t;position:relative;height:12px;border-radius:6px;background:#241b4d;overflow:hidden}
+.pipe3d .p3-track i{position:absolute;left:0;top:0;bottom:0;border-radius:6px;transition:width .45s ease}
+.pipe3d .p3-track u{position:absolute;left:50%;top:-1px;bottom:-1px;border-left:2px dashed #ffe678aa;text-decoration:none}
+.pipe3d .p3-bv{grid-area:v;font:600 10px ui-monospace,monospace;color:#cfc7f0}
+.pipe3d .p3-small{font-size:10px;line-height:1.65;color:#a79cd8;margin:8px 0 0}
+.pipe3d .p3-wide{width:100%;padding:11px 8px;border-color:#9ef87e88;color:#9ef87e;background:#16301f}
+.pipe3d #p3-hist{display:block;width:100%;height:auto;margin-top:10px;border-radius:8px;border:1px solid #3c2e78}
+.pipe3d .p3-note{font-size:10px;line-height:1.7;color:#a79cd8;margin:12px 0 0}
+.pipe3d .p3-note b{color:#ffe678}
+@media(max-width:430px){.pipe3d{padding:12px 8px}.pipe3d h3{font-size:16px}.pipe3d .p3-steps button{font-size:9px}.pipe3d .p3-actions button{font-size:10px;padding:9px 2px}.pipe3d .p3-bar{grid-template-columns:78px 1fr}.pipe3d .p3-shell{aspect-ratio:1/1.25}}
+@media(prefers-reduced-motion:reduce){.pipe3d *{transition:none!important}}

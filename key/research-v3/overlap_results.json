@@ -1,0 +1,221 @@
+{
+  "title": "Overlapping subset probability: control experiment",
+  "date_utc": "2026-10-22",
+  "seed": 20261022,
+  "scope": "Toy subset-sum surrogate; NOT a reproduction or assessment of an ECDLP method.",
+  "hypothesis": "Independence formulas can fail when candidate events share latent variables.",
+  "models": {
+    "uniform": "n independently random residues; subset events overlap in coordinates.",
+    "paired": "Each pair of positions shares one residue; stronger dependence.",
+    "identical": "All positions share one residue; deliberately extreme dependence."
+  },
+  "statistics": "Wilson 95% binomial interval across independent simulation trials",
+  "limitation": "This is not the zero-minor signature-matrix distribution in Mahalanobis 2026.",
+  "elapsed_seconds": 12.54,
+  "results": [
+    {
+      "prime": 1009,
+      "positions": 14,
+      "subset_size": 3,
+      "candidate_sets": 364,
+      "dependency_model": "uniform",
+      "trials": 1000,
+      "positive_cases": 305,
+      "observed_success_rate": 0.305,
+      "wilson95": [
+        0.2772547779089377,
+        0.33423771253975465
+      ],
+      "independence_formula": 0.3029736798726306,
+      "difference_observed_minus_formula": 0.0020263201273694187,
+      "independence_inside_ci": true
+    },
+    {
+      "prime": 1009,
+      "positions": 14,
+      "subset_size": 3,
+      "candidate_sets": 364,
+      "dependency_model": "paired",
+      "trials": 1000,
+      "positive_cases": 81,
+      "observed_success_rate": 0.081,
+      "wilson95": [
+        0.06564936712410993,
+        0.09955757389128536
+      ],
+      "independence_formula": 0.3029736798726306,
+      "difference_observed_minus_formula": -0.22197367987263056,
+      "independence_inside_ci": false
+    },
+    {
+      "prime": 1009,
+      "positions": 14,
+      "subset_size": 3,
+      "candidate_sets": 364,
+      "dependency_model": "identical",
+      "trials": 1000,
+      "positive_cases": 0,
+      "observed_success_rate": 0.0,
+      "wilson95": [
+        0,
+        0.003826898586390522
+      ],
+      "independence_formula": 0.3029736798726306,
+      "difference_observed_minus_formula": -0.3029736798726306,
+      "independence_inside_ci": false
+    },
+    {
+      "prime": 4093,
+      "positions": 20,
+      "subset_size": 3,
+      "candidate_sets": 1140,
+      "dependency_model": "uniform",
+      "trials": 1000,
+      "positive_cases": 259,
+      "observed_success_rate": 0.259,
+      "wilson95": [
+        0.23280577181548165,
+        0.2870387933031586
+      ],
+      "independence_formula": 0.24312588942992752,
+      "difference_observed_minus_formula": 0.015874110570072486,
+      "independence_inside_ci": true
+    },
+    {
+      "prime": 4093,
+      "positions": 20,
+      "subset_size": 3,
+      "candidate_sets": 1140,
+      "dependency_model": "paired",
+      "trials": 1000,
+      "positive_cases": 51,
+      "observed_success_rate": 0.051,
+      "wilson95": [
+        0.03900075064262791,
+        0.06643580428795079
+      ],
+      "independence_formula": 0.24312588942992752,
+      "difference_observed_minus_formula": -0.19212588942992753,
+      "independence_inside_ci": false
+    },
+    {
+      "prime": 4093,
+      "positions": 20,
+      "subset_size": 3,
+      "candidate_sets": 1140,
+      "dependency_model": "identical",
+      "trials": 1000,
+      "positive_cases": 1,
+      "observed_success_rate": 0.001,
+      "wilson95": [
+        0.0001765418290572713,
+        0.0056427029601604705
+      ],
+      "independence_formula": 0.24312588942992752,
+      "difference_observed_minus_formula": -0.24212588942992752,
+      "independence_inside_ci": false
+    },
+    {
+      "prime": 4093,
+      "positions": 18,
+      "subset_size": 4,
+      "candidate_sets": 3060,
+      "dependency_model": "uniform",
+      "trials": 1000,
+      "positive_cases": 518,
+      "observed_success_rate": 0.518,
+      "wilson95": [
+        0.48702012301568326,
+        0.5488421086352068
+      ],
+      "independence_formula": 0.5265501227931979,
+      "difference_observed_minus_formula": -0.00855012279319789,
+      "independence_inside_ci": true
+    },
+    {
+      "prime": 4093,
+      "positions": 18,
+      "subset_size": 4,
+      "candidate_sets": 3060,
+      "dependency_model": "paired",
+      "trials": 1000,
+      "positive_cases": 92,
+      "observed_success_rate": 0.092,
+      "wilson95": [
+        0.075613625710728,
+        0.1115091235357667
+      ],
+      "independence_formula": 0.5265501227931979,
+      "difference_observed_minus_formula": -0.43455012279319793,
+      "independence_inside_ci": false
+    },
+    {
+      "prime": 4093,
+      "positions": 18,
+      "subset_size": 4,
+      "candidate_sets": 3060,
+      "dependency_model": "identical",
+      "trials": 1000,
+      "positive_cases": 0,
+      "observed_success_rate": 0.0,
+      "wilson95": [
+        0,
+        0.003826898586390522
+      ],
+      "independence_formula": 0.5265501227931979,
+      "difference_observed_minus_formula": -0.5265501227931979,
+      "independence_inside_ci": false
+    },
+    {
+      "prime": 20011,
+      "positions": 22,
+      "subset_size": 4,
+      "candidate_sets": 7315,
+      "dependency_model": "uniform",
+      "trials": 1000,
+      "positive_cases": 330,
+      "observed_success_rate": 0.33,
+      "wilson95": [
+        0.3015550314798513,
+        0.3597461140395216
+      ],
+      "independence_formula": 0.30619065974961446,
+      "difference_observed_minus_formula": 0.023809340250385558,
+      "independence_inside_ci": true
+    },
+    {
+      "prime": 20011,
+      "positions": 22,
+      "subset_size": 4,
+      "candidate_sets": 7315,
+      "dependency_model": "paired",
+      "trials": 1000,
+      "positive_cases": 47,
+      "observed_success_rate": 0.047,
+      "wilson95": [
+        0.03552692265984565,
+        0.06194024745942417
+      ],
+      "independence_formula": 0.30619065974961446,
+      "difference_observed_minus_formula": -0.25919065974961447,
+      "independence_inside_ci": false
+    },
+    {
+      "prime": 20011,
+      "positions": 22,
+      "subset_size": 4,
+      "candidate_sets": 7315,
+      "dependency_model": "identical",
+      "trials": 1000,
+      "positive_cases": 0,
+      "observed_success_rate": 0.0,
+      "wilson95": [
+        0,
+        0.003826898586390522
+      ],
+      "independence_formula": 0.30619065974961446,
+      "difference_observed_minus_formula": -0.30619065974961446,
+      "independence_inside_ci": false
+    }
+  ]
+}

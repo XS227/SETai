@@ -1,0 +1,128 @@
+{
+  "verifiedUtc": "2026-10-24T16:36:05.644Z",
+  "url": "https://setai.no/projects/nesten-umulig/",
+  "http": 200,
+  "browserErrors": [],
+  "samples": [
+    {
+      "shown": "131725976",
+      "confirmed": "131737227"
+    },
+    {
+      "shown": "131726033",
+      "confirmed": "131737227"
+    },
+    {
+      "shown": "131726089",
+      "confirmed": "131737227"
+    },
+    {
+      "shown": "131726145",
+      "confirmed": "131737227"
+    },
+    {
+      "shown": "131726221",
+      "confirmed": "131737227"
+    },
+    {
+      "shown": "131726296",
+      "confirmed": "131737227"
+    },
+    {
+      "shown": "131726352",
+      "confirmed": "131737227"
+    },
+    {
+      "shown": "131726409",
+      "confirmed": "131737227"
+    },
+    {
+      "shown": "131726465",
+      "confirmed": "131737227"
+    },
+    {
+      "shown": "131726522",
+      "confirmed": "131737227"
+    },
+    {
+      "shown": "131726578",
+      "confirmed": "131737227"
+    },
+    {
+      "shown": "131726634",
+      "confirmed": "131737227"
+    },
+    {
+      "shown": "131726691",
+      "confirmed": "131737227"
+    },
+    {
+      "shown": "131726747",
+      "confirmed": "131737227"
+    },
+    {
+      "shown": "131726804",
+      "confirmed": "131737227"
+    },
+    {
+      "shown": "131726860",
+      "confirmed": "131737227"
+    },
+    {
+      "shown": "131726917",
+      "confirmed": "131737227"
+    },
+    {
+      "shown": "131726973",
+      "confirmed": "131737227"
+    },
+    {
+      "shown": "131727030",
+      "confirmed": "131737227"
+    },
+    {
+      "shown": "131727086",
+      "confirmed": "131737227"
+    },
+    {
+      "shown": "131727142",
+      "confirmed": "131737227"
+    },
+    {
+      "shown": "131727199",
+      "confirmed": "131737227"
+    },
+    {
+      "shown": "131727255",
+      "confirmed": "131737227"
+    },
+    {
+      "shown": "131727312",
+      "confirmed": "131737227"
+    },
+    {
+      "shown": "131727368",
+      "confirmed": "131737227"
+    }
+  ],
+  "smoothDistinctValues": 25,
+  "neverExceedsConfirmed": true,
+  "measuredInstruments": true,
+  "privateFieldsExcluded": true,
+  "mobile390NoOverflow": true,
+  "displayed": {
+    "mean": "50,000 %",
+    "best": "72,5 %",
+    "bestBits": "116 / 160 like adressebiter.",
+    "chance": "9,01 × 10⁻³⁹ %",
+    "speed": "564",
+    "pace": "33 862",
+    "cpu": "43,7",
+    "memory": "29,1 / 160 MiB",
+    "counterMode": "Jevnt fordelt mellom målepunkter",
+    "agent": "I DRIFT"
+  },
+  "actualAgentCpuPercent": 4.808373170410411,
+  "cpuQuotaPercent": 11,
+  "scope": "Read-only operational verification. Address similarity is not private-key progress. Cumulative chance is an idealized probability model."
+}

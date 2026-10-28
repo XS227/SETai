@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="nb"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow"><meta name="description" content="SETAEI forskningsnotat: ECDLP-hypoteser og falsifiserbare kontroller.">
+<title>Hypoteselab v3 · SETAEI</title>
+<style>
+:root{color-scheme:dark}*{box-sizing:border-box}
+body{background:radial-gradient(ellipse at 80% 0%,#20382f 0,transparent 45%),#0b1420;color:#eaf2f8;font:15px/1.75 system-ui,-apple-system,Segoe UI,Arial,sans-serif;margin:0}
+main{width:min(1030px,calc(100% - 32px));margin:45px auto 80px}
+header{display:flex;justify-content:space-between;align-items:center;gap:12px}
+a{color:#c5f479}h1{font-size:clamp(37px,6vw,64px);line-height:1.1;letter-spacing:-2px;margin:28px 0 16px}
+h1 em{font-style:normal;color:#c5f479}h2{font-size:22px;margin:0 0 12px}
+.card{border:1px solid #365262;border-radius:15px;background:linear-gradient(140deg,#192a36,#121e2b);padding:24px;margin:22px 0}
+.eyebrow{color:#c5f479;letter-spacing:2px;font-size:11px;font-weight:650}
+.tag{display:inline-block;color:#d4e8c5;border:1px solid #69865c;padding:5px 12px;border-radius:30px;font-size:12px}
+.lead{font-size:17px;max-width:820px;color:#bcd0df}p{color:#bfcedb}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:25px 0}
+.grid>div{border:1px solid #405b6c;border-radius:12px;padding:17px;background:#132837}
+.grid small{color:#a5b9c8;display:block}.grid strong{display:block;color:#c5f479;font-size:24px;margin:4px 0}
+table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:12px 10px;border-bottom:1px solid #344b5a;font-size:13px}th{color:#a8bfce;font-weight:600}
+.status{font-size:12px;color:#c5f479}
+ol{padding-left:21px}li{margin:10px 0;color:#bfcedb}
+.btn{display:inline-block;padding:10px 15px;border:1px solid #658a6c;border-radius:9px;background:#213b30;text-decoration:none;margin:5px 7px 5px 0}
+small{color:#99aebd}
+@media(max-width:700px){.grid{grid-template-columns:1fr}.card{padding:16px}.tablewrap{overflow:auto}}
+</style></head><body><main>
+<header><strong>SETAEI / RESEARCH</strong><a href="/key/">Tilbake til nøkkelverktøyet ↗</a></header>
+<p class="eyebrow">ECDLP · HYPOTESELAB V3</p>
+<h1>Finner vi en <em>ny matematisk snarvei?</em></h1>
+<p class="lead">Vi skiller kjente svake kurver, kjent matematiske optimaliseringer og utestede nye forslag fra reelle gjennombrudd. Her er hva som er dokumentert, hva som fortsatt må testes, og hva som ikke er funnet.</p>
+<p><span class="tag">Forskningsoversikt – ingen ny nøkkelgjenfinningsmetode påvist</span></p>
+<div class="grid">
+<div><small>Verifiserte resultater fra v2</small><strong>543 / 600</strong><small>Treff på syntetiske mini-kurver</small></div>
+<div><small>Modellert kjent symmetri</small><strong>6× orbit</strong><small>Kan gi konstantfaktorgevinst, ikke ny eksponent</small></div>
+<div><small>Ny 2026-hypotese</small><strong>Uavklart</strong><small>Ingen ny reproduksjon gjennomført</small></div>
+</div>
+<section class="card"><h2>1 · Symmetri i kurver av samme familie som secp256k1</h2>
+<p>For kurver på formen y²=x³+b har j-invarianten verdien 0. På egnede primtallsfelt gir en kubikkrot av 1 en automorfi: φ(x,y)=(βx,y). Sammen med P ↦ −P gir dette normalt seks beslektede punkter.</p>
+<p><strong>Testbar hypotese:</strong> Kan en korrekt implementert orbitalgoritme redusere gangesteg sammenlignet med vår Pollard-baseline, når alle kostnader, sykluser og minnebruk telles?</p>
+<p><span class="status">KJENT TEORI – IKKE NYTT FUNN</span></p>
+<p>Et ideelt søk som utnytter orbitsymmetri kan få en gevinst av størrelsesorden √6 ≈ 2,45. Det er langt unna det som trengs for en tilfeldig 256-biters nøkkel. Å bare vise en mindre orbit er heller ikke å demonstrere en raskere kjørende løser.</p>
+<p><a href="https://www.coinfabrik.com/wp-content/uploads/2016/06/ECDSA-Security-in-Bitcoin-and-Ethereum-a-Research-Survey.pdf">Oversikt over secp256k1-automorfier</a> · <a href="https://www.sciencedirect.com/science/article/abs/pii/S0020025512000722">Forskning på negasjonskart og syklusproblemer</a></p></section>
+<section class="card"><h2>2 · Gir offentlige punktkoordinater en statistisk lekkasje?</h2>
+<p>V2 viste at én modell lærte den enkle additive kontrollgruppen, mens holdt-utenfor ECC-eksempler ble rundt 50–51 % riktig bit for bit. Det er ikke nok til å bevise at alle mulige modeller vil mislykkes.</p>
+<p><strong>Neste falsifiserbare prøve:</strong> Velg en forhåndsregistrert mengde binære trekk fra både X og Y, og test om de kan predikere de laveste hemmelige nøkkelbitene over majoritetsbaselinen på nøkler som aldri brukes i trening. Bruk uavhengige tester per kurvestørrelse og juster for mange kandidater.</p>
+<p><span class="status">TESTPLAN – V3 HAR IKKE NYE LEKKASJEMÅLINGER</span></p>
+<p>Positiv kontroll skal bruke en additiv gruppe der offentlig verdi faktisk koder hemmelig tall. Resultat med tilfeldig forbedring på en liten kurve må reproduseres på større, nye kurver før det kan tolkes.</p></section>
+<section class="card"><h2>3 · Ny artikkel fra juli 2026: matrise-minorer</h2>
+<p>Ayan Mahalanobis foreslår i <em>A Guess and Determine Attack on the Elliptic Curve Discrete Logarithm Problem</em> (arXiv:2607.09814) en metode via null-minorer i en matrise. Denne er forskningsmessig interessant, men dens praktiske kompleksitet er ikke etablert.</p>
+<p><strong>To kritiske spørsmål:</strong> Er overlappende kandidatsett så avhengige at suksess-sannsynligheten overvurderes? Og hvor raskt må parameteren d vokse når nøkkelstørrelsen øker?</p>
+<p><span class="status">UPRØVD HYPOTESE – IKKE VERIFISERT ECDLP-GJENNOMBRUDD</span></p>
+<p><a href="https://arxiv.org/abs/2607.09814">Original preprint ↗</a> · <a href="https://pith.science/paper/2607.09814">Automatisk ekstern kritikk ↗</a>. Den eksterne vurderingen er AI-generert, ikke ordinær fagfellevurdering.</p></section>
+<section class="card"><h2>Første nye test: Overlapp og sannsynlighet</h2><p>Vi gjennomførte 12 uavhengige kontrolloppsett med 1 000 simulerte tilfeller i hvert. I ett eksempel ga uavhengige inngangsverdier 30,5 % treff mot modellens 30,3 %. Da inngangsverdiene i stedet var like i par, falt treffraten til 8,1 %; med fullstendig like verdier ble den 0,0 % i dette forsøket.</p><p>Dette viser at <strong>avhengighetsstrukturen er viktig</strong>, men det er ikke en test av den faktiske ECDLP-algoritmen i 2026-artikkelen.</p><a class="btn" href="./overlap/">Se de 12 målingene og grafen ↗</a> <a href="./overlap_probe.py">Python-kilde</a> · <a href="./overlap_results.json">JSON-data</a></section>
+<section class="card"><h2>4 · Hvor finnes faktiske matematiske svakheter?</h2>
+<div class="tablewrap"><table><thead><tr><th>Kurveegenskap</th><th>Kjent metode</th><th>Betydning</th></tr></thead><tbody>
+<tr><td>Kompositt gruppeorden med små faktorer</td><td>Pohlig–Hellman</td><td>Kan redusere vanskeligheten dramatisk på feilvalgte kurver</td></tr>
+<tr><td>Lite embedding degree</td><td>MOV / Frey–Rück</td><td>Overfører problemet til en endelig feltgruppe</td></tr>
+<tr><td>Anomal kurve, #E(Fp)=p</td><td>Smart / Satoh–Araki</td><td>Strukturelt svak kurvefamilie</td></tr>
+<tr><td>Orbitsymmetri / endomorfier</td><td>GLV-optimalisering</td><td>Vanligvis konstantfaktorgevinst, ikke praktisk nøkkelgjenfinning</td></tr></tbody></table></div>
+<p>Disse egenskapene er nyttige for å forstå hva som gjør noen kurver svake. Vi har ingen dokumentasjon for at en normal, tilfeldig secp256k1-nøkkel har en tilsvarende utnyttbar svakhet.</p></section>
+<section class="card"><h2>5 · Kriterier for å kunne kalle noe et funn</h2>
+<ol><li>En ny metode må beskrives så presist at andre kan implementere den uten opprinnelig kode.</li><li>Den må finne skjulte, tilfeldig valgte nøkler på ukjente testtilfeller – uten lekkasje av fasit.</li><li>Den må sammenlignes mot BSGS og Pollard under samme beregnings- og minnebudsjett.</li><li>Forbedringen må vedvare på større kurver og måles med usikkerhetsintervaller.</li><li>Et uavhengig miljø må reprodusere resultatet.</li></ol>
+<p><strong>Avgrensning:</strong> Dette forskningsarbeidet omhandler matematiske testkurver, ikke nøkler eller adresser til tredjeparters lommebøker.</p></section>
+<section class="card"><h2>Data fra fullførte eksperimenter</h2><a class="btn" href="/key/research-v2/">Se faktiske v2-målinger</a><a class="btn" href="/key/research-v2/experiment_v2.py">Python-koden v2</a><a class="btn" href="/key/research-v2/results_v2.json">Verifisert v2-datasett</a></section>
+<footer><small>SETAEI · Hypoteselab v3 · 22. oktober 2026. Denne siden er en forskningsoversikt, ikke en påstand om nyoppdaget sikkerhetssvakhet.</small></footer>
+</main></body></html>

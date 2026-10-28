@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="nb"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive"><meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; connect-src 'self'; img-src 'self' data:; base-uri 'none'; form-action 'self'; object-src 'none'">
+<title>SETAEI · Agent Control</title>
+<link rel="stylesheet" href="style.css"><script src="dashboard-audit-20261024-v2.js" defer></script><link rel="stylesheet" href="audit-panel.css">
+</head><body>
+<header class="topbar"><a class="brand" href="/key/"><span class="brand-symbol">S</span><span>SETAEI<small>RESEARCH SYSTEMS</small></span></a><div class="top-right"><span class="overline">AGENT CONTROL</span><a href="/key/">↖ Til verktøy</a></div></header>
+<main>
+<section id="gate" class="gate-card">
+  <div class="lock-symbol">◎</div><p class="overline">SETAEI / LIVE INTELLIGENCE</p>
+  <h1>Agentoversikt<span class="green">.</span></h1>
+  <p>Se faktiske forsøk, hastighet, fremdrift og forskningsresultater fra serveren.</p>
+  <form id="login-form"><label for="access-code">VISNINGSKODE</label>
+    <div class="pin-row"><input id="access-code" type="password" inputmode="numeric" pattern="[0-9]{3}" maxlength="3" minlength="3" autocomplete="off" placeholder="•••" required><button id="unlock" type="submit">Åpne oversikten ↗</button></div>
+    <p class="hint">Tre siffer for lesetilgang. Pause / Play krever separat administratortilgang.</p><p id="login-error" class="error" role="alert"></p>
+  </form>
+</section>
+<section id="dashboard" hidden>
+  <div class="heading"><div><p class="overline">SERVER 01 / AUTONOMOUS EXPERIMENTATION</p><h1>Agent Control <span class="green">/ Live</span></h1><p>Direkte data fra VPS-en. Ingen simulert aktivitet.</p></div><div class="connection"><span class="led"></span><span id="connection-label">Tilkoblet</span><button id="logout" type="button">Lås ↗</button></div></div>
+  <div class="metric-grid">
+    <article class="metric"><small>⌁ WALLET-FORSØK</small><strong id="wallet-attempts">—</strong><div class="metric-footer"><span id="wallet-badge" class="pill">Laster</span><small id="wallet-updated">—</small></div></article>
+    <article class="metric"><small>↗ AKTIV HASTIGHET</small><strong><span id="wallet-speed">—</span><em>/sek</em></strong><div class="metric-footer"><small id="wallet-speed-note">Målt søkehastighet</small></div></article>
+    <article class="metric"><small>◇ FORSKNINGSTESTER</small><strong id="research-tests">—</strong><div class="metric-footer"><span id="research-badge" class="pill">Laster</span><small id="research-total">—</small></div></article>
+    <article class="metric"><small>▦ AGENTMINNE</small><strong><span id="memory-value">—</span><em>MiB</em></strong><div class="metric-footer"><small id="memory-limit">Minnegrense 120 MiB</small></div></article>
+  </div>
+  <div class="panels">
+    <article class="panel"><div class="panel-head"><div><p class="overline">PROCESS 01 / WALLET SEARCH</p><h2>Wallet-søkeagent</h2></div><span id="wallet-status" class="status-chip">—</span></div>
+      <p class="hint">Tester offentlige adresser mot ønsket prefiks. Det er ikke en metode som rekonstruerer den opprinnelige privatnøkkelen.</p>
+      <dl class="details"><div><dt>Prefiks</dt><dd id="wallet-prefix">—</dd></div><div><dt>Lengde</dt><dd id="wallet-length">—</dd></div><div><dt>Startet</dt><dd id="wallet-started">—</dd></div><div><dt>Sist lagret</dt><dd id="wallet-stored">—</dd></div></dl>
+      <div class="chart-label"><span>FORSØK MENS SIDEN ER ÅPEN</span><small id="wallet-trend-summary">—</small></div>
+      <svg id="wallet-graph" role="img" aria-label="Utvikling i antall forsøk" viewBox="0 0 600 130" preserveAspectRatio="none"><path d="M0 105 H600 M0 60 H600 M0 15 H600" stroke="#31434a" stroke-dasharray="3 7" fill="none"/><polyline id="wallet-trend-line" points="" fill="none" stroke="#c3f87a" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/></svg>
+      <p id="wallet-description" class="info-note">Henter status …</p><a class="panel-link" href="/key/">Styr Pause / Play på hovedsiden ↗</a>
+    </article>
+    <article class="panel"><div class="panel-head"><div><p class="overline">PROCESS 02 / CONTROLLED SCIENCE</p><h2>Forskningsagent</h2></div><span id="research-status" class="status-chip">—</span></div>
+      <p class="hint">Uavhengige tester på syntetiske nøkkelpar med kjent fasit. Fullførte tester bruker ikke CPU.</p>
+      <div class="progress-title"><span>Fremdrift</span><strong id="research-progress-label">0 %</strong></div><div class="progress-track"><div id="research-progress-fill"></div></div>
+      <div class="experiments"><div class="experiment"><span>01</span><div><strong>AI mot tilfeldig gjetting</strong><p id="model-result">Laster …</p></div><b id="model-count">—</b></div><div class="experiment"><span>02</span><div><strong>Adresselikhet og nøkkellikhet</strong><p id="ranking-result">Laster …</p></div><b id="ranking-count">—</b></div><div class="experiment"><span>03</span><div><strong>Én nøkkelbit endret</strong><p id="avalanche-result">Laster …</p></div><b id="avalanche-count">—</b></div></div>
+      <div class="conclusion" id="research-conclusion">Beregner konklusjon …</div><p id="research-audit-note" class="hint audit-note">Henter datert revisjon av eksperimentene …</p><div class="audit-actions"><a href="/projects/nesten-umulig/">Nesten umulig · offentlig observatorium ↗</a><a href="/key/learning-lab/">Feillab · nattlig trening og feilkart ↗</a><a href="/key/research-v4/">Åpne full analyse og metode ↗</a><a href="/key/research-v4/reproducibility.zip" download>Last ned data og reproduksjon</a></div><p class="hint">Det løpende adressesøket er et separat observasjonsdatasett. Dets forsøk regnes ikke som AI-tester.</p>
+    </article>
+  </div>
+  <section class="panel resource-panel"><div class="panel-head"><div><p class="overline">INFRASTRUCTURE</p><h2>Serverens ressurser</h2></div><small class="poll-label"><span class="led"></span> Oppdateres hvert 5. sekund</small></div><div class="resource-grid"><div><small>Agentens CPU-grense</small><strong id="resource-cpu">20 %</strong></div><div><small>Systemlast</small><strong id="resource-load">—</strong></div><div><small>Tilstand</small><strong id="resource-status">—</strong></div><div><small>Sist oppdatert</small><strong id="resource-time">—</strong></div></div><p class="fineprint">Denne PIN-koden beskytter kun den skrivebeskyttede oversikten. Tre siffer er ikke sterk autentisering. Ingen hemmelige nøkler eller administratortoken vises.</p></section>
+</section></main><footer><span>SETAEI · BLI FUNNET. BLI VALGT.</span><span>AGENT CONTROL / READ ONLY</span></footer>
+</body></html>

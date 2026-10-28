@@ -1,0 +1,32 @@
+[Unit]
+Description=SETAEI isolated synthetic error learning study
+After=local-fs.target
+
+[Service]
+Type=oneshot
+User=setai-lab
+Group=setai-lab
+StateDirectory=setai-learning-lab
+StateDirectoryMode=0755
+Environment=LAB_DATA_DIR=/var/lib/setai-learning-lab/private
+Environment=LAB_PUBLIC_DIR=/var/lib/setai-learning-lab/public
+ExecStart=/opt/node22/bin/node /var/www/setai/key/learning-lab/lab-runner.cjs
+Nice=19
+CPUQuota=5%
+MemoryMax=192M
+TimeoutStartSec=10min
+UMask=0022
+NoNewPrivileges=true
+PrivateTmp=true
+PrivateNetwork=true
+ProtectSystem=strict
+ProtectHome=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+LockPersonality=true
+RestrictAddressFamilies=AF_UNIX
+StandardOutput=journal
+StandardError=journal
+

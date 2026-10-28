@@ -23,7 +23,7 @@
     if (!chips.some(function(c){ return c.getAttribute('data-f')===f; })) f = 'alle';
     state.filter = f; var n = 0;
     items.forEach(function(li){ var ok = f==='alle' || tagsOf(li).indexOf(f) >= 0; li.hidden = !ok; if (ok) n++; });
-    groups.forEach(function(g){ g.hidden = !g.querySelector('.pgrid > li:not([hidden])'); });
+    groups.forEach(function(g){ if (g.classList.contains('realgram-group')) { g.hidden = false; return; } g.hidden = !g.querySelector('.pgrid > li:not([hidden])'); });
     empty.hidden = n>0;
     chips.forEach(function(c){ c.setAttribute('aria-pressed', String(c.getAttribute('data-f')===f)); });
     var chip = document.querySelector('.fchip[data-f="'+f+'"]'), label = chip ? chip.firstChild.textContent.trim() : '';
@@ -53,6 +53,44 @@
     if (best !== state.view){ state.view = best; emit(); }
   }
   addEventListener('scroll', nearest, {passive:true});
+
+
+
+  // ── Native project videos ───────────────────────────
+  (function(){
+    var vids=Array.prototype.slice.call(document.querySelectorAll('.project-video'));
+    if(!vids.length) return;
+    vids.forEach(function(v){
+      v.muted=true;
+      v.loop=true;
+      v.playsInline=true;
+      function play(){ var p=v.play(); if(p&&p.catch)p.catch(function(){}); }
+      v.addEventListener('loadeddata',play,{once:true});
+      v.addEventListener('canplay',play);
+      if('IntersectionObserver' in window){
+        new IntersectionObserver(function(es){
+          es.forEach(function(e){ if(e.isIntersecting){ play(); } else { v.pause(); } });
+        },{threshold:.12,rootMargin:'120px'}).observe(v);
+      }else play();
+    });
+  })();
+
+  // ── Native project video previews ─────────────────────────
+  (function(){
+    var vids=Array.prototype.slice.call(document.querySelectorAll('.project-video'));
+    if(!vids.length) return;
+    vids.forEach(function(v){
+      v.muted=true; v.defaultMuted=true; v.loop=true; v.playsInline=true;
+      function play(){ var p=v.play(); if(p&&p.catch)p.catch(function(){}); }
+      v.addEventListener('canplay',play);
+      v.addEventListener('loadeddata',play);
+      if('IntersectionObserver' in window){
+        new IntersectionObserver(function(es){
+          es.forEach(function(e){ if(e.isIntersecting) play(); else v.pause(); });
+        },{rootMargin:'160px'}).observe(v);
+      } else play();
+    });
+  })();
 
   // ── 3D lab ───────────────────────────────────────────────
   var canvas = document.getElementById('scene');
@@ -138,7 +176,7 @@
   }
   addEventListener('resize', resize); resize();
   // the lab fades back once you scroll into the cards
-  function fade(){ var v = Math.max(0.3, 1 - scrollY/(innerHeight*0.9)*0.7); canvas.style.opacity = v.toFixed(2); }
+  function fade(){ var v = Math.max(0.68, 1 - scrollY/(innerHeight*1.4)*0.32); canvas.style.opacity = v.toFixed(2); }
   addEventListener('scroll', fade, {passive:true}); fade();
 
   var clock = new THREE.Clock(), tourIdx = 0, tourT = 0;

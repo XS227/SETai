@@ -1,0 +1,37 @@
+{
+  "verifiedUtc": "2026-10-24T16:07:15.319Z",
+  "url": "https://setai.no/projects/nesten-umulig/",
+  "http": 200,
+  "browserErrors": [],
+  "firstObservedCounter": "130753776",
+  "secondObservedCounter": "130765619",
+  "automaticRealCounterUpdate": true,
+  "agentVisibleInHeroAndObservatory": true,
+  "measuredRateVisible": true,
+  "privateFieldsExcluded": true,
+  "originalAgentCpuPercent": 11,
+  "mobile390NoOverflow": true,
+  "discoveryPages": {
+    "/blog/": {
+      "status": 200,
+      "type": "text/html",
+      "containsProject": true
+    },
+    "/projects/": {
+      "status": 200,
+      "type": "text/html",
+      "containsProject": true
+    },
+    "/sitemap.xml": {
+      "status": 200,
+      "type": "text/xml",
+      "containsProject": true
+    },
+    "/projects/nesten-umulig/og.png": {
+      "status": 200,
+      "type": "image/png"
+    }
+  },
+  "canonicalAndAuthorSchemaChecked": true,
+  "ogImage1200x630": true
+}

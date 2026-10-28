@@ -1,0 +1,110 @@
+// Black & White Universe, chapter 08 «Silence»: the scenes the shared engine (bwu-scene.js) renders. Everything here moves less as you read.
+window.BWU_SCENES = [
+'vec3 bg(vec2 p, float t){ return vec3(.01)+vec3(.025)*fbm(p*2.2+vec2(t*.01,-t*.008))*(1.-smoothstep(0.,1.2,length(p)))+vec3(stars(p*55.,.025))*.3; }',
+'vec3 WARM=vec3(1.,.62,.34);',
+'float pt(vec2 p, vec2 c, float k){ vec2 d=p-c; return k/(dot(d,d)+k); }',
+
+// I: a stillness so alive that even light seems to pause and listen
+'vec3 sStill(vec2 p, float t, float m){',
+'  vec3 c=bg(p,t);',
+'  float slow=1.-smoothstep(.1,.8,m);',
+'  float tt=t*.6*slow+m*3.;',
+'  for(int k=0;k<2;k++){ vec2 q=p*(10.+float(k)*7.)+vec2(tt*(.6+float(k)*.4),tt*.2)+float(k)*5.;',
+'    vec2 g=floor(q), f=fract(q)-.5; vec2 o=vec2(h21(g),h21(g+2.))-.5;',
+'    c+=vec3(.7)*glowLine(length(f-o*.6),.05)*step(.7,h21(g+9.))*(1.-smoothstep(.2,.6,length(p)))*(1.-float(k)*.4); }',
+'  float r=length(p), listen=smoothstep(.4,1.,m);',
+'  c+=vec3(.9)*(pt(p,vec2(0.),.00004)+exp(-r*12.)*.12)*(.4+.6*listen);',
+'  c+=vec3(.25)*glowLine(r-.12,10.*PX)*listen*.4;',
+'  return c; }',
+
+// II: having said "Be", the universe now simply is; the ring expands, then rests as a perfect circle
+'vec3 sIs(vec2 p, float t, float m){',
+'  vec3 c=bg(p,t); float r=length(p);',
+'  float grow=smoothstep(0.,.55,m), R=.03+.19*grow;',
+'  float wob=.012*(1.-smoothstep(.4,.7,m))*sin(atan(p.y,p.x)*6.+t*3.);',
+'  c+=vec3(.95)*glowLine(r-R-wob,mix(2.5,1.2,smoothstep(.4,.8,m))*PX)+vec3(.35)*glowLine(r-R,10.*PX)*.2;',
+'  for(int k=1;k<4;k++){ float fk=float(k); float Rk=R+fk*.05*(1.-smoothstep(.45,.75,m)); c+=vec3(.4)*glowLine(r-Rk,1.*PX)*(1.-fk/4.)*(1.-smoothstep(.45,.75,m)); }',
+'  return c; }',
+
+// III: in that silence God breathes, and man simply knows
+'vec3 sBreathe(vec2 p, float t, float m){',
+'  vec3 c=bg(p,t)*.7; float r=length(p);',
+'  float b=.5+.5*sin(t*.55);',
+'  c+=vec3(.5)*exp(-r*mix(9.,4.,b))*.35*(.5+.5*m);',
+'  c+=vec3(.2)*glowLine(r-mix(.12,.3,b),12.*PX)*.4;',
+'  float know=smoothstep(.55,.95,m);',
+'  c+=mix(vec3(1.),WARM,.2)*pt(p,vec2(0.),.00004)*know;',
+'  return c; }',
+
+// IV: speech is a veil between two silences
+'vec3 sVeil(vec2 p, float t, float m){',
+'  vec3 c=bg(p,t)*.8;',
+'  float x=p.x+.02*sin(p.y*7.+t*.7)+.01*sin(p.y*17.-t*.5);',
+'  float veil=(1.-smoothstep(.06,.09,abs(x)))*(1.-smoothstep(.28,.4,abs(p.y)));',
+'  float threads=.5+.5*sin(x*260.);',
+'  float clear=smoothstep(.3,1.,m);',
+'  c+=vec3(.55)*veil*threads*(1.-clear*.8)+vec3(.12)*veil*(1.-clear);',
+'  c+=vec3(.5)*glowLine(abs(x)-.09,1.*PX)*(1.-smoothstep(.28,.4,abs(p.y)))*(1.-clear*.6);',
+'  c+=vec3(.6)*(pt(p,vec2(-.25,0.),.00002)+pt(p,vec2(.25,0.),.00002))*(.3+.7*clear);',
+'  return c; }',
+
+// V: silence is the word before words, the space between light and darkness
+'vec3 sBetween(vec2 p, float t, float m){',
+'  vec3 c=vec3(.01);',
+'  float band=exp(-sq(p.y*mix(30.,9.,m)));',
+'  c+=vec3(.3)*clamp(-p.y*1.2,0.,1.)*(1.-smoothstep(.2,.7,length(p)))*.8;',
+'  c+=vec3(.8)*band*(1.-smoothstep(.3,.75,abs(p.x)))*(.25+.35*m);',
+'  c+=vec3(stars(p*55.,.03))*.35*step(0.,p.y);',
+'  c+=vec3(1.)*pt(p,vec2(0.),.00003)*smoothstep(.4,.9,m);',
+'  return c; }',
+
+// VI: the zero-point field, absolute stillness before every vibration; light has not yet chosen to shine
+'vec3 sZero(vec2 p, float t, float m){',
+'  vec3 c=bg(p,t)*.6; float r=length(p);',
+'  float j=mix(.18,0.,smoothstep(.1,.85,m));',
+'  vec2 q=p*24.; vec2 g=floor(q), f=fract(q)-.5;',
+'  vec2 jit=(vec2(noise(g+t*3.),noise(g+7.-t*3.))-.5)*j;',
+'  float dotI=glowLine(length(f-jit),.06)*(1.-smoothstep(.22,.42,r));',
+'  c+=vec3(.6)*dotI;',
+'  float wait=.5+.5*sin(t*.9);',
+'  c+=vec3(.4)*glowLine(r-.02,1.*PX)*smoothstep(.5,1.,m)*(.5+.5*wait);',
+'  return c; }',
+
+// VII: He creates in silence, not with sound but with presence; a thought rises from a still mirror
+'vec3 sPresence(vec2 p, float t, float m){',
+'  vec3 c=bg(p,t)*.8;',
+'  float hz=-.12;',
+'  if(p.y<hz){ vec2 q=vec2(p.x,2.*hz-p.y); c=bg(q,t)*.5; }',
+'  c+=vec3(.5)*glowLine(p.y-hz,1.*PX)*(1.-smoothstep(.3,.6,abs(p.x)));',
+'  float rise=smoothstep(.15,.95,m), y=hz+.3*rise;',
+'  vec2 P=vec2(0.,y), Pm=vec2(0.,2.*hz-y);',
+'  c+=mix(vec3(1.),WARM,.2)*pt(p,P,.00004)*(.2+.8*rise);',
+'  c+=vec3(.5)*pt(p,Pm,.00002)*(.2+.8*rise);',
+'  c+=vec3(.7)*glowLine(sdSeg(p,vec2(0.,hz),P),1.*PX)*rise*.35;',
+'  float rr=length((p-vec2(0.,hz))*vec2(1.,5.));',
+'  c+=vec3(.6)*glowLine(rr-fract(t*.25)*.4,1.4*PX)*(1.-fract(t*.25))*step(p.y,hz+.01)*rise;',
+'  return c; }',
+
+// VIII: the answer lives in the stillness between your two breaths
+'vec3 sTwoBreaths(vec2 p, float t, float m){',
+'  vec3 c=bg(p,t);',
+'  float x=p.x*2.2+t*.25, ph=fract(x);',
+'  float breath=ph<.7 ? sin(ph/.7*PI) : 0.;',
+'  float y=-.02+.13*breath;',
+'  float fade=smoothstep(-.5,-.2,p.x)*(1.-smoothstep(.35,.5,p.x));',
+'  c+=vec3(.85)*glowLine(p.y-y,1.3*PX)*fade;',
+'  float pause=step(.7,ph)*fade;',
+'  c+=mix(vec3(1.),WARM,.3)*glowLine(p.y+.02,2.*PX)*pause*smoothstep(.2,.8,m);',
+'  c+=mix(vec3(1.),WARM,.3)*exp(-length(p-vec2(0.,-.02))*30.)*.15*smoothstep(.6,1.,m);',
+'  return c; }',
+
+'vec3 scene(float id, vec2 p, float t, float m){',
+'  if(id<.5) return sStill(p,t,m);',
+'  if(id<1.5) return sIs(p,t,m);',
+'  if(id<2.5) return sBreathe(p,t,m);',
+'  if(id<3.5) return sVeil(p,t,m);',
+'  if(id<4.5) return sBetween(p,t,m);',
+'  if(id<5.5) return sZero(p,t,m);',
+'  if(id<6.5) return sPresence(p,t,m);',
+'  return sTwoBreaths(p,t,m); }'
+].join('\n');

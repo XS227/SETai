@@ -1,0 +1,150 @@
+{
+  "studyId": "20261024T142456Z",
+  "sealedAfterAnalysisUtc": "2026-10-24T14:37:36.565602+00:00",
+  "protocolSealedBeforeTrials": true,
+  "externalPreregistration": false,
+  "files": [
+    {
+      "name": "README.txt",
+      "bytes": 982,
+      "sha256": "78d463dbe27110b914da5d17c4207ec0dbdce4e59f97bc401394b65a8ff2c8c8"
+    },
+    {
+      "name": "SETAEI_Eksperimentanalyse_2026-10-24.md",
+      "bytes": 9536,
+      "sha256": "92fe810140bad6755a1bd619528bb0e1a69cf6d9fec207f7c8cb421a2713686e"
+    },
+    {
+      "name": "address-observation.json",
+      "bytes": 1047,
+      "sha256": "43932216bbab203b68ddf721156e177f3bcbf7670d2567532e00c5a9c6ebc94e"
+    },
+    {
+      "name": "address_histogram.png",
+      "bytes": 134640,
+      "sha256": "71417b29b3644e5a98e25f37d4ad98e774cb198398521d434d561566789de9c0"
+    },
+    {
+      "name": "analysis.json",
+      "bytes": 54368,
+      "sha256": "6579ea48583a5d4d841c08a83ab56e6ec5b464d6dc722f095c730e8b114d054a"
+    },
+    {
+      "name": "analyze.py",
+      "bytes": 21231,
+      "sha256": "aef6942c82f4736cd9d95ece265fdd36104fb98b98ebb1711a66e4495c195c57"
+    },
+    {
+      "name": "audit-runner.cjs",
+      "bytes": 9655,
+      "sha256": "894a0592a1f2ba0a6391004c801eddf6e87ed56e2848b1403eafc5db4ec7f878"
+    },
+    {
+      "name": "audit.css",
+      "bytes": 2628,
+      "sha256": "6d78d2c4f924df651eda81546af07f2e31872a1a8e18b0d4f99a6d790f804d94"
+    },
+    {
+      "name": "effect_intervals.png",
+      "bytes": 67946,
+      "sha256": "336632081c673fd5b53d8b8341b6954b9cb5a5d1b44670a59a997ea7ee47e855"
+    },
+    {
+      "name": "frozen-sources/crypto-address-v2.js",
+      "bytes": 40911,
+      "sha256": "92cb91b67766205ba7b6ed5644b677a87ee43dcb393652ffee4ceb804a3f9a5d"
+    },
+    {
+      "name": "frozen-sources/crypto-public-v1.js",
+      "bytes": 41658,
+      "sha256": "2505ca402ef577e59932a386b5575147b739eddc24821cd8dffcf661922779a0"
+    },
+    {
+      "name": "frozen-sources/guess-experiment-v5.js",
+      "bytes": 1539,
+      "sha256": "377862d59843aa17d8958516e5fc7f12b5f2b3040daee86b25e40af5b4d2c597"
+    },
+    {
+      "name": "frozen-sources/model-experiment-v5.js",
+      "bytes": 554219,
+      "sha256": "f1142ca11bfe3ffd16f45d7e7b19f89d4f3d868ac3f249531f449701e775b0e5"
+    },
+    {
+      "name": "frozen-sources/research.js",
+      "bytes": 7894,
+      "sha256": "b12605cb611ee3eee0bec30848491d31b7fc720e19c0ec122563c91c78b11182"
+    },
+    {
+      "name": "index.html",
+      "bytes": 12347,
+      "sha256": "3f621dd3afc848c5a04cda65d80d7511715509df355f51e0ed870237a3371dcb"
+    },
+    {
+      "name": "input.json",
+      "bytes": 2180068,
+      "sha256": "ed7c90bf31440a4a811f6cdafd706f0787ee17fc1df1fb6f66370380f16ecb89"
+    },
+    {
+      "name": "original-research-state.json",
+      "bytes": 830,
+      "sha256": "73ce4ecefe1ef2cf60880805550b5448999a7f53316c52897d099fc7845db925"
+    },
+    {
+      "name": "protocol.json",
+      "bytes": 3597,
+      "sha256": "d42cc321e47a700228c2257da19152dd7dd24c469283641ad5a6eceb160b4566"
+    },
+    {
+      "name": "run.json",
+      "bytes": 2455,
+      "sha256": "89f0e959117bb40f2e79b0bb89301914a9fdd47855a5fd340a3bac0d70711344"
+    },
+    {
+      "name": "trials.jsonl.gz",
+      "bytes": 150666,
+      "sha256": "9e1665b47bfb8a712985d4a2a5c8ae9556f03aea2c455c6e3f832524d19eca34"
+    },
+    {
+      "name": "verify-metrics.cjs",
+      "bytes": 4528,
+      "sha256": "39a88fa204721c1ddf740a4d53fde842d52aa8ab63eb1e92e3a8facd52e0ab25"
+    }
+  ],
+  "frozenSources": [
+    {
+      "source": "/opt/setai-key-agent/research.js",
+      "name": "research.js",
+      "sha256": "b12605cb611ee3eee0bec30848491d31b7fc720e19c0ec122563c91c78b11182",
+      "bytes": 7894,
+      "mtime": "2026-10-23T00:11:33.742Z"
+    },
+    {
+      "source": "/var/www/setai/key/crypto-public-v1.js",
+      "name": "crypto-public-v1.js",
+      "sha256": "2505ca402ef577e59932a386b5575147b739eddc24821cd8dffcf661922779a0",
+      "bytes": 41658,
+      "mtime": "2026-10-22T23:32:39.378Z"
+    },
+    {
+      "source": "/var/www/setai/key/crypto-address-v2.js",
+      "name": "crypto-address-v2.js",
+      "sha256": "92cb91b67766205ba7b6ed5644b677a87ee43dcb393652ffee4ceb804a3f9a5d",
+      "bytes": 40911,
+      "mtime": "2026-10-21T19:29:12.243Z"
+    },
+    {
+      "source": "/var/www/setai/key/model-experiment-v5.js",
+      "name": "model-experiment-v5.js",
+      "sha256": "f1142ca11bfe3ffd16f45d7e7b19f89d4f3d868ac3f249531f449701e775b0e5",
+      "bytes": 554219,
+      "mtime": "2026-10-21T20:07:46.791Z"
+    },
+    {
+      "source": "/var/www/setai/key/guess-experiment-v5.js",
+      "name": "guess-experiment-v5.js",
+      "sha256": "377862d59843aa17d8958516e5fc7f12b5f2b3040daee86b25e40af5b4d2c597",
+      "bytes": 1539,
+      "mtime": "2026-10-21T20:07:46.791Z"
+    }
+  ]
+}

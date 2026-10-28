@@ -1,0 +1,6457 @@
+{
+  "timestamp_utc": "2026-10-22T01:52:50.383281+00:00",
+  "seed": 20261022,
+  "repeats": 300,
+  "curves": [
+    {
+      "bits": 16,
+      "field_p": 49177,
+      "order_n": 48799,
+      "beta": 14791,
+      "lambda": 44397,
+      "orbit_size_for_nonzero_points": 6,
+      "predicted_distinct_orbits": 8134,
+      "invariant_tests": 14,
+      "passed": true
+    },
+    {
+      "bits": 20,
+      "field_p": 786433,
+      "order_n": 784897,
+      "beta": 392448,
+      "lambda": 783362,
+      "orbit_size_for_nonzero_points": 6,
+      "predicted_distinct_orbits": 130817,
+      "invariant_tests": 14,
+      "passed": true
+    },
+    {
+      "bits": 24,
+      "field_p": 12582919,
+      "order_n": 12587563,
+      "beta": 5029916,
+      "lambda": 12571304,
+      "orbit_size_for_nonzero_points": 6,
+      "predicted_distinct_orbits": 2097928,
+      "invariant_tests": 14,
+      "passed": true
+    },
+    {
+      "bits": 28,
+      "field_p": 201326707,
+      "order_n": 201298843,
+      "beta": 192172537,
+      "lambda": 148783274,
+      "orbit_size_for_nonzero_points": 6,
+      "predicted_distinct_orbits": 33549808,
+      "invariant_tests": 14,
+      "passed": true
+    },
+    {
+      "bits": 32,
+      "field_p": 3221225563,
+      "order_n": 3221180089,
+      "beta": 1790994331,
+      "lambda": 3039057644,
+      "orbit_size_for_nonzero_points": 6,
+      "predicted_distinct_orbits": 536863349,
+      "invariant_tests": 14,
+      "passed": true
+    },
+    {
+      "bits": 36,
+      "field_p": 51539607793,
+      "order_n": 51539513437,
+      "beta": 7859548490,
+      "lambda": 51071394496,
+      "orbit_size_for_nonzero_points": 6,
+      "predicted_distinct_orbits": 8589918907,
+      "invariant_tests": 14,
+      "passed": true
+    },
+    {
+      "bits": 40,
+      "field_p": 824633721253,
+      "order_n": 824635470601,
+      "beta": 614287769822,
+      "lambda": 305583630095,
+      "orbit_size_for_nonzero_points": 6,
+      "predicted_distinct_orbits": 137439245101,
+      "invariant_tests": 14,
+      "passed": true
+    },
+    {
+      "bits": 44,
+      "field_p": 13194139533493,
+      "order_n": 13194144388501,
+      "beta": 8787539717430,
+      "lambda": 2277707309922,
+      "orbit_size_for_nonzero_points": 6,
+      "predicted_distinct_orbits": 2199024064751,
+      "invariant_tests": 14,
+      "passed": true
+    },
+    {
+      "bits": 48,
+      "field_p": 211106232533407,
+      "order_n": 211106205190693,
+      "beta": 65170322870165,
+      "lambda": 161404497882977,
+      "orbit_size_for_nonzero_points": 6,
+      "predicted_distinct_orbits": 35184367531783,
+      "invariant_tests": 14,
+      "passed": true
+    }
+  ],
+  "census": {
+    "bits": 16,
+    "tested_points": 48799,
+    "distinct_orbits": 8134,
+    "theoretical_orbits": 8134,
+    "exact_enumeration": true,
+    "group_additions": 48799
+  },
+  "collision_simulation_summary": [
+    {
+      "bits": 16,
+      "samples": 300,
+      "mean_full_samples": 281.05,
+      "mean_quotient_samples": 107.99,
+      "ratio_means": 2.6025,
+      "median_full": 266.5,
+      "median_quotient": 102.5,
+      "predicted_asymptotic_speedup": 2.4495
+    },
+    {
+      "bits": 20,
+      "samples": 300,
+      "mean_full_samples": 1076.76,
+      "mean_quotient_samples": 438.63,
+      "ratio_means": 2.4548,
+      "median_full": 982.0,
+      "median_quotient": 413.5,
+      "predicted_asymptotic_speedup": 2.4495
+    },
+    {
+      "bits": 24,
+      "samples": 300,
+      "mean_full_samples": 4484.53,
+      "mean_quotient_samples": 1837.37,
+      "ratio_means": 2.4407,
+      "median_full": 4321.5,
+      "median_quotient": 1827.5,
+      "predicted_asymptotic_speedup": 2.4495
+    }
+  ],
+  "collision_simulation_raw": [
+    {
+      "bits": 16,
+      "replicate": 1,
+      "full_group_samples": 316,
+      "symmetry_quotient_samples": 135,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 2,
+      "full_group_samples": 198,
+      "symmetry_quotient_samples": 130,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 3,
+      "full_group_samples": 111,
+      "symmetry_quotient_samples": 71,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 4,
+      "full_group_samples": 287,
+      "symmetry_quotient_samples": 83,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 5,
+      "full_group_samples": 229,
+      "symmetry_quotient_samples": 84,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 6,
+      "full_group_samples": 312,
+      "symmetry_quotient_samples": 21,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 7,
+      "full_group_samples": 431,
+      "symmetry_quotient_samples": 153,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 8,
+      "full_group_samples": 480,
+      "symmetry_quotient_samples": 183,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 9,
+      "full_group_samples": 309,
+      "symmetry_quotient_samples": 40,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 10,
+      "full_group_samples": 188,
+      "symmetry_quotient_samples": 15,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 11,
+      "full_group_samples": 170,
+      "symmetry_quotient_samples": 107,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 12,
+      "full_group_samples": 338,
+      "symmetry_quotient_samples": 146,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 13,
+      "full_group_samples": 348,
+      "symmetry_quotient_samples": 68,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 14,
+      "full_group_samples": 241,
+      "symmetry_quotient_samples": 134,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 15,
+      "full_group_samples": 738,
+      "symmetry_quotient_samples": 122,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 16,
+      "full_group_samples": 29,
+      "symmetry_quotient_samples": 72,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 17,
+      "full_group_samples": 27,
+      "symmetry_quotient_samples": 66,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 18,
+      "full_group_samples": 226,
+      "symmetry_quotient_samples": 109,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 19,
+      "full_group_samples": 116,
+      "symmetry_quotient_samples": 106,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 20,
+      "full_group_samples": 256,
+      "symmetry_quotient_samples": 222,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 21,
+      "full_group_samples": 232,
+      "symmetry_quotient_samples": 123,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 22,
+      "full_group_samples": 192,
+      "symmetry_quotient_samples": 191,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 23,
+      "full_group_samples": 151,
+      "symmetry_quotient_samples": 235,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 24,
+      "full_group_samples": 232,
+      "symmetry_quotient_samples": 148,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 25,
+      "full_group_samples": 480,
+      "symmetry_quotient_samples": 150,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 26,
+      "full_group_samples": 414,
+      "symmetry_quotient_samples": 134,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 27,
+      "full_group_samples": 95,
+      "symmetry_quotient_samples": 46,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 28,
+      "full_group_samples": 376,
+      "symmetry_quotient_samples": 102,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 29,
+      "full_group_samples": 194,
+      "symmetry_quotient_samples": 101,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 30,
+      "full_group_samples": 252,
+      "symmetry_quotient_samples": 116,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 31,
+      "full_group_samples": 164,
+      "symmetry_quotient_samples": 131,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 32,
+      "full_group_samples": 148,
+      "symmetry_quotient_samples": 136,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 33,
+      "full_group_samples": 65,
+      "symmetry_quotient_samples": 157,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 34,
+      "full_group_samples": 524,
+      "symmetry_quotient_samples": 77,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 35,
+      "full_group_samples": 152,
+      "symmetry_quotient_samples": 42,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 36,
+      "full_group_samples": 540,
+      "symmetry_quotient_samples": 39,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 37,
+      "full_group_samples": 278,
+      "symmetry_quotient_samples": 156,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 38,
+      "full_group_samples": 674,
+      "symmetry_quotient_samples": 138,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 39,
+      "full_group_samples": 292,
+      "symmetry_quotient_samples": 195,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 40,
+      "full_group_samples": 76,
+      "symmetry_quotient_samples": 121,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 41,
+      "full_group_samples": 122,
+      "symmetry_quotient_samples": 115,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 42,
+      "full_group_samples": 337,
+      "symmetry_quotient_samples": 136,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 43,
+      "full_group_samples": 163,
+      "symmetry_quotient_samples": 54,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 44,
+      "full_group_samples": 100,
+      "symmetry_quotient_samples": 114,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 45,
+      "full_group_samples": 452,
+      "symmetry_quotient_samples": 146,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 46,
+      "full_group_samples": 146,
+      "symmetry_quotient_samples": 191,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 47,
+      "full_group_samples": 458,
+      "symmetry_quotient_samples": 82,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 48,
+      "full_group_samples": 144,
+      "symmetry_quotient_samples": 144,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 49,
+      "full_group_samples": 258,
+      "symmetry_quotient_samples": 191,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 50,
+      "full_group_samples": 359,
+      "symmetry_quotient_samples": 93,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 51,
+      "full_group_samples": 341,
+      "symmetry_quotient_samples": 72,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 52,
+      "full_group_samples": 59,
+      "symmetry_quotient_samples": 55,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 53,
+      "full_group_samples": 432,
+      "symmetry_quotient_samples": 65,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 54,
+      "full_group_samples": 374,
+      "symmetry_quotient_samples": 83,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 55,
+      "full_group_samples": 438,
+      "symmetry_quotient_samples": 29,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 56,
+      "full_group_samples": 409,
+      "symmetry_quotient_samples": 126,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 57,
+      "full_group_samples": 49,
+      "symmetry_quotient_samples": 182,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 58,
+      "full_group_samples": 178,
+      "symmetry_quotient_samples": 156,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 59,
+      "full_group_samples": 337,
+      "symmetry_quotient_samples": 247,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 60,
+      "full_group_samples": 78,
+      "symmetry_quotient_samples": 33,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 61,
+      "full_group_samples": 206,
+      "symmetry_quotient_samples": 140,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 62,
+      "full_group_samples": 246,
+      "symmetry_quotient_samples": 85,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 63,
+      "full_group_samples": 346,
+      "symmetry_quotient_samples": 18,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 64,
+      "full_group_samples": 151,
+      "symmetry_quotient_samples": 144,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 65,
+      "full_group_samples": 422,
+      "symmetry_quotient_samples": 94,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 66,
+      "full_group_samples": 102,
+      "symmetry_quotient_samples": 113,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 67,
+      "full_group_samples": 102,
+      "symmetry_quotient_samples": 98,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 68,
+      "full_group_samples": 231,
+      "symmetry_quotient_samples": 62,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 69,
+      "full_group_samples": 382,
+      "symmetry_quotient_samples": 51,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 70,
+      "full_group_samples": 226,
+      "symmetry_quotient_samples": 74,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 71,
+      "full_group_samples": 194,
+      "symmetry_quotient_samples": 279,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 72,
+      "full_group_samples": 306,
+      "symmetry_quotient_samples": 238,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 73,
+      "full_group_samples": 351,
+      "symmetry_quotient_samples": 90,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 74,
+      "full_group_samples": 581,
+      "symmetry_quotient_samples": 70,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 75,
+      "full_group_samples": 168,
+      "symmetry_quotient_samples": 86,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 76,
+      "full_group_samples": 143,
+      "symmetry_quotient_samples": 104,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 77,
+      "full_group_samples": 232,
+      "symmetry_quotient_samples": 89,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 78,
+      "full_group_samples": 121,
+      "symmetry_quotient_samples": 104,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 79,
+      "full_group_samples": 191,
+      "symmetry_quotient_samples": 68,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 80,
+      "full_group_samples": 265,
+      "symmetry_quotient_samples": 43,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 81,
+      "full_group_samples": 364,
+      "symmetry_quotient_samples": 118,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 82,
+      "full_group_samples": 46,
+      "symmetry_quotient_samples": 22,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 83,
+      "full_group_samples": 643,
+      "symmetry_quotient_samples": 37,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 84,
+      "full_group_samples": 437,
+      "symmetry_quotient_samples": 81,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 85,
+      "full_group_samples": 413,
+      "symmetry_quotient_samples": 78,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 86,
+      "full_group_samples": 71,
+      "symmetry_quotient_samples": 177,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 87,
+      "full_group_samples": 335,
+      "symmetry_quotient_samples": 103,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 88,
+      "full_group_samples": 465,
+      "symmetry_quotient_samples": 117,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 89,
+      "full_group_samples": 416,
+      "symmetry_quotient_samples": 212,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 90,
+      "full_group_samples": 214,
+      "symmetry_quotient_samples": 15,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 91,
+      "full_group_samples": 110,
+      "symmetry_quotient_samples": 35,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 92,
+      "full_group_samples": 129,
+      "symmetry_quotient_samples": 97,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 93,
+      "full_group_samples": 398,
+      "symmetry_quotient_samples": 206,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 94,
+      "full_group_samples": 405,
+      "symmetry_quotient_samples": 151,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 95,
+      "full_group_samples": 433,
+      "symmetry_quotient_samples": 26,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 96,
+      "full_group_samples": 88,
+      "symmetry_quotient_samples": 252,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 97,
+      "full_group_samples": 223,
+      "symmetry_quotient_samples": 136,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 98,
+      "full_group_samples": 415,
+      "symmetry_quotient_samples": 134,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 99,
+      "full_group_samples": 59,
+      "symmetry_quotient_samples": 116,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 100,
+      "full_group_samples": 47,
+      "symmetry_quotient_samples": 192,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 101,
+      "full_group_samples": 27,
+      "symmetry_quotient_samples": 255,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 102,
+      "full_group_samples": 141,
+      "symmetry_quotient_samples": 81,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 103,
+      "full_group_samples": 61,
+      "symmetry_quotient_samples": 40,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 104,
+      "full_group_samples": 140,
+      "symmetry_quotient_samples": 92,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 105,
+      "full_group_samples": 286,
+      "symmetry_quotient_samples": 34,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 106,
+      "full_group_samples": 365,
+      "symmetry_quotient_samples": 48,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 107,
+      "full_group_samples": 564,
+      "symmetry_quotient_samples": 145,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 108,
+      "full_group_samples": 505,
+      "symmetry_quotient_samples": 47,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 109,
+      "full_group_samples": 352,
+      "symmetry_quotient_samples": 145,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 110,
+      "full_group_samples": 427,
+      "symmetry_quotient_samples": 160,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 111,
+      "full_group_samples": 66,
+      "symmetry_quotient_samples": 81,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 112,
+      "full_group_samples": 208,
+      "symmetry_quotient_samples": 92,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 113,
+      "full_group_samples": 442,
+      "symmetry_quotient_samples": 36,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 114,
+      "full_group_samples": 165,
+      "symmetry_quotient_samples": 196,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 115,
+      "full_group_samples": 122,
+      "symmetry_quotient_samples": 43,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 116,
+      "full_group_samples": 116,
+      "symmetry_quotient_samples": 160,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 117,
+      "full_group_samples": 511,
+      "symmetry_quotient_samples": 32,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 118,
+      "full_group_samples": 335,
+      "symmetry_quotient_samples": 60,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 119,
+      "full_group_samples": 147,
+      "symmetry_quotient_samples": 105,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 120,
+      "full_group_samples": 89,
+      "symmetry_quotient_samples": 163,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 121,
+      "full_group_samples": 210,
+      "symmetry_quotient_samples": 65,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 122,
+      "full_group_samples": 440,
+      "symmetry_quotient_samples": 125,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 123,
+      "full_group_samples": 321,
+      "symmetry_quotient_samples": 13,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 124,
+      "full_group_samples": 443,
+      "symmetry_quotient_samples": 116,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 125,
+      "full_group_samples": 280,
+      "symmetry_quotient_samples": 13,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 126,
+      "full_group_samples": 289,
+      "symmetry_quotient_samples": 101,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 127,
+      "full_group_samples": 376,
+      "symmetry_quotient_samples": 109,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 128,
+      "full_group_samples": 260,
+      "symmetry_quotient_samples": 94,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 129,
+      "full_group_samples": 681,
+      "symmetry_quotient_samples": 90,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 130,
+      "full_group_samples": 104,
+      "symmetry_quotient_samples": 140,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 131,
+      "full_group_samples": 51,
+      "symmetry_quotient_samples": 254,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 132,
+      "full_group_samples": 376,
+      "symmetry_quotient_samples": 111,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 133,
+      "full_group_samples": 435,
+      "symmetry_quotient_samples": 121,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 134,
+      "full_group_samples": 183,
+      "symmetry_quotient_samples": 63,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 135,
+      "full_group_samples": 204,
+      "symmetry_quotient_samples": 165,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 136,
+      "full_group_samples": 276,
+      "symmetry_quotient_samples": 79,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 137,
+      "full_group_samples": 405,
+      "symmetry_quotient_samples": 59,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 138,
+      "full_group_samples": 243,
+      "symmetry_quotient_samples": 43,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 139,
+      "full_group_samples": 114,
+      "symmetry_quotient_samples": 13,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 140,
+      "full_group_samples": 407,
+      "symmetry_quotient_samples": 67,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 141,
+      "full_group_samples": 229,
+      "symmetry_quotient_samples": 113,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 142,
+      "full_group_samples": 121,
+      "symmetry_quotient_samples": 37,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 143,
+      "full_group_samples": 249,
+      "symmetry_quotient_samples": 127,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 144,
+      "full_group_samples": 123,
+      "symmetry_quotient_samples": 87,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 145,
+      "full_group_samples": 387,
+      "symmetry_quotient_samples": 49,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 146,
+      "full_group_samples": 283,
+      "symmetry_quotient_samples": 107,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 147,
+      "full_group_samples": 208,
+      "symmetry_quotient_samples": 178,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 148,
+      "full_group_samples": 308,
+      "symmetry_quotient_samples": 132,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 149,
+      "full_group_samples": 822,
+      "symmetry_quotient_samples": 105,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 150,
+      "full_group_samples": 430,
+      "symmetry_quotient_samples": 79,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 151,
+      "full_group_samples": 220,
+      "symmetry_quotient_samples": 81,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 152,
+      "full_group_samples": 219,
+      "symmetry_quotient_samples": 210,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 153,
+      "full_group_samples": 577,
+      "symmetry_quotient_samples": 87,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 154,
+      "full_group_samples": 231,
+      "symmetry_quotient_samples": 73,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 155,
+      "full_group_samples": 105,
+      "symmetry_quotient_samples": 145,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 156,
+      "full_group_samples": 32,
+      "symmetry_quotient_samples": 150,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 157,
+      "full_group_samples": 319,
+      "symmetry_quotient_samples": 63,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 158,
+      "full_group_samples": 306,
+      "symmetry_quotient_samples": 38,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 159,
+      "full_group_samples": 220,
+      "symmetry_quotient_samples": 97,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 160,
+      "full_group_samples": 204,
+      "symmetry_quotient_samples": 35,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 161,
+      "full_group_samples": 548,
+      "symmetry_quotient_samples": 169,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 162,
+      "full_group_samples": 257,
+      "symmetry_quotient_samples": 175,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 163,
+      "full_group_samples": 153,
+      "symmetry_quotient_samples": 71,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 164,
+      "full_group_samples": 282,
+      "symmetry_quotient_samples": 140,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 165,
+      "full_group_samples": 176,
+      "symmetry_quotient_samples": 50,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 166,
+      "full_group_samples": 551,
+      "symmetry_quotient_samples": 130,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 167,
+      "full_group_samples": 300,
+      "symmetry_quotient_samples": 78,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 168,
+      "full_group_samples": 408,
+      "symmetry_quotient_samples": 191,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 169,
+      "full_group_samples": 302,
+      "symmetry_quotient_samples": 119,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 170,
+      "full_group_samples": 276,
+      "symmetry_quotient_samples": 111,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 171,
+      "full_group_samples": 326,
+      "symmetry_quotient_samples": 49,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 172,
+      "full_group_samples": 291,
+      "symmetry_quotient_samples": 139,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 173,
+      "full_group_samples": 184,
+      "symmetry_quotient_samples": 84,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 174,
+      "full_group_samples": 523,
+      "symmetry_quotient_samples": 249,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 175,
+      "full_group_samples": 450,
+      "symmetry_quotient_samples": 22,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 176,
+      "full_group_samples": 513,
+      "symmetry_quotient_samples": 140,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 177,
+      "full_group_samples": 336,
+      "symmetry_quotient_samples": 107,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 178,
+      "full_group_samples": 250,
+      "symmetry_quotient_samples": 33,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 179,
+      "full_group_samples": 341,
+      "symmetry_quotient_samples": 61,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 180,
+      "full_group_samples": 168,
+      "symmetry_quotient_samples": 99,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 181,
+      "full_group_samples": 273,
+      "symmetry_quotient_samples": 71,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 182,
+      "full_group_samples": 135,
+      "symmetry_quotient_samples": 105,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 183,
+      "full_group_samples": 241,
+      "symmetry_quotient_samples": 123,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 184,
+      "full_group_samples": 442,
+      "symmetry_quotient_samples": 141,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 185,
+      "full_group_samples": 149,
+      "symmetry_quotient_samples": 56,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 186,
+      "full_group_samples": 206,
+      "symmetry_quotient_samples": 139,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 187,
+      "full_group_samples": 295,
+      "symmetry_quotient_samples": 234,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 188,
+      "full_group_samples": 351,
+      "symmetry_quotient_samples": 340,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 189,
+      "full_group_samples": 394,
+      "symmetry_quotient_samples": 60,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 190,
+      "full_group_samples": 213,
+      "symmetry_quotient_samples": 21,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 191,
+      "full_group_samples": 101,
+      "symmetry_quotient_samples": 92,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 192,
+      "full_group_samples": 193,
+      "symmetry_quotient_samples": 45,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 193,
+      "full_group_samples": 363,
+      "symmetry_quotient_samples": 115,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 194,
+      "full_group_samples": 231,
+      "symmetry_quotient_samples": 128,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 195,
+      "full_group_samples": 377,
+      "symmetry_quotient_samples": 66,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 196,
+      "full_group_samples": 152,
+      "symmetry_quotient_samples": 55,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 197,
+      "full_group_samples": 184,
+      "symmetry_quotient_samples": 236,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 198,
+      "full_group_samples": 247,
+      "symmetry_quotient_samples": 33,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 199,
+      "full_group_samples": 219,
+      "symmetry_quotient_samples": 92,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 200,
+      "full_group_samples": 371,
+      "symmetry_quotient_samples": 102,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 201,
+      "full_group_samples": 39,
+      "symmetry_quotient_samples": 119,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 202,
+      "full_group_samples": 835,
+      "symmetry_quotient_samples": 50,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 203,
+      "full_group_samples": 252,
+      "symmetry_quotient_samples": 104,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 204,
+      "full_group_samples": 99,
+      "symmetry_quotient_samples": 62,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 205,
+      "full_group_samples": 466,
+      "symmetry_quotient_samples": 106,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 206,
+      "full_group_samples": 274,
+      "symmetry_quotient_samples": 110,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 207,
+      "full_group_samples": 98,
+      "symmetry_quotient_samples": 42,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 208,
+      "full_group_samples": 294,
+      "symmetry_quotient_samples": 170,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 209,
+      "full_group_samples": 325,
+      "symmetry_quotient_samples": 59,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 210,
+      "full_group_samples": 210,
+      "symmetry_quotient_samples": 171,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 211,
+      "full_group_samples": 366,
+      "symmetry_quotient_samples": 186,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 212,
+      "full_group_samples": 349,
+      "symmetry_quotient_samples": 158,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 213,
+      "full_group_samples": 281,
+      "symmetry_quotient_samples": 60,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 214,
+      "full_group_samples": 536,
+      "symmetry_quotient_samples": 36,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 215,
+      "full_group_samples": 153,
+      "symmetry_quotient_samples": 59,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 216,
+      "full_group_samples": 369,
+      "symmetry_quotient_samples": 144,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 217,
+      "full_group_samples": 82,
+      "symmetry_quotient_samples": 146,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 218,
+      "full_group_samples": 138,
+      "symmetry_quotient_samples": 108,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 219,
+      "full_group_samples": 351,
+      "symmetry_quotient_samples": 32,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 220,
+      "full_group_samples": 180,
+      "symmetry_quotient_samples": 141,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 221,
+      "full_group_samples": 193,
+      "symmetry_quotient_samples": 47,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 222,
+      "full_group_samples": 210,
+      "symmetry_quotient_samples": 108,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 223,
+      "full_group_samples": 803,
+      "symmetry_quotient_samples": 92,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 224,
+      "full_group_samples": 178,
+      "symmetry_quotient_samples": 103,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 225,
+      "full_group_samples": 507,
+      "symmetry_quotient_samples": 58,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 226,
+      "full_group_samples": 184,
+      "symmetry_quotient_samples": 82,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 227,
+      "full_group_samples": 495,
+      "symmetry_quotient_samples": 233,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 228,
+      "full_group_samples": 287,
+      "symmetry_quotient_samples": 74,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 229,
+      "full_group_samples": 455,
+      "symmetry_quotient_samples": 89,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 230,
+      "full_group_samples": 471,
+      "symmetry_quotient_samples": 121,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 231,
+      "full_group_samples": 150,
+      "symmetry_quotient_samples": 41,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 232,
+      "full_group_samples": 502,
+      "symmetry_quotient_samples": 47,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 233,
+      "full_group_samples": 399,
+      "symmetry_quotient_samples": 57,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 234,
+      "full_group_samples": 48,
+      "symmetry_quotient_samples": 101,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 235,
+      "full_group_samples": 165,
+      "symmetry_quotient_samples": 59,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 236,
+      "full_group_samples": 358,
+      "symmetry_quotient_samples": 203,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 237,
+      "full_group_samples": 283,
+      "symmetry_quotient_samples": 88,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 238,
+      "full_group_samples": 599,
+      "symmetry_quotient_samples": 111,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 239,
+      "full_group_samples": 355,
+      "symmetry_quotient_samples": 177,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 240,
+      "full_group_samples": 63,
+      "symmetry_quotient_samples": 234,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 241,
+      "full_group_samples": 139,
+      "symmetry_quotient_samples": 64,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 242,
+      "full_group_samples": 276,
+      "symmetry_quotient_samples": 41,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 243,
+      "full_group_samples": 135,
+      "symmetry_quotient_samples": 121,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 244,
+      "full_group_samples": 313,
+      "symmetry_quotient_samples": 122,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 245,
+      "full_group_samples": 197,
+      "symmetry_quotient_samples": 162,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 246,
+      "full_group_samples": 191,
+      "symmetry_quotient_samples": 90,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 247,
+      "full_group_samples": 587,
+      "symmetry_quotient_samples": 49,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 248,
+      "full_group_samples": 277,
+      "symmetry_quotient_samples": 103,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 249,
+      "full_group_samples": 206,
+      "symmetry_quotient_samples": 58,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 250,
+      "full_group_samples": 392,
+      "symmetry_quotient_samples": 175,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 251,
+      "full_group_samples": 124,
+      "symmetry_quotient_samples": 48,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 252,
+      "full_group_samples": 144,
+      "symmetry_quotient_samples": 101,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 253,
+      "full_group_samples": 294,
+      "symmetry_quotient_samples": 174,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 254,
+      "full_group_samples": 361,
+      "symmetry_quotient_samples": 96,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 255,
+      "full_group_samples": 493,
+      "symmetry_quotient_samples": 141,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 256,
+      "full_group_samples": 582,
+      "symmetry_quotient_samples": 46,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 257,
+      "full_group_samples": 311,
+      "symmetry_quotient_samples": 32,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 258,
+      "full_group_samples": 294,
+      "symmetry_quotient_samples": 35,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 259,
+      "full_group_samples": 267,
+      "symmetry_quotient_samples": 104,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 260,
+      "full_group_samples": 124,
+      "symmetry_quotient_samples": 70,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 261,
+      "full_group_samples": 144,
+      "symmetry_quotient_samples": 175,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 262,
+      "full_group_samples": 542,
+      "symmetry_quotient_samples": 131,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 263,
+      "full_group_samples": 224,
+      "symmetry_quotient_samples": 58,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 264,
+      "full_group_samples": 336,
+      "symmetry_quotient_samples": 149,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 265,
+      "full_group_samples": 50,
+      "symmetry_quotient_samples": 196,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 266,
+      "full_group_samples": 249,
+      "symmetry_quotient_samples": 156,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 267,
+      "full_group_samples": 231,
+      "symmetry_quotient_samples": 107,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 268,
+      "full_group_samples": 354,
+      "symmetry_quotient_samples": 209,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 269,
+      "full_group_samples": 402,
+      "symmetry_quotient_samples": 126,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 270,
+      "full_group_samples": 36,
+      "symmetry_quotient_samples": 91,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 271,
+      "full_group_samples": 259,
+      "symmetry_quotient_samples": 87,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 272,
+      "full_group_samples": 291,
+      "symmetry_quotient_samples": 133,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 273,
+      "full_group_samples": 298,
+      "symmetry_quotient_samples": 135,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 274,
+      "full_group_samples": 412,
+      "symmetry_quotient_samples": 123,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 275,
+      "full_group_samples": 93,
+      "symmetry_quotient_samples": 102,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 276,
+      "full_group_samples": 338,
+      "symmetry_quotient_samples": 69,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 277,
+      "full_group_samples": 310,
+      "symmetry_quotient_samples": 50,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 278,
+      "full_group_samples": 266,
+      "symmetry_quotient_samples": 246,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 279,
+      "full_group_samples": 394,
+      "symmetry_quotient_samples": 10,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 280,
+      "full_group_samples": 273,
+      "symmetry_quotient_samples": 168,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 281,
+      "full_group_samples": 312,
+      "symmetry_quotient_samples": 50,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 282,
+      "full_group_samples": 419,
+      "symmetry_quotient_samples": 80,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 283,
+      "full_group_samples": 228,
+      "symmetry_quotient_samples": 168,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 284,
+      "full_group_samples": 354,
+      "symmetry_quotient_samples": 56,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 285,
+      "full_group_samples": 75,
+      "symmetry_quotient_samples": 130,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 286,
+      "full_group_samples": 335,
+      "symmetry_quotient_samples": 101,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 287,
+      "full_group_samples": 312,
+      "symmetry_quotient_samples": 93,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 288,
+      "full_group_samples": 187,
+      "symmetry_quotient_samples": 148,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 289,
+      "full_group_samples": 35,
+      "symmetry_quotient_samples": 171,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 290,
+      "full_group_samples": 129,
+      "symmetry_quotient_samples": 47,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 291,
+      "full_group_samples": 197,
+      "symmetry_quotient_samples": 215,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 292,
+      "full_group_samples": 184,
+      "symmetry_quotient_samples": 34,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 293,
+      "full_group_samples": 298,
+      "symmetry_quotient_samples": 100,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 294,
+      "full_group_samples": 239,
+      "symmetry_quotient_samples": 132,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 295,
+      "full_group_samples": 581,
+      "symmetry_quotient_samples": 88,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 296,
+      "full_group_samples": 475,
+      "symmetry_quotient_samples": 26,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 297,
+      "full_group_samples": 127,
+      "symmetry_quotient_samples": 253,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 298,
+      "full_group_samples": 196,
+      "symmetry_quotient_samples": 156,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 299,
+      "full_group_samples": 264,
+      "symmetry_quotient_samples": 132,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 16,
+      "replicate": 300,
+      "full_group_samples": 432,
+      "symmetry_quotient_samples": 82,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 1,
+      "full_group_samples": 1388,
+      "symmetry_quotient_samples": 691,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 2,
+      "full_group_samples": 1521,
+      "symmetry_quotient_samples": 409,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 3,
+      "full_group_samples": 316,
+      "symmetry_quotient_samples": 223,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 4,
+      "full_group_samples": 639,
+      "symmetry_quotient_samples": 622,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 5,
+      "full_group_samples": 2591,
+      "symmetry_quotient_samples": 340,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 6,
+      "full_group_samples": 440,
+      "symmetry_quotient_samples": 144,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 7,
+      "full_group_samples": 1037,
+      "symmetry_quotient_samples": 531,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 8,
+      "full_group_samples": 1379,
+      "symmetry_quotient_samples": 449,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 9,
+      "full_group_samples": 880,
+      "symmetry_quotient_samples": 445,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 10,
+      "full_group_samples": 77,
+      "symmetry_quotient_samples": 993,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 11,
+      "full_group_samples": 541,
+      "symmetry_quotient_samples": 432,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 12,
+      "full_group_samples": 913,
+      "symmetry_quotient_samples": 132,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 13,
+      "full_group_samples": 501,
+      "symmetry_quotient_samples": 1222,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 14,
+      "full_group_samples": 947,
+      "symmetry_quotient_samples": 574,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 15,
+      "full_group_samples": 595,
+      "symmetry_quotient_samples": 234,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 16,
+      "full_group_samples": 908,
+      "symmetry_quotient_samples": 317,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 17,
+      "full_group_samples": 227,
+      "symmetry_quotient_samples": 438,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 18,
+      "full_group_samples": 792,
+      "symmetry_quotient_samples": 417,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 19,
+      "full_group_samples": 866,
+      "symmetry_quotient_samples": 278,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 20,
+      "full_group_samples": 940,
+      "symmetry_quotient_samples": 486,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 21,
+      "full_group_samples": 1061,
+      "symmetry_quotient_samples": 355,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 22,
+      "full_group_samples": 944,
+      "symmetry_quotient_samples": 307,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 23,
+      "full_group_samples": 1401,
+      "symmetry_quotient_samples": 343,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 24,
+      "full_group_samples": 282,
+      "symmetry_quotient_samples": 498,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 25,
+      "full_group_samples": 1366,
+      "symmetry_quotient_samples": 937,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 26,
+      "full_group_samples": 948,
+      "symmetry_quotient_samples": 247,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 27,
+      "full_group_samples": 2391,
+      "symmetry_quotient_samples": 277,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 28,
+      "full_group_samples": 792,
+      "symmetry_quotient_samples": 788,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 29,
+      "full_group_samples": 738,
+      "symmetry_quotient_samples": 814,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 30,
+      "full_group_samples": 382,
+      "symmetry_quotient_samples": 412,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 31,
+      "full_group_samples": 662,
+      "symmetry_quotient_samples": 540,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 32,
+      "full_group_samples": 1407,
+      "symmetry_quotient_samples": 574,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 33,
+      "full_group_samples": 1849,
+      "symmetry_quotient_samples": 219,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 34,
+      "full_group_samples": 731,
+      "symmetry_quotient_samples": 295,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 35,
+      "full_group_samples": 2598,
+      "symmetry_quotient_samples": 435,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 36,
+      "full_group_samples": 1076,
+      "symmetry_quotient_samples": 245,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 37,
+      "full_group_samples": 343,
+      "symmetry_quotient_samples": 157,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 38,
+      "full_group_samples": 807,
+      "symmetry_quotient_samples": 736,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 39,
+      "full_group_samples": 1155,
+      "symmetry_quotient_samples": 553,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 40,
+      "full_group_samples": 554,
+      "symmetry_quotient_samples": 571,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 41,
+      "full_group_samples": 333,
+      "symmetry_quotient_samples": 532,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 42,
+      "full_group_samples": 704,
+      "symmetry_quotient_samples": 623,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 43,
+      "full_group_samples": 2394,
+      "symmetry_quotient_samples": 408,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 44,
+      "full_group_samples": 1006,
+      "symmetry_quotient_samples": 418,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 45,
+      "full_group_samples": 1082,
+      "symmetry_quotient_samples": 369,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 46,
+      "full_group_samples": 1950,
+      "symmetry_quotient_samples": 126,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 47,
+      "full_group_samples": 845,
+      "symmetry_quotient_samples": 305,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 48,
+      "full_group_samples": 2437,
+      "symmetry_quotient_samples": 520,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 49,
+      "full_group_samples": 1561,
+      "symmetry_quotient_samples": 931,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 50,
+      "full_group_samples": 825,
+      "symmetry_quotient_samples": 438,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 51,
+      "full_group_samples": 1904,
+      "symmetry_quotient_samples": 391,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 52,
+      "full_group_samples": 1595,
+      "symmetry_quotient_samples": 490,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 53,
+      "full_group_samples": 475,
+      "symmetry_quotient_samples": 611,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 54,
+      "full_group_samples": 557,
+      "symmetry_quotient_samples": 144,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 55,
+      "full_group_samples": 639,
+      "symmetry_quotient_samples": 1120,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 56,
+      "full_group_samples": 1107,
+      "symmetry_quotient_samples": 580,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 57,
+      "full_group_samples": 805,
+      "symmetry_quotient_samples": 246,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 58,
+      "full_group_samples": 792,
+      "symmetry_quotient_samples": 626,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 59,
+      "full_group_samples": 908,
+      "symmetry_quotient_samples": 411,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 60,
+      "full_group_samples": 1491,
+      "symmetry_quotient_samples": 297,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 61,
+      "full_group_samples": 996,
+      "symmetry_quotient_samples": 866,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 62,
+      "full_group_samples": 1146,
+      "symmetry_quotient_samples": 386,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 63,
+      "full_group_samples": 1590,
+      "symmetry_quotient_samples": 336,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 64,
+      "full_group_samples": 928,
+      "symmetry_quotient_samples": 399,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 65,
+      "full_group_samples": 276,
+      "symmetry_quotient_samples": 411,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 66,
+      "full_group_samples": 683,
+      "symmetry_quotient_samples": 316,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 67,
+      "full_group_samples": 1240,
+      "symmetry_quotient_samples": 380,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 68,
+      "full_group_samples": 369,
+      "symmetry_quotient_samples": 31,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 69,
+      "full_group_samples": 286,
+      "symmetry_quotient_samples": 279,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 70,
+      "full_group_samples": 1862,
+      "symmetry_quotient_samples": 140,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 71,
+      "full_group_samples": 1506,
+      "symmetry_quotient_samples": 102,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 72,
+      "full_group_samples": 147,
+      "symmetry_quotient_samples": 151,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 73,
+      "full_group_samples": 1793,
+      "symmetry_quotient_samples": 634,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 74,
+      "full_group_samples": 1531,
+      "symmetry_quotient_samples": 350,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 75,
+      "full_group_samples": 474,
+      "symmetry_quotient_samples": 370,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 76,
+      "full_group_samples": 343,
+      "symmetry_quotient_samples": 456,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 77,
+      "full_group_samples": 1078,
+      "symmetry_quotient_samples": 697,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 78,
+      "full_group_samples": 986,
+      "symmetry_quotient_samples": 277,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 79,
+      "full_group_samples": 2508,
+      "symmetry_quotient_samples": 309,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 80,
+      "full_group_samples": 738,
+      "symmetry_quotient_samples": 570,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 81,
+      "full_group_samples": 1044,
+      "symmetry_quotient_samples": 171,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 82,
+      "full_group_samples": 687,
+      "symmetry_quotient_samples": 145,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 83,
+      "full_group_samples": 995,
+      "symmetry_quotient_samples": 658,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 84,
+      "full_group_samples": 2255,
+      "symmetry_quotient_samples": 520,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 85,
+      "full_group_samples": 1866,
+      "symmetry_quotient_samples": 79,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 86,
+      "full_group_samples": 1119,
+      "symmetry_quotient_samples": 599,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 87,
+      "full_group_samples": 1301,
+      "symmetry_quotient_samples": 529,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 88,
+      "full_group_samples": 695,
+      "symmetry_quotient_samples": 336,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 89,
+      "full_group_samples": 1251,
+      "symmetry_quotient_samples": 253,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 90,
+      "full_group_samples": 1143,
+      "symmetry_quotient_samples": 168,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 91,
+      "full_group_samples": 1498,
+      "symmetry_quotient_samples": 720,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 92,
+      "full_group_samples": 696,
+      "symmetry_quotient_samples": 453,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 93,
+      "full_group_samples": 1292,
+      "symmetry_quotient_samples": 22,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 94,
+      "full_group_samples": 1887,
+      "symmetry_quotient_samples": 179,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 95,
+      "full_group_samples": 2394,
+      "symmetry_quotient_samples": 550,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 96,
+      "full_group_samples": 1301,
+      "symmetry_quotient_samples": 636,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 97,
+      "full_group_samples": 568,
+      "symmetry_quotient_samples": 288,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 98,
+      "full_group_samples": 1549,
+      "symmetry_quotient_samples": 190,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 99,
+      "full_group_samples": 893,
+      "symmetry_quotient_samples": 259,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 100,
+      "full_group_samples": 373,
+      "symmetry_quotient_samples": 750,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 101,
+      "full_group_samples": 402,
+      "symmetry_quotient_samples": 268,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 102,
+      "full_group_samples": 2064,
+      "symmetry_quotient_samples": 487,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 103,
+      "full_group_samples": 767,
+      "symmetry_quotient_samples": 354,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 104,
+      "full_group_samples": 1907,
+      "symmetry_quotient_samples": 294,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 105,
+      "full_group_samples": 1868,
+      "symmetry_quotient_samples": 457,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 106,
+      "full_group_samples": 739,
+      "symmetry_quotient_samples": 854,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 107,
+      "full_group_samples": 1927,
+      "symmetry_quotient_samples": 226,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 108,
+      "full_group_samples": 983,
+      "symmetry_quotient_samples": 380,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 109,
+      "full_group_samples": 385,
+      "symmetry_quotient_samples": 575,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 110,
+      "full_group_samples": 1500,
+      "symmetry_quotient_samples": 518,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 111,
+      "full_group_samples": 313,
+      "symmetry_quotient_samples": 337,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 112,
+      "full_group_samples": 588,
+      "symmetry_quotient_samples": 356,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 113,
+      "full_group_samples": 1572,
+      "symmetry_quotient_samples": 842,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 114,
+      "full_group_samples": 509,
+      "symmetry_quotient_samples": 539,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 115,
+      "full_group_samples": 1377,
+      "symmetry_quotient_samples": 190,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 116,
+      "full_group_samples": 907,
+      "symmetry_quotient_samples": 624,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 117,
+      "full_group_samples": 2139,
+      "symmetry_quotient_samples": 399,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 118,
+      "full_group_samples": 1385,
+      "symmetry_quotient_samples": 438,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 119,
+      "full_group_samples": 1245,
+      "symmetry_quotient_samples": 462,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 120,
+      "full_group_samples": 1688,
+      "symmetry_quotient_samples": 338,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 121,
+      "full_group_samples": 662,
+      "symmetry_quotient_samples": 178,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 122,
+      "full_group_samples": 1347,
+      "symmetry_quotient_samples": 477,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 123,
+      "full_group_samples": 2105,
+      "symmetry_quotient_samples": 210,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 124,
+      "full_group_samples": 653,
+      "symmetry_quotient_samples": 772,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 125,
+      "full_group_samples": 1741,
+      "symmetry_quotient_samples": 544,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 126,
+      "full_group_samples": 1595,
+      "symmetry_quotient_samples": 396,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 127,
+      "full_group_samples": 1204,
+      "symmetry_quotient_samples": 644,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 128,
+      "full_group_samples": 1141,
+      "symmetry_quotient_samples": 695,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 129,
+      "full_group_samples": 618,
+      "symmetry_quotient_samples": 202,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 130,
+      "full_group_samples": 1414,
+      "symmetry_quotient_samples": 451,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 131,
+      "full_group_samples": 425,
+      "symmetry_quotient_samples": 461,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 132,
+      "full_group_samples": 862,
+      "symmetry_quotient_samples": 523,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 133,
+      "full_group_samples": 1887,
+      "symmetry_quotient_samples": 469,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 134,
+      "full_group_samples": 719,
+      "symmetry_quotient_samples": 537,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 135,
+      "full_group_samples": 2141,
+      "symmetry_quotient_samples": 660,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 136,
+      "full_group_samples": 408,
+      "symmetry_quotient_samples": 372,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 137,
+      "full_group_samples": 855,
+      "symmetry_quotient_samples": 443,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 138,
+      "full_group_samples": 981,
+      "symmetry_quotient_samples": 448,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 139,
+      "full_group_samples": 427,
+      "symmetry_quotient_samples": 228,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 140,
+      "full_group_samples": 1801,
+      "symmetry_quotient_samples": 757,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 141,
+      "full_group_samples": 1673,
+      "symmetry_quotient_samples": 435,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 142,
+      "full_group_samples": 1081,
+      "symmetry_quotient_samples": 372,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 143,
+      "full_group_samples": 1917,
+      "symmetry_quotient_samples": 886,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 144,
+      "full_group_samples": 2068,
+      "symmetry_quotient_samples": 503,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 145,
+      "full_group_samples": 1090,
+      "symmetry_quotient_samples": 264,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 146,
+      "full_group_samples": 1284,
+      "symmetry_quotient_samples": 331,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 147,
+      "full_group_samples": 644,
+      "symmetry_quotient_samples": 178,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 148,
+      "full_group_samples": 1315,
+      "symmetry_quotient_samples": 444,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 149,
+      "full_group_samples": 1212,
+      "symmetry_quotient_samples": 401,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 150,
+      "full_group_samples": 520,
+      "symmetry_quotient_samples": 348,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 151,
+      "full_group_samples": 114,
+      "symmetry_quotient_samples": 473,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 152,
+      "full_group_samples": 1635,
+      "symmetry_quotient_samples": 330,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 153,
+      "full_group_samples": 1293,
+      "symmetry_quotient_samples": 422,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 154,
+      "full_group_samples": 752,
+      "symmetry_quotient_samples": 312,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 155,
+      "full_group_samples": 282,
+      "symmetry_quotient_samples": 203,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 156,
+      "full_group_samples": 1101,
+      "symmetry_quotient_samples": 225,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 157,
+      "full_group_samples": 768,
+      "symmetry_quotient_samples": 103,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 158,
+      "full_group_samples": 506,
+      "symmetry_quotient_samples": 427,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 159,
+      "full_group_samples": 188,
+      "symmetry_quotient_samples": 413,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 160,
+      "full_group_samples": 1783,
+      "symmetry_quotient_samples": 291,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 161,
+      "full_group_samples": 1002,
+      "symmetry_quotient_samples": 1017,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 162,
+      "full_group_samples": 1956,
+      "symmetry_quotient_samples": 687,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 163,
+      "full_group_samples": 1996,
+      "symmetry_quotient_samples": 686,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 164,
+      "full_group_samples": 169,
+      "symmetry_quotient_samples": 641,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 165,
+      "full_group_samples": 952,
+      "symmetry_quotient_samples": 211,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 166,
+      "full_group_samples": 293,
+      "symmetry_quotient_samples": 414,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 167,
+      "full_group_samples": 1080,
+      "symmetry_quotient_samples": 458,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 168,
+      "full_group_samples": 1812,
+      "symmetry_quotient_samples": 246,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 169,
+      "full_group_samples": 833,
+      "symmetry_quotient_samples": 516,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 170,
+      "full_group_samples": 765,
+      "symmetry_quotient_samples": 677,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 171,
+      "full_group_samples": 720,
+      "symmetry_quotient_samples": 322,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 172,
+      "full_group_samples": 1517,
+      "symmetry_quotient_samples": 214,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 173,
+      "full_group_samples": 758,
+      "symmetry_quotient_samples": 135,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 174,
+      "full_group_samples": 812,
+      "symmetry_quotient_samples": 822,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 175,
+      "full_group_samples": 489,
+      "symmetry_quotient_samples": 438,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 176,
+      "full_group_samples": 930,
+      "symmetry_quotient_samples": 332,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 177,
+      "full_group_samples": 681,
+      "symmetry_quotient_samples": 243,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 178,
+      "full_group_samples": 2014,
+      "symmetry_quotient_samples": 214,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 179,
+      "full_group_samples": 1270,
+      "symmetry_quotient_samples": 346,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 180,
+      "full_group_samples": 725,
+      "symmetry_quotient_samples": 182,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 181,
+      "full_group_samples": 1013,
+      "symmetry_quotient_samples": 167,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 182,
+      "full_group_samples": 944,
+      "symmetry_quotient_samples": 461,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 183,
+      "full_group_samples": 1155,
+      "symmetry_quotient_samples": 387,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 184,
+      "full_group_samples": 1291,
+      "symmetry_quotient_samples": 613,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 185,
+      "full_group_samples": 242,
+      "symmetry_quotient_samples": 253,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 186,
+      "full_group_samples": 1671,
+      "symmetry_quotient_samples": 1132,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 187,
+      "full_group_samples": 773,
+      "symmetry_quotient_samples": 467,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 188,
+      "full_group_samples": 1293,
+      "symmetry_quotient_samples": 174,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 189,
+      "full_group_samples": 1070,
+      "symmetry_quotient_samples": 355,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 190,
+      "full_group_samples": 316,
+      "symmetry_quotient_samples": 339,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 191,
+      "full_group_samples": 746,
+      "symmetry_quotient_samples": 1027,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 192,
+      "full_group_samples": 602,
+      "symmetry_quotient_samples": 146,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 193,
+      "full_group_samples": 1174,
+      "symmetry_quotient_samples": 118,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 194,
+      "full_group_samples": 1256,
+      "symmetry_quotient_samples": 513,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 195,
+      "full_group_samples": 1251,
+      "symmetry_quotient_samples": 385,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 196,
+      "full_group_samples": 814,
+      "symmetry_quotient_samples": 573,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 197,
+      "full_group_samples": 1797,
+      "symmetry_quotient_samples": 212,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 198,
+      "full_group_samples": 1611,
+      "symmetry_quotient_samples": 327,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 199,
+      "full_group_samples": 1938,
+      "symmetry_quotient_samples": 311,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 200,
+      "full_group_samples": 738,
+      "symmetry_quotient_samples": 773,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 201,
+      "full_group_samples": 1488,
+      "symmetry_quotient_samples": 612,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 202,
+      "full_group_samples": 1261,
+      "symmetry_quotient_samples": 433,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 203,
+      "full_group_samples": 1585,
+      "symmetry_quotient_samples": 50,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 204,
+      "full_group_samples": 1544,
+      "symmetry_quotient_samples": 476,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 205,
+      "full_group_samples": 1016,
+      "symmetry_quotient_samples": 288,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 206,
+      "full_group_samples": 225,
+      "symmetry_quotient_samples": 562,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 207,
+      "full_group_samples": 746,
+      "symmetry_quotient_samples": 480,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 208,
+      "full_group_samples": 1685,
+      "symmetry_quotient_samples": 635,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 209,
+      "full_group_samples": 923,
+      "symmetry_quotient_samples": 833,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 210,
+      "full_group_samples": 517,
+      "symmetry_quotient_samples": 653,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 211,
+      "full_group_samples": 931,
+      "symmetry_quotient_samples": 94,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 212,
+      "full_group_samples": 377,
+      "symmetry_quotient_samples": 269,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 213,
+      "full_group_samples": 1038,
+      "symmetry_quotient_samples": 741,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 214,
+      "full_group_samples": 832,
+      "symmetry_quotient_samples": 292,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 215,
+      "full_group_samples": 2852,
+      "symmetry_quotient_samples": 843,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 216,
+      "full_group_samples": 325,
+      "symmetry_quotient_samples": 551,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 217,
+      "full_group_samples": 1252,
+      "symmetry_quotient_samples": 594,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 218,
+      "full_group_samples": 1643,
+      "symmetry_quotient_samples": 190,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 219,
+      "full_group_samples": 558,
+      "symmetry_quotient_samples": 308,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 220,
+      "full_group_samples": 2517,
+      "symmetry_quotient_samples": 327,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 221,
+      "full_group_samples": 594,
+      "symmetry_quotient_samples": 166,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 222,
+      "full_group_samples": 1200,
+      "symmetry_quotient_samples": 988,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 223,
+      "full_group_samples": 1542,
+      "symmetry_quotient_samples": 435,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 224,
+      "full_group_samples": 773,
+      "symmetry_quotient_samples": 657,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 225,
+      "full_group_samples": 1442,
+      "symmetry_quotient_samples": 463,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 226,
+      "full_group_samples": 1848,
+      "symmetry_quotient_samples": 406,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 227,
+      "full_group_samples": 1456,
+      "symmetry_quotient_samples": 96,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 228,
+      "full_group_samples": 751,
+      "symmetry_quotient_samples": 352,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 229,
+      "full_group_samples": 1757,
+      "symmetry_quotient_samples": 556,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 230,
+      "full_group_samples": 1208,
+      "symmetry_quotient_samples": 687,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 231,
+      "full_group_samples": 1394,
+      "symmetry_quotient_samples": 359,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 232,
+      "full_group_samples": 601,
+      "symmetry_quotient_samples": 403,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 233,
+      "full_group_samples": 1095,
+      "symmetry_quotient_samples": 35,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 234,
+      "full_group_samples": 407,
+      "symmetry_quotient_samples": 523,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 235,
+      "full_group_samples": 575,
+      "symmetry_quotient_samples": 605,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 236,
+      "full_group_samples": 887,
+      "symmetry_quotient_samples": 284,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 237,
+      "full_group_samples": 681,
+      "symmetry_quotient_samples": 94,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 238,
+      "full_group_samples": 1330,
+      "symmetry_quotient_samples": 221,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 239,
+      "full_group_samples": 2113,
+      "symmetry_quotient_samples": 374,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 240,
+      "full_group_samples": 1394,
+      "symmetry_quotient_samples": 291,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 241,
+      "full_group_samples": 863,
+      "symmetry_quotient_samples": 898,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 242,
+      "full_group_samples": 1579,
+      "symmetry_quotient_samples": 591,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 243,
+      "full_group_samples": 943,
+      "symmetry_quotient_samples": 187,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 244,
+      "full_group_samples": 1180,
+      "symmetry_quotient_samples": 160,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 245,
+      "full_group_samples": 715,
+      "symmetry_quotient_samples": 572,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 246,
+      "full_group_samples": 1367,
+      "symmetry_quotient_samples": 488,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 247,
+      "full_group_samples": 1400,
+      "symmetry_quotient_samples": 362,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 248,
+      "full_group_samples": 605,
+      "symmetry_quotient_samples": 93,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 249,
+      "full_group_samples": 2973,
+      "symmetry_quotient_samples": 125,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 250,
+      "full_group_samples": 550,
+      "symmetry_quotient_samples": 227,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 251,
+      "full_group_samples": 1246,
+      "symmetry_quotient_samples": 531,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 252,
+      "full_group_samples": 248,
+      "symmetry_quotient_samples": 566,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 253,
+      "full_group_samples": 951,
+      "symmetry_quotient_samples": 635,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 254,
+      "full_group_samples": 1419,
+      "symmetry_quotient_samples": 815,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 255,
+      "full_group_samples": 1476,
+      "symmetry_quotient_samples": 222,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 256,
+      "full_group_samples": 554,
+      "symmetry_quotient_samples": 395,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 257,
+      "full_group_samples": 1150,
+      "symmetry_quotient_samples": 258,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 258,
+      "full_group_samples": 606,
+      "symmetry_quotient_samples": 446,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 259,
+      "full_group_samples": 357,
+      "symmetry_quotient_samples": 321,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 260,
+      "full_group_samples": 380,
+      "symmetry_quotient_samples": 336,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 261,
+      "full_group_samples": 962,
+      "symmetry_quotient_samples": 392,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 262,
+      "full_group_samples": 876,
+      "symmetry_quotient_samples": 433,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 263,
+      "full_group_samples": 227,
+      "symmetry_quotient_samples": 172,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 264,
+      "full_group_samples": 1739,
+      "symmetry_quotient_samples": 178,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 265,
+      "full_group_samples": 2139,
+      "symmetry_quotient_samples": 932,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 266,
+      "full_group_samples": 70,
+      "symmetry_quotient_samples": 506,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 267,
+      "full_group_samples": 897,
+      "symmetry_quotient_samples": 1104,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 268,
+      "full_group_samples": 1124,
+      "symmetry_quotient_samples": 344,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 269,
+      "full_group_samples": 948,
+      "symmetry_quotient_samples": 383,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 270,
+      "full_group_samples": 896,
+      "symmetry_quotient_samples": 104,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 271,
+      "full_group_samples": 1342,
+      "symmetry_quotient_samples": 300,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 272,
+      "full_group_samples": 1177,
+      "symmetry_quotient_samples": 1043,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 273,
+      "full_group_samples": 427,
+      "symmetry_quotient_samples": 248,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 274,
+      "full_group_samples": 426,
+      "symmetry_quotient_samples": 208,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 275,
+      "full_group_samples": 280,
+      "symmetry_quotient_samples": 646,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 276,
+      "full_group_samples": 864,
+      "symmetry_quotient_samples": 481,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 277,
+      "full_group_samples": 95,
+      "symmetry_quotient_samples": 673,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 278,
+      "full_group_samples": 2389,
+      "symmetry_quotient_samples": 370,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 279,
+      "full_group_samples": 1040,
+      "symmetry_quotient_samples": 295,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 280,
+      "full_group_samples": 728,
+      "symmetry_quotient_samples": 526,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 281,
+      "full_group_samples": 1261,
+      "symmetry_quotient_samples": 1015,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 282,
+      "full_group_samples": 1384,
+      "symmetry_quotient_samples": 186,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 283,
+      "full_group_samples": 434,
+      "symmetry_quotient_samples": 536,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 284,
+      "full_group_samples": 688,
+      "symmetry_quotient_samples": 530,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 285,
+      "full_group_samples": 1609,
+      "symmetry_quotient_samples": 161,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 286,
+      "full_group_samples": 522,
+      "symmetry_quotient_samples": 445,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 287,
+      "full_group_samples": 370,
+      "symmetry_quotient_samples": 121,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 288,
+      "full_group_samples": 879,
+      "symmetry_quotient_samples": 655,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 289,
+      "full_group_samples": 1068,
+      "symmetry_quotient_samples": 490,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 290,
+      "full_group_samples": 354,
+      "symmetry_quotient_samples": 772,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 291,
+      "full_group_samples": 899,
+      "symmetry_quotient_samples": 161,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 292,
+      "full_group_samples": 384,
+      "symmetry_quotient_samples": 484,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 293,
+      "full_group_samples": 1648,
+      "symmetry_quotient_samples": 726,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 294,
+      "full_group_samples": 1649,
+      "symmetry_quotient_samples": 481,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 295,
+      "full_group_samples": 681,
+      "symmetry_quotient_samples": 714,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 296,
+      "full_group_samples": 392,
+      "symmetry_quotient_samples": 799,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 297,
+      "full_group_samples": 1660,
+      "symmetry_quotient_samples": 426,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 298,
+      "full_group_samples": 1267,
+      "symmetry_quotient_samples": 599,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 299,
+      "full_group_samples": 900,
+      "symmetry_quotient_samples": 535,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 20,
+      "replicate": 300,
+      "full_group_samples": 781,
+      "symmetry_quotient_samples": 430,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 1,
+      "full_group_samples": 995,
+      "symmetry_quotient_samples": 1192,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 2,
+      "full_group_samples": 3420,
+      "symmetry_quotient_samples": 1333,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 3,
+      "full_group_samples": 1994,
+      "symmetry_quotient_samples": 1447,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 4,
+      "full_group_samples": 3114,
+      "symmetry_quotient_samples": 4048,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 5,
+      "full_group_samples": 3214,
+      "symmetry_quotient_samples": 2503,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 6,
+      "full_group_samples": 3451,
+      "symmetry_quotient_samples": 2491,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 7,
+      "full_group_samples": 4839,
+      "symmetry_quotient_samples": 1468,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 8,
+      "full_group_samples": 4157,
+      "symmetry_quotient_samples": 2897,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 9,
+      "full_group_samples": 4558,
+      "symmetry_quotient_samples": 1648,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 10,
+      "full_group_samples": 2454,
+      "symmetry_quotient_samples": 2156,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 11,
+      "full_group_samples": 5938,
+      "symmetry_quotient_samples": 1260,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 12,
+      "full_group_samples": 3063,
+      "symmetry_quotient_samples": 2677,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 13,
+      "full_group_samples": 1199,
+      "symmetry_quotient_samples": 5949,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 14,
+      "full_group_samples": 5115,
+      "symmetry_quotient_samples": 2854,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 15,
+      "full_group_samples": 1919,
+      "symmetry_quotient_samples": 1067,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 16,
+      "full_group_samples": 1851,
+      "symmetry_quotient_samples": 4083,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 17,
+      "full_group_samples": 6561,
+      "symmetry_quotient_samples": 1014,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 18,
+      "full_group_samples": 5967,
+      "symmetry_quotient_samples": 2445,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 19,
+      "full_group_samples": 2551,
+      "symmetry_quotient_samples": 2174,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 20,
+      "full_group_samples": 2368,
+      "symmetry_quotient_samples": 2229,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 21,
+      "full_group_samples": 2520,
+      "symmetry_quotient_samples": 142,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 22,
+      "full_group_samples": 5129,
+      "symmetry_quotient_samples": 3542,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 23,
+      "full_group_samples": 5962,
+      "symmetry_quotient_samples": 2206,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 24,
+      "full_group_samples": 6741,
+      "symmetry_quotient_samples": 692,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 25,
+      "full_group_samples": 4203,
+      "symmetry_quotient_samples": 891,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 26,
+      "full_group_samples": 11599,
+      "symmetry_quotient_samples": 2722,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 27,
+      "full_group_samples": 1390,
+      "symmetry_quotient_samples": 3304,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 28,
+      "full_group_samples": 5161,
+      "symmetry_quotient_samples": 2830,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 29,
+      "full_group_samples": 2217,
+      "symmetry_quotient_samples": 877,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 30,
+      "full_group_samples": 1312,
+      "symmetry_quotient_samples": 1548,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 31,
+      "full_group_samples": 3658,
+      "symmetry_quotient_samples": 1068,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 32,
+      "full_group_samples": 1542,
+      "symmetry_quotient_samples": 1977,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 33,
+      "full_group_samples": 7700,
+      "symmetry_quotient_samples": 528,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 34,
+      "full_group_samples": 6710,
+      "symmetry_quotient_samples": 2381,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 35,
+      "full_group_samples": 5822,
+      "symmetry_quotient_samples": 194,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 36,
+      "full_group_samples": 4408,
+      "symmetry_quotient_samples": 2221,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 37,
+      "full_group_samples": 5586,
+      "symmetry_quotient_samples": 4076,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 38,
+      "full_group_samples": 1561,
+      "symmetry_quotient_samples": 450,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 39,
+      "full_group_samples": 4910,
+      "symmetry_quotient_samples": 2064,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 40,
+      "full_group_samples": 4943,
+      "symmetry_quotient_samples": 775,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 41,
+      "full_group_samples": 2648,
+      "symmetry_quotient_samples": 683,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 42,
+      "full_group_samples": 4807,
+      "symmetry_quotient_samples": 2571,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 43,
+      "full_group_samples": 3824,
+      "symmetry_quotient_samples": 1476,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 44,
+      "full_group_samples": 6071,
+      "symmetry_quotient_samples": 890,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 45,
+      "full_group_samples": 4524,
+      "symmetry_quotient_samples": 699,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 46,
+      "full_group_samples": 2715,
+      "symmetry_quotient_samples": 445,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 47,
+      "full_group_samples": 6767,
+      "symmetry_quotient_samples": 1726,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 48,
+      "full_group_samples": 2260,
+      "symmetry_quotient_samples": 2171,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 49,
+      "full_group_samples": 5485,
+      "symmetry_quotient_samples": 1508,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 50,
+      "full_group_samples": 4926,
+      "symmetry_quotient_samples": 2028,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 51,
+      "full_group_samples": 5966,
+      "symmetry_quotient_samples": 4492,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 52,
+      "full_group_samples": 3945,
+      "symmetry_quotient_samples": 1314,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 53,
+      "full_group_samples": 1684,
+      "symmetry_quotient_samples": 3466,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 54,
+      "full_group_samples": 1171,
+      "symmetry_quotient_samples": 2098,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 55,
+      "full_group_samples": 5319,
+      "symmetry_quotient_samples": 1833,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 56,
+      "full_group_samples": 1773,
+      "symmetry_quotient_samples": 3821,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 57,
+      "full_group_samples": 5828,
+      "symmetry_quotient_samples": 684,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 58,
+      "full_group_samples": 352,
+      "symmetry_quotient_samples": 501,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 59,
+      "full_group_samples": 2498,
+      "symmetry_quotient_samples": 944,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 60,
+      "full_group_samples": 8969,
+      "symmetry_quotient_samples": 1649,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 61,
+      "full_group_samples": 7492,
+      "symmetry_quotient_samples": 1959,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 62,
+      "full_group_samples": 3802,
+      "symmetry_quotient_samples": 1474,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 63,
+      "full_group_samples": 6020,
+      "symmetry_quotient_samples": 2635,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 64,
+      "full_group_samples": 2724,
+      "symmetry_quotient_samples": 804,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 65,
+      "full_group_samples": 3061,
+      "symmetry_quotient_samples": 2350,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 66,
+      "full_group_samples": 2193,
+      "symmetry_quotient_samples": 812,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 67,
+      "full_group_samples": 3082,
+      "symmetry_quotient_samples": 766,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 68,
+      "full_group_samples": 4584,
+      "symmetry_quotient_samples": 1821,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 69,
+      "full_group_samples": 6389,
+      "symmetry_quotient_samples": 746,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 70,
+      "full_group_samples": 3755,
+      "symmetry_quotient_samples": 2186,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 71,
+      "full_group_samples": 3453,
+      "symmetry_quotient_samples": 1972,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 72,
+      "full_group_samples": 8136,
+      "symmetry_quotient_samples": 1111,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 73,
+      "full_group_samples": 7360,
+      "symmetry_quotient_samples": 2005,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 74,
+      "full_group_samples": 2211,
+      "symmetry_quotient_samples": 1411,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 75,
+      "full_group_samples": 1224,
+      "symmetry_quotient_samples": 1001,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 76,
+      "full_group_samples": 2058,
+      "symmetry_quotient_samples": 3476,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 77,
+      "full_group_samples": 4765,
+      "symmetry_quotient_samples": 2129,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 78,
+      "full_group_samples": 6074,
+      "symmetry_quotient_samples": 2193,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 79,
+      "full_group_samples": 1918,
+      "symmetry_quotient_samples": 1082,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 80,
+      "full_group_samples": 4472,
+      "symmetry_quotient_samples": 2864,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 81,
+      "full_group_samples": 3601,
+      "symmetry_quotient_samples": 63,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 82,
+      "full_group_samples": 1946,
+      "symmetry_quotient_samples": 2292,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 83,
+      "full_group_samples": 7320,
+      "symmetry_quotient_samples": 1507,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 84,
+      "full_group_samples": 4450,
+      "symmetry_quotient_samples": 964,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 85,
+      "full_group_samples": 6477,
+      "symmetry_quotient_samples": 2302,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 86,
+      "full_group_samples": 8212,
+      "symmetry_quotient_samples": 2372,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 87,
+      "full_group_samples": 6308,
+      "symmetry_quotient_samples": 2997,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 88,
+      "full_group_samples": 1591,
+      "symmetry_quotient_samples": 275,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 89,
+      "full_group_samples": 5950,
+      "symmetry_quotient_samples": 2751,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 90,
+      "full_group_samples": 10245,
+      "symmetry_quotient_samples": 682,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 91,
+      "full_group_samples": 3862,
+      "symmetry_quotient_samples": 971,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 92,
+      "full_group_samples": 3585,
+      "symmetry_quotient_samples": 1892,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 93,
+      "full_group_samples": 4312,
+      "symmetry_quotient_samples": 1871,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 94,
+      "full_group_samples": 6685,
+      "symmetry_quotient_samples": 2354,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 95,
+      "full_group_samples": 5606,
+      "symmetry_quotient_samples": 1596,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 96,
+      "full_group_samples": 4652,
+      "symmetry_quotient_samples": 2560,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 97,
+      "full_group_samples": 2533,
+      "symmetry_quotient_samples": 2851,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 98,
+      "full_group_samples": 4588,
+      "symmetry_quotient_samples": 1795,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 99,
+      "full_group_samples": 5165,
+      "symmetry_quotient_samples": 720,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 100,
+      "full_group_samples": 8828,
+      "symmetry_quotient_samples": 218,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 101,
+      "full_group_samples": 635,
+      "symmetry_quotient_samples": 2342,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 102,
+      "full_group_samples": 8057,
+      "symmetry_quotient_samples": 825,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 103,
+      "full_group_samples": 7246,
+      "symmetry_quotient_samples": 3029,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 104,
+      "full_group_samples": 2248,
+      "symmetry_quotient_samples": 985,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 105,
+      "full_group_samples": 5615,
+      "symmetry_quotient_samples": 1280,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 106,
+      "full_group_samples": 6292,
+      "symmetry_quotient_samples": 2891,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 107,
+      "full_group_samples": 2972,
+      "symmetry_quotient_samples": 2377,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 108,
+      "full_group_samples": 4987,
+      "symmetry_quotient_samples": 1260,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 109,
+      "full_group_samples": 1933,
+      "symmetry_quotient_samples": 953,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 110,
+      "full_group_samples": 6750,
+      "symmetry_quotient_samples": 2202,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 111,
+      "full_group_samples": 3402,
+      "symmetry_quotient_samples": 1018,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 112,
+      "full_group_samples": 6471,
+      "symmetry_quotient_samples": 1776,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 113,
+      "full_group_samples": 5741,
+      "symmetry_quotient_samples": 2557,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 114,
+      "full_group_samples": 3000,
+      "symmetry_quotient_samples": 1875,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 115,
+      "full_group_samples": 4628,
+      "symmetry_quotient_samples": 2445,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 116,
+      "full_group_samples": 2256,
+      "symmetry_quotient_samples": 3687,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 117,
+      "full_group_samples": 978,
+      "symmetry_quotient_samples": 1878,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 118,
+      "full_group_samples": 9620,
+      "symmetry_quotient_samples": 4735,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 119,
+      "full_group_samples": 8793,
+      "symmetry_quotient_samples": 5646,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 120,
+      "full_group_samples": 5546,
+      "symmetry_quotient_samples": 2933,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 121,
+      "full_group_samples": 3827,
+      "symmetry_quotient_samples": 1563,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 122,
+      "full_group_samples": 5249,
+      "symmetry_quotient_samples": 1301,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 123,
+      "full_group_samples": 4289,
+      "symmetry_quotient_samples": 2383,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 124,
+      "full_group_samples": 3954,
+      "symmetry_quotient_samples": 2288,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 125,
+      "full_group_samples": 1166,
+      "symmetry_quotient_samples": 2670,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 126,
+      "full_group_samples": 2652,
+      "symmetry_quotient_samples": 443,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 127,
+      "full_group_samples": 1569,
+      "symmetry_quotient_samples": 1346,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 128,
+      "full_group_samples": 2831,
+      "symmetry_quotient_samples": 408,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 129,
+      "full_group_samples": 6548,
+      "symmetry_quotient_samples": 2147,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 130,
+      "full_group_samples": 4452,
+      "symmetry_quotient_samples": 3099,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 131,
+      "full_group_samples": 2832,
+      "symmetry_quotient_samples": 2032,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 132,
+      "full_group_samples": 5741,
+      "symmetry_quotient_samples": 3743,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 133,
+      "full_group_samples": 3159,
+      "symmetry_quotient_samples": 1854,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 134,
+      "full_group_samples": 2396,
+      "symmetry_quotient_samples": 1662,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 135,
+      "full_group_samples": 4404,
+      "symmetry_quotient_samples": 2094,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 136,
+      "full_group_samples": 4352,
+      "symmetry_quotient_samples": 2279,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 137,
+      "full_group_samples": 5900,
+      "symmetry_quotient_samples": 1506,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 138,
+      "full_group_samples": 8216,
+      "symmetry_quotient_samples": 3737,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 139,
+      "full_group_samples": 1452,
+      "symmetry_quotient_samples": 884,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 140,
+      "full_group_samples": 3501,
+      "symmetry_quotient_samples": 1835,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 141,
+      "full_group_samples": 4626,
+      "symmetry_quotient_samples": 1265,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 142,
+      "full_group_samples": 2832,
+      "symmetry_quotient_samples": 2466,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 143,
+      "full_group_samples": 2868,
+      "symmetry_quotient_samples": 677,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 144,
+      "full_group_samples": 5712,
+      "symmetry_quotient_samples": 225,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 145,
+      "full_group_samples": 1918,
+      "symmetry_quotient_samples": 2987,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 146,
+      "full_group_samples": 5848,
+      "symmetry_quotient_samples": 4267,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 147,
+      "full_group_samples": 6025,
+      "symmetry_quotient_samples": 591,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 148,
+      "full_group_samples": 8893,
+      "symmetry_quotient_samples": 1736,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 149,
+      "full_group_samples": 5495,
+      "symmetry_quotient_samples": 2680,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 150,
+      "full_group_samples": 5111,
+      "symmetry_quotient_samples": 524,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 151,
+      "full_group_samples": 1830,
+      "symmetry_quotient_samples": 2575,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 152,
+      "full_group_samples": 1442,
+      "symmetry_quotient_samples": 1962,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 153,
+      "full_group_samples": 10003,
+      "symmetry_quotient_samples": 2005,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 154,
+      "full_group_samples": 3459,
+      "symmetry_quotient_samples": 1730,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 155,
+      "full_group_samples": 7358,
+      "symmetry_quotient_samples": 2973,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 156,
+      "full_group_samples": 3614,
+      "symmetry_quotient_samples": 1826,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 157,
+      "full_group_samples": 10817,
+      "symmetry_quotient_samples": 3733,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 158,
+      "full_group_samples": 5287,
+      "symmetry_quotient_samples": 980,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 159,
+      "full_group_samples": 7496,
+      "symmetry_quotient_samples": 3465,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 160,
+      "full_group_samples": 4038,
+      "symmetry_quotient_samples": 1538,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 161,
+      "full_group_samples": 3849,
+      "symmetry_quotient_samples": 1809,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 162,
+      "full_group_samples": 2280,
+      "symmetry_quotient_samples": 1430,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 163,
+      "full_group_samples": 3987,
+      "symmetry_quotient_samples": 4509,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 164,
+      "full_group_samples": 1468,
+      "symmetry_quotient_samples": 1381,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 165,
+      "full_group_samples": 4044,
+      "symmetry_quotient_samples": 1571,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 166,
+      "full_group_samples": 1470,
+      "symmetry_quotient_samples": 345,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 167,
+      "full_group_samples": 4428,
+      "symmetry_quotient_samples": 1238,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 168,
+      "full_group_samples": 2623,
+      "symmetry_quotient_samples": 1138,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 169,
+      "full_group_samples": 7919,
+      "symmetry_quotient_samples": 738,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 170,
+      "full_group_samples": 7796,
+      "symmetry_quotient_samples": 1672,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 171,
+      "full_group_samples": 1037,
+      "symmetry_quotient_samples": 1960,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 172,
+      "full_group_samples": 702,
+      "symmetry_quotient_samples": 1861,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 173,
+      "full_group_samples": 13009,
+      "symmetry_quotient_samples": 1573,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 174,
+      "full_group_samples": 7172,
+      "symmetry_quotient_samples": 2274,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 175,
+      "full_group_samples": 5876,
+      "symmetry_quotient_samples": 2001,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 176,
+      "full_group_samples": 6655,
+      "symmetry_quotient_samples": 2236,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 177,
+      "full_group_samples": 5117,
+      "symmetry_quotient_samples": 1990,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 178,
+      "full_group_samples": 3931,
+      "symmetry_quotient_samples": 2587,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 179,
+      "full_group_samples": 12906,
+      "symmetry_quotient_samples": 2766,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 180,
+      "full_group_samples": 5149,
+      "symmetry_quotient_samples": 1331,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 181,
+      "full_group_samples": 3483,
+      "symmetry_quotient_samples": 973,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 182,
+      "full_group_samples": 3339,
+      "symmetry_quotient_samples": 3558,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 183,
+      "full_group_samples": 1324,
+      "symmetry_quotient_samples": 1848,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 184,
+      "full_group_samples": 4967,
+      "symmetry_quotient_samples": 2410,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 185,
+      "full_group_samples": 2110,
+      "symmetry_quotient_samples": 1821,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 186,
+      "full_group_samples": 1807,
+      "symmetry_quotient_samples": 1317,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 187,
+      "full_group_samples": 4735,
+      "symmetry_quotient_samples": 1850,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 188,
+      "full_group_samples": 4872,
+      "symmetry_quotient_samples": 713,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 189,
+      "full_group_samples": 7358,
+      "symmetry_quotient_samples": 1837,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 190,
+      "full_group_samples": 2094,
+      "symmetry_quotient_samples": 2688,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 191,
+      "full_group_samples": 4293,
+      "symmetry_quotient_samples": 3196,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 192,
+      "full_group_samples": 4935,
+      "symmetry_quotient_samples": 664,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 193,
+      "full_group_samples": 6151,
+      "symmetry_quotient_samples": 2143,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 194,
+      "full_group_samples": 3436,
+      "symmetry_quotient_samples": 224,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 195,
+      "full_group_samples": 6260,
+      "symmetry_quotient_samples": 726,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 196,
+      "full_group_samples": 2458,
+      "symmetry_quotient_samples": 1101,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 197,
+      "full_group_samples": 6345,
+      "symmetry_quotient_samples": 2222,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 198,
+      "full_group_samples": 3067,
+      "symmetry_quotient_samples": 1895,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 199,
+      "full_group_samples": 3210,
+      "symmetry_quotient_samples": 2717,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 200,
+      "full_group_samples": 7433,
+      "symmetry_quotient_samples": 2444,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 201,
+      "full_group_samples": 5628,
+      "symmetry_quotient_samples": 4039,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 202,
+      "full_group_samples": 1746,
+      "symmetry_quotient_samples": 1454,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 203,
+      "full_group_samples": 5005,
+      "symmetry_quotient_samples": 3650,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 204,
+      "full_group_samples": 4242,
+      "symmetry_quotient_samples": 69,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 205,
+      "full_group_samples": 4160,
+      "symmetry_quotient_samples": 842,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 206,
+      "full_group_samples": 4200,
+      "symmetry_quotient_samples": 2000,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 207,
+      "full_group_samples": 1377,
+      "symmetry_quotient_samples": 923,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 208,
+      "full_group_samples": 4771,
+      "symmetry_quotient_samples": 2657,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 209,
+      "full_group_samples": 2416,
+      "symmetry_quotient_samples": 1829,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 210,
+      "full_group_samples": 2535,
+      "symmetry_quotient_samples": 3077,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 211,
+      "full_group_samples": 3430,
+      "symmetry_quotient_samples": 936,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 212,
+      "full_group_samples": 3688,
+      "symmetry_quotient_samples": 1294,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 213,
+      "full_group_samples": 7717,
+      "symmetry_quotient_samples": 2267,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 214,
+      "full_group_samples": 5975,
+      "symmetry_quotient_samples": 334,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 215,
+      "full_group_samples": 1414,
+      "symmetry_quotient_samples": 1342,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 216,
+      "full_group_samples": 5994,
+      "symmetry_quotient_samples": 1830,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 217,
+      "full_group_samples": 4542,
+      "symmetry_quotient_samples": 2023,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 218,
+      "full_group_samples": 2998,
+      "symmetry_quotient_samples": 1957,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 219,
+      "full_group_samples": 7286,
+      "symmetry_quotient_samples": 2818,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 220,
+      "full_group_samples": 6952,
+      "symmetry_quotient_samples": 902,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 221,
+      "full_group_samples": 2350,
+      "symmetry_quotient_samples": 769,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 222,
+      "full_group_samples": 3471,
+      "symmetry_quotient_samples": 2424,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 223,
+      "full_group_samples": 3809,
+      "symmetry_quotient_samples": 4250,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 224,
+      "full_group_samples": 1405,
+      "symmetry_quotient_samples": 1443,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 225,
+      "full_group_samples": 2438,
+      "symmetry_quotient_samples": 1293,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 226,
+      "full_group_samples": 4331,
+      "symmetry_quotient_samples": 719,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 227,
+      "full_group_samples": 4798,
+      "symmetry_quotient_samples": 1195,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 228,
+      "full_group_samples": 8556,
+      "symmetry_quotient_samples": 520,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 229,
+      "full_group_samples": 3129,
+      "symmetry_quotient_samples": 1045,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 230,
+      "full_group_samples": 4713,
+      "symmetry_quotient_samples": 1594,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 231,
+      "full_group_samples": 3175,
+      "symmetry_quotient_samples": 795,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 232,
+      "full_group_samples": 4338,
+      "symmetry_quotient_samples": 1504,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 233,
+      "full_group_samples": 6816,
+      "symmetry_quotient_samples": 567,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 234,
+      "full_group_samples": 4732,
+      "symmetry_quotient_samples": 1952,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 235,
+      "full_group_samples": 6757,
+      "symmetry_quotient_samples": 212,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 236,
+      "full_group_samples": 7056,
+      "symmetry_quotient_samples": 1861,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 237,
+      "full_group_samples": 8427,
+      "symmetry_quotient_samples": 828,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 238,
+      "full_group_samples": 2709,
+      "symmetry_quotient_samples": 2277,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 239,
+      "full_group_samples": 542,
+      "symmetry_quotient_samples": 1027,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 240,
+      "full_group_samples": 5008,
+      "symmetry_quotient_samples": 2198,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 241,
+      "full_group_samples": 684,
+      "symmetry_quotient_samples": 2856,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 242,
+      "full_group_samples": 5201,
+      "symmetry_quotient_samples": 1367,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 243,
+      "full_group_samples": 5160,
+      "symmetry_quotient_samples": 762,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 244,
+      "full_group_samples": 3196,
+      "symmetry_quotient_samples": 1081,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 245,
+      "full_group_samples": 5353,
+      "symmetry_quotient_samples": 1118,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 246,
+      "full_group_samples": 2302,
+      "symmetry_quotient_samples": 1309,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 247,
+      "full_group_samples": 2161,
+      "symmetry_quotient_samples": 561,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 248,
+      "full_group_samples": 7283,
+      "symmetry_quotient_samples": 2154,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 249,
+      "full_group_samples": 6254,
+      "symmetry_quotient_samples": 2790,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 250,
+      "full_group_samples": 7522,
+      "symmetry_quotient_samples": 2894,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 251,
+      "full_group_samples": 1870,
+      "symmetry_quotient_samples": 826,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 252,
+      "full_group_samples": 3980,
+      "symmetry_quotient_samples": 2679,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 253,
+      "full_group_samples": 2747,
+      "symmetry_quotient_samples": 4341,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 254,
+      "full_group_samples": 4194,
+      "symmetry_quotient_samples": 1890,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 255,
+      "full_group_samples": 10050,
+      "symmetry_quotient_samples": 1609,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 256,
+      "full_group_samples": 2796,
+      "symmetry_quotient_samples": 2607,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 257,
+      "full_group_samples": 3663,
+      "symmetry_quotient_samples": 1925,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 258,
+      "full_group_samples": 4535,
+      "symmetry_quotient_samples": 1910,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 259,
+      "full_group_samples": 8950,
+      "symmetry_quotient_samples": 1989,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 260,
+      "full_group_samples": 8387,
+      "symmetry_quotient_samples": 3089,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 261,
+      "full_group_samples": 5848,
+      "symmetry_quotient_samples": 1967,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 262,
+      "full_group_samples": 2249,
+      "symmetry_quotient_samples": 2341,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 263,
+      "full_group_samples": 1432,
+      "symmetry_quotient_samples": 2036,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 264,
+      "full_group_samples": 11990,
+      "symmetry_quotient_samples": 893,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 265,
+      "full_group_samples": 3636,
+      "symmetry_quotient_samples": 727,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 266,
+      "full_group_samples": 4962,
+      "symmetry_quotient_samples": 1068,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 267,
+      "full_group_samples": 7006,
+      "symmetry_quotient_samples": 584,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 268,
+      "full_group_samples": 3938,
+      "symmetry_quotient_samples": 2052,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 269,
+      "full_group_samples": 1849,
+      "symmetry_quotient_samples": 852,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 270,
+      "full_group_samples": 4911,
+      "symmetry_quotient_samples": 891,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 271,
+      "full_group_samples": 2345,
+      "symmetry_quotient_samples": 689,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 272,
+      "full_group_samples": 5992,
+      "symmetry_quotient_samples": 2641,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 273,
+      "full_group_samples": 7653,
+      "symmetry_quotient_samples": 2647,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 274,
+      "full_group_samples": 2356,
+      "symmetry_quotient_samples": 316,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 275,
+      "full_group_samples": 7910,
+      "symmetry_quotient_samples": 724,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 276,
+      "full_group_samples": 6912,
+      "symmetry_quotient_samples": 1765,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 277,
+      "full_group_samples": 6892,
+      "symmetry_quotient_samples": 1670,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 278,
+      "full_group_samples": 1636,
+      "symmetry_quotient_samples": 2559,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 279,
+      "full_group_samples": 2598,
+      "symmetry_quotient_samples": 1726,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 280,
+      "full_group_samples": 1444,
+      "symmetry_quotient_samples": 2205,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 281,
+      "full_group_samples": 4963,
+      "symmetry_quotient_samples": 1426,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 282,
+      "full_group_samples": 1563,
+      "symmetry_quotient_samples": 3630,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 283,
+      "full_group_samples": 8594,
+      "symmetry_quotient_samples": 2948,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 284,
+      "full_group_samples": 7528,
+      "symmetry_quotient_samples": 2378,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 285,
+      "full_group_samples": 5684,
+      "symmetry_quotient_samples": 3692,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 286,
+      "full_group_samples": 1938,
+      "symmetry_quotient_samples": 198,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 287,
+      "full_group_samples": 5043,
+      "symmetry_quotient_samples": 816,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 288,
+      "full_group_samples": 745,
+      "symmetry_quotient_samples": 856,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 289,
+      "full_group_samples": 2694,
+      "symmetry_quotient_samples": 439,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 290,
+      "full_group_samples": 2908,
+      "symmetry_quotient_samples": 2446,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 291,
+      "full_group_samples": 2039,
+      "symmetry_quotient_samples": 1405,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 292,
+      "full_group_samples": 6277,
+      "symmetry_quotient_samples": 787,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 293,
+      "full_group_samples": 2826,
+      "symmetry_quotient_samples": 1394,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 294,
+      "full_group_samples": 6557,
+      "symmetry_quotient_samples": 2196,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 295,
+      "full_group_samples": 4335,
+      "symmetry_quotient_samples": 1764,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 296,
+      "full_group_samples": 3740,
+      "symmetry_quotient_samples": 1704,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 297,
+      "full_group_samples": 2450,
+      "symmetry_quotient_samples": 1122,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 298,
+      "full_group_samples": 1622,
+      "symmetry_quotient_samples": 719,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 299,
+      "full_group_samples": 5967,
+      "symmetry_quotient_samples": 1308,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    },
+    {
+      "bits": 24,
+      "replicate": 300,
+      "full_group_samples": 3954,
+      "symmetry_quotient_samples": 1976,
+      "model": "independent_uniform_birthday_sampling_NOT_real_Pollard_rho"
+    }
+  ],
+  "status": "PASS",
+  "limitations": [
+    "Automorphism identity and orbit sizes are mathematically known, NOT newly discovered.",
+    "Collision sampling is independent random drawing from a mathematical quotient, NOT a functioning Pollard rho ECDLP search.",
+    "Sample-count gain ignores canonicalization costs, fruitless cycles, validation and search setup.",
+    "Actual speedup of a real walk may be smaller or absent; no attack on Ethereum keys or addresses was performed.",
+    "Small research curves share j=0 symmetry but do not reproduce the 256-bit security setting.",
+    "No ML model or novel learning shortcut was tested in this study."
+  ]
+}

@@ -70,12 +70,47 @@ if ($phone !== '' && !preg_match('/^[0-9 +()\-.]{4,}$/', $phone)) {
     exit;
 }
 
+// Customer-referral requirements apply only to the sales-partner landing page.
+if ($source === 'salgspartner-jul-2026') {
+    $customer_company = trim(is_string($input['customer_company'] ?? null) ? $input['customer_company'] : '');
+    $customer_contact_name = trim(is_string($input['customer_contact_name'] ?? null) ? $input['customer_contact_name'] : '');
+    $customer_contact_phone = trim(is_string($input['customer_contact_phone'] ?? null) ? $input['customer_contact_phone'] : '');
+    $referral_error = null;
+    if (($input['customer_email_confirmed'] ?? false) !== true) {
+        $referral_error = 'Du må bekrefte at du har mottatt en e-post fra kunden om at de ønsker å se et nettsideforslag.';
+    } elseif (mb_strlen($customer_company) < 2 || mb_strlen($customer_company) > 200) {
+        $referral_error = 'Oppgi navnet på bedriften du refererer.';
+    } elseif (mb_strlen($customer_contact_name) < 2 || mb_strlen($customer_contact_name) > 200) {
+        $referral_error = 'Oppgi navnet på kontaktpersonen hos bedriften.';
+    } else {
+        $customer_phone_digits = preg_replace('/[^0-9]/', '', $customer_contact_phone);
+        if (!preg_match('/^[0-9 +()\-.]{8,40}$/', $customer_contact_phone) || strlen($customer_phone_digits) < 8 || strlen($customer_phone_digits) > 15) {
+            $referral_error = 'Oppgi et gyldig telefonnummer til kontaktpersonen hos bedriften.';
+        }
+    }
+    if ($referral_error !== null) {
+        http_response_code(400);
+        echo json_encode(['ok' => false, 'error' => $referral_error], JSON_UNESCAPED_UNICODE);
+        exit;
+    }
+}
+
 // Caps
 $name    = mb_substr($name,    0, 200);
 $company = mb_substr($company, 0, 200);
 $phone   = mb_substr($phone,   0, 40);
 $message = mb_substr($message, 0, 4000);
 $source  = preg_replace('/[^a-zA-Z0-9_\-]/', '', $source) ?: 'homepage';
+
+if ($source === 'salgspartner-jul-2026') {
+    $message = "KUNDEREFERANSE\n"
+        . "Bedrift: {$customer_company}\n"
+        . "Kontaktperson hos bedriften: {$customer_contact_name}\n"
+        . "Kontaktpersonens telefonnummer: {$customer_contact_phone}\n"
+        . "Referenten bekrefter å ha mottatt en e-post fra kunden om at kunden ønsker å se et skreddersydd nettsideforslag fra SETAEI.\n\n"
+        . $message;
+}
+
 
 $ip = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'] ?? '';
 if (str_contains($ip, ',')) $ip = trim(explode(',', $ip)[0]);

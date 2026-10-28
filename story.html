@@ -168,9 +168,11 @@ footer{
     opacity:0.5;
 }
 </style>
+<style>#page-bg{position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none}</style>
 </head>
 
 <body>
+<canvas id="page-bg" data-theme="network" data-accent="#e9b778" data-layout="center" data-bg="#0b0f14" aria-hidden="true"></canvas>
 
 <section class="hero">
     <div class="glow"></div>
@@ -226,5 +228,6 @@ footer{
     © 2026 SETAEI • Built as Intelligent System Architecture
 </footer>
 
+<script src="/assets/home/page-bg.js?v=4" defer></script>
 </body>
 </html>

@@ -1,0 +1,20 @@
+{
+  "testedUtc": "2026-10-24T16:30:09.410Z",
+  "browserErrors": [],
+  "smoothValuesObserved": 16,
+  "neverExceedsConfirmed": true,
+  "pausedCounterFreezes": true,
+  "reducedMotionUsesExactCounter": true,
+  "measuredGaugesChecked": true,
+  "addressPercentagesChecked": true,
+  "tinyChanceVisible": true,
+  "visitorToyIsolated": true,
+  "mobileWidths": [
+    360,
+    390,
+    412,
+    768,
+    1440
+  ],
+  "scope": "Isolated synthetic UI fixtures; not additional research observations."
+}

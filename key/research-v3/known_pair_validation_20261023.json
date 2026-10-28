@@ -1,0 +1,11 @@
+{
+  "dataset": "independent random synthetic Ethereum/EVM keypairs; no real target wallets",
+  "evaluated_at": "2026-10-22T22:33:13.893Z",
+  "model_training_count": 700,
+  "model_original_test_count": 300,
+  "new_test_pairs": 1000,
+  "bit_accuracy": 0.50141796875,
+  "exact_key_matches": 0,
+  "random_bit_baseline": 0.5,
+  "elapsed_ms": 865
+}

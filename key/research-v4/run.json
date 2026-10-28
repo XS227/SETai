@@ -1,0 +1,94 @@
+{
+  "id": "20261024T142456Z",
+  "startedUtc": "2026-10-24T14:24:56.456Z",
+  "endedUtc": "2026-10-24T14:26:30.649Z",
+  "wallMs": 94122.695119,
+  "cpuMicros": {
+    "user": 7541589,
+    "system": 145858
+  },
+  "rows": 7168,
+  "phaseTimes": {
+    "replay_model": {
+      "startedUtc": "2026-10-24T14:24:56.532Z",
+      "trials": 1200,
+      "endedUtc": "2026-10-24T14:25:10.949Z",
+      "wallMs": 14417.585001,
+      "cpuMicros": {
+        "user": 1060795,
+        "system": 10620
+      }
+    },
+    "replay_ranking": {
+      "startedUtc": "2026-10-24T14:25:10.955Z",
+      "trials": 1200,
+      "endedUtc": "2026-10-24T14:25:32.997Z",
+      "wallMs": 22042.307152,
+      "cpuMicros": {
+        "user": 1851361,
+        "system": 30588
+      }
+    },
+    "replay_avalanche": {
+      "startedUtc": "2026-10-24T14:25:33.090Z",
+      "trials": 256,
+      "endedUtc": "2026-10-24T14:25:35.825Z",
+      "wallMs": 2735.3497209999987,
+      "cpuMicros": {
+        "user": 213932,
+        "system": 78
+      }
+    },
+    "fresh_model": {
+      "startedUtc": "2026-10-24T14:25:35.825Z",
+      "trials": 2000,
+      "endedUtc": "2026-10-24T14:25:52.454Z",
+      "wallMs": 16628.873377000004,
+      "cpuMicros": {
+        "user": 1339974,
+        "system": 43676
+      }
+    },
+    "fresh_ranking": {
+      "startedUtc": "2026-10-24T14:25:52.454Z",
+      "trials": 2000,
+      "endedUtc": "2026-10-24T14:26:24.980Z",
+      "wallMs": 32526.15051,
+      "cpuMicros": {
+        "user": 2638669,
+        "system": 44025
+      }
+    },
+    "fresh_avalanche": {
+      "startedUtc": "2026-10-24T14:26:24.980Z",
+      "trials": 512,
+      "endedUtc": "2026-10-24T14:26:30.646Z",
+      "wallMs": 5666.218949999995,
+      "cpuMicros": {
+        "user": 434384,
+        "system": 15636
+      }
+    }
+  },
+  "protocolSha256": "d42cc321e47a700228c2257da19152dd7dd24c469283641ad5a6eceb160b4566",
+  "modelMetadata": {
+    "version": 1,
+    "method": "ridge regression",
+    "input": "160 Ethereum address bits, MSB first; no checksum case",
+    "training_count": 700,
+    "validation_train_count": 500,
+    "validation_count": 200,
+    "test_count": 300,
+    "lambda": 1,
+    "bit_accuracy": 0.4988151041666667,
+    "full_key_matches": 0
+  },
+  "environment": {
+    "node": "v22.13.0",
+    "platform": "linux",
+    "arch": "x64",
+    "cpuModel": "AMD EPYC-Rome Processor",
+    "cpuCount": 1
+  },
+  "trialLogSha256": "96012422539c2d32bdbfc6e9cd99b26085636c465490532cc1057d1a6fb98bac"
+}

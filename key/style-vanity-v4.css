@@ -1,0 +1,13 @@
+/* ETA, progressive disclosure and hardware-adaptive worker controls */
+.vanity-panel .vanity-metrics{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.vanity-panel .vanity-eta-metric{grid-column:1/-1;background:linear-gradient(135deg,#213b37,#173039);border-color:#4a7662}
+.vanity-panel #vanity-eta{font-variant-numeric:tabular-nums;font-size:clamp(22px,5vw,33px);line-height:1.25;letter-spacing:.2px;color:var(--lime)}
+.vanity-panel #vanity-eta-label{letter-spacing:.8px;font-size:10px;color:#b5cdc4}
+.vanity-panel #vanity-eta-note{font-size:11px;line-height:1.6;margin:4px 0 14px;color:#a6bac9}
+.vanity-panel #vanity-results{margin-top:24px;animation:vanity-rise .25s ease-out}
+.vanity-panel #vanity-results[hidden]{display:none!important}
+.vanity-panel #vanity-results>.vanity-controls{margin-top:0}
+.vanity-panel #vanity-workers{max-width:100%}
+.vanity-panel #vanity-parallel-help{overflow-wrap:anywhere}
+@keyframes vanity-rise{from{opacity:.2;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:420px){.vanity-panel .vanity-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.vanity-panel #vanity-eta{font-size:26px}}

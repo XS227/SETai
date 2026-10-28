@@ -1,0 +1,10 @@
+[Unit]
+Description=SETAEI nightly synthetic learning round (14-round runner limit)
+
+[Timer]
+OnCalendar=*-*-* 03:15:00 Europe/Berlin
+Persistent=true
+Unit=setai-learning-lab.service
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,35 @@
+bits,n,method,trial,status,group_ops,elapsed_seconds,correct,reason
+16,48799,exhaustive,1,found,18217,0.024965,True,
+16,48799,exhaustive,2,found,6737,0.012264,True,
+16,48799,BSGS,1,found,343,0.000499,True,
+16,48799,BSGS,2,found,354,0.000631,True,
+16,48799,Pollard rho,1,found,416,0.000676,True,
+16,48799,Pollard rho,2,found,492,0.000745,True,
+20,784897,exhaustive,,skipped_budget,,,,VPS resource cap / no extrapolated measurements
+20,784897,BSGS,1,found,1021,0.001746,True,
+20,784897,BSGS,2,found,1374,0.00245,True,
+20,784897,Pollard rho,1,found,9929,0.016955,True,
+20,784897,Pollard rho,2,found,4172,0.008435,True,
+24,12587563,exhaustive,,skipped_budget,,,,VPS resource cap / no extrapolated measurements
+24,12587563,BSGS,1,found,5748,0.009856,True,
+24,12587563,BSGS,2,found,4761,0.008953,True,
+24,12587563,Pollard rho,1,found,21675,0.038481,True,
+24,12587563,Pollard rho,2,found,2704,0.004813,True,
+28,201298843,exhaustive,,skipped_budget,,,,VPS resource cap / no extrapolated measurements
+28,201298843,BSGS,1,found,17542,0.032316,True,
+28,201298843,Pollard rho,1,found,80556,0.163376,True,
+32,3221180089,exhaustive,,skipped_budget,,,,VPS resource cap / no extrapolated measurements
+32,3221180089,BSGS,1,found,88311,0.189442,True,
+32,3221180089,Pollard rho,1,capped,150000,0.335717,,Operation cap
+36,51539513437,exhaustive,,skipped_budget,,,,VPS resource cap / no extrapolated measurements
+36,51539513437,BSGS,,skipped_budget,,,,VPS resource cap / no extrapolated measurements
+36,51539513437,Pollard rho,,skipped_budget,,,,VPS resource cap / no extrapolated measurements
+40,824635470601,exhaustive,,skipped_budget,,,,VPS resource cap / no extrapolated measurements
+40,824635470601,BSGS,,skipped_budget,,,,VPS resource cap / no extrapolated measurements
+40,824635470601,Pollard rho,,skipped_budget,,,,VPS resource cap / no extrapolated measurements
+44,13194144388501,exhaustive,,skipped_budget,,,,VPS resource cap / no extrapolated measurements
+44,13194144388501,BSGS,,skipped_budget,,,,VPS resource cap / no extrapolated measurements
+44,13194144388501,Pollard rho,,skipped_budget,,,,VPS resource cap / no extrapolated measurements
+48,211106205190693,exhaustive,,skipped_budget,,,,VPS resource cap / no extrapolated measurements
+48,211106205190693,BSGS,,skipped_budget,,,,VPS resource cap / no extrapolated measurements
+48,211106205190693,Pollard rho,,skipped_budget,,,,VPS resource cap / no extrapolated measurements

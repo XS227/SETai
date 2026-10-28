@@ -1,0 +1,41 @@
+
+.reverse-panel{max-width:760px}
+.reverse-panel .card-top h2{font-size:19px}
+.reverse-intro{font-size:13px;line-height:1.9;color:#c4d2dc}
+.reverse-notice{padding:13px 15px;background:#1d2e38;border-left:3px solid #c5f479;color:#cedce7;font-size:12px;line-height:1.8;border-radius:4px;margin:16px 0 24px}
+.reverse-facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-bottom:24px}
+.reverse-facts>div{padding:16px 8px;border:1px solid #405968;background:#10222f;border-radius:10px;text-align:center}
+.reverse-facts small{display:block;color:#9cb4c4;font-size:10px;line-height:1.6}
+.reverse-facts strong{display:block;color:#c5f479;font-size:18px;margin-top:6px}
+.reverse-source{border:1px solid #394d61;border-radius:12px;background:#0f1d2a;padding:19px}
+.reverse-source h3{font-size:14px;margin:0 0 12px}
+.reverse-source .reverse-big{font:700 23px ui-monospace,Consolas,monospace;color:#e7f5f8;overflow-wrap:anywhere;margin:6px 0 17px}
+.reverse-source .reverse-tiny{font:600 15px ui-monospace,Consolas,monospace;color:#c5f479}
+.reverse-source .label{margin-bottom:5px}
+.reverse-inline{display:flex;align-items:center;gap:8px;margin-top:15px}
+.reverse-inline input{min-width:0;flex:1;margin:0;background:#0a1a27;border:1px solid #496075;border-radius:8px;padding:11px;color:#e6eff6;font-size:14px}
+.reverse-inline button{flex:0 0 auto;padding:10px 12px;border-radius:8px}
+.reverse-two-btn{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:18px}
+.reverse-two-btn .primary{margin:0;padding:14px 11px;font-size:12px;justify-content:center}
+.reverse-two-btn .secondary{margin:0;font-size:12px}
+.reverse-two-btn button{min-height:53px}
+.reverse-progress-shell{background:#304454;height:7px;border-radius:7px;overflow:hidden;margin:18px 0 6px}
+#reverse-progress{width:0%;height:100%;background:linear-gradient(90deg,#6dabb6,#c5f479)}
+.reverse-numerics{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#a6bece}
+.reverse-result{font-size:13px;padding:14px;line-height:1.8;color:#d2e0eb;background:#142838;border:1px solid #466174;border-radius:8px;margin:12px 0}
+.reverse-result.success{border-color:#6ea376;background:#1f3a2c;color:#dbf6d6}
+.reverse-result.error{border-color:#ba7666}
+.reverse-hit{font-size:11px;line-height:1.9;color:#c6d9e0;margin:10px 0}
+.reverse-trace{font-family:ui-monospace,Consolas,monospace;font-size:11px;background:#0b1721;border:1px solid #2f4557;padding:12px;border-radius:8px;min-height:45px;max-height:185px;overflow:auto;display:grid;gap:7px}
+.reverse-trace-row{color:#a2b9c9}
+.reverse-trace-row.found{color:#c5f479;font-weight:700}
+.reverse-summary{margin-top:22px;padding:19px;background:#172734;border:1px solid #415b6c;border-radius:12px}
+.reverse-summary h3{font-size:14px}
+.reverse-summary p,.reverse-summary li{color:#bdccd6;font-size:12px;line-height:1.85}
+.reverse-summary table{width:100%;border-collapse:collapse;font-size:12px}
+.reverse-summary th,.reverse-summary td{text-align:left;padding:10px 7px;border-bottom:1px solid #354d5c}
+.reverse-summary th{color:#a3b9c8;font-weight:600}
+.reverse-summary td{color:#dbebf2}
+.reverse-summary details summary{color:#c5f479;cursor:pointer;font-size:12px;padding:11px 0}
+@media(max-width:580px){.reverse-panel{padding:16px}.reverse-facts{gap:5px}.reverse-facts>div{padding:12px 5px}.reverse-facts strong{font-size:15px}.reverse-facts small{font-size:9px}.reverse-source,.reverse-summary{padding:13px}.reverse-two-btn .primary,.reverse-two-btn .secondary{padding:12px 7px;font-size:11px}.reverse-inline{flex-wrap:wrap}.reverse-inline input{width:100%}}
+\n.research-entry{max-width:760px;margin:0 auto 16px;padding:14px 16px;border:1px solid #3f5c58;border-radius:11px;background:#172c2c;display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:11px;color:#c7d9d2}.research-entry a{white-space:nowrap;color:#c5f479;font-weight:700;text-decoration:none}.research-entry a:hover{text-decoration:underline}@media(max-width:580px){.research-entry{flex-direction:column;align-items:flex-start}.research-entry a{font-size:12px}}\n

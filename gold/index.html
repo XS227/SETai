@@ -28,8 +28,10 @@
     @media(max-width:980px){.hero,.grid{grid-template-columns:1fr}.hero{align-items:start}.signals{grid-template-columns:1fr 1fr}.lower{grid-template-columns:1fr}.chart-shell{height:560px}}
     @media(max-width:680px){.wrap{width:min(100% - 22px,1440px)}header{height:64px}.back-link{display:none}main{padding-top:34px}h1{font-size:clamp(49px,16vw,72px)}.signals{grid-template-columns:1fr}.chart-shell{height:500px}.tv-shell{height:270px}footer .wrap{flex-direction:column}}
   </style>
+<style>#page-bg{position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none}</style>
 </head>
 <body>
+<canvas id="page-bg" data-theme="wave" data-accent="#dfb85d" data-layout="left" data-bg="#080704" aria-hidden="true"></canvas>
 <header><div class="wrap nav"><a class="brand" href="https://setai.no/" aria-label="SETAEI home"><span class="brand-mark">Au</span><span>SETAEI / GOLD</span></a><div class="nav-right"><span class="live-pill"><span class="live-dot"></span>LIVE MARKET</span><a class="back-link" href="https://setai.no/">SETAEI ↗</a></div></div></header>
 <main class="wrap">
 <section class="hero"><div><div class="eyebrow">Gold-only market intelligence</div><h1>Gold <span>Agent.</span></h1><p class="hero-copy">One market. One job. Track XAU/USD, read the trend, and surface a clear daily and weekly technical signal — BUY, SELL or NEUTRAL.</p></div><aside class="agent-state"><div class="agent-state-top"><span class="agent-label">Agent status</span><span class="agent-version">V0.1</span></div><h2 class="agent-name">XAU/USD Monitor</h2><p class="agent-desc">Signals refresh with the market. Daily and weekly ratings are kept separate so short-term noise does not hide the larger trend.</p></aside></section>
@@ -57,5 +59,6 @@
 </section>
 </main>
 <footer><div class="wrap"><p>Market data and technical ratings are provided by TradingView. Signals are informational market analysis, not a guarantee of profit or personalized financial advice. Gold prices and technical conditions can change rapidly.</p><span>© SETAEI · GOLD AGENT</span></div></footer>
+<script src="/assets/home/page-bg.js?v=4" defer></script>
 </body>
 </html>

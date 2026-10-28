@@ -1,0 +1,21 @@
+{
+  "verifiedUtc": "2026-10-24T15:08:49.108471+00:00",
+  "browserDesktopAndMobile390": true,
+  "allFourViewsAndEthereumPosition64": true,
+  "mobileOverflowCheckedAfterEthereumSelection": true,
+  "javascriptErrors": [],
+  "rawRows": 6144,
+  "rawAndCodeSha256Verified": true,
+  "retryKeepsOriginalModelsAndMetrics": true,
+  "crossRoundWordDisjointnessChecked": true,
+  "originalSearchService": "MainPID=709\nNRestarts=0\nActiveState=active\n",
+  "nightlyTimer": "NextElapseUSecRealtime=Sun 2026-10-25 02:15:00 UTC\nActiveState=active\n",
+  "pilotQualityChecks": {
+    "splitDisjoint": true,
+    "testOpenedAfterSelection": true,
+    "correctTestCounts": true,
+    "learningControlGeneralizes": true,
+    "noWalletInputs": true
+  },
+  "scope": "Operational checks, not additional experimental observations."
+}

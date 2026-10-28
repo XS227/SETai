@@ -1,0 +1,29 @@
+[Unit]
+Description=SETAEI aggregate server metrics
+After=network.target
+
+[Service]
+Type=simple
+DynamicUser=yes
+SupplementaryGroups=www-data
+RuntimeDirectory=setai-server-status
+RuntimeDirectoryMode=0755
+ExecStart=/usr/bin/python3 /opt/setai-server-status/collector.py
+EnvironmentFile=-/etc/setai-server-status/agent.conf
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+RestrictSUIDSGID=yes
+LockPersonality=yes
+MemoryMax=48M
+CPUQuota=5%
+UMask=0022
+
+[Install]
+WantedBy=multi-user.target
