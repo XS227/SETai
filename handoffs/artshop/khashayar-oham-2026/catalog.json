@@ -1,0 +1,288 @@
+{
+  "updated": "2026-10-28",
+  "artist": "Khashayar Shahrokhi",
+  "artist_slug": "khashayar-shahrokhi",
+  "works_on_paper": [
+    {
+      "id": "KS-D-001",
+      "artist": "Khashayar Shahrokhi",
+      "artist_slug": "khashayar-shahrokhi",
+      "category": "Works on Paper",
+      "title_proposed": "The Silent Watcher",
+      "title_proposed_fa": "نگهبان خاموش",
+      "title_confirmed": false,
+      "technique_visual_estimate": "Fine-line ink drawing on warm-toned paper",
+      "technique_confirmed": false,
+      "description_proposed": "A birdlike guardian with an elaborate beak and plumage.",
+      "year": null,
+      "dimensions_cm": null,
+      "edition": null,
+      "photo_pixel_dimensions": [
+        1152,
+        1536
+      ],
+      "display_orientation": "portrait",
+      "original": "assets/originals/IMG-20261028-WA0009.jpg",
+      "image": "assets/web/KS-D-001.webp",
+      "thumb": "assets/thumb/KS-D-001.webp",
+      "public_price": null,
+      "public_price_label": "Price on request"
+    },
+    {
+      "id": "KS-D-002",
+      "artist": "Khashayar Shahrokhi",
+      "artist_slug": "khashayar-shahrokhi",
+      "category": "Works on Paper",
+      "title_proposed": "The Weight of Memory",
+      "title_proposed_fa": "سنگینی خاطره",
+      "title_confirmed": false,
+      "technique_visual_estimate": "Pen and ink on warm-toned paper",
+      "technique_confirmed": false,
+      "description_proposed": "A human profile folded into an animal-like coiled body.",
+      "year": null,
+      "dimensions_cm": null,
+      "edition": null,
+      "photo_pixel_dimensions": [
+        1536,
+        1152
+      ],
+      "display_orientation": "landscape",
+      "original": "assets/originals/IMG-20261028-WA0010.jpg",
+      "image": "assets/web/KS-D-002.webp",
+      "thumb": "assets/thumb/KS-D-002.webp",
+      "public_price": null,
+      "public_price_label": "Price on request"
+    },
+    {
+      "id": "KS-D-003",
+      "artist": "Khashayar Shahrokhi",
+      "artist_slug": "khashayar-shahrokhi",
+      "category": "Works on Paper",
+      "title_proposed": "The Lineage of Thought",
+      "title_proposed_fa": "تبار اندیشه",
+      "title_confirmed": false,
+      "technique_visual_estimate": "Pen and ink on warm-toned paper",
+      "technique_confirmed": false,
+      "description_proposed": "Floating anatomical heads connected by a sinuous spinal form.",
+      "year": null,
+      "dimensions_cm": null,
+      "edition": null,
+      "photo_pixel_dimensions": [
+        1536,
+        1152
+      ],
+      "display_orientation": "landscape",
+      "original": "assets/originals/IMG-20261028-WA0012.jpg",
+      "image": "assets/web/KS-D-003.webp",
+      "thumb": "assets/thumb/KS-D-003.webp",
+      "public_price": null,
+      "public_price_label": "Price on request"
+    },
+    {
+      "id": "KS-D-004",
+      "artist": "Khashayar Shahrokhi",
+      "artist_slug": "khashayar-shahrokhi",
+      "category": "Works on Paper",
+      "title_proposed": "The Garden Within",
+      "title_proposed_fa": "باغ درون",
+      "title_confirmed": false,
+      "technique_visual_estimate": "Pen and ink on warm-toned paper",
+      "technique_confirmed": false,
+      "description_proposed": "Botanical branches grow from an anatomical head in profile.",
+      "year": null,
+      "dimensions_cm": null,
+      "edition": null,
+      "photo_pixel_dimensions": [
+        1152,
+        1536
+      ],
+      "display_orientation": "portrait",
+      "original": "assets/originals/IMG-20261028-WA0014.jpg",
+      "image": "assets/web/KS-D-004.webp",
+      "thumb": "assets/thumb/KS-D-004.webp",
+      "public_price": null,
+      "public_price_label": "Price on request"
+    },
+    {
+      "id": "KS-D-005",
+      "artist": "Khashayar Shahrokhi",
+      "artist_slug": "khashayar-shahrokhi",
+      "category": "Works on Paper",
+      "title_proposed": "Metamorphosis",
+      "title_proposed_fa": "دگردیسی",
+      "title_confirmed": false,
+      "technique_visual_estimate": "Dark ink on pink-toned paper",
+      "technique_confirmed": false,
+      "description_proposed": "Human-animal figure suspended in a twisting coiled form.",
+      "year": null,
+      "dimensions_cm": null,
+      "edition": null,
+      "photo_pixel_dimensions": [
+        1152,
+        1536
+      ],
+      "display_orientation": "portrait",
+      "original": "assets/originals/IMG-20261028-WA0016.jpg",
+      "image": "assets/web/KS-D-005.webp",
+      "thumb": "assets/thumb/KS-D-005.webp",
+      "public_price": null,
+      "public_price_label": "Price on request"
+    },
+    {
+      "id": "KS-D-006",
+      "artist": "Khashayar Shahrokhi",
+      "artist_slug": "khashayar-shahrokhi",
+      "category": "Works on Paper",
+      "title_proposed": "The Winged Prophet",
+      "title_proposed_fa": "پیام‌آور بالدار",
+      "title_confirmed": false,
+      "technique_visual_estimate": "Ink with ochre-coloured wash on paper",
+      "technique_confirmed": false,
+      "description_proposed": "Visionary avian-beaked figure with wings and anatomical detail.",
+      "year": null,
+      "dimensions_cm": null,
+      "edition": null,
+      "photo_pixel_dimensions": [
+        1153,
+        1536
+      ],
+      "display_orientation": "portrait",
+      "original": "assets/originals/IMG-20261028-WA0017.jpg",
+      "image": "assets/web/KS-D-006.webp",
+      "thumb": "assets/thumb/KS-D-006.webp",
+      "public_price": null,
+      "public_price_label": "Price on request"
+    },
+    {
+      "id": "KS-D-007",
+      "artist": "Khashayar Shahrokhi",
+      "artist_slug": "khashayar-shahrokhi",
+      "category": "Works on Paper",
+      "title_proposed": "Crimson Guardian",
+      "title_proposed_fa": "نگهبان سرخ",
+      "title_confirmed": false,
+      "technique_visual_estimate": "Burgundy pigment and fine-line drawing on paper",
+      "technique_confirmed": false,
+      "description_proposed": "Armoured humanlike figure with raised spines and organic crest.",
+      "year": null,
+      "dimensions_cm": null,
+      "edition": null,
+      "photo_pixel_dimensions": [
+        1151,
+        1536
+      ],
+      "display_orientation": "portrait",
+      "original": "assets/originals/IMG-20261028-WA0018.jpg",
+      "image": "assets/web/KS-D-007.webp",
+      "thumb": "assets/thumb/KS-D-007.webp",
+      "public_price": null,
+      "public_price_label": "Price on request"
+    }
+  ],
+  "sculpture": {
+    "id": "KS-S-2026-001",
+    "collection": "Oham Collection",
+    "year": 2026,
+    "medium_en": "Triple-fired ceramic",
+    "medium_fa": "سرامیک سه بار پخته شده",
+    "title_proposed": "Untitled",
+    "title_confirmed": false,
+    "dimensions_cm": null,
+    "edition": null,
+    "availability": null,
+    "price_label": "Price on request",
+    "image_angles": [
+      {
+        "original": "assets/originals/45549.jpg",
+        "web": "assets/web/KS-S-2026-001-angle-01.webp",
+        "thumb": "assets/thumb/KS-S-2026-001-angle-01.webp"
+      },
+      {
+        "original": "assets/originals/45551.jpg",
+        "web": "assets/web/KS-S-2026-001-angle-02.webp",
+        "thumb": "assets/thumb/KS-S-2026-001-angle-02.webp"
+      },
+      {
+        "original": "assets/originals/45552.jpg",
+        "web": "assets/web/KS-S-2026-001-angle-03.webp",
+        "thumb": "assets/thumb/KS-S-2026-001-angle-03.webp"
+      },
+      {
+        "original": "assets/originals/IMG-20261028-WA0036.jpg",
+        "web": "assets/web/KS-S-2026-001-angle-04.webp",
+        "thumb": "assets/thumb/KS-S-2026-001-angle-04.webp"
+      },
+      {
+        "original": "assets/originals/IMG-20261028-WA0037.jpg",
+        "web": "assets/web/KS-S-2026-001-angle-05.webp",
+        "thumb": "assets/thumb/KS-S-2026-001-angle-05.webp"
+      },
+      {
+        "original": "assets/originals/IMG-20261028-WA0038.jpg",
+        "web": "assets/web/KS-S-2026-001-angle-06.webp",
+        "thumb": "assets/thumb/KS-S-2026-001-angle-06.webp"
+      },
+      {
+        "original": "assets/originals/IMG-20261028-WA0040.jpg",
+        "web": "assets/web/KS-S-2026-001-angle-07.webp",
+        "thumb": "assets/thumb/KS-S-2026-001-angle-07.webp"
+      },
+      {
+        "original": "assets/originals/IMG-20261028-WA0041.jpg",
+        "web": "assets/web/KS-S-2026-001-angle-08.webp",
+        "thumb": "assets/thumb/KS-S-2026-001-angle-08.webp"
+      },
+      {
+        "original": "assets/originals/IMG-20261028-WA0042.jpg",
+        "web": "assets/web/KS-S-2026-001-angle-09.webp",
+        "thumb": "assets/thumb/KS-S-2026-001-angle-09.webp"
+      },
+      {
+        "original": "assets/originals/IMG-20261028-WA0043.jpg",
+        "web": "assets/web/KS-S-2026-001-angle-10.webp",
+        "thumb": "assets/thumb/KS-S-2026-001-angle-10.webp"
+      },
+      {
+        "original": "assets/originals/IMG-20261028-WA0045.jpg",
+        "web": "assets/web/KS-S-2026-001-angle-11.webp",
+        "thumb": "assets/thumb/KS-S-2026-001-angle-11.webp"
+      },
+      {
+        "original": "assets/originals/IMG-20261028-WA0046.jpg",
+        "web": "assets/web/KS-S-2026-001-angle-12.webp",
+        "thumb": "assets/thumb/KS-S-2026-001-angle-12.webp"
+      },
+      {
+        "original": "assets/originals/IMG-20261028-WA0047.jpg",
+        "web": "assets/web/KS-S-2026-001-angle-13.webp",
+        "thumb": "assets/thumb/KS-S-2026-001-angle-13.webp"
+      }
+    ],
+    "actual_3d_mesh": null
+  },
+  "existing_painting": {
+    "preserve": true,
+    "title": "Oham",
+    "medium": "Painting",
+    "dimensions_cm": {
+      "width": 210,
+      "height": 270
+    },
+    "live_url": "https://setai.no/artshop/artists/khashayar-shahrokhi"
+  },
+  "policy": {
+    "public_numeric_prices": false,
+    "price_label": "Price on request",
+    "contact": "art@setai.no",
+    "include_shop": true,
+    "include_artist_profile": true
+  },
+  "warnings": [
+    "All seven drawing titles are provisional.",
+    "Dates, techniques and cm dimensions must be approved by artist.",
+    "Image pixels are NOT physical dimensions.",
+    "Do not replace existing Oham painting.",
+    "No verified 3D mesh is included.",
+    "Handoff repository is NOT verified to be the site source; no production deploy yet."
+  ]
+}

@@ -23,3 +23,6 @@ There are **13 user-provided original photos**: 45549.jpg, 45551.jpg, 45552.jpg,
 
 ## Hand-off status
 **GitHub handoff metadata published only.** Original image binaries and live deploy **not yet uploaded/published**. A local ZIP and revised PDF can be provided by the originating agent to complete the handoff.
+
+## 2026 drawings: 7 works on paper
+20 original JPGs plus WebP and thumbnails in assets. catalog.json and drawings.json are ready for Claude Code import. See CLAUDE_CODE_NEXT_STEPS.md. Provisional titles/techniques; no invented years or cm sizes.
