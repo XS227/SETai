@@ -1,0 +1,57 @@
+{
+  "artist": "Khashayar Shahrokhi",
+  "collection": "Oham Collection",
+  "year": 2026,
+  "medium": {
+    "en": "Triple-fired ceramic",
+    "fa": "سرامیک سه بار پخته شده",
+    "no": "Trippelbrent keramikk"
+  },
+  "title": {
+    "display": "Untitled (working title)",
+    "verified": false
+  },
+  "dimensions_cm": null,
+  "edition": null,
+  "availability": null,
+  "sale": {
+    "public_prices_visible": false,
+    "cta_en": "Price on request",
+    "cta_no": "Pris på forespørsel",
+    "contact": "art@setai.no"
+  },
+  "photos": {
+    "source": "User-provided originals in ChatGPT conversation 2026-10-28, Art project",
+    "files": [
+      "45549.jpg",
+      "45551.jpg",
+      "45552.jpg",
+      "IMG-20261028-WA0036.jpg",
+      "IMG-20261028-WA0037.jpg",
+      "IMG-20261028-WA0038.jpg",
+      "IMG-20261028-WA0040.jpg",
+      "IMG-20261028-WA0041.jpg",
+      "IMG-20261028-WA0042.jpg",
+      "IMG-20261028-WA0043.jpg",
+      "IMG-20261028-WA0045.jpg",
+      "IMG-20261028-WA0046.jpg",
+      "IMG-20261028-WA0047.jpg"
+    ],
+    "original_images_uploaded_to_git": false,
+    "note": "Uploaded in conversation; request accompanying image asset ZIP or retrieve original attachments in the same ChatGPT thread. Do not invent exact photogrammetry or treat generated visuals as measured geometry."
+  },
+  "website": {
+    "artist_page": "https://setai.no/artshop/artists/khashayar-shahrokhi",
+    "existing_featured_oham": "Painting, 210 x 270 cm. Preserve original artwork and existing images in this section.",
+    "deploy_status": "NOT_DEPLOYED",
+    "source_repo_status": "NOT_IDENTIFIED; this repo is handoff, not verified live site's source"
+  },
+  "pending": [
+    "Official title",
+    "Height width depth in cm",
+    "Exact materials/glazes beyond triple firing",
+    "edition uniqueness",
+    "availability",
+    "artist authorization for publishing photos and 3D derivative"
+  ]
+}
