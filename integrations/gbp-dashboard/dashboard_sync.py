@@ -176,7 +176,7 @@ def update_locations(db, accounts, locations, account_map=None):
             if isinstance(v,list): address_parts.extend(map(str,v))
             elif v: address_parts.append(str(v))
         ad=' · '.join(address_parts)
-        account_id=(account_map or {}).get(loc['name']) or sole_account
+        account_id=(account_map or {}).get(loc['name']) or (sole_account if client=='setaei' else None)
         if account_id is None:
             existing=db.execute('SELECT account_id FROM locations WHERE id=?',(loc['name'],)).fetchone()
             if existing and existing[0] in names:
