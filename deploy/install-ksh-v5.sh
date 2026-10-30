@@ -3,7 +3,7 @@
 set -Eeuo pipefail
 if [[ $(id -u) -ne 0 ]]; then echo 'Use sudo bash install-ksh-v5.sh' >&2; exit 1; fi
 SOURCE='https://raw.githubusercontent.com/XS227/SETai/ksh-fullsite-v5-20261030/deploy/ksh-fullsite-v5.tar.xz.base64'
-HASH='11c57a4033d7d44af395c5926c97cbe2c69b927bbb6c7de3304ca86c445aa29b'
+HASH='08ad1f0c1c6c91b12276036441666a4278b2c6d7a877129ecbf3edfd6d5e1d76'
 TARGET='/var/www/setai/ksh'
 PARENT='/var/www/setai'
 TMP="$(mktemp -d /tmp/ksh-v5-XXXXXXXX)"
