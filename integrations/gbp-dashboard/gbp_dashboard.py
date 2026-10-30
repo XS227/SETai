@@ -43,7 +43,9 @@ def as_dict(row):
     return dict(row) if row else None
 
 
-def dashboard_payload(location=None, days=30):
+def dashboard_payload(location=None, days=30, client='setaei'):
+    if client not in ('setaei', 'bilvaskexpress'):
+        raise ValueError('Unknown client')
     result = dict(connected=False, updated_at=None, locations=[], selected=None,
                   days=days, summary={}, trend=[], keywords=[], reviews=[],
                   statuses=[], errors=[], account_name=None)
@@ -54,10 +56,10 @@ def dashboard_payload(location=None, days=30):
         meta = db.execute('SELECT value FROM meta WHERE key=?', ('last_success_utc',)).fetchone()
         result['updated_at'] = meta['value'] if meta else None
         rows = db.execute('''SELECT id,title,website,account_id,place_id,store_code,
-                        address,verification_state,last_seen_utc FROM locations ORDER BY id''').fetchall()
+                        address,verification_state,last_seen_utc FROM locations WHERE client=? ORDER BY id''', (client,)).fetchall()
         result['locations'] = [dict(r) for r in rows]
         if not rows:
-            result['errors'] = ['Ingen profiler funnet i synkroniserte data.']
+            result['errors'] = ['Ingen Google-profiler for '+('Bilvaskexpress' if client=='bilvaskexpress' else 'SETAEI')+' er bekreftet i siste synkronisering. Sjekk at manager-invitasjonen er akseptert og at profilens nettsted er riktig.']
             return result
         valid = {r['id'] for r in rows}
         if location not in valid:
@@ -99,7 +101,8 @@ def dashboard_payload(location=None, days=30):
 @B.get('/seo/google/dashboard/')
 def page():
     must_be_admin()
-    return render_template_string(DASHBOARD_HTML)
+    client = 'bilvaskexpress' if request.args.get('client') == 'bilvaskexpress' else 'setaei'
+    return render_template_string(DASHBOARD_HTML, business_name=('Bilvaskexpress' if client=='bilvaskexpress' else 'SETAEI'))
 
 
 @B.get('/seo/google/dashboard.js')
@@ -114,16 +117,19 @@ def api_dashboard():
     raw_days = request.args.get('days', '30')
     days = int(raw_days) if raw_days in ('7','30','90') else 30
     location = request.args.get('location','')
+    client = request.args.get('client','setaei')
+    if client not in ('setaei','bilvaskexpress'):
+        return jsonify({'error':'Ugyldig kunde'}),400
     if location and not re.fullmatch(r'locations/\d{1,30}',location):
         return jsonify({'error':'Ugyldig profil-ID'}),400
     try:
-        return jsonify(dashboard_payload(location=location,days=days))
+        return jsonify(dashboard_payload(location=location,days=days,client=client))
     except (sqlite3.Error, OSError):
         return jsonify({'error':'Kunne ikke åpne privat Google-datalager.'}),503
 
 
 DASHBOARD_JS = r'''(()=>{'use strict';
-const $=id=>document.getElementById(id); const f=new Intl.NumberFormat('nb-NO'); const state={days:30,location:''};
+const $=id=>document.getElementById(id); const f=new Intl.NumberFormat('nb-NO'); const client=new URLSearchParams(window.location.search).get('client')==='bilvaskexpress'?'bilvaskexpress':'setaei'; const state={days:30,location:''};
 const text=(el,value)=>{el.textContent=String(value)}; const el=(tag,cls,content)=>{const x=document.createElement(tag);if(cls)x.className=cls;if(content!==undefined)x.textContent=String(content);return x};
 const format=(v)=>Number.isFinite(v)?f.format(v):'—';const sum=(s,keys)=>{let exists=false,total=0;for(const k of keys){if(Object.prototype.hasOwnProperty.call(s,k)){exists=true;total+=Number(s[k])||0}}return exists?total:null};
 function lineGraph(days){const metrics=[['Search',['BUSINESS_IMPRESSIONS_DESKTOP_SEARCH','BUSINESS_IMPRESSIONS_MOBILE_SEARCH'],'#17243b'],['Maps',['BUSINESS_IMPRESSIONS_DESKTOP_MAPS','BUSINESS_IMPRESSIONS_MOBILE_MAPS'],'#ed8e42']];
@@ -133,7 +139,7 @@ for(let i=0;i<=4;i++){const y=T+h-i*h/4;svg+='<line x1="'+L+'" y1="'+y+'" x2="'+
 series.forEach((arr,j)=>{let run=[];const flush=()=>{if(run.length>0)svg+='<polyline points="'+run.join(' ')+'" fill="none" stroke="'+metrics[j][2]+'" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>';run=[]};arr.forEach((v,i)=>{if(v===null){flush();return}const x=L+(points.length<=1?w/2:i*w/(points.length-1));const y=T+h-v/max*h;run.push(x.toFixed(2)+','+y.toFixed(2))});flush()});
 if(points.length){svg+='<text x="'+L+'" y="'+(H-9)+'" fill="#8997a8" font-size="11">'+points[0].date.slice(5)+'</text><text x="'+(W-R)+'" y="'+(H-9)+'" fill="#8997a8" font-size="11" text-anchor="end">'+points.at(-1).date.slice(5)+'</text>'}svg+='</svg>';$('chart').innerHTML=svg}
 function update(v){let locSelect=$('location');const choices=v.locations||[];if(locSelect.options.length!==choices.length||Array.from(locSelect.options).some((o,i)=>o.value!==choices[i].id)){locSelect.replaceChildren(...choices.map(x=>{const o=el('option','',x.title+' · '+x.id.split('/').pop());o.value=x.id;return o}));}if(v.selected){state.location=v.selected;locSelect.value=v.selected}
-const note=$('notice');let notes=[];if(choices.length>1)notes.push(choices.length+' SETAEI-oppføringer funnet. Velg én profil om gangen. Mulige duplikater må kontrolleres før tall kan kombineres.');if(v.errors?.length)notes.push(...v.errors);if(v.statuses?.some(x=>x.status==='error'))notes.push('Noen Google-API-er svarte med feil. Se datakildene nedenfor.');note.classList.toggle('hidden',!notes.length);text(note,notes.join(' '));text($('stamp'),v.updated_at?'Siste vellykkede synkronisering: '+v.updated_at+' UTC · Profil: '+v.selected:'Ingen fullført synkronisering registrert ennå');
+const note=$('notice');let notes=[];if(choices.length>1)notes.push(choices.length+' oppføringer for '+(client==='bilvaskexpress'?'Bilvaskexpress':'SETAEI')+' funnet. Velg én profil om gangen. Mulige duplikater må kontrolleres før tall kan kombineres.');if(v.errors?.length)notes.push(...v.errors);if(v.statuses?.some(x=>x.status==='error'))notes.push('Noen Google-API-er svarte med feil. Se datakildene nedenfor.');note.classList.toggle('hidden',!notes.length);text(note,notes.join(' '));text($('stamp'),v.updated_at?'Siste vellykkede synkronisering: '+v.updated_at+' UTC · Profil: '+v.selected:'Ingen fullført synkronisering registrert ennå');
 const s=v.summary||{};text($('search'),format(sum(s,['BUSINESS_IMPRESSIONS_DESKTOP_SEARCH','BUSINESS_IMPRESSIONS_MOBILE_SEARCH'])));text($('maps'),format(sum(s,['BUSINESS_IMPRESSIONS_DESKTOP_MAPS','BUSINESS_IMPRESSIONS_MOBILE_MAPS'])));text($('website'),format(s.WEBSITE_CLICKS));text($('calls'),format(s.CALL_CLICKS));lineGraph(v.trend||[]);
 const actions=$('actions');actions.replaceChildren();for(const [label,key] of [['Veibeskrivelser','BUSINESS_DIRECTION_REQUESTS'],['Nettstedsklikk','WEBSITE_CLICKS'],['Telefonklikk','CALL_CLICKS']]){const r=el('div','status');r.append(el('span','',label),el('strong','',format(s[key])));actions.append(r)}
 text($('keywordperiod'),v.keyword_period?'Måned: '+v.keyword_period+' · Antall visninger, ikke søkerangering':'Månedlige søkeord · Google-data ikke tilgjengelig');let keywords=$('keywords');keywords.replaceChildren();if(!v.keywords?.length){let tr=el('tr');let td=el('td','hint','Ingen søkeorddata returnert');td.colSpan=2;tr.append(td);keywords.append(tr)}else{for(const k of v.keywords){const tr=el('tr');tr.append(el('td','',k.keyword),el('td','right',k.value!==null?format(k.value):('< '+format(k.threshold))));keywords.append(tr)}}
@@ -141,7 +147,7 @@ text($('rating'),v.review_summary?.total_reviews!==undefined?'Google-anmeldelser
 const prof=$('profiles');prof.replaceChildren();if(!choices.length)prof.append(el('p','hint','Profiler kommer etter første synkronisering.'));else for(const l of choices){const row=el('div','status');let left=el('div');left.append(el('strong','',l.title),el('div','label',l.id));if(l.website)left.append(el('div','hint',l.website));row.append(left);row.append(el('span','hint',l.verification_state||'Status ikke kjent'));prof.append(row)}
 const statuses=$('statuses');statuses.replaceChildren();if(!v.statuses?.length)statuses.append(el('p','hint','Datakildenes status vises etter synkronisering.'));else for(const x of v.statuses){const row=el('div','status'),l=el('div');l.append(el('strong','',x.source));if(x.detail)l.append(el('div','hint',x.detail));row.append(l,el('span',x.status==='ok'?'ok':'err',x.status==='ok'?'OK':'Feil'));statuses.append(row)}
 }
-async function load(){try{const q=new URLSearchParams({days:String(state.days)});if(state.location)q.set('location',state.location);const r=await fetch('/seo/google/api/dashboard?'+q,{credentials:'same-origin',cache:'no-store'});if(!r.ok)throw Error('HTTP '+r.status);update(await r.json());}catch(e){$('notice').classList.remove('hidden');text($('notice'),'Kunne ikke hente private Google-data ('+e.message+'). Kontroller innlogging og datatjeneste.')}}
+async function load(){try{const q=new URLSearchParams({days:String(state.days),client});if(state.location)q.set('location',state.location);const r=await fetch('/seo/google/api/dashboard?'+q,{credentials:'same-origin',cache:'no-store'});if(!r.ok)throw Error('HTTP '+r.status);update(await r.json());}catch(e){$('notice').classList.remove('hidden');text($('notice'),'Kunne ikke hente private Google-data ('+e.message+'). Kontroller innlogging og datatjeneste.')}}
 $('location').addEventListener('change',e=>{state.location=e.target.value;load()});document.querySelectorAll('[data-days]').forEach(b=>b.addEventListener('click',()=>{state.days=Number(b.dataset.days);document.querySelectorAll('[data-days]').forEach(x=>x.classList.toggle('active',x===b));load()}));load();
 })();'''
 
@@ -156,14 +162,14 @@ DASHBOARD_HTML = r'''<!doctype html><html lang="no"><head>
 .notice{border:1px solid #f3d3a5;background:#fff7ec;border-radius:14px;padding:15px 19px;color:#945215;font-size:13px;margin:0 0 22px}.notice.hidden{display:none}.stamp{font-size:12px;color:var(--sub);padding:6px 0 18px}.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px}.panel{background:white;border:1px solid var(--line);border-radius:20px;padding:22px;box-shadow:0 10px 40px #1c2f4c06;min-width:0}.kpi{min-height:148px;display:flex;flex-direction:column;justify-content:space-between}.kpi .value{font-size:clamp(24px,3vw,39px);letter-spacing:-1px;font-weight:780}.kpi .name{color:var(--sub);font-size:13px;font-weight:650}.kpi .small{font-size:11px;color:#a1aabd}.kpi span.dot{display:inline-block;width:8px;height:8px;background:var(--gold);border-radius:50%;margin-right:8px}
 .layout{display:grid;grid-template-columns:1.6fr 1fr;gap:16px;margin-top:18px}.panel h2{font-size:17px;margin:0 0 8px;letter-spacing:-.3px}.subtitle{font-size:12px;color:var(--sub);margin:0 0 21px}.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--sub);margin:12px 0}.chip{width:10px;height:10px;display:inline-block;border-radius:3px;margin-right:5px}.chart{width:100%;min-height:245px}.chart svg{display:block;width:100%;height:auto}.tablewrap{overflow:auto}table{border-collapse:collapse;width:100%;font-size:13px}th{text-align:left;color:#8690a2;font-size:11px;text-transform:uppercase;letter-spacing:.65px}td,th{padding:11px 6px;border-bottom:1px solid var(--line);vertical-align:top}td.right,th.right{text-align:right}tr:last-child td{border-bottom:0}.hint{color:var(--sub);font-size:12px;line-height:1.6}.label{font-size:11px;color:#7d8ca4;background:#eff3f8;padding:4px 7px;border-radius:6px;display:inline-block;max-width:100%;overflow-wrap:anywhere}.review{padding:15px 0;border-bottom:1px solid var(--line)}.review:last-child{border-bottom:0}.stars{color:var(--gold);letter-spacing:1px}.review strong{font-size:13px}.review p{font-size:12px;line-height:1.55;color:#59677d;white-space:pre-wrap}.status{display:flex;justify-content:space-between;gap:8px;padding:12px 0;border-bottom:1px solid var(--line);font-size:12px}.status:last-child{border-bottom:0}.ok{color:var(--green);font-weight:800}.err{color:#bd5f44;font-weight:800}.footer{font-size:12px;color:var(--sub);margin-top:20px;line-height:1.6}
 @media(max-width:1020px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.layout{grid-template-columns:1fr}}@media(max-width:540px){.grid{gap:10px}.panel{padding:16px;border-radius:15px}.kpi{min-height:120px}.hero{padding-top:22px}.hero h1{font-size:30px}.toolbar{width:100%}.select{width:100%}.nav{align-items:start}.chart{min-height:180px}}
-</style></head><body><div class="shell"><nav class="nav"><span class="logo">SETAE<b>I</b><span style="font-size:11px;color:#9aabbf;font-weight:600;letter-spacing:1.5px;margin-left:8px">CONTROL ROOM</span></span><div class="navlinks"><a href="/seo/">SEO-oversikt</a><a href="/seo/google/">Google-tilkobling</a><a href="/seo/google/locations">Profiler</a></div></nav>
-<header class="hero"><div><div class="eyebrow">Google Business Profile / Live datakilde</div><h1>SETAEI <span style="font-weight:390;color:#8694a8">Performance</span></h1><p>Synlighet, henvendelser og søkeord fra Google Search og Maps. Ekte API-data, lagret historisk per bedriftsprofil.</p></div><div class="toolbar"><select id="location" class="select" aria-label="Velg Google-bedriftsprofil"><option>Laster profiler …</option></select><div class="period" aria-label="Datoperiode"><button data-days="7">7 d</button><button data-days="30" class="active">30 d</button><button data-days="90">90 d</button></div></div></header>
+</style></head><body><div class="shell"><nav class="nav"><span class="logo">SETAE<b>I</b><span style="font-size:11px;color:#9aabbf;font-weight:600;letter-spacing:1.5px;margin-left:8px">CONTROL ROOM</span></span><div class="navlinks"><a href="/seo/">SEO-oversikt</a><a href="/seo/google/dashboard">SETAEI</a><a href="/seo/google/dashboard?client=bilvaskexpress">Bilvaskexpress</a><a href="/seo/google/">Google-tilkobling</a><a href="/seo/google/locations">Profiler</a></div></nav>
+<header class="hero"><div><div class="eyebrow">Google Business Profile / Live datakilde</div><h1>{{ business_name }} <span style="font-weight:390;color:#8694a8">Performance</span></h1><p>Synlighet, henvendelser og søkeord fra Google Search og Maps. Ekte API-data, lagret historisk per bedriftsprofil.</p></div><div class="toolbar"><select id="location" class="select" aria-label="Velg Google-bedriftsprofil"><option>Laster profiler …</option></select><div class="period" aria-label="Datoperiode"><button data-days="7">7 d</button><button data-days="30" class="active">30 d</button><button data-days="90">90 d</button></div></div></header>
 <div id="notice" class="notice hidden" role="status"></div><div id="stamp" class="stamp">Laster data fra privat SETAEI-datalager …</div>
 <section class="grid" aria-label="Nøkkeltall"><article class="panel kpi"><div class="name"><span class="dot"></span>Search-visninger</div><div class="value" id="search">—</div><div class="small">Desktop + mobil</div></article><article class="panel kpi"><div class="name"><span class="dot"></span>Maps-visninger</div><div class="value" id="maps">—</div><div class="small">Desktop + mobil</div></article><article class="panel kpi"><div class="name"><span class="dot"></span>Nettstedsklikk</div><div class="value" id="website">—</div><div class="small">Klikk fra bedriftsprofil</div></article><article class="panel kpi"><div class="name"><span class="dot"></span>Telefonklikk</div><div class="value" id="calls">—</div><div class="small">Ikke bekreftede samtaler</div></article></section>
 <div class="layout"><section class="panel"><h2>Synlighet over tid</h2><p class="subtitle">Daglige visninger på Google Search og Maps</p><div id="chart" class="chart"><p class="hint">Laster graf …</p></div><div class="legend"><span><i class="chip" style="background:#17243b"></i>Search</span><span><i class="chip" style="background:#ed8e42"></i>Maps</span></div></section><section class="panel"><h2>Handlinger fra profilen</h2><p class="subtitle">Målt i valgt periode</p><div id="actions"></div><p class="hint">Google registrerer klikk og forespørsler, ikke faktiske telefonanrop eller salg.</p></section></div>
 <div class="layout"><section class="panel"><h2>Oppdagede søkeord</h2><p class="subtitle" id="keywordperiod">Månedlige visninger fra Google Business Profile</p><div class="tablewrap"><table><thead><tr><th>Søkeord</th><th class="right">Antall / grense</th></tr></thead><tbody id="keywords"><tr><td colspan="2" class="hint">Venter på Google-data</td></tr></tbody></table></div></section><section class="panel"><h2>Anmeldelser</h2><p class="subtitle" id="rating">Kun tilgjengelig for verifiserte profiler</p><div id="reviews"></div></section></div>
 <div class="layout"><section class="panel"><h2>Profilkontroll</h2><p class="subtitle">Google-oppføringene holdes adskilt til mulig duplisering er kontrollert</p><div id="profiles"></div></section><section class="panel"><h2>Datakilder og oppdateringer</h2><p class="subtitle">Hentestatus per API, ingen oppdiktede tall</p><div id="statuses"></div><p class="hint">Automatisk synkronisering via systemd-timer på VPS-en. Nye data blir synlige etter neste vellykkede kjøring.</p></section></div>
-<footer class="footer">Privat SETAEI-dashboard · Google Business Profile API · Oppføringene summeres aldri på tvers før en administrator har vurdert profilene. Søkeordstatistikk er ikke organisk rangeringsposisjon.</footer></div>
+<footer class="footer">Privat {{ business_name }}-dashboard · Google Business Profile API · Oppføringene summeres aldri på tvers før en administrator har vurdert profilene. Søkeordstatistikk er ikke organisk rangeringsposisjon.</footer></div>
 <script src="/seo/google/dashboard.js" defer></script></body></html>'''
 
 
