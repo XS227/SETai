@@ -11,6 +11,7 @@ import sys
 import time
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
+from urllib.parse import urlsplit
 
 import requests
 from app import google_access_token
@@ -62,7 +63,8 @@ def init_db(db):
     CREATE TABLE IF NOT EXISTS meta (key TEXT PRIMARY KEY, value TEXT NOT NULL);
     CREATE TABLE IF NOT EXISTS locations (
        id TEXT PRIMARY KEY,title TEXT NOT NULL,website TEXT,account_id TEXT,place_id TEXT,
-       store_code TEXT,address TEXT,verification_state TEXT,last_seen_utc TEXT NOT NULL);
+       store_code TEXT,address TEXT,verification_state TEXT,last_seen_utc TEXT NOT NULL,
+       client TEXT NOT NULL DEFAULT 'setaei');
     CREATE TABLE IF NOT EXISTS daily_metrics (
        location_id TEXT NOT NULL,day TEXT NOT NULL,metric TEXT NOT NULL,value INTEGER NOT NULL,
        PRIMARY KEY(location_id, day,metric));
@@ -78,6 +80,11 @@ def init_db(db):
        location_id TEXT NOT NULL,source TEXT NOT NULL,status TEXT NOT NULL,
        detail TEXT,checked_at TEXT NOT NULL,PRIMARY KEY(location_id,source));
     ''')
+    # Safely migrate the existing October 2026 SETAEI database without dropping data.
+    existing = {row[1] for row in db.execute('PRAGMA table_info(locations)')}
+    if 'client' not in existing:
+        db.execute("ALTER TABLE locations ADD COLUMN client TEXT NOT NULL DEFAULT 'setaei'")
+    db.commit()
 
 
 def status(db, loc, source, result, detail=''):
@@ -101,32 +108,66 @@ def list_accounts(sess):
     return all_accounts
 
 
-def list_locations(sess):
+def list_locations(sess, account=None):
     locations=[]
     token=None
     for _ in range(12):
         args={'readMask':'name,title,websiteUri,storeCode,metadata,storefrontAddress,phoneNumbers,categories',
               'pageSize':100}
         if token: args['pageToken']=token
+        url = LOCATIONS_API if account is None else 'https://mybusinessbusinessinformation.googleapis.com/v1/'+account+'/locations'
         try:
-            data=api_call(sess,LOCATIONS_API,**args)
+            data=api_call(sess,url,**args)
         except RuntimeError as exc:
             # Fall back to the verified minimal Google Business Information field mask.
             # Never silently swallow auth, quota, or network failures.
             if 'Google HTTP 400' not in str(exc):
                 raise
             args['readMask']='name,title,storeCode,websiteUri,phoneNumbers'
-            data=api_call(sess,LOCATIONS_API,**args)
+            data=api_call(sess,url,**args)
         locations.extend(x for x in data.get('locations',[]) if valid_location(x.get('name')))
         token=data.get('nextPageToken')
         if not token: break
     return locations
 
 
-def update_locations(db, accounts, locations):
-    names = [a.get('name','') for a in accounts if re.fullmatch(r'accounts/\d{1,30}', a.get('name',''))]
-    account_id = names[0] if len(names)==1 else None
+def classify_client(loc):
+    # Explicit domain allow-list: no other manager-accessible customer is automatically imported.
+    from urllib.parse import urlsplit
+    website=str(loc.get('websiteUri') or '').strip()
+    host=(urlsplit(website).hostname or '').lower().rstrip('.') if website else ''
+    title=''.join(ch for ch in str(loc.get('title') or '').casefold() if ch.isalnum())
+    if host in ('setai.no','www.setai.no') and title=='setaei':
+        return 'setaei'
+    if host in ('bilvaskexpress.no','www.bilvaskexpress.no') and title.startswith('bilvaskexpress'):
+        return 'bilvaskexpress'
+    # An absent website or different host needs manual profile verification.
+    return None
+
+
+def account_location_map(sess, accounts):
+    # A manager may gain access through multiple Google account containers.
+    # Per-account enumeration avoids incorrectly assigning every profile to SETAEI's account.
+    mapping={}
+    for account in accounts:
+        name=account.get('name') or ''
+        if not re.fullmatch(r'accounts/\d{1,30}',name):
+            continue
+        try:
+            for loc in list_locations(sess,account=name):
+                mapping.setdefault(loc['name'],name)
+        except (RuntimeError,requests.RequestException,ValueError):
+            print('WARN_ACCOUNT_LOOKUP',name,'Could not map account-specific locations; review API may remain unavailable')
+    return mapping
+
+
+def update_locations(db, accounts, locations, account_map=None):
+    names=[a.get('name','') for a in accounts if re.fullmatch(r'accounts/\d{1,30}',a.get('name',''))]
+    sole_account=names[0] if len(names)==1 else None
     for loc in locations:
+        client=classify_client(loc)
+        if client is None:
+            continue
         metadata=loc.get('metadata') or {}
         address=loc.get('storefrontAddress') or {}
         address_parts=[]
@@ -135,16 +176,21 @@ def update_locations(db, accounts, locations):
             if isinstance(v,list): address_parts.extend(map(str,v))
             elif v: address_parts.append(str(v))
         ad=' · '.join(address_parts)
-        db.execute('''INSERT INTO locations(id,title,website,account_id,place_id,store_code,address,verification_state,last_seen_utc)
-          VALUES(?,?,?,?,?,?,?,?,?) ON CONFLICT(id) DO UPDATE SET
+        account_id=(account_map or {}).get(loc['name']) or sole_account
+        if account_id is None:
+            existing=db.execute('SELECT account_id FROM locations WHERE id=?',(loc['name'],)).fetchone()
+            if existing and existing[0] in names:
+                account_id=existing[0]
+        db.execute('''INSERT INTO locations(id,title,website,account_id,place_id,store_code,address,verification_state,last_seen_utc,client)
+          VALUES(?,?,?,?,?,?,?,?,?,?) ON CONFLICT(id) DO UPDATE SET
           title=excluded.title, website=excluded.website,account_id=excluded.account_id,
           place_id=excluded.place_id, store_code=excluded.store_code,address=excluded.address,
-          verification_state=excluded.verification_state,last_seen_utc=excluded.last_seen_utc''',
+          verification_state=excluded.verification_state,last_seen_utc=excluded.last_seen_utc,
+          client=excluded.client''',
           (loc['name'],loc.get('title') or 'Uten navn',loc.get('websiteUri',''),account_id,
            metadata.get('placeId'),loc.get('storeCode'),ad,
-           ('Voice of Merchant' if metadata.get('hasVoiceOfMerchant') else 'Status ikke avklart'),utcnow()))
+           ('Voice of Merchant' if metadata.get('hasVoiceOfMerchant') else 'Status ikke avklart'),utcnow(),client))
     db.commit()
-    return account_id
 
 
 def date_params(start,end):
@@ -263,13 +309,20 @@ def main():
         sess.headers['X-GOOG-API-FORMAT-VERSION']='2'
         try:
             accounts=list_accounts(sess)
-            locations=[l for l in list_locations(sess) if (str(l.get('title','')).strip().casefold()=='setaei' and
-                       ('setai.no' in str(l.get('websiteUri','')) or not l.get('websiteUri')))]
-            account_id=update_locations(db,accounts,locations)
+            visible=list_locations(sess)
+            locations=[l for l in visible if classify_client(l) is not None]
+            mapped=account_location_map(sess,accounts) if len(accounts)>1 else {}
+            update_locations(db,accounts,locations,account_map=mapped)
         except (requests.RequestException,RuntimeError,ValueError) as exc:
             print('ERROR: Could not list Google profiles.',str(exc)[:140])
             return 2
-        print('SETAEI PROFILE COUNT:',len(locations),'[each kept separate]')
+        for client in ('setaei','bilvaskexpress'):
+            print(client.upper()+' PROFILE COUNT:',sum(classify_client(l)==client for l in locations),'[each kept separate]')
+        if not any(classify_client(l)=='bilvaskexpress' for l in locations):
+            print('BILVASKEXPRESS_NOT_VISIBLE=YES: Confirm accepted invitation, same Google account, and GBP website')
+            for l in visible:
+                if 'bilvask' in str(l.get('title','')).casefold():
+                    print('BILVASK_CANDIDATE_REQUIRES_VERIFICATION:',l.get('name',''),str(l.get('title',''))[:90],str(l.get('websiteUri',''))[:120])
         end=date.today()-timedelta(days=1)
         start=end-timedelta(days=89)
         keyword_month=month_before(date.today())
@@ -279,7 +332,7 @@ def main():
             for source, action in [
                 ('performance',lambda:fetch_daily(sess,db,locid,start,end)),
                 ('search_keywords',lambda:fetch_keywords(sess,db,locid,keyword_month)),
-                ('reviews',lambda:fetch_reviews(sess,db,locid,account_id))]:
+                ('reviews',lambda:fetch_reviews(sess,db,locid,db.execute('SELECT account_id FROM locations WHERE id=?',(locid,)).fetchone()[0]))]:
                 try:
                     count=action()
                     status(db,locid,source,'ok','%d oppføringer returnert'%count)
