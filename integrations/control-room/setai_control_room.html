@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="no"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>SETAEI Control Room — Agency OS</title>
+<link rel="stylesheet" href="/seo/google/control-room.css">
+<script src="/seo/google/control-room.js" defer></script></head>
+<body>
+<a href="#workspace" class="skip">Hopp til innhold</a>
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar" aria-label="Hovedmeny">
+    <a class="identity" href="#overview" aria-label="SETAEI Control Room hjem"><span class="brand-mark">S<span>✳</span></span>
+       <span class="brand-name">SETAEI <small>CONTROL ROOM</small></span></a>
+    <div class="sidebar-divider"></div>
+    <div class="nav-caption">WORKSPACE</div>
+    <nav class="nav" id="navigation" aria-label="Moduler">
+      <a data-view="overview" href="#overview"><span class="nav-icon">◈</span><span>Oversikt</span></a>
+      <a data-view="clients" href="#clients"><span class="nav-icon">▦</span><span>Kunder</span></a>
+      <a data-view="seo" href="#seo"><span class="nav-icon">⌁</span><span>SEO Intelligence</span></a>
+      <a data-view="google" href="#google"><span class="nav-icon">◎</span><span>Google Business</span></a>
+      <a data-view="leads" href="#leads"><span class="nav-icon">◇</span><span>Leads & salg</span></a>
+      <a data-view="projects" href="#projects"><span class="nav-icon">▤</span><span>Prosjekter</span></a>
+      <a data-view="systems" href="#systems"><span class="nav-icon">◉</span><span>Systemer</span></a>
+    </nav>
+    <div class="sidebar-bottom">
+      <div class="online-indicator"><span class="pulse"></span> Agency OS <span id="shell-status">Kontrollerer …</span></div>
+      <a class="small-link" href="/seo/google/" title="Google OAuth administrator">Google-tilkobling ↗</a>
+      <a class="small-link" href="/seo/">Offentlig SEO-side ↗</a>
+      <span class="sidebar-meta">SETAEI · Norway · v1.0</span>
+    </div>
+  </aside>
+  <div class="main-column">
+    <header class="topbar">
+      <button class="icon-button menu-toggle" id="menu-toggle" aria-label="Åpne meny" aria-expanded="false">☰</button>
+      <div class="breadcrumbs"><span>SETAEI</span><span class="crumb-sep">/</span><strong id="crumb-current">Oversikt</strong></div>
+      <div class="top-actions">
+        <div class="synced" id="sync-indicator"><span class="pulse"></span><span>Google-data kontrolleres</span></div>
+        <button class="icon-button refresh-button" id="reload-button" title="Oppdater data" aria-label="Oppdater data">↻</button>
+        <a class="avatar" href="/seo/google/" title="Administratorinnstillinger">S</a>
+      </div>
+    </header>
+    <main id="workspace" tabindex="-1">
+      <section class="view" data-panel="overview">
+        <div class="page-head"><div><p class="eyebrow">AGENCY INTELLIGENCE / MISSION CONTROL</p><h1>Alt samlet. <em>Full oversikt.</em></h1>
+          <p class="intro">Kunder, Google-synlighet, SEO-rapporter, salg og systemstatus — fra ett sted.</p></div>
+          <a class="button primary" href="#clients">Se alle kunder <span>↗</span></a></div>
+        <div class="kpi-grid">
+          <article class="kpi"><span class="kpi-label">Kunder i kontrollrommet</span><strong id="kpi-clients">5</strong><small>2 med Google Business-oppsett</small><span class="kpi-glyph">▦</span></article>
+          <article class="kpi"><span class="kpi-label">GBP-profiler funnet</span><strong id="kpi-profiles">—</strong><small id="kpi-profiles-sub">Venter på Google API</small><span class="kpi-glyph">◎</span></article>
+          <article class="kpi"><span class="kpi-label">Google-datakilder</span><strong id="kpi-sources">—</strong><small id="kpi-sources-sub">Ytelse · søkeord · anmeldelser</small><span class="kpi-glyph">⌁</span></article>
+          <article class="kpi"><span class="kpi-label">Siste Google-oppdatering</span><strong id="kpi-updated" class="kpi-date">—</strong><small>Synkronisering to ganger daglig</small><span class="kpi-glyph">◷</span></article>
+        </div>
+        <div class="content-grid">
+          <article class="panel wide"><div class="panel-header"><div><p class="eyebrow">CUSTOMER COMMAND</p><h2>Kundeportefølje</h2></div><a class="text-link" href="#clients">Alle kunder ↗</a></div>
+            <div class="customer-list" id="overview-customers"></div></article>
+          <article class="panel"><div class="panel-header"><div><p class="eyebrow">PRIORITIES</p><h2>Arbeidskø</h2></div></div>
+            <div class="stack">
+              <div class="action-row"><span class="priority-dot warn"></span><div><strong>Google-anmeldelser</strong><small>Kontroller API-tilgang før vi henter anmeldelser</small></div><a href="#google" aria-label="Åpne Google Business">↗</a></div>
+              <div class="action-row"><span class="priority-dot"></span><div><strong>SETAEI-profilene</strong><small>Undersøk mulige duplikater før tall kombineres</small></div><a href="#google" aria-label="Åpne Google Business">↗</a></div>
+              <div class="action-row"><span class="priority-dot"></span><div><strong>SEO-oppfølging</strong><small>Gjennomgå prioriterte kundetiltak og rangeringer</small></div><a href="#seo" aria-label="Åpne SEO">↗</a></div>
+              <div class="action-row"><span class="priority-dot"></span><div><strong>Salg og forslag</strong><small>Følg opp kontakter i eksisterende Lead Agent</small></div><a href="#leads" aria-label="Åpne Leads">↗</a></div>
+            </div>
+          </article>
+        </div>
+        <div class="content-grid">
+          <article class="panel"><div class="panel-header"><div><p class="eyebrow">DATA SOURCES</p><h2>Tilkoblinger</h2></div></div><div class="source-list" id="overview-sources"><div class="source-row"><span>Google Business Profile</span><span class="state awaiting">Kontrollerer</span></div><div class="source-row"><span>Search Console-rapport</span><span class="state legacy">Eksisterende</span></div><div class="source-row"><span>Lead Agent</span><span class="state legacy">Eget system</span></div></div></article>
+          <article class="panel"><div class="panel-header"><div><p class="eyebrow">SHORTCUTS</p><h2>Hurtighandlinger</h2></div></div>
+            <div class="quick-grid"><a href="#seo">↗ <strong>SEO-status</strong><small>Søkeord og tiltak</small></a><a href="#google">↗ <strong>Google-data</strong><small>Search og Maps</small></a><a href="#leads">↗ <strong>Leads</strong><small>Forslag og oppfølging</small></a><a href="#systems">↗ <strong>Systemer</strong><small>Drift og integrasjoner</small></a></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="view" data-panel="clients" hidden>
+        <div class="page-head"><div><p class="eyebrow">CLIENT OPERATIONS</p><h1>Kunder <em>& rapporter.</em></h1><p class="intro">Én oversikt for alle SETAEI-kunder. Google-data vises bare for autoriserte profiler.</p></div></div>
+        <div class="toolbar"><label class="search-wrap"><span>⌕</span><input id="client-search" placeholder="Søk etter kunde…" autocomplete="off" aria-label="Søk etter kunde"></label><span class="quiet">Deler aldri ulike kunders Google-data</span></div>
+        <div id="client-cards" class="client-grid"></div>
+      </section>
+
+      <section class="view" data-panel="seo" hidden>
+        <div class="page-head"><div><p class="eyebrow">SEARCH INTELLIGENCE</p><h1>SEO <em>& vekst.</em></h1><p class="intro">Eksisterende Search Console-rapport og historiske kundetiltak i samme arbeidsflate.</p></div>
+          <a class="button" href="/seo-status.html" target="_blank" rel="noopener">Åpne originalrapport ↗</a></div>
+        <div class="context-note"><span>ⓘ</span><span>SEO-rapporten nedenfor er eksisterende Search Console-historikk. Google Business-data hentes separat i fanen «Google Business». Ikke bland rangeringer med Maps-visninger.</span></div>
+        <div class="panel frame-card"><div class="panel-header"><div><p class="eyebrow">EXISTING REPORT / PRESERVED</p><h2>SETAEI SEO Status</h2></div><a class="text-link" href="/seo-status.html" target="_blank" rel="noopener">Åpne i ny fane ↗</a></div>
+          <iframe src="/seo-status.html" title="Eksisterende SEO Status-rapport" loading="lazy" referrerpolicy="same-origin"></iframe></div>
+      </section>
+
+      <section class="view" data-panel="google" hidden>
+        <div class="page-head"><div><p class="eyebrow">GOOGLE BUSINESS PROFILE / VERIFIED API DATA</p><h1>Google <em>Business.</em></h1><p class="intro">Search, Maps, nettstedsklikk og handlinger. Måledata er adskilt per faktisk Google-profil.</p></div>
+          <a class="button" href="/seo/google/" target="_blank" rel="noopener">Administrer tilkobling ↗</a></div>
+        <div class="toolbar"><label for="google-client" class="select-label">Kunde <select id="google-client"><option value="setaei">SETAEI</option><option value="bilvaskexpress">Bilvaskexpress</option></select></label>
+        <label for="google-profile" class="select-label">Google-profil <select id="google-profile"><option value="">Henter …</option></select></label>
+        <div class="pill-tabs" id="google-period"><button data-days="7">7 dager</button><button data-days="30" class="active">30 dager</button><button data-days="90">90 dager</button></div></div>
+        <div class="context-note" id="google-warning"><span>ⓘ</span><span>Henter data fra Google …</span></div>
+        <div class="kpi-grid">
+          <article class="kpi"><span class="kpi-label">Search-visninger</span><strong id="g-search">—</strong><small>Desktop + mobil</small></article>
+          <article class="kpi"><span class="kpi-label">Maps-visninger</span><strong id="g-maps">—</strong><small>Desktop + mobil</small></article>
+          <article class="kpi"><span class="kpi-label">Nettsideklikk</span><strong id="g-website">—</strong><small>Fra bedriftsprofil</small></article>
+          <article class="kpi"><span class="kpi-label">Telefonklikk</span><strong id="g-calls">—</strong><small>Ikke bekreftede anrop</small></article>
+        </div>
+        <div class="content-grid"><article class="panel wide"><div class="panel-header"><div><p class="eyebrow">DAILY ACTIVITY</p><h2>Synlighet over tid</h2></div><div class="chart-key"><span class="key search"></span>Search <span class="key maps"></span>Maps</div></div><div id="google-chart" class="google-chart"><span class="quiet">Laster graf …</span></div></article>
+          <article class="panel"><div class="panel-header"><div><p class="eyebrow">CUSTOMER ACTIONS</p><h2>Handlinger</h2></div></div><div id="google-actions" class="stack"></div><div class="data-stamp" id="google-stamp"></div></article></div>
+        <div class="content-grid"><article class="panel"><div class="panel-header"><div><p class="eyebrow">DISCOVERY</p><h2>Google-søkeord</h2></div></div><p class="quiet" id="keyword-period">Månedlige søkeord</p><div class="table-scroll"><table><thead><tr><th>Søkeord</th><th>Visninger</th></tr></thead><tbody id="google-keywords"></tbody></table></div></article>
+          <article class="panel"><div class="panel-header"><div><p class="eyebrow">SOURCE INTEGRITY</p><h2>Datakilder</h2></div></div><div id="google-sources" class="source-list"></div><div class="bottom-actions"><a class="text-link" id="google-original" href="/seo/google/dashboard">Full detaljrapport ↗</a></div></article></div>
+      </section>
+
+      <section class="view" data-panel="leads" hidden>
+        <div class="page-head"><div><p class="eyebrow">GROWTH OPERATIONS</p><h1>Leads <em>& salg.</em></h1><p class="intro">En inngang til kundeinnhenting, tilbud, utkast og oppfølgingshistorikk.</p></div></div>
+        <div class="link-cards">
+          <a class="link-card" href="/lead-agent/admin.html" target="_blank" rel="noopener"><span>01 · CRM</span><strong>Lead Agent</strong><small>Prospekter, kvalifisering og status på oppfølging.</small><b>Åpne →</b></a>
+          <a class="link-card" href="/lead-agent/drafts.html" target="_blank" rel="noopener"><span>02 · OUTREACH</span><strong>Tilbudsutkast</strong><small>Gjennomgå og ferdigstill e-poster før utsending.</small><b>Åpne →</b></a>
+          <a class="link-card" href="/salgspartner/" target="_blank" rel="noopener"><span>03 · CAMPAIGN</span><strong>Julekampanje</strong><small>Salgspartnerprogrammet og kampanjelandingssiden.</small><b>Åpne →</b></a>
+        </div><div class="context-note"><span>ⓘ</span><span>Lead Agent beholder egen tilgangskontroll. Dette kontrollrommet viser ikke private kontaktopplysninger eller oppdiktede salgstall.</span></div>
+      </section>
+
+      <section class="view" data-panel="projects" hidden>
+        <div class="page-head"><div><p class="eyebrow">WORK IN PROGRESS</p><h1>Prosjekter <em>& leveranser.</em></h1><p class="intro">Eksisterende løsninger samles i ett operativt prosjektbibliotek.</p></div></div>
+        <div class="link-cards">
+          <a class="link-card" href="/ksh/" target="_blank" rel="noopener"><span>SALES / DESIGN</span><strong>KSH · Bedriftsforslag</strong><small>Heimslig AS og Heimdal Naturstein.</small><b>Åpne →</b></a>
+          <a class="link-card" href="/salgspartner/" target="_blank" rel="noopener"><span>CAMPAIGN</span><strong>SETAEI Salgspartner</strong><small>Gnist, Nordlys og Supernova.</small><b>Åpne →</b></a>
+          <a class="link-card" href="/projects/" target="_blank" rel="noopener"><span>PORTFOLIO</span><strong>Prosjektoversikt</strong><small>Kundecaser og aktive konsepter.</small><b>Åpne →</b></a>
+          <a class="link-card" href="/projects/nesten-umulig/" target="_blank" rel="noopener"><span>RESEARCH</span><strong>Nesten umulig</strong><small>Forskningsprosjekt og offentlig live-teller.</small><b>Åpne →</b></a>
+        </div>
+      </section>
+
+      <section class="view" data-panel="systems" hidden>
+        <div class="page-head"><div><p class="eyebrow">INTEGRATIONS / INFRASTRUCTURE</p><h1>Systemer <em>& drift.</em></h1><p class="intro">Tjenester, integrasjoner og datakvalitet — tydelig markert når sanntidsstatus ikke finnes.</p></div></div>
+        <div class="content-grid"><article class="panel"><div class="panel-header"><div><p class="eyebrow">LIVE SERVICE CHECK</p><h2>Google OAuth Bridge</h2></div></div><div class="big-state" id="health-state">Kontrollerer …</div><p class="quiet" id="health-detail">Helsesjekk mot autorisert tjeneste.</p></article>
+          <article class="panel"><div class="panel-header"><div><p class="eyebrow">HOSTING</p><h2>Serveroversikt</h2></div></div><p class="quiet">Serverdetaljer hentes fra eksisterende driftsoversikt. Her vises ikke estimerte CPU- eller diskverdier.</p><a class="button" href="/server" target="_blank" rel="noopener">Åpne serverstatus ↗</a></article></div>
+        <div class="content-grid"><article class="panel"><div class="panel-header"><div><p class="eyebrow">INTEGRATIONS</p><h2>Datakildestatus</h2></div></div><div class="source-list" id="system-sources"></div></article>
+          <article class="panel"><div class="panel-header"><div><p class="eyebrow">DATA POLICY</p><h2>Hva er bekreftet?</h2></div></div><p class="quiet">Google Performance-data oppdateres av eksisterende systemd-timer. Search Console-historikk kommer fra den eksisterende SEO-statussiden. Lead Agent er separat. Rapporten skal aldri tolke klikk som bekreftet salg.</p></article></div>
+      </section>
+    </main>
+    <footer class="footer"><span>SETAEI CONTROL ROOM · PRIVATE AGENCY WORKSPACE</span><span>Google-data: autorisert API · SEO: datert historikk · Ingen oppdiktede KPI-er</span></footer>
+  </div>
+</div>
+</body></html>
