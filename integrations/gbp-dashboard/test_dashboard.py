@@ -30,6 +30,8 @@ with tempfile.TemporaryDirectory() as d:
     class Sess:
         headers={}
         def get(self,url,params=None,timeout=None):
+            if '/reviews' in url:
+                return R({'averageRating':4.5,'totalReviewCount':2,'reviews':[{'reviewId':'test-id','starRating':'FIVE','reviewer':{'displayName':'Test User'},'comment':'Very good','updateTime':'2026-10-01T08:00:00Z'}]})
             if url.endswith('/accounts'):
                 return R({'accounts':[{'name':'accounts/105249988601083040243'},{'name':'accounts/222222222222222222'}]})
             if '/accounts/-/locations' in url:
@@ -43,8 +45,6 @@ with tempfile.TemporaryDirectory() as d:
                 return R({'multiDailyMetricTimeSeries':[{'dailyMetricTimeSeries':[{'dailyMetric':'WEBSITE_CLICKS','timeSeries':{'datedValues':[{'date':{'year':x.year,'month':x.month,'day':x.day},'value':('27' if '/locations/3333333333333:' in url else '14')}]}}]}]})
             if 'impressions/monthly' in url:
                 return R({'searchKeywordsCounts':[{'searchKeyword':'setaei seo','insightsValue':{'value':'56'}},{'searchKeyword':'agency near me','insightsValue':{'threshold':'15'}}]})
-            if '/reviews' in url:
-                return R({'averageRating':4.5,'totalReviewCount':2,'reviews':[{'reviewId':'test-id','starRating':'FIVE','reviewer':{'displayName':'Test User'},'comment':'Very good','updateTime':'2026-10-01T08:00:00Z'}]})
             raise RuntimeError('Unexpected endpoint '+url)
     sync.requests.Session=lambda:Sess()
     assert sync.main()==0
