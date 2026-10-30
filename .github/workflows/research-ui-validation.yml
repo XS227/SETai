@@ -1,0 +1,40 @@
+name: Research UI validation
+on:
+  pull_request:
+    paths:
+      - 'key-research/**'
+      - '.github/workflows/research-ui-validation.yml'
+  workflow_dispatch:
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify source syntax
+        run: |
+          node --check key-research/assets/multi-target.js
+          bash -n key-research/deploy/DEPLOY_FROM_GITHUB.sh
+      - name: Verify pages and isolate live counter
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          root=Path('key-research')
+          required=[
+              'index.html','assets/styles.css','assets/multi-target.js',
+              'experiment-01/index.html','experiment-02/index.html',
+              'journal/index.html','deploy/DEPLOY_FROM_GITHUB.sh'
+          ]
+          for f in required:
+              p=root/f
+              assert p.is_file() and p.stat().st_size>100, f
+          assert 'Cryptographic Randomness Research' in (root/'index.html').read_text()
+          index=(root/'experiment-02/index.html').read_text()
+          assert '../assets/multi-target.js' in index
+          assert '/key/' in (root/'index.html').read_text()
+          script=(root/'deploy/DEPLOY_FROM_GITHUB.sh').read_text()
+          for token in ('MODE=inspect','/key/api/latest','--target=','key-research'):
+              assert token in script, token
+          print('Research UI source checks passed; no production deployment.')
+          PY
