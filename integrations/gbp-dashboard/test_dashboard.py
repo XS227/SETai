@@ -31,12 +31,16 @@ with tempfile.TemporaryDirectory() as d:
         headers={}
         def get(self,url,params=None,timeout=None):
             if url.endswith('/accounts'):
-                return R({'accounts':[{'name':'accounts/105249988601083040243'}]})
+                return R({'accounts':[{'name':'accounts/105249988601083040243'},{'name':'accounts/222222222222222222'}]})
             if '/accounts/-/locations' in url:
+                return R({'locations':[{'name':'locations/467110247860418129','title':'SETAEI','websiteUri':'https://setai.no/'},{'name':'locations/14671405080341449883','title':'SETAEI','websiteUri':'https://www.setai.no/'},{'name':'locations/3333333333333','title':'Bilvask Express','websiteUri':'https://www.bilvaskexpress.no/'},{'name':'locations/44444444444','title':'Unrelated Client','websiteUri':'https://other.example/'}]})
+            if '/accounts/105249988601083040243/locations' in url:
                 return R({'locations':[{'name':'locations/467110247860418129','title':'SETAEI','websiteUri':'https://setai.no/'},{'name':'locations/14671405080341449883','title':'SETAEI','websiteUri':'https://www.setai.no/'}]})
+            if '/accounts/222222222222222222/locations' in url:
+                return R({'locations':[{'name':'locations/3333333333333','title':'Bilvask Express','websiteUri':'https://bilvaskexpress.no/'}]})
             if 'fetchMultiDailyMetricsTimeSeries' in url:
                 x=date.today()-timedelta(days=1)
-                return R({'multiDailyMetricTimeSeries':[{'dailyMetricTimeSeries':[{'dailyMetric':'WEBSITE_CLICKS','timeSeries':{'datedValues':[{'date':{'year':x.year,'month':x.month,'day':x.day},'value':'14'}]}}]}]})
+                return R({'multiDailyMetricTimeSeries':[{'dailyMetricTimeSeries':[{'dailyMetric':'WEBSITE_CLICKS','timeSeries':{'datedValues':[{'date':{'year':x.year,'month':x.month,'day':x.day},'value':('27' if '/locations/3333333333333:' in url else '14')}]}}]}]})
             if 'impressions/monthly' in url:
                 return R({'searchKeywordsCounts':[{'searchKeyword':'setaei seo','insightsValue':{'value':'56'}},{'searchKeyword':'agency near me','insightsValue':{'threshold':'15'}}]})
             if '/reviews' in url:
@@ -46,6 +50,14 @@ with tempfile.TemporaryDirectory() as d:
     assert sync.main()==0
     output=dashboard.dashboard_payload(days=30)
     assert len(output['locations'])==2
+    client=dashboard.dashboard_payload(days=30,client='bilvaskexpress')
+    assert len(client['locations'])==1
+    assert client['locations'][0]['website'].endswith('bilvaskexpress.no/')
+    assert client['summary']['WEBSITE_CLICKS']==27
+    assert output['summary']['WEBSITE_CLICKS']==14
+    assert sync.classify_client({'title':'Bilvask Express','websiteUri':'https://bilvaskexpress.no.evil.test/'}) is None
+    assert sync.classify_client({'title':'Unrelated Client','websiteUri':'https://other.example/'}) is None
+    assert sync.classify_client({'title':'Bilvask Express','websiteUri':''}) is None
     assert output['summary']['WEBSITE_CLICKS']==14
     assert output['keyword_period']
     assert output['keywords'][0]['value']==56
@@ -56,6 +68,7 @@ with tempfile.TemporaryDirectory() as d:
     assert other['selected'] != output['selected']
     assert dashboard.dashboard_payload(location='locations/999999',days=30)['selected']==output['selected']
     with sqlite3.connect(dashboard.DB_PATH) as db:
-        assert db.execute('SELECT COUNT(*) FROM daily_metrics').fetchone()[0]==2
-        assert db.execute('SELECT COUNT(*) FROM source_status').fetchone()[0]==6
-    print('TESTS_OK: per-profile metrics, Google API response parsing, keywords, review totals, date ranges, SQLite persistence')
+        assert db.execute('SELECT COUNT(*) FROM daily_metrics').fetchone()[0]==3
+        assert db.execute('SELECT COUNT(*) FROM source_status').fetchone()[0]==9
+        assert db.execute("SELECT account_id FROM locations WHERE client='bilvaskexpress'").fetchone()[0]=='accounts/222222222222222222'
+    print('TESTS_OK: brand isolation, allowlisted Bilvaskexpress manager profile, per-account ownership, metrics, keywords, reviews, SQLite persistence')
