@@ -9,7 +9,7 @@ BASE=/opt/setai-gbp
 PY="$BASE/.venv/bin/python"
 APP_UNIT=setai-gbp-oauth.service
 SYNC_UNIT=setai-gbp-dashboard-sync.service
-REV=02612246593df5b54c0bef52462ea3be7b2cf9b3
+REV=088b26f24d045391bfb50f7ca1ae30e9843cc0ae
 RAW="https://raw.githubusercontent.com/XS227/SETai/$REV/integrations/gbp-dashboard"
 WORK="$(mktemp -d /tmp/gbp-bilvaskexpress.XXXXXXXX)"
 BACKUP="/root/gbp-before-bilvaskexpress-$(date -u +%Y%m%dT%H%M%SZ)"
@@ -33,7 +33,9 @@ done
 "$PY" -m py_compile "$WORK"/gbp_dashboard.py "$WORK"/dashboard_sync.py "$WORK"/test_dashboard.py
 
 # Run entirely mocked Google API tests before touching production files.
+echo '=== SIMULATED_LOCAL_TEST_BEGIN (NOT actual Google data) ==='
 (cd "$WORK" && "$PY" test_dashboard.py)
+echo '=== SIMULATED_LOCAL_TEST_PASSED ==='
 mkdir -p "$BACKUP"
 for f in gbp_dashboard.py dashboard_sync.py; do
     cp -a "$BASE/$f" "$BACKUP/$f"
@@ -79,13 +81,14 @@ fi
 
 echo "DEPLOYED=YES"
 echo "BACKUP_SAVED=$BACKUP"
-echo 'RUNNING_FIRST_MULTI_CLIENT_GOOGLE_SYNC'
+echo '=== ACTUAL_GOOGLE_API_SYNC_BEGIN ==='
 systemctl reset-failed "$SYNC_UNIT" || true
 if systemctl start "$SYNC_UNIT"; then
     echo 'SYNC_RESULT=SUCCESS'
 else
     echo 'SYNC_RESULT=PARTIAL_OR_FAILED (inspect log below)'
 fi
+echo '=== ACTUAL_GOOGLE_API_LOGS ==='
 journalctl -u "$SYNC_UNIT" -n 38 --no-pager -o cat
 
 "$PY" - <<'PY'
