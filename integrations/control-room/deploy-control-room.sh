@@ -9,7 +9,7 @@ PY="$BASE/.venv/bin/python"
 SVC=setai-gbp-oauth.service
 WSGI="$BASE/gbp_dashboard_wsgi.py"
 SNIP=/etc/nginx/snippets/setai-gbp-oauth.conf
-REV=db7fe8949341b3b681a225ef1ba2ee887daa33aa
+REV=030899246356b2d39d474417532035439e5b4499
 RAW="https://raw.githubusercontent.com/XS227/SETai/$REV/integrations/control-room"
 WORK="$(mktemp -d /tmp/setaei-control-room.XXXXXXXX)"
 BACKUP="/root/setaei-control-room-before-$(date -u +%Y%m%dT%H%M%SZ)"
@@ -25,7 +25,7 @@ grep -q 'register_dashboard(app)' "$WSGI" || { echo 'STOP: unexpected WSGI layou
 grep -q 'proxy_pass http://127.0.0.1:18767;' "$SNIP" || { echo 'STOP: unexpected Nginx OAuth proxy port'; exit 1; }
 systemctl is-active --quiet "$SVC" || { echo 'STOP: OAuth service not running'; exit 1; }
 
-for file in setai_control_room.py setai_control_room.html setai_control_room.css setai_control_room.js; do
+for file in setai_control_room.py setai_control_room.html setai_control_room.css setai_control_room.js test_control_room.py; do
   curl -fsSL --retry 2 --max-time 30 "$RAW/$file" -o "$WORK/$file"
   [ -s "$WORK/$file" ] || { echo "STOP: empty asset $file"; exit 1; }
 done
@@ -49,6 +49,7 @@ assert 'session.get("admin") is not True' in src
 assert 'send_file(BASE / "setai_control_room.html"' in src
 print('CONTROL_ROOM_ASSETS=OK')
 PY
+(cd "$WORK" && "$PY" test_control_room.py)
 
 mkdir -p "$BACKUP"
 cp -a "$WSGI" "$BACKUP/gbp_dashboard_wsgi.py"
