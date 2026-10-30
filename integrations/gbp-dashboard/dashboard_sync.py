@@ -105,10 +105,18 @@ def list_locations(sess):
     locations=[]
     token=None
     for _ in range(12):
-        args={'readMask':'name,title,websiteUri,storeCode,metadata,storefrontAddress,phoneNumbers,primaryCategory',
+        args={'readMask':'name,title,websiteUri,storeCode,metadata,storefrontAddress,phoneNumbers,categories',
               'pageSize':100}
         if token: args['pageToken']=token
-        data=api_call(sess,LOCATIONS_API,**args)
+        try:
+            data=api_call(sess,LOCATIONS_API,**args)
+        except RuntimeError as exc:
+            # Fall back to the verified minimal Google Business Information field mask.
+            # Never silently swallow auth, quota, or network failures.
+            if 'Google HTTP 400' not in str(exc):
+                raise
+            args['readMask']='name,title,storeCode,websiteUri,phoneNumbers'
+            data=api_call(sess,LOCATIONS_API,**args)
         locations.extend(x for x in data.get('locations',[]) if valid_location(x.get('name')))
         token=data.get('nextPageToken')
         if not token: break
@@ -142,7 +150,7 @@ def update_locations(db, accounts, locations):
 def date_params(start,end):
     d={}
     for label,day in (('start',start),('end',end)):
-        prefix='dailyRange.%s_date.'%label
+        prefix='dailyRange.%sDate.'%label
         d[prefix+'year']=day.year
         d[prefix+'month']=day.month
         d[prefix+'day']=day.day
@@ -179,10 +187,10 @@ def fetch_daily(sess,db,loc,start,end):
 
 
 def fetch_keywords(sess,db,loc,period):
-    params={'monthlyRange.start_month.year':period.year,
-            'monthlyRange.start_month.month':period.month,
-            'monthlyRange.end_month.year':period.year,
-            'monthlyRange.end_month.month':period.month,
+    params={'monthlyRange.startMonth.year':period.year,
+            'monthlyRange.startMonth.month':period.month,
+            'monthlyRange.endMonth.year':period.year,
+            'monthlyRange.endMonth.month':period.month,
             'pageSize':100}
     url=PERFORMANCE+loc+'/searchkeywords/impressions/monthly'
     results={}
