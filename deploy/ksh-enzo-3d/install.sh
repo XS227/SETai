@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Isolated Enzo interactive 3D landing deployment.
 set -euo pipefail
-ROOT="\${1:-/var/www/setai/ksh/fliskonkurrenten}"
+ROOT="${1:-/var/www/setai/ksh/fliskonkurrenten}"
 RAW="https://raw.githubusercontent.com/XS227/SETai/main/deploy/ksh-enzo-3d"
 TARGET="$ROOT/produkt/sanipro-enzo"
 [[ -d "$ROOT" && -f "$ROOT/index.html" ]] || { echo "Fant ikke eksisterende Fliskonkurrenten KSH-rot $ROOT. Ingen endringer." >&2;exit 2; }
