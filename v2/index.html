@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+
+<html lang="no">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/>
+<meta content="#050812" name="theme-color"/>
+<meta content="SETAEI er et uavhengig digitalt studio for AI, nettsider, 3D-opplevelser, programvare og SEO. Vi bygger ideer som kan oppleves — og som virker." name="description"/>
+<title>SETAEI — Ideer skal oppleves · V2</title>
+<link href="https://setai.no/v2/" rel="canonical"/>
+<meta content="website" property="og:type"/>
+<meta content="SETAEI — Ideer skal oppleves" property="og:title"/>
+<meta content="Design, kode og intelligens — samlet i ett digitalt studio." property="og:description"/>
+<meta content="https://setai.no/v2/" property="og:url"/>
+
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"SETAEI","url":"https://setai.no/","description":"Digitalt studio for AI, webdesign, SEO og programvareutvikling","areaServed":"Worldwide"}</script>
+<style>@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@1,500;1,600&display=swap');
+:root{color-scheme:dark;--ink:#090c16;--paper:#eeeae3;--blue:#7cb5ff;--purple:#b29dff;--hairline:rgba(255,255,255,.16)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#050812;color:#f5f4f2;font-family:'DM Sans','Helvetica Neue',sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}button,a{-webkit-tap-highlight-color:transparent}button{font:inherit}a{color:inherit;text-decoration:none}a:focus-visible,button:focus-visible{outline:3px solid #80baff;outline-offset:5px}.skip{position:fixed;z-index:100;left:12px;top:-100px;background:white;color:black;padding:12px}.skip:focus{top:10px}::selection{color:#070b14;background:#9bd0ff}.progress{position:fixed;z-index:99;top:0;left:0;right:0;height:2px;background:transparent;pointer-events:none}.progress span{display:block;height:100%;background:linear-gradient(90deg,#428bff,#d3acff);transform:scaleX(0);transform-origin:left center}
+.site-header{height:89px;position:absolute;z-index:60;top:0;width:100%;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(24px,4.5vw,84px);border-bottom:1px solid rgba(255,255,255,.12);transition:background .4s,color .4s}.site-header.is-scrolled{position:fixed;background:rgba(7,9,16,.88);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom-color:rgba(255,255,255,.12)}.logo{display:flex;align-items:center;gap:10px;font-family:Manrope,sans-serif;font-weight:800;font-size:21px;letter-spacing:.12em;white-space:nowrap}.logo-symbol{display:inline-grid;place-items:center;color:#9eafff;font-size:35px;line-height:.8;transform:rotate(-20deg)}.logo small{font:500 8px/1.3 'DM Sans',sans-serif;letter-spacing:.18em;color:#8390a7;margin-left:3px;padding-left:13px;border-left:1px solid #434757}.desktop-nav{display:flex;gap:clamp(20px,3.4vw,56px);align-items:center}.desktop-nav a,.back-link{font-size:12px;opacity:.73;transition:opacity .2s}.desktop-nav a:hover,.back-link:hover{opacity:1}.header-actions{display:flex;gap:26px;align-items:center}.contact-link{font-size:12px;border:1px solid rgba(255,255,255,.35);padding:14px 19px;border-radius:100px;transition:background .25s,color .25s}.contact-link:hover{background:#fff;color:#080b12}.contact-link span{margin-left:14px}.menu-toggle{display:none;position:relative;width:38px;height:38px;background:none;border:0;cursor:pointer}.menu-toggle span{position:absolute;height:1px;background:white;left:5px;right:5px;top:14px;transition:transform .2s}.menu-toggle span+span{top:23px}.mobile-menu{display:none}
+.cinema{height:315vh;position:relative;background:#050812}.cinema-sticky{height:100vh;height:100svh;position:sticky;top:0;overflow:hidden;isolation:isolate;background:radial-gradient(circle at 70% 49%,#0a285e 0,#0b1026 29%,#050812 70%)}#heroCanvas{position:absolute;inset:0;width:100%;height:100%;z-index:-2;display:block}.fallback-art{position:absolute;z-index:-3;left:45%;top:17%;height:68vh;aspect-ratio:1/1;filter:drop-shadow(0 0 90px #145bc9);transform:rotate(-23deg)}.fallback-art i{position:absolute;inset:12%;border-radius:50%;border:23px solid #386cd9;box-shadow:inset 7px 2px 30px #b7a1ff,15px 10px 70px #0a45a8;transform:rotateX(65deg) rotateY(36deg)}.fallback-art i:nth-child(2){transform:rotateX(12deg) rotateY(70deg)}.fallback-art i:nth-child(3){transform:rotateX(53deg) rotateY(-31deg)}.veil{pointer-events:none;position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(4,7,16,.83) 0%,rgba(5,8,19,.55) 30%,transparent 58%),linear-gradient(0deg,rgba(4,7,15,.5) 0%,transparent 25%,rgba(4,7,15,.23) 100%)}.coordinate{position:absolute;z-index:2;writing-mode:vertical-rl;top:38%;font-size:10px;letter-spacing:.18em;color:rgba(222,225,244,.56)}.coordinate-left{left:clamp(22px,3vw,56px);display:flex;gap:25px}.coordinate-right{right:clamp(18px,2.5vw,48px);transform:rotate(180deg)}
+.frame{position:absolute;inset:0;display:flex;align-items:center;z-index:3;padding:80px clamp(43px,11.2vw,220px) 50px;pointer-events:none;opacity:0;transform:translateY(34px);transition:opacity .3s linear,transform .3s linear}.frame-one{opacity:1;transform:translateY(0)}.frame.is-active{pointer-events:auto}.frame-inner{width:min(810px,73vw)}.eyebrow{display:flex;align-items:center;gap:15px;font:600 10px/1.4 'DM Sans',sans-serif;letter-spacing:.2em;color:#b6c7e9;margin:0 0 30px}.eyebrow-mark{width:17px;height:17px;display:inline-grid;place-items:center;border:1px solid #9fbcfc;border-radius:50%;flex:none}.eyebrow-mark:after{content:"";background:#b3ceff;width:4px;height:4px;border-radius:50%}.frame h1,.frame h2,.expertise h2,.final-cta h2{font-family:Manrope,Arial,sans-serif;letter-spacing:-.075em;line-height:1.06;font-weight:600;margin:0}.frame h1{font-size:clamp(47px,5.7vw,112px)}.frame h2{font-size:clamp(48px,6.3vw,119px)}.frame h1 span,.frame h2 span{color:#90baff}.frame em,.expertise em,.final-cta em,.method em{font-family:'Playfair Display',Georgia,serif;font-weight:500;letter-spacing:-.07em}.frame em{color:#d1b5ff}.hero-description{font-size:clamp(13px,1vw,17px);line-height:1.7;max-width:415px;color:#b7bfd0;margin:29px 0 23px}.hero-actions{margin-top:29px}.round-action{display:inline-flex;align-items:center;gap:16px;font-size:12px;font-weight:600;letter-spacing:.02em}.round-icon{border:1px solid rgba(255,255,255,.5);border-radius:50%;width:48px;height:48px;display:grid;place-items:center;font-size:20px;transition:transform .3s,background .3s,color .3s}.round-action:hover .round-icon{transform:rotate(-45deg);background:white;color:#070b14}.text-arrow{display:inline-block;padding:12px 0;border-bottom:1px solid #c6d1e7;font-size:13px}.text-arrow span{margin-left:35px}.scene-footer{position:absolute;z-index:5;bottom:37px;left:clamp(43px,11.2vw,220px);right:clamp(35px,8vw,155px);display:flex;align-items:end;gap:35px}.scene-index{font:600 22px Manrope,sans-serif;letter-spacing:-.03em}.scene-index-tail{font-size:11px;color:#6d819f}.scene-tabs{display:flex;gap:5px;align-items:center;margin-bottom:9px}.scene-tabs span{display:block;width:26px;height:2px;background:rgba(255,255,255,.24);transition:background .3s,width .3s}.scene-tabs span.active{width:50px;background:#a5c3fa}.scroll-prompt{margin-left:auto;display:flex;align-items:center;gap:15px;font-size:9px;letter-spacing:.2em;color:#a5acc1}.scroll-line{height:1px;width:55px;background:#8696b5}
+.intro-break{color:#11151c;background:var(--paper);padding:47px clamp(25px,6vw,100px) 110px}.section-top{display:flex;justify-content:space-between;gap:20px;border-top:1px solid rgba(18,22,31,.23);padding-top:21px}.mini-marker{font-size:10px;letter-spacing:.14em;font-weight:600}.intro-grid{display:grid;grid-template-columns:1.45fr .55fr;gap:60px;align-items:end;margin-top:92px}.intro-grid h2{font-family:Manrope,sans-serif;font-size:clamp(62px,8.2vw,149px);line-height:1.01;font-weight:600;letter-spacing:-.095em;margin:0}.intro-grid h2 span:not(.accent-stop){font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:500}.accent-stop{color:#4d61d9}.intro-aside{padding-bottom:12px}.intro-aside p{font-size:clamp(15px,1.2vw,18px);line-height:1.75;max-width:340px}.badge-orbit{height:92px;width:92px;border:1px solid #a8a9af;border-radius:50%;display:grid;place-items:center;margin-bottom:52px;transform:rotate(-25deg);box-shadow:14px -8px 0 -10px #4d61d9}.badge-orbit span{font-size:56px;color:#3f53c5}.underlined-link{display:inline-flex;gap:35px;border-bottom:1px solid #181b22;padding-bottom:11px;font-size:12px;font-weight:700;margin-top:20px}.underlined-link:hover{gap:48px;transition:gap .2s}
+.work{background:var(--paper);color:#161719;padding:0 clamp(25px,6vw,100px) 100px}.work-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}.project-card{min-height:605px;overflow:hidden;border-radius:5px;position:relative;transition:transform .6s cubic-bezier(.15,.75,.1,1),opacity .6s;will-change:transform}.project-card:hover{transform:translateY(-6px)}.card-click{display:flex;flex-direction:column;position:absolute;inset:0;isolation:isolate}.card-meta{height:70px;z-index:3;display:flex;align-items:center;justify-content:space-between;padding:0 31px;font-size:10px;letter-spacing:.18em;font-weight:700}.corner-arrow{font-size:19px;display:grid;place-items:center;border:1px solid currentColor;border-radius:50%;height:38px;width:38px;opacity:.8;transition:transform .3s}.project-card:hover .corner-arrow{transform:rotate(45deg)}.card-bottom{margin-top:auto;display:flex;align-items:end;justify-content:space-between;gap:14px;padding:22px 31px 34px;z-index:3}.card-category{letter-spacing:.15em;font-size:9px;font-weight:700;margin:0 0 8px;opacity:.68}.card-bottom h3{font:600 clamp(26px,3vw,48px)/1.13 Manrope,sans-serif;letter-spacing:-.06em;margin:0 0 9px}.card-bottom p:not(.card-category){font-size:12px;opacity:.72;margin:0}.card-visit{font-size:10px;font-weight:700;white-space:nowrap;letter-spacing:.06em;padding-bottom:4px}.project-realgram{background:radial-gradient(circle at 50% 41%,#333585 1%,#10112b 56%,#090816 90%);color:#fff}.realgram-visual{position:absolute;inset:0;overflow:hidden}.halo{position:absolute;border:1px solid #a882ff;border-radius:50%;width:390px;height:390px;left:50%;top:37%;transform:translate(-50%,-50%) rotate(45deg);filter:blur(.2px);box-shadow:0 0 45px #6c4ee34d,inset 0 0 37px #5c4ce83d}.halo-two{width:490px;height:490px;border-color:rgba(112,82,255,.25);transform:translate(-50%,-50%) rotate(65deg)}.phone{width:180px;height:353px;border:7px solid #161025;border-radius:33px;background:linear-gradient(155deg,#2b2359,#14132a 50%,#0c0c18);box-shadow:18px 22px 35px #05040bb0,0 0 0 1px #9475bc,inset 0 0 15px #443b65;position:absolute;top:34%;left:51%;transform:translate(-50%,-40%) rotate(-9deg);padding:17px 13px;color:#fff}.phone-notch{position:absolute;top:2px;left:55px;width:63px;height:14px;border-radius:0 0 12px 12px;background:#0a0711}.phone-top{font-size:12px;font-weight:700;letter-spacing:.04em;display:flex;justify-content:space-between;margin-top:4px}.phone-top span{color:#ffda80}.phone-identity{font-size:17px;line-height:1.18;margin-top:37px;color:#cbbce9}.phone-identity strong{color:white}.phone-pills{display:flex;gap:4px;margin-top:16px}.phone-pills b{font-size:7px;background:#362a62;border:1px solid #554489;border-radius:40px;padding:6px}.phone-chat{margin-top:30px;display:grid;gap:10px}.phone-chat span{height:12px;border-radius:10px;background:#5a479f;opacity:.8}.phone-chat span:nth-child(2){width:70%;margin-left:auto;background:#9076ca}.phone-chat span:nth-child(3){width:85%}.phone-dock{position:absolute;bottom:17px;width:100%;left:0;text-align:center;letter-spacing:.5em;color:#8c77c7;font-size:13px}.floating-word{position:absolute;top:43%;left:6%;font-size:11px;line-height:1.5;letter-spacing:.2em;color:#d9b9ff;transform:rotate(-90deg)}.floating-word strong{font-weight:400;font-size:8px;letter-spacing:.21em}.project-si{background:#091d24;color:#f0f4ea}.si-visual{position:absolute;inset:0;overflow:hidden;background:radial-gradient(circle at 52% 42%,#165b56 1%,#102b32 34%,#06151b 70%)}.si-grid{position:absolute;inset:0;background-image:linear-gradient(#74c9b111 1px,transparent 1px),linear-gradient(90deg,#74c9b111 1px,transparent 1px);background-size:36px 36px;transform:perspective(500px) rotateX(50deg) scale(1.6);mask-image:linear-gradient(to bottom,transparent 5%,black 80%)}.si-core{position:absolute;top:38%;left:51%;transform:translate(-50%,-50%) rotate(-22deg);width:220px;height:220px;border-radius:43%;background:radial-gradient(circle at 28% 27%,#cffff1,#78c7b5 20%,#1f665e 46%,#09262a 75%);border:1px solid #baffd1a8;box-shadow:0 0 55px #7ce1bb55,0 24px 75px #000a,inset -15px -15px 44px #06272d;display:grid;place-items:center}.si-core:after{content:"";position:absolute;inset:10px;border-radius:43%;border:1px solid #d5fff76e}.si-core span{font:800 81px Manrope,sans-serif;letter-spacing:-.14em;padding-right:15px;color:#e1fff5;text-shadow:0 1px 30px #02302d}.si-interface{position:absolute;bottom:190px;right:5%;width:195px;height:88px;background:#0e3232ba;border:1px solid #a1f6c777;backdrop-filter:blur(8px);border-radius:9px;padding:12px;box-shadow:0 12px 30px #0005}.si-interface small{font-size:6px;letter-spacing:.12em;color:#a3ffda}.si-interface p{font-size:11px;margin:14px 0 0;color:#e7f8ef}.si-typing{display:flex;gap:4px;margin-top:11px}.si-typing span{width:6px;height:6px;background:#8ad4b6;border-radius:50%}.project-kashi{background:#d6cbb8;color:#2d332d}.kashi-visual{position:absolute;inset:0;overflow:hidden;background:linear-gradient(135deg,#ccbea2,#e3d6c3 68%,#a59e86)}.tile-wall{position:absolute;inset:-40px;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);gap:6px;transform:perspective(600px) rotateX(28deg) rotateZ(-23deg) scale(1.3);opacity:.82}.tile-wall i{background:repeating-linear-gradient(24deg,transparent 0 13px,#ded4bf7a 14px 16px,transparent 18px 43px),radial-gradient(ellipse at 35% 20%,#eee3d1,#ac9f89);border:2px solid #d2c7b5;box-shadow:inset 0 0 26px #ffffff99,2px 4px 7px #57483833}.tile-wall i:nth-child(2n){background:radial-gradient(circle at 18% 17%,#efe8d8,#bba68a)}.kashi-cube{position:absolute;left:50%;top:41%;transform:translate(-50%,-50%) rotate(-11deg);width:184px;height:184px;border:1px solid #fff8e8b8;display:grid;place-items:center;background:#ded1baaa;box-shadow:20px 24px 0 -4px #94816b99,45px 48px 45px #52463366,0 0 0 12px #f3eee555;backdrop-filter:blur(5px)}.kashi-cube span{font:500 110px 'Playfair Display',serif;color:#535244}.kashi-stamp{position:absolute;right:7%;top:21%;font-size:9px;letter-spacing:.2em;line-height:2;color:#605747}.project-somi{background:#e8d4ca;color:#59433d}.somi-visual{position:absolute;inset:0;background:radial-gradient(circle at 49% 35%,#fff3e6,#e1bdb4 55%,#bd948d);overflow:hidden}.somi-ring{position:absolute;border-radius:50%;border:25px solid #f9e9db;box-shadow:inset 11px 15px 24px #b489825a,16px 19px 40px #aa7b8066}.ring-a{width:340px;height:340px;top:8%;left:20%;transform:rotateX(52deg) rotate(-28deg)}.ring-b{width:250px;height:250px;top:17%;left:31%;border-color:#e8afa7;transform:rotateY(60deg) rotate(-28deg)}.ring-c{width:170px;height:170px;top:23%;left:40%;border-color:#f6ddd1;transform:rotateX(54deg) rotate(25deg)}.somi-serif{position:absolute;top:30%;left:50%;transform:translate(-50%,-50%);font-family:'Playfair Display',serif;font-size:95px;letter-spacing:-.065em;color:#794e4c;text-shadow:0 10px 45px #fff6}.somi-serif span{font:12px 'DM Sans';vertical-align:top;letter-spacing:0}.somi-visual p{position:absolute;top:44%;left:50%;transform:translateX(-50%);font-family:'Playfair Display',serif;font-style:italic;font-size:16px;white-space:nowrap;color:#795e5a}.work-end{border-top:1px solid #b6b1a7;margin-top:65px;padding-top:25px;display:flex;justify-content:space-between;align-items:center;gap:20px}.work-end>span{font-size:11px;letter-spacing:.15em;font-weight:600}.pill-outline{display:flex;align-items:center;gap:40px;padding:16px 24px;border:1px solid #1b1f27;border-radius:100px;font-size:12px;font-weight:700;transition:background .2s,color .2s}.pill-outline:hover{background:#14191f;color:white}
+.expertise{background:#0a0b10;padding:48px clamp(25px,6vw,100px) 140px;position:relative;overflow:hidden}.expertise:before{content:"";position:absolute;pointer-events:none;top:10%;right:-13%;width:50vw;height:50vw;background:radial-gradient(circle,#20265d64,transparent 70%)}.section-top-dark{border-color:#ffffff40;color:#b6bac6}.expertise-heading{margin:115px 0 90px}.expertise h2{font-size:clamp(55px,7.25vw,115px);max-width:1200px}.expertise h2 span{color:#9ebdff}.expertise h2 em{color:#ccb9ec}.services{border-top:1px solid #ffffff34;position:relative}.service-row{display:grid;grid-template-columns:90px 1fr auto;align-items:center;gap:20px;border-bottom:1px solid #ffffff34;padding:37px 10px;transition:background .2s,padding .2s}.service-row:hover{background:#202334;padding-left:25px}.service-num{color:#9ea5b5;font-size:11px}.service-row h3{font:600 clamp(24px,3.2vw,51px)/1.2 Manrope,sans-serif;letter-spacing:-.06em;margin:0}.service-row p{font-size:12px;margin:10px 0 0;color:#9ca5b5}.service-arrow{display:grid;place-items:center;width:55px;height:55px;border:1px solid #6e7488;border-radius:50%;font-size:24px;transition:transform .2s}.service-row:hover .service-arrow{transform:rotate(45deg)}
+.method{background:#d9e4f6;color:#161c2c;padding:46px clamp(25px,6vw,100px) 140px;position:relative;overflow:hidden}.method:before{content:"";position:absolute;right:-20%;top:6%;width:70vw;height:70vw;border:1px solid #91a7cd;border-radius:50%;pointer-events:none;box-shadow:0 0 0 100px #d9e4f6,0 0 0 101px #91a7cd5c,0 0 0 200px #d9e4f6,0 0 0 201px #91a7cd44}.method-star{position:absolute;right:12%;top:140px;font-size:160px;line-height:1;color:#5272c5;transform:rotate(18deg)}.method-content{position:relative;margin-top:160px}.method-pre{font-size:12px;letter-spacing:.15em;text-transform:uppercase;font-weight:700;margin:0 0 36px}.method h2{font:600 clamp(57px,8.6vw,145px)/1.04 Manrope,sans-serif;letter-spacing:-.09em;margin:0}.method h2 em{color:#496ace}.method-bottom{display:flex;gap:70px;justify-content:space-between;align-items:end;margin-top:78px}.method-bottom p{font-size:clamp(17px,1.7vw,25px);line-height:1.6;max-width:600px;margin:0}.method-bottom a{white-space:nowrap}
+.final-cta{background:#080d21;min-height:910px;padding:108px clamp(25px,6vw,100px) 60px;display:flex;align-items:flex-start;flex-direction:column;position:relative;overflow:hidden;isolation:isolate}.cta-aura{z-index:-1;position:absolute;top:10%;right:8%;height:650px;width:650px;border-radius:50%;background:radial-gradient(circle at 45% 48%,#597cffbb 0,#2a3d9b99 13%,#26337b77 32%,#080d2122 66%);box-shadow:0 0 200px #5b70fd3b;filter:blur(5px)}.cta-aura:after{content:"";position:absolute;inset:21%;border:1px solid #c3c8ff75;border-radius:50%;box-shadow:0 0 120px #8d94ff55,inset 0 0 80px #828ae744;transform:rotateX(60deg) rotate(15deg)}.final-cta h2{font-size:clamp(61px,8.7vw,146px);margin-top:43px;max-width:1150px}.final-cta h2 em{color:#c5bcff}.contact-orb{position:absolute;right:16%;top:51%;border-radius:50%;background:#d5ddf7;color:#141c3f;width:172px;height:172px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:11px;font-size:12px;font-weight:700;transform:rotate(-12deg);transition:transform .4s,background .3s;box-shadow:0 20px 90px #8e95ff45}.contact-orb:hover{transform:rotate(0) scale(1.07);background:white}.contact-orb strong{font-size:40px;font-weight:400}.cta-bottom{margin-top:auto;width:100%;border-top:1px solid #ffffff55;padding-top:21px;display:flex;align-items:center;justify-content:space-between;gap:20px;font-size:12px;color:#bec6dc}.cta-bottom a{text-decoration:underline;text-underline-offset:6px}.footer{background:#080d21;padding:0 clamp(25px,6vw,100px) 35px}.footer-big{font:800 clamp(94px,20.7vw,400px)/.9 Manrope,sans-serif;letter-spacing:-.12em;white-space:nowrap;overflow:hidden;padding-right:3%;border-bottom:1px solid #ffffff42;color:#e6eaff}.footer-big span{font-size:.33em;vertical-align:top;letter-spacing:0;color:#b4b5ff;margin-left:.15em}.footer-bottom{display:flex;align-items:center;justify-content:space-between;gap:30px;padding-top:25px;font-size:10px;letter-spacing:.07em;color:#aeb4c8}.footer-bottom div{display:flex;gap:26px}.footer-bottom a:hover{color:white}.version-note{font-size:9px;letter-spacing:.1em;color:#7783a2;margin-top:42px}
+.reveal{opacity:0;transform:translateY(36px)}.reveal.visible{opacity:1;transform:translateY(0);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.75,.2,1)}
+@media (max-width:1100px){.desktop-nav{gap:18px}.header-actions{gap:14px}.back-link{display:none}.intro-grid{grid-template-columns:1.3fr .7fr}.project-card{min-height:550px}.footer-big{font-size:20.4vw}}
+@media (max-width:760px){.site-header{height:72px;padding:0 21px}.logo{font-size:17px}.logo small{font-size:7px;padding-left:9px;margin-left:0}.logo-symbol{font-size:29px}.desktop-nav{display:none}.back-link{display:none}.header-actions{gap:12px}.contact-link{padding:11px 12px;font-size:10px}.contact-link span{margin-left:4px}.menu-toggle{display:block}.menu-toggle.open span:first-child{transform:translateY(4.5px) rotate(45deg)}.menu-toggle.open span:last-child{transform:translateY(-4.5px) rotate(-45deg)}.mobile-menu{display:flex;flex-direction:column;gap:20px;position:absolute;top:72px;left:0;right:0;visibility:hidden;opacity:0;transform:translateY(-10px);pointer-events:none;background:#0b1020ef;backdrop-filter:blur(20px);padding:30px 25px 36px;transition:opacity .25s,transform .25s,visibility .25s}.mobile-menu.show{visibility:visible;opacity:1;transform:none;pointer-events:auto}.mobile-menu a{font:600 23px Manrope,sans-serif;letter-spacing:-.04em}.cinema{height:290vh}.cinema-sticky{height:100svh}.veil{background:linear-gradient(90deg,#050813ca 0,#070c1c70 65%,transparent),linear-gradient(0deg,#040713dd,transparent 27%)}.fallback-art{left:20%;top:23%;height:55vh;opacity:.75}.frame{padding:70px 34px 80px}.frame-inner{width:100%}.frame h1,.frame h2{font-size:clamp(45px,9.3vw,70px);letter-spacing:-.075em}.frame h1{max-width:600px}.frame h2{max-width:600px}.eyebrow{font-size:9px;letter-spacing:.15em;margin-bottom:25px}.hero-description{font-size:13px;max-width:340px;margin-top:25px}.coordinate{display:none}.scene-footer{left:34px;right:26px;bottom:28px}.scroll-prompt{font-size:8px}.scroll-line{width:22px}.intro-break{padding:30px 25px 75px}.mini-marker{font-size:8px}.intro-grid{grid-template-columns:1fr;gap:30px;margin-top:72px}.intro-grid h2{font-size:clamp(59px,11.5vw,110px)}.intro-aside{display:grid;grid-template-columns:80px 1fr;gap:0 25px}.badge-orbit{height:70px;width:70px;margin:0;grid-row:span 2}.badge-orbit span{font-size:42px}.intro-aside p{margin:0;font-size:15px}.intro-aside .underlined-link{justify-self:start}.work{padding:0 25px 70px}.work-grid{grid-template-columns:1fr;gap:16px}.project-card{min-height:590px}.work-end{margin-top:35px;flex-wrap:wrap}.expertise{padding:32px 25px 90px}.expertise-heading{margin:80px 0 65px}.expertise h2{font-size:clamp(47px,8.7vw,78px)}.service-row{grid-template-columns:40px 1fr auto;padding:28px 0;gap:8px}.service-row h3{font-size:clamp(21px,5.2vw,40px)}.service-row p{font-size:10px;line-height:1.5}.service-arrow{width:40px;height:40px;font-size:19px}.method{padding:31px 25px 95px}.method-content{margin-top:115px}.method h2{font-size:clamp(45px,9.1vw,78px)}.method-star{font-size:90px;top:90px}.method-bottom{flex-direction:column;align-items:flex-start;gap:22px;margin-top:60px}.method-bottom p{font-size:17px}.final-cta{min-height:740px;padding:90px 25px 45px}.final-cta h2{font-size:clamp(52px,9.7vw,80px)}.contact-orb{width:130px;height:130px;right:15%;top:53%}.cta-bottom{margin-top:auto}.footer{padding:0 25px 30px}.footer-big{font-size:20vw}.footer-bottom{flex-direction:column;align-items:flex-start;gap:19px}.footer-bottom div{flex-wrap:wrap}}
+@media(max-width:430px){.logo small{display:none}.contact-link{font-size:9px;padding:10px}.frame{padding:80px 24px 75px}.frame h1,.frame h2{font-size:clamp(40px,10.2vw,51px)}.hero-description{max-width:285px}.scene-footer{left:25px}.scene-index{font-size:18px}.scene-tabs span{width:15px}.scene-tabs span.active{width:29px}.scroll-prompt{letter-spacing:.04em}.intro-grid h2{font-size:clamp(49px,11.5vw,74px)}.intro-aside{grid-template-columns:60px 1fr;gap:0 15px}.badge-orbit{width:55px;height:55px}.badge-orbit span{font-size:36px}.project-card{min-height:525px}.phone{transform:translate(-50%,-42%) rotate(-9deg) scale(.88)}.card-meta{padding:0 22px}.card-bottom{padding:22px}.card-bottom h3{font-size:27px}.card-bottom p:not(.card-category){font-size:11px}.somi-serif{font-size:77px}.si-core{transform:translate(-50%,-50%) rotate(-22deg) scale(.83)}.si-interface{right:4%;bottom:158px;transform:scale(.78);transform-origin:bottom right}.service-row{grid-template-columns:25px 1fr auto;gap:7px}.service-arrow{width:34px;height:34px}.service-row h3{font-size:21px}.expertise h2{font-size:clamp(41px,9.2vw,53px)}.method h2{font-size:clamp(38px,9vw,50px)}.final-cta h2{font-size:clamp(43px,10.4vw,59px)}.contact-orb{top:55%;right:8%;width:114px;height:114px;font-size:11px}.contact-orb strong{font-size:30px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}.frame{transition:none}.cinema{height:100svh}.cinema .frame:not(.frame-one){display:none}.scroll-prompt{display:none}}
+
+/* V2.1 — Keep SETAEI's original name; never create a substitute star or brand symbol. */
+.logo{font:800 24px/1 Manrope,'DM Sans',Arial,sans-serif;letter-spacing:.11em;gap:0;flex-shrink:0}
+.logo-wordmark{color:#f7f9ff;display:block}
+.site-header{gap:28px}
+.header-actions{gap:15px;flex-shrink:0}
+.lang-switch{display:inline-flex;align-items:center;gap:2px;padding:4px;border:1px solid rgba(255,255,255,.24);border-radius:30px;background:rgba(255,255,255,.055);direction:ltr}
+.lang-switch button{border:0;background:none;color:#bec8e4;font-size:11px;font-weight:800;min-width:34px;min-height:32px;border-radius:25px;cursor:pointer;padding:2px 6px;transition:background .2s,color .2s}
+.lang-switch button[aria-pressed="true"]{color:#131824;background:#e2eaff}
+.lang-switch button:hover:not([aria-pressed="true"]){color:white;background:rgba(255,255,255,.1)}
+.menu-toggle{display:flex!important;align-items:center;justify-content:center;position:relative;width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.4);background:rgba(255,255,255,.045);flex-shrink:0;z-index:2}
+.menu-toggle span{position:absolute;display:block;height:2px;left:12px;right:12px;top:17px;background:#e8edff;border-radius:10px;transition:transform .2s,opacity .2s,top .2s}
+.menu-toggle span:nth-child(2){top:23px}
+.menu-toggle span:nth-child(3){top:29px}
+.menu-toggle.open span:first-child{top:23px;transform:rotate(45deg)}
+.menu-toggle.open span:nth-child(2){opacity:0}
+.menu-toggle.open span:nth-child(3){top:23px;transform:rotate(-45deg)}
+/* Full-screen accessible drawer on any viewport: menu is always available */
+.mobile-menu{display:flex!important;flex-direction:column;gap:0;position:fixed;z-index:1;top:89px;left:0;right:0;max-height:calc(100svh - 89px);overflow:auto;visibility:hidden;opacity:0;transform:translateY(-12px);pointer-events:none;background:rgba(9,14,30,.985);backdrop-filter:blur(28px);padding:26px clamp(25px,6vw,95px) 30px;border-bottom:1px solid #344260;transition:opacity .2s,transform .2s,visibility .2s;box-shadow:0 20px 60px #03071388}
+.mobile-menu.show{visibility:visible;opacity:1;transform:none;pointer-events:auto}
+.mobile-menu .drawer-heading,.mobile-menu .drawer-bottom{display:flex;justify-content:space-between;gap:20px;color:#8995b8;letter-spacing:.15em;font-size:10px;align-items:center}
+.mobile-menu .drawer-heading{padding-bottom:20px;border-bottom:1px solid #2b3554}
+.mobile-menu .drawer-bottom{border-top:1px solid #2b3554;margin-top:16px;padding-top:20px}
+.mobile-menu>a{display:block;font:600 clamp(17px,2.9vw,29px)/1.2 Manrope,Arial,sans-serif;letter-spacing:-.045em;padding:10px 0;border-bottom:1px solid #ffffff14;transition:padding .2s,color .2s}
+.mobile-menu>a:hover{padding-left:10px;color:#93bfff}
+@media(max-width:1050px){.desktop-nav{display:none}.site-header{gap:12px}}
+@media(max-width:760px){.site-header{height:72px;gap:10px}.logo{font-size:19px;letter-spacing:.08em}.header-actions{gap:7px}.lang-switch{gap:0;padding:2px}.lang-switch button{min-width:28px;min-height:28px;font-size:10px;padding:2px 3px}.menu-toggle{width:39px;height:39px}.menu-toggle span{left:10px;right:10px;top:13px}.menu-toggle span:nth-child(2){top:19px}.menu-toggle span:nth-child(3){top:25px}.menu-toggle.open span:first-child,.menu-toggle.open span:nth-child(3){top:19px}.contact-link{display:none}.mobile-menu{top:72px;max-height:calc(100svh - 72px);padding:18px 25px}.mobile-menu>a{font-size:20px;padding:11px 0}}
+@media(max-width:350px){.logo{font-size:17px}.lang-switch button{min-width:25px;font-size:9px}.site-header{padding:0 15px}}
+/* Genuine technology/certification logo assets already used on setai.no */
+.certifications{background:#111a2c;color:#f3f4fb;padding:40px clamp(25px,6vw,100px) 130px;position:relative;overflow:hidden}
+.certifications:before{content:"";width:550px;height:550px;position:absolute;right:-170px;top:-200px;background:radial-gradient(circle,#3759a84d,transparent 69%);pointer-events:none}
+.cert-heading{position:relative;max-width:850px;margin:80px 0 55px}
+.cert-heading h2{font:600 clamp(44px,6.8vw,95px)/1.09 Manrope,sans-serif;letter-spacing:-.075em;margin:0 0 20px}
+.cert-heading h2 em{font-family:'Playfair Display',Georgia,serif;color:#aebcfb}
+.cert-heading>p:last-child{color:#bac5d7;font-size:clamp(14px,1.4vw,18px);line-height:1.7;max-width:560px}
+.cert-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;position:relative}
+.cert-tile{border:1px solid #8490b52f;background:rgba(255,255,255,.045);border-radius:12px;min-height:170px;display:flex;align-items:center;justify-content:center;flex-direction:column;padding:28px;gap:25px;transition:border-color .25s,transform .25s}
+.cert-tile:hover{transform:translateY(-3px);border-color:#93adf080}
+.cert-tile img{display:block;max-width:72%;width:auto;height:52px;object-fit:contain;filter:drop-shadow(0 3px 12px #050b1863)}
+.cert-tile span{font-size:9px;letter-spacing:.16em;color:#a6b5d4;text-align:center}
+.cert-disclaimer{max-width:750px;font-size:11px;line-height:1.7;color:#9aaac9;margin:22px 0 0}
+/* Footer with genuine existing site links and exact SETAEI copyright year */
+.footer{background:#070b15;padding:80px clamp(25px,6vw,100px) 34px}
+.footer-top{display:grid;grid-template-columns:2fr repeat(3,minmax(0,1fr));gap:38px;padding-bottom:95px;border-bottom:1px solid #ffffff38}
+.footer-wordmark{font:800 clamp(42px,5.5vw,86px)/1 Manrope,sans-serif;letter-spacing:.075em;display:inline-block}
+.footer-identity p{max-width:310px;color:#adbbd7;font-size:14px;line-height:1.7;margin:22px 0}
+.footer-email{font-size:13px;text-decoration:underline;text-underline-offset:6px}
+.footer-links{display:flex;flex-direction:column;gap:15px}
+.footer-links h3{font:700 11px/1.5 'DM Sans',sans-serif;color:#eef2ff;letter-spacing:.11em;margin:7px 0 18px;text-transform:uppercase}
+.footer-links a{font-size:13px;color:#a8b4ce;line-height:1.4;transition:color .2s}
+.footer-links a:hover{color:#fff}
+.footer-bottom{padding-top:27px;display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;font-size:11px;letter-spacing:.02em;color:#b9c3d7}
+.footer-rights{color:#9da8bf}
+.version-note{margin-top:32px;font-size:10px;letter-spacing:.035em;color:#7d8ca9}
+@media(max-width:950px){.footer-top{grid-template-columns:repeat(3,minmax(0,1fr))}.footer-identity{grid-column:span 3}.footer-top{padding-bottom:55px}}
+@media(max-width:650px){.certifications{padding:30px 25px 85px}.cert-heading{margin:60px 0 38px}.cert-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.cert-tile{min-height:135px;padding:18px 10px;gap:18px}.cert-tile img{max-width:82%;height:40px}.cert-tile span{font-size:8px;letter-spacing:.07em}.footer{padding:66px 25px 28px}.footer-top{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:26px;row-gap:35px}.footer-identity{grid-column:span 2}.footer-links h3{margin-bottom:10px}.footer-bottom{gap:15px}}
+.lang-fa [data-t],.lang-fa [data-t-html]{direction:rtl;unicode-bidi:plaintext}
+.lang-fa .frame-inner,.lang-fa .intro-grid,.lang-fa .cert-heading,.lang-fa .expertise-heading,.lang-fa .method-content,.lang-fa .final-cta h2{text-align:right;direction:rtl}
+.lang-fa .hero-description,.lang-fa .intro-aside p,.lang-fa .cert-heading p{margin-left:auto;margin-right:0}
+.lang-fa .frame-inner .eyebrow,.lang-fa .cert-heading .eyebrow,.lang-fa .expertise-heading .eyebrow,.lang-fa .final-cta .eyebrow{justify-content:flex-start;flex-direction:row-reverse}
+.lang-fa .method-bottom{direction:rtl}
+.lang-fa .footer-identity,.lang-fa .footer-links{text-align:right}
+@media(prefers-reduced-motion:reduce){.cert-tile,.mobile-menu{transition:none}}
+.logo .setaei-logo{display:block;width:clamp(116px,11vw,156px);height:auto;overflow:visible;flex-shrink:0}.footer-wordmark .setaei-logo{display:block;width:clamp(185px,28vw,310px);height:auto;overflow:visible}.setaei-logo{color:#eef3ff}@media(max-width:760px){.logo .setaei-logo{width:118px}}
+</style></head>
+<body>
+<a class="skip" data-t="skip" href="#prosjekter">Hopp til innhold</a>
+<div aria-hidden="true" class="progress"><span id="progressLine"></span></div>
+<header class="site-header" id="header">
+<a aria-label="SETAEI – hjem" class="logo" href="/"><svg class="setaei-logo" viewBox="15 15 545 105" role="img" aria-label="SETAEI"><g fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="butt" stroke-linejoin="round"><path d="M78 29H49C31 29 27 50 43 58L68 70C83 77 79 105 58 105H27"/><path d="M118 31h58M118 68h48M118 105h58"/><path d="M215 31h70M250 31v74"/><path d="M321 105l34-74 34 74"/><path d="M429 31h58M429 68h48M429 105h58"/><path d="M539 31v74"/></g><path fill="#F47A2A" d="M355 58l5 11 12 1-9 8 3 12-11-6-11 6 3-12-9-8 12-1z"/></svg></a>
+<nav aria-label="Hovedmeny" class="desktop-nav">
+<a data-t="navProjects" href="#prosjekter">Prosjekter</a>
+<a data-t="navServices" href="#tjenester">Tjenester</a>
+<a data-t="navMethod" href="#metode">Metode</a>
+</nav>
+<div class="header-actions">
+<div aria-label="Velg språk / Choose language / انتخاب زبان" class="lang-switch" role="group">
+<button aria-pressed="true" data-lang="no" lang="no" type="button">NO</button>
+<button aria-pressed="false" data-lang="en" lang="en" type="button">EN</button>
+<button aria-pressed="false" data-lang="fa" lang="fa" type="button">فا</button>
+</div>
+<a class="contact-link" data-t="navContact" href="/contact/">Kontakt ↗</a>
+<button aria-controls="mobileMenu" aria-expanded="false" aria-label="Åpne meny" class="menu-toggle" id="menuToggle" type="button"><span></span><span></span><span></span></button>
+</div>
+<nav aria-label="Utvidet meny" class="mobile-menu" id="mobileMenu" inert="">
+<div class="drawer-heading"><span>SETAEI</span><span data-t="menuLabel">MENY / NAVIGASJON</span></div>
+<a data-t="navHome" href="#cinema">Hjem</a>
+<a data-t="navProjects" href="#prosjekter">Prosjekter</a>
+<a data-t="navServices" href="#tjenester">Tjenester</a>
+<a data-t="navCerts" href="#sertifiseringer">Sertifiseringer &amp; teknologi</a>
+<a data-t="navMethod" href="#metode">Metode</a>
+<a data-t="navBlog" href="/blog/">Blogg</a>
+<a data-t="navBook" href="/black-white-universe/">Bok</a>
+<a data-t="navAbout" href="/about/">Om oss</a>
+<a data-t="navPartner" href="/salgspartner/">Bli salgspartner</a>
+<a data-t="navContact" href="/contact/">Kontakt ↗</a>
+<div class="drawer-bottom"><span>SETAEI / V2</span><span data-t="drawerText">Bygget i Norge · arbeider globalt</span></div>
+</nav>
+</header>
+<main>
+<section aria-label="SETAEI – filmatisk introduksjon" class="cinema" id="cinema">
+<div class="cinema-sticky">
+<div aria-hidden="true" class="fallback-art"><i></i><i></i><i></i></div>
+<canvas aria-label="En animert, tredimensjonal SETAEI-skulptur som reagerer på scrolling" id="heroCanvas" role="img"></canvas>
+<div aria-hidden="true" class="veil"></div>
+<div aria-hidden="true" class="coordinate coordinate-left"><span>SETAEI / 2026</span><span>OSLO · GLOBALT</span></div>
+<div aria-hidden="true" class="coordinate coordinate-right">MOVE YOUR WORLD / 01—03</div>
+<div class="frame frame-one" data-frame="0">
+<div class="frame-inner">
+<p class="eyebrow" data-t-html="heroEyebrow"><span class="eyebrow-mark"></span> ET UAVHENGIG DIGITALT STUDIO</p>
+<h1 data-t-html="heroTitle">Ideer skal<br/>ikke bare <em>vises.</em><br/><span>De skal oppleves.</span></h1>
+<p class="hero-description" data-t="heroDesc">Vi forener design, teknologi og kunstig intelligens for å bygge digitale opplevelser som får mennesker til å stoppe opp.</p>
+<div class="hero-actions"><a class="round-action" href="#prosjekter"><span class="round-icon">↘</span><span data-t="heroAction">Opplev arbeidet vårt</span></a></div>
+</div>
+</div>
+<div aria-hidden="true" class="frame frame-two" data-frame="1">
+<div class="frame-inner"><p class="eyebrow" data-t-html="scene2Eyebrow"><span class="eyebrow-mark"></span> KAPITTEL 02 / BYGGET FOR Å MERKES</p><h2 data-t-html="scene2Title">Fra <em>en idé</em><br/>til en helt<br/><span>ny virkelighet.</span></h2><p class="hero-description" data-t="scene2Desc">Ikke bare en pen fasade. Ekte systemer, levende 3D, apper og opplevelser med en hensikt.</p><a class="text-arrow" data-t-html="scene2Action" href="#tjenester">Utforsk hva vi bygger <span aria-hidden="true">↗</span></a></div>
+</div>
+<div aria-hidden="true" class="frame frame-three" data-frame="2">
+<div class="frame-inner"><p class="eyebrow" data-t-html="scene3Eyebrow"><span class="eyebrow-mark"></span> KAPITTEL 03 / FRA IDÉ TIL IMPACT</p><h2 data-t-html="scene3Title">Skapt for<br/><em>å bevege.</em><br/><span>Bygget for vekst.</span></h2><p class="hero-description" data-t="scene3Desc">Fra første konsept til lansering, søkesynlighet, integrasjoner og videre utvikling.</p><a class="round-action" href="/contact/"><span class="round-icon">↗</span><span data-t="scene3Action">La oss bygge noe nytt</span></a></div>
+</div>
+<div aria-hidden="true" class="scene-footer"><div class="scene-index"><span id="sceneNumber">01</span><span class="scene-index-tail"> / 03</span></div><div class="scene-tabs"><span class="active"></span><span></span><span></span></div><div class="scroll-prompt"><span class="scroll-line"></span><span data-t="scrollText">SCROLL FOR Å UTFORSKE</span></div></div>
+</div>
+</section>
+<section class="intro-break" id="prosjekter">
+<div class="section-top"><span class="mini-marker" data-t="workKicker">01 / UTVALGTE ARBEIDER</span><span class="mini-marker" data-t="workKickerRight">STRATEGI — DESIGN — TEKNOLOGI</span></div>
+<div class="intro-grid"><h2 data-t-html="introTitle">Én kreativ<br/><span>hjerne.</span><br/>Mange verdener<span class="accent-stop">.</span></h2><div class="intro-aside"><div aria-hidden="true" class="badge-orbit"><span>3D</span></div><p data-t="introDesc">Vi utvikler ikke prosjekter for å fylle en portefølje. Vi bygger produkter, merkevarer og digitale systemer som har en jobb å gjøre.</p><a class="underlined-link" data-t-html="allProjects" href="/projects/">Alle prosjekter <span aria-hidden="true">↗</span></a></div></div>
+</section>
+<section aria-label="Utvalgte prosjekter" class="work">
+<div class="work-grid">
+<article class="project-card project-realgram reveal"><a aria-label="Utforsk REALGRAM-prosjektet" class="card-click" href="/projects/"><div class="card-meta"><span>01 / APP &amp; PRODUKT</span><span class="corner-arrow">↗</span></div><div aria-hidden="true" class="realgram-visual"><div class="halo halo-one"></div><div class="halo halo-two"></div><div class="phone"><div class="phone-notch"></div><div class="phone-top">realgram <span>✧</span></div><div class="phone-identity">Stay connected.<br/><strong>Stay free.</strong></div><div class="phone-pills"><b>● Secured</b><b>✦ AI</b></div><div class="phone-chat"><span></span><span></span><span></span></div><div class="phone-dock">◉   ◌   ✧   ◎</div></div><span class="floating-word">CONNECTED<br/><strong>WITHOUT LIMITS</strong></span></div><div class="card-bottom"><div><p class="card-category" data-t="catRealgram">DIGITAL PRODUCT / AI</p><h3>REALGRAM</h3><p data-t="cardRealgram">Kommunikasjon, frihet og intelligens i én plattform.</p></div><span class="card-visit" data-t="cardVisit">SE CASE ↗</span></div></a></article>
+<article class="project-card project-si reveal"><a aria-label="Utforsk SI – Super Intelligence" class="card-click" href="https://si.setai.no/"><div class="card-meta"><span>02 / LOKAL AI</span><span class="corner-arrow">↗</span></div><div aria-hidden="true" class="si-visual"><div class="si-grid"></div><div class="si-core"><span>SI</span></div><div class="si-interface"><small>● ON-DEVICE INTELLIGENCE</small><div class="si-typing"><span></span><span></span><span></span></div><p>Private by design.</p></div></div><div class="card-bottom"><div><p class="card-category" data-t="catSi">AI / PRIVACY / ANDROID</p><h3>SUPER INTELLIGENCE</h3><p data-t="cardSi">Personlig intelligens. Direkte på din enhet.</p></div><span class="card-visit" data-t="cardVisit">UTFORSK ↗</span></div></a></article>
+<article class="project-card project-kashi reveal"><a aria-label="Utforsk KASHI – digitalt showroom" class="card-click" href="/kashi/"><div class="card-meta"><span>03 / 3D &amp; HANDEL</span><span class="corner-arrow">↗</span></div><div aria-hidden="true" class="kashi-visual"><div class="tile-wall"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="kashi-cube"><span>K</span></div><div class="kashi-stamp">MATERIAL / SPACE<br/>EXPERIENCE</div></div><div class="card-bottom"><div><p class="card-category" data-t="catKashi">3D SHOWROOM / COMMERCE</p><h3>KASHI</h3><p data-t="cardKashi">Se materialer på en helt ny måte.</p></div><span class="card-visit" data-t="cardVisit">UTFORSK ↗</span></div></a></article>
+<article class="project-card project-somi reveal"><a aria-label="Besøk SOMI Klinikken" class="card-click" href="https://somiklinikken.no/"><div class="card-meta"><span>04 / DIGITAL IDENTITET</span><span class="corner-arrow">↗</span></div><div aria-hidden="true" class="somi-visual"><div class="somi-ring ring-a"></div><div class="somi-ring ring-b"></div><div class="somi-ring ring-c"></div><span class="somi-serif">somi<span>®</span></span><p>care in every detail.</p></div><div class="card-bottom"><div><p class="card-category" data-t="catSomi">WEB / DESIGN / SEO</p><h3>SOMI KLINIKKEN</h3><p data-t="cardSomi">Et rolig digitalt møte med merkevaren.</p></div><span class="card-visit" data-t="cardVisit">BESØK ↗</span></div></a></article>
+</div>
+<div class="work-end"><span data-t="workEnding">OG DETTE ER BARE BEGYNNELSEN.</span><a class="pill-outline" data-t-html="workAll" href="/projects/">Se hele laboratoriet <span>↗</span></a></div>
+</section>
+<section class="expertise" id="tjenester"><div class="section-top section-top-dark"><span class="mini-marker" data-t="servicesKicker">02 / HVA VI GJØR</span><span class="mini-marker" data-t="servicesKickerRight">ÉN PARTNER. FLERE DISIPLINER.</span></div><div class="expertise-heading"><p class="eyebrow" data-t-html="servicesEyebrow"><span class="eyebrow-mark"></span> FRA SKISSE TIL VIRKELIGHET</p><h2 data-t-html="servicesTitle">Design som <em>føles.</em><br/>Teknologi som <span>virker.</span></h2></div><div class="services"><a class="service-row reveal" href="/services/"><span class="service-num">01</span><div><h3 data-t="service1Title">Digitale opplevelser</h3><p data-t="service1Desc">Webdesign, 3D, animasjon, nettsider og netthandel</p></div><span class="service-arrow">↗</span></a><a class="service-row reveal" href="/services/"><span class="service-num">02</span><div><h3 data-t="service2Title">AI &amp; programvare</h3><p data-t="service2Desc">AI-agenter, apper, SaaS, automatisering og integrasjoner</p></div><span class="service-arrow">↗</span></a><a class="service-row reveal" href="/services/ai-drevet-seo/"><span class="service-num">03</span><div><h3 data-t="service3Title">Synlighet &amp; vekst</h3><p data-t="service3Desc">Teknisk SEO, AI-søk, strategi og målbare kundereiser</p></div><span class="service-arrow">↗</span></a><a class="service-row reveal" href="/services/"><span class="service-num">04</span><div><h3 data-t="service4Title">Strategi &amp; teknisk ledelse</h3><p data-t="service4Desc">Produktstrategi, CTO-kompetanse, sikkerhet og drift</p></div><span class="service-arrow">↗</span></a></div></section>
+<section class="method" id="metode"><div aria-hidden="true" class="method-star">✧</div><div class="section-top"><span class="mini-marker" data-t="methodKicker">03 / VÅR FILOSOFI</span><span class="mini-marker" data-t="methodKickerRight">BYGGET MED INTENSJON</span></div><div class="method-content"><p class="method-pre" data-t="methodPre">Vi tror på helheten.</p><h2 data-t-html="methodTitle">Det er ikke<br/>magi. Det er<br/><em>menneske × maskin.</em></h2><div class="method-bottom"><p data-t="methodDesc">God teknologi betyr lite uten en god idé. God design betyr lite uten funksjon. Hos SETAEI jobber alt sammen — fra første strek til produktet er ute i verden.</p><a class="underlined-link" data-t-html="methodLink" href="/about/">Bli kjent med SETAEI <span aria-hidden="true">↗</span></a></div></div></section>
+<section aria-labelledby="certTitle" class="certifications" id="sertifiseringer">
+<div class="section-top section-top-dark"><span class="mini-marker" data-t="certKicker">04 / KOMPETANSE &amp; TEKNOLOGI</span><span class="mini-marker">SETAEI / VERIFIED SKILLS &amp; TOOLS</span></div>
+<div class="cert-heading"><p class="eyebrow"><span class="eyebrow-mark"></span><span data-t="certEyebrow">FAGLIG GRUNNLAG / PRAKTISK BRUK</span></p><h2 data-t-html="certTitle" id="certTitle">Sertifiseringer <em>&amp; teknologi.</em></h2><p data-t="certIntro">Kompetanse fra anerkjente læringsmiljøer, kombinert med teknologi vi utvikler og arbeider med.</p></div>
+<div aria-label="Sertifikatutstedere og teknologiplattformer" class="cert-grid">
+<div class="cert-tile"><img alt="IBM" loading="lazy" src="https://setai.no/assets/brand/certs/ibm-light.svg"/><span>AI DEVELOPER</span></div>
+<div class="cert-tile"><img alt="Google" loading="lazy" src="https://setai.no/assets/brand/certs/premium/google.svg"/><span>AI PROFESSIONAL</span></div>
+<div class="cert-tile"><img alt="Apple" loading="lazy" src="https://setai.no/assets/brand/certs/apple-light.svg"/><span>PLATFORM EXPERIENCE</span></div>
+<div class="cert-tile"><img alt="Anthropic" loading="lazy" src="https://setai.no/assets/brand/certs/anthropic-light.svg"/><span>AI TECHNOLOGY</span></div>
+<div class="cert-tile"><img alt="OpenAI" loading="lazy" src="https://setai.no/assets/brand/certs/openai-light.svg"/><span>AI TECHNOLOGY</span></div>
+<div class="cert-tile"><img alt="Duke University" loading="lazy" src="https://setai.no/assets/brand/certs/duke-light.svg"/><span>DEFI SPECIALIZATION</span></div>
+</div>
+<p class="cert-disclaimer" data-t="certNote">Logoene representerer dokumentert opplæring, erfaring eller teknologi som brukes – ikke at alle virksomhetene formelt sertifiserer SETAEI.</p>
+</section>
+<section class="final-cta" id="kontakt"><div aria-hidden="true" class="cta-aura"></div><p class="eyebrow" data-t-html="ctaEyebrow"><span class="eyebrow-mark"></span> NESTE KAPITTEL STARTER HER</p><h2 data-t-html="ctaTitle">Har du en idé<br/>som <em>fortjener</em><br/>å eksistere?</h2><a aria-label="Start et prosjekt med SETAEI" class="contact-orb" href="/contact/"><span data-t="ctaOrb">La oss skape</span><strong>↗</strong></a><div class="cta-bottom"><p data-t="ctaDesc">Fortell oss hva du vil bygge. Vi finner den riktige veien dit.</p><a data-t-html="ctaLink" href="/contact/">Gå til kontaktskjema ↗</a></div></section>
+</main>
+<footer class="footer" id="footer">
+<div class="footer-top">
+<div class="footer-identity">
+<a aria-label="SETAEI – hjem" class="footer-wordmark" href="/"><svg class="setaei-logo" viewBox="15 15 545 105" role="img" aria-label="SETAEI"><g fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="butt" stroke-linejoin="round"><path d="M78 29H49C31 29 27 50 43 58L68 70C83 77 79 105 58 105H27"/><path d="M118 31h58M118 68h48M118 105h58"/><path d="M215 31h70M250 31v74"/><path d="M321 105l34-74 34 74"/><path d="M429 31h58M429 68h48M429 105h58"/><path d="M539 31v74"/></g><path fill="#F47A2A" d="M355 58l5 11 12 1-9 8 3 12-11-6-11 6 3-12-9-8 12-1z"/></svg></a>
+<p data-t="footerPitch">Design, kunstig intelligens og teknologi. Bygget i Norge, for ideer uten grenser.</p>
+<a class="footer-email" href="mailto:khabat@setai.no">khabat@setai.no ↗</a>
+</div>
+<div class="footer-links"><h3 data-t="footerExplore">Utforsk</h3>
+<a data-t="navServices" href="/services/">Tjenester</a>
+<a data-t="navProjects" href="/projects/">Prosjekter</a>
+<a data-t="navBlog" href="/blog/">Blogg</a>
+<a data-t="navBook" href="/black-white-universe/">Bok</a>
+</div>
+<div class="footer-links"><h3 data-t="footerCompany">SETAEI</h3>
+<a data-t="navAbout" href="/about/">Om oss</a>
+<a data-t="navPartner" href="/salgspartner/">Bli salgspartner</a>
+<a href="/services/ai-drevet-seo/">AI-drevet SEO</a>
+<a data-t="navContact" href="/contact/">Kontakt ↗</a>
+</div>
+<div class="footer-links"><h3 data-t="footerSelected">Utvalgte prosjekter</h3>
+<a href="/projects/">RealGram</a>
+<a href="/si/">Super Intelligence</a>
+<a href="/projects/shahnameh/">Shahnameh</a>
+<a href="https://namnum.no/">NAMNum</a>
+</div>
+</div>
+<div class="footer-bottom"><span>© 2026 SETAEI <span class="footer-rights" data-t="rights">· Alle rettigheter reservert.</span></span><span data-t="builtIn">Bygget i Norge · arbeider globalt</span><a data-t="backTop" href="#cinema">Til toppen ↑</a></div>
+<p class="version-note" data-t="versionNote">V2 / CINEMATIC WEBGL · Designutkast. Den ordinære forsiden er bevart.</p>
+</footer>
+<script>/* SETAEI V2 multilingual interface. The existing Norwegian copy is the source of truth. */
+(() => {
+  'use strict';
+  const translations = {
+    en: {
+      skip:'Skip to content', navProjects:'Projects', navServices:'Services', navMethod:'Approach', navContact:'Contact ↗', navHome:'Home', navCerts:'Certifications & technology', navBlog:'Journal', navBook:'Book', navAbout:'About', navPartner:'Become a sales partner', menuLabel:'MENU / NAVIGATION', drawerText:'Built in Norway · working globally',
+      heroEyebrow:'AN INDEPENDENT DIGITAL STUDIO',heroTitle:'Ideas should<br>not just <em>be seen.</em><br><span>They should be felt.</span>', heroDesc:'We bring together design, technology and artificial intelligence to create digital experiences that make people stop and pay attention.',heroAction:'Explore our work',
+      scene2Eyebrow:'CHAPTER 02 / MADE TO BE FELT',scene2Title:'From <em>an idea</em><br>to an entirely<br><span>new reality.</span>',scene2Desc:'More than a polished facade. Real systems, living 3D, apps and meaningful experiences.',scene2Action:'Discover what we build <span aria-hidden="true">↗</span>',
+      scene3Eyebrow:'CHAPTER 03 / FROM IDEA TO IMPACT',scene3Title:'Designed<br><em>to move.</em><br><span>Built for growth.</span>',scene3Desc:'From the first concept to launch, search visibility, integrations and continuous improvement.',scene3Action:'Let us build something new',scrollText:'SCROLL TO EXPLORE',
+      workKicker:'01 / SELECTED WORK',workKickerRight:'STRATEGY — DESIGN — TECHNOLOGY',introTitle:'One creative<br><span>mind.</span><br>Many worlds<span class="accent-stop">.</span>',introDesc:'We don’t create projects to fill a portfolio. We build products, brands and digital systems with a real purpose.',allProjects:'All projects <span aria-hidden="true">↗</span>', workEnding:'AND THIS IS JUST THE BEGINNING.',workAll:'Explore all projects <span>↗</span>',
+      cardRealgram:'Communication, freedom and intelligence in one platform.',cardSi:'Personal intelligence. On your device.',cardKashi:'Experience materials in a completely new way.',cardSomi:'A calm digital introduction to the brand.',catRealgram:'DIGITAL PRODUCT / AI',catSi:'AI / PRIVACY / ANDROID',catKashi:'3D SHOWROOM / COMMERCE',catSomi:'WEB / DESIGN / SEO',cardVisit:'EXPLORE ↗',
+      servicesKicker:'02 / WHAT WE DO',servicesKickerRight:'ONE PARTNER. MULTIPLE DISCIPLINES.',servicesEyebrow:'FROM SKETCH TO REALITY',servicesTitle:'Design you can <em>feel.</em><br>Technology that <span>works.</span>',
+      service1Title:'Digital experiences',service1Desc:'Web design, 3D, animation, websites and e-commerce',service2Title:'AI & software',service2Desc:'AI agents, apps, SaaS, automation and integrations',service3Title:'Visibility & growth',service3Desc:'Technical SEO, AI search, strategy and measurable customer journeys',service4Title:'Strategy & technical leadership',service4Desc:'Product strategy, CTO expertise, security and operations',
+      methodKicker:'03 / OUR PHILOSOPHY',methodKickerRight:'BUILT WITH PURPOSE',methodPre:'We believe in the whole picture.',methodTitle:'It isn’t<br>magic. It’s<br><em>human × machine.</em>',methodDesc:'Great technology means little without a great idea. Great design means little without function. At SETAEI everything works together — from the first sketch to the final product.',methodLink:'Meet SETAEI <span aria-hidden="true">↗</span>',
+      certKicker:'04 / EXPERTISE & TECHNOLOGY',certEyebrow:'PROVEN LEARNING / PRACTICAL WORK',certTitle:'Certifications <em>& technology.</em>',certIntro:'Knowledge gained through recognized learning programs, paired with the technology we build and work with.',certNote:'These logos represent documented training, experience or technology used. They do not imply that all listed organizations formally certify SETAEI.',
+      ctaEyebrow:'YOUR NEXT CHAPTER STARTS HERE',ctaTitle:'Have an idea<br>that <em>deserves</em><br>to exist?',ctaOrb:'Let’s create',ctaDesc:'Tell us what you want to build. We’ll find the right way forward.',ctaLink:'Open contact form ↗',
+      footerPitch:'Design, artificial intelligence and technology. Built in Norway, for ideas without borders.',footerExplore:'Explore',footerCompany:'SETAEI',footerSelected:'Selected projects',rights:'· All rights reserved.',builtIn:'Built in Norway · working globally',backTop:'Back to top ↑',versionNote:'V2 / CINEMATIC WEBGL · Design preview. The main homepage is unchanged.'
+    },
+    fa: {
+      skip:'رفتن به محتوا', navProjects:'پروژه‌ها', navServices:'خدمات', navMethod:'روش کار', navContact:'تماس ↗', navHome:'خانه', navCerts:'گواهی‌نامه‌ها و فناوری', navBlog:'وبلاگ', navBook:'کتاب', navAbout:'درباره ما', navPartner:'همکار فروش شوید', menuLabel:'فهرست / ناوبری',drawerText:'ساخته‌شده در نروژ · فعال در جهان',
+      heroEyebrow:'استودیوی مستقل طراحی و فناوری',heroTitle:'ایده‌ها فقط<br>برای <em>دیده‌شدن</em> نیستند.<br><span>باید تجربه شوند.</span>',heroDesc:'طراحی، فناوری و هوش مصنوعی را کنار هم می‌آوریم تا تجربه‌های دیجیتالی خلق کنیم که نگاه‌ها را متوقف کنند.',heroAction:'پروژه‌های ما را ببینید',
+      scene2Eyebrow:'فصل ۰۲ / ساخته‌شده برای تجربه',scene2Title:'از <em>یک ایده</em><br>تا یک<br><span>دنیای تازه.</span>',scene2Desc:'فراتر از یک ظاهر زیبا؛ سیستم‌های واقعی، سه‌بعدی زنده، اپلیکیشن و تجربه‌های هدفمند.',scene2Action:'با کارهای ما آشنا شوید <span aria-hidden="true">↗</span>',
+      scene3Eyebrow:'فصل ۰۳ / از ایده تا تأثیر',scene3Title:'برای <em>تأثیرگذاری.</em><br><span>برای رشد.</span>',scene3Desc:'از اولین مفهوم تا انتشار، دیده‌شدن در جست‌وجو، یکپارچه‌سازی و توسعهٔ مستمر.',scene3Action:'چیزی تازه بسازیم',scrollText:'برای ادامه اسکرول کنید',
+      workKicker:'۰۱ / پروژه‌های منتخب',workKickerRight:'استراتژی — طراحی — فناوری',introTitle:'یک ذهن<br><span>خلاق.</span><br>دنیاهای بسیار<span class="accent-stop">.</span>',introDesc:'ما پروژه نمی‌سازیم تا فقط نمونه‌کار جمع کنیم. محصول، برند و سیستم دیجیتالی می‌سازیم که هدفی واقعی داشته باشد.',allProjects:'همهٔ پروژه‌ها <span aria-hidden="true">↗</span>',workEnding:'این فقط آغاز ماجراست.',workAll:'دیدن تمام پروژه‌ها <span>↗</span>',
+      cardRealgram:'ارتباط، آزادی و هوشمندی در یک پلتفرم.',cardSi:'هوش شخصی، روی دستگاه شما.',cardKashi:'تجربه‌ای تازه از دیدن متریال و فضا.',cardSomi:'معرفی دیجیتال آرام و حرفه‌ای برای یک برند.',catRealgram:'محصول دیجیتال / هوش مصنوعی',catSi:'هوش مصنوعی / حریم خصوصی',catKashi:'نمایشگاه سه‌بعدی / فروش',catSomi:'وب / طراحی / سئو',cardVisit:'مشاهده ↗',
+      servicesKicker:'۰۲ / خدمات ما',servicesKickerRight:'یک شریک، تخصص‌های گوناگون',servicesEyebrow:'از طرح تا واقعیت',servicesTitle:'طراحی که <em>حس می‌شود.</em><br>فناوری که <span>کار می‌کند.</span>',
+      service1Title:'تجربه‌های دیجیتال',service1Desc:'طراحی وب، سه‌بعدی، انیمیشن، سایت و فروشگاه اینترنتی',service2Title:'هوش مصنوعی و نرم‌افزار',service2Desc:'ایجنت‌های هوش مصنوعی، اپلیکیشن، SaaS و اتوماسیون',service3Title:'دیده‌شدن و رشد',service3Desc:'سئوی فنی، جست‌وجوی هوشمند، استراتژی و رشد قابل‌اندازه‌گیری',service4Title:'استراتژی و مدیریت فنی',service4Desc:'استراتژی محصول، مشاورهٔ CTO، امنیت و زیرساخت',
+      methodKicker:'۰۳ / فلسفهٔ ما',methodKickerRight:'ساخته‌شده با هدف',methodPre:'ما به تصویر کامل باور داریم.',methodTitle:'جادو نیست.<br>همکاری<br><em>انسان × ماشین است.</em>',methodDesc:'فناوری خوب بدون ایدهٔ خوب کافی نیست و طراحی خوب بدون کاربرد معنا ندارد. در SETAEI همه‌چیز از نخستین طرح تا محصول نهایی هماهنگ پیش می‌رود.',methodLink:'آشنایی با SETAEI <span aria-hidden="true">↗</span>',
+      certKicker:'۰۴ / مهارت و فناوری',certEyebrow:'آموزش معتبر / تجربهٔ عملی',certTitle:'گواهی‌نامه‌ها <em>و فناوری.</em>',certIntro:'دانش حاصل از دوره‌های شناخته‌شده در کنار فناوری‌هایی که با آنها کار و توسعه می‌دهیم.',certNote:'لوگوها نشان‌دهندهٔ آموزش مستند، تجربه یا فناوری مورد استفاده‌اند؛ نه اینکه همهٔ این سازمان‌ها به SETAEI تأیید رسمی داده باشند.',
+      ctaEyebrow:'فصل بعدی از همین‌جا آغاز می‌شود',ctaTitle:'ایده‌ای دارید<br>که <em>ارزش</em><br>واقعی‌شدن دارد؟',ctaOrb:'با هم بسازیم',ctaDesc:'بگویید چه چیزی می‌خواهید بسازید تا مسیر مناسبش را پیدا کنیم.',ctaLink:'فرم تماس ↗',
+      footerPitch:'طراحی، هوش مصنوعی و فناوری؛ ساخته‌شده در نروژ، برای ایده‌هایی بدون مرز.',footerExplore:'بگردید',footerCompany:'SETAEI',footerSelected:'پروژه‌های منتخب',rights:'· تمام حقوق محفوظ است.',builtIn:'ساخته‌شده در نروژ · فعال در جهان',backTop:'بازگشت به بالا ↑',versionNote:'نسخهٔ دوم / CINEMATIC WEBGL · پیش‌نمایش طراحی؛ صفحهٔ اصلی بدون تغییر باقی مانده است.'
+    }
+  };
+  const nodes = [...document.querySelectorAll('[data-t], [data-t-html]')];
+  const original = new Map(nodes.map(node => [node, node.hasAttribute('data-t-html') ? node.innerHTML : node.textContent]));
+  const buttons = [...document.querySelectorAll('.lang-switch [data-lang]')];
+  const valid = ['no','en','fa'];
+  let saved='no'; try { saved=localStorage.getItem('setaei-v2-language') || 'no'; } catch (_) {}
+  function setLang(language) {
+    const lang = valid.includes(language) ? language : 'no';
+    for (const node of nodes) {
+      const rich = node.hasAttribute('data-t-html');
+      const key = node.getAttribute(rich ? 'data-t-html' : 'data-t');
+      const value = translations[lang]?.[key] ?? original.get(node);
+      if (rich) node.innerHTML = value; else node.textContent = value;
+    }
+    document.documentElement.lang=lang;
+    document.documentElement.dir='ltr'; // cinematic layout remains LTR; prose uses its own RTL direction
+    document.body.classList.toggle('lang-fa',lang==='fa');
+    buttons.forEach(btn=>btn.setAttribute('aria-pressed',String(btn.dataset.lang===lang)));
+    document.title = lang==='fa' ? 'SETAEI — ایده‌ها باید تجربه شوند' : lang==='en' ? 'SETAEI — Ideas should be felt · V2' : 'SETAEI — Ideer skal oppleves · V2';
+    try { localStorage.setItem('setaei-v2-language',lang); } catch (_) {}
+  }
+  buttons.forEach(button => button.addEventListener('click',() => setLang(button.dataset.lang)));
+  setLang(saved);
+})();
+</script><script>/* SETAEI cinematic v2 — no frameworks, WebGL2 raymarched 3D sculpture. */
+(() => {
+  'use strict';
+  const $ = (sel, root = document) => root.querySelector(sel);
+  const cinema = $('#cinema');
+  const canvas = $('#heroCanvas');
+  const frames = [...document.querySelectorAll('[data-frame]')];
+  const tabs = [...document.querySelectorAll('.scene-tabs span')];
+  const progressLine = $('#progressLine');
+  const sceneNumber = $('#sceneNumber');
+  const header = $('#header');
+  const menuToggle = $('#menuToggle');
+  const mobileMenu = $('#mobileMenu');
+  const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+  let scrollProgress = 0;
+  let pointer = { x: 0, y: 0 };
+
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const smooth = (a, b, x) => { const t = clamp((x - a) / (b - a), 0, 1); return t * t * (3 - 2 * t); };
+
+  function updateScene() {
+    const max = Math.max(1, cinema.offsetHeight - innerHeight);
+    scrollProgress = reducedMotion.matches ? 0 : clamp(-cinema.getBoundingClientRect().top / max, 0, 1);
+    const segment = scrollProgress < .31 ? 0 : scrollProgress < .66 ? 1 : 2;
+    const fades = [1 - smooth(.22, .35, scrollProgress), smooth(.25, .39, scrollProgress) * (1 - smooth(.57, .71, scrollProgress)), smooth(.61, .75, scrollProgress)];
+    frames.forEach((frame, i) => {
+      const opacity = reducedMotion.matches ? (i === 0 ? 1 : 0) : fades[i];
+      frame.style.opacity = opacity.toFixed(3);
+      frame.style.transform = `translate3d(0,${Math.round((1 - opacity) * 27)}px,0)`;
+      frame.style.pointerEvents = opacity > .88 ? 'auto' : 'none';
+      frame.setAttribute('aria-hidden', opacity > .88 ? 'false' : 'true');
+      const links = frame.querySelectorAll('a');
+      links.forEach(link => { link.tabIndex = opacity > .88 ? 0 : -1; });
+    });
+    sceneNumber.textContent = String(segment + 1).padStart(2, '0');
+    tabs.forEach((tab, i) => tab.classList.toggle('active', i === segment));
+    const scrolled = window.scrollY > 70;
+    header.classList.toggle('is-scrolled', scrolled);
+    progressLine.style.transform = `scaleX(${clamp(scrollY / Math.max(1,document.documentElement.scrollHeight - innerHeight),0,1)})`;
+  }
+  let scrollQueued = false;
+  addEventListener('scroll', () => {
+    if (scrollQueued) return;
+    scrollQueued = true;
+    requestAnimationFrame(() => { scrollQueued = false; updateScene(); });
+  }, {passive:true});
+  addEventListener('resize', updateScene, {passive:true});
+  reducedMotion.addEventListener?.('change', updateScene);
+  updateScene();
+
+  function closeMenu() {
+    menuToggle.classList.remove('open');
+    menuToggle.setAttribute('aria-expanded','false');
+    menuToggle.setAttribute('aria-label','Åpne meny');
+    mobileMenu.classList.remove('show');
+    mobileMenu.inert = true;
+  }
+  menuToggle.addEventListener('click', () => {
+    const opened = menuToggle.getAttribute('aria-expanded') !== 'true';
+    menuToggle.classList.toggle('open', opened);
+    menuToggle.setAttribute('aria-expanded', String(opened));
+    menuToggle.setAttribute('aria-label', opened ? 'Lukk meny' : 'Åpne meny');
+    mobileMenu.classList.toggle('show', opened);
+    mobileMenu.inert = !opened;
+  });
+  mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+  addEventListener('keydown', e => { if(e.key === 'Escape') closeMenu(); });
+  addEventListener('pointermove', e => { if(e.pointerType !== 'touch') pointer = {x: e.clientX / innerWidth * 2 - 1, y: e.clientY / innerHeight * 2 - 1}; }, {passive:true});
+
+  const observer = 'IntersectionObserver' in window ? new IntersectionObserver(entries => {
+    entries.forEach(entry => { if(entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); } });
+  }, { threshold: .06, rootMargin: '0px 0px -30px 0px' }) : null;
+  document.querySelectorAll('.reveal').forEach(el => { if(observer) observer.observe(el); else el.classList.add('visible'); });
+  if(reducedMotion.matches) return;
+
+  let gl;
+  try { gl = canvas.getContext('webgl2', { alpha: true, antialias: false, depth:false, stencil:false, powerPreference:'high-performance' }); } catch (_) {}
+  if(!gl) { canvas.style.display = 'none'; return; }
+  const vertexSource = `#version 300 es
+  precision highp float;
+  in vec2 position;
+  void main(){gl_Position=vec4(position,0.,1.);}`;
+  const fragmentSource = `#version 300 es
+  precision highp float;
+  out vec4 fragColor;
+  uniform vec2 uResolution;
+  uniform float uTime;
+  uniform float uScroll;
+  uniform vec2 uPointer;
+  #define PI 3.14159265359
+
+  mat2 rot(float a){float c=cos(a),s=sin(a);return mat2(c,-s,s,c);}
+  float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453123);}
+  float sdTorus(vec3 p,vec2 t){vec2 q=vec2(length(p.xz)-t.x,p.y);return length(q)-t.y;}
+  vec2 model(vec3 p){
+    // Group transformed together: real three-dimensional SDF toroidal geometry.
+    p.x-=1.34;
+    p.xy*=rot(-.31 + uPointer.x*.065);
+    p.xz*=rot(.22 + uTime*.064 + uScroll*1.25);
+    p.yz*=rot(.43 + uTime*.042 + uScroll*1.00);
+    vec3 a=p; a.xy*=rot(.92); a.yz*=rot(.23);
+    vec3 b=p; b.xz*=rot(1.05); b.yz*=rot(1.19);
+    vec3 c=p; c.xy*=rot(1.64); c.xz*=rot(.34);
+    float d1=sdTorus(a,vec2(1.38,.112));
+    float d2=sdTorus(b,vec2(1.16,.095));
+    float d3=sdTorus(c,vec2(.96,.076));
+    float dc=length(p*vec3(1.,1.04,1.))-.26;
+    float d=d1; float material=1.;
+    if(d2<d){d=d2;material=2.;}
+    if(d3<d){d=d3;material=3.;}
+    if(dc<d){d=dc;material=4.;}
+    return vec2(d,material);
+  }
+  vec3 normal(vec3 p){float e=.0023;return normalize(vec3(
+    model(p+vec3(e,0,0)).x-model(p-vec3(e,0,0)).x,
+    model(p+vec3(0,e,0)).x-model(p-vec3(0,e,0)).x,
+    model(p+vec3(0,0,e)).x-model(p-vec3(0,0,e)).x));}
+  float star(vec2 p){vec2 i=floor(p);vec2 f=fract(p)-.5;float h=hash(i);float s=smoothstep(.997,1.,h);vec2 o=vec2(hash(i+14.3),hash(i+9.1))-.5;return s*.0026/(dot(f-o,f-o)+.001);}
+  void main(){
+    vec2 uv=(gl_FragCoord.xy-.5*uResolution.xy)/uResolution.y;
+    vec2 screenUV=gl_FragCoord.xy/uResolution.xy;
+    float scroll=uScroll;
+    vec3 background=mix(vec3(.010,.016,.038),vec3(.018,.043,.095),smoothstep(-.4,.9,uv.x));
+    float halo=exp(-2.9*length((uv-vec2(.34,-.02))*vec2(.88,1.12)));
+    background+=vec3(.035,.10,.28)*halo*(1.+.3*sin(uTime*.15));
+    background+=vec3(.11,.07,.25)*exp(-7.2*length(uv-vec2(.80,.36)));
+    float stars=star(uv*77.)+star(uv*120.+33.);
+    background+=vec3(.40,.60,1.)*stars*.58;
+    // Camera moving toward sculpture with scroll, with subtle pointer parallax.
+    vec3 ro=vec3(-.03+uPointer.x*.04,uPointer.y*-.04,6.1-scroll*1.0);
+    vec3 rd=normalize(vec3(uv.x*.90,uv.y*.90,-1.92));
+    float t=0.;float glow=0.;vec2 hit=vec2(0.);bool found=false;
+    for(int i=0;i<71;i++){
+      vec3 p=ro+rd*t;
+      vec2 h=model(p);
+      if(h.x<.0021){hit=h;found=true;break;}
+      glow+=.0055*exp(-7.2*max(0.,h.x))*(.45+.55/(1.+.05*t*t));
+      t+=clamp(h.x*.74,.018,.37);
+      if(t>15.)break;
+    }
+    vec3 col=background;
+    if(found){
+      vec3 p=ro+rd*t;
+      vec3 n=normal(p);
+      vec3 v=normalize(ro-p);
+      vec3 light1=normalize(vec3(-.55,.86,1.6));
+      vec3 light2=normalize(vec3(.8,-.38,.55));
+      float ndl=max(dot(n,light1),0.);
+      float rim=pow(1.-max(dot(n,v),0.),2.25);
+      float spec1=pow(max(dot(reflect(-light1,n),v),0.),54.);
+      float spec2=pow(max(dot(reflect(-light2,n),v),0.),27.);
+      vec3 base=hit.y<1.5?vec3(.24,.48,.97):hit.y<2.5?vec3(.55,.43,.90):hit.y<3.5?vec3(.22,.68,.90):vec3(.83,.81,1.);
+      // PBR-inspired iridescent metal and glass lighting, not a video/image sprite.
+      float fresnel=pow(1.-max(dot(n,v),0.),4.);
+      vec3 metal=mix(base*.19,base*(.4+ndl*.9),.73);
+      metal+=vec3(.92,.95,1.)*spec1*1.7;
+      metal+=vec3(.63,.78,1.)*spec2*.46;
+      metal+=mix(vec3(.20,.44,1.),vec3(.86,.50,1.),.5+.5*sin(p.y*2.8+uScroll*5.))*rim*.85;
+      metal+=vec3(.8,.89,1.)*fresnel*.41;
+      metal*=exp(-.033*t*t);
+      col=mix(col,metal,.97);
+    }
+    col+=vec3(.10,.26,.66)*min(glow,1.6)*.22;
+    col+=vec3(.025,.036,.092)*exp(-4.3*length(uv-vec2(.34,.05)));
+    // Soft vignette and minimal noise for a cinematic grade.
+    col*=1.-.24*smoothstep(.4,1.3,length(uv));
+    col+=(hash(gl_FragCoord.xy+fract(uTime)*43.)-.5)*.009;
+    col=col/(col+vec3(.48));
+    col=pow(max(col,0.),vec3(.94));
+    fragColor=vec4(col,1.);
+  }`;
+
+  function shader(type, source) {
+    const s=gl.createShader(type);
+    gl.shaderSource(s,source);gl.compileShader(s);
+    if(!gl.getShaderParameter(s,gl.COMPILE_STATUS)) { console.warn('SETAEI shader compilation failed:',gl.getShaderInfoLog(s));gl.deleteShader(s);return null; }
+    return s;
+  }
+  const vs=shader(gl.VERTEX_SHADER,vertexSource);
+  const fs=shader(gl.FRAGMENT_SHADER,fragmentSource);
+  if(!vs||!fs){canvas.style.display='none';return;}
+  const program=gl.createProgram();gl.attachShader(program,vs);gl.attachShader(program,fs);gl.linkProgram(program);
+  gl.deleteShader(vs);gl.deleteShader(fs);
+  if(!gl.getProgramParameter(program,gl.LINK_STATUS)){console.warn('SETAEI WebGL link error',gl.getProgramInfoLog(program));canvas.style.display='none';return;}
+  gl.useProgram(program);
+  const locPos=gl.getAttribLocation(program,'position');
+  const buffer=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,buffer);
+  gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,-1,1,1,-1,1,1]),gl.STATIC_DRAW);
+  gl.enableVertexAttribArray(locPos);gl.vertexAttribPointer(locPos,2,gl.FLOAT,false,0,0);
+  const uniforms={res:gl.getUniformLocation(program,'uResolution'),time:gl.getUniformLocation(program,'uTime'),scroll:gl.getUniformLocation(program,'uScroll'),pointer:gl.getUniformLocation(program,'uPointer')};
+  let running=true,frameId=0,started=performance.now(),last=0,w=0,h=0;
+  function resize(){
+    const dpr=Math.min(devicePixelRatio||1,innerWidth<760?0.85:1.35);
+    const nextW=Math.max(1,Math.round(canvas.clientWidth*dpr));
+    const nextH=Math.max(1,Math.round(canvas.clientHeight*dpr));
+    if(nextW!==w||nextH!==h){w=canvas.width=nextW;h=canvas.height=nextH;gl.viewport(0,0,w,h);}
+  }
+  function render(now){
+    frameId=0;
+    if(!running||document.hidden) return;
+    if(cinema.getBoundingClientRect().bottom<0) return;
+    const minFrame=innerWidth<760?45:30;
+    if(now-last < minFrame){frameId=requestAnimationFrame(render);return;}last=now;
+    resize();
+    gl.uniform2f(uniforms.res,w,h);
+    gl.uniform1f(uniforms.time,(now-started)/1000);
+    gl.uniform1f(uniforms.scroll,scrollProgress);
+    gl.uniform2f(uniforms.pointer,pointer.x,pointer.y);
+    gl.drawArrays(gl.TRIANGLES,0,6);
+    frameId=requestAnimationFrame(render);
+  }
+  const visibilityObserver = new IntersectionObserver(entries => {
+    const visible=entries[0]?.isIntersecting ?? false;
+    running=visible&&!document.hidden;
+    if(running&&!frameId) frameId=requestAnimationFrame(render);
+    if(!running&&frameId){cancelAnimationFrame(frameId);frameId=0;}
+  },{threshold:0});
+  visibilityObserver.observe(cinema);
+  document.addEventListener('visibilitychange',()=>{running=!document.hidden&&cinema.getBoundingClientRect().bottom>0;if(running&&!frameId)frameId=requestAnimationFrame(render);});
+  addEventListener('resize',resize,{passive:true});
+  canvas.addEventListener('webglcontextlost', e=>{e.preventDefault();running=false;if(frameId)cancelAnimationFrame(frameId);canvas.style.display='none';});
+})();
+</script>
+</body>
+</html>
