@@ -5,11 +5,12 @@ ROOT="${1:-/var/www/setai/ksh/heimslig}"
 RAW="https://raw.githubusercontent.com/XS227/SETai/main/deploy/heimslig-v7"
 [[ -d "$ROOT" && -f "$ROOT/3d-studio/index.html" && -f "$ROOT/assets/v5/room-studio.js" ]] || { echo 'Heimslig v5 is required. No site changes made.' >&2;exit 2;}
 TMP=$(mktemp -d);trap 'rm -rf "$TMP"' EXIT
-for file in room-core.js room-renderer.js room-studio.js;do
+for file in room-core.js room-renderer.js room-studio.js test-room.js;do
  curl -fLsS --retry 3 --max-time 45 "$RAW/$file" -o "$TMP/$file"
  [[ -s "$TMP/$file" ]] || { echo "Empty $file" >&2;exit 2;}
  if command -v node >/dev/null;then node --check "$TMP/$file";fi
 done
+if command -v node >/dev/null;then node "$TMP/test-room.js";fi
 grep -q 'findPlacement' "$TMP/room-core.js"
 grep -q 'requestedProduct' "$TMP/room-studio.js"
 grep -q "i.type==='sirkel'" "$TMP/room-renderer.js"
