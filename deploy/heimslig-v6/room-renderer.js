@@ -57,10 +57,10 @@ void main(){
  // CC0 surface scans from Poly Haven, cached locally by the v6 installer.
  // Illustrative reference textures: NEVER described as Heimslig's own products.
  const matFiles={
-  oak:'oak_veneer_03',concrete:'concrete_floor',wall:'plastered_wall_05',
-  limestone:'stone_tiles',slate:'rock_wall_02',fabric:'wool_boucle'
+  oak:'oak_veneer_03',oakfloor:'laminate_floor_02',concrete:'concrete_floor',wall:'plastered_wall_05',
+  limestone:'stone_tiles',slate:'slate_floor',fabric:'wool_boucle'
  };
- const matScale={oak:1.15,concrete:.72,wall:1.3,limestone:1,slate:.9,fabric:3.2};
+ const matScale={oak:1.15,oakfloor:.75,concrete:.72,wall:1.3,limestone:1,slate:.64,fabric:3.2};
  const textures={};
  let materialReady=0;
  let neutral=null;
@@ -87,7 +87,7 @@ void main(){
      if(['diff','normal','rough'].every(k=>textures[material][k]))materialReady++;
      if(state){dirty=true;draw();}
      const status=document.getElementById('h5-render-mode');
-     if(status&&materialReady>=6)status.textContent='LIVE 3D · PBR MATERIALER · DRA FOR Å ROTERE';
+     if(status&&materialReady>=7)status.textContent='LIVE 3D · PBR MATERIALER · DRA FOR Å ROTERE';
     };
     img.onerror=()=>{ /* Keep procedural fallback when a scanned material is unavailable. */ };
     img.src='/ksh/heimslig/assets/v6/textures/'+id+'_'+suffix+'_1k.jpg';
@@ -115,7 +115,7 @@ void main(){
  }
  function update(s){state=s;if(!gl){plan();return;}for(const m of meshes){gl.deleteBuffer(m.position);gl.deleteBuffer(m.normal);}meshes=[];
  const w=s.width,l=s.length,h=s.height;
- add(box(0,-.06,0,w,.12,l),floorColors[s.floor],s.floor==='oak'?2:s.floor==='concrete'?0:4,null,s.floor);
+ add(box(0,-.06,0,w,.12,l),floorColors[s.floor],s.floor==='oak'?2:s.floor==='concrete'?0:4,null,s.floor==='oak'?'oakfloor':s.floor);
  add(box(0,h/2,-l/2-.05,w+.1,h,.1),wallColors[s.wall],0,null,'wall');add(box(-w/2-.05,h/2,0,.1,h,l),wallColors[s.wall],0,null,'wall');
  add(box(0,.06,-l/2+.01,w,.12,.025),'#e6e0d4');add(box(-w/2+.01,.06,0,.025,.12,l),'#e6e0d4');
  // Window within the wall dimensions, with frame and daylight panel.
