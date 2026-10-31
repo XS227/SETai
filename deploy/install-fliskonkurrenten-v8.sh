@@ -53,7 +53,7 @@ echo "$EXPECTED_SHA256  $TARGET" | sha256sum --check --status || {
 PASS=0
 for attempt in 1 2 3; do
   CACHEBUST="$(date +%s)-$attempt"
-  if curl --fail --location --silent --show-error --max-time 25 "$URL?check=$CACHEBUST" | grep -qF 'id="leverandorer"'; then
+  if curl --fail --location --silent --show-error --max-time 25 "$URL?check=$CACHEBUST" | grep -F 'id="leverandorer"' >/dev/null; then
     PASS=1
     break
   fi
