@@ -51,6 +51,12 @@ for slug in vedum-flow-takegronn zup-spilepanel-eik-sort colorker-althea-sand-de
   cp -a "$ROOT/produkt/$slug/assets/main.js" "$BACKUP/products/$slug/assets/main.js"
  fi
 done
+for section in om-oss kontakt leverandorer inspirasjon outlet fliser baderom naturstein;do
+ if [[ -f "$ROOT/$section/index.html" ]];then
+  mkdir -p "$BACKUP/sections/$section"
+  cp -a "$ROOT/$section/index.html" "$BACKUP/sections/$section/index.html"
+ fi
+done
 for name in "assets/ksh-four-products-v2.css" "assets/ksh-four-products-v2.js" "assets/fliskonkurrenten-logo.png" "produkter/index.html";do
  if [[ -f "$ROOT/$name" ]];then
   mkdir -p "$BACKUP/$(dirname "$name")"
@@ -73,6 +79,7 @@ css='<link rel="stylesheet" href="/ksh/fliskonkurrenten/assets/ksh-four-products
 js='<script defer src="/ksh/fliskonkurrenten/assets/ksh-four-products-v2.js?v=2"></script>'
 paths=[root/'index.html']
 paths += [root/'produkt'/x/'index.html' for x in ('sanipro-sense','vedum-flow-takegronn','zup-spilepanel-eik-sort','colorker-althea-sand-dekor')]
+paths += [root/x/'index.html' for x in ('om-oss','kontakt','leverandorer','inspirasjon','outlet','fliser','baderom','naturstein') if (root/x/'index.html').is_file()]
 for p in paths:
  html=p.read_text(encoding='utf-8')
  # Disable the old camera-only AR button in already deployed Sense pages too.
