@@ -1,0 +1,82 @@
+/* SETAEI KSH / Fliskonkurrenten shared design system v2.
+   All new selectors are namespaced to avoid overwriting existing page layouts. */
+:root{--ksh2-paper:#f2ede6;--ksh2-ink:#252320;--ksh2-gold:#c9a882}
+.ksh2-head,.ksh2-head *,.ksh2-foot,.ksh2-foot *,.ksh2-products,.ksh2-products *,.ksh2-room,.ksh2-room *{box-sizing:border-box}
+.ksh2-head{position:absolute!important;top:0;left:0;right:0;z-index:80;min-height:88px;color:#fff!important;background:linear-gradient(180deg,rgba(16,17,17,.48),transparent);padding:18px clamp(20px,5vw,80px);display:flex;justify-content:space-between;align-items:center;gap:28px;font-family:'DM Sans',Arial,sans-serif;line-height:1.25}
+.ksh2-head a,.ksh2-foot a{color:inherit;text-decoration:none}
+.ksh2-logo{display:inline-flex;align-items:center;min-width:140px;max-width:190px;flex:none}
+.ksh2-logo img{width:174px;height:56px;max-height:56px;object-fit:contain;object-position:left center}
+.ksh2-nav{display:flex;align-items:center;gap:clamp(10px,1.8vw,26px)}
+.ksh2-nav a{font-size:12px!important;letter-spacing:.045em;font-weight:600;white-space:nowrap;padding:8px 2px;border-bottom:1px solid transparent}
+.ksh2-nav a:hover,.ksh2-nav a:focus-visible{border-bottom-color:#e2c7a7}
+.ksh2-head .ksh2-shop{flex:none;border:1px solid #fff9;border-radius:40px;padding:12px 19px;font-size:11px;letter-spacing:.05em;white-space:nowrap;font-weight:700}
+.ksh2-toggle{display:none;align-items:center;justify-content:center;color:#fff;border:1px solid #ffffff66;background:transparent;border-radius:50%;width:44px;height:44px;flex:none;font-size:21px}
+.ksh2-foot{background:#242421!important;color:#f0ece4!important;padding:72px clamp(20px,5vw,80px) 24px;font:400 13px/1.8 'DM Sans',Arial,sans-serif;letter-spacing:0}
+.ksh2-foot-inner{max-width:1320px;margin:0 auto;display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:clamp(26px,5vw,90px)}
+.ksh2-foot h3{font:600 11px/1.5 'DM Sans',Arial,sans-serif;letter-spacing:.20em;text-transform:uppercase;color:#bda58b;margin:0 0 17px}
+.ksh2-foot p{color:#d3cac0;font:inherit;margin:9px 0 18px;max-width:340px}
+.ksh2-foot .ksh2-logo{margin-bottom:18px}
+.ksh2-foot .ksh2-list{display:grid;align-content:start;gap:7px}
+.ksh2-foot .ksh2-list a{font-size:13px}
+.ksh2-foot .ksh2-list a:hover{text-decoration:underline;text-underline-offset:4px}
+.ksh2-foot-bottom{max-width:1320px;margin:40px auto 0;padding-top:18px;border-top:1px solid #fff2;display:flex;justify-content:space-between;gap:20px;align-items:center;color:#cbbfb1;font-size:11px;letter-spacing:.04em}
+.ksh2-products{background:var(--ksh2-paper);color:var(--ksh2-ink);padding:clamp(76px,9vw,150px) max(5vw,22px);font-family:'DM Sans',Arial,sans-serif;position:relative}
+.ksh2-products-wrap{max-width:1320px;margin:auto}
+.ksh2-products-kicker{font-size:11px!important;letter-spacing:.2em!important;font-weight:700;text-transform:uppercase;color:#857362}
+.ksh2-products h2{font:400 clamp(44px,6vw,88px)/1.08 'Playfair Display',Georgia,serif;margin:18px 0 22px;color:#28221f!important;letter-spacing:-.04em}
+.ksh2-products h2 em{font-weight:400}
+.ksh2-products-intro{font-size:16px;line-height:1.7;max-width:610px;margin:0 0 35px;color:#675c53}
+.ksh2-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.ksh2-product{display:flex;flex-direction:column;text-decoration:none;color:#28231e!important;min-width:0;overflow:hidden;background:#e5dfd6;border-radius:7px;box-shadow:0 3px 19px #2a1e1008;transition:transform .22s,box-shadow .22s}
+.ksh2-product:hover{transform:translateY(-6px);box-shadow:0 15px 44px #3a2e1f18}
+.ksh2-product-figure{height:clamp(180px,23vw,290px);overflow:hidden;background:#ded6cb;position:relative}
+.ksh2-product-figure img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.ksh2-product:hover img{transform:scale(1.065)}
+.ksh2-product-figure span{position:absolute;left:15px;top:15px;padding:6px 10px;background:#24211edd;color:#fff;border-radius:2px;text-transform:uppercase;font-size:9px;letter-spacing:.12em}
+.ksh2-product-content{padding:21px;flex:1;display:flex;flex-direction:column;gap:9px}
+.ksh2-product-content h3{font:400 clamp(22px,2.1vw,30px)/1.15 'Playfair Display',Georgia,serif;margin:0;letter-spacing:-.025em;color:#24211e}
+.ksh2-product-content p{margin:0;line-height:1.5;font-size:12px;color:#73685f;flex:1}
+.ksh2-price{font-size:15px;font-weight:700;margin:2px 0}
+.ksh2-price small{font-size:11px;font-weight:400}
+.ksh2-explore{border-top:1px solid #33281d22;padding-top:14px;margin-top:8px;letter-spacing:.04em;font-size:12px;font-weight:700}
+.ksh2-all{display:inline-flex;margin-top:25px;padding:12px 22px;border-radius:40px;border:1px solid #5d5249;color:#3a302a!important;text-decoration:none;font-weight:700;font-size:12px}
+.ksh2-room{border:0;padding:0;max-width:none;max-height:none;width:100vw;height:100dvh;background:#d9d2c5;color:#221d1b;overflow:hidden}
+.ksh2-room::backdrop{background:rgba(11,9,8,.85);backdrop-filter:blur(6px)}
+.ksh2-roomscene{position:absolute;inset:0;background:linear-gradient(180deg,#cfc7ba 0 61%,#ad9884 61.2%,#d7c0a9 100%);isolation:isolate}
+.ksh2-roomscene::before{content:"";position:absolute;left:0;right:0;top:61%;height:1px;background:#5f524277}
+.ksh2-roomscene::after{content:"";position:absolute;bottom:0;left:0;right:0;height:39%;background:repeating-linear-gradient(92deg,transparent 0 100px,#6f655a22 101px 103px),linear-gradient(25deg,transparent 30%,#fff5 100%);transform-origin:center top;transform:perspective(280px) rotateX(18deg);pointer-events:none}
+.ksh2-room[data-tone="night"] .ksh2-roomscene{background:linear-gradient(180deg,#515257 0 61%,#343236 61.2%,#67646a 100%)}
+.ksh2-room[data-tone="warm"] .ksh2-roomscene{background:linear-gradient(180deg,#b8a092 0 61%,#917766 61.2%,#c6a48b 100%)}
+.ksh2-room model-viewer{width:100%;height:100%;position:absolute;inset:0;z-index:2;--poster-color:transparent;background:transparent}
+.ksh2-roomtoolbar{position:absolute;z-index:9;top:clamp(14px,4vw,36px);left:clamp(14px,4vw,36px);right:clamp(14px,4vw,36px);display:flex;align-items:center;justify-content:space-between;gap:20px;pointer-events:none}
+.ksh2-roomtoolbar>*{pointer-events:auto}
+.ksh2-roomtoolbar strong{font:500 19px 'Playfair Display',Georgia,serif;max-width:60vw}
+.ksh2-room button{cursor:pointer;font:600 12px 'DM Sans',Arial,sans-serif}
+.ksh2-roomclose{width:44px;height:44px;border-radius:50%;border:1px solid #554a3f8c;background:#f9f6f0;color:#282520;font-size:23px!important}
+.ksh2-roomfoot{position:absolute;z-index:9;bottom:clamp(16px,4vw,37px);left:clamp(16px,5vw,52px);right:clamp(16px,5vw,52px);display:flex;align-items:end;justify-content:space-between;gap:20px}
+.ksh2-roomfoot p{margin:0;font:12px/1.6 'DM Sans',Arial,sans-serif;max-width:410px;text-shadow:0 1px 18px #eee}
+.ksh2-roomtones{display:flex;gap:7px;flex-wrap:wrap}
+.ksh2-roomtones button{border:1px solid #5a4b3c;min-height:37px;padding:8px 13px;border-radius:30px;background:#f7f4ed;color:#322d2a}
+.ksh2-roomtones button[aria-pressed="true"]{background:#2b2723;color:white;border-color:#2b2723}
+.ksh2-enter-room{display:inline-flex;gap:10px;align-items:center;margin:12px 0;padding:12px 22px;border-radius:100px;background:#302823;color:#fff;border:1px solid #302823}
+.ksh2-enter-room:focus-visible,.ksh2-roomclose:focus-visible{outline:3px solid #c9a77f;outline-offset:2px}
+@media(max-width:950px){.ksh2-nav{gap:13px}.ksh2-nav a{font-size:11px!important}.ksh2-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.ksh2-foot-inner{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){
+ .ksh2-head{min-height:76px;padding:12px 20px}
+ .ksh2-logo img{width:140px}
+ .ksh2-toggle{display:flex}
+ .ksh2-head .ksh2-shop{display:none}
+ .ksh2-nav{display:none;position:absolute;z-index:3;left:12px;right:12px;top:76px;background:#24221f;color:#fff;padding:24px;border-radius:5px;flex-direction:column;align-items:stretch;box-shadow:0 19px 45px #0005}
+ .ksh2-head[data-open="true"] .ksh2-nav{display:flex}
+ .ksh2-nav a{padding:12px 2px;border-bottom:1px solid #fff2;font-size:15px!important}
+ .ksh2-foot-inner{grid-template-columns:1fr;gap:22px}
+ .ksh2-foot-bottom{flex-direction:column;align-items:flex-start}
+ .ksh2-grid{gap:11px}
+ .ksh2-product-content{padding:15px}
+ .ksh2-product-figure{height:175px}
+ .ksh2-product-content h3{font-size:21px}
+ .ksh2-products h2{font-size:43px}
+ .ksh2-roomfoot{flex-direction:column;align-items:flex-start}
+ .ksh2-roomtoolbar strong{font-size:16px}
+}
+@media(max-width:400px){.ksh2-grid{grid-template-columns:1fr}.ksh2-product-figure{height:240px}}
