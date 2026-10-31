@@ -59,7 +59,7 @@ for slug,(price,name) in names.items():
  links=Links();links.feed(html)
  assert not any(str(x).startswith(('http:','https:','//')) for x in links.urls)
  logo=(p/'assets/fliskonkurrenten-logo.png').read_bytes()
- assert len(logo)>1000 and logo[:8]==b'\\x89PNG\\r\\n\\x1a\\n',slug
+ assert len(logo)>1000 and logo[:8]==bytes([137,80,78,71,13,10,26,10]),slug
  for f in ('hero.webp','detail.webp'):
   data=(p/'assets'/f).read_bytes()
   assert len(data)>3500 and data[:4]==b'RIFF' and data[8:12]==b'WEBP',(slug,f)
