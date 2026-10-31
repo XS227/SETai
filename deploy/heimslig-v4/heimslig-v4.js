@@ -15,6 +15,7 @@
   function num(v){var x=Number(String(v||"").replace(",","."));return isFinite(x)?Math.max(0,x):0;}
   function category(){for(var i=0;i<categories.length;i++)if(path.includes("/"+categories[i][0]+"/"))return categories[i][0];return "sofaer";}
   function addLinks(){
+    if(path.includes("/social/"))return;
     var targets=Array.from(document.querySelectorAll("header nav,header .nav-links,nav.main-nav,footer nav,footer .footer-links"));
     if(!targets.length)targets=Array.from(document.querySelectorAll("header,footer")).slice(0,2);
     targets.forEach(function(t){
@@ -26,6 +27,18 @@
     });
   }
   function compactPrototypeWarning(){
+    Array.from(document.querySelectorAll('nav,[class*="breadcrumb"],[class*="crumb"]')).forEach(function(n){
+      var className=String(n.className||""),label=String(n.getAttribute("aria-label")||"");
+      var txt=(n.textContent||"").trim().replace(/\s+/g," ");
+      var isCrumb=/bread|crumb|brødsmul/i.test(className+" "+label) ||
+        (n.tagName==="NAV"&&txt.length<150&&/^Hjem\s*[\/›»]/i.test(txt)&&/Produkter/i.test(txt));
+      if(!isCrumb)return;
+      n.hidden=true;n.style.display="none";n.style.margin="0";n.style.padding="0";
+      if(n.parentElement&&n.parentElement.children.length===1&&
+         !/^(MAIN|HEADER|BODY)$/i.test(n.parentElement.tagName)){
+        n.parentElement.style.margin="0";n.parentElement.style.padding="0";
+      }
+    });
     Array.from(document.querySelectorAll("p,aside,div")).forEach(function(n){
       var s=(n.textContent||"").trim();
       if(s.startsWith("Alle produktene er designkonsepter:") && s.length<270 && n.querySelectorAll("p,aside,div").length===0){
