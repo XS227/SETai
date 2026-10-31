@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="no">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+  <meta name="theme-color" content="#171a19"/>
+  <title>Sanipro Enzo | Interaktiv 3D-produktdemo – Fliskonkurrenten · SETAEI</title>
+  <meta name="description" content="Utforsk Sanipro Enzo 179 i en interaktiv 3D-produktdemo. Se form, størrelse og overflate før du besøker Fliskonkurrentens produkt."/>
+  <meta name="robots" content="noindex,nofollow"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <script type="module" src="https://unpkg.com/@google/model-viewer@4.0.0/dist/model-viewer.min.js"></script>
+  <style>
+    :root{color-scheme:light;--ink:#212320;--stone:#f5f1ec;--muted:#716e68;--line:#d7d2ca;--warm:#a57957;--deep:#171a19;--page:1200px}
+    *{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;background:#f7f5f1;color:var(--ink);font-family:'DM Sans',system-ui,-apple-system,sans-serif;line-height:1.58}
+    a{color:inherit}button{font:inherit;cursor:pointer}button:focus-visible,a:focus-visible{outline:3px solid #a57957;outline-offset:3px}
+    .eyebrow{text-transform:uppercase;letter-spacing:.19em;font-size:.68rem;font-weight:800;line-height:1.45}
+    .prototype{background:#1b1c1a;color:#d7d0c4;font-size:.73rem;text-align:center;padding:9px 20px;letter-spacing:.035em}
+    .top{position:sticky;top:0;z-index:20;background:rgba(247,245,241,.95);backdrop-filter:blur(15px);border-bottom:1px solid #e8e3dc}
+    .nav{max-width:var(--page);margin:auto;min-height:72px;padding:12px 28px;display:flex;justify-content:space-between;align-items:center;gap:28px}
+    .brand{font-family:Manrope,system-ui,sans-serif;font-size:1.06rem;font-weight:800;letter-spacing:.07em;text-decoration:none;white-space:nowrap}
+    .brand span{display:block;font-size:.6rem;font-weight:600;letter-spacing:.25em;color:#827e76}
+    .navlinks{display:flex;align-items:center;gap:26px}.navlinks a{font-size:.82rem;text-decoration:none;font-weight:700}
+    .pill{border:1px solid #222;border-radius:100px;padding:11px 17px;text-decoration:none;font-weight:700;font-size:.79rem;white-space:nowrap;transition:background .2s,color .2s}
+    .pill.dark{background:var(--deep);color:white}.pill.dark:hover{background:#574b3e}.pill:hover{color:#fff;background:#514a42}
+    .hero{max-width:var(--page);margin:auto;display:grid;grid-template-columns:minmax(330px,.82fr) minmax(470px,1.18fr);gap:28px;min-height:660px;padding:36px 26px 40px}
+    .heroCopy{padding:62px 0 30px 12px;display:flex;flex-direction:column;align-items:start}
+    .heroCopy .eyebrow{color:#927457}.hero h1{font-family:Manrope,system-ui,sans-serif;font-size:clamp(3.4rem,6vw,6rem);letter-spacing:-.083em;line-height:1.01;font-weight:600;margin:23px 0 23px}
+    .hero h1 span{display:block;font-size:.31em;font-weight:500;letter-spacing:-.035em;line-height:1.2;margin:18px 0 0;color:#575651}
+    .intro{max-width:380px;font-size:1.06rem;line-height:1.78;color:#5e5b56;margin:0 0 28px}
+    .keyFacts{border-top:1px solid var(--line);padding:23px 0;margin-top:23px;display:flex;flex-wrap:wrap;gap:23px 29px;align-self:stretch}
+    .keyFacts div strong{font-family:Manrope,sans-serif;font-size:1.25rem;letter-spacing:-.06em;display:block;font-weight:700}.keyFacts div small{display:block;font-size:.68rem;color:#8c877e;font-weight:800;text-transform:uppercase;letter-spacing:.11em}
+    .actions{display:flex;flex-wrap:wrap;gap:11px;margin:7px 0 9px}
+    .viewerFrame{position:relative;min-height:590px;border-radius:19px;overflow:hidden;background:radial-gradient(ellipse at 57% 35%,#ffffff 4%,#e8e2d9 54%,#d8d0c4 108%);box-shadow:0 14px 40px rgba(43,38,32,.065);isolation:isolate}
+    .viewerFrame::after{content:'';position:absolute;inset:0;pointer-events:none;border:1px solid rgba(255,255,255,.65);border-radius:19px}
+    .viewerFrame::before{content:'';position:absolute;bottom:16%;left:12%;width:75%;height:23%;background:radial-gradient(ellipse,rgba(68,55,45,.18),transparent 70%);filter:blur(19px);pointer-events:none}
+    .viewer-meta{position:absolute;top:24px;left:27px;z-index:2;display:flex;flex-direction:column;gap:5px}
+    .viewer-meta small{font-size:.72rem;color:#70695e}.viewer-meta .eyebrow{font-size:.66rem}
+    model-viewer{width:100%;height:100%;min-height:590px;display:block;--progress-bar-color:#8e735c;outline:none}
+    .viewerTools{position:absolute;top:23px;right:22px;z-index:3;display:flex;gap:8px}
+    .tool{border:1px solid rgba(43,39,36,.18);border-radius:99px;background:rgba(255,255,255,.82);backdrop-filter:blur(9px);min-width:42px;height:42px;padding:0 13px;font-size:.84rem;color:#333}
+    .tool[aria-pressed="true"]{background:#242623;color:#fff}
+    .controls{position:absolute;bottom:22px;left:23px;right:23px;z-index:4;background:rgba(255,255,255,.91);backdrop-filter:blur(16px);border:1px solid #fff;border-radius:12px;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 14px}
+    .swatches{display:flex;gap:7px;align-items:center}.swatch{width:27px;height:27px;border-radius:100%;border:2px solid white;box-shadow:0 0 0 1px #d2cbc2;position:relative}
+    .swatch[aria-pressed=true]{box-shadow:0 0 0 2px #41423d}.swatch.white{background:#eff0eb}.swatch.sand{background:#c3b4a2}.swatch.grey{background:#878985}.swatch.clay{background:#b9826e}
+    .controls .hint{font-size:.72rem;color:#69645d;text-align:right}.controls .hint strong{display:block;color:#30312f;font-size:.78rem}
+    .viewer-note{position:absolute;bottom:91px;right:23px;font-size:.64rem;color:#6a645c;text-align:right;pointer-events:none}
+    .container{max-width:var(--page);margin:auto;padding:0 26px}
+    .disclaimer{max-width:var(--page);margin:auto;padding:0 38px 50px;color:#807b74;font-size:.75rem;line-height:1.5}
+    .separator{height:1px;background:var(--line)}
+    .story{display:grid;grid-template-columns:1fr 1fr;gap:75px;padding:100px 0}
+    .story h2{font:600 clamp(2.4rem,4.1vw,4.2rem)/1.16 Manrope,system-ui;letter-spacing:-.077em;margin:18px 0}
+    .story p{color:#6c6761;max-width:520px}.story .num{font-weight:800;font-size:.85rem;border:1px solid #ccc3b7;border-radius:100px;padding:7px 12px;display:inline-block}
+    .visualCard{border-radius:17px;background:#e7dfd5;min-height:380px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+    .visualCard img{max-width:100%;max-height:400px;object-fit:contain;mix-blend-mode:multiply;filter:contrast(1.01);padding:28px}
+    .visualCard .annotation{position:absolute;bottom:18px;left:22px;right:22px;font-size:.74rem;color:#6b5c4e}
+    .features{background:var(--deep);color:#f9f5ef;padding:89px 0 100px}
+    .features .eyebrow{color:#c5ad92}.features h2{font:600 clamp(2rem,3.5vw,3.6rem)/1.12 Manrope,sans-serif;letter-spacing:-.06em;margin:12px 0 37px;max-width:650px}
+    .featuresGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.feature{padding:26px;background:#242725;border:1px solid #343936;border-radius:12px}
+    .feature strong{font:700 1.1rem Manrope,sans-serif;display:block;margin:14px 0 6px}.feature p{font-size:.86rem;color:#bab7b0;line-height:1.75;margin:0}.feature .sym{font-size:1.5rem}
+    .specs{display:grid;grid-template-columns:1fr 1fr;gap:60px;padding:92px 0}.specs h2{font:600 clamp(2.1rem,4vw,3.6rem)/1.15 Manrope,sans-serif;letter-spacing:-.065em;margin:10px 0 20px}.specs p{color:#69655e}
+    .specTable{border-top:1px solid var(--line)}.specRow{display:flex;justify-content:space-between;gap:24px;padding:18px 3px;border-bottom:1px solid var(--line);font-size:.88rem}.specRow b{font-weight:700;text-align:right}
+    .finalCta{background:#e7ded2;border-radius:16px;padding:48px 56px;margin-bottom:90px;display:flex;justify-content:space-between;align-items:center;gap:25px}
+    .finalCta h2{font:600 clamp(2rem,3vw,3rem)/1.14 Manrope,sans-serif;letter-spacing:-.055em;margin:6px 0}.finalCta p{margin:0;color:#69645c;font-size:.91rem}
+    footer{border-top:1px solid #d9d2c8;padding:30px 0;color:#736e67;font-size:.75rem}.foot{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}.foot a{text-decoration:none}
+    @media(max-width:1000px){.hero{grid-template-columns:1fr;gap:12px}.heroCopy{padding:33px 13px 5px}.hero h1{font-size:clamp(3.6rem,9vw,6rem)}.viewerFrame{min-height:540px}model-viewer{min-height:540px}.story{gap:30px}.specs{gap:25px}}
+    @media(max-width:650px){.nav{padding:12px 18px}.navlinks a:not(.pill){display:none}.brand{font-size:.84rem}.brand span{font-size:.55rem}.navlinks .pill{padding:9px 12px;font-size:.7rem}.hero{padding:19px 12px 14px}.heroCopy{padding:16px 13px 5px}.hero h1{font-size:3.6rem}.intro{font-size:.95rem}.viewerFrame{min-height:450px}model-viewer{min-height:450px}.viewerTools{top:18px;right:13px}.viewer-meta{left:17px;top:20px}.controls{left:12px;right:12px;bottom:14px}.viewer-note{right:16px;bottom:91px}.disclaimer{padding:8px 23px 35px}.container{padding:0 20px}.story{padding:52px 0;grid-template-columns:1fr;gap:20px}.story h2{font-size:2.35rem}.visualCard{min-height:300px}.features{padding:65px 0}.featuresGrid{grid-template-columns:1fr}.specs{padding:65px 0;grid-template-columns:1fr;gap:24px}.finalCta{padding:28px 24px;flex-direction:column;align-items:start;margin-bottom:55px}.foot{flex-direction:column}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  </style>
+</head>
+<body>
+  <div class="prototype">SETAEI KSH / INTERAKTIV KONSEPTDEMO · IKKE FLISKONKURRENTENS OFFISIELLE PRODUKTSIDE</div>
+  <header class="top"><nav class="nav" aria-label="Hovedmeny"><a class="brand" href="https://setai.no/ksh/fliskonkurrenten/">FLISKONKURRENTEN<span>PRODUKTKONSEPT / ENZO</span></a><div class="navlinks"><a href="#egenskaper">Egenskaper</a><a href="#spesifikasjoner">Spesifikasjoner</a><a class="pill" href="https://fliskonkurrenten.no/produkt/sanipro-enzo-badekar-hvit-179x90xh66/" target="_blank" rel="noopener noreferrer">Originalprodukt ↗</a></div></nav></header>
+  <main>
+    <section class="hero" aria-labelledby="product-title">
+      <div class="heroCopy"><div class="eyebrow">SANIPRO / XONYX SOLID SURFACE</div><h1 id="product-title">Enzo<span>Skulpturell ro. I ditt baderom.</span></h1><p class="intro">Et frittstående badekar med myke, ovale linjer og matt hvit overflate. Utforsk silhuetten fra alle vinkler – før du opplever den i ditt eget rom.</p>
+        <div class="actions"><a class="pill dark" href="#3d">Utforsk i 3D ↓</a><a class="pill" href="https://fliskonkurrenten.no/produkt/sanipro-enzo-badekar-hvit-179x90xh66/" target="_blank" rel="noopener noreferrer">Se hos Fliskonkurrenten ↗</a></div>
+        <div class="keyFacts"><div><strong>179 cm</strong><small>Lengde</small></div><div><strong>90 cm</strong><small>Bredde</small></div><div><strong>66 cm</strong><small>Høyde</small></div><div><strong>300 L</strong><small>Oppgitt volum</small></div></div>
+        <p style="color:#89847a;font-size:.79rem;margin:3px 0 0">Sanipro Enzo · NRF 6215671 · Xonyx støpemarmor</p>
+      </div>
+      <div class="viewerFrame" id="3d" aria-label="Interaktivt 3D-showroom for badekar"><div class="viewer-meta"><strong class="eyebrow">FORM / 360°</strong><small>Dra for å rotere · knip for å zoome</small></div>
+        <model-viewer id="enzoViewer" src="./enzo-concept.glb" alt="Konseptmodell av et hvitt ovalt, frittstående Sanipro Enzo-badekar, med åpen skål og avløp" camera-controls auto-rotate rotation-per-second="10deg" auto-rotate-delay="1500" shadow-intensity="1.3" shadow-softness=".8" environment-image="neutral" exposure="1.18" camera-orbit="28deg 66deg 3.55m" field-of-view="32deg" min-camera-orbit="auto 15deg 2.4m" max-camera-orbit="auto 87deg 6.6m" interaction-prompt="auto" touch-action="pan-y" loading="eager">
+          <div slot="progress-bar" style="height:3px;background:#a57957"></div>
+          <div slot="poster" style="padding:150px 20px;text-align:center;color:#6b645b">Laster 3D-modell …</div>
+        </model-viewer>
+        <div class="viewerTools"><button type="button" class="tool" id="orbitToggle" aria-pressed="true" aria-label="Sett automatisk rotasjon på pause">Ⅱ</button><button type="button" class="tool" id="resetView" title="Tilbakestill kamera" aria-label="Tilbakestill kamera">↺</button></div>
+        <div class="viewer-note">Interaktiv rekonstruksjon · ikke original CAD-modell</div>
+        <div class="controls"><div><div class="eyebrow" style="color:#807669;font-size:.56rem;margin-bottom:7px">Utvendig overflate · konsept</div><div class="swatches" role="group" aria-label="Velg illustrativ utvendig farge"><button class="swatch white" aria-label="Matt hvit" aria-pressed="true" data-color="white"></button><button class="swatch sand" aria-label="Sand" aria-pressed="false" data-color="sand"></button><button class="swatch grey" aria-label="Grå" aria-pressed="false" data-color="grey"></button><button class="swatch clay" aria-label="Leire" aria-pressed="false" data-color="clay"></button></div></div><div class="hint"><strong id="colorName">Matt hvit</strong>Fargevalg er illustrativt</div></div>
+      </div>
+    </section>
+    <p class="disclaimer">3D-visningen er en SETAEI-konseptrekonstruksjon basert på publiserte mål og produktbilder. Den er ikke oppmålt fabrikk-CAD, og skal ikke brukes til kontroll av røropplegg, montering, toleranser eller fargenøyaktighet. Kjøp og oppdatert produktinformasjon skjer på Fliskonkurrentens originale nettside.</p>
+    <div class="container"><div class="separator"></div><section class="story" id="egenskaper"><div><span class="num">01 / Formen</span><h2>Skapt for å bli rommets naturlige midtpunkt.</h2><p>Enzos frittstående silhuett kombinerer avrundede linjer med et rent ytre. Den høye kanten og det åpne karet gir karakter – uten at baderommet føles visuelt tungt.</p><p>Bruk 3D-visningen over for å se konturen fra front, side og ovenfra. Et produktbilde er ett perspektiv. Et roterbart objekt gir flere.</p><a class="pill" href="#3d">Se modellen fra alle vinkler ↑</a></div><div class="visualCard"><img src="https://fliskonkurrenten.no/wp-content/uploads/2025/09/E6mp-pifWn-U4mniGoxN3v_A9G9D7ItkJiOAwc6fAvhdeYCqubJ3z7SPJmYrEJfFzXuuFO-KjV61EmxSGMxHbvwV-1-600x600.webp" alt="Sanipro Enzo-produktfoto fra Fliskonkurrentens produktutvalg" loading="lazy" onerror="this.remove()"/><div class="annotation">Originalt produktfoto via Fliskonkurrenten · modell kun konsept</div></div></section></div>
+    <section class="features"><div class="container"><span class="eyebrow">MATERIALER OG DETALJER</span><h2>En rolig overflate. Gjennomtenkte detaljer.</h2><div class="featuresGrid"><div class="feature"><div class="sym">◯</div><strong>Matt Xonyx</strong><p>Solid Surface-materiale med et dempet uttrykk. Matt, hvitt eksteriør er standard utførelse.</p></div><div class="feature"><div class="sym">↗</div><strong>Frittstående</strong><p>Ovalt design som kan plasseres fritt, innenfor kravene til vann, avløp og montering.</p></div><div class="feature"><div class="sym">◎</div><strong>Detaljene</strong><p>Leverandøren oppgir justerbare ben, overløp og pop-up avløpsventil som standard.</p></div></div></div></section>
+    <div class="container"><section class="specs" id="spesifikasjoner"><div><span class="eyebrow" style="color:#98795b">SANIPRO / ENZO 179</span><h2>Form og funksjon, i riktig størrelse.</h2><p>Størrelse og øvrige produktdata her er hentet fra de offentlige produktsidene. Kontroller oppdaterte priser, lagerstatus og leveringsvilkår direkte hos Fliskonkurrenten.</p><p><a href="https://sanipro.no/produkt/enzo/" target="_blank" rel="noopener noreferrer">Les produsentens informasjon ↗</a></p><p><a href="https://higgsfield.ai/s/JpG9EMDhrTw" target="_blank" rel="noopener noreferrer">Se det opprinnelige Higgsfield-videoresultatet (MP4) ↗</a></p></div><div class="specTable"><div class="specRow"><span>Produsent</span><b>Sanipro</b></div><div class="specRow"><span>Produkt</span><b>Enzo / NRF 6215671</b></div><div class="specRow"><span>Mål (L × B × H)</span><b>179 × 90 × 66 cm</b></div><div class="specRow"><span>Oppgitt volum</span><b>300 liter</b></div><div class="specRow"><span>Oppgitt vekt</span><b>125 kg</b></div><div class="specRow"><span>Materiale</span><b>Xonyx Solid Surface</b></div><div class="specRow"><span>Standard farge</span><b>Matt hvit</b></div><div class="specRow"><span>Veiledende butikkpris ved kontroll</span><b>46 490 kr</b></div></div></section>
+      <section class="finalCta"><div><span class="eyebrow" style="color:#947455">KLAR FOR ET NYTT BADEROM?</span><h2>Oppdag Enzo hos Fliskonkurrenten.</h2><p>Få aktuelle priser, fargealternativer og informasjon om bestilling.</p></div><a class="pill dark" href="https://fliskonkurrenten.no/produkt/sanipro-enzo-badekar-hvit-179x90xh66/" target="_blank" rel="noopener noreferrer">Se produkt og tilgjengelighet ↗</a></section>
+    </div>
+  </main>
+  <footer><div class="container foot"><span>© 2026 SETAEI · KSH designkonsept. Ikke en aktiv nettbutikk.</span><span><a href="https://setai.no/ksh/fliskonkurrenten/">Til Fliskonkurrenten-konseptet</a> · <a href="https://fliskonkurrenten.no/">Offisiell butikk ↗</a></span></div></footer>
+  <script>
+    (function(){
+      const viewer=document.getElementById('enzoViewer');
+      const colorName=document.getElementById('colorName');
+      const colorValues={white:[.925,.935,.929,1],sand:[.68,.61,.53,1],grey:[.48,.51,.51,1],clay:[.65,.43,.35,1]};
+      const colorNames={white:'Matt hvit',sand:'Sand · konsept',grey:'Grå · konsept',clay:'Leire · konsept'};
+      function recolor(value){
+        const model=viewer.model;if(!model||!model.materials)return;
+        const material=model.materials.find(m=>m.name==='Enzo exterior');
+        if(material&&material.pbrMetallicRoughness)material.pbrMetallicRoughness.setBaseColorFactor(colorValues[value]);
+      }
+      document.querySelectorAll('.swatch').forEach(b=>b.addEventListener('click',()=>{
+        document.querySelectorAll('.swatch').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));
+        const key=b.dataset.color;colorName.textContent=colorNames[key];
+        recolor(key);
+      }));
+      viewer.addEventListener('load',()=>{const active=document.querySelector('.swatch[aria-pressed=true]');recolor(active?.dataset.color||'white')});
+      const toggle=document.getElementById('orbitToggle');
+      toggle.addEventListener('click',()=>{
+        const running=viewer.hasAttribute('auto-rotate');
+        if(running)viewer.removeAttribute('auto-rotate');else viewer.setAttribute('auto-rotate','');
+        toggle.setAttribute('aria-pressed',String(!running));toggle.textContent=running?'▶':'Ⅱ';
+        toggle.setAttribute('aria-label',running?'Start automatisk rotasjon':'Sett automatisk rotasjon på pause');
+      });
+      document.getElementById('resetView').addEventListener('click',()=>{viewer.cameraOrbit='28deg 66deg 3.55m';viewer.fieldOfView='32deg';viewer.jumpCameraToGoal()});
+      viewer.addEventListener('error',()=>{const slot=viewer.querySelector('[slot=poster]');if(slot)slot.textContent='3D-modellen kunne ikke lastes. Sjekk at enzo-concept.glb ligger ved siden av siden.'});
+      if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){viewer.removeAttribute('auto-rotate');toggle.setAttribute('aria-pressed','false');toggle.textContent='▶'}
+    })();
+  </script>
+</body>
+</html>
