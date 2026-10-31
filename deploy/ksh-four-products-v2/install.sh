@@ -45,6 +45,12 @@ for slug in sanipro-sense vedum-flow-takegronn zup-spilepanel-eik-sort colorker-
  mkdir -p "$BACKUP/products/$slug"
  cp -a "$ROOT/produkt/$slug/index.html" "$BACKUP/products/$slug/index.html"
 done
+for slug in vedum-flow-takegronn zup-spilepanel-eik-sort colorker-althea-sand-dekor;do
+ if [[ -f "$ROOT/produkt/$slug/assets/main.js" ]];then
+  mkdir -p "$BACKUP/products/$slug/assets"
+  cp -a "$ROOT/produkt/$slug/assets/main.js" "$BACKUP/products/$slug/assets/main.js"
+ fi
+done
 for name in "assets/ksh-four-products-v2.css" "assets/ksh-four-products-v2.js" "assets/fliskonkurrenten-logo.png" "produkter/index.html";do
  if [[ -f "$ROOT/$name" ]];then
   mkdir -p "$BACKUP/$(dirname "$name")"
@@ -69,6 +75,10 @@ paths=[root/'index.html']
 paths += [root/'produkt'/x/'index.html' for x in ('sanipro-sense','vedum-flow-takegronn','zup-spilepanel-eik-sort','colorker-althea-sand-dekor')]
 for p in paths:
  html=p.read_text(encoding='utf-8')
+ # Disable the old camera-only AR button in already deployed Sense pages too.
+ if p.parent.name=='sanipro-sense':
+  html=re.sub(r' ar\s+ar-modes=["\'][^"\']*["\']','',html,flags=re.I)
+  html=re.sub(r'<button\b[^>]*slot=["\']ar-button["\'][^>]*>.*?</button>','',html,flags=re.I|re.S)
  html=re.sub(r'<link\b[^>]*href=["\'][^"\']*ksh-four-products-v2\.css[^"\']*["\'][^>]*>', '',html,flags=re.I)
  html=re.sub(r'<script\b[^>]*src=["\'][^"\']*ksh-four-products-v2\.js[^"\']*["\'][^>]*>\s*</script>', '',html,flags=re.I)
  assert len(re.findall('</head>',html,re.I))==1,p
@@ -79,7 +89,18 @@ for p in paths:
  staged.write_text(html,encoding='utf-8')
  staged.chmod(p.stat().st_mode & 0o777)
  staged.replace(p)
-print('Four product pages and proposal homepage upgraded.')
+for slug in ('vedum-flow-takegronn','zup-spilepanel-eik-sort','colorker-althea-sand-dekor'):
+ jsfile=root/'produkt'/slug/'assets/main.js'
+ if not jsfile.is_file():continue
+ script=jsfile.read_text(encoding='utf-8')
+ # Remove old AR elements from the JS-generated HTML, preventing camera launch.
+ script=re.sub(r' ar\s+ar-modes=["\'][^"\']*["\']','',script,flags=re.I)
+ script=re.sub(r'<button\b[^>]*slot=["\']ar-button["\'][^>]*>.*?</button>','',script,flags=re.I|re.S)
+ staged=jsfile.with_name('main.js.new')
+ staged.write_text(script,encoding='utf-8')
+ staged.chmod(jsfile.stat().st_mode & 0o777)
+ staged.replace(jsfile)
+print('Four product pages and proposal homepage upgraded; camera-only AR controls disabled.')
 PY
 echo "=== PUBLISHED ==="
 echo "https://setai.no/ksh/fliskonkurrenten/"
