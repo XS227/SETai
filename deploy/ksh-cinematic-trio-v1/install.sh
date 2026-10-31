@@ -30,6 +30,11 @@ getphoto zup-spilepanel-eik-sort hero "https://fliskonkurrenten.no/wp-content/up
 getphoto zup-spilepanel-eik-sort detail "https://fliskonkurrenten.no/wp-content/uploads/2024/01/Skjermbilde-2024-10-31-084259-png.webp"
 getphoto colorker-althea-sand-dekor hero "https://fliskonkurrenten.no/wp-content/uploads/2026/05/E6mp-pifWn-U4mniGoxN3v_A9G9D7ItkJiOAwc7LU_lQdYD_t7B2z7KNdWF6EZPFkSOqFOWP2lLmGGpSGsxae_sC-600x600.webp"
 getphoto colorker-althea-sand-dekor detail "https://fliskonkurrenten.no/wp-content/uploads/2026/05/E6mp-pifWn-U4mniGoxN3v_A9G9D7ItkJiOAwc6aBPkDc9Ckt7B4yuKPcjV5FZeZyS79Ru-Li121GDxZScxae_k-600x600.webp"
+# Preserve the customer's actual white logo across all three pages.
+curl -fLsS --retry 3 --max-time 100 "https://fliskonkurrenten.no/wp-content/uploads/2023/12/logo-Flisa-hvit-e1703620450362.png" -o "$TMP/fliskonkurrenten-logo.png"
+for slug in vedum-flow-takegronn zup-spilepanel-eik-sort colorker-althea-sand-dekor;do
+ cp "$TMP/fliskonkurrenten-logo.png" "$TMP/$slug/assets/fliskonkurrenten-logo.png"
+done
 python3 "$TMP/build_glb.py" "$TMP/models"
 for slug in vedum-flow-takegronn zup-spilepanel-eik-sort colorker-althea-sand-dekor;do
  cp "$TMP/models/$slug.glb" "$TMP/$slug/assets/model.glb"
@@ -53,6 +58,8 @@ for slug,(price,name) in names.items():
  assert 'oslovvssenter' not in html.lower()
  links=Links();links.feed(html)
  assert not any(str(x).startswith(('http:','https:','//')) for x in links.urls)
+ logo=(p/'assets/fliskonkurrenten-logo.png').read_bytes()
+ assert len(logo)>1000 and logo[:8]==b'\\x89PNG\\r\\n\\x1a\\n',slug
  for f in ('hero.webp','detail.webp'):
   data=(p/'assets'/f).read_bytes()
   assert len(data)>3500 and data[:4]==b'RIFF' and data[8:12]==b'WEBP',(slug,f)
