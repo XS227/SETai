@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="no">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="theme-color" content="#eeeae1">
+<title>Sosialt & inspirasjon | Heimslig — SETAEI konsept</title>
+<meta name="description" content="Et visuelt inspirasjonsmagasin og en modul for fremtidige verifiserte Instagram-innlegg. Dette er en SETAEI-designprototype.">
+<link rel="stylesheet" href="../assets/v4/heimslig-v4.css">
+<style>
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#f7f5ef;color:#37342e;font-family:Arial,Helvetica,sans-serif}a{color:inherit}
+.topline{background:#34332e;color:#f7efe0;font-size:.68rem;letter-spacing:.045em;padding:10px 6vw;text-align:center}
+.topline a{color:#fff}.sitehead{display:flex;gap:25px;align-items:center;justify-content:space-between;background:#faf9f4;padding:26px 6vw;position:relative;z-index:4;border-bottom:1px solid #e0dcd3}
+.brand{text-decoration:none;display:flex;flex-direction:column;gap:5px}.brand strong{font-size:1.42rem;letter-spacing:-.045em}.brand span{font-size:.65rem;letter-spacing:.2em;color:#99816a}.nav{display:flex;gap:25px;flex-wrap:wrap;align-items:center}.nav a{text-decoration:none;font-weight:600;font-size:.83rem}.nav a:hover{color:#967658}
+.hero{min-height:52vh;background:linear-gradient(120deg,#dde1d4 1%,#f0ecdf 50%,#d8d4ca);padding:clamp(70px,12vw,152px) 7vw 85px;display:grid;grid-template-columns:1fr 250px;gap:20px;align-items:end}
+.kicker{color:#85755f;letter-spacing:.21em;text-transform:uppercase;font-size:.72rem;font-weight:700;margin:0 0 24px}
+h1{font-family:Georgia,serif;font-weight:400;font-size:clamp(3.3rem,9vw,8.5rem);letter-spacing:-.075em;line-height:.97;margin:0;max-width:1000px}
+.hero p{line-height:1.7;color:#655e54;max-width:270px}.main{max-width:1550px;margin:0 auto;padding:65px 5vw 85px}
+.intro{display:flex;gap:20px;justify-content:space-between;align-items:end;margin-bottom:26px;flex-wrap:wrap}.intro h2,.instagram-area h2{font:400 clamp(2rem,4vw,4.3rem)/1.1 Georgia,serif;letter-spacing:-.055em;margin:0}.intro p{max-width:400px;color:#6b6d62;line-height:1.6}.tablist{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0 35px}.tablist button{padding:11px 18px;border:1px solid #cacac0;background:transparent;color:#43483e;cursor:pointer;font:600 .83rem Arial,sans-serif}.tablist button[aria-pressed="true"],.tablist button:hover{background:#344b3c;color:#fff;border-color:#344b3c}
+.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.story{background:#ede9df;position:relative;overflow:hidden;min-height:280px}.story.wide{grid-column:span 2}.story.tall{grid-row:span 2;min-height:560px}
+.story a{display:block;text-decoration:none;height:100%;min-height:inherit;position:relative}.story img{width:100%;height:100%;min-height:inherit;position:absolute;inset:0;object-fit:cover;transition:transform .7s ease;filter:saturate(.8)}.story:hover img{transform:scale(1.045)}
+.story .caption{position:absolute;bottom:0;left:0;right:0;padding:55px 23px 22px;background:linear-gradient(transparent,rgba(17,26,21,.78));color:#fff}.story .caption small{display:block;letter-spacing:.18em;text-transform:uppercase;opacity:.8;font-size:.64rem;margin-bottom:8px}.story .caption h3{font:400 clamp(1.35rem,2.5vw,2.5rem) Georgia,serif;margin:0;letter-spacing:-.03em}.story .caption span{display:inline-block;margin-top:10px;font-size:.81rem}.story.hidden{display:none}
+.instagram-area{border-top:1px solid #d8d5cc;margin-top:85px;padding-top:60px}.instagram-area p{color:#6d6a60;line-height:1.65;max-width:660px}.embed-gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:30px}.ig-card{background:#fff;border:1px solid #e0dbd3;padding:12px}.ig-card iframe{width:100%;height:520px;border:0}.ig-card p{font-size:.8rem}.ig-empty{background:#eae8df;padding:28px;border-left:3px solid #748875;margin-top:22px;max-width:760px}
+.cta{margin-top:80px;background:#334b3b;color:#f2f0e9;padding:50px;display:flex;justify-content:space-between;gap:28px;align-items:center;flex-wrap:wrap}.cta h2{font:400 clamp(2rem,4vw,3.5rem) Georgia,serif;max-width:680px;margin:0}.cta a{background:#f7f5eb;padding:14px 24px;text-decoration:none;color:#344a3d;font-weight:700}
+.footer{padding:50px 6vw;background:#e7e4d9;color:#616058;display:flex;gap:20px;justify-content:space-between;flex-wrap:wrap;font-size:.81rem}
+@media(max-width:800px){.sitehead{padding:17px 5vw}.nav{gap:12px}.hero{grid-template-columns:1fr;min-height:420px;padding-top:80px}.hero p{max-width:500px}.gallery{grid-template-columns:1fr 1fr;gap:10px}.story.wide{grid-column:span 2}.story.tall{grid-row:auto;min-height:340px}.embed-gallery{grid-template-columns:1fr}.main{padding:45px 4vw}.cta{padding:28px}}
+@media(max-width:480px){.gallery{grid-template-columns:1fr}.story,.story.wide,.story.tall{grid-column:auto;min-height:330px}.sitehead{align-items:flex-start}.nav{max-width:220px;justify-content:flex-end}.hero h1{font-size:3.9rem}.footer{padding:30px 4vw}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+</style>
+<link rel="stylesheet" href="/ksh/heimslig/assets/v5/room-studio.css?v=5.1">
+</head>
+<body>
+<div class="topline">SETAEI / INTERN NETTSIDEPROTOTYPE · Inspirationsbilder og konsepter, ikke dokumenterte Heimslig-produkter. <a href="/ksh/">Til strategipresentasjonen</a></div>
+<header class="sitehead"><a class="brand" href="../" aria-label="Heimslig forside"><strong>HEIMSLIG</strong><span>ROOM &amp; OBJECTS</span></a><nav class="nav" aria-label="Hovedmeny"><a href="../produkter/">Møbler</a><a href="../inspirasjon/">Inspirasjon</a><a href="./" aria-current="page">Sosialt</a><a href="../3d-studio/">3D-studio</a><a href="../produkter/#heimslig-kalkulator">Priskalkulator</a><a href="../kontakt/">Kontakt</a></nav></header>
+<section class="hero"><div><p class="kicker">Et digitalt interiørmagasin</p><h1>Et hjem fullt<br>av historier.</h1></div><p>Materialer, rom og detaljer som vekker ideer. Her møtes kuratert inspirasjon, produkter og fremtidens sosiale innhold.</p></section>
+<main class="main">
+<div class="intro"><div><p class="kicker">Redaksjonell inspirasjon</p><h2>Rom for å drømme.</h2></div><p>Utforsk stemninger i konseptet. Fotografi brukes som illustrasjon, ikke som dokumentasjon på varer fra Heimslig eller innlegg fra deres Instagram.</p></div>
+<div class="tablist" role="group" aria-label="Filtrer inspirasjon"><button type="button" data-filter="alle" aria-pressed="true">Alle</button><button type="button" data-filter="stue" aria-pressed="false">Stue</button><button type="button" data-filter="spiseplass" aria-pressed="false">Spiseplass</button><button type="button" data-filter="soverom" aria-pressed="false">Soverom</button><button type="button" data-filter="detaljer" aria-pressed="false">Detaljer</button></div>
+<div class="gallery" id="story-gallery">
+<article class="story wide" data-topic="stue"><a href="../produkter/sofaer/"><img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=1400&q=85" loading="lazy" alt="Lys stue med myke teksturer, illustrasjonsfoto"><div class="caption"><small>01 / Stue</small><h3>Myke flater, rolige dager.</h3><span>Utforsk sofaer ↗</span></div></a></article>
+<article class="story tall" data-topic="detaljer"><a href="../inspirasjon/"><img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1000&q=85" loading="lazy" alt="Naturlige detaljer i boliginteriør, illustrasjonsfoto"><div class="caption"><small>02 / Materialer</small><h3>Det vakre i detaljene.</h3><span>Se inspirasjon ↗</span></div></a></article>
+<article class="story" data-topic="spiseplass"><a href="../produkter/bord/"><img src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=900&q=85" loading="lazy" alt="Spiseplass med varme materialer, illustrasjonsfoto"><div class="caption"><small>03 / Spiseplass</small><h3>Rundt samme bord.</h3><span>Utforsk bord ↗</span></div></a></article>
+<article class="story" data-topic="soverom"><a href="../produkter/senger/"><img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=900&q=85" loading="lazy" alt="Rolig soverom, illustrasjonsfoto"><div class="caption"><small>04 / Soverom</small><h3>Rom for ro.</h3><span>Utforsk senger ↗</span></div></a></article>
+<article class="story wide" data-topic="stue"><a href="../produkter/stoler/"><img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=1400&q=85" loading="lazy" alt="Interiør med sittemøbler, illustrasjonsfoto"><div class="caption"><small>05 / Stue</small><h3>Et eget sted å lande.</h3><span>Utforsk lenestoler ↗</span></div></a></article>
+<article class="story" data-topic="detaljer"><a href="../produkter/oppbevaring/"><img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=900&q=85" loading="lazy" alt="Lys interiørdetalj, illustrasjonsfoto"><div class="caption"><small>06 / Oppbevaring</small><h3>Plass til det du elsker.</h3><span>Utforsk oppbevaring ↗</span></div></a></article>
+</div>
+<section class="instagram-area" id="instagram"><p class="kicker">Sosiale medier</p><h2>Fra feed til hjem.</h2><p>Her kan verifiserte Instagram-innlegg og reels fra en godkjent konto integreres. Kun innlegg med bekreftede lenker vises som Instagram-innhold; ingen bilder tilskrives Heimslig uten dokumentasjon.</p><div id="ig-empty" class="ig-empty">Ingen bekreftede Heimslig-innlegg er koblet til prototypen ennå. Den redaksjonelle inspirasjonsveggen over er tilgjengelig.</div><div id="embed-gallery" class="embed-gallery" aria-live="polite"></div></section>
+<section class="cta"><h2>Fra inspirasjon til ditt eget rom.</h2><a href="../3d-studio/">Prøv 3D-studio ↗</a></section>
+</main>
+<footer class="footer"><span>HEIMSLIG · SETAEI designkonsept © 2026</span><span>Ikke en aktiv nettbutikk · Ingen bestilling · <a href="../om-oss/">Om konseptet</a></span><span><a href="../">Forside</a> · <a href="../kontakt/">Kontakt</a></span></footer>
+<script src="../assets/v4/heimslig-v4.js" defer></script>
+<script>
+document.querySelectorAll('[data-filter]').forEach(function(btn){btn.addEventListener('click',function(){var f=btn.dataset.filter;document.querySelectorAll('[data-filter]').forEach(function(b){b.setAttribute('aria-pressed',String(b===btn));});document.querySelectorAll('.story').forEach(function(card){card.classList.toggle('hidden',f!=='alle'&&card.dataset.topic!==f);});});});
+fetch('./posts.json',{cache:'no-store'}).then(function(r){return r.ok?r.json():[];}).then(function(posts){if(!Array.isArray(posts))return;var root=document.getElementById('embed-gallery');posts.slice(0,12).forEach(function(p){var m=String(p.url||'').match(/^https:\/\/(?:www\.)?instagram\.com\/(p|reel)\/([A-Za-z0-9_-]+)\/?/);if(!m)return;var box=document.createElement('div');box.className='ig-card';var frame=document.createElement('iframe');frame.loading='lazy';frame.title='Instagram '+m[1]+' '+m[2];frame.src='https://www.instagram.com/'+m[1]+'/'+m[2]+'/embed/';box.appendChild(frame);var label=document.createElement('p');var a=document.createElement('a');a.href=p.url;a.target='_blank';a.rel='noopener noreferrer';a.textContent=String(p.caption||'Se originalinnlegg på Instagram');label.appendChild(a);box.appendChild(label);root.appendChild(box);});if(root.children.length)document.getElementById('ig-empty').hidden=true;}).catch(function(){});
+</script>
+<script src="./site-images.js" defer></script>
+
+<!-- HEIMSLIG_V5_START -->
+<script defer src="/ksh/heimslig/assets/v4/heimslig-v4.js?v=5.1"></script>
+<!-- HEIMSLIG_V5_END -->
+</body></html>

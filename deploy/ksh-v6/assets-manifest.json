@@ -1,0 +1,212 @@
+[
+  {
+    "path": "assets/chair/modern_arm_chair_01.gltf",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/modern_arm_chair_01/modern_arm_chair_01_1k.gltf",
+    "size": 5121,
+    "sha256": "d31be520add2603447b43acedbdacf9516866f7c89e9ea9230c9edbac9cc6e6a"
+  },
+  {
+    "path": "assets/chair/textures/modern_arm_chair_01_pillow_nor_gl_1k.jpg",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/modern_arm_chair_01/modern_arm_chair_01_pillow_nor_gl_1k.jpg",
+    "size": 302377,
+    "sha256": "2717b9d22e1d3533e3c7436a0230b00b1d25bf396246679825c8db08edaba0a8"
+  },
+  {
+    "path": "assets/chair/textures/modern_arm_chair_01_legs_nor_gl_1k.jpg",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/modern_arm_chair_01/modern_arm_chair_01_legs_nor_gl_1k.jpg",
+    "size": 560864,
+    "sha256": "af328e8530884907cf0d38a675338bb4e2b03c56ed2d21eb5abf505bb67c11de"
+  },
+  {
+    "path": "assets/chair/textures/modern_arm_chair_01_pillow_arm_1k.jpg",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/modern_arm_chair_01/modern_arm_chair_01_pillow_arm_1k.jpg",
+    "size": 321223,
+    "sha256": "fec333290ddfd70e78428251874d30d5410d6d0a956dd84922b0d3f3596e4b7a"
+  },
+  {
+    "path": "assets/chair/textures/modern_arm_chair_01_legs_diff_1k.jpg",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/modern_arm_chair_01/modern_arm_chair_01_legs_diff_1k.jpg",
+    "size": 460937,
+    "sha256": "6291421a8db6cd9bbbc8c141aa087465d698427249f813d24c6e5ccdbf0bf536"
+  },
+  {
+    "path": "assets/chair/textures/modern_arm_chair_01_legs_arm_1k.jpg",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/modern_arm_chair_01/modern_arm_chair_01_legs_arm_1k.jpg",
+    "size": 577931,
+    "sha256": "c76b65200a52cf649a865baf7f879dc34277b923edaac7ec8164eaf7c51c935d"
+  },
+  {
+    "path": "assets/chair/modern_arm_chair_01.bin",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/modern_arm_chair_01/modern_arm_chair_01.bin",
+    "size": 240728,
+    "sha256": "8755f2f498c0bb165660379d1b045465751c16bbeaf553c8dd76bb14c16d1ff6"
+  },
+  {
+    "path": "assets/chair/textures/modern_arm_chair_01_pillow_diff_1k.jpg",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/modern_arm_chair_01/modern_arm_chair_01_pillow_diff_1k.jpg",
+    "size": 228851,
+    "sha256": "f1935436b460ad5c03ac7ff9d1e1b4aaedcdc9a503d79c257beb8cdac2e9e1f7"
+  },
+  {
+    "path": "assets/wood_floor_nor_gl_1k.jpg",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/wood_floor/wood_floor_nor_gl_1k.jpg",
+    "size": 423303,
+    "sha256": "452247f0d0d1b7fc7f8324ff3b6ed60bcc6de1405f4284eeb8d9bce90d4939c2"
+  },
+  {
+    "path": "assets/wood_floor_diff_1k.jpg",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/wood_floor/wood_floor_diff_1k.jpg",
+    "size": 734493,
+    "sha256": "2a1c07687b6dbb214c4b9213739c6d92d425f1f0fc8ab3ac157f105d78240789"
+  },
+  {
+    "path": "assets/wood_floor_arm_1k.jpg",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/wood_floor/wood_floor_arm_1k.jpg",
+    "size": 447855,
+    "sha256": "a84d9457fa35a76cf8a41da8bcef55387230c6b236819de878799585eda76059"
+  },
+  {
+    "path": "assets/painted_plaster_wall_nor_gl_1k.jpg",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/painted_plaster_wall/painted_plaster_wall_nor_gl_1k.jpg",
+    "size": 900461,
+    "sha256": "8eb01647d126eb5341e2c325821ad48c8ca11349dbef53447c95422c5d91cc9d"
+  },
+  {
+    "path": "assets/painted_plaster_wall_arm_1k.jpg",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/painted_plaster_wall/painted_plaster_wall_arm_1k.jpg",
+    "size": 511105,
+    "sha256": "2f13ed444e3e8f13087bca0890969d30795ed074bcfb11737d1ad6f5f0b53992"
+  },
+  {
+    "path": "assets/painted_plaster_wall_diff_1k.jpg",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/painted_plaster_wall/painted_plaster_wall_diff_1k.jpg",
+    "size": 686726,
+    "sha256": "440310f05af089f2c93353167573403cbc3f805948203237b5d26431eeb9e19c"
+  },
+  {
+    "path": "assets/flis-logo.png",
+    "url": "https://fliskonkurrenten.no/wp-content/uploads/2023/12/logo-Flisa-hvit-e1703620450362.png",
+    "size": 43579,
+    "sha256": "a84eabfb1469de9bdb3b3fd697ffeb6f67def1286ff6618a8c45779ecc42a8f5"
+  },
+  {
+    "path": "assets/heimdal-logo.png",
+    "url": "https://fliskonkurrenten.no/wp-content/uploads/2023/12/heimdal-logo-hvit.png",
+    "size": 15852,
+    "sha256": "f6e43e00bfedd65047ecad323dd4357b69b7dfbec1d824d6ee1392076708bb90"
+  },
+  {
+    "path": "assets/flyt-logo.png",
+    "url": "https://fliskonkurrenten.no/wp-content/uploads/2023/12/flytgulv-logo-hvit.png",
+    "size": 10368,
+    "sha256": "549bf52aa4c5752f13ebf704358b8a1e56eb9cf3edc7daeaee0558f09f30fb0a"
+  },
+  {
+    "path": "assets/windsor-0.webp",
+    "url": "https://fliskonkurrenten.no/wp-content/uploads/2026/05/E6mp-pifWn-U4mniGoxN3v_A9G9D7ItkJiOAwc6aBPkDc9Ckt7B4yuKPcjV5FZeZyS79Ru-Li121GDxZScxae_k.webp",
+    "size": 359930,
+    "sha256": "02dd9f6579b15d6e2d712583729067d5f0bc3423d80d01e862b6de168006e19a"
+  },
+  {
+    "path": "assets/windsor-1.webp",
+    "url": "https://fliskonkurrenten.no/wp-content/uploads/2026/05/E6mp-pifWn-U4mniGoxN3v_A9G9D7ItkJiOAwc7NVfpUdoWus-ItzLHaJjR8E8aSmCL6QOXejwuyTD8MGsxae_k-1.webp",
+    "size": 219790,
+    "sha256": "cfae8cd7e1916207efb655ec3558733e1bff793ca09cc9205f0b9df10d92fcf2"
+  },
+  {
+    "path": "assets/windsor-2.webp",
+    "url": "https://fliskonkurrenten.no/wp-content/uploads/2026/05/E6mp-pifWn-U4mniGoxN3v_A9G9D7ItkJiOAwc7ODvhVJdGtsLEtzuaNdGJ9RZbDkHv9RLiIiQ-2SzkOTsxae_k-1.webp",
+    "size": 261768,
+    "sha256": "0f461653a79b58166626bdc5ca5609c33074b575b5d1a33ba27acfcdcf519108"
+  },
+  {
+    "path": "vendor/build/three.module.js",
+    "url": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+    "size": 1314681,
+    "sha256": "ce1fa418de16a19495a9f72495580e3015d7745c296d3ce0485897f902ddedfb"
+  },
+  {
+    "path": "vendor/examples/jsm/controls/OrbitControls.js",
+    "url": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/controls/OrbitControls.js",
+    "size": 32134,
+    "sha256": "80efaadea4f8a636a65fb0bd08bfef62f3d93a0bb94e2e7500f23176c5c07f4e"
+  },
+  {
+    "path": "vendor/examples/jsm/loaders/GLTFLoader.js",
+    "url": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/loaders/GLTFLoader.js",
+    "size": 110273,
+    "sha256": "45139faddd5aaf48ed2d62203d976e5cbd703db1a592de40527f9f6cf58abd44"
+  },
+  {
+    "path": "vendor/examples/jsm/utils/BufferGeometryUtils.js",
+    "url": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/utils/BufferGeometryUtils.js",
+    "size": 31768,
+    "sha256": "c25b7930e570e9ec56173cd3b866ec8d2e10016630db3937efb439daf1cedbf6"
+  },
+  {
+    "path": "vendor/examples/jsm/geometries/RoundedBoxGeometry.js",
+    "url": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/geometries/RoundedBoxGeometry.js",
+    "size": 4625,
+    "sha256": "d20aeaf7077c459a8d952d215738d7b44fba028440bb862d84b622a34f0c80bb"
+  },
+  {
+    "path": "vendor/examples/jsm/environments/RoomEnvironment.js",
+    "url": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/environments/RoomEnvironment.js",
+    "size": 3606,
+    "sha256": "85869bdd22f7cf0b22e68dcefe6cb710480af0f5c901a76f7a7764fd07fc8014"
+  },
+  {
+    "path": "vendor/LICENSE",
+    "url": "https://cdn.jsdelivr.net/npm/three@0.170.0/LICENSE",
+    "size": 1081,
+    "sha256": "4c40a1ef62450b857c3b2aaf294936304cd552d965fbcd9d32d4c5bcf4ba4454"
+  },
+  {
+    "path": "assets/metro.jpg",
+    "url": "https://fliskonkurrenten.no/wp-content/uploads/2024/01/metropolis-sand-60x60-1.jpg",
+    "sha256": "8a5ed15059b2f31b0104229881cd8d589bfefbe98ed8602d3a32c2120918f5af",
+    "size": 8258
+  },
+  {
+    "path": "assets/cemento.jpg",
+    "url": "https://fliskonkurrenten.no/wp-content/uploads/2024/01/d3d_default_cemento_min_grigio_cassero_2.jpg",
+    "sha256": "cb609c309392968f36849691ff79f57a5cd89b5fa4d52fc87e5d70a62ae81395",
+    "size": 51960
+  },
+  {
+    "path": "assets/social/Dei2J-WCskG.jpg",
+    "url": "https://raw.githubusercontent.com/XS227/SETai/main/deploy/ksh-v6/social-images/Dei2J-WCskG.jpg",
+    "size": 42962,
+    "sha256": "d1674d3887f418769b51402c25fc7ee4db3123763d9319af2229ca3ad0d9f6a8"
+  },
+  {
+    "path": "assets/social/DebWN4dlUqH.jpg",
+    "url": "https://raw.githubusercontent.com/XS227/SETai/main/deploy/ksh-v6/social-images/DebWN4dlUqH.jpg",
+    "size": 40361,
+    "sha256": "c49e093743a93121396b99b88343a948db372a03da281cceb45f0b8d74262220"
+  },
+  {
+    "path": "assets/social/DdeBm2nCLrG.jpg",
+    "url": "https://raw.githubusercontent.com/XS227/SETai/main/deploy/ksh-v6/social-images/DdeBm2nCLrG.jpg",
+    "size": 51056,
+    "sha256": "103dc486aac7ec5362120abf31435cac874b590b67f78488d4455cb06aa7e741"
+  },
+  {
+    "path": "assets/social/DEmVm4CMIrO.jpg",
+    "url": "https://raw.githubusercontent.com/XS227/SETai/main/deploy/ksh-v6/social-images/DEmVm4CMIrO.jpg",
+    "size": 39756,
+    "sha256": "ed95b53c1146a97a5ff3d62faf435f5926f2853fcaf7eeb8f699fdfa4b8634ad"
+  },
+  {
+    "path": "assets/social/DJ84gDPRSfe.jpg",
+    "url": "https://raw.githubusercontent.com/XS227/SETai/main/deploy/ksh-v6/social-images/DJ84gDPRSfe.jpg",
+    "size": 106278,
+    "sha256": "619ef854d1349c7cd5c96612ea7cd68ce3ee2646ab8edac547158ee961d86f29"
+  },
+  {
+    "path": "assets/social/DJqssF3tO5x.jpg",
+    "url": "https://raw.githubusercontent.com/XS227/SETai/main/deploy/ksh-v6/social-images/DJqssF3tO5x.jpg",
+    "size": 52490,
+    "sha256": "6e92a333854dc86e304b053ac6582b56690ca34b1721da8af147c0fb0fa33c82"
+  }
+]

@@ -1,0 +1,15 @@
+const assert=require('node:assert/strict'),C=require('./room-data.js');
+let s=C.defaults();let t=C.totals(s);
+assert.equal(t.packages,21);assert.equal(t.orderArea,22.47);assert.equal(t.floorCost,21324.03);assert.equal(t.missing,2);
+s.items[0].price=12000;s.delivery=1000;assert.equal(C.totals(s).total,34324.03);assert.equal(C.totals(s).missing,0);
+s.floor='metro';assert.equal(C.totals(s).packages,16);assert.equal(C.totals(s).floorCost,12879.36);
+s.floorPrices.metro=0;assert.equal(C.totals(s).floorCost,0);s.floor='windsor';assert.equal(C.unitPrice(s),949);
+s.floor='cemento';assert.equal(C.totals(s).packages,16);assert.equal(C.totals(s).floorCost,14952.96);
+s.width=6;assert.equal(C.totals(s).packages,19);assert.equal(C.totals(s).orderArea,27.36);
+s.floor='oak';assert.equal(C.unitPrice(s),null);assert.equal(C.totals(s).missing,1);s.floorPrices.oak=500;assert.equal(C.totals(s).floorCost,13200);
+s.items[0].rotation=90;s.items[0].x=5;assert.equal(C.outside(s,s.items[0]),true);
+assert.equal(C.price('garbage'),null);assert.equal(C.price(''),null);assert.equal(C.price(0),0);
+const legacy={width:6,length:4,height:2.5,floor:'slate',floorPrices:{slate:500},items:[{id:'old',type:'sofa',size:[2.4,.86,.96],price:12000}],selected:'old'};
+const migrated=C.normalize(legacy);assert.equal(migrated.width,6);assert.equal(migrated.floor,'windsor');assert.equal(C.unitPrice(migrated),949);assert.equal(migrated.items[0].price,12000);
+const empty=C.normalize({items:[],delivery:0});assert.equal(empty.items.length,0);assert.equal(C.totals(empty).missing,0);
+assert.equal(C.normalize({width:100,length:-1,height:NaN}).width,12);console.log('PASS: package rounding, totals, zero/missing prices, material isolation, fit and migration.');

@@ -1,0 +1,42 @@
+/* SETAEI / Heimslig v4 — prototype visual enhancements, 31.10.2026 */
+:root { --h4-ink:#332f27; --h4-leaf:#334c3c; --h4-sand:#e9e7dc; --h4-cream:#f8f6ef; --h4-gold:#b79670; }
+.breadcrumb,.breadcrumbs,.breadcrumb-trail,.breadcrumb-nav,.crumbs,nav[aria-label="Brødsmulesti"],nav[aria-label="Breadcrumb"],nav[aria-label="breadcrumbs"] { display:none!important; margin:0!important; padding:0!important; }
+body .heimslig-v4-navlinks { display:inline-flex; align-items:center; gap:12px; flex-wrap:wrap; }
+.heimslig-v4-navlinks a { color:inherit!important; text-decoration:none!important; font-size:.86rem; font-weight:650; letter-spacing:.02em; border-bottom:1px solid currentColor; padding:4px 0; }
+.heimslig-v4-navlinks a:hover { color:var(--h4-gold)!important; }
+.heimslig-v4-panel { background:linear-gradient(138deg,#eeece2,#f9f7f1 63%,#e9e6dc); color:var(--h4-ink); border:1px solid #d7d2c5; padding:clamp(24px,4vw,52px); border-radius:4px; max-width:1300px; margin:35px auto 40px; font-family:inherit; clear:both; }
+.heimslig-v4-panel * { box-sizing:border-box; }
+.heimslig-v4-panel .h4-eyebrow { text-transform:uppercase; color:#947b5f; letter-spacing:.17em; font-size:.72rem; font-weight:700; margin:0 0 12px; }
+.heimslig-v4-panel h2 { font-family:Georgia,'Times New Roman',serif!important; font-size:clamp(2rem,4vw,3.8rem); font-weight:400; letter-spacing:-.045em; line-height:1.06; margin:0 0 10px; color:var(--h4-ink); }
+.heimslig-v4-panel .h4-intro { color:#666459; max-width:650px; font-size:1rem; line-height:1.65; margin:0 0 26px; }
+.h4-calculator { display:grid; grid-template-columns:minmax(0,1fr) minmax(230px,.43fr); gap:30px; align-items:start; }
+.h4-lines { display:grid; gap:12px; }
+.h4-line { display:grid; grid-template-columns:minmax(100px,1.3fr) minmax(70px,.6fr) minmax(104px,1fr) 36px; gap:10px; align-items:end; }
+.h4-line label,.h4-shipping label { display:block; font-size:.72rem; font-weight:700; color:#5a6359; margin:0 0 7px; }
+.h4-line input,.h4-line select,.h4-shipping input { font-family:inherit; width:100%; height:46px; font-size:16px; border-radius:2px; border:1px solid #c6c8bd; background:#fffefa; padding:10px; outline-offset:3px; color:#29362d; }
+.h4-line button.h4-remove { height:46px; width:36px; background:transparent; border:1px solid #c6c8bd; color:#546454; cursor:pointer; font-size:1.2rem; }
+.h4-line button.h4-remove:disabled { opacity:.32; cursor:not-allowed; }
+.h4-actions { display:flex; gap:12px; flex-wrap:wrap; align-items:center; margin-top:15px; }
+.h4-button { background:var(--h4-leaf); border:1px solid var(--h4-leaf); color:#fff!important; text-decoration:none!important; min-height:42px; padding:10px 17px; cursor:pointer; font:600 .84rem inherit; display:inline-flex; align-items:center; justify-content:center; }
+.h4-button.ghost { background:transparent; color:var(--h4-leaf)!important; }
+.h4-shipping { margin:20px 0; max-width:230px; }
+.h4-summary { background:#344b3c; color:#f8f6ee; padding:27px; min-height:270px; }
+.h4-summary .h4-sumlabel { letter-spacing:.12em; text-transform:uppercase; font-size:.68rem; opacity:.78; }
+.h4-summary output { display:block; font:400 clamp(2rem,3.7vw,3.2rem)/1.22 Georgia,'Times New Roman',serif; margin:17px 0; word-break:break-word; color:#fff; }
+.h4-summary p { font-size:.81rem; line-height:1.6; opacity:.85; margin:0 0 22px; }
+.h4-summary .h4-button { background:#f9f6ec; color:#344b3c!important; border-color:#f9f6ec; width:100%; }
+.h4-fineprint { color:#6b6c62; font-size:.76rem; line-height:1.6; margin:16px 0 0; max-width:750px; }
+.h4-social-promo { margin:28px auto 52px; max-width:1300px; padding:clamp(30px,5vw,64px); color:#f8f6ee; background:linear-gradient(135deg,#304b3e,#647869); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:20px; }
+.h4-social-promo h2 { font:400 clamp(2rem,4vw,3.5rem)/1.1 Georgia,serif; letter-spacing:-.03em; margin:0 0 8px; color:inherit; }
+.h4-social-promo p { max-width:500px; margin:0; color:#ebeae1; }
+.h4-social-promo a { background:#f6f3e9; color:#344a3e; padding:15px 22px; font-weight:700; text-decoration:none; }
+@media(max-width:760px) {
+ .heimslig-v4-panel { margin:22px 15px; padding:24px 17px; }
+ .h4-calculator { grid-template-columns:1fr; }
+ .h4-line { grid-template-columns:minmax(0,1fr) 76px minmax(90px,.84fr) 29px; gap:6px; }
+ .h4-line input,.h4-line select { padding:6px; }
+ .h4-line button.h4-remove { width:29px; }
+ .h4-summary { min-height:auto; }
+ .h4-social-promo { margin:24px 15px; }
+}
+@media print { .h4-remove,.h4-actions,.h4-social-promo { display:none!important; } .h4-summary { print-color-adjust:exact; -webkit-print-color-adjust:exact; } }
