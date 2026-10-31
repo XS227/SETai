@@ -90,10 +90,11 @@ function installRoomPreview(){
  box.addEventListener('close',()=>{document.body.style.overflow='';mv.removeAttribute('src');});
  for(const b of box.querySelectorAll('[data-tone]'))b.addEventListener('click',()=>{box.dataset.tone=b.dataset.tone;box.querySelectorAll('[data-tone]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));});
 }
+let tries=0;
 function init(){
  installChrome();installGallery();installRoomPreview();
- // One late check covers the three dynamic product pages, which build markup in main.js.
- if(location.pathname.includes('/produkt/') && !document.querySelector('model-viewer[data-ksh-room-ready]'))setTimeout(init,250);
+ // Bounded late check for dynamic pages: never retry indefinitely if model-viewer fails.
+ if(location.pathname.includes('/produkt/') && !document.querySelector('model-viewer[data-ksh-room-ready]') && ++tries<16)setTimeout(init,350);
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
 })();
