@@ -13,7 +13,7 @@ for slug in vedum-flow-takegronn zup-spilepanel-eik-sort colorker-althea-sand-de
  [[ -s "$ROOT/fliskonkurrenten/produkt/$slug/assets/model.glb" ]] || { echo "Mangler produktmodell: $slug" >&2; exit 2; }
 done
 [[ -s "$ROOT/fliskonkurrenten/produkt/sanipro-sense/assets/sense-hero.webp" ]] || { echo 'Mangler Sense-produktbilder.' >&2; exit 2; }
-curl -fsSL "$BASE/install.sh" -o "$TMP/base-install.sh"
+curl -fsSL --retry 2 --max-time 60 "$BASE/install.sh" -o "$TMP/base-install.sh"
 KSH_SOURCE_URL="$BASE" bash "$TMP/base-install.sh" "$ROOT"
 BACKUP="${KSH_BACKUP_ROOT:-/var/backups/setaei}/sense-v3-$(date +%Y%m%d-%H%M%S)-$$"
 python3 - "$ROOT" "$TMP" "$BACKUP" <<'PY'
