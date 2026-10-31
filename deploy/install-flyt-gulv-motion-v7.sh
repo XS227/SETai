@@ -42,7 +42,7 @@ if [[ "$FAILED" != 0 ]]; then
   if [[ -s "$BACKUP" ]]; then cp -a "$BACKUP" "$TARGET/index.html"; fi
   exit 2
 fi
-if ! curl -fsSL --max-time 15 'https://setai.no/ksh/flyt-gulv/?flyt-release=v7-content' | grep -q 'flyt-motion-v7.js'; then
+if ! curl -fsSL --max-time 15 'https://setai.no/ksh/flyt-gulv/?flyt-release=v7-content' -o "$WORK/live.html" || ! grep -q 'flyt-motion-v7.js' "$WORK/live.html"; then
   echo 'The server is still serving the old page. Rolling back.' >&2
   if [[ -s "$BACKUP" ]]; then cp -a "$BACKUP" "$TARGET/index.html"; fi
   exit 3
