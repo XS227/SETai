@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "study": "SETAEI-ET02",
+  "revision": "2026-10-31-target-registration-01",
+  "source": "Explicitly user-supplied public Ethereum addresses in this conversation, with user declaration of ownership; no independent ownership verification",
+  "target_bits": 160,
+  "registered_targets": [
+    {
+      "id": "R01",
+      "address": "0x2F2D854c1d6d5Bb8936bB85bC07c28EbB42c9b10",
+      "source": "user supplied",
+      "status": "registered_public_reference"
+    },
+    {
+      "id": "R02",
+      "address": "0x0e131e840e46430071A08E221B093743eD69e00B",
+      "source": "user supplied",
+      "status": "registered_public_reference"
+    },
+    {
+      "id": "R03",
+      "address": "0x69e449cDBCb7dd89b1a236F0C815a3301C227e93",
+      "source": "user supplied",
+      "status": "registered_public_reference"
+    },
+    {
+      "id": "R04",
+      "address": "0xAFa2A89CB43619677d9C72E81f6d4c8a730a1022",
+      "source": "user supplied",
+      "status": "registered_public_reference"
+    },
+    {
+      "id": "R05",
+      "address": "0x6073Cf6D98404319F035D368541c765C06354169",
+      "source": "user supplied",
+      "status": "registered_public_reference"
+    },
+    {
+      "id": "R06",
+      "address": "0xa1a45e91164cDab8FA596809a9B24f8d4FDBE0F3",
+      "source": "user supplied",
+      "status": "registered_public_reference"
+    },
+    {
+      "id": "R07",
+      "address": "0x7D9557F7ceC9A8077379E6235CfCC60b93E2ef11",
+      "source": "user supplied",
+      "status": "registered_public_reference"
+    },
+    {
+      "id": "R08",
+      "address": "0x8AE880b5D35305Da48b63CE3e52B22D17859f293",
+      "source": "user supplied",
+      "status": "registered_public_reference"
+    },
+    {
+      "id": "R09",
+      "address": "0xa6c3a9abcA3B67B51EFb860FDc60A15467a15c46",
+      "source": "user supplied",
+      "status": "registered_public_reference"
+    }
+  ],
+  "reference_slot_10": {
+    "id": "R10",
+    "address": null,
+    "status": "unresolved_existing_target",
+    "message": "Original target address is not exposed in the public live API; no invented target is substituted."
+  },
+  "study_mode": "address_only_statistical_illustration",
+  "never_store_private_keys": true,
+  "agent_status": "not_modified"
+}
