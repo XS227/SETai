@@ -32,8 +32,8 @@ if 'KSH_SHOWROOM_DARKROOM_V121' not in s:
 
 category=base/'kategorier/category.js'
 s=category.read_text()
-needle="""'<div class="k13-detail-actions"><a href="/ksh/fliskonkurrenten/showroom/">Test 3D-showroom ↗</a><a href="/ksh/fliskonkurrenten/produkter/">Se produktstudiene ↗</a></div></div>'+"""
-replacement="""'<div class="k13-detail-actions">'+(technical?'<a href="'+safe(category.source)+'" target="_blank" rel="noopener noreferrer">Se produkter og priser ↗</a><a href="/ksh/fliskonkurrenten/leverandorer/?tema=teknisk">Relevante leverandører ↗</a>':'<a href="/ksh/fliskonkurrenten/showroom/">Test 3D-showroom ↗</a><a href="/ksh/fliskonkurrenten/produkter/">Se produktstudiene ↗</a>')+'</div></div>'+"""
+needle="""<div class="k13-detail-actions"><a href="/ksh/fliskonkurrenten/showroom/">Test 3D-showroom ↗</a><a href="/ksh/fliskonkurrenten/produkter/">Se produktstudiene ↗</a></div></div>"""
+replacement="""<div class="k13-detail-actions">'+(technical?'<a href="'+safe(category.source)+'" target="_blank" rel="noopener noreferrer">Se produkter og priser ↗</a><a href="/ksh/fliskonkurrenten/leverandorer/?tema=teknisk">Relevante leverandører ↗</a>':'<a href="/ksh/fliskonkurrenten/showroom/">Test 3D-showroom ↗</a><a href="/ksh/fliskonkurrenten/produkter/">Se produktstudiene ↗</a>')+'</div></div>"""
 if 'category.source' not in s or needle in s:
     assert s.count(needle)==1,'Technical CTA source segment not found'
     s=s.replace(needle,replacement,1)
