@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # SETAEI KSH Fliskonkurrenten v13: correct live Vedum 3D and all-category banners.
 set -euo pipefail
-ROOT="\${1:-/var/www/setai/ksh/fliskonkurrenten}"
+ROOT="${1:-/var/www/setai/ksh/fliskonkurrenten}"
 RAW="https://raw.githubusercontent.com/XS227/SETai/main/deploy/ksh-v13"
 [[ -f "$ROOT/produkt/vedum-flow-takegronn/assets/model-turbine-v9.glb" && -f "$ROOT/produkter/index.html" ]] || {
  echo "Required KSH product assets not present; no changes made." >&2;exit 2;
