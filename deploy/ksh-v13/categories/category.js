@@ -3,7 +3,7 @@
  'use strict';
  const route='/ksh/fliskonkurrenten/kategorier/';
  const host=document.getElementById('k13-view');
- const safe=x=>String(x||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;':'&quot;',"'":'&#39;'}[c]));
+ const safe=x=>String(x||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  const encode=s=>encodeURIComponent(s);
  const image=s=>route+String(s||'assets/fliser-bad.webp');
  const menu=document.getElementById('k13-menu'),head=document.querySelector('.k13-head');
@@ -38,6 +38,8 @@
    '</div></section>';
   }).join('');
   host.innerHTML=nav+'<div id="k13-groups">'+sections+'</div><section class="k13-ending"><p class="k13-eyebrow">DESIGNFORSLAG / DIGITALT PRODUKTSTUDIO</p><h2>Vil du se materialene<br><em>i et ekte rom?</em></h2><p>Opplev hvordan produkter kan vises, kombineres og beregnes i Fliskonkurrentens foreslåtte 3D-løsning.</p><a href="/ksh/fliskonkurrenten/showroom/">Åpne 3D-showroom ↗</a></section>';
+  // Hash navigation must run after async catalog content is generated.
+  if(location.hash)requestAnimationFrame(()=>document.getElementById(location.hash.slice(1))?.scrollIntoView({block:'start'}));
  }
  function detail(data,slug){
   let group,category;
