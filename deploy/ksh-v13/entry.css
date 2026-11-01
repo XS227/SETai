@@ -1,0 +1,15 @@
+/* KSH v13 homepage categories, scoped to Fliskonkurrenten proposal. */
+.kh13-home{background:#ece7dd;color:#26231f;padding:clamp(80px,9vw,145px) max(4vw,18px);font-family:'DM Sans',Arial,sans-serif}
+.kh13-wrap{max-width:1380px;margin:auto}.kh13-heading{display:grid;grid-template-columns:1.2fr 1fr;align-items:end;gap:25px;margin:0 0 37px}
+.kh13-eyebrow{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:#876f56;font-weight:700}.kh13-heading h2{font:400 clamp(54px,6vw,96px)/1.02 'Playfair Display',Georgia,serif;letter-spacing:-.06em;margin:15px 0;color:#29251f}
+.kh13-heading h2 em{font-weight:400}.kh13-heading>p{max-width:415px;line-height:1.8;color:#645c53;margin:0 0 8px;justify-self:end;font-size:15px}
+.kh13-banners{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}.kh13-banner{display:block;position:relative;min-width:0;overflow:hidden;border-radius:4px;aspect-ratio:1.19;text-decoration:none;color:#fff!important;background:#55514d;isolation:isolate}
+.kh13-banner:nth-child(1),.kh13-banner:nth-child(6){grid-column:span 2;aspect-ratio:2.45}
+.kh13-banner img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .65s}.kh13-banner:hover img{transform:scale(1.07)}
+.kh13-banner-fade{position:absolute;inset:0;background:linear-gradient(180deg,#09090930,#17130f16 35%,#0e0c09b8);z-index:1}
+.kh13-title{position:absolute;bottom:25px;left:25px;right:70px;z-index:2}.kh13-title small{display:block;font-size:10px;letter-spacing:.15em;font-weight:700;margin-bottom:9px;color:#f7f4e5}.kh13-title strong{display:block;font:400 clamp(29px,3.2vw,47px)/1.1 'Playfair Display',Georgia,serif;letter-spacing:-.03em}
+.kh13-arrow{position:absolute;right:19px;bottom:22px;display:grid;place-items:center;z-index:2;border:1px solid #ffffff88;border-radius:50%;width:41px;height:41px;font-size:23px}
+.kh13-all{display:inline-flex;gap:12px;margin-top:31px;border:1px solid #544739;padding:12px 21px;border-radius:40px;text-decoration:none!important;color:#2d2924!important;font-size:12px;font-weight:700}
+@media(max-width:950px){.kh13-banners{grid-template-columns:repeat(2,minmax(0,1fr))}.kh13-banner:nth-child(6){grid-column:span 1;aspect-ratio:1.19}.kh13-heading{grid-template-columns:1fr}.kh13-heading>p{justify-self:start}.kh13-heading h2{font-size:clamp(46px,8vw,77px)}}
+@media(max-width:560px){.kh13-home{padding:70px 16px}.kh13-banners{grid-template-columns:1fr;gap:11px}.kh13-banner,.kh13-banner:nth-child(1),.kh13-banner:nth-child(6){grid-column:span 1;aspect-ratio:1.26}.kh13-title{bottom:19px;left:19px}.kh13-title strong{font-size:36px}.kh13-arrow{right:14px;bottom:18px}.kh13-heading h2{font-size:49px}}
+@media(prefers-reduced-motion:reduce){.kh13-banner img{transition:none}}
