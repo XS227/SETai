@@ -5,7 +5,7 @@ ROOT="/var/www/setai/kashi"
 if [[ "$#" -gt 0 ]]; then ROOT="$1"; fi
 [[ "$ROOT" == /* && -d "$ROOT" && -f "$ROOT/index.html" ]] || { echo "ERROR: KASHI document root not found: $ROOT" >&2; exit 2; }
 command -v curl >/dev/null || { echo "ERROR: curl required" >&2; exit 2; }
-RAW="https://raw.githubusercontent.com/XS227/SETai/1ca40c136a276f40a7fa1d48147d3bcfced6ce52/deploy/kashi-partners-v1/index.html"
+RAW="https://raw.githubusercontent.com/XS227/SETai/35cff570db75c4d63efdd8ad4f8702551e395b80/deploy/kashi-partners-v1/index.html"
 TMP="$(mktemp)"; trap 'rm -f "$TMP"' EXIT
 curl -fLsS --retry 3 --max-time 30 "$RAW" -o "$TMP"
 python3 - "$TMP" <<'PY'
