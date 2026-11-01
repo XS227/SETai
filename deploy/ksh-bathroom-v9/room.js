@@ -63,6 +63,7 @@ function render(name){ui.querySelector('#sr5-title').textContent=labels[name];
    }).join('')+
    '<button type="button" class="sr8-clear" id="sr8-clear" '+(!Object.values(enabled).some(Boolean)?'disabled':'')+'>Fjern alle produkter fra rommet</button>'+
    '<p>Modellene er visuelle produktstudier. Vedum står mot venstre vegg; flis og spileplate vises som veggmaterialer.</p>'+
+   '<figure class="sr9-stone-reference"><img src="/ksh/fliskonkurrenten/assets/bathroom-v9/turbine-grey.jpg" loading="lazy" alt="Vedum Turbine Grey komposittstein mønster"><figcaption>Vedum Turbine Grey · original materialreferanse fra produsenten. Naturlig åremønster og grå nyanser.</figcaption></figure>'+
    (enabled.stone?'<figure class="sr5-stone"><img src="/ksh/assets/ksh-v6/assets/social/DJqssF3tO5x.jpg" alt="Naturstein fra Heimdal"><figcaption>Heimdal · referansefoto, ikke en priset 3D-modell.</figcaption></figure>':'');
   options.querySelectorAll('[data-product]').forEach(b=>b.onclick=()=>{
    const key=b.dataset.product;enabled[key]=!enabled[key];update();setStatus();render(name);
