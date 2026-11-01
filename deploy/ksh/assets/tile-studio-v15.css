@@ -1,0 +1,72 @@
+/* SETAEI KSH tile showroom v15 | shared standalone + embedded product page */
+#reisen .sr5-tools{position:absolute!important;top:13px!important;left:13px!important;right:13px!important;width:auto!important;max-width:calc(100% - 125px)!important;height:auto!important;display:flex!important;justify-content:flex-start!important;align-content:flex-start!important;align-items:flex-start!important;flex-wrap:wrap!important;gap:6px!important;z-index:37!important;}
+#reisen .sr5-tools button{box-sizing:border-box!important;display:flex!important;flex-direction:column!important;justify-content:center!important;align-items:center!important;gap:4px!important;position:relative!important;flex:0 0 67px!important;width:67px!important;min-width:0!important;height:56px!important;min-height:56px!important;max-height:56px!important;padding:6px 3px!important;margin:0!important;border-radius:11px!important;color:#24352b!important;background:#faf8f2f5!important;border:1px solid #35453825!important;box-shadow:0 3px 10px #1a1a1a1a!important;line-height:1!important;text-align:center!important;white-space:nowrap!important;}
+#reisen .sr5-tools button svg{flex:0 0 19px!important;display:block!important;width:19px!important;height:19px!important;min-width:19px!important;max-width:19px!important;max-height:19px!important;margin:0!important;padding:0!important;}
+#reisen .sr5-tools button .sr12-tool-label{font-family:Arial,sans-serif!important;font-size:9.2px!important;font-weight:750!important;line-height:1.18!important;letter-spacing:-.025em!important;display:block!important;position:static!important;width:auto!important;height:auto!important;padding:0!important;margin:0!important;overflow:visible!important;white-space:nowrap!important;color:inherit!important;max-width:100%!important;text-align:center!important;}
+#reisen .sr5-tools button[data-tool="tiles"],#reisen .sr5-tools button[data-tool="products"]{background:#315445!important;color:#fff!important;border-color:#315445!important;}
+#reisen .sr5-tools button[data-tool="tiles"]{background:#ad7454!important;border-color:#ad7454!important;}
+#reisen .sr5-tools button[aria-expanded="true"]{background:#23342b!important;border-color:#23342b!important;color:#fff!important;}
+#reisen .sr5-tools .sr5-tooltip{display:none!important;}
+#reisen .sr11-fullscreen{z-index:40!important;}
+#reisen .sr5-drawer{z-index:49!important;}
+#reisen .sr5-tools button:focus-visible,#reisen .sr15-tile:focus-visible,#reisen .sr15-match button:focus-visible{outline:3px solid #e99d57!important;outline-offset:2px!important;}
+#reisen .sr15-library-top{position:relative;padding:16px 0;}
+#reisen .sr15-library-top label{display:block;color:#25392d;font-size:13px;font-weight:750;margin:0 0 4px;}
+#reisen .sr15-library-top input{min-height:44px;width:100%;box-sizing:border-box;font-size:13px;border:1px solid #c7ccbf;border-radius:7px;padding:10px;background:#fff;}
+#reisen .sr15-filter{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px;}
+#reisen .sr15-filter button{font:650 10px/1.2 Arial,sans-serif;min-height:34px;padding:8px 10px;border-radius:30px;border:1px solid #c4c9bf;background:#fff;color:#334438;}
+#reisen .sr15-filter button[aria-pressed="true"]{background:#335343;color:#fff;border-color:#335343;}
+#reisen .sr15-library-count{font-size:11px;color:#747d72;padding:0 0 9px;}
+#reisen .sr15-tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;}
+#reisen .sr15-tile{display:flex;flex-direction:column;align-items:start;text-align:left;gap:5px;min-width:0;border:1px solid #d7d9d0;border-radius:8px;background:#fff;color:#2b302b;padding:8px;cursor:pointer;}
+#reisen .sr15-tile[hidden]{display:none;}
+#reisen .sr15-tile[aria-pressed="true"]{border:2px solid #315645;background:#e9eee7;}
+#reisen .sr15-tile img{width:100%;height:auto;aspect-ratio:1;object-fit:cover;border-radius:4px;}
+#reisen .sr15-tile span{font:700 11px/1.35 Arial,sans-serif;display:block;overflow-wrap:anywhere;}
+#reisen .sr15-tile small{font-size:10px;color:#717d72;margin:0;}
+#reisen .sr15-disclaimer{font:11px/1.5 Arial,sans-serif;color:#778075;margin:17px 0!important;}
+#reisen .sr15-surface{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:14px 0;border-bottom:1px solid #ddd;}
+#reisen .sr15-surface>span{flex:1 1 100%;font-size:12px;font-weight:750;}
+#reisen .sr15-surface button{padding:10px 15px;border-radius:6px;min-height:40px;background:#fff;border:1px solid #bbb;cursor:pointer;color:#283429;font-size:12px;}
+#reisen .sr15-surface button[aria-pressed=true]{background:#315445;color:#fff;border-color:#315445;}
+#reisen .sr15-active{display:grid;grid-template-columns:62px 1fr auto;gap:9px;align-items:center;background:#e9ebe4;padding:9px;border-radius:8px;min-width:0;}
+#reisen .sr15-active img{width:62px;height:62px;object-fit:cover;border-radius:5px;}
+#reisen .sr15-active div{display:flex;flex-direction:column;gap:3px;min-width:0;}
+#reisen .sr15-active strong{font-size:12px;overflow-wrap:anywhere;color:#26362c;}
+#reisen .sr15-active small{font-size:9px;color:#61746a;margin:0;}
+#reisen .sr15-active span{font-size:11px;color:#59665b;}
+#reisen .sr15-active button{background:#fff;border:1px solid #b6b9b1;padding:8px;border-radius:5px;font-size:10px;color:#26362c;}
+#reisen .sr15-match{border-top:1px solid #ddd;margin:12px 0 3px;padding-top:14px;}
+#reisen .sr15-match-head{display:flex;flex-direction:column;gap:5px;color:#26362d;}
+#reisen .sr15-match-head>span{font-size:9px;letter-spacing:.14em;color:#9a6a50;font-weight:750;}
+#reisen .sr15-match-head>strong{font-size:15px;}
+#reisen .sr15-match-head small{font-size:11px;color:#70776d;}
+#reisen .sr15-match-choices{display:flex;flex-direction:column;gap:8px;margin-top:13px;}
+#reisen .sr15-match-choices button{display:flex;align-items:center;justify-content:flex-start;gap:8px;border:1px solid #d4d8cd;background:#fff;border-radius:6px;padding:10px;text-align:left;color:#28352b;cursor:pointer;}
+#reisen .sr15-match-choices button[aria-pressed=true]{border:2px solid #335d42;background:#ebf1e9;}
+#reisen .sr15-match-choices button>span:nth-child(2){font-size:11px;font-weight:700;flex:1;}
+#reisen .sr15-match-choices button small{font-size:9px;color:#697266;white-space:nowrap;}
+#reisen .sr15-dots{display:flex;}
+#reisen .sr15-dots i{width:16px;height:24px;border-radius:3px 0 0 3px;border:1px solid #0002;}
+#reisen .sr15-dots i+i{border-radius:0 3px 3px 0;}
+#reisen .sr15-tip{font-size:11px!important;line-height:1.4!important;margin:9px 0!important;}
+#reisen .sr15-addons{margin-top:12px;display:flex;flex-direction:column;gap:8px;}
+#reisen .sr15-addons>strong{font-size:12px;}
+#reisen .sr15-addons button{border:1px solid #d6d8ce;border-radius:5px;padding:10px;display:flex;gap:4px;flex-direction:column;align-items:flex-start;background:#fff;color:#2c392f;text-align:left;}
+#reisen .sr15-addons button span{font:700 11px/1.35 Arial,sans-serif;}
+#reisen .sr15-addons button small{font-size:10px;color:#598065;margin:0;}
+#reisen .sr5-drawer{scrollbar-width:thin;}
+@media(max-width:700px){
+ #reisen .sr5-tools{left:10px!important;top:10px!important;right:10px!important;max-width:calc(100% - 74px)!important;gap:5px!important;}
+ #reisen .sr5-tools button{flex-basis:57px!important;width:57px!important;height:53px!important;min-height:53px!important;max-height:53px!important;padding:5px 1px!important;}
+ #reisen .sr5-tools button .sr12-tool-label{font-size:8.5px!important;}
+ #reisen .sr5-tools button svg{flex-basis:18px!important;width:18px!important;height:18px!important;}
+ #reisen .sr5-drawer{top:125px!important;bottom:105px!important;max-height:calc(100% - 230px)!important;}
+}
+@media(max-width:360px){
+ #reisen .sr5-tools{max-width:calc(100% - 68px)!important;gap:4px!important;}
+ #reisen .sr5-tools button{flex-basis:50px!important;width:50px!important;}
+ #reisen .sr5-tools button .sr12-tool-label{font-size:7.8px!important;}
+ #reisen .sr5-drawer{top:130px!important;}
+}
+@media(min-width:701px) and (max-width:1000px){#reisen .sr5-tools button{flex-basis:62px!important;width:62px!important;}}
