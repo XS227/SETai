@@ -69,7 +69,7 @@ for catSlug,url,count in sources:
 
 show3d=[
  ('sanipro-sense','Sanipro Sense','badekar','/ksh/fliskonkurrenten/produkt/sanipro-sense/assets/sense-hero.webp'),
- ('sanipro-enzo','Sanipro Enzo','badekar','/ksh/fliskonkurrenten/produkt/sanipro-enzo/assets/enzo-hero.webp'),
+ ('sanipro-enzo','Sanipro Enzo','badekar','https://fliskonkurrenten.no/wp-content/uploads/2025/09/E6mp-pifWn-U4mniGoxN3v_A9G9D7ItkJiOAwc6fAvhdeYCqubJ3z7SPJmYrEJfFzXuuFO-KjV61EmxSGMxHbvwV-1-600x600.webp'),
  ('vedum-flow-takegronn','Vedum Flow · Tåkegrønn','baderomsinnredning','/ksh/fliskonkurrenten/produkt/vedum-flow-takegronn/assets/hero.webp'),
  ('colorker-althea-sand-dekor','Colorker Althea Sand Dekor','fliser-bad','/ksh/fliskonkurrenten/produkt/colorker-althea-sand-dekor/assets/hero.webp'),
  ('zup-spilepanel-eik-sort','Z-UP Spilepanel · Eik Sort','spileplater-utvalg','/ksh/fliskonkurrenten/produkt/zup-spilepanel-eik-sort/assets/hero.webp')
