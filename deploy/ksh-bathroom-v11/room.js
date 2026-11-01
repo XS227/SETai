@@ -231,8 +231,8 @@ function render(name){ui.querySelector('#sr5-title').textContent=labels[name];
   });
   const brightness=options.querySelector('#sr11-brightness'),
         temperature=options.querySelector('#sr11-temperature');
-  brightness.oninput=()=>{state.lightBrightness=+brightness.value;options.querySelector('#sr11-brightness-value').textContent=brightness.value+' %';update();};
-  temperature.oninput=()=>{state.lightTemperature=+temperature.value;options.querySelector('#sr11-temperature-value').textContent=temperature.value+' K';update();};
+  brightness.oninput=()=>{state.lightBrightness=+brightness.value;options.querySelector('#sr11-brightness-value').textContent=brightness.value+' %';persist();if(renderer.is3D)renderer.applyLighting(state);};
+  temperature.oninput=()=>{state.lightTemperature=+temperature.value;options.querySelector('#sr11-temperature-value').textContent=temperature.value+' K';persist();if(renderer.is3D)renderer.applyLighting(state);};
   return;
  }
  if(name==='views'){
