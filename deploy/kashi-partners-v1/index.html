@@ -35,19 +35,37 @@ footer{border-top:1px solid var(--line);padding:24px 28px;color:#91a2a3;font-siz
 @media(max-width:700px){.top-inner{padding:12px 17px;flex-wrap:wrap}.top-right{margin-left:auto}.menu{display:inline-block}.nav{display:none;width:100%;flex-direction:column;align-items:stretch;padding:12px 0}.nav.open{display:flex}.hero{padding:34px 0 27px}.hero p{font-size:14px}main{padding:0 15px 45px}.metric{padding:16px}.metric b{font-size:27px}.metric span{font-size:10px}.two{grid-template-columns:1fr}.form-grid{grid-template-columns:repeat(2,1fr)}.output{grid-template-columns:1fr}.sources{grid-template-columns:1fr}.desktop-table{display:none}.mobile-cards{display:block}.section{margin-top:34px}.controls{width:100%}.controls input,.controls select{flex:1;min-width:110px}}
 @media(max-width:370px){.top-right .pill{display:none}.metrics{gap:9px}.form-grid{grid-template-columns:1fr}.catalog-row{grid-template-columns:95px 1fr 45px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+
+.lang-set{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:999px;overflow:hidden;margin-left:auto}
+.lang-set a{font-size:11px;padding:7px 10px;text-decoration:none;color:var(--muted)}.lang-set a.active{color:#102027;background:var(--gold);font-weight:750}
+.scenario-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.scenario{background:linear-gradient(145deg,#1c2e32,#111e24);border:1px solid #38514d;border-radius:16px;padding:20px}
+.scenario header{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.scenario header h3{font-size:18px;font-weight:630;margin:0}
+.scenario header span{color:var(--gold);font-size:11px}
+.scenario p{color:var(--muted);font-size:11px;margin:7px 0 14px}
+.scenario dl{margin:0}
+.scenario dl div{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:9px 0;border-top:1px solid #2b3e42}
+.scenario dt{color:#a4b5b5;font-size:11px}.scenario dd{margin:0;font-variant-numeric:tabular-nums;font-size:13px;text-align:right}
+.scenario .total{border-top:1px solid #69837b;margin-top:6px;padding-top:14px}
+.scenario .total dd{font-size:25px;color:var(--gold);font-weight:650}
+.verified{font-size:11px;color:#abd7c8;border:1px solid #47685e;padding:5px 9px;border-radius:100px}
+@media(max-width:1000px){.scenario-grid{grid-template-columns:1fr}.scenario dl{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 15px}.scenario dl div{min-width:0}}
+@media(max-width:700px){.scenario dl{display:block}.lang-set{margin-left:0}.top-right{margin-left:auto}.nav{order:5}}
+
 </style>
 </head>
 <body>
 <header class="top"><div class="top-inner">
 <a class="logo" href="/kashi/" aria-label="KASHI hovedside">KASHI<small>ICELAND · BY SETAEI</small></a>
 <nav class="nav" id="nav" aria-label="Sidenavigasjon">
-<a href="#oversikt">Leverandører</a><a href="#utvalg">Produktutvalg</a><a href="#logistikk">Levering</a><a href="#kalkulator">Priskalkulator</a><a href="#kilder">Kilder</a>
+<a href="#oversikt">Leverandører</a><a href="#utvalg">Produktutvalg</a><a href="#import2026">Importavgifter</a><a href="#logistikk">Levering</a><a href="#kalkulator">Priskalkulator</a><a href="/kashi/seo/">Markedsanalyse</a><a href="#kilder">Kilder</a>
 </nav>
-<div class="top-right"><span class="pill">Arbeidsoversikt · Ikke indeksert</span><span>01.11.2026</span><button class="btn menu" id="menu" aria-expanded="false" aria-controls="nav">Meny ☰</button></div>
+<div class="lang-set" role="group" aria-label="Velg språk"><a class="active" aria-current="page" href="/kashi/partners/">NO</a><a lang="fa" dir="rtl" href="/kashi/partners/fa/">فارسی</a></div><div class="top-right"><span class="pill">Arbeidsoversikt · Ikke indeksert</span><span>01.11.2026</span><button class="btn menu" id="menu" aria-expanded="false" aria-controls="nav">Meny ☰</button></div>
 </div></header>
 <main>
 <section class="hero">
-<div><div class="eyebrow">KASHI / Partnership intelligence / 01</div><h1>Fra fabrikk til <em style="color:var(--gold)">Island.</em></h1>
+<div><div class="eyebrow">KASHI / Partnerskap og import / 01</div><h1>Fra fabrikk til <em style="color:var(--gold)">Island.</em></h1>
 <p>Én oversikt over iranske flisleverandører: produkter, katalogdekning, reelle pristilbud, logistikk og mulig provisjonsavtale. Datagrunnlag fra offentlige kilder og tidligere KASHI-kartlegging. Ingen kandidat regnes som signert partner.</p></div>
 <div class="hero-side"><strong>Beslutningsgrunnlag, ikke pristilbud</strong>
 Offentlig katalogantall kan ikke sammenlignes direkte med aktive, lagerførte SKU-er. Tomme priser og leveringstider betyr «ikke bekreftet», ikke null. Rapporten er laget for å bli fylt ut når tilbud og pakkelister mottas.</div>
@@ -81,7 +99,47 @@ Offentlig katalogantall kan ikke sammenlignes direkte med aktive, lagerførte SK
 <div class="step"><div class="n">3</div><div><strong>Neste terskel</strong><span>Få SKU-feed, 2026-prisliste, prøver, lagerstatus, eksportsertifikater og leveringsvilkår.</span></div></div>
 <p class="help"><a class="source-link" href="https://t.me/SETAREH_TILE" target="_blank" rel="noopener noreferrer">Se offisiell Telegram-katalog ↗</a></p></div>
 </div></section>
-<section class="section" id="logistikk"><div class="section-head"><div><div class="eyebrow">03 / Iceland supply chain</div><h2>Levering og avtalevilkår</h2><p class="hint">Faktisk vareflyt må kontrolleres før nettbutikken viser kjøpbar beholdning eller lovet levering.</p></div></div>
+<section class="section" id="import2026">
+<div class="section-head"><div><div class="eyebrow">03 / Importkostnader · 2026</div><h2>Hva koster importen til Island?</h2><p class="hint">Tre hypotetiske regneeksempler med samme varepris på 7 USD/m². Dette er <b>scenarioforutsetninger, ikke innhentede pristilbud</b>.</p></div><span class="verified">HS 6907 · toll 0 % · mva 24 %</span></div>
+<div class="scenario-grid">
+<article class="scenario"><header><h3>Én pall / prøvemarked</h3><span>50 m²</span></header><p>LCL / samlast. Høy fraktkostnad per m².</p><dl>
+<div><dt>Fliser: 50 × $7</dt><dd>$350</dd></div>
+<div><dt>Antatt sjøfrakt</dt><dd>$1,650</dd></div>
+<div><dt>Antatt forsikring</dt><dd>$40</dd></div>
+<div><dt>Antatt lokal håndtering</dt><dd>$300</dd></div>
+<div><dt>Toll (HS 6907)</dt><dd>$0</dd></div>
+<div><dt>Importmva: 24 % × $2,040 CIF</dt><dd>$489.60</dd></div>
+<div class="total"><dt>Kontant ut ved import</dt><dd>$2,829.60</dd></div>
+<div><dt>Per m² inkl. importmva</dt><dd>$56.59</dd></div>
+<div><dt>Per m² ekskl. fradragsberettiget mva</dt><dd>$46.80</dd></div>
+</dl></article>
+<article class="scenario"><header><h3>Mindre parti</h3><span>250 m²</span></header><p>Samlast / prosjektordre. Eksempel, ikke frakttilbud.</p><dl>
+<div><dt>Fliser: 250 × $7</dt><dd>$1,750</dd></div>
+<div><dt>Antatt sjøfrakt</dt><dd>$2,900</dd></div>
+<div><dt>Antatt forsikring</dt><dd>$65</dd></div>
+<div><dt>Antatt lokal håndtering</dt><dd>$500</dd></div>
+<div><dt>Toll (HS 6907)</dt><dd>$0</dd></div>
+<div><dt>Importmva: 24 % × $4,715 CIF</dt><dd>$1,131.60</dd></div>
+<div class="total"><dt>Kontant ut ved import</dt><dd>$6,346.60</dd></div>
+<div><dt>Per m² inkl. importmva</dt><dd>$25.39</dd></div>
+<div><dt>Per m² ekskl. fradragsberettiget mva</dt><dd>$20.86</dd></div>
+</dl></article>
+<article class="scenario"><header><h3>20-fots container</h3><span>1,200 m²</span></header><p>FCL. Sjøfrakt $4,835 er en publisert veiledende «fra»-pris, ikke tilbud for KASHI.</p><dl>
+<div><dt>Fliser: 1 200 × $7</dt><dd>$8,400</dd></div>
+<div><dt>Indikativ sjøfrakt</dt><dd>$4,835</dd></div>
+<div><dt>Antatt forsikring</dt><dd>$150</dd></div>
+<div><dt>Antatt lokal håndtering</dt><dd>$1,000</dd></div>
+<div><dt>Toll (HS 6907)</dt><dd>$0</dd></div>
+<div><dt>Importmva: 24 % × $13,385 CIF</dt><dd>$3,212.40</dd></div>
+<div class="total"><dt>Kontant ut ved import</dt><dd>$17,597.40</dd></div>
+<div><dt>Per m² inkl. importmva</dt><dd>$14.66</dd></div>
+<div><dt>Per m² ekskl. fradragsberettiget mva</dt><dd>$11.99</dd></div>
+</dl></article>
+</div>
+<div class="note"><b>Toll er kontrollert:</b> Islands tolltariff fra 1. januar 2026 oppgir ordinær toll 0 % for keramiske fliser under 6907.2100, .2200, .2300, .3000 og .4000. Mva er normalt 24 % av tollverdien (CIF) pluss eventuell toll. Tallene gjelder bare dersom produktet er riktig klassifisert og transaksjonen lovlig. <a class="source-link" href="https://www.skatturinn.is/media/tollamal/Tollskra-2022-3.pdf#page=390" target="_blank" rel="noopener noreferrer">Tolltariff 2026 ↗</a> · <a class="source-link" href="https://www.skatturinn.is/einstaklingar/tollamal/sendingar-og-pakkar-til-landsins/almennt-um-sendingar/verslad-a-netinu-1" target="_blank" rel="noopener noreferrer">CIF-grunnlag ↗</a> · <a class="source-link" href="https://fwfreight.com/freight-shipping/from-iran-to-iceland/" target="_blank" rel="noopener noreferrer">Veiledende containerfrakt ↗</a></div>
+<div class="note"><b>To forskjellige kostnadsmål:</b> «Kontant ut ved import» inkluderer importmva som normalt må finansieres. For en islandsk mva-registrert virksomhet kan inngående mva være fradragsberettiget dersom vilkårene er oppfylt. De øvrige kostnadene er ikke dokumenterte priser. Avklar også bankbetaling, sanksjonssjekk, speditør og rute for iransk opprinnelse <em>før</em> bestilling. <a class="source-link" href="https://cb.is/financial-supervision/supervision-of-anti-money-laundering-and-combating-the-financing-of-terrorism/high-risk-jurisdictions/" target="_blank" rel="noopener noreferrer">Islandske AML-risikokrav ↗</a></div>
+</section>
+<section class="section" id="logistikk"><div class="section-head"><div><div class="eyebrow">04 / Iceland supply chain</div><h2>Levering og avtalevilkår</h2><p class="hint">Faktisk vareflyt må kontrolleres før nettbutikken viser kjøpbar beholdning eller lovet levering.</p></div></div>
 <div class="panel table-wrap"><table><thead><tr><th>Kontrollpunkt</th><th>Hva KASHI trenger</th><th>Per i dag</th><th>Handling</th></tr></thead><tbody>
 <tr><td><strong>Eksportpris</strong></td><td>USD/EUR per m² per SKU, kvalitet/grad, rabattrinn og gyldighet</td><td><span class="st miss">Ikke mottatt</span></td><td>Forespør prisfil / Proforma Invoice</td></tr>
 <tr><td><strong>Minste ordre</strong></td><td>MOQ per SKU, blandet pall/container, prøver</td><td><span class="st warn">Uavklart</span></td><td>Be om 1, 5 paller og 20' FCL</td></tr>
@@ -91,7 +149,7 @@ Offentlig katalogantall kan ikke sammenlignes direkte med aktive, lagerførte SK
 <tr><td><strong>KASHI provisjon</strong></td><td>Prosent, nett-/bruttogrunnlag, betaling, retur, markedsføring og bildefiler</td><td><span class="st miss">Ikke avtalt</span></td><td>Forhandle partner-/dropship-avtale</td></tr>
 </tbody></table></div>
 </section>
-<section class="section" id="kalkulator"><div class="section-head"><div><div class="eyebrow">04 / Landed cost model</div><h2>Pris- og marginkalkulator</h2><p class="hint">Regn på et konkret tilbud. Tomme felt er bevisste: ingen fabrikkpris er verifisert. Kalkulatoren legger ikke inn skatter eller valutakurs automatisk.</p></div></div>
+<section class="section" id="kalkulator"><div class="section-head"><div><div class="eyebrow">05 / Landed cost model</div><h2>Pris- og marginkalkulator</h2><p class="hint">Regn på et konkret tilbud. Tomme felt er bevisste: ingen fabrikkpris er verifisert. Kalkulatoren legger ikke inn skatter eller valutakurs automatisk.</p></div></div>
 <div class="card">
 <div class="form-grid">
 <div class="field"><label for="calcSupplier">Leverandør</label><select id="calcSupplier"><option>Setareh Meybod</option><option>Tabriz Tile Group</option><option>Persepolis Tile</option><option>IR-Build / Khatam</option><option>LuxeCeram</option><option>Semnan (navn mangler)</option></select></div>
@@ -102,10 +160,10 @@ Offentlig katalogantall kan ikke sammenlignes direkte med aktive, lagerførte SK
 <div class="field"><label for="commission">KASHI provisjon % (scenario)</label><input id="commission" type="number" min="0" max="100" step="0.1" placeholder="Avtales"></div>
 </div>
 <div class="output" aria-live="polite"><div><small>Varekostnad + frakt / m²</small><strong id="landed">—</strong><span>USD per m² før avgifter</span></div><div><small>Samlet kostnad</small><strong id="total">—</strong><span>USD, ekskl. toll / skatt / retur</span></div><div><small>Provisjon på vareverdi</small><strong id="fee">—</strong><span>USD, kun dersom prosentsats er fylt inn</span></div></div>
-<p class="help">Provisjon beregnes her på fabrikkens vareverdi for å illustrere en modell — dette er <b>ikke</b> en avtalt utbetalingsbase. Reell fortjeneste og salgspris krever valutakurs, islandske avgifter, betalingsgebyrer, svinn, retur og kontraktsvilkår. Verdiene sendes ikke til en server.</p>
+<div class="output" aria-live="polite" style="margin-top:12px"><div><small>Importmva 24 % på vare + frakt</small><strong id="vat">—</strong><span>USD · kontantbehov ved innførsel</span></div><div><small>Totalt kontantbehov ved import</small><strong id="cash">—</strong><span>USD · inkl. importmva</span></div><div><small>Kontantutlegg per m²</small><strong id="cashPerM2">—</strong><span>USD/m² · inkl. importmva</span></div></div><p class="help">Kalkulatoren forutsetter keramiske fliser i HS 6907 med 0 % ordinær toll og 24 % importmva; «frakt + forsikring» inngår i CIF. Lokal håndtering legges til etter beregnet importmva og kan selv være mva-pliktig som tjeneste. Dette er en forenkling; islandsk tollmyndighet fastsetter endelig avgift. Inngående importmva kan være fradragsberettiget for registrerte virksomheter. <a href="/kashi/seo/" class="source-link">Se også tidligere KASHI-markedsanalyse ↗</a></p><p class="help">Provisjon beregnes her på fabrikkens vareverdi for å illustrere en modell — dette er <b>ikke</b> en avtalt utbetalingsbase. Reell fortjeneste og salgspris krever valutakurs, islandske avgifter, betalingsgebyrer, svinn, retur og kontraktsvilkår. Verdiene sendes ikke til en server.</p>
 <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:18px"><button class="btn" id="reset">Nullstill kalkulator</button><button class="btn btn-gold" id="copyRequest">Kopier forespørsel til leverandør</button></div>
 </div></section>
-<section class="section" id="kilder"><div class="section-head"><div><div class="eyebrow">05 / Data provenance</div><h2>Kilder og neste beslutning</h2><p class="hint">Alle kilder er åpne. Tilsagn om pris, distribusjon og eksport må bekreftes skriftlig.</p></div></div>
+<section class="section" id="kilder"><div class="section-head"><div><div class="eyebrow">06 / Data provenance</div><h2>Kilder og neste beslutning</h2><p class="hint">Alle kilder er åpne. Tilsagn om pris, distribusjon og eksport må bekreftes skriftlig.</p></div></div>
 <div class="sources">
 <div class="source"><b>Setareh Tile · Offisielt</b><a href="https://setarehtile.com/" target="_blank" rel="noopener noreferrer">setarehtile.com</a><span>Nettstedets app ga CSS-lastingsfeil i kontrollen 01.11.2026. Total SKU ikke verifisert.</span><a href="https://t.me/SETAREH_TILE" target="_blank" rel="noopener noreferrer">Telegram · kataloger og pakkeinfo</a></div>
 <div class="source"><b>Tabriz Tile Group · Produktkatalog</b><a href="https://tabriztilegroup.com/products/" target="_blank" rel="noopener noreferrer">tabriztilegroup.com/products</a><span>355 oppføringer ved kontroll 01.11.2026; ikke nødvendigvis lagervarer.</span></div>
@@ -114,7 +172,7 @@ Offentlig katalogantall kan ikke sammenlignes direkte med aktive, lagerførte SK
 <div class="source"><b>LuxeCeram · Eksportkoordinering</b><a href="https://luxeceram.com/" target="_blank" rel="noopener noreferrer">luxeceram.com</a><span>Elleve formatgrupper; kan koordinere FOB/CIF etter forespørsel, ikke en bekreftet rute.</span></div>
 <div class="source"><b>Setareh · Ekstern produktreferanse</b><a href="https://manamaster.com/factory/setare-meybod-tile/" target="_blank" rel="noopener noreferrer">Manamaster produktside</a><span>Eksempler som 62,5×62,5; ikke bindende eksport- eller KASHI-priser.</span></div>
 </div>
-<div class="note"><b>Prioritert beslutning:</b> be Setareh, Tabriz og Persepolis om en eksportprisliste og SKU-feed, sammenlign FOB-/transportkostnader per pall og container, og test utvalgte ekte produkter i KASHIs digitale showroom. Semnan holdes som plassholder til produsenten er navngitt.</div>
+<div class="source"><b>Island · toll og mva 2026</b><a href="https://www.skatturinn.is/media/tollamal/Tollskra-2022-3.pdf#page=390" target="_blank" rel="noopener noreferrer">Offisiell 2026-tolltariff · HS 6907</a><span>0 % for de vanlige keramiske flisposisjonene. Mva 24 % av CIF og eventuell toll.</span></div><div class="source"><b>Importberegning / frakt / sanksjonskontroll</b><a href="https://island.is/en/estimate-import-charges" target="_blank" rel="noopener noreferrer">Islandske importavgifter</a><span>Fraktberegning i eksemplene er hypotetisk, unntatt «fra»-pris hos fraktmegler. Iran står på Islands liste over høyrisikoland.</span></div></div><div class="note"><b>Prioritert beslutning:</b> be Setareh, Tabriz og Persepolis om en eksportprisliste og SKU-feed, sammenlign FOB-/transportkostnader per pall og container, og test utvalgte ekte produkter i KASHIs digitale showroom. Semnan holdes som plassholder til produsenten er navngitt.</div>
 </section>
 </main>
 <footer><span>KASHI · Island / Iran / Norge · Analyse for innkjøp og samarbeid</span><span>Utviklet av SETAEI · © 2026 · Status: kandidater, ikke inngåtte avtaler</span></footer>
@@ -156,6 +214,10 @@ function calc(){
  document.getElementById("landed").textContent=valid?money((q*u+f+h)/q):"—";
  document.getElementById("total").textContent=valid?money(q*u+f+h):"—";
  document.getElementById("fee").textContent=valid&&values[4]!==""&&p>=0&&p<=100?money(q*u*p/100):"—";
+ const vat=valid?(q*u+f)*0.24:NaN;
+ document.getElementById("vat").textContent=valid?money(vat):"—";
+ document.getElementById("cash").textContent=valid?money(q*u+f+h+vat):"—";
+ document.getElementById("cashPerM2").textContent=valid?money((q*u+f+h+vat)/q):"—";
 }
 fields.forEach(k=>document.getElementById(k).addEventListener("input",calc));
 document.getElementById("reset").addEventListener("click",()=>{fields.forEach(k=>document.getElementById(k).value="");calc()});
