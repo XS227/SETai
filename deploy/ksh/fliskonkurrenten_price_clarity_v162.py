@@ -18,9 +18,6 @@ room=root/'assets/bathroom-v11-1/room.js'
 swap(room,"document.querySelector('#sr5-total').textContent=money(q.total);",
           "document.querySelector('#sr5-total').textContent=q.total>0?money(q.total):(q.missing?'Pris må bekreftes':money(0));")
 studio=root/'assets/bathroom-v11-1/tile-studio-v15.js'
-needle="const stage='<div class=\"sr15-surface\""
-value="""if(chosen)selected+='<a class="sr15-source-link" href="'+e(chosen.origin)+'" target="_blank" rel="noopener noreferrer">Se produkt, pris og tilgjengelighet hos Fliskonkurrenten ↗</a>';
- const stage='<div class="sr15-surface\\""""
 # Keep JS interpolation and quote boundaries exact; short direct string replacement.
 s=studio.read_text()
 a="const stage='<div class=\"sr15-surface\""
