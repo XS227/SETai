@@ -50,7 +50,7 @@ for tile in LIB:
  '<div class="tg15-action"><a href="'+ROOT+'showroom/?tile='+esc(slug)+'&surface=wall#reisen">Prøv på vegg ↗</a><a href="'+ROOT+'showroom/?tile='+esc(slug)+'&surface=floor#reisen">Prøv som gulv ↗</a><a href="'+esc(tile['origin'])+'" target="_blank" rel="noopener noreferrer">Pris og spesifikasjoner ↗</a></div>'+
  '<p><strong>Mer salg uten å forstyrre:</strong> Når du åpner showroomet, foreslår vi passende farger, gulvmaterialer og supplerende baderomsprodukter. Du velger selv hva som legges til.</p>'+
  '<p style="font-size:11px">Dette er en demonstrasjon basert på produktfoto – ikke en skannet 3D-modell. Oppdatert varepris og levering finnes hos originalbutikken.</p>'+
- '<p><a href="'+ROOT+'fliser-i-rommet/?kategori='+esc(tile['categorySlug'])+'">Se flere fliser fra '+esc(tile['category'])+' ↗</a></p></div></div></div></main>'+footer+'</body></html>'
+ '<p><a href="'+ROOT+'fliser-i-rommet/?kategori='+esc(tile['categorySlug'])+'">Se flere fliser fra '+esc(tile['category'])+' ↗</a></p></div></div></div></main>'+footer+'</body></html>')
  if put(ST/slug/'index.html',product):made+=1
 print('TILE_PRODUCT_PAGES',made,'TOTAL',len(LIB))
 
