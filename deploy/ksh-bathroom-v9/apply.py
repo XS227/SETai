@@ -21,7 +21,7 @@ substitute(root/'showroom/index.html','/assets/bathroom-v8/room.js?v=8','/assets
 substitute(root/'showroom/index.html','/assets/bathroom-v8/room.css?v=8','/assets/bathroom-v9/room.css?v=9')
 substitute(root/'produkt/sanipro-sense/index.html','/assets/bathroom-v8/room.css?v=8','/assets/bathroom-v9/room.css?v=9')
 substitute(root/'assets/sense-film-v4/landing.js','/assets/bathroom-v8/room.js?v=8','/assets/bathroom-v9/room.js?v=9')
-substitute(root/'produkt/vedum-flow-takegronn/assets/main.js','./assets/model.glb','./assets/model-turbine-v9.glb')
+substitute(root/'produkt/vedum-flow-takegronn/assets/main.js','./assets/model-yup-v6.glb','./assets/model-turbine-v9.glb')
 # Source material image is copied unmodified from the manufacturer's publicly visible swatch.
 # Preserve original source meshes and older files for rollback, never overwrite them.
 assert (root/'produkt/vedum-flow-takegronn/assets/model-yup-v6.glb').is_file()
