@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="no">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0c1318">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>KASHI | Leverandørkontroll · Island</title>
+<meta name="description" content="KASHI internt kontrollpanel for mulige iranske flisleverandører, katalogdekning, eksportpriser, logistikk og provisjon.">
+<style>
+:root{color-scheme:dark;--bg:#0c1318;--pane:#142027;--pane2:#192a31;--line:#2c3e42;--white:#eff1e9;--muted:#9aa9ab;--gold:#d4b984;--turq:#8dc9bc;--red:#e4a99a;--r:18px}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 10% -10%,#28413e 0,transparent 36%),var(--bg);color:var(--white);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.5}
+a{color:inherit}button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.top{position:sticky;top:0;z-index:10;background:rgba(12,19,24,.92);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
+.top-inner{max-width:1480px;margin:auto;display:flex;align-items:center;gap:28px;padding:15px 28px}.logo{font-size:23px;letter-spacing:.23em;font-weight:800;text-decoration:none;white-space:nowrap}.logo small{display:block;color:var(--gold);letter-spacing:.21em;font-size:8px;font-weight:600}
+.nav{display:flex;flex-wrap:wrap;align-items:center;gap:22px}.nav a{font-size:13px;color:#c9d3d1;text-decoration:none}.nav a:hover{color:var(--gold)}.top-right{margin-left:auto;display:flex;align-items:center;gap:10px;white-space:nowrap;font-size:11px;color:var(--muted)}
+.pill{border:1px solid #506052;border-radius:100px;padding:6px 10px;color:#cae6d7;font-size:11px}.menu{display:none}
+main{width:min(1480px,100%);margin:auto;padding:0 28px 70px}.hero{padding:56px 0 38px;display:grid;grid-template-columns:1.35fr .65fr;gap:35px;align-items:end;border-bottom:1px solid var(--line)}
+.eyebrow{color:var(--gold);font-size:11px;font-weight:800;letter-spacing:.23em;text-transform:uppercase}.hero h1{font-weight:500;font-family:Georgia,serif;font-size:clamp(36px,4.8vw,72px);line-height:1.05;letter-spacing:-.035em;margin:17px 0}.hero p{color:#afbdba;max-width:720px;font-size:16px;margin:0}.hero-side{border-left:1px solid #415254;padding:0 0 0 25px;color:#b1bfbd;font-size:13px}.hero-side strong{color:var(--white);display:block;font-size:15px;margin-bottom:8px}
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;padding:25px 0}.metric{background:linear-gradient(160deg,#203138,#132027);border:1px solid var(--line);border-radius:var(--r);padding:22px}.metric small{display:block;font-size:11px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase}.metric b{display:block;font-size:34px;font-weight:600;line-height:1.35;margin:6px 0}.metric span{font-size:11px;color:#b3c0bf}.metric .accent{color:var(--gold)}
+.section{margin-top:45px}.section-head{display:flex;gap:18px;align-items:end;justify-content:space-between;margin-bottom:16px}.section h2{margin:0;font-weight:500;font-family:Georgia,serif;font-size:30px}.section .hint{color:var(--muted);font-size:12px;margin:8px 0 0}.controls{display:flex;align-items:center;flex-wrap:wrap;gap:9px}
+input,select{background:#101b21;border:1px solid #385057;border-radius:10px;color:var(--white);padding:11px 12px;min-height:44px;min-width:0}input::placeholder{color:#8da1a5}
+.btn{background:#22363a;color:var(--white);border:1px solid #47605c;border-radius:10px;padding:10px 14px;min-height:43px}.btn:hover{border-color:var(--gold)}.btn-gold{background:var(--gold);color:#101d22;font-weight:750;border-color:var(--gold)}.btn-ghost{background:transparent}
+.panel{border:1px solid var(--line);background:rgba(20,32,39,.92);border-radius:var(--r);overflow:hidden}.table-wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;text-align:left;font-size:13px}th{background:#1b2c31;padding:15px 14px;color:#b5c4bf;font-size:11px;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap;font-weight:650}td{padding:16px 14px;border-top:1px solid #293b41;vertical-align:top}tbody tr:hover{background:rgba(141,201,188,.045)}td strong{display:block;font-weight:650;color:#e7ede8}td small{color:#96a7aa;display:block;margin-top:5px;line-height:1.4}.source-link{font-size:12px;color:var(--turq);text-decoration:none}.source-link:hover{text-decoration:underline}
+.st{display:inline-block;border-radius:20px;padding:5px 8px;border:1px solid #51605e;font-size:10px;white-space:nowrap;color:#c4d3ca}.st.warn{color:#e5c998;border-color:#756445}.st.miss{color:#e6b7ae;border-color:#78534f}
+.note{background:#1e2b2d;border-left:3px solid var(--gold);padding:14px 17px;font-size:12px;color:#bfcfca;margin-top:15px;border-radius:0 10px 10px 0}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:17px}.card{border:1px solid var(--line);border-radius:var(--r);padding:24px;background:var(--pane)}.card h3{font-size:17px;font-weight:650;margin:0 0 9px}.card p{font-size:13px;color:#a9b9b8;margin:0 0 17px}.catalog-row{display:grid;grid-template-columns:130px 1fr 63px;align-items:center;gap:11px;padding:11px 0;border-top:1px solid #2d3d42;font-size:12px}.bar{height:7px;background:#304246;border-radius:100px;overflow:hidden}.bar i{display:block;height:100%;background:linear-gradient(90deg,#669789,#e5c98d);border-radius:100px}.catalog-row b{text-align:right;font-size:12px;font-weight:650}
+.steps{display:grid;gap:10px}.step{display:grid;grid-template-columns:27px 1fr;gap:12px;align-items:start;border:1px solid #31464a;border-radius:12px;padding:12px;font-size:13px}.step .n{color:#1b302f;background:var(--gold);border-radius:100%;font-size:12px;width:24px;height:24px;display:grid;place-items:center;font-weight:700}.step strong{display:block}.step span{display:block;color:var(--muted);font-size:11px;margin-top:2px}
+.form-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.field{min-width:0}.field label{display:block;font-size:11px;color:#becbc7;margin-bottom:6px}.field input,.field select{width:100%}.output{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px}.output>div{border:1px solid #39524e;padding:15px;border-radius:12px;background:#17282b}.output small{display:block;color:var(--muted);font-size:11px}.output strong{display:block;font-size:22px;color:var(--gold);margin-top:4px}.output span{font-size:11px;color:var(--muted)}.help{font-size:12px;color:var(--muted);margin:12px 0 0}
+.sources{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.source{border:1px solid var(--line);border-radius:12px;padding:15px;background:#142127;font-size:12px}.source b{display:block;margin-bottom:7px}.source a{color:var(--turq);overflow-wrap:anywhere}.source span{color:var(--muted);display:block;margin-top:6px;font-size:11px}
+footer{border-top:1px solid var(--line);padding:24px 28px;color:#91a2a3;font-size:12px;display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap;max-width:1480px;margin:auto}
+.mobile-cards{display:none}.mobile-card{padding:17px;border-top:1px solid var(--line)}.mobile-card:first-child{border:0}.mobile-card h3{margin:0 0 5px;font-size:17px}.mobile-card p{font-size:12px;color:var(--muted);margin:0 0 12px}.mobile-card dl{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:0}.mobile-card dt{color:#98a8a9;font-size:10px}.mobile-card dd{margin:3px 0 0;font-size:12px}.mobile-card a{color:var(--turq)}
+@media(max-width:1100px){.hero{grid-template-columns:1fr}.hero-side{border-left:0;border-top:1px solid #334b48;padding:15px 0 0}.nav{gap:12px}.metrics{grid-template-columns:repeat(2,1fr)}.section-head{align-items:start;flex-direction:column}.sources{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:700px){.top-inner{padding:12px 17px;flex-wrap:wrap}.top-right{margin-left:auto}.menu{display:inline-block}.nav{display:none;width:100%;flex-direction:column;align-items:stretch;padding:12px 0}.nav.open{display:flex}.hero{padding:34px 0 27px}.hero p{font-size:14px}main{padding:0 15px 45px}.metric{padding:16px}.metric b{font-size:27px}.metric span{font-size:10px}.two{grid-template-columns:1fr}.form-grid{grid-template-columns:repeat(2,1fr)}.output{grid-template-columns:1fr}.sources{grid-template-columns:1fr}.desktop-table{display:none}.mobile-cards{display:block}.section{margin-top:34px}.controls{width:100%}.controls input,.controls select{flex:1;min-width:110px}}
+@media(max-width:370px){.top-right .pill{display:none}.metrics{gap:9px}.form-grid{grid-template-columns:1fr}.catalog-row{grid-template-columns:95px 1fr 45px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header class="top"><div class="top-inner">
+<a class="logo" href="/kashi/" aria-label="KASHI hovedside">KASHI<small>ICELAND · BY SETAEI</small></a>
+<nav class="nav" id="nav" aria-label="Sidenavigasjon">
+<a href="#oversikt">Leverandører</a><a href="#utvalg">Produktutvalg</a><a href="#logistikk">Levering</a><a href="#kalkulator">Priskalkulator</a><a href="#kilder">Kilder</a>
+</nav>
+<div class="top-right"><span class="pill">Internt · Ikke indeksert</span><span>01.11.2026</span><button class="btn menu" id="menu" aria-expanded="false" aria-controls="nav">Meny ☰</button></div>
+</div></header>
+<main>
+<section class="hero">
+<div><div class="eyebrow">KASHI / Partnership intelligence / 01</div><h1>Fra fabrikk til <em style="color:var(--gold)">Island.</em></h1>
+<p>Én oversikt over iranske flisleverandører: produkter, katalogdekning, reelle pristilbud, logistikk og mulig provisjonsavtale. Datagrunnlag fra offentlige kilder og tidligere KASHI-kartlegging. Ingen kandidat regnes som signert partner.</p></div>
+<div class="hero-side"><strong>Beslutningsgrunnlag, ikke pristilbud</strong>
+Offentlig katalogantall kan ikke sammenlignes direkte med aktive, lagerførte SKU-er. Tomme priser og leveringstider betyr «ikke bekreftet», ikke null. Rapporten er laget for å bli fylt ut når tilbud og pakkelister mottas.</div>
+</section>
+<section class="metrics" aria-label="Nøkkeltall">
+<div class="metric"><small>Navngitte kandidater</small><b>5 <span class="accent">+ 1</span></b><span>Fem firmaer + Semnan under avklaring</span></div>
+<div class="metric"><small>Tabriz offentlig katalog</small><b>355</b><span>Produktoppføringer · kontrollert 01.11</span></div>
+<div class="metric"><small>Persepolis KASHI-snapshot</small><b>307</b><span>Foreløpige oppføringer fra oktober</span></div>
+<div class="metric"><small>Verifiserte priser til Island</small><b class="accent">0</b><span>Ingen signerte eksporttilbud ennå</span></div>
+</section>
+<section class="section" id="oversikt">
+<div class="section-head"><div><div class="eyebrow">01 / Supplier universe</div><h2>Leverandørsammenligning</h2><p class="hint">Søk, filtrer og eksporter oversikten. «Kandidat» er ikke det samme som godkjent salgspartner.</p></div>
+<div class="controls"><input id="search" type="search" placeholder="Søk leverandør / format" aria-label="Søk leverandører"><select id="filter" aria-label="Filtrer leverandørtype"><option value="all">Alle typer</option><option value="factory">Fabrikk</option><option value="sourcing">Eksport / sourcing</option><option value="unconfirmed">Under avklaring</option></select><button class="btn" id="csv">Eksporter CSV ↓</button></div>
+</div>
+<div class="panel desktop-table table-wrap"><table><thead><tr><th>Leverandør</th><th>Type / status</th><th>Produkter / oppføringer</th><th>Dokumenterte størrelser</th><th>Pris / m²</th><th>Til Island</th><th>Provisjon</th><th>Kilde</th></tr></thead><tbody id="rows"></tbody></table></div>
+<div class="panel mobile-cards" id="mobileRows"></div>
+<div class="note">Datakvalitet: Tabriz <b>355</b> er fra en offentlig produktside; Persepolis <b>307</b> er et tidligere KASHI-uttrekk som må fornyes. Dette er ulike målemetoder, ikke en verifisert rangering av lagerførte modeller. Setareh har ingen pålitelig total i tilgjengelig materiale.</div>
+</section>
+<section class="section" id="utvalg"><div class="section-head"><div><div class="eyebrow">02 / Catalogue</div><h2>Utvalg og produksjonsprofil</h2><p class="hint">Forskjell mellom registrerte produktoppføringer og antall dokumenterte formatgrupper.</p></div></div>
+<div class="two">
+<div class="card"><h3>Katalogdekning</h3><p>Kun de to leverandørene med tidligere registrerte tall vises med stolpe. Resten krever produktfeed eller pristilbud.</p>
+<div class="catalog-row"><span>Tabriz Tile Group</span><div class="bar"><i style="width:100%"></i></div><b>355</b></div>
+<div class="catalog-row"><span>Persepolis Tile</span><div class="bar"><i style="width:86.5%"></i></div><b>307*</b></div>
+<div class="catalog-row"><span>Setareh Meybod</span><div class="bar"><i style="width:0%"></i></div><b>Ukjent</b></div>
+<div class="catalog-row"><span>IR-Build / Khatam</span><div class="bar"><i style="width:0%"></i></div><b>Ukjent</b></div>
+<div class="catalog-row"><span>LuxeCeram</span><div class="bar"><i style="width:0%"></i></div><b>Ukjent</b></div>
+<p class="help">* Oktobersnapshot, ikke nyopptelt i dag. Null bredde betyr manglende data, ikke null produkter.</p></div>
+<div class="card"><h3>Setareh · Ny kandidat fra Meybod</h3><p>Offisiell kanal viser minst syv separate historiske kataloger (30×30, 30×60, 30×80, 30×90, 33×100, 40×100 og 60×60). Nyere produktinnlegg viser også 60×120.</p>
+<div class="step"><div class="n">1</div><div><strong>Interessant produktbredde</strong><span>Vegger, gulv, dekor og matt / blank overflate. 62,5×62,5 finnes også hos forhandler.</span></div></div>
+<div class="step"><div class="n">2</div><div><strong>Pakkeinformasjon finnes</strong><span>Pakkespesifikasjoner publisert, men må kobles til riktige SKU-er og oppdateres.</span></div></div>
+<div class="step"><div class="n">3</div><div><strong>Neste terskel</strong><span>Få SKU-feed, 2026-prisliste, prøver, lagerstatus, eksportsertifikater og leveringsvilkår.</span></div></div>
+<p class="help"><a class="source-link" href="https://t.me/SETAREH_TILE" target="_blank" rel="noopener noreferrer">Se offisiell Telegram-katalog ↗</a></p></div>
+</div></section>
+<section class="section" id="logistikk"><div class="section-head"><div><div class="eyebrow">03 / Iceland supply chain</div><h2>Levering og avtalevilkår</h2><p class="hint">Faktisk vareflyt må kontrolleres før nettbutikken viser kjøpbar beholdning eller lovet levering.</p></div></div>
+<div class="panel table-wrap"><table><thead><tr><th>Kontrollpunkt</th><th>Hva KASHI trenger</th><th>Per i dag</th><th>Handling</th></tr></thead><tbody>
+<tr><td><strong>Eksportpris</strong></td><td>USD/EUR per m² per SKU, kvalitet/grad, rabattrinn og gyldighet</td><td><span class="st miss">Ikke mottatt</span></td><td>Forespør prisfil / Proforma Invoice</td></tr>
+<tr><td><strong>Minste ordre</strong></td><td>MOQ per SKU, blandet pall/container, prøver</td><td><span class="st warn">Uavklart</span></td><td>Be om 1, 5 paller og 20' FCL</td></tr>
+<tr><td><strong>Transport til Island</strong></td><td>FOB Bandar Abbas og tilbud med sjøfrakt til Reykjavík / endelig adresse</td><td><span class="st warn">Uavklart</span></td><td>Innhent separate LCL/FCL-tilbud</td></tr>
+<tr><td><strong>Tid til levering</strong></td><td>Produksjon, lasting, transitt, fortolling og siste mil</td><td><span class="st miss">Ingen dato</span></td><td>Få skriftlig ledetid per rute</td></tr>
+<tr><td><strong>Dokumentasjon</strong></td><td>Tekniske datablad, CE/EN hvor relevant, vannopptak, frost, slip, emballasje, opprinnelse</td><td><span class="st warn">Delvis produktinfo</span></td><td>Kontroller dokument per SKU</td></tr>
+<tr><td><strong>KASHI provisjon</strong></td><td>Prosent, nett-/bruttogrunnlag, betaling, retur, markedsføring og bildefiler</td><td><span class="st miss">Ikke avtalt</span></td><td>Forhandle partner-/dropship-avtale</td></tr>
+</tbody></table></div>
+</section>
+<section class="section" id="kalkulator"><div class="section-head"><div><div class="eyebrow">04 / Landed cost model</div><h2>Pris- og marginkalkulator</h2><p class="hint">Regn på et konkret tilbud. Tomme felt er bevisste: ingen fabrikkpris er verifisert. Kalkulatoren legger ikke inn skatter eller valutakurs automatisk.</p></div></div>
+<div class="card">
+<div class="form-grid">
+<div class="field"><label for="calcSupplier">Leverandør</label><select id="calcSupplier"><option>Setareh Meybod</option><option>Tabriz Tile Group</option><option>Persepolis Tile</option><option>IR-Build / Khatam</option><option>LuxeCeram</option><option>Semnan (navn mangler)</option></select></div>
+<div class="field"><label for="qty">Antall m²</label><input id="qty" type="number" min="0.01" step="0.01" placeholder="F.eks. 150"></div>
+<div class="field"><label for="unit">Fabrikkpris USD/m²</label><input id="unit" type="number" min="0" step="0.01" placeholder="Fra tilbud"></div>
+<div class="field"><label for="freight">Frakt + forsikring USD totalt</label><input id="freight" type="number" min="0" step="0.01" placeholder="Fra speditør"></div>
+<div class="field"><label for="handling">Fortolling + lokal håndtering USD</label><input id="handling" type="number" min="0" step="0.01" placeholder="Fra speditør"></div>
+<div class="field"><label for="commission">KASHI provisjon % (scenario)</label><input id="commission" type="number" min="0" max="100" step="0.1" placeholder="Avtales"></div>
+</div>
+<div class="output" aria-live="polite"><div><small>Varekostnad + frakt / m²</small><strong id="landed">—</strong><span>USD per m² før avgifter</span></div><div><small>Samlet kostnad</small><strong id="total">—</strong><span>USD, ekskl. toll / skatt / retur</span></div><div><small>Provisjon på vareverdi</small><strong id="fee">—</strong><span>USD, kun dersom prosentsats er fylt inn</span></div></div>
+<p class="help">Provisjon beregnes her på fabrikkens vareverdi for å illustrere en modell — dette er <b>ikke</b> en avtalt utbetalingsbase. Reell fortjeneste og salgspris krever valutakurs, islandske avgifter, betalingsgebyrer, svinn, retur og kontraktsvilkår. Verdiene sendes ikke til en server.</p>
+<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:18px"><button class="btn" id="reset">Nullstill kalkulator</button><button class="btn btn-gold" id="copyRequest">Kopier forespørsel til leverandør</button></div>
+</div></section>
+<section class="section" id="kilder"><div class="section-head"><div><div class="eyebrow">05 / Data provenance</div><h2>Kilder og neste beslutning</h2><p class="hint">Alle kilder er åpne. Tilsagn om pris, distribusjon og eksport må bekreftes skriftlig.</p></div></div>
+<div class="sources">
+<div class="source"><b>Setareh Tile · Offisielt</b><a href="https://setarehtile.com/" target="_blank" rel="noopener noreferrer">setarehtile.com</a><span>Nettstedets app ga CSS-lastingsfeil i kontrollen 01.11.2026. Total SKU ikke verifisert.</span><a href="https://t.me/SETAREH_TILE" target="_blank" rel="noopener noreferrer">Telegram · kataloger og pakkeinfo</a></div>
+<div class="source"><b>Tabriz Tile Group · Produktkatalog</b><a href="https://tabriztilegroup.com/products/" target="_blank" rel="noopener noreferrer">tabriztilegroup.com/products</a><span>355 oppføringer ved kontroll 01.11.2026; ikke nødvendigvis lagervarer.</span></div>
+<div class="source"><b>Persepolis Tile · Produsent</b><a href="https://persepolistile.com/" target="_blank" rel="noopener noreferrer">persepolistile.com</a><span>307 fra tidligere KASHI-uttrekk (oktober). Eksportbakgrunn i produsentkatalog; ny opptelling trengs.</span></div>
+<div class="source"><b>IR-Build / Khatam · Fabrikk / eksport</b><a href="https://ir-build.com/" target="_blank" rel="noopener noreferrer">ir-build.com</a><span>Syv formatgrupper, egen fabrikk og oppgitte eksportmarkeder; ingen bindende islandstilbud.</span></div>
+<div class="source"><b>LuxeCeram · Eksportkoordinering</b><a href="https://luxeceram.com/" target="_blank" rel="noopener noreferrer">luxeceram.com</a><span>Elleve formatgrupper; kan koordinere FOB/CIF etter forespørsel, ikke en bekreftet rute.</span></div>
+<div class="source"><b>Setareh · Ekstern produktreferanse</b><a href="https://manamaster.com/factory/setare-meybod-tile/" target="_blank" rel="noopener noreferrer">Manamaster produktside</a><span>Eksempler som 62,5×62,5; ikke bindende eksport- eller KASHI-priser.</span></div>
+</div>
+<div class="note"><b>Prioritert beslutning:</b> be Setareh, Tabriz og Persepolis om en eksportprisliste og SKU-feed, sammenlign FOB-/transportkostnader per pall og container, og test utvalgte ekte produkter i KASHIs digitale showroom. Semnan holdes som plassholder til produsenten er navngitt.</div>
+</section>
+</main>
+<footer><span>KASHI · Island / Iran / Norge · Analyse for innkjøp og samarbeid</span><span>Utviklet av SETAEI · © 2026 · Status: kandidater, ikke inngåtte avtaler</span></footer>
+<script>
+"use strict";
+const suppliers=[
+{n:"Setareh Meybod Tile",region:"Meybod · Yazd",type:"factory",state:"Ny kandidat",count:null,counts:"Ikke kartlagt",sizes:"30×30, 30×60, 30×80, 30×90, 33×100, 40×100, 60×60, 60×120 (+ 62,5×62,5)",price:"Ikke innhentet",ship:"Ikke bekreftet",commission:"Ikke avtalt",url:"https://setarehtile.com/",source:"Produsent / Telegram"},
+{n:"Tabriz Tile Group",region:"Tabriz · East Azerbaijan",type:"factory",state:"Kandidat",count:355,counts:"355 oppføringer · offentlig",sizes:"Flere format · se katalog",price:"Ikke innhentet",ship:"Ikke bekreftet",commission:"Ikke avtalt",url:"https://tabriztilegroup.com/products/",source:"Offisiell katalog"},
+{n:"Persepolis Tile",region:"Mehriz · Yazd",type:"factory",state:"Kandidat",count:307,counts:"307 oppføringer · tidligere KASHI-uttrekk",sizes:"Bl.a. 60×60–40×160",price:"Ikke innhentet",ship:"Eksport historisk; Island uavklart",commission:"Ikke avtalt",url:"https://persepolistile.com/",source:"KASHI-snapshot / produsent"},
+{n:"IR-Build / Khatam",region:"Ardakan · Yazd",type:"factory",state:"Kontaktet tidligere",count:null,counts:"Total ikke kartlagt",sizes:"30×60, 40×40, 60×60, 40×120, 80×80, 60×120, 100×100",price:"Ikke innhentet",ship:"Eksportaktør; Island uavklart",commission:"Ikke avtalt",url:"https://ir-build.com/",source:"Produsentside"},
+{n:"LuxeCeram",region:"Yazd · Iran",type:"sourcing",state:"Kontaktet tidligere",count:null,counts:"Total ikke kartlagt",sizes:"11 formatgrupper inkl. 60×60, 60×120, 80×80",price:"Ikke innhentet",ship:"FOB/CIF mulig etter avtale; Island uavklart",commission:"Ikke avtalt",url:"https://luxeceram.com/",source:"Eksportørside"},
+{n:"Semnan · produsent TBD",region:"Semnan · Iran",type:"unconfirmed",state:"Navn mangler",count:null,counts:"Ikke kartlagt",sizes:"Ikke kartlagt",price:"Ikke innhentet",ship:"Ikke bekreftet",commission:"Ikke avtalt",url:"",source:"KASHI dialog"}
+];
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function render(){
+ const q=document.getElementById("search").value.trim().toLocaleLowerCase("no");
+ const type=document.getElementById("filter").value;
+ const data=suppliers.filter(x=>(type==="all"||x.type===type)&&[x.n,x.region,x.sizes,x.state].join(" ").toLocaleLowerCase("no").includes(q));
+ document.getElementById("rows").innerHTML=data.map(x=>'<tr><td><strong>'+esc(x.n)+'</strong><small>'+esc(x.region)+'</small></td><td><span class="st '+(x.type==="unconfirmed"?"miss":"warn")+'">'+esc(x.state)+'</span><small>'+esc(x.type==="sourcing"?"Sourcing / eksport":x.type==="factory"?"Produsent":"Uavklart")+'</small></td><td><strong>'+esc(x.counts)+'</strong></td><td>'+esc(x.sizes)+'</td><td><span class="st miss">'+esc(x.price)+'</span></td><td>'+esc(x.ship)+'</td><td><span class="st miss">'+esc(x.commission)+'</span></td><td>'+(x.url?'<a class="source-link" target="_blank" rel="noopener noreferrer" href="'+esc(x.url)+'">'+esc(x.source)+' ↗</a>':esc(x.source))+'</td></tr>').join("")||'<tr><td colspan="8">Ingen treff. Nullstill søket.</td></tr>';
+ document.getElementById("mobileRows").innerHTML=data.map(x=>'<article class="mobile-card"><h3>'+esc(x.n)+'</h3><p>'+esc(x.region)+' · '+esc(x.state)+'</p><dl><div><dt>Registrerte produkter</dt><dd>'+esc(x.counts)+'</dd></div><div><dt>Pris per m²</dt><dd>Ikke innhentet</dd></div><div><dt>Levering Island</dt><dd>'+esc(x.ship)+'</dd></div><div><dt>Provisjon</dt><dd>Ikke avtalt</dd></div></dl><p style="margin-top:12px">Format: '+esc(x.sizes)+'</p>'+(x.url?'<a href="'+esc(x.url)+'" target="_blank" rel="noopener noreferrer">Åpne kilde ↗</a>':'')+'</article>').join("")||'<div class="mobile-card">Ingen treff.</div>';
+}
+document.getElementById("search").addEventListener("input",render);
+document.getElementById("filter").addEventListener("change",render);render();
+document.getElementById("csv").addEventListener("click",()=>{
+ const columns=["Leverandør","Region","Type","Status","Oppføringer","Format","Fabrikkpris USD/m²","Levering Island","Provisjon","Kilde"];
+ const rows=suppliers.map(x=>[x.n,x.region,x.type,x.state,x.count===null?"Ikke verifisert":x.count,x.sizes,"Ikke innhentet",x.ship,x.commission,x.url]);
+ const quote=v=>'"'+String(v).replace(/"/g,'""')+'"';
+ const data="\uFEFF"+[columns,...rows].map(row=>row.map(quote).join(";")).join("\r\n");
+ const u=URL.createObjectURL(new Blob([data],{type:"text/csv;charset=utf-8"}));const a=document.createElement("a");a.href=u;a.download="kashi-leverandoranalyse-2026-11-01.csv";document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),1000);
+});
+document.getElementById("menu").addEventListener("click",()=>{let n=document.getElementById("nav");n.classList.toggle("open");document.getElementById("menu").setAttribute("aria-expanded",String(n.classList.contains("open")))});
+document.querySelectorAll(".nav a").forEach(a=>a.addEventListener("click",()=>{document.getElementById("nav").classList.remove("open");document.getElementById("menu").setAttribute("aria-expanded","false")}));
+const fields=["qty","unit","freight","handling","commission"];
+const money=n=>"$"+n.toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2});
+function calc(){
+ let values=fields.map(k=>document.getElementById(k).value.trim());
+ let [q,u,f,h,p]=values.map(Number);
+ let valid=values.slice(0,4).every(x=>x!==""&&Number.isFinite(Number(x)))&&q>0&&u>=0&&f>=0&&h>=0;
+ document.getElementById("landed").textContent=valid?money((q*u+f+h)/q):"—";
+ document.getElementById("total").textContent=valid?money(q*u+f+h):"—";
+ document.getElementById("fee").textContent=valid&&values[4]!==""&&p>=0&&p<=100?money(q*u*p/100):"—";
+}
+fields.forEach(k=>document.getElementById(k).addEventListener("input",calc));
+document.getElementById("reset").addEventListener("click",()=>{fields.forEach(k=>document.getElementById(k).value="");calc()});
+document.getElementById("copyRequest").addEventListener("click",async()=>{
+ const supplier=document.getElementById("calcSupplier").value;
+ const txt="Hello "+supplier+" export team,\nKASHI Iceland is evaluating tile manufacturers for an Icelandic consumer/B2B showroom and sales partnership. Could you send your latest complete 2026 product catalogue (SKU, size, finish, grade, packing, photos and rights), export price list in USD per m², MOQ per SKU and mixed pallet/container policy, lead time, samples, FOB Bandar Abbas and freight options to Reykjavik for 1 pallet, 5 pallets and 20-foot FCL, compliance documents, and reseller/commission terms? Please clarify whether stock feeds and ongoing sales via KASHI are possible.\nBest regards,\nKASHI / SETAEI";
+ try{await navigator.clipboard.writeText(txt);const b=document.getElementById("copyRequest");b.textContent="Forespørsel kopiert ✓";setTimeout(()=>b.textContent="Kopier forespørsel til leverandør",2500)}catch(e){const box=document.createElement("textarea");box.value=txt;document.body.append(box);box.select();document.execCommand("copy");box.remove();alert("Forespørselen er kopiert hvis nettleseren tillater utklippstavle.")}
+});
+</script>
+</body></html>
