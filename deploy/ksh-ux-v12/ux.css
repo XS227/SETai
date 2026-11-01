@@ -1,0 +1,172 @@
+/* KSH v12 – compact showroom controls, Fold responsive cinematic product pages.
+   Scoped, additive overrides. Original pricing, 3D geometry, headers/footers remain. */
+
+/* Prevent transformed oversize hero photos / WebGL components from shifting mobile viewport. */
+html{max-width:100%;overflow-x:clip}
+body[data-ksh-brand="fliskonkurrenten"]{max-width:100%;overflow-x:clip}
+body[data-ksh-brand="fliskonkurrenten"] main{max-width:100%;min-width:0}
+body[data-ksh-brand="fliskonkurrenten"] #app{max-width:100%;min-width:0}
+body[data-ksh-brand="fliskonkurrenten"] .hero,
+body[data-ksh-brand="fliskonkurrenten"] .story-stage{overflow:clip}
+body[data-ksh-brand="fliskonkurrenten"] .hero-photo{background-position:center;background-repeat:no-repeat}
+body[data-ksh-product="zup"] .hero-photo{
+ background-image:linear-gradient(90deg,#0b0b0bd9,#15120e97 45%,#22201531),
+ url("/ksh/fliskonkurrenten/produkt/zup-spilepanel-eik-sort/assets/zup-eik-sort-600066.jpg")!important;
+ background-position:center!important;
+}
+body[data-ksh-product="zup"] .offer-img{
+ background-image:url("/ksh/fliskonkurrenten/produkt/zup-spilepanel-eik-sort/assets/zup-eik-sort-600066.jpg")!important;
+ background-position:center!important;
+}
+body[data-ksh-product="zup"] .model-view .poster{
+ background-image:url("/ksh/fliskonkurrenten/produkt/zup-spilepanel-eik-sort/assets/zup-eik-sort-600066.jpg")!important;
+}
+/* Keep the canonical KSH footer, not a second generated product footer. */
+body[data-ksh-brand="fliskonkurrenten"]:has(.k6-footer) #app>footer.footer{display:none!important}
+body[data-ksh-brand="fliskonkurrenten"] .ksh2-product-figure img{object-fit:cover;object-position:center}
+body[data-ksh-brand="fliskonkurrenten"] .ksh2-product-figure:has(img[data-ksh-zup]) img{object-fit:contain;background:#262626}
+body[data-ksh-brand="fliskonkurrenten"] .story-photo{background-repeat:no-repeat}
+body[data-ksh-brand="fliskonkurrenten"] .ksh2-head{max-width:100%;box-sizing:border-box}
+
+/* Small, unobtrusive showroom drawer: leave 3D room visible while editing.
+   Selected products and price remain usable; list scrolls within the drawer. */
+.sense-composer .sr5-drawer{
+ width:min(292px,calc(100% - 26px))!important;
+ max-width:calc(100% - 26px)!important;
+ top:74px!important;bottom:auto!important;
+ max-height:min(53%,410px)!important;
+ overflow-y:auto!important;overflow-x:hidden!important;
+ padding:13px!important;
+ border-radius:12px!important;
+ box-shadow:0 7px 23px rgba(30,25,20,.20)!important;
+ background:rgba(250,247,241,.94)!important;
+ backdrop-filter:blur(12px);
+}
+.sense-composer .sr5-drawer>header{margin-bottom:7px!important;padding:5px 0 7px!important}
+.sense-composer .sr5-drawer h3{font-size:clamp(19px,2.2vw,23px)!important;line-height:1.18}
+.sense-composer .sr5-drawer p{margin:8px 0;font-size:10px;line-height:1.45}
+.sense-composer .sr5-product,.sense-composer .sr5-material{padding:7px 9px!important;min-height:47px!important;margin:5px 0!important;gap:8px!important}
+.sense-composer .sr10-product-row{margin:5px 0!important;gap:5px!important}
+.sense-composer .sr10-product-row .sr5-product{min-height:49px!important}
+.sense-composer .sr10-focus{min-width:44px!important;width:44px!important;font-size:20px}
+.sense-composer .sr5-product small{font-size:10px;line-height:1.35}
+.sense-composer .sr5-drawer input[type=range]{touch-action:pan-x}
+.sense-composer .sr11-light-setting{padding:9px 10px;margin:9px 0}
+.sense-composer .sr11-views{gap:5px}
+.sense-composer .sr11-views button{min-height:43px;padding:7px 10px}
+.sense-composer .sr5-close{width:36px;height:36px;min-height:36px}
+@media(max-width:1180px),(pointer:coarse){
+ .sr10-compact.sense-composer .sr5-drawer{
+   left:10px!important;right:10px!important;top:auto!important;
+   bottom:79px!important;width:auto!important;max-width:none!important;
+   max-height:min(28%,238px)!important;min-height:0!important;
+   border-radius:14px!important;padding:10px 13px!important;
+   overscroll-behavior:contain;
+ }
+ .sr10-compact.sense-composer .sr5-drawer>header{top:-10px!important;margin-bottom:4px}
+ .sr10-compact.sense-composer .sr5-price{
+   bottom:9px!important;right:10px!important;
+   max-width:245px!important;min-height:60px!important;
+   padding:9px 12px!important;
+ }
+ .sr10-compact.sense-composer .sr5-price output{font-size:clamp(19px,3.5vw,25px)!important}
+}
+@media(max-width:650px){
+ .sr10-compact.sense-composer .sr5-drawer{
+   left:8px!important;right:8px!important;bottom:74px!important;
+   max-height:min(27%,218px)!important;
+ }
+ .sr10-compact.sense-composer .sr5-price{left:auto!important;right:8px!important;max-width:210px!important}
+}
+@media(max-height:520px) and (orientation:landscape){
+ .sr10-compact.sense-composer .sr5-drawer{
+  top:57px!important;bottom:8px!important;left:auto!important;
+  right:8px!important;width:min(290px,53vw)!important;max-height:calc(100% - 70px)!important;
+ }
+ .sr10-compact.sense-composer .sr5-price{left:8px!important;right:auto!important;bottom:8px!important;max-width:215px!important}
+}
+/* Cinematic product pages on mobile, Galaxy Fold cover/open, and tablets */
+@media(max-width:1050px){
+ body[data-ksh-brand="fliskonkurrenten"] .hero{
+   width:100%!important;min-height:max(590px,100svh)!important;
+   height:auto!important;position:relative!important;
+   display:flex!important;align-items:center!important;
+   overflow:clip!important;
+ }
+ body[data-ksh-brand="fliskonkurrenten"] .hero-photo{
+   inset:0!important;max-width:100%;transform-origin:center!important;
+ }
+ body[data-ksh-brand="fliskonkurrenten"] .hero-content{
+   padding-top:clamp(100px,16svh,185px)!important;
+   padding-bottom:125px!important;
+   min-width:0!important;max-width:100%!important;
+   margin-inline:auto!important;position:relative!important;z-index:1!important;
+ }
+ body[data-ksh-brand="fliskonkurrenten"] .hero h1{
+   font-size:clamp(40px,8.4vw,90px)!important;
+   line-height:1.05!important;overflow-wrap:break-word!important;
+   max-width:100%!important;margin:12px 0 18px!important;
+ }
+ body[data-ksh-brand="fliskonkurrenten"] .hero .description{
+   font-size:clamp(14px,2vw,18px)!important;line-height:1.6!important;
+   max-width:min(500px,92%)!important;
+ }
+ body[data-ksh-brand="fliskonkurrenten"] .hero .actions{
+   display:flex!important;flex-wrap:wrap!important;gap:10px!important;
+   max-width:100%!important;margin-top:23px!important;
+ }
+ body[data-ksh-brand="fliskonkurrenten"] .hero .actions a{
+   max-width:100%!important;min-height:44px!important;flex:0 1 auto!important;
+   white-space:normal!important;
+ }
+ body[data-ksh-brand="fliskonkurrenten"] .hero-bottom{
+   max-width:calc(100% - 8vw)!important;
+   left:4vw!important;right:4vw!important;bottom:23px!important;
+   display:flex!important;flex-wrap:wrap!important;gap:10px!important;
+   font-size:9px!important;letter-spacing:.08em!important;
+ }
+ body[data-ksh-brand="fliskonkurrenten"] .story-stage{
+   height:100svh!important;min-height:0!important;max-width:100%!important;
+   overflow:clip!important;
+ }
+ body[data-ksh-brand="fliskonkurrenten"] .story-photo{inset:0!important}
+ body[data-ksh-brand="fliskonkurrenten"] .story-copy{
+   left:5vw!important;right:5vw!important;max-width:90vw!important;
+   bottom:clamp(35px,8svh,80px)!important;
+ }
+ body[data-ksh-brand="fliskonkurrenten"] .story-copy h2{
+   font-size:clamp(35px,7.5vw,76px)!important;
+   line-height:1.12!important;overflow-wrap:break-word!important;
+ }
+ body[data-ksh-brand="fliskonkurrenten"] .chapterno{top:clamp(48px,10svh,90px)!important}
+ body[data-ksh-brand="fliskonkurrenten"] .intro,
+ body[data-ksh-brand="fliskonkurrenten"] .feature-wrap,
+ body[data-ksh-brand="fliskonkurrenten"] .spec-grid,
+ body[data-ksh-brand="fliskonkurrenten"] .offer{grid-template-columns:minmax(0,1fr)!important}
+ body[data-ksh-brand="fliskonkurrenten"] .feature-copy{padding:55px max(5vw,20px)!important;min-width:0}
+ body[data-ksh-brand="fliskonkurrenten"] .spec-grid{gap:28px!important}
+ body[data-ksh-brand="fliskonkurrenten"] .spec-drawing{min-height:240px!important;padding:25px!important}
+ body[data-ksh-brand="fliskonkurrenten"] .specs dd{overflow-wrap:anywhere;min-width:0}
+ body[data-ksh-brand="fliskonkurrenten"] .model-head{display:block!important}
+ body[data-ksh-brand="fliskonkurrenten"] .model-view{height:clamp(300px,52svh,480px)!important}
+ body[data-ksh-brand="fliskonkurrenten"] .model-tools{gap:10px!important;padding:12px 16px!important}
+ body[data-ksh-brand="fliskonkurrenten"] .sticky{max-width:calc(100vw - 16px)!important}
+}
+@media(max-width:520px){
+ body[data-ksh-brand="fliskonkurrenten"] .shell{width:calc(100% - 34px)!important;max-width:100%!important}
+ body[data-ksh-brand="fliskonkurrenten"] .hero h1{font-size:clamp(38px,11vw,59px)!important}
+ body[data-ksh-brand="fliskonkurrenten"] .hero-content{padding-top:133px!important;padding-bottom:120px!important}
+ body[data-ksh-brand="fliskonkurrenten"] .hero-bottom>span:nth-child(2){order:2;width:100%;text-align:left}
+ body[data-ksh-brand="fliskonkurrenten"] .story-copy h2{font-size:clamp(37px,10vw,58px)!important}
+ body[data-ksh-brand="fliskonkurrenten"] .section,
+ body[data-ksh-brand="fliskonkurrenten"] .model{padding-block:65px!important}
+ body[data-ksh-brand="fliskonkurrenten"] .feature-photo{min-height:320px!important}
+ body[data-ksh-brand="fliskonkurrenten"] .model-tools{flex-direction:column!important}
+ body[data-ksh-brand="fliskonkurrenten"] .sticky{left:8px!important;right:8px!important;bottom:calc(10px + env(safe-area-inset-bottom,0px))!important;transform:translateY(150%)!important;width:auto!important;border-radius:17px!important;padding:7px 8px!important;white-space:normal!important}
+ body[data-ksh-brand="fliskonkurrenten"] .sticky.on{transform:none!important}
+ body[data-ksh-brand="fliskonkurrenten"] .contact form{grid-template-columns:1fr!important}
+ body[data-ksh-brand="fliskonkurrenten"] .contact input,
+ body[data-ksh-brand="fliskonkurrenten"] .contact textarea{width:100%!important;min-width:0}
+ body[data-ksh-brand="fliskonkurrenten"] .specs div{gap:12px!important}
+ body[data-ksh-brand="fliskonkurrenten"] .specs dt{max-width:48%}
+}
