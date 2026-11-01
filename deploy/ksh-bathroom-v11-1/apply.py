@@ -6,18 +6,18 @@ root,temp,backup=map(Path,sys.argv[1:])
 assert (root/'showroom/index.html').is_file()
 assert (root/'produkt/sanipro-sense/index.html').is_file()
 assert (root/'assets/sense-film-v4/landing.js').is_file()
-assert (root/'assets/bathroom-v10/layout.js').is_file()
+assert (root/'assets/bathroom-v11/layout.js').is_file()
 changes={}
 for name in ('room.js','room.css','layout.js'):
- dest=root/'assets/bathroom-v11'/name
+ dest=root/'assets/bathroom-v11-1'/name
  changes[dest]=(temp/name).read_bytes()
 refs={
  root/'showroom/index.html':[
-  ('/assets/bathroom-v11-1/room.js?v=11.1','/assets/bathroom-v11-1/room.js?v=11'),
-  ('/assets/bathroom-v11-1/room.css?v=11.1','/assets/bathroom-v11-1/room.css?v=11')
+  ('/assets/bathroom-v11/room.js?v=11','/assets/bathroom-v11-1/room.js?v=11.1'),
+  ('/assets/bathroom-v11/room.css?v=11','/assets/bathroom-v11-1/room.css?v=11.1')
  ],
  root/'produkt/sanipro-sense/index.html':[
-  ('/assets/bathroom-v11-1/room.css?v=11.1','/assets/bathroom-v11-1/room.css?v=11')
+  ('/assets/bathroom-v11/room.css?v=11','/assets/bathroom-v11-1/room.css?v=11.1')
  ],
  root/'assets/sense-film-v4/landing.js':[
   ('/assets/bathroom-v11-1/room.js?v=11.1','/assets/bathroom-v11-1/room.js?v=11')
@@ -57,5 +57,5 @@ except BaseException:
   else:path.unlink(missing_ok=True)
  raise
 print('KSH V11.1 INSTALLED:',len(written),'files')
-print('Full screen / light sliders / camera views')
+print('Fullscreen browser fallback portal corrected; top-down camera framing improved')
 print('Backup:',backup)
