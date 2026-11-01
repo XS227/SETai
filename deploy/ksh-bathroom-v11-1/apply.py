@@ -20,7 +20,7 @@ refs={
   ('/assets/bathroom-v11/room.css?v=11','/assets/bathroom-v11-1/room.css?v=11.1')
  ],
  root/'assets/sense-film-v4/landing.js':[
-  ('/assets/bathroom-v11-1/room.js?v=11.1','/assets/bathroom-v11-1/room.js?v=11')
+  ('/assets/bathroom-v11/room.js?v=11','/assets/bathroom-v11-1/room.js?v=11.1')
  ]
 }
 for path,changes_for_file in refs.items():
