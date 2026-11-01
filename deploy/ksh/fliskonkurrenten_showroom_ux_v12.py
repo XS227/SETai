@@ -30,7 +30,7 @@ if 'KSH_SHOWROOM_UX_V12' not in js:
     js=replace_once(js,"this.renderer.toneMappingExposure=(s.daylight==='evening'?1.04:1.15)*Math.pow(factor,.48);",
        "this.renderer.toneMappingExposure=(s.daylight==='evening'?.98:1.08)*Math.pow(factor,.42);")
     js=replace_once(js,"'Rommet er tomt. Åpne produktikonet for å legge inn en modell.'","'Rommet er tomt. Trykk «+ Produkt» for å legge inn et produkt.'")
-    js=replace_once(js,"state.lightTemperature=b.dataset.day==='day'?5500:3000;\n    update();",
+    js=replace_once(js,"state.lightTemperature=b.dataset.day==='day'?5500:3000;\n   update();",
        "state.lightTemperature=b.dataset.day==='day'?5500:3000;\n    state.lightCustomized=true;\n    update();")
     js=replace_once(js,"state.lightBrightness=+brightness.value;options.querySelector",
        "state.lightBrightness=+brightness.value;state.lightCustomized=true;options.querySelector")
