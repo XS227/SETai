@@ -66,6 +66,11 @@ if 'ksh13-material-reference' not in mainjs:
   '<span>Samme tåkegrønne farge og Turbine Grey-overflate som i vårt 3D-showroom. '+ 
   '3D-modellen er en interaktiv rekonstruksjon; sammenlign alltid med materialprøver.</span></div>'+
   needle,1)
+# Reject any generated JavaScript that does not parse before touching production.
+import subprocess
+testfile=tmp/'vedum-main-preview.js'
+testfile.write_text(mainjs,encoding='utf-8')
+subprocess.run(['node','--check',str(testfile)],check=True,timeout=12)
 changes[jsfile]=mainjs.encode('utf-8')
 # Improve the material reference / model-viewer background on the Vedum page only.
 vedum_css=(
