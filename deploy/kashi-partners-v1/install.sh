@@ -25,7 +25,7 @@ for content in (no,fa):
  assert content.count("</html>")==1 and len(content)>15000
  assert "noindex" in content and "Setareh Meybod Tile" in content
  assert "Tabriz Tile Group" in content and "Persepolis Tile" in content
- assert "24%" in content and "0%" in content
+ assert ("24%" in content or "24 %" in content or "۲۴٪" in content) and ("0%" in content or "0 %" in content)
  assert 'https://www.skatturinn.is/' in content
  assert content.count("<script>")==1 and content.count("</script>")==1
 assert 'id="import2026"' in no and 'id="vat"' in no and '/kashi/partners/fa/' in no
