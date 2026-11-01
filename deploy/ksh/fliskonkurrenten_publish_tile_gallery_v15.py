@@ -43,7 +43,7 @@ made=0
 for tile in LIB:
  slug=tile['id'];name=esc(tile['name'])
  intro='Slik kan '+name+' se ut i et rom. Vi bruker utsnitt fra et produktfoto som en visuell flisprøve. Flisens farge, format og mønster må verifiseres med fysisk produktprøve.'
- product=head(tile['name']+' | Prøv flisen i rommet | SETAEI KSH','Produktbilde, omtrentlig flisvisualisering og forslag til materialkombinasjoner for '+tile['name'])+
+ product=(head(tile['name']+' | Prøv flisen i rommet | SETAEI KSH','Produktbilde, omtrentlig flisvisualisering og forslag til materialkombinasjoner for '+tile['name'])+
  '<main class="tg15-page"><div class="tg15-container">'+NAV+
  '<div class="tg15-detail"><figure class="tg15-detail-photo"><img loading="eager" src="'+esc(tile['photo'])+'" alt="Flisfoto: '+name+'"><figcaption>Foto: Fliskonkurrentens produktside. Materialtekstur er en illustrasjon.</figcaption></figure>'+
  '<div class="tg15-detail-copy"><span class="tg15-kicker">'+esc(tile['category'])+' / DIGITALT SHOWROOM</span><h1>'+name+'</h1><p>'+intro+'</p><p><strong>Valgt produkt:</strong> '+name+'</p>'+
