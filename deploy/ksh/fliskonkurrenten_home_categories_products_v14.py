@@ -115,7 +115,7 @@ for p in products:
     if p['type']=='3d':continue
     c=cats[p['cat']]
     title=esc(p['name'])
-    page='''<!doctype html><html lang="nb"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+    page=('''<!doctype html><html lang="nb"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow"><meta name="description" content="SETAEI designforslag: '''+title+''', produktreferanse fra Fliskonkurrenten.">
 <title>'''+title+''' | Fliskonkurrenten · SETAEI</title>'''+COMMON_HEAD+SOCIAL_HEAD+'<link rel="stylesheet" href="'+CSS+'"></head><body data-ksh-brand="fliskonkurrenten">'+
     '<main class="sp-page"><div class="sp-wrap"><nav class="sp-breadcrumb" aria-label="Tilbake"><a href="'+ROOT+'">Forside</a><span> / </span><a href="'+ROOT+'kategorier/?kategori='+esc(p['cat'])+'">'+esc(c['title'])+'</a><span> / </span><span>'+title+'</span></nav>'+
@@ -130,7 +130,7 @@ for p in products:
     if ensure_saved(PRODUCT_DETAIL/p['slug']/'index.html',page):made+=1
 
 # Distinct catalogue page with both real-source and 3D cards.
-directory='''<!doctype html><html lang="nb"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex,nofollow">
+directory=('''<!doctype html><html lang="nb"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex,nofollow">
 <title>Produkter | Fliskonkurrenten · SETAEI demo</title><meta name="description" content="Utforsk produktsider og ferdige 3D-demoer i Fliskonkurrentens SETAEI-designforslag.">'''+COMMON_HEAD+SOCIAL_HEAD+'<link rel="stylesheet" href="'+CSS+'"><script defer src="'+JS+'"></script></head><body data-ksh-brand="fliskonkurrenten">'+
 '<main class="sp-page"><header class="sp-hero"><div class="sp-wrap"><span class="sp-kicker">FLISKONKURRENTEN / PRODUKTUNIVERS</span><h1>Produkter.<br><em>Opplev mer.</em></h1><p>Utforsk produkteksempler fra nettbutikken. Der vi har en fungerende 3D-demo, kan du åpne og rotere modellen.</p></div></header><div class="sp-wrap sp-directory" id="sp-directory"><div class="sp-toolbar"><h2>Utforsk produkter</h2><div class="sp-filters"><button type="button" data-pfilter="alle" aria-pressed="true">Alle</button><button type="button" data-pfilter="3d">3D-demoer</button><button type="button" data-pfilter="fliser">Fliser</button><button type="button" data-pfilter="bad">Bad</button><button type="button" data-pfilter="stein">Naturstein</button><button type="button" data-pfilter="teknisk">Teknisk</button></div></div><div class="sp-grid" id="sp-products">'+''.join(bodyCard(p) for p in products)+'</div><p class="sp-disclaimer">Dette er et ikke-indeksert designforslag. Pris og tilgjengelighet kommer fra den offisielle nettbutikken, og kan endres.</p></div></main>'+footer+'</body></html>')
 ensure_saved(PRODUCT_DIR/'index.html',directory)
