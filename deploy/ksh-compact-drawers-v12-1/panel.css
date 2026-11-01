@@ -1,0 +1,42 @@
+/* KSH v12.1: keep showroom selection boxes truly compact and scrollable.
+   Height is explicit to override earlier top+bottom positioning. */
+.sense-composer.sr5 .sr5-drawer{
+ top:70px!important;bottom:auto!important;
+ height:min(278px,35vh)!important;
+ min-height:0!important;
+ max-height:min(278px,35vh)!important;
+ width:min(280px,calc(100% - 30px))!important;
+ right:12px!important;left:auto!important;
+ overflow-y:auto!important;overflow-x:hidden!important;
+ overscroll-behavior:contain!important;
+ scrollbar-gutter:stable;
+}
+.sr10-compact.sense-composer.sr5 .sr5-drawer{
+ top:auto!important;bottom:77px!important;
+ left:10px!important;right:10px!important;
+ width:auto!important;min-height:0!important;
+ height:min(206px,25dvh)!important;
+ max-height:min(206px,25dvh)!important;
+ padding:10px 12px!important;
+}
+.journey-stage:fullscreen .sr10-compact.sense-composer.sr5 .sr5-drawer,
+.journey-stage.sr11-faux-fullscreen .sr10-compact.sense-composer.sr5 .sr5-drawer{
+ height:min(245px,28dvh)!important;
+ max-height:min(245px,28dvh)!important;
+}
+@media(max-width:650px){
+ .sr10-compact.sense-composer.sr5 .sr5-drawer{
+  left:8px!important;right:8px!important;
+  height:min(190px,24dvh)!important;
+  max-height:min(190px,24dvh)!important;
+ }
+}
+@media(max-height:520px) and (orientation:landscape){
+ .sr10-compact.sense-composer.sr5 .sr5-drawer{
+  left:auto!important;right:8px!important;
+  top:58px!important;bottom:auto!important;
+  width:min(270px,50vw)!important;
+  height:calc(100% - 66px)!important;
+  max-height:calc(100% - 66px)!important;
+ }
+}
