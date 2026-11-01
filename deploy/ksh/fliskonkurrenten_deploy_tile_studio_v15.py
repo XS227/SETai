@@ -86,8 +86,8 @@ if(incomingTile){
 }
 """
  js=swap_once(js,anchor,insertion+anchor,'initialize URL tile')
- js=swap_once(js,"const enabled={\n  sense:stored?raw.enabled.sense!==false:true,",
-   "const enabled={\n  sense:(incomingTile&&!stored)?false:(stored?raw.enabled.sense!==false:true),",'avoid auto-adding bathtub to tile-only room')
+ js=swap_once(js,"const enabled={\n sense:stored?raw.enabled.sense!==false:true,",
+   "const enabled={\n sense:(incomingTile&&!stored)?false:(stored?raw.enabled.sense!==false:true),",'avoid auto-adding bathtub to tile-only room')
  anchor="buildRoom(s){const empty=s.floor==='none';super.buildRoom(empty?{...s,floor:'cemento'}:s);if(empty){const plane=this.room.children.find(o=>o.geometry?.type==='PlaneGeometry');if(plane){plane.material.dispose();plane.material=new T.MeshStandardMaterial({color:'#bdbab4',roughness:1});}}}"
  js=swap_once(js,anchor,
    anchor[:-1]+"if(s.tileId&&getTile(s.tileId))applyTileTexture(T,this,s);}",'tile geometry overlay')
