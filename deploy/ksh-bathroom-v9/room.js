@@ -1,0 +1,84 @@
+import * as T from 'three';
+import {GLTFLoader} from '/ksh/assets/ksh-v6/vendor/examples/jsm/loaders/GLTFLoader.js';
+import {RoomRenderer} from '/ksh/assets/ksh-v6/room-renderer.js?v=5';
+import {products,placement,normalizeModel,quote} from './layout.js';
+const C=window.KSHRoom;C.materials.none={name:'Ingen gulvbelegg',size:[1,1],pack:null,price:0,image:'cemento.jpg'};
+const base='/ksh/fliskonkurrenten/produkt/',stage=document.querySelector('#reisen .journey-stage');
+const host=document.createElement('div');host.id='sense-live-room';stage.prepend(host);
+const shapes={room:'<path d="M3 9 12 3l9 6v12H3Z M8 21v-8h8v8"/>',floor:'<path d="m12 3 10 6-10 6L2 9Z M2 14l10 6 10-6"/>',products:'<path d="M4 9h16v12H4Z M8 9V4h8v5 M2 14h20"/>',light:'<circle cx="12" cy="12" r="4"/><path d="M12 1v3 M12 20v3 M1 12h3 M20 12h3 M4 4l2 2 M18 18l2 2"/>',camera:'<path d="M4 8a9 9 0 1 1 0 9 M4 2v6h6"/>',budget:'<rect x="5" y="2" width="14" height="20" rx="2"/><path d="M8 6h8 M8 11h2 M14 11h2 M8 16h2 M14 16h2"/>'};
+const icon=k=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${shapes[k]}</svg>`;
+const labels={room:'Rommål',floor:'Gulv',products:'Produkter',light:'Lys',camera:'Nullstill kamera',budget:'Prisberegning'};
+const ui=document.createElement('div');ui.className='sense-composer sr5';ui.innerHTML=`<nav class="sr5-tools" aria-label="Romvalg">${Object.keys(labels).map(k=>`<button type="button" data-tool="${k}" aria-label="${labels[k]}" title="${labels[k]}" ${k==='camera'?'':'aria-expanded="false" aria-controls="sr5-drawer"'}>${icon(k)}<span class="sr5-tooltip">${labels[k]}</span></button>`).join('')}</nav><aside class="sr5-drawer" id="sr5-drawer" hidden aria-label="Romvalg"><header><h3 id="sr5-title"></h3><button class="sr5-close" type="button" aria-label="Lukk romvalg">×</button></header><div id="sr5-options"></div></aside><button type="button" class="sr5-price" aria-label="Åpne live prisberegning" aria-expanded="false" aria-controls="sr5-drawer"><span id="sr5-total-label">Delsum</span><output id="sr5-total" aria-live="polite"></output><span class="sr5-price-hint">${icon('budget')} Se beregning</span></button>`;stage.append(ui);
+let raw;try{raw=JSON.parse(localStorage.getItem('ksh-bathroom-v6')||localStorage.getItem('ksh-sense-room-v5')||localStorage.getItem('ksh-sense-room-v3'));}catch{}
+const state=C.normalize({...C.defaults(),width:3.8,length:3.4,height:2.8,items:[],delivery:null,...raw?.room});state.width=Math.max(3.2,state.width);state.length=Math.max(2.8,state.length);state.height=Math.max(2.8,state.height);state.items=[];
+const allKeys=['sense','vedum','zup','althea','stone'];
+const incoming=new URLSearchParams(location.search).get('add');
+const stored=raw?.enabled && typeof raw.enabled==='object';
+const enabled={
+ sense:stored?raw.enabled.sense!==false:true,
+ vedum:!!raw?.enabled?.vedum,zup:!!raw?.enabled?.zup,
+ althea:!!raw?.enabled?.althea,stone:!!raw?.enabled?.stone
+};
+// First launch from a product page presents that product, not a compulsory
+// pre-added Sense tub. Existing saved rooms retain their individual choices.
+if(allKeys.includes(incoming)){
+ if(!stored){for(const key of allKeys)enabled[key]=false;}
+ enabled[incoming]=true;
+ const url=new URL(location.href);url.searchParams.delete('add');
+ history.replaceState(history.state,'',url.pathname+url.search+url.hash);
+}
+const money=n=>new Intl.NumberFormat('nb-NO',{style:'currency',currency:'NOK',maximumFractionDigits:0}).format(n),num=n=>new Intl.NumberFormat('nb-NO',{maximumFractionDigits:2}).format(n);
+let current=null,lastOpener=null;const errors=new Set();
+function status(message){document.querySelector('#sense-live-status').textContent=message;}
+class BathRoom extends RoomRenderer{
+ constructor(){super(host,()=>{},status,{skipChair:true,hideOpening:true});this.models={};if(!this.is3D)return;this.controls.enabled=true;const loader=new GLTFLoader();
+  for(const key of ['sense','vedum','zup','althea']){const url=key==='sense'?'/ksh/fliskonkurrenten/assets/sense-v3/sense-v3.glb':base+products[key].slug+'/assets/'+(key==='vedum'?'model-turbine-v9.glb':'model-yup-v6.glb');loader.load(url,g=>{try{this.models[key]=normalizeModel(T,g.scene,key);errors.delete(key);this.objectKey='';this.update(state);setStatus();}catch(e){errors.add(key);status(e.message+' · kontroller produktmodellen.');}},undefined,()=>{errors.add(key);setStatus();});}
+ }
+ buildRoom(s){const empty=s.floor==='none';super.buildRoom(empty?{...s,floor:'cemento'}:s);if(empty){const plane=this.room.children.find(o=>o.geometry?.type==='PlaneGeometry');if(plane){plane.material.dispose();plane.material=new T.MeshStandardMaterial({color:'#bdbab4',roughness:1});}}}
+ buildObjects(){this.clear(this.objects);if(!this.models)return;
+  for(const key of ['sense','vedum','zup','althea'])if(enabled[key]&&this.models[key]){const object=this.models[key].clone(true),p=placement(key,state);object.position.set(...p.position);object.rotation.y=p.rotation;this.objects.add(object);}
+ }
+}
+const renderer=new BathRoom();window.KSHBathroom={state,enabled};if(!renderer.is3D)host.hidden=true;
+function setStatus(){status(!renderer.is3D?'Produktfoto · 3D er ikke tilgjengelig i nettleseren':errors.size?'En eller flere modeller kunne ikke lastes. Se prislisten.':!['sense','vedum','zup','althea'].some(k=>enabled[k])?'Rommet er tomt. Åpne produktikonet for å legge inn en modell.':'Dra for å rotere · mål i meter · produktstudier');}
+function persist(){try{localStorage.setItem('ksh-bathroom-v6',JSON.stringify({room:state,enabled}));}catch{}}
+function update(){renderer.objectKey='';renderer.update(state);persist();const q=quote(C,state,enabled);document.querySelector('#sr5-total').textContent=money(q.total);document.querySelector('#sr5-total-label').textContent=q.missing?`Delsum · ${q.missing} uten pris`:'Delsum produkter og gulv';
+ if(current==='budget')renderBudget();if(!renderer.is3D){let board=ui.querySelector('.sr5-photo-samples');if(!board){board=document.createElement('div');board.className='sr5-photo-samples';ui.append(board);}board.innerHTML=state.floor==='none'?'<span>Ingen gulvbelegg valgt</span>':`<img src="/ksh/assets/ksh-v6/assets/${C.materials[state.floor].image}" alt="${C.materials[state.floor].name}"><span>${C.materials[state.floor].name}</span>`;}
+}
+const options=ui.querySelector('#sr5-options');
+function renderBudget(){const q=quote(C,state,enabled),t=q.floor;options.innerHTML=`<dl class="sr5-breakdown">${q.lines.map(l=>`<dt>${l.name}${l.key==='althea'?' · 1 flis':l.key==='zup'?' · 1 panel':''}</dt><dd>${l.price===null?'Ikke priset':money(l.price)}</dd>`).join('')}<dt>${C.materials[state.floor].name}<small>${num(t.area)} m² netto · ${state.waste}% svinn${t.packages===null?'':` · ${t.packages} pakker`}<br>${num(t.orderArea)} m² × ${C.unitPrice(state)===null?'ukjent pris':money(C.unitPrice(state))+'/m²'}</small></dt><dd>${C.unitPrice(state)===null?'Ikke priset':money(t.floorCost)}</dd><dt><strong>Delsum kjente priser</strong></dt><dd><strong>${money(q.total)}</strong></dd></dl><p>Priser fra produktstudiene, kontrollert 31.10.2026. Arbeid, lim, fug og levering kommer i tillegg. Steinreferansen er ikke priset. Colorker beregnes som én flis; bestillingsmengde må avklares.</p><p>Modeller som ennå ikke er lastet inn, står fortsatt i prislisten.</p>`;}
+function render(name){ui.querySelector('#sr5-title').textContent=labels[name];
+ if(name==='budget'){renderBudget();return;}
+ if(name==='room'){options.innerHTML=`<p>Rommålene oppdaterer gulvmengden, prisen og plasseringen av veggproduktene.</p>${[['width','Bredde',3.2,8],['length','Lengde',2.8,8],['height','Høyde',2.8,4]].map(([k,l,min,max])=>`<label>${l} (m)<input data-dimension="${k}" type="number" value="${state[k]}" min="${min}" max="${max}" step="0.1"></label>`).join('')}<p>Sense: 170 × 80 × 60 cm. Vedum: 120,5 cm bredde, topp ca. 90 cm over gulvet. Z-UP: 279,8 × 60 cm. Colorker: 119,2 × 59,5 cm.</p>`;
+  options.querySelectorAll('[data-dimension]').forEach(el=>el.oninput=()=>{if(el.value===''||!el.validity.valid)return;state[el.dataset.dimension]=Number(el.value);update();});return;}
+ if(name==='floor'){options.innerHTML='<p>Trykk på valgt gulv en gang til for å fjerne det. «Ingen gulvbelegg» fjerner gulv fra listen og prisen.</p>'+Object.entries(C.materials).map(([key,m])=>`<button class="sr5-material" type="button" data-floor="${key}" aria-pressed="${state.floor===key}"><img src="/ksh/assets/ksh-v6/assets/${m.image}" alt=""><span>${m.name}<small>${m.price===null?'Uten produktpris':money(C.unitPrice({...state,floor:key}))+' / m²'}</small></span></button>`).join('')+`<label>Kapp og svinn (%)<input id="sr5-waste" type="number" value="${state.waste}" min="0" max="30" step="1"></label><p>Hele pakker beregnes automatisk. Velg kalkulatorikonet for alle mengder og delpriser.</p>`;
+  options.querySelectorAll('[data-floor]').forEach(b=>b.onclick=()=>{state.floor=state.floor===b.dataset.floor?'none':b.dataset.floor;update();render(name);});options.querySelector('#sr5-waste').oninput=e=>{if(e.target.value!==''&&e.target.validity.valid){state.waste=Number(e.target.value);update();}};return;}
+ if(name==='products'){
+  options.innerHTML='<p>Legg til eller fjern hvert produkt når du vil. Valgene og budsjettet lagres automatisk.</p>'+
+   Object.entries(products).map(([key,p])=>{
+    const on=!!enabled[key],cost=p.price===null?'Referansefoto, ikke priset':money(p.price)+(key==='althea'?' / flis':key==='zup'?' / panel':'');
+    return '<button type="button" class="sr5-product" data-product="'+key+'" aria-pressed="'+on+'" aria-label="'+(on?'Fjern ':'Legg til ')+p.name+'">'+
+     '<span aria-hidden="true">'+(on?'−':'＋')+'</span><span>'+p.name+
+     '<small>'+(on?'I rommet · trykk for å fjerne':'Legg til i rommet')+' · '+cost+'</small></span></button>';
+   }).join('')+
+   '<button type="button" class="sr8-clear" id="sr8-clear" '+(!Object.values(enabled).some(Boolean)?'disabled':'')+'>Fjern alle produkter fra rommet</button>'+
+   '<p>Modellene er visuelle produktstudier. Vedum står mot venstre vegg; flis og spileplate vises som veggmaterialer.</p>'+
+   (enabled.stone?'<figure class="sr5-stone"><img src="/ksh/assets/ksh-v6/assets/social/DJqssF3tO5x.jpg" alt="Naturstein fra Heimdal"><figcaption>Heimdal · referansefoto, ikke en priset 3D-modell.</figcaption></figure>':'');
+  options.querySelectorAll('[data-product]').forEach(b=>b.onclick=()=>{
+   const key=b.dataset.product;enabled[key]=!enabled[key];update();setStatus();render(name);
+   options.querySelector('[data-product="'+key+'"]')?.focus({preventScroll:true});
+  });
+  options.querySelector('#sr8-clear').onclick=()=>{for(const key of allKeys)enabled[key]=false;update();setStatus();render(name);};
+  return;
+ }
+ if(name==='light'){options.innerHTML=`<div class="sr5-light-options"><button type="button" data-day="day" aria-pressed="${state.daylight==='day'}">Dagslys</button><button type="button" data-day="evening" aria-pressed="${state.daylight==='evening'}">Kveldslys</button></div><p>Lys og skjerm påvirker fargene. Bruk fysiske materialprøver før bestilling.</p>`;options.querySelectorAll('[data-day]').forEach(b=>b.onclick=()=>{state.daylight=b.dataset.day;update();render(name);});}
+}
+function close(){current=null;ui.querySelector('.sr5-drawer').hidden=true;ui.querySelectorAll('[aria-expanded]').forEach(b=>b.setAttribute('aria-expanded','false'));lastOpener?.focus({preventScroll:true});}
+function open(name,button){if(current===name){close();return;}current=name;lastOpener=button;render(name);ui.querySelector('.sr5-drawer').hidden=false;ui.querySelectorAll('[aria-expanded]').forEach(b=>b.setAttribute('aria-expanded',String(b===button)));ui.querySelector('.sr5-close').focus({preventScroll:true});}
+ui.querySelectorAll('[data-tool]').forEach(b=>b.onclick=()=>{if(b.dataset.tool==='camera'){if(renderer.is3D)renderer.reset();close();}else open(b.dataset.tool,b);});ui.querySelector('.sr5-price').onclick=e=>open('budget',e.currentTarget);ui.querySelector('.sr5-close').onclick=close;ui.addEventListener('keydown',e=>{if(e.key==='Escape')close();});
+update();if(renderer.is3D)renderer.reset();setStatus();
+// Keep the live subtotal inside the visible part of a tall showroom on phones.
+let layoutFrame=0;
+function fitOverlay(){layoutFrame=0;const rect=stage.getBoundingClientRect(),height=stage.clientHeight;ui.querySelector('.sr5-price').style.bottom=Math.min(Math.max(65,rect.bottom-innerHeight+18),Math.max(65,height-155))+'px';ui.style.setProperty('--sr5-drawer-height',Math.max(150,Math.min(height-235,innerHeight-Math.max(86,rect.top)-215))+'px');}
+function scheduleOverlay(){if(!layoutFrame)layoutFrame=requestAnimationFrame(fitOverlay);}
+addEventListener('scroll',scheduleOverlay,{passive:true});addEventListener('resize',scheduleOverlay);if(window.visualViewport)visualViewport.addEventListener('resize',scheduleOverlay);if(window.ResizeObserver)new ResizeObserver(scheduleOverlay).observe(stage);fitOverlay();
