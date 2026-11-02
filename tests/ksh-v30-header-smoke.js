@@ -28,7 +28,9 @@ const {chromium}=require('/home/ubuntu/somi-build/node_modules/playwright');
      burgerBorder:menu?getComputedStyle(menu).borderColor:'n/a',
      scrollWidth:document.documentElement.scrollWidth,
      innerWidth:innerWidth,
-     darkCss:!!document.querySelector('link[href*="ksh-dark-header-v30.css"]')
+     darkCss:!!document.querySelector('link[href*="ksh-dark-header-v30.css?v=30.2"]'),
+     strip:document.querySelector('.preview-strip,.concept-ribbon')?getComputedStyle(document.querySelector('.preview-strip,.concept-ribbon')).backgroundColor:'n/a',
+     categoryBar:document.querySelector('.mega-row')?getComputedStyle(document.querySelector('.mega-row')).backgroundColor:'n/a'
     };
    });
    if(width===440&&['Fliskonkurrenten','Heimslig 3D','Heimdal 3D','Flyt-Gulv'].includes(name)){
