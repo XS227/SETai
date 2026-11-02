@@ -1,0 +1,189 @@
+/* SETAEI KSH v26 — editorial project navigator, responsive and accessible.
+   Scoped to enhanced guide only; supplier/social/SEO pages remain unchanged. */
+body[data-ksh-brand] .net21-guide.net26-guide{
+ background:#1e1e1e!important;color:#f7f4ef!important;
+ padding:clamp(58px,7vw,105px) clamp(15px,4vw,58px)!important;
+ position:relative;overflow:hidden;isolation:isolate;
+}
+body[data-ksh-brand] .net21-guide.net26-guide::before{
+ content:"";position:absolute;z-index:-1;top:-260px;right:-120px;
+ width:580px;height:580px;border:1px solid rgba(204,177,146,.22);
+ border-radius:50%;box-shadow:0 0 0 120px rgba(204,177,146,.025),0 0 0 121px rgba(204,177,146,.11);
+ pointer-events:none;
+}
+body[data-ksh-brand] .net26-guide .net21-container{max-width:1260px}
+body[data-ksh-brand] .net26-guide .net21-overline{color:#ceac8c!important;font-size:11px!important;letter-spacing:.22em!important;margin-bottom:18px!important}
+body[data-ksh-brand] .net26-guide .net21-head{align-items:end!important;gap:35px!important}
+body[data-ksh-brand] .net26-guide .net21-head h2{
+ font:400 clamp(43px,5.9vw,78px)/1.045 Georgia,serif!important;
+ color:#fbf8f3!important;letter-spacing:-.055em!important;max-width:900px!important;
+ margin:0 0 18px!important;
+}
+body[data-ksh-brand] .net26-guide .net21-head h2 em{color:#d5b596!important;font-style:italic}
+body[data-ksh-brand] .net26-guide .net21-head p{
+ color:#bdb7b0!important;max-width:625px!important;font:400 15px/1.65 Arial,sans-serif!important;
+ margin:0 0 6px!important;
+}
+body[data-ksh-brand] .net26-guide .net21-phase{
+ color:#d1b79a!important;letter-spacing:.18em!important;
+ border-left:1px solid #aa8e75;padding:8px 0 8px 16px;
+}
+body[data-ksh-brand] .net26-guide .net21-choices{
+ display:flex;gap:9px!important;flex-wrap:wrap;margin:29px 0 22px!important;
+}
+body[data-ksh-brand] .net26-guide .net21-choices button{
+ border:1px solid #585553!important;border-radius:4px!important;
+ background:#292929!important;color:#e8e4de!important;
+ font:750 12px/1.4 Arial,sans-serif!important;
+ min-height:47px!important;padding:11px 18px!important;
+ transition:background .2s,border-color .2s,transform .2s;
+}
+body[data-ksh-brand] .net26-guide .net21-choices button:hover{
+ background:#383331!important;border-color:#ac9077!important;transform:translateY(-2px)
+}
+body[data-ksh-brand] .net26-guide .net21-choices button[aria-pressed="true"]{
+ background:#d6b99a!important;color:#1b1c1c!important;border-color:#d6b99a!important;
+ box-shadow:0 4px 18px #0808081e;
+}
+body[data-ksh-brand] .net26-guide .net21-result{
+ background:#f5f2ed!important;border:1px solid #b5a795!important;
+ border-radius:16px!important;padding:clamp(17px,2.4vw,32px)!important;
+ box-shadow:0 22px 70px rgba(0,0,0,.23);
+ color:#302a27!important;
+}
+body[data-ksh-brand] .net26-guide .net21-result-head{
+ display:flex;align-items:center;justify-content:space-between;gap:22px;
+ margin-bottom:23px!important;padding-bottom:22px;border-bottom:1px solid #d8d0c6;
+}
+body[data-ksh-brand] .net26-guide .net21-result-head p{
+ max-width:700px!important;font:14px/1.6 Arial,sans-serif!important;
+ color:#635950!important;margin:0!important;
+}
+body[data-ksh-brand] .net26-guide .net21-result-head p strong{
+ font:400 clamp(30px,3.3vw,44px)/1.1 Georgia,serif!important;
+ letter-spacing:-.04em;color:#292725!important;display:inline-block;
+ margin-bottom:10px;
+}
+body[data-ksh-brand] .net26-guide .net21-go{
+ display:inline-flex!important;align-items:center;justify-content:center;
+ min-height:50px!important;border-radius:4px!important;
+ background:#262422!important;color:#fff!important;border:1px solid #262422!important;
+ padding:14px 20px!important;font-size:12px!important;font-weight:800!important;text-align:center;
+ box-shadow:0 9px 22px #0002;
+}
+body[data-ksh-brand] .net26-guide .net21-go:hover{background:#5a4739!important}
+body[data-ksh-brand] .net26-guide .net21-cards{
+ display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px!important;
+}
+body[data-ksh-brand] .net26-guide .net21-card{
+ display:flex;flex-direction:column;padding:0!important;
+ border:1px solid #dcd6cc!important;background:#fffcf7!important;
+ border-radius:9px!important;overflow:hidden;min-width:0;box-shadow:0 4px 15px #2e26100b;
+ transition:transform .25s,box-shadow .25s;
+}
+body[data-ksh-brand] .net26-guide .net21-card:hover{
+ transform:translateY(-4px);box-shadow:0 17px 30px #221c161f;
+}
+body[data-ksh-brand] .net26-guide .net26-media{
+ position:relative;height:155px;flex:none;background:linear-gradient(115deg,#787065,#3a3937);overflow:hidden;
+}
+body[data-ksh-brand] .net26-guide .net26-media::after{
+ content:"";position:absolute;inset:35% 0 0;
+ background:linear-gradient(0deg,rgba(12,12,12,.68),transparent);pointer-events:none;
+}
+body[data-ksh-brand] .net26-guide .net26-media img{
+ width:100%;height:100%;object-fit:cover;display:block;
+ filter:saturate(.68) contrast(1.06) brightness(.86);
+ transition:transform .65s;
+}
+body[data-ksh-brand] .net26-guide .net21-card:hover .net26-media img{transform:scale(1.045)}
+body[data-ksh-brand] .net26-guide .net26-media span{
+ position:absolute;z-index:1;bottom:15px;left:18px;right:10px;
+ color:white;font-size:10px;font-weight:800;letter-spacing:.14em;text-shadow:0 1px 4px #0008;
+}
+body[data-ksh-brand] .net26-guide .net21-cardtop{padding:21px 20px 0!important}
+body[data-ksh-brand] .net26-guide .net21-cardtop span{color:#88664e!important;font-size:9px!important;letter-spacing:.16em}
+body[data-ksh-brand] .net26-guide .net21-cardtop h3{
+ font:400 clamp(22px,2.35vw,30px)/1.1 Georgia,serif!important;
+ color:#2b2927!important;letter-spacing:-.045em;margin:8px 0 11px!important;
+}
+body[data-ksh-brand] .net26-guide .net21-card>p{
+ color:#645e57!important;font-size:12px!important;line-height:1.65!important;
+ min-height:0!important;margin:0 20px 16px!important;flex-grow:1;
+}
+body[data-ksh-brand] .net26-guide .net21-actions{
+ padding:0 20px 21px!important;display:flex;gap:13px!important;flex-wrap:wrap;align-items:center;
+}
+body[data-ksh-brand] .net26-guide .net21-primary{
+ background:#2c2927!important;color:#fff!important;border-color:#2c2927!important;
+ min-height:42px!important;padding:11px 15px!important;border-radius:3px!important;
+ font-size:11px!important;
+}
+body[data-ksh-brand] .net26-guide .net21-secondary{color:#554436!important;font-size:11px!important}
+body[data-ksh-brand] .net26-guide .net26-brief-details{
+ margin-top:22px;border:1px solid #d6c9b9;background:#ece5da;border-radius:8px;overflow:hidden;
+}
+body[data-ksh-brand] .net26-guide .net26-brief-details summary{
+ padding:17px 21px;display:flex;gap:20px;justify-content:space-between;align-items:center;
+ cursor:pointer;list-style:none;color:#342d27;
+}
+body[data-ksh-brand] .net26-guide .net26-brief-details summary::-webkit-details-marker{display:none}
+body[data-ksh-brand] .net26-guide .net26-brief-details summary span{display:flex;flex-direction:column;gap:3px}
+body[data-ksh-brand] .net26-guide .net26-brief-details summary strong{font-size:13px;font-weight:800}
+body[data-ksh-brand] .net26-guide .net26-brief-details summary small{font-size:11px;color:#71665e}
+body[data-ksh-brand] .net26-guide .net26-brief-details summary b{font-size:23px;font-weight:400;transition:transform .2s}
+body[data-ksh-brand] .net26-guide .net26-brief-details[open] summary b{transform:rotate(45deg)}
+body[data-ksh-brand] .net26-guide .net21-brief{
+ display:grid;grid-template-columns:minmax(130px,1fr) minmax(220px,2fr) auto;
+ gap:12px;margin:0!important;padding:4px 21px 20px!important;background:transparent!important;
+ align-items:end;border-radius:0!important;
+}
+body[data-ksh-brand] .net26-guide .net21-brief button{
+ border-radius:3px;background:#342f2a!important;color:#fff!important;padding:12px 17px!important;
+ min-height:45px!important;
+}
+body[data-ksh-brand] .net26-guide .net21-brief input,
+body[data-ksh-brand] .net26-guide .net21-brief textarea{
+ background:#fffcf6!important;color:#342f2a!important;border-radius:3px!important;
+ border:1px solid #c5b9a8!important;
+}
+body[data-ksh-brand] .net26-guide .net21-follow{margin:19px 2px 0;color:#65594d!important}
+body[data-ksh-brand] .net26-guide .net21-follow small{color:#877c71!important}
+body[data-ksh-brand] .net26-guide :focus-visible{outline:3px solid #b27e56;outline-offset:3px}
+@media(max-width:980px){
+ body[data-ksh-brand] .net26-guide .net21-head{align-items:flex-start!important;flex-direction:column}
+ body[data-ksh-brand] .net26-guide .net21-phase{margin:0}
+ body[data-ksh-brand] .net26-guide .net21-cards{gap:10px!important}
+ body[data-ksh-brand] .net26-guide .net21-brief{grid-template-columns:1fr 1fr}
+ body[data-ksh-brand] .net26-guide .net21-brief button{grid-column:1/-1}
+}
+@media(max-width:680px){
+ body[data-ksh-brand] .net21-guide.net26-guide{padding:51px 15px!important}
+ body[data-ksh-brand] .net26-guide .net21-head h2{font-size:clamp(37px,10vw,53px)!important}
+ body[data-ksh-brand] .net26-guide .net21-head p{font-size:13px!important}
+ body[data-ksh-brand] .net26-guide .net21-choices{
+  display:grid;grid-template-columns:1fr 1fr;gap:7px!important;margin:21px 0!important
+ }
+ body[data-ksh-brand] .net26-guide .net21-choices button{padding:10px 9px!important;min-height:47px!important;font-size:11px!important;text-align:center}
+ body[data-ksh-brand] .net26-guide .net21-result{padding:15px!important;border-radius:11px!important}
+ body[data-ksh-brand] .net26-guide .net21-result-head{align-items:stretch!important;gap:15px!important}
+ body[data-ksh-brand] .net26-guide .net21-result-head p strong{font-size:30px!important}
+ body[data-ksh-brand] .net26-guide .net21-result-head .net21-go{width:100%}
+ body[data-ksh-brand] .net26-guide .net21-cards{
+  display:grid;grid-auto-flow:column;grid-template-columns:none;
+  grid-auto-columns:min(79vw,290px);overflow-x:auto;overscroll-behavior-x:contain;
+  scroll-snap-type:x mandatory;padding-bottom:12px;margin-right:-15px;
+  scrollbar-width:thin;scrollbar-color:#bda990 transparent;
+ }
+ body[data-ksh-brand] .net26-guide .net21-card{scroll-snap-align:start}
+ body[data-ksh-brand] .net26-guide .net26-media{height:130px}
+ body[data-ksh-brand] .net26-guide .net21-cardtop{padding:16px 16px 0!important}
+ body[data-ksh-brand] .net26-guide .net21-card>p{margin:0 16px 14px!important}
+ body[data-ksh-brand] .net26-guide .net21-actions{padding:0 16px 18px!important}
+ body[data-ksh-brand] .net26-guide .net21-brief{grid-template-columns:1fr;padding:0 14px 17px!important}
+ body[data-ksh-brand] .net26-guide .net26-brief-details summary{padding:15px 14px}
+ body[data-ksh-brand] .net26-guide .net21-follow{font-size:11px}
+}
+@media(prefers-reduced-motion:reduce){
+ body[data-ksh-brand] .net26-guide *{transition:none!important;scroll-behavior:auto!important}
+}
