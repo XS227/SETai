@@ -18,7 +18,7 @@ def repl(s,old,new):
 def data(s):
  s=repl(s,"daylight:'day',waste:10,","daylight:'day',lightStrength:1,waste:10,")
  pos="for(const [k,opts] of [['floor',materials]"
- marker="  for(const [k,opts] of [['floor',materials]"
+ marker="for(const [k,opts] of [['floor',materials]"
  if "s.lightStrength=clamp(raw.lightStrength" not in s:
   assert marker in s
   s=s.replace(marker,"  s.lightStrength=clamp(raw.lightStrength,.4,1.6,1);\n"+marker,1)
