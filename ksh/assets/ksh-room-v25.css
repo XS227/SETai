@@ -1,0 +1,9 @@
+/* KSH v25: accessible placement validation for the existing Three.js room. */
+.r6-studio .r6-placement-actions{display:flex;align-items:center;flex-wrap:wrap;gap:13px;min-height:42px;padding:10px 0 0}
+.r6-studio #r6-reflow{border:1px solid #a77d59;background:#302c29;color:#fff;min-height:42px;padding:11px 17px;border-radius:4px;font:700 12px/1.35 Arial,sans-serif;cursor:pointer}
+.r6-studio #r6-reflow:hover{background:#5b4838}
+.r6-studio #r6-placement-status{font:600 12px/1.5 Arial,sans-serif;color:#6c523c}
+.r6-studio .r6-outside:not(:empty){background:#faf1e6;border:1px solid #ddbb91;border-left:4px solid #aa7453;color:#4a3526;padding:12px 15px;border-radius:4px}
+.r6-studio [hidden]{display:none!important}
+.r6-studio .r6-tools button:focus-visible,.r6-studio .r6-panel button:focus-visible,.r6-studio #r6-reflow:focus-visible{outline:3px solid #ad7850;outline-offset:3px}
+@media(max-width:700px){.r6-studio .r6-placement-actions{padding:11px 3px;gap:10px}.r6-studio #r6-reflow{width:100%}.r6-studio #r6-placement-status{font-size:11px}}
