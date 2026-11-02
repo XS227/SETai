@@ -132,3 +132,40 @@ html body[data-ksh-brand="flyt-gulv"] #mobile-menu:not([hidden]) a{
 @media(prefers-reduced-motion:reduce){
  html body[data-ksh-brand] header.ksh23-unified-header *{transition:none!important}
 }
+
+/* v30.2: the proposal notice + contextual product links visually belong
+   to the dark header. Their content and positioning are not changed. */
+html body[data-ksh-brand] :is(.preview-strip,.concept-ribbon){
+ background:#252426!important;
+ color:#d5d0c9!important;
+ border-bottom:1px solid rgba(255,255,255,.13)!important;
+}
+html body[data-ksh-brand] :is(.preview-strip,.concept-ribbon) :is(span,strong,b){
+ color:#ddd6cd!important;
+}
+html body[data-ksh-brand] :is(.preview-strip,.concept-ribbon) a{
+ color:#e0c09f!important;
+ text-decoration:underline;
+ text-underline-offset:3px;
+}
+html body[data-ksh-brand] .mega-row{
+ background:#252426!important;
+ color:#f0ece7!important;
+ border-color:rgba(255,255,255,.15)!important;
+ box-shadow:0 6px 18px rgba(0,0,0,.1)!important;
+}
+html body[data-ksh-brand] .mega-row :is(span,strong,a){
+ color:#f0ece7!important;
+}
+html body[data-ksh-brand] .mega-row small{
+ color:#c0b7ae!important;
+}
+html body[data-ksh-brand] .mega-row a:hover strong,
+html body[data-ksh-brand] .mega-row a:focus-visible strong{
+ color:#dbb797!important;
+}
+html body[data-ksh-brand] .mega-row a:focus-visible,
+html body[data-ksh-brand] :is(.preview-strip,.concept-ribbon) a:focus-visible{
+ outline:2px solid #dbb797!important;
+ outline-offset:3px!important;
+}
