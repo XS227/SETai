@@ -82,7 +82,7 @@ def room_studio():
     txt=replace_once(txt,oldoutside,newoutside,'layout warning')
 
     oldadd="function add(type,source){if(s.items.length>=20)return;const id='i'+Date.now()+Math.random().toString(16).slice(2);const i=source?{...source,id,size:[...source.size],x:source.x+.3,z:source.z+.3}:C.item(type,id);s.items.push(i);s.selected=id;update();}"
-    newadd="function add(type,source){if(s.items.length>=20)return;const id='i'+Date.now()+Math.random().toString(16).slice(2);const i=source?{...source,id,size:[...source.size],x:source.x+.5,z:source.z+.5}:C.item(type,id);const place=C.findFreePlacement(s,i,s.items);if(!place){spatialMessage='Rommet har ikke plass til dette møbelet. Fjern et møbel eller øk rommålene.';$('outside').textContent=spatialMessage;return;}i.x=place.x;i.z=place.z;spatialMessage='';s.items.push(i);s.selected=id;update();}"
+    newadd="function add(type,source){if(s.items.length>=20)return;const id='i'+Date.now()+Math.random().toString(16).slice(2);const i=source?{...source,id,size:[...source.size],x:source.x+.5,z:source.z+.5}:C.item(type,id);const place=C.findFreePlacement(s,i,s.items);if(!place){const trial={...s,items:[...s.items.map(v=>({...v,size:[...v.size]})),i]};if(!C.arrangeRoom(trial).length){s.items=trial.items;spatialMessage='';s.selected=id;update();return;}spatialMessage='Rommet har ikke plass til dette møbelet. Fjern et møbel eller øk rommålene.';$('outside').textContent=spatialMessage;return;}i.x=place.x;i.z=place.z;spatialMessage='';s.items.push(i);s.selected=id;update();}"
     txt=replace_once(txt,oldadd,newadd,'smart add and duplicate')
 
     oldedit="function edit(fn,reset=false){const i=selected();if(!i)return;fn(i);if(reset){i.price=null;set('item-price',null);}}"
