@@ -19,7 +19,7 @@ def js(s):
  s="/* KSH_STONE_LIGHT_25 */\n"+s
  s=replace(s,"uniform int u_stoneType;varying","uniform int u_stoneType;uniform float u_lightPower;varying")
  s=replace(s,"col*=shade;col=pow(max(col,vec3(0.)),vec3(.92));","col*=shade*u_lightPower;col=pow(max(col,vec3(0.)),vec3(.92));")
- s=replace(s,"const uStone=gl.getUniformLocation(program,'u_stoneType');gl.enable","const uStone=gl.getUniformLocation(program,'u_stoneType'),uLight=gl.getUniformLocation(program,'u_lightPower');gl.enable")
+ s=replace(s,"uStone=gl.getUniformLocation(program,'u_stoneType');gl.enable","uStone=gl.getUniformLocation(program,'u_stoneType'),uLight=gl.getUniformLocation(program,'u_lightPower');gl.enable")
  s=replace(s,"let yaw=-.38,model='sofa'","let lightPower=1;let yaw=-.38,model='sofa'")
  s=replace(s,"for(const item of scene){gl.uniform1f(uYaw","gl.uniform1f(uLight,lightPower);for(const item of scene){gl.uniform1f(uYaw")
  old="const resize=new ResizeObserver(()=>dirty=true);resize.observe(host);rebuild();"
