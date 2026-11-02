@@ -66,7 +66,7 @@ def main():
     for old_url, new_url, kind in link_fixes:
         # Both rel/target attribute orders are used across the existing HTML.
         pattern = re.compile(r'href="' + re.escape(old_url) +
-                             r'"(?:\\s+(?:target="_blank"|rel="noopener"))*')
+                             r'"(?:\s+(?:target="_blank"|rel="noopener"))*')
         after, n = pattern.subn('href="' + new_url + '"', after)
         if n:
             changes.append(f"{kind} links: {n}")
