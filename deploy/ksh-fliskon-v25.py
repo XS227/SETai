@@ -6,6 +6,7 @@ Only edits /var/www/setai/ksh/fliskonkurrenten/index.html.
 """
 from pathlib import Path
 from datetime import datetime, timezone
+import re
 
 P = Path("/var/www/setai/ksh/fliskonkurrenten/index.html")
 CSS_MARK = 'id="ksh-v25-black-header"'
@@ -58,18 +59,17 @@ def main():
     before = P.read_text(encoding="utf-8")
     after = before
     changes = []
-    old_shop = 'href="https://fliskonkurrenten.no/nettbutikk/" rel="noopener" target="_blank"'
-    new_shop = 'href="/ksh/fliskonkurrenten/varer/"'
-    if old_shop in after:
-        n = after.count(old_shop)
-        after = after.replace(old_shop, new_shop)
-        changes.append(f"shop links: {n}")
-    old_outlet = 'href="https://fliskonkurrenten.no/product-category/outlet/" rel="noopener" target="_blank"'
-    new_outlet = 'href="/ksh/fliskonkurrenten/outlet/"'
-    if old_outlet in after:
-        n = after.count(old_outlet)
-        after = after.replace(old_outlet, new_outlet)
-        changes.append(f"outlet links: {n}")
+    link_fixes = [
+        ("https://fliskonkurrenten.no/nettbutikk/", "/ksh/fliskonkurrenten/varer/", "shop"),
+        ("https://fliskonkurrenten.no/product-category/outlet/", "/ksh/fliskonkurrenten/outlet/", "outlet"),
+    ]
+    for old_url, new_url, kind in link_fixes:
+        # Both rel/target attribute orders are used across the existing HTML.
+        pattern = re.compile(r'href="' + re.escape(old_url) +
+                             r'"(?:\\s+(?:target="_blank"|rel="noopener"))*')
+        after, n = pattern.subn('href="' + new_url + '"', after)
+        if n:
+            changes.append(f"{kind} links: {n}")
     if CSS_MARK not in after:
         assert "</head>" in after, "Head close tag missing"
         after = after.replace("</head>", CSS + "\n</head>", 1)
