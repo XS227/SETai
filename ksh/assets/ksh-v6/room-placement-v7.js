@@ -92,11 +92,17 @@
     }
     return bad;
   }
-  const oldNormalize=C.normalize;
+  const oldNormalize=C.normalize,oldReflow=C.reflow;
   C.normalize=function(raw){
     const s=oldNormalize(raw);
     s.placementIssues=arrange(s);
     return s;
+  };
+  C.reflow=function(s){
+    const saved=s.items.map(i=>({...i,size:[...i.size]}));
+    if(oldReflow && oldReflow(s) && !issues(s).length)return true;
+    s.items=saved;
+    return !arrange(s).length && !issues(s).length;
   };
   Object.assign(C,{placementVersion:7,overlaps,fitsRoom:fits,canPlace:clear,findFreePlacement:findFree,arrangeRoom:arrange,layoutIssues:issues});
 })(window);
