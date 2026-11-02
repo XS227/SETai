@@ -7,3 +7,12 @@
 .r6-studio [hidden]{display:none!important}
 .r6-studio .r6-tools button:focus-visible,.r6-studio .r6-panel button:focus-visible,.r6-studio #r6-reflow:focus-visible{outline:3px solid #ad7850;outline-offset:3px}
 @media(max-width:700px){.r6-studio .r6-placement-actions{padding:11px 3px;gap:10px}.r6-studio #r6-reflow{width:100%}.r6-studio #r6-placement-status{font-size:11px}}
+
+/* Cross-showroom feature parity: angle views and fine-grained lighting. */
+.r6-studio .r6-views{position:absolute;left:20px;bottom:166px;z-index:7;display:flex;align-items:center;gap:10px;padding:9px 11px;background:rgba(251,249,246,.96);border:1px solid #d9cec0;border-radius:5px;box-shadow:0 10px 24px rgba(32,29,24,.12);backdrop-filter:blur(14px)}
+.r6-studio .r6-views label{font:750 11px/1.3 Arial,sans-serif;color:#665547}
+.r6-studio .r6-views select{appearance:auto;min-height:36px;width:auto;max-width:185px;border:1px solid #cdbfae;border-radius:4px;background:#fff;color:#2d2a26;padding:6px 10px;font:700 12px Arial,sans-serif}
+.r6-studio .r6-light-control{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:15px 0;margin-top:13px;border-top:1px solid #d5c8ba;font:750 12px Arial,sans-serif}
+.r6-studio .r6-light-control output{margin-left:auto;color:#74583c;font:800 13px Arial,sans-serif}
+.r6-studio .r6-light-control input[type=range]{width:100%;accent-color:#a47b58;min-height:30px;cursor:pointer}
+@media(max-width:700px){.r6-studio .r6-views{left:12px;bottom:173px;padding:6px 9px;gap:7px}.r6-studio .r6-views select{min-height:34px;font-size:11px;max-width:140px}}
