@@ -55,6 +55,7 @@
     return null;
   }
   function arrange(s){
+    const initial=s.items.map(i=>({id:i.id,x:i.x,z:i.z}));
     const placed=[],unplaced=[];
     for(const i of s.items){
       if(clear(s,i,placed)){placed.push(i);continue;}
@@ -62,6 +63,26 @@
       if(xy){i.x=xy.x;i.z=xy.z;}else unplaced.push(i.id);
       placed.push(i);
     }
+    if(!unplaced.length)return [];
+    // A large item may be impossible to add around an existing central sofa.
+    // Repack all objects, largest first, near perimeter before giving up.
+    const order=[...s.items].sort((a,b)=>(b.size[0]*b.size[2])-(a.size[0]*a.size[2]));
+    for(const corner of [
+      {x:-s.width/2,z:-s.length/2},
+      {x:s.width/2,z:-s.length/2},
+      {x:-s.width/2,z:s.length/2},
+      {x:s.width/2,z:s.length/2}
+    ]){
+      const packed=[];let possible=true;
+      for(const i of order){
+        const xy=findFree(s,i,packed,corner);
+        if(!xy){possible=false;break;}
+        i.x=xy.x;i.z=xy.z;packed.push(i);
+      }
+      if(possible)return [];
+    }
+    // Do not discard or silently corrupt saved furniture on impossible layouts.
+    initial.forEach(p=>{const i=s.items.find(v=>v.id===p.id);i.x=p.x;i.z=p.z;});
     return unplaced;
   }
   function issues(s){
