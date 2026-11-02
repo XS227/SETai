@@ -17,7 +17,7 @@ args = ap.parse_args()
 
 root=args.root
 companies=("fliskonkurrenten","heimslig","heimdal-naturstein","flyt-gulv")
-stylesheet='<link rel="stylesheet" href="/ksh/assets/ksh-dark-header-v30.css?v=30.1">'
+stylesheet='<link rel="stylesheet" href="/ksh/assets/ksh-dark-header-v30.css?v=30.2">'
 stamp=datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
 found=0
 changed=0
@@ -36,10 +36,13 @@ for company in companies:
             continue
         found+=1
         if "ksh-dark-header-v30.css" in old:
+            new=old.replace("ksh-dark-header-v30.css?v=30.1","ksh-dark-header-v30.css?v=30.2")
+        else:
+            new,count=re.subn(r"</head\s*>",stylesheet+"</head>",old,count=1,flags=re.I)
+            if count!=1:
+                raise RuntimeError("head close missing "+str(path))
+        if new==old:
             continue
-        new,count=re.subn(r"</head\s*>",stylesheet+"</head>",old,count=1,flags=re.I)
-        if count!=1:
-            raise RuntimeError("head close missing "+str(path))
         if not args.dry_run:
             backup=path.with_name(path.name+".bak.dark-header30."+stamp)
             shutil.copy2(path,backup)
