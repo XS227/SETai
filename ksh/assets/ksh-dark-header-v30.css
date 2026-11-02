@@ -1,0 +1,134 @@
+/* KSH 2026-11-02 · v30 | Unified dark brand header
+ * Shared visual treatment matching Fliskonkurrenten's proposal.
+ * Original verified logo images are unchanged; only surrounding chrome changes.
+ * Loaded LAST on company preview pages to supersede cream v23/v24 skins.
+ */
+:root{--ksh30-header:#19191b;--ksh30-header-raised:#242326;--ksh30-white:#f8f6f2;--ksh30-muted:#c4bdb5;--ksh30-border:rgba(255,255,255,.19);--ksh30-accent:#d8b899}
+html body[data-ksh-brand] :is(
+ header.ksh23-unified-header,
+ header.ksh23-flis-nav,
+ header.nav,
+ header.bath-header,
+ header.ksh2-head,
+ header.k13-head,
+ header.sitehead,
+ header.site-head,
+ header.full-head
+){
+ background:var(--ksh30-header)!important;
+ color:var(--ksh30-white)!important;
+ border-bottom:1px solid var(--ksh30-border)!important;
+ box-shadow:0 7px 28px rgba(0,0,0,.2)!important;
+}
+html body[data-ksh-brand] header.ksh23-unified-header{
+ backdrop-filter:blur(16px);
+ -webkit-backdrop-filter:blur(16px);
+}
+html body[data-ksh-brand] :is(header.ksh23-unified-header,header.ksh23-flis-nav,header.nav) :is(.ksh23-site-nav a,.navlinks a,nav a){
+ color:var(--ksh30-white)!important;
+}
+html body[data-ksh-brand] :is(header.ksh23-unified-header,header.ksh23-flis-nav,header.nav) :is(nav a:hover,nav a[aria-current="page"],.navlinks .outletlink){
+ color:var(--ksh30-accent)!important;
+}
+/* Heimslig's existing proposed wordmark: do not replace the artwork or append text. */
+html body[data-ksh-brand="heimslig"] header.ksh23-unified-header :is(
+ .ksh24-heimslig-logo,.ksh24-heimslig-logo span,.ksh23-heimslig-wordmark,.ksh23-text-brand,.ksh23-text-brand small,.full-brand
+){color:var(--ksh30-white)!important}
+/* The white corporate artwork is already readable against a charcoal plate.
+ * Merge the plate with the header instead of recoloring the supplied bitmap. */
+html body[data-ksh-brand] header.ksh23-unified-header :is(
+ .ksh24-logo-plate,.ksh23-heimdal-badge,.ksh23-flyt-badge
+),
+html body[data-ksh-brand="fliskonkurrenten"] header.ksh23-flis-nav .ksh23-flis-brandplate{
+ background:var(--ksh30-header-raised)!important;
+ border-color:transparent!important;
+ box-shadow:none!important;
+}
+html body[data-ksh-brand] header.ksh23-unified-header :is(.ksh23-flyt-label,.ksh23-flyt-label small){
+ color:var(--ksh30-white)!important;
+}
+html body[data-ksh-brand] header.ksh23-unified-header .head-cta>a:not(.ksh23-primary){
+ color:var(--ksh30-muted)!important;
+}
+/* Consistent high-contrast CTA, aligned to Fliskonkurrenten's charcoal/sand palette */
+html body[data-ksh-brand] header.ksh23-unified-header .ksh23-primary,
+html body[data-ksh-brand] header.ksh23-flis-nav .ksh23-flis-cta,
+html body[data-ksh-brand="fliskonkurrenten"] header.nav .nav-actions .btn,
+html body[data-ksh-brand] header.bath-header .btn,
+html body[data-ksh-brand] header.ksh2-head .btn{
+ background:var(--ksh30-accent)!important;
+ color:#1e1b19!important;
+ border:1px solid var(--ksh30-accent)!important;
+ border-radius:5px!important;
+ font-weight:800!important;
+ text-decoration:none!important;
+}
+html body[data-ksh-brand] header.ksh23-unified-header .ksh23-primary:hover,
+html body[data-ksh-brand] header.ksh23-flis-nav .ksh23-flis-cta:hover,
+html body[data-ksh-brand="fliskonkurrenten"] header.nav .nav-actions .btn:hover{
+ background:#e9cdb1!important;
+ border-color:#e9cdb1!important;
+}
+/* Shared hamburger: identical contrast and clear touch target on all four brands. */
+html body[data-ksh-brand] :is(header.ksh23-unified-header,header.ksh23-flis-nav,header.nav) :is(
+ .hamburger,.menu-toggle,.ksh23-burger,.ksh23-flis-menu,.hamb
+){
+ background:transparent!important;
+ color:var(--ksh30-white)!important;
+ border:1px solid rgba(255,255,255,.33)!important;
+ border-radius:6px!important;
+ box-shadow:none!important;
+ min-width:42px!important;
+ min-height:42px!important;
+}
+html body[data-ksh-brand] :is(header.ksh23-unified-header,header.ksh23-flis-nav) :is(
+ .menu-toggle svg,.hamburger svg,.ksh23-burger svg
+){stroke:var(--ksh30-white)!important}
+html body[data-ksh-brand] :is(header.ksh23-unified-header,header.ksh23-flis-nav) :is(
+ .menu-toggle span,.ksh23-burger span,.ksh23-flis-menu span,.hamburger span
+){background:var(--ksh30-white)!important}
+html body[data-ksh-brand] header.nav .hamb{color:var(--ksh30-white)!important}
+html body[data-ksh-brand] :is(header.ksh23-unified-header,header.ksh23-flis-nav,header.nav) :is(a,button):focus-visible{
+ outline:3px solid var(--ksh30-accent)!important;
+ outline-offset:3px!important;
+}
+/* The Flyt-Gulv mobile menu is separate from its header; match the same material. */
+html body[data-ksh-brand="flyt-gulv"] #mobile-menu:not([hidden]){
+ background:var(--ksh30-header-raised)!important;
+ color:var(--ksh30-white)!important;
+ border:1px solid var(--ksh30-border)!important;
+ box-shadow:0 24px 45px #0005!important;
+}
+html body[data-ksh-brand="flyt-gulv"] #mobile-menu:not([hidden]) a{
+ color:var(--ksh30-white)!important;
+}
+/* All generated KSH menus open on the SAME dark palette, not a cream rectangle. */
+@media(max-width:950px){
+ html body[data-ksh-brand] header.ksh23-unified-header .ksh23-site-nav,
+ html body[data-ksh-brand] header.ksh23-flis-nav nav,
+ html body[data-ksh-brand="fliskonkurrenten"] header.nav .navlinks{
+  background:var(--ksh30-header-raised)!important;
+  border:1px solid var(--ksh30-border)!important;
+  box-shadow:0 20px 44px #0006!important;
+  color:var(--ksh30-white)!important;
+ }
+ html body[data-ksh-brand] :is(header.ksh23-unified-header,header.ksh23-flis-nav,header.nav) nav a{
+  color:var(--ksh30-white)!important;
+  border-color:rgba(255,255,255,.12)!important;
+ }
+}
+@media(max-width:560px){
+ html body[data-ksh-brand] header.ksh23-unified-header .ksh23-primary{
+  min-height:40px!important;
+  padding:8px 10px!important;
+ }
+ html body[data-ksh-brand="heimdal-naturstein"] header.ksh23-unified-header .ksh24-logo-plate{
+  max-width:120px!important;
+ }
+ html body[data-ksh-brand] :is(header.ksh23-unified-header,header.ksh23-flis-nav,header.nav) :is(.hamburger,.menu-toggle,.ksh23-burger,.ksh23-flis-menu,.hamb){
+  flex-shrink:0!important;
+ }
+}
+@media(prefers-reduced-motion:reduce){
+ html body[data-ksh-brand] header.ksh23-unified-header *{transition:none!important}
+}
