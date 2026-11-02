@@ -36,6 +36,7 @@ update(Path("assets/ksh-v6/room-renderer.js"),render)
 def studio(s):
  if "KSH_SHOWROOM_PARITY_25_2" in s:return s
  s="/* KSH_SHOWROOM_PARITY_25_2 */\n"+s
+ s=repl(s,"import {RoomRenderer} from './room-renderer.js';","import {RoomRenderer} from './room-renderer.js?v=25.2';")
  old='<button type="button" class="r6-fullscreen" id="r6-fullscreen" aria-label="Fullskjerm">⤢</button>'
  new=old+'<div class="r6-views"><label for="r6-camera-view">Visning</label><select id="r6-camera-view" aria-label="Velg kameravinkel"><option value="angle">Perspektiv</option><option value="front">Forfra</option><option value="side">Fra siden</option><option value="top">Ovenfra</option></select></div>'
  s=repl(s,old,new)
