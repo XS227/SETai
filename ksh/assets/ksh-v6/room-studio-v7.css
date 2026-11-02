@@ -43,3 +43,11 @@
  .r6-studio .r6-tools span{font-size:8px}
 }
 @media(prefers-reduced-motion:reduce){.r6-studio *{transition:none!important}}
+
+/* Integrate with the existing v25 automatic-arrangement control. */
+.r6-studio .r6-placement-actions{display:flex;align-items:center;gap:13px;flex-wrap:wrap;margin:13px 0}
+.r6-studio #r6-reflow{display:inline-flex;align-items:center;justify-content:center;min-height:43px;padding:11px 17px;background:#302a25;color:#fff;border:0;border-radius:6px;font-weight:800;font-size:12px}
+.r6-studio #r6-reflow:hover{background:#654d39}
+.r6-studio #r6-reflow[hidden]{display:none!important}
+.r6-studio #r6-placement-status:not(:empty){display:inline-block;font-size:12px;color:#775a40;line-height:1.5}
+.r6-studio #r6-view-top{border:1px solid #d4c9b9}
