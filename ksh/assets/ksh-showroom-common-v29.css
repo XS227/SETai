@@ -1,0 +1,38 @@
+/* Shared KSH showroom interaction polish — Heimdal stone studio.
+   Its original angle/finish/material actions are preserved. */
+#atelier.studio-shell .viewer-controls{
+ display:flex;flex-wrap:wrap;gap:7px!important;max-width:calc(100% - 26px);
+ background:rgba(30,29,28,.84)!important;backdrop-filter:blur(14px);
+ border:1px solid rgba(255,255,255,.17)!important;
+ border-radius:11px!important;padding:7px!important;z-index:6!important;
+}
+#atelier.studio-shell .viewer-btn{
+ border:1px solid rgba(255,255,255,.21)!important;
+ border-radius:7px!important;background:rgba(247,244,237,.92)!important;
+ color:#27221d!important;font-weight:750!important;min-height:39px!important;
+ padding:9px 12px!important;cursor:pointer!important;
+}
+#atelier.studio-shell .viewer-btn:hover{background:#e4cfb8!important}
+#atelier.studio-shell .studio-views .mini-chip[aria-pressed=true]{
+ background:#2e2a26!important;color:#fff!important;border-color:#2e2a26!important
+}
+#atelier.studio-shell .studio-views .mini-chip:focus-visible,
+#atelier.studio-shell .viewer-btn:focus-visible{outline:3px solid #b89470;outline-offset:3px}
+#atelier.studio-shell:fullscreen,
+#atelier.studio-shell.ksh29-expanded{
+ background:#f4f0e9!important;color:#2a2521!important;
+ padding:18px!important;overflow:auto!important;
+}
+#atelier.studio-shell:fullscreen{height:100dvh;width:100vw}
+#atelier.studio-shell.ksh29-expanded{
+ position:fixed!important;inset:0!important;z-index:99999!important;
+ width:100vw!important;height:100dvh!important;
+}
+#atelier.studio-shell:fullscreen .site-studio,
+#atelier.studio-shell.ksh29-expanded .site-studio{min-height:min(80dvh,850px)}
+#atelier.studio-shell:fullscreen .viewer,
+#atelier.studio-shell.ksh29-expanded .viewer{min-height:65dvh}
+@media(max-width:640px){
+ #atelier.studio-shell .viewer-controls{gap:4px!important;padding:4px!important}
+ #atelier.studio-shell .viewer-btn{font-size:11px!important;padding:7px!important}
+}
