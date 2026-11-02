@@ -1,0 +1,45 @@
+/* Heimslig Room Studio v7 — shared showroom interaction vocabulary.
+   The renderer and photographed product materials remain unchanged. */
+.r6-studio{--r6-ink:#292723;--r6-line:#d9d0c4;font-family:Arial,Helvetica,sans-serif!important}
+.r6-studio .r6-title{gap:24px;margin-bottom:23px}
+.r6-studio .r6-title small{color:#9a795e;font-weight:750;letter-spacing:.18em}
+.r6-studio .r6-title h2{font:400 clamp(39px,4.6vw,67px)/1.05 Georgia,serif;letter-spacing:-.055em}
+.r6-studio .r6-scene{border-radius:15px;background:#e4dfd5;box-shadow:0 24px 60px rgba(34,30,25,.12);border:1px solid #bdb5a9}
+.r6-studio .r6-tools{top:20px;left:20px;gap:5px;padding:6px;border:1px solid rgba(255,255,255,.5);background:rgba(248,246,240,.84);backdrop-filter:blur(16px);border-radius:12px;box-shadow:0 8px 32px #211d1717}
+.r6-studio .r6-tools button{border:0;border-radius:8px;background:transparent;box-shadow:none;min-height:67px;width:61px;transition:background .2s,color .2s}
+.r6-studio .r6-tools button:hover{background:#e5dace}
+.r6-studio .r6-tools button[aria-expanded=true]{background:#292622;color:#fff}
+.r6-studio .r6-fullscreen{border:1px solid rgba(255,255,255,.65);background:rgba(250,247,241,.94);box-shadow:0 4px 18px #231c1512;border-radius:10px;width:46px;height:46px}
+.r6-studio .r6-mode{border:1px solid #e1d8cb;background:rgba(249,246,240,.95);border-radius:10px;gap:3px;padding:5px;bottom:20px;left:20px}
+.r6-studio .r6-mode button{border-radius:7px;min-height:42px;font-size:11px;font-weight:750;padding:9px 13px}
+.r6-studio .r6-mode button[aria-pressed=true]{background:#302a25;color:#fff}
+.r6-studio #r6-view-top{color:#3b3028}
+.r6-studio .r6-budget-pill{border-radius:11px;background:rgba(250,247,241,.94);min-width:230px;border:1px solid #e0d8cb;box-shadow:0 10px 38px #231c1518;bottom:20px;right:20px}
+.r6-studio .r6-panel{border-radius:14px;box-shadow:0 18px 65px #1a171734}
+.r6-studio .r6-panel header{background:#faf7f1}
+.r6-studio .r6-row button,.r6-studio .r6-primary{min-height:43px;border-radius:6px}
+.r6-studio .r6-placement-help{font-size:12px;line-height:1.6;color:#776b5f;background:#eee9e0;padding:11px 13px;border-left:2px solid #b09274;border-radius:4px;margin:13px 0}
+.r6-studio #r6-autoplace{display:block;width:100%;background:#3c342d;color:#fff;border:none;margin:8px 0 16px;min-height:44px;padding:10px 14px;border-radius:6px;font-size:12px;font-weight:800}
+.r6-studio #r6-autoplace:hover{background:#66503f}
+.r6-studio .r6-outside:not(:empty){background:#fff3dc;color:#654521;border:1px solid #dfbf91;padding:12px 16px;border-radius:8px;font-weight:700}
+@media(max-width:780px){
+ .r6-studio .r6-title{align-items:start;flex-direction:column;gap:9px}
+ .r6-studio .r6-title p{max-width:100%}
+ .r6-studio .r6-tools{top:12px;left:12px;right:62px;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:2px;padding:4px}
+ .r6-studio .r6-tools button{width:100%;min-width:0;min-height:54px;padding:5px 2px}
+ .r6-studio .r6-tools svg{width:19px;height:19px}
+ .r6-studio .r6-tools span{font-size:9px}
+ .r6-studio .r6-fullscreen{top:12px;right:12px;width:40px;height:40px}
+ .r6-studio .r6-mode{left:12px;right:12px;bottom:80px;display:flex;justify-content:center}
+ .r6-studio .r6-mode button{padding:8px 8px;flex:1;white-space:nowrap}
+ .r6-studio .r6-budget-pill{left:12px;right:12px;min-width:0;bottom:12px;padding:8px 13px}
+ .r6-studio .r6-budget-pill strong{font-size:20px}
+ .r6-studio .r6-scene{height:clamp(540px,73dvh,790px)}
+ .r6-studio .r6-panel{top:77px;bottom:155px;left:12px;right:12px;max-width:none;width:auto;padding:16px}
+}
+@media(max-width:400px){
+ .r6-studio .r6-mode button{font-size:10px;padding:8px 3px}
+ .r6-studio .r6-tools svg{width:17px;height:17px}
+ .r6-studio .r6-tools span{font-size:8px}
+}
+@media(prefers-reduced-motion:reduce){.r6-studio *{transition:none!important}}
