@@ -38,6 +38,8 @@ a.card:hover{border-color:var(--accent);transform:translateY(-2px)}
 .entry{position:relative}.entry:before{content:"";position:absolute;left:-29px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--accent)}
 .entry time{font-size:12px;color:var(--muted);letter-spacing:.06em}.entry h3{margin:2px 0 6px;font-size:18px}.entry p{margin:0;color:var(--soft);font-size:14px;max-width:780px}
 .principles{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.principles div{border-top:2px solid var(--accent);padding-top:12px}.principles h3{font-size:16px;margin:0 0 6px}.principles p{margin:0;color:var(--muted);font-size:13px}
+.score{display:grid;gap:8px}.score .big{font-family:"Space Grotesk";font-size:clamp(30px,4vw,44px);font-weight:700;letter-spacing:-.04em;color:var(--accent);line-height:1.1}
+.score .row{display:flex;justify-content:space-between;gap:10px;font-size:13px;color:var(--soft);border-top:1px solid var(--line);padding-top:7px}.score .row b{color:var(--txt);font-variant-numeric:tabular-nums}.score .verdict{font-size:12.5px;color:var(--muted)}
 .footer{border-top:1px solid var(--line);margin-top:60px;padding:30px 0 50px;color:var(--muted);font-size:12px}
 @media(max-width:900px){.grid{grid-template-columns:1fr 1fr}.principles{grid-template-columns:1fr 1fr}}
 @media(max-width:600px){.grid,.principles{grid-template-columns:1fr}.topinner{flex-wrap:wrap;padding:10px 0;gap:8px}.navlinks{margin:0;width:100%;overflow-x:auto;padding-bottom:6px}.wordmark small{display:none}.hyp li{grid-template-columns:1fr}}
@@ -46,7 +48,7 @@ a.card:hover{border-color:var(--accent);transform:translateY(-2px)}
 <body>
 <header class="top"><div class="wrap topinner">
  <a class="wordmark" href="/" aria-label="SETAEI – hjem"><svg viewBox="15 15 545 105" role="img" aria-label="SETAEI"><g fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="butt" stroke-linejoin="round"><path d="M78 29H49C31 29 27 50 43 58L68 70C83 77 79 105 58 105H27"/><path d="M118 31h58M118 68h48M118 105h58"/><path d="M215 31h70M250 31v74"/><path d="M321 105l34-74 34 74"/><path d="M429 31h58M429 68h48M429 105h58"/><path d="M539 31v74"/></g><path fill="#F47A2A" d="M355 58l5 11 12 1-9 8 3 12-11-6-11 6 3-12-9-8 12-1z"/></svg><small>Forskning</small></a>
- <nav class="navlinks" aria-label="Forskning"><a href="#lotterier">Lotterier</a><a href="#wallet-agent">Wallet-agent</a><a href="#hypoteser">Hypoteser</a><a href="#logg">Logg</a><a href="#prinsipper">Prinsipper</a></nav>
+ <nav class="navlinks" aria-label="Forskning"><a href="#lotterier">Lotterier</a><a href="#wallet-agent">Wallet-agent</a><a href="#treff">Treffprosent</a><a href="#hypoteser">Hypoteser</a><a href="#logg">Logg</a><a href="#prinsipper">Prinsipper</a></nav>
 </div></header>
 <main class="wrap">
 <section class="hero">
@@ -73,6 +75,13 @@ a.card:hover{border-color:var(--accent);transform:translateY(-2px)}
  <div class="grid">
   <div class="card"><span class="status plan">Planlagt</span><h3>Wallet-agent</h3><p>Mål, data og metode beskrives her når prosjektet er definert.</p><span class="meta">Beskrivelse kommer</span></div>
  </div>
+</section>
+
+<section class="section" id="treff">
+ <div class="eyebrow">Treffprosent så langt</div>
+ <h2>Hvor ofte har vi gjettet riktig?</h2>
+ <p class="help">Andelen av de trukne tallene som numerologi-rekka vår traff, mot det ren tilfeldighet gir. «Tilbakeregnet» er alle historiske trekninger spilt på nytt med bare data fra før hver trekning. «Forhåndsregistrert» er rekker som var låst før trekningen, og bare de er bevis.</p>
+ <div class="grid" id="scoreGrid"><div class="card"><p>Beregner…</p></div></div>
 </section>
 
 <section class="section" id="hypoteser">
@@ -109,5 +118,45 @@ a.card:hover{border-color:var(--accent);transform:translateY(-2px)}
 </section>
 </main>
 <footer class="footer"><div class="wrap">© 2026 SETAEI Forskning · <a href="/">setai.no</a></div></footer>
+<script src="/forskning/engine.js?v=1"></script>
+<script>
+(function(){
+'use strict';
+var E=window.SETAEI_ENGINE,grid=document.getElementById('scoreGrid');
+function fmt(n,d){return Number(n).toLocaleString('nb-NO',{maximumFractionDigits:d==null?1:d})}
+function pf(p){return p<0.001?'< 0,001':fmt(p,3)}
+function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e}
+var SPEC=[['keno','Keno','/Keno/','k10','nivå 10 (10 tall)','Keno/draws.json','Keno/preregistered.json'],
+ ['lotto','Lotto','/forskning/lotto/','main7','7 av 34','forskning/data/lotto.json','forskning/data/lotto-prereg.json'],
+ ['eurojackpot','EuroJackpot','/forskning/eurojackpot/','main5','5 hovedtall','forskning/data/eurojackpot.json','forskning/data/eurojackpot-prereg.json']];
+function load(u){return fetch('/'+u,{cache:'no-cache'}).then(function(r){if(!r.ok)throw Error(u+' '+r.status);return r.json()})}
+function row(card,l,v){var r=el('div','row');r.appendChild(el('span',null,l));r.appendChild(el('b',null,v));card.appendChild(r)}
+function build(spec,i){
+ return Promise.all([load(spec[5]),load(spec[6]).catch(function(){return {entries:[]}})]).then(function(a){
+  var draws=a[0].draws,prereg=a[1].entries||[],G=E.GAMES[spec[0]],slotIds=[spec[3]];
+  if(spec[0]==='eurojackpot')slotIds.push('stars2');
+  var cells=E.backtestAll(spec[0],draws,'all'),scored=E.scoreEntries(spec[0],prereg.filter(function(e){return draws.some(function(d){return d.date===e.reg.date})}),draws);
+  var card=el('a','card');card.href=spec[2];card.appendChild(el('h3',null,spec[1]));
+  slotIds.forEach(function(id,j){
+   var slot=G.slots.filter(function(s){return s.id===id})[0],num=cells.filter(function(c){return c.key==='numerology|'+id})[0],rnd=cells.filter(function(c){return c.key==='random|'+id})[0];
+   var box=el('div','score');box.appendChild(el('div','metriclabel',(id==='stars2'?'Stjernetall · 2 av 12':spec[4])+' · numerologi'));
+   box.appendChild(el('div','big',fmt(100*num.mean/slot.k)+' %'));
+   box.appendChild(el('div','detail','av de trukne tallene traff rekka vår (tilbakeregnet, '+fmt(num.n,0)+' trekninger)'));
+   row(box,'Ren tilfeldighet',fmt(100*num.expected/slot.k)+' %');
+   row(box,'Tilfeldig kontrollrekke',fmt(100*rnd.mean/slot.k)+' %');
+   row(box,'Forskjell mot tilfeldighet','z = '+(num.z>=0?'+':'')+fmt(num.z,2)+' · p = '+pf(num.p));
+   var live=scored.filter(function(c){return c.strategy==='numerology'&&c.slot===id})[0];
+   row(box,'Forhåndsregistrert (live)',live&&live.n?fmt(100*live.mean/slot.k)+' % over '+live.n+' trekninger':'ingen scorede ennå ('+prereg.length+' låst)');
+   box.appendChild(el('div','verdict',num.p<0.05?'Avviker uten korreksjon, men må tåle flere tester og nye trekninger.':'Ikke til å skille fra tilfeldighet.'));
+   if(j)box.style.cssText='border-top:1px solid var(--line);padding-top:12px;margin-top:4px';
+   card.appendChild(box);
+  });
+  card.appendChild(el('span','cta','Se alle trekninger og gjetting →'));
+  return card;
+ });
+}
+Promise.all(SPEC.map(build)).then(function(cards){grid.textContent='';cards.forEach(function(c){grid.appendChild(c)})}).catch(function(e){grid.textContent='';var c=el('div','card');c.appendChild(el('p',null,'Kunne ikke beregne treffprosent: '+e.message));grid.appendChild(c)});
+})();
+</script>
 </body>
 </html>

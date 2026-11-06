@@ -83,15 +83,7 @@ function renderBacktest(){
  $('backtestNotice').textContent=cells.length+' tester i familien. Uten korreksjon har '+raw+' p < 0,05 (ventet ved flaks alene: ca. '+fmt(cells.length*0.05,1)+'). Etter Holm-korreksjon har '+sig+' p < 0,05; laveste Holm-p er '+U.pfmt(minH)+'. Tilfeldig kontroll og faste tall er med i familien nettopp for å vise hvor store avvik ren flaks gir.';
 }
 /* ---- 04 Siste trekninger ---- */
-function renderRecent(){
- var t=$('recentDraws');t.textContent='';
- draws.slice(-10).reverse().forEach(function(d){
-  var line=el('div','result');line.appendChild(el('div','drawdate',U.niceDate(d.date)));
-  var b=el('div','balls');d.main.forEach(function(n){b.appendChild(el('span','ball',String(n)))});
-  if(d.stars)d.stars.forEach(function(n){b.appendChild(el('span','ball hot',String(n)))});
-  line.appendChild(b);t.appendChild(line);
- });
-}
+function renderRecent(){U.renderRecent(game,$('recentDraws'),draws,{preregUrl:$('dataUrl').getAttribute('data-prereg'),n:10})}
 function periodOptions(){
  var sel=$('period'),years={};draws.forEach(function(d){years[d.date.slice(0,4)]=1});
  var ys=Object.keys(years).sort().reverse();

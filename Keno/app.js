@@ -170,15 +170,7 @@ function renderBacktest(){
 }
 
 /* ---------- 05 Trekninger + sannsynlighet ---------- */
-function renderRecent(){
- var t=$('recentDraws');t.textContent='';
- archive.slice(-10).reverse().forEach(function(d){
-  var line=el('div','result');line.appendChild(el('div','drawdate',niceDate(d.date)));
-  var nr=NUM.row(d.date,10).numbers,nb=el('div','balls');
-  d.numbers.forEach(function(n){nb.appendChild(el('span','ball'+(n===chosen?' hot':'')+(nr.indexOf(n)>=0?' num':''),String(n)))});
-  line.appendChild(nb);line.appendChild(el('div','drawhits',d.numbers.filter(function(n){return nr.indexOf(n)>=0}).length+'/10 numerologi'));t.appendChild(line);
- });
-}
+function renderRecent(){UI.renderRecent('keno',$('recentDraws'),archive,{preregUrl:'./preregistered.json',slotId:'k'+level.value,n:10})}
 function renderProbability(){
  var k=Number(level.value);$('levelDisplay').textContent=k;
  var p=comb(20,k)/comb(70,k);$('perfectOdds').textContent='1 av '+fmt(Math.round(1/p),0);
@@ -195,7 +187,7 @@ function validate(data){
  });return data.draws;
 }
 period.addEventListener('change',function(){renderTop();renderHeatmap()});
-level.addEventListener('input',function(){renderProbability();renderRows()});
+level.addEventListener('input',function(){renderProbability();renderRows();renderRecent()});
 level.addEventListener('change',renderBacktest);
 windowEl.addEventListener('change',renderBacktest);yearEl.addEventListener('change',renderBacktest);
 birthEl.addEventListener('change',function(){

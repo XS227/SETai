@@ -83,5 +83,40 @@ function renderPrereg(game,box,draws,url,cb){
   box.textContent='';box.appendChild(el('div','notice','Førhåndsregistreringen kunne ikke lastes: '+err.message));
  }).then(function(){if(cb)cb()});
 }
-root.SETAEI_UI={$:$,el:el,fmt:fmt,pct:pct,pfmt:pfmt,niceDate:niceDate,balls:balls,verifyChain:verifyChain,renderPrereg:renderPrereg,NAMES:NAMES,ZERO:ZERO};
+
+var PREG={};
+function preregDoc(url){return PREG[url]||(PREG[url]=fetch(url,{cache:'no-cache'}).then(function(r){return r.ok?r.json():{entries:[]}}).catch(function(){return {entries:[]}}))}
+/* Last n draws with OUR guess underneath. Orange = guessed correctly. Rows come from the locked pre-registration when it
+ * exists for that date, otherwise they are rebuilt from the date and the draws before it (same engine, no hindsight). */
+function renderRecent(game,box,draws,opts){
+ opts=opts||{};var G=E.GAMES[game],n=opts.n||10;
+ return preregDoc(opts.preregUrl).then(function(doc){
+  var by={};(doc.entries||[]).forEach(function(e){by[e.reg.date]=e});
+  var slots=G.slots.filter(function(sl){return !opts.slotId||sl.id===opts.slotId});
+  box.textContent='';
+  var sumN={numerology:0,random:0},sumH={numerology:0,random:0},cnt=0,blocks=[];
+  draws.slice(-n).reverse().forEach(function(d){
+   var entry=by[d.date],rows=entry?entry.reg.rows:E.buildRows(game,draws,d.date),blk=el('div','drawblock');
+   var head=el('div','drawhead');head.appendChild(el('span','drawdate',niceDate(d.date)));
+   head.appendChild(el('span','tag '+(entry?'tag-frekvens':'tag-kontroll'),entry?'forhåndsregistrert':'rekonstruert'));blk.appendChild(head);
+   slots.forEach(function(sl){
+    var drawn=d[sl.field],g=rows.numerology[sl.id],c=rows.random[sl.id];
+    var hg=E.hits(g,drawn),hc=E.hits(c,drawn),label=(G.slots.length>1?(sl.field==='stars'?'Stjernetall':'Hovedtall')+' · ':'');
+    var r1=el('div','grow');r1.appendChild(el('span','rowlabel',label+'Trukket'));var b1=el('div','balls');
+    drawn.forEach(function(x){b1.appendChild(el('span','ball'+(g.indexOf(x)>=0?' hot':''),String(x)))});r1.appendChild(b1);blk.appendChild(r1);
+    var r2=el('div','grow');r2.appendChild(el('span','rowlabel',label+'Vår gjetting (numerologi)'));var b2=el('div','balls');
+    g.forEach(function(x){b2.appendChild(el('span','ball'+(drawn.indexOf(x)>=0?' hot':' miss'),String(x)))});r2.appendChild(b2);
+    r2.appendChild(el('span','drawhits',hg+' av '+sl.k+' riktige · kontroll '+hc+' · forventet '+fmt(E.hyper(sl).e,2)));blk.appendChild(r2);
+    sumN.numerology+=hg;sumN.random+=hc;sumH.numerology+=sl.k;sumH.random+=sl.k;
+   });cnt++;blocks.push(blk);
+  });
+  if(cnt){
+   var exp=slots.reduce(function(a,sl){return a+E.hyper(sl).e},0)*cnt,tot=sumH.numerology;
+   var sm=el('p','help','Siste '+cnt+' trekninger: numerologi traff '+sumN.numerology+' av '+tot+' tall ('+pct(sumN.numerology/tot)+'), tilfeldig kontroll '+sumN.random+' ('+pct(sumN.random/tot)+'). Ren tilfeldighet gir '+pct(exp/tot)+'. Oransje = riktig gjettet.');
+   box.appendChild(sm);
+  }
+  blocks.forEach(function(b){box.appendChild(b)});
+ });
+}
+root.SETAEI_UI={renderRecent:renderRecent,preregDoc:preregDoc,$:$,el:el,fmt:fmt,pct:pct,pfmt:pfmt,niceDate:niceDate,balls:balls,verifyChain:verifyChain,renderPrereg:renderPrereg,NAMES:NAMES,ZERO:ZERO};
 })(window);
