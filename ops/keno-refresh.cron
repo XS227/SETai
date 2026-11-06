@@ -1,0 +1,4 @@
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+# SETAEI Keno: refresh independent Keno archive at 03:17 UTC daily.
+17 3 * * * www-data /opt/setai-keno/venv/bin/python /opt/setai-keno/update.py --output /var/www/setai/Keno/draws.json >> /var/log/setai-keno-refresh.log 2>&1
