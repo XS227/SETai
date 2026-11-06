@@ -16,7 +16,7 @@
 <body>
 <header class="top"><div class="wrap topinner">
  <a href="/" class="brand" aria-label="SETAEI – hjem"><img src="/assets/logo/setaei-logo.png" alt="SETAEI"></a>
- <nav class="navlinks" aria-label="Lotterianalyser"><a href="/LotteryAudit/">LotteryAudit</a><a href="/EuroJackpot/">EuroJackpot</a><a href="/Lotto/">Lotto</a><a href="/Vikinglotto/">Vikinglotto</a><a class="active" href="/Keno/" aria-current="page">Keno</a></nav>
+ <nav class="navlinks" aria-label="Keno-analyse"><a href="/">SETAEI</a><a href="#frekvenser">Frekvenser</a><a href="#baktest">Baktest</a><a href="#resultater">Trekninger</a><a href="#metode">Metode</a></nav>
 </div></header>
 <main class="wrap">
 <section class="hero">
@@ -31,11 +31,11 @@
  <div class="panel"><div class="metriclabel">Forventet treff · nivå 10</div><div class="metric">2,857</div><div class="detail">Per rekke og trekning</div></div>
  <div class="panel"><div class="metriclabel">Teoretisk tilbakebetaling</div><div class="metric">≈ 55 %</div><div class="detail">Ikke en investeringsavkastning</div></div>
 </section>
-<section class="section">
+<section class="section" id="frekvenser">
  <div class="sectiontitle"><div><div class="eyebrow">01 / Frekvenser</div><h2>70 tall. Ett datagrunnlag.</h2></div><div class="controls"><div class="control"><label for="period">Analyseperiode</label><select id="period"><option value="30">Siste 30 trekninger</option><option value="90">Siste 90 trekninger</option><option value="365">Siste 365 trekninger</option><option value="2026" selected>År 2026</option><option value="all">Alle trekninger</option></select></div></div></div>
  <div class="panel"><div class="help" id="periodDescription">Laster datagrunnlag…</div><div class="heatmap" id="heatmap"></div><div class="legend"><span>Færre</span><span class="grad"></span><span>Flere</span><span id="selectedInfo" style="margin-left:auto"></span></div></div>
 </section>
-<section class="section">
+<section class="section" id="baktest">
  <div class="sectiontitle"><div><div class="eyebrow">02 / Ærlig baktest</div><h2>Hva ville modellen faktisk truffet?</h2></div></div>
  <div class="panel gridgap">
   <div class="controls">
@@ -48,17 +48,17 @@
   <div class="notice" id="backtestNotice"><strong>Tolkningsregel:</strong> En positiv forskjell i en delperiode er ikke bevis på at neste trekning kan forutsies. Alle modellvarianter må vurderes samlet for å unngå tilfeldige «vinnere».</div>
  </div>
 </section>
-<section class="section cols">
+<section class="section cols" id="resultater">
  <div><div class="sectiontitle"><div><div class="eyebrow">03 / Trekningslogg</div><h2>Siste resultater</h2></div></div><div class="panel" id="recentDraws"><p class="nodata">Laster…</p></div></div>
  <div class="gridgap">
   <div><div class="sectiontitle"><div><div class="eyebrow">04 / Sannsynlighet</div><h2>Hva betyr tallene?</h2></div></div>
   <div class="panel"><div class="metriclabel">Sannsynlighet for alle valgte tall trukket</div><div class="metric accent" id="perfectOdds">—</div><div class="detail" id="perfectDetails">—</div><div class="divider"></div><div class="metriclabel">Forventet treff per trekning</div><div class="metric" id="expectedHits">—</div><div class="detail">Matematisk forventning; påvirkes ikke av tidligere trekninger.</div><div class="divider"></div><div class="sub">Keno har faste odds med teoretisk premieandel rundt 55 %. Gevinster har høy variasjon; tilsynelatende lønnsomme perioder er ikke en påvist fordel.</div></div></div>
  </div>
 </section>
-<section class="section"><div class="sectiontitle"><div><div class="eyebrow">Metode og datakilder</div><h2>Reproduserbar, ikke etterpåklok.</h2></div></div>
+<section class="section" id="metode"><div class="sectiontitle"><div><div class="eyebrow">Metode og datakilder</div><h2>Reproduserbar, ikke etterpåklok.</h2></div></div>
 <div class="panel"><p>Historiske tall er hentet fra det uavhengige <a class="accent" href="https://statyr.com/nb-no/keno/arkiv" target="_blank" rel="noopener noreferrer">Statyr Keno-arkivet</a>. Spilleregler og premiestruktur fra <a class="accent" href="https://www.norsk-tipping.no/lotteri/keno/slik-spiller-du" target="_blank" rel="noopener noreferrer">Norsk Tipping</a>. Arkivdata er kontrollert for 20 forskjellige tall i intervallet 1–70, stigende datoer og duplikater; formatkontroll er ikke det samme som offisiell verifisering av hver trekning.</p><p>Baktesten er «walk-forward» fra 1. januar 2013 og bruker ingen informasjon fra testtrekningen eller senere trekninger. Det finnes ingen dokumentert, gjentakbar fordel ved å velge historisk hyppige eller sjeldne tall. Lagrede modellresultater må vises sammen med antall tester og kontrollgrupper.</p><p class="sub">Dette nettstedet selger ingen spill, tar ikke imot innsats og er ikke tilknyttet Norsk Tipping. 18+ for pengespill. Trenger du hjelp til å begrense spilling, se <a class="accent" href="https://hjelpelinjen.no/" target="_blank" rel="noopener noreferrer">Hjelpelinjen</a>.</p><span class="badge" id="dataStatus">Datakilde: kontrolleres…</span></div></section>
 </main>
-<footer class="footer"><div class="wrap footerinner"><span>© <span id="copyrightYear"></span> SETAEI · Uavhengig forskningsprosjekt</span><span><a href="/LotteryAudit/">LotteryAudit</a> · <a href="/EuroJackpot/">EuroJackpot</a> · <a href="/">setai.no</a></span></div></footer>
+<footer class="footer"><div class="wrap footerinner"><span>© <span id="copyrightYear"></span> SETAEI · Uavhengig forskningsprosjekt</span><span><a href="#frekvenser">Frekvenskart</a> · <a href="#baktest">Baktest</a> · <a href="/">setai.no</a></span></div></footer>
 <script>
 (function(){
 "use strict";
