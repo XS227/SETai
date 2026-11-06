@@ -61,8 +61,8 @@ a.card:hover{border-color:var(--accent);transform:translateY(-2px)}
  <p class="help">Kan noe som helst, enten statistikk eller numerologi, forutsi tall som er laget for å være tilfeldige? Vi tester det på ekte trekninger, med tilfeldige rekker som kontroll.</p>
  <div class="grid">
   <a class="card" href="/Keno/"><span class="status live">Live</span><h3>Keno</h3><p>20 av 70 tall hver dag. Topp 10-lister, likefordelingstester, numerologi-rekker og walk-forward-baktest på over 5 500 trekninger.</p><span class="cta">Åpne analysen →</span><span class="meta">Oppdateres daglig · data fra 2011</span></a>
-  <div class="card"><span class="status build">Under oppbygging</span><h3>Lotto</h3><p>7 av 34 tall, én gang i uka. Samme metode som for Keno. Datasettet fra den gamle Lotto-laben skal flyttes inn her.</p><span class="meta">Den gamle /Lotto/-siden er stengt med 410 etter servermigreringen</span></div>
-  <div class="card"><span class="status build">Under oppbygging</span><h3>EuroJackpot</h3><p>5 av 50 tall og 2 av 12 stjernetall. Her ble numerologi-motoren først laget. Gamle studier og forhåndsregistrerte rekker skal tas med.</p><span class="meta">Den gamle /EuroJackpot/-siden er stengt med 410 etter servermigreringen</span></div>
+  <a class="card" href="/forskning/lotto/"><span class="status live">Live</span><h3>Lotto</h3><p>7 av 34 tall hver lørdag. Samme metode som Keno: topp 10, numerologi-rekker, Holm-korrigert baktest og forhåndsregistrerte rekker.</p><span class="cta">Åpne analysen →</span><span class="meta">Data fra Norsk Tipping sitt API · fra 2016</span></a>
+  <a class="card" href="/forskning/eurojackpot/"><span class="status live">Live</span><h3>EuroJackpot</h3><p>5 av 50 tall og 2 av 12 stjernetall, tirsdag og fredag. Her ble numerologi-motoren først laget. Nå med felles motor og forhåndsregistrering.</p><span class="cta">Åpne analysen →</span><span class="meta">Data fra WestLotto · fra 2012</span></a>
  </div>
 </section>
 
@@ -80,7 +80,7 @@ a.card:hover{border-color:var(--accent);transform:translateY(-2px)}
  <h2>Hypoteser vi tester</h2>
  <p class="help">Hver hypotese skrives ned før testen kjøres. En hypotese regnes som støttet bare hvis den holder på nye trekninger som kom etter at den ble registrert.</p>
  <ol class="hyp">
-  <li><b>H1</b><span>Numerologi-rekker basert på trekningsdatoen gir flere treff enn tilfeldige rekker i Keno.</span><span class="res">Ikke støttet så langt (z = 0,52)</span></li>
+  <li><b>H1</b><span>Numerologi-rekker basert på trekningsdatoen gir flere treff enn tilfeldige rekker i Keno.</span><span class="res">Ikke støttet i baktest (z = 0,52). Forhåndsregistrert test pågår fra 6.11.2026</span></li>
   <li><b>H2</b><span>Tall som er trukket mye nylig («varme tall») blir trukket oftere i neste trekning.</span><span class="res">Ikke støttet så langt</span></li>
   <li><b>H3</b><span>Keno-arkivet er forenlig med en ren, likefordelt tilfeldig trekning (χ²-test per år).</span><span class="res ok">Testes løpende på /Keno/</span></li>
   <li><b>H4</b><span>Personlige numerologi-rekker (fødselsdato) skiller seg fra tilfeldighet for noen fødselsdatoer.</span><span class="res">Åpen: krever korreksjon for mange tester</span></li>
@@ -91,6 +91,7 @@ a.card:hover{border-color:var(--accent);transform:translateY(-2px)}
  <div class="eyebrow">Forskningslogg</div>
  <h2>Hva vi har gjort, og hva vi fant</h2>
  <div class="log">
+  <div class="entry"><time datetime="2026-11-06">6. november 2026</time><h3>Én forskning for Keno, Lotto og EuroJackpot</h3><p>Alle tre spill bruker nå samme motor (<code>/forskning/engine.js</code>), testet mot den opprinnelige Keno-koden. Baktesten er korrigert for flere tester med Holm over hele familien: 81 tester for Keno, 9 for Lotto og 18 for EuroJackpot. Ingen metode overlever korreksjonen. Laveste Holm-p er 0,81 for Keno og 1,0 for Lotto. Uten korreksjon ser 9 av 81 Keno-tester «signifikante» ut (4 er ventet ved flaks), og den tilfeldige kontrollrekka på nivå 3 har z = +2,58. Det er akkurat hvorfor vi korrigerer. Fra 6. november lagrer serveren rekker før hver trekning i en hash-kjede, og bare disse regnes som bevis.</p></div>
   <div class="entry"><time datetime="2026-11-06">6. november 2026</time><h3>Numerologi-motor for Keno og første baktest</h3><p>Motoren <code>setaei-keno-numerology-v1</code> er tatt i bruk. Over 5 009 Keno-trekninger fra 2013 traff numerologi-rekka på nivå 10 i snitt 2,867 tall, mot 2,857 forventet ved ren tilfeldighet (z = 0,52). På nivå 5 ble z = −0,46. Det er ikke til å skille fra tilfeldighet.</p></div>
   <div class="entry"><time datetime="2026-11-06">6. november 2026</time><h3>Keno-arkiv og uavhengig revisjon</h3><p>Arkivet inneholder 5 500 trekninger (2011–2026). Frekvensstrategier med vindu på 90, 180 og 365 trekninger ga 2,849–2,898 treff mot 2,857 forventet. Ingen av dem viste en fordel som kan gjentas.</p></div>
  </div>

@@ -43,3 +43,7 @@ Each walk-forward simulation selects k numbers using only the previous W draws, 
 
 ## Redesign 2026-11-06 (research hub)
 Keno is now part of **SETAEI Forskning** (`/forskning/`, see `handoffs/forskning/README.md`). The page logic moved to `app.js`, and the numerology engine lives in `numerology.js` (`setaei-keno-numerology-v1`). The page now shows top-10 lists, randomness tests, rows for the next draw (numerology by date, personal, hot, overdue, random control) and a backtest with z-scores. The logo is the inline SETAEI SVG wordmark, not `/assets/logo/setaei-logo.png`.
+
+
+## Shared engine and pre-registration (2026-11-06)
+Rows, scoring and Holm correction now come from `/forskning/engine.js` (shared with `/forskning/lotto/` and `/forskning/eurojackpot/`). `Keno/preregistered.json` is written by `scripts/forskning_prereg.js` from cron (`ops/forskning.cron`): rows for the next draw are locked before it happens in a SHA-256 hash chain. Run `node --test tests/forskning_engine.test.js tests/forskning_prereg.test.js`.

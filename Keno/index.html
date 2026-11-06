@@ -80,7 +80,7 @@ button.ball{cursor:pointer}.ball.hot{background:var(--accent);border-color:var(-
 <body>
 <header class="top"><div class="wrap topinner">
  <a class="wordmark" href="/" aria-label="SETAEI – hjem"><svg viewBox="15 15 545 105" role="img" aria-label="SETAEI"><g fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="butt" stroke-linejoin="round"><path d="M78 29H49C31 29 27 50 43 58L68 70C83 77 79 105 58 105H27"/><path d="M118 31h58M118 68h48M118 105h58"/><path d="M215 31h70M250 31v74"/><path d="M321 105l34-74 34 74"/><path d="M429 31h58M429 68h48M429 105h58"/><path d="M539 31v74"/></g><path fill="#F47A2A" d="M355 58l5 11 12 1-9 8 3 12-11-6-11 6 3-12-9-8 12-1z"/></svg><small>Forskning</small></a>
- <nav class="navlinks" aria-label="Keno-analyse"><a href="#topp10">Topp 10</a><a href="#rekker">Rekker</a><a href="#frekvenser">Frekvenser</a><a href="#baktest">Baktest</a><a href="#resultater">Trekninger</a><a href="#metode">Metode</a><a class="hub" href="/forskning/">← Alle forskningsprosjekter</a></nav>
+ <nav class="navlinks" aria-label="Keno-analyse"><a href="#topp10">Topp 10</a><a href="#rekker">Rekker</a><a href="#frekvenser">Frekvenser</a><a href="#baktest">Baktest</a><a href="#forhand">Forhåndsregistrert</a><a href="#resultater">Trekninger</a><a href="#metode">Metode</a><a class="hub" href="/forskning/">← Alle forskningsprosjekter</a></nav>
 </div></header>
 <main class="wrap">
 <section class="hero">
@@ -133,10 +133,16 @@ button.ball{cursor:pointer}.ball.hot{background:var(--accent);border-color:var(-
    <div class="control"><label for="testYear">Testperiode</label><select id="testYear"><option value="all" selected>Alle år fra 2013</option><option value="2026">2026</option><option value="2025">2025</option><option value="2024">2024</option></select></div>
   </div>
   <p class="help">Hver historiske trekning spilles på nytt: Frekvensmodellene ser bare trekningene <strong>før</strong> den, og numerologi-rekka lages bare fra datoen. z viser hvor mange standardfeil snittet ligger fra ren tilfeldighet.</p>
-  <div class="tablebox"><table class="table"><thead><tr><th>Strategi</th><th>Trekninger</th><th>Snitt treff</th><th>Avvik</th><th>z</th><th>Beste</th></tr></thead><tbody id="backtest"><tr><td colspan="6">Beregner…</td></tr></tbody></table></div>
+  <div class="tablebox"><table class="table"><thead><tr><th>Strategi</th><th>Trekninger</th><th>Snitt treff</th><th>Avvik</th><th>z</th><th>p</th><th>Holm-p</th><th>Beste</th></tr></thead><tbody id="backtest"><tr><td colspan="8">Beregner…</td></tr></tbody></table></div>
   <div class="notice" id="backtestNotice">Beregner…</div>
   <div><div class="metriclabel">Treffordeling · numerologi (dato) mot teori</div><div class="dist" id="dist"></div><div class="key"><span><i style="background:var(--accent)"></i>Observert</span><span><i style="background:#ffffff40"></i>Forventet (hypergeometrisk)</span></div></div>
  </div>
+</section>
+
+<section class="section" id="forhand">
+ <div class="sectiontitle"><div><div class="eyebrow">04b / Forhåndsregistrert</div><h2>Rekker låst før trekningen</h2></div></div>
+ <p class="help">Baktesten over er historikk. Bare dette er bevis: serveren lagrer rekkene før hver trekning og kobler dem i en hash-kjede, slik at ingen kan skrives om etterpå. Primærtesten er én på forhånd valgt hypotese; alt annet korrigeres med Holm.</p>
+ <div class="panel" id="prereg"><p class="detail">Laster…</p></div>
 </section>
 
 <section class="section cols" id="resultater">
@@ -152,7 +158,9 @@ button.ball{cursor:pointer}.ball.hot{background:var(--accent);border-color:var(-
 <p class="sub">Dette nettstedet selger ingen spill, tar ikke imot innsats og er ikke tilknyttet Norsk Tipping. 18+ for pengespill. Trenger du hjelp til å begrense spillingen, kan du kontakte <a style="color:var(--accent)" href="https://hjelpelinjen.no/" target="_blank" rel="noopener noreferrer">Hjelpelinjen</a>.</p><span class="badge" id="dataStatus">Datakilde: kontrolleres…</span></div></section>
 </main>
 <footer class="footer"><div class="wrap footerinner"><span>© <span id="copyrightYear"></span> SETAEI Forskning · uavhengig prosjekt</span><span><a href="/forskning/">Alle forskningsprosjekter</a> · <a href="#topp10">Topp 10</a> · <a href="/">setai.no</a></span></div></footer>
-<script src="./numerology.js?v=1"></script>
-<script src="./app.js?v=1"></script>
+<script src="../forskning/engine.js?v=1"></script>
+<script src="../forskning/ui.js?v=1"></script>
+<script src="./numerology.js?v=2"></script>
+<script src="./app.js?v=2"></script>
 </body>
 </html>

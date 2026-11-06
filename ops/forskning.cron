@@ -1,0 +1,8 @@
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+# SETAEI Forskning (installed as /etc/cron.d/setai-forskning). All times UTC, user www-data.
+# 03:17 Keno archive refresh lives in /etc/cron.d/setai-keno-refresh (see ops/keno-refresh.cron).
+22 3 * * * www-data /usr/bin/python3 /opt/setai-forskning/lottery_update.py --game lotto --output /var/www/setai/forskning/data/lotto.json >> /var/log/setai-forskning.log 2>&1
+24 3 * * * www-data /usr/bin/python3 /opt/setai-forskning/lottery_update.py --game eurojackpot --output /var/www/setai/forskning/data/eurojackpot.json >> /var/log/setai-forskning.log 2>&1
+# Pre-registration: registers the NEXT draw for all games, before it happens (refuses after 12:00 Oslo on draw day).
+30 3 * * * www-data /usr/bin/node /opt/setai-forskning/forskning_prereg.js --base /var/www/setai --engine /var/www/setai/forskning/engine.js >> /var/log/setai-forskning.log 2>&1

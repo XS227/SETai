@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="no">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#10100F">
+<meta name="robots" content="noindex,follow">
+<title>EuroJackpot – topp 10, numerologi og ærlig baktest | SETAEI Forskning</title>
+<meta name="description" content="SETAEI Forskning: EuroJackpot-analyse med topp 10-tall, numerologiske rekker, tilfeldighetstester, Holm-korrigert baktest og forhåndsregistrerte rekker.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../spill.css?v=1">
+</head>
+<body data-game="eurojackpot">
+<header class="top"><div class="wrap topinner">
+ <a class="wordmark" href="/" aria-label="SETAEI – hjem"><svg viewBox="15 15 545 105" role="img" aria-label="SETAEI"><g fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="butt" stroke-linejoin="round"><path d="M78 29H49C31 29 27 50 43 58L68 70C83 77 79 105 58 105H27"/><path d="M118 31h58M118 68h48M118 105h58"/><path d="M215 31h70M250 31v74"/><path d="M321 105l34-74 34 74"/><path d="M429 31h58M429 68h48M429 105h58"/><path d="M539 31v74"/></g><path fill="#F47A2A" d="M355 58l5 11 12 1-9 8 3 12-11-6-11 6 3-12-9-8 12-1z"/></svg><small>Forskning</small></a>
+ <nav class="navlinks" aria-label="EuroJackpot-analyse"><a href="#topp10">Topp 10</a><a href="#rekker">Rekker</a><a href="#baktest">Baktest</a><a href="#forhand">Forhåndsregistrert</a><a href="#resultater">Trekninger</a><a href="#metode">Metode</a><a class="hub" href="/forskning/">Alle prosjekter</a></nav>
+</div></header>
+<main class="wrap">
+<section class="hero">
+ <div class="eyebrow">SETAEI Forskning / Lotterier / EuroJackpot</div>
+ <h1>Fem av 50,<br><span>to av 12.</span></h1>
+ <p class="lede">5 hovedtall av 50 og 2 stjernetall av 12 trekkes hver tirsdag og fredag. Samme metode som for Keno og Lotto: tilfeldige kontrollrekker, Holm-korreksjon og forhåndsregistrerte rekker.</p>
+ <div class="pillline"><span class="pill">5 av 50 + 2 av 12</span><span class="pill">Tirsdag og fredag</span><span class="pill">Ingen salg · ingen innsats</span></div>
+</section>
+<section class="section stats" aria-label="Datagrunnlag">
+ <div class="panel"><div class="metriclabel">Trekninger i arkivet</div><div class="metric" id="totalCount">—</div><div class="detail">5 av 50 + 2 av 12</div></div>
+ <div class="panel"><div class="metriclabel">Siste trekning</div><div class="metric" id="lastDate" style="font-size:clamp(20px,2.2vw,28px)">—</div><div class="detail" id="dataStatus">Laster…</div></div>
+ <div class="panel"><div class="metriclabel">Forventet treff</div><div class="metric" style="font-size:clamp(18px,2vw,24px)">Forventet treff er 0,5 på hovedtallene og 0,333 på stjernetallene.</div><div class="detail">Per rekke, uansett strategi</div></div>
+ <div class="panel"><div class="metriclabel">Hva dette er</div><div class="metric" style="font-size:clamp(18px,2vw,24px)">Forskning</div><div class="detail">Ikke tips, ikke investering</div></div>
+</section>
+<div id="dataUrl" data-url="/forskning/data/eurojackpot.json" data-prereg="/forskning/data/eurojackpot-prereg.json" hidden></div>
+<div class="toolbar controls" role="group" aria-label="Analysevalg">
+ <div class="control"><label for="period">Analyseperiode</label><select id="period"></select></div>
+</div>
+
+<section class="section" id="topp10">
+ <div class="sectiontitle"><div><div class="eyebrow">01 / Topp 10</div><h2>De ti som skiller seg ut</h2></div></div>
+ <p class="help">Avvik innenfor ±2 σ er helt normalt. Med mange tall vil noen alltid ligge utenfor ved ren tilfeldighet.</p>
+ <div id="topBox" style="display:grid;gap:12px">Laster…</div>
+</section>
+
+<section class="section" id="rekker">
+ <div class="sectiontitle"><div><div class="eyebrow">02 / Rekker for neste trekning</div><h2>Rekker for <span id="nextDate">…</span></h2></div></div>
+ <p class="help">Fem metoder side om side. Numerologi-rekkene kommer fra SETAEI-motoren (dato, redusert etter Åse Steinslands metode med mestertall 11/22/33). Tilfeldig kontroll er den ærlige målestokken alle andre må slå.</p>
+ <div class="rowgrid" id="rows"></div>
+</section>
+
+<section class="section" id="baktest">
+ <div class="sectiontitle"><div><div class="eyebrow">03 / Ærlig baktest</div><h2>Slår noen metode tilfeldighet?</h2></div></div>
+ <div class="panel" style="display:grid;gap:14px">
+  <div class="controls"><div class="control"><label for="testYear">Testperiode</label><select id="testYear"></select></div></div>
+  <p class="help">Hver historiske trekning spilles på nytt: frekvensmodellene ser bare trekningene <strong>før</strong> den. Alle strategier vurderes på de samme trekningene. Tabellen er sortert etter p-verdi; Holm-p er korrigert for hele familien.</p>
+  <div class="tablebox"><table class="table"><thead><tr><th>Strategi</th><th>Trekninger</th><th>Snitt treff</th><th>Avvik</th><th>z</th><th>p</th><th>Holm-p</th><th>Beste</th></tr></thead><tbody id="backtest"><tr><td colspan="8">Beregner…</td></tr></tbody></table></div>
+  <div class="notice" id="backtestNotice">Beregner…</div>
+ </div>
+</section>
+
+<section class="section" id="forhand">
+ <div class="sectiontitle"><div><div class="eyebrow">04 / Forhåndsregistrert</div><h2>Rekker låst før trekningen</h2></div></div>
+ <p class="help">Bare dette er bevis. Rekkene lagres av serveren før hver trekning og kobles i en hash-kjede, slik at ingen kan skrives om etterpå.</p>
+ <div class="panel" id="prereg"><p class="detail">Laster…</p></div>
+</section>
+
+<section class="section" id="resultater">
+ <div class="sectiontitle"><div><div class="eyebrow">05 / Trekningslogg</div><h2>Siste 10 trekninger</h2></div></div>
+ <div class="panel" id="recentDraws"><p class="detail">Laster…</p></div>
+</section>
+
+<section class="section" id="metode"><div class="sectiontitle"><div><div class="eyebrow">Metode og datakilder</div><h2>Reproduserbar, ikke etterpåklok.</h2></div></div>
+<div class="panel"><p>Data: WestLotto sine offisielle resultatsider for EuroJackpot, arkiv fra 23. mars 2012. Stjernetall analyseres bare fra 25. mars 2022 (1–12).. Dataene valideres for format, tallområde og unike datoer; oppdateringen stopper hvis en ny rad motsier en gammel.</p>
+<p>Alle treff telles mot den hypergeometriske fordelingen. z viser hvor mange standardfeil snittet ligger fra tilfeldighet. Familien av tester korrigeres med Holm. Motoren (<code>/forskning/engine.js</code>) deles med Keno-siden og er testet mot den opprinnelige koden.</p>
+<p class="sub">Dette nettstedet selger ingen spill, tar ikke imot innsats og er ikke tilknyttet noen spilloperatør. 18+ for pengespill. Trenger du hjelp til å begrense spillingen, kontakt <a style="color:var(--accent)" href="https://hjelpelinjen.no/" target="_blank" rel="noopener noreferrer">Hjelpelinjen</a>.</p></div></section>
+</main>
+<footer class="footer"><div class="wrap footerinner"><span>© <span id="copyrightYear"></span> SETAEI Forskning · uavhengig prosjekt</span><span><a href="/forskning/">Alle forskningsprosjekter</a> · <a href="/Keno/">Keno</a> · <a href="/">setai.no</a></span></div></footer>
+<script src="../engine.js?v=1"></script>
+<script src="../ui.js?v=1"></script>
+<script src="../game.js?v=1"></script>
+</body>
+</html>

@@ -17,9 +17,8 @@ function comb(n,k){if(k<0||k>n)return 0;var o=1;for(var i=1;i<=k;i++)o=o*(n-i+1)
 // Standard normal CDF (Abramowitz–Stegun 7.1.26 via erf)
 function phi(z){var t=1/(1+.3275911*Math.abs(z)/Math.SQRT2),y=1-(((((1.061405429*t-1.453152027)*t)+1.421413741)*t-.284496736)*t+.254829592)*t*Math.exp(-z*z/2);return z>=0?(1+y)/2:(1-y)/2}
 function chiP(x,df){var z=(Math.pow(x/df,1/3)-(1-2/(9*df)))/Math.sqrt(2/(9*df));return 1-phi(z)}
-function hash(s){var h=2166136261;for(var i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}return h>>>0}
-function rng(seed){return function(){seed|=0;seed=seed+0x6D2B79F5|0;var t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
-function randomRow(key,k){var r=rng(hash(key)),a=[];for(var i=1;i<=70;i++)a.push(i);for(i=0;i<k;i++){var j=i+Math.floor(r()*(70-i));var t=a[i];a[i]=a[j];a[j]=t}return a.slice(0,k).sort(function(x,y){return x-y})}
+var ENG=window.SETAEI_ENGINE,UI=window.SETAEI_UI;
+function randomRow(key,k){return ENG.randomRow(key,k,70)}
 function hitStats(k){var e=k*20/70,v=k*(20/70)*(50/70)*(70-k)/69;return{e:e,v:v}}
 
 function rows(){
@@ -83,8 +82,8 @@ function renderTop(){
 }
 
 /* ---------- 02 Rekker ---------- */
-function hotRow(k,lookback){var ds=archive.slice(-lookback),c=counts(ds),n=[];for(var i=1;i<=70;i++)n.push(i);return n.sort(function(a,b){return c[b]-c[a]||a-b}).slice(0,k).sort(function(a,b){return a-b})}
-function gapRow(k){var g=gaps(),n=[];for(var i=1;i<=70;i++)n.push(i);return n.sort(function(a,b){return g[b]-g[a]||a-b}).slice(0,k).sort(function(a,b){return a-b})}
+function hotRow(k,lookback){return ENG.hotRow(archive.map(function(d){return d.numbers}),k,lookback,70)}
+function gapRow(k){return ENG.gapRow(archive.map(function(d){return d.numbers}),k,70)}
 function renderRows(){
  var k=Number(level.value),next=addDays(archive[archive.length-1].date,1),box=$('rows');box.textContent='';
  $('nextDate').textContent=niceDate(next);
@@ -122,41 +121,46 @@ function renderHeatmap(){
  $('selectedInfo').textContent=chosen===null?'Trykk på et tall for detalj':'Tall '+chosen+': '+c[chosen]+' trekk ('+pct(c[chosen]/Math.max(1,ds.length))+', forventet 28,6 %)';
 }
 
-/* ---------- 04 Baktest ---------- */
-function backtest(k,lookback,yr){
- var counter=new Array(71).fill(0),S={hot:[],cold:[],num:[],pers:[],rand:[],fixed:[]},dist={num:new Array(k+1).fill(0)};
- var fixed=[];for(var f=1;f<=k;f++)fixed.push(f);
- for(var i=0;i<archive.length;i++){
-  var cur=archive[i];
-  if(i>=lookback){
-   if(cur.date>='2013-01-01'&&(yr==='all'||cur.date.slice(0,4)===yr)){
-    var drawn=new Set(cur.numbers),order=[];for(var n=1;n<=70;n++)order.push(n);
-    var hits=function(arr){var h=0;for(var j=0;j<arr.length;j++)if(drawn.has(arr[j]))h++;return h};
-    order.sort(function(a,b){return counter[b]-counter[a]||a-b});S.hot.push(hits(order.slice(0,k)));
-    order.sort(function(a,b){return counter[a]-counter[b]||a-b});S.cold.push(hits(order.slice(0,k)));
-    var h=hits(NUM.row(cur.date,k).numbers);S.num.push(h);dist.num[h]++;
-    if(birth&&birth<cur.date){try{S.pers.push(hits(NUM.row(cur.date,k,birth).numbers))}catch(e){}}
-    S.rand.push(hits(randomRow('ctrl'+cur.date,k)));S.fixed.push(hits(fixed));
-   }
-   archive[i-lookback].numbers.forEach(function(n){counter[n]--});
-  }
-  cur.numbers.forEach(function(n){counter[n]++});
- }
- return {S:S,dist:dist};
+/* ---------- 04 Baktest (shared engine, Holm over the whole family) ---------- */
+var btCache={};
+function familyCells(yr){return btCache[yr]||(btCache[yr]=ENG.backtestAll('keno',archive,yr))}
+function personalStats(k,yr){ // depends on the visitor's birth date, so it is outside the Holm family
+ var hs=[];
+ if(!birth)return hs;
+ archive.forEach(function(cur){
+  if(cur.date<'2013-01-01'||(yr!=='all'&&cur.date.slice(0,4)!==yr)||birth>=cur.date)return;
+  var set=new Set(cur.numbers),h=0;NUM.row(cur.date,k,birth).numbers.forEach(function(n){if(set.has(n))h++});hs.push(h);
+ });
+ return hs;
+}
+function numDist(k,yr){
+ var d=new Array(k+1).fill(0),n=0;
+ archive.forEach(function(cur,i){
+  if(i<365||cur.date<'2013-01-01'||(yr!=='all'&&cur.date.slice(0,4)!==yr))return;
+  var set=new Set(cur.numbers),h=0;NUM.row(cur.date,k).numbers.forEach(function(x){if(set.has(x))h++});d[h]++;n++;
+ });
+ return {d:d,n:n};
 }
 function renderBacktest(){
- var k=Number(level.value),w=Number(windowEl.value),y=yearEl.value,res=backtest(k,w,y),st=hitStats(k),tb=$('backtest');tb.textContent='';
- var names=[['num','Numerologi · dato','primary'],['pers','Numerologi · personlig ('+(birth||'ingen fødselsdato')+')'],['hot','Hyppigste tall (vindu '+w+')'],['cold','Sjeldneste tall (vindu '+w+')'],['rand','Tilfeldig kontroll'],['fixed','Faste tall 1–'+k]];
- names.forEach(function(x){
-  var r=res.S[x[0]],len=r.length,tr=el('tr',x[2]||'');
-  if(!len){if(x[0]==='pers'){tr.appendChild(el('td',null,x[1]));var td=el('td',null,'Legg inn fødselsdato under «Rekker» for å teste');td.colSpan=5;tr.appendChild(td);tb.appendChild(tr)}return}
-  var avg=r.reduce(function(a,b){return a+b},0)/len,z=(avg-st.e)/Math.sqrt(st.v/len);
-  [x[1],fmt(len,0),fmt(avg),(avg-st.e>=0?'+':'')+fmt(avg-st.e),(z>=0?'+':'')+fmt(z,2),String(Math.max.apply(null,r))].forEach(function(v,i){var td=el('td',i===4?(Math.abs(z)>=2?(z>0?'good':'negative'):'muted'):null,v);tr.appendChild(td)});
+ var k=Number(level.value),w=Number(windowEl.value),y=yearEl.value,cells=familyCells(y),st=hitStats(k),tb=$('backtest');tb.textContent='';
+ var by={};cells.forEach(function(c){by[c.key]=c});
+ var pick=[['numerology|k'+k,'Numerologi · dato','primary'],['hot'+w+'|k'+k,'Hyppigste tall (vindu '+w+')'],['cold'+w+'|k'+k,'Sjeldneste tall (vindu '+w+')'],['random|k'+k,'Tilfeldig kontroll'],['fixed|k'+k,'Faste tall 1–'+k]];
+ pick.forEach(function(x){
+  var c=by[x[0]];if(!c)return;var tr=el('tr',x[2]||'');
+  [x[1],fmt(c.n,0),fmt(c.mean),(c.mean-c.expected>=0?'+':'')+fmt(c.mean-c.expected),(c.z>=0?'+':'')+fmt(c.z,2),UI.pfmt(c.p),UI.pfmt(c.holm),String(c.max)].forEach(function(v,i){
+   tr.appendChild(el('td',i===4?(Math.abs(c.z)>=2?(c.z>0?'good':'negative'):'muted'):i===6?(c.holm<0.05?'good':'muted'):null,v));
+  });
   tb.appendChild(tr);
  });
- $('backtestNotice').textContent='Forventning ved tilfeldig valg: '+fmt(st.e)+' treff per trekning på nivå '+k+'. |z| under 2 betyr «ikke skillbart fra tilfeldighet». Vi tester seks strategier samtidig, så én z over 2 av og til er ventet ved flaks alene.';
- // hit distribution numerology vs hypergeometric
- var d=res.dist.num,n=res.S.num.length,box=$('dist');box.textContent='';
+ var hs=personalStats(k,y),tr=el('tr');
+ if(hs.length){
+  var avg=hs.reduce(function(a,b){return a+b},0)/hs.length,z=(avg-st.e)/Math.sqrt(st.v/hs.length);
+  [ 'Numerologi · personlig ('+birth+')',fmt(hs.length,0),fmt(avg),(avg-st.e>=0?'+':'')+fmt(avg-st.e),(z>=0?'+':'')+fmt(z,2),UI.pfmt(ENG.pTwoSided(z)),'utenfor familien',String(Math.max.apply(null,hs))].forEach(function(v,i){tr.appendChild(el('td',i===4?(Math.abs(z)>=2?(z>0?'good':'negative'):'muted'):null,v))});
+ }else{tr.appendChild(el('td',null,'Numerologi · personlig'));var td=el('td',null,'Legg inn fødselsdato under «Rekker» for å teste');td.colSpan=7;tr.appendChild(td)}
+ tb.appendChild(tr);
+ var sig=cells.filter(function(c){return c.holm<0.05}).length,raw=cells.filter(function(c){return c.p<0.05}).length,minH=Math.min.apply(null,cells.map(function(c){return c.holm}));
+ $('backtestNotice').textContent='Forventning ved tilfeldig valg: '+fmt(st.e)+' treff på nivå '+k+'. Hele familien er '+cells.length+' tester (9 nivå × numerologi, kontroll, faste tall og 3 vinduer for hyppigste og sjeldneste). Uten korreksjon har '+raw+' p < 0,05 (ventet ved flaks alene: ca. '+fmt(cells.length*0.05,1)+'). Etter Holm-korreksjon har '+sig+' det; laveste Holm-p er '+UI.pfmt(minH)+'. Tilfeldig kontroll og faste tall er med nettopp for å vise hvor store avvik ren flaks gir. Alle strategier måles på samme trekninger (de med minst 365 trekninger historikk).';
+ var nd=numDist(k,y),d=nd.d,n=nd.n,box=$('dist');box.textContent='';
  var maxP=0,rowsD=[];for(var h=0;h<=k;h++){var pe=comb(20,h)*comb(50,k-h)/comb(70,k),po=d[h]/Math.max(1,n);rowsD.push([h,po,pe]);maxP=Math.max(maxP,po,pe)}
  rowsD.forEach(function(r){
   var line=el('div','distrow');line.appendChild(el('span','distlabel',r[0]+' rette'));
@@ -206,6 +210,7 @@ fetch('./draws.json',{cache:'no-cache'}).then(function(r){if(!r.ok)throw Error('
  $('dataStatus').textContent='Arkiv sist hentet '+data.retrieved+' · kilde: Statyr · ikke offisielt bekreftet';
  renderTop();renderHeatmap();renderRows();renderProbability();renderRecent();
  setTimeout(renderBacktest,30);
+ UI.renderPrereg('keno',$('prereg'),archive,'./preregistered.json');
 }).catch(function(err){
  ['topInfo','periodDescription'].forEach(function(id){if($(id))$(id).textContent='Kan ikke laste historikken: '+err.message});
  $('backtest').textContent='';$('rows').textContent='Trekningene kunne ikke lastes.';$('recentDraws').textContent='Trekningene kunne ikke lastes.';
