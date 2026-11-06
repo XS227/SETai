@@ -128,6 +128,8 @@
   idx.forEach(function(i,j){run=Math.max(run,Math.min(1,(m-j)*ps[i]));out[i]=run});
   return out;
  }
+ function comb(n,k){if(k<0||k>n)return 0;var o=1;for(var i=1;i<=k;i++)o=o*(n-i+1)/i;return o}
+ function matchDist(slot){var o=[];for(var h=0;h<=slot.k;h++)o.push(comb(slot.drawn,h)*comb(slot.pool-slot.drawn,slot.k-h)/comb(slot.pool,slot.k));return o}
  function hits(row,drawn){var s=new Set(drawn),h=0;for(var i=0;i<row.length;i++)if(s.has(row[i]))h++;return h}
  /* Score a list of pre-registered entries ({reg:{date,rows}}) against real draws. */
  function scoreEntries(game,entries,draws){
@@ -147,12 +149,14 @@
  /* ---------- walk-forward backtest, whole family in one pass ---------- */
  /* Cells for every strategy × slot (× window for hot/cold), Holm-adjusted over the whole family.
   * All strategies are scored on the same draws (those with at least max(window) draws of history). */
- function backtestAll(game,draws,yr){
-  var g=GAMES[game],cells={},keys=[],maxW=Math.max.apply(null,g.windows),groups={};
+ function backtestAll(game,draws,yr,opts){
+  var trace=!!(opts&&opts.trace);
+  var curDate='',g=GAMES[game],cells={},keys=[],maxW=Math.max.apply(null,g.windows),groups={};
   g.slots.forEach(function(slot){var key=slot.field+'|'+slot.pool+'|'+(slot.from||'');(groups[key]=groups[key]||[]).push(slot)});
   function add(key,meta,h){
    var c=cells[key];if(!c){c=cells[key]=Object.assign({key:key,sum:0,n:0,max:0},meta);keys.push(key)}
    c.sum+=h;c.n++;if(h>c.max)c.max=h;
+   if(trace){(c.hits||(c.hits=[])).push(h);(c.dates||(c.dates=[])).push(curDate)}
   }
   Object.keys(groups).forEach(function(gk){
    var slots=groups[gk],first=slots[0],sd=draws.filter(function(d){return !first.from||d.date>=first.from});
@@ -160,7 +164,7 @@
    var counters={};g.windows.forEach(function(w){counters[w]=new Array(pool+1).fill(0)});
    slots.forEach(function(s){s.fixedRow=[];for(var f=1;f<=s.k;f++)s.fixedRow.push(f)});
    for(var i=0;i<arr.length;i++){
-    var date=dates[i];
+    var date=dates[i];curDate=date;
     if(i>=maxW&&date>=g.testFrom&&(yr==='all'||date.slice(0,4)===yr)){
      var drawn=new Set(arr[i]);
      var h0=function(row){var h=0;for(var j=0;j<row.length;j++)if(drawn.has(row[j]))h++;return h};
@@ -187,7 +191,7 @@
   return list;
  }
 
- var api={VERSION:VERSION,numFor:numFor,GAMES:GAMES,STRATEGIES:STRATEGIES,numerology:numerology,hash:hash,rng:rng,randomRow:randomRow,counts:counts,gaps:gaps,hotRow:hotRow,gapRow:gapRow,
+ var api={VERSION:VERSION,comb:comb,matchDist:matchDist,numFor:numFor,GAMES:GAMES,STRATEGIES:STRATEGIES,numerology:numerology,hash:hash,rng:rng,randomRow:randomRow,counts:counts,gaps:gaps,hotRow:hotRow,gapRow:gapRow,
   buildRows:buildRows,slotDraws:slotDraws,phi:phi,chiP:chiP,addDays:addDays,nextDrawDate:nextDrawDate,pTwoSided:pTwoSided,hyper:hyper,holm:holm,hits:hits,scoreEntries:scoreEntries,backtestAll:backtestAll,controlKey:controlKey};
  if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.SETAEI_ENGINE=api;
 })(typeof window!=='undefined'?window:globalThis);

@@ -9,153 +9,120 @@
 <meta name="description" content="SETAEI Forskning: langsiktige, åpne forskningsprosjekter om tilfeldighet, lotterier, numerologi og autonome agenter, med forhåndsregistrerte hypoteser og en løpende logg.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-<style>
-:root{color-scheme:dark;--bg:#10100F;--card:#181715;--card2:#211f1c;--line:#ffffff17;--txt:#FFFAF0;--muted:#B9B2A6;--soft:#D6D0C4;--accent:#F47A2A;--cool:#7CC7B2}
-*{box-sizing:border-box}html{scroll-behavior:smooth}
-body{margin:0;background:radial-gradient(ellipse at 50% -20%,#2a1b10 0%,var(--bg) 52%);color:var(--txt);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.6;overflow-x:hidden}
-a{color:inherit;text-decoration:none}h1,h2,h3{font-family:"Space Grotesk",Inter,sans-serif;letter-spacing:-.03em}
-.wrap{width:min(1180px,calc(100% - 32px));margin:auto}
-.top{border-bottom:1px solid var(--line);background:#10100fdd;backdrop-filter:blur(14px);position:sticky;top:0;z-index:10}
-.topinner{display:flex;align-items:center;gap:20px;min-height:68px}
-.wordmark{display:flex;align-items:center;gap:12px}.wordmark svg{width:112px;height:auto;display:block}.wordmark small{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);border-left:1px solid var(--line);padding-left:12px}
-.navlinks{margin-left:auto;display:flex;gap:18px;font-size:13px;font-weight:600;white-space:nowrap}.navlinks a:hover{color:var(--accent)}
-.eyebrow{color:var(--accent);font-size:12px;letter-spacing:.22em;text-transform:uppercase;font-weight:700}
-.hero{padding:70px 0 30px}.hero h1{font-size:clamp(44px,8vw,96px);line-height:1;margin:16px 0;font-weight:700;letter-spacing:-.05em}.hero h1 span{color:var(--accent)}
-.lede{max-width:740px;color:var(--soft);font-size:clamp(15px,2vw,19px)}
-.section{margin:56px 0;scroll-margin-top:84px}.section>h2{font-size:clamp(26px,3vw,36px);margin:6px 0 8px}
-.help{color:var(--muted);font-size:14px;max-width:760px;margin:0 0 18px}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.card{border:1px solid var(--line);background:linear-gradient(150deg,var(--card2),var(--card));border-radius:18px;padding:22px;display:flex;flex-direction:column;gap:10px;min-width:0;transition:border-color .2s,transform .2s}
-a.card:hover{border-color:var(--accent);transform:translateY(-2px)}
-.card h3{margin:0;font-size:22px}.card p{margin:0;color:var(--soft);font-size:14px}.card .meta{color:var(--muted);font-size:12px;margin-top:auto}
-.status{align-self:flex-start;font-size:10px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;border-radius:99px;padding:3px 9px;border:1px solid}
-.live{color:var(--cool);border-color:#7CC7B266}.build{color:var(--accent);border-color:#F47A2A66}.plan{color:var(--soft);border-color:#ffffff33}
-.cta{color:var(--accent);font-weight:600;font-size:14px}
-.hyp{list-style:none;padding:0;margin:0;display:grid;gap:10px}
-.hyp li{border:1px solid var(--line);border-radius:14px;padding:14px 16px;background:#ffffff04;display:grid;grid-template-columns:56px 1fr auto;gap:12px;align-items:start}
-.hyp b{color:var(--accent);font-family:"Space Grotesk"}.hyp span.res{font-size:12px;color:var(--muted);white-space:nowrap}.hyp span.res.ok{color:var(--cool)}
-.log{border-left:2px solid var(--line);margin-left:6px;padding-left:22px;display:grid;gap:22px}
-.entry{position:relative}.entry:before{content:"";position:absolute;left:-29px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--accent)}
-.entry time{font-size:12px;color:var(--muted);letter-spacing:.06em}.entry h3{margin:2px 0 6px;font-size:18px}.entry p{margin:0;color:var(--soft);font-size:14px;max-width:780px}
-.principles{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.principles div{border-top:2px solid var(--accent);padding-top:12px}.principles h3{font-size:16px;margin:0 0 6px}.principles p{margin:0;color:var(--muted);font-size:13px}
-.score{display:grid;gap:8px}.score .big{font-family:"Space Grotesk";font-size:clamp(30px,4vw,44px);font-weight:700;letter-spacing:-.04em;color:var(--accent);line-height:1.1}
-.score .row{display:flex;justify-content:space-between;gap:10px;font-size:13px;color:var(--soft);border-top:1px solid var(--line);padding-top:7px}.score .row b{color:var(--txt);font-variant-numeric:tabular-nums}.score .verdict{font-size:12.5px;color:var(--muted)}
-.footer{border-top:1px solid var(--line);margin-top:60px;padding:30px 0 50px;color:var(--muted);font-size:12px}
-@media(max-width:900px){.grid{grid-template-columns:1fr 1fr}.principles{grid-template-columns:1fr 1fr}}
-@media(max-width:600px){.grid,.principles{grid-template-columns:1fr}.topinner{flex-wrap:wrap;padding:10px 0;gap:8px}.navlinks{margin:0;width:100%;overflow-x:auto;padding-bottom:6px}.wordmark small{display:none}.hyp li{grid-template-columns:1fr}}
-</style>
+<link rel="stylesheet" href="/forskning/forskning.css?v=3">
 </head>
 <body>
-<header class="top"><div class="wrap topinner">
- <a class="wordmark" href="/" aria-label="SETAEI – hjem"><svg viewBox="15 15 545 105" role="img" aria-label="SETAEI"><g fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="butt" stroke-linejoin="round"><path d="M78 29H49C31 29 27 50 43 58L68 70C83 77 79 105 58 105H27"/><path d="M118 31h58M118 68h48M118 105h58"/><path d="M215 31h70M250 31v74"/><path d="M321 105l34-74 34 74"/><path d="M429 31h58M429 68h48M429 105h58"/><path d="M539 31v74"/></g><path fill="#F47A2A" d="M355 58l5 11 12 1-9 8 3 12-11-6-11 6 3-12-9-8 12-1z"/></svg><small>Forskning</small></a>
- <nav class="navlinks" aria-label="Forskning"><a href="#lotterier">Lotterier</a><a href="#wallet-agent">Wallet-agent</a><a href="#treff">Treffprosent</a><a href="#hypoteser">Hypoteser</a><a href="#logg">Logg</a><a href="#prinsipper">Prinsipper</a></nav>
-</div></header>
-<main class="wrap">
-<section class="hero">
- <div class="eyebrow">SETAEI Forskning</div>
- <h1>Langsiktige spørsmål.<br><span>Åpne svar.</span></h1>
- <p class="lede">Her samler SETAEI forskningsprosjektene som skal jobbes med over tid. Hypotesene skrives ned før vi tester dem, all kode og data er åpen, og alle resultater føres i en logg, også de som ikke ble som vi håpet.</p>
+<main id="main" class="wrap">
+
+<section id="neste" data-nav="Neste trekninger" class="hero2">
+ <span class="eyebrow">SETAEI Forskning</span>
+ <h1>Neste trekninger.<br><span>Åpne svar.</span></h1>
+ <p class="lede">Hver rekke under er et eksperiment som låses før trekningen og testes åpent mot tilfeldighet. Forskning, ikke spilletips: alle rekker har nøyaktig samme sjanse.</p>
+ <div class="hubnext" id="hubNext"><div class="nextcard"><p class="mini">Laster neste trekninger…</p></div></div>
 </section>
 
-<section class="section" id="lotterier">
- <div class="eyebrow">Spor 1</div>
- <h2>Lotterier, tilfeldighet og numerologi</h2>
- <p class="help">Kan noe som helst, enten statistikk eller numerologi, forutsi tall som er laget for å være tilfeldige? Vi tester det på ekte trekninger, med tilfeldige rekker som kontroll.</p>
- <div class="grid">
-  <a class="card" href="/Keno/"><span class="status live">Live</span><h3>Keno</h3><p>20 av 70 tall hver dag. Topp 10-lister, likefordelingstester, numerologi-rekker og walk-forward-baktest på over 5 500 trekninger.</p><span class="cta">Åpne analysen →</span><span class="meta">Oppdateres daglig · data fra 2011</span></a>
-  <a class="card" href="/forskning/lotto/"><span class="status live">Live</span><h3>Lotto</h3><p>7 av 34 tall hver lørdag. Samme metode som Keno: topp 10, numerologi-rekker, Holm-korrigert baktest og forhåndsregistrerte rekker.</p><span class="cta">Åpne analysen →</span><span class="meta">Data fra Norsk Tipping sitt API · fra 2016</span></a>
-  <a class="card" href="/forskning/eurojackpot/"><span class="status live">Live</span><h3>EuroJackpot</h3><p>5 av 50 tall og 2 av 12 stjernetall, tirsdag og fredag. Her ble numerologi-motoren først laget. Nå med felles motor og forhåndsregistrering.</p><span class="cta">Åpne analysen →</span><span class="meta">Data fra WestLotto · fra 2012</span></a>
+<section id="treff" class="sec" data-nav="Treffprosent så langt">
+ <div class="sh"><div><span class="eyebrow">01 · Treffprosent så langt</span><h2>Hvor ofte har vi gjettet riktig?</h2></div></div>
+ <p class="lead">Andelen av de trukne tallene som numerologi-rekka traff, mot det ren tilfeldighet gir. «Tilbakeregnet» er alle historiske trekninger spilt på nytt med bare data fra før hver trekning. «Forhåndsregistrert» er rekker som var låst før trekningen, og bare de er bevis.</p>
+ <div class="proj" id="scoreGrid"><div class="projcard"><p class="mini">Beregner…</p></div></div>
+</section>
+
+<section id="prosjekter" class="sec" data-nav="Prosjekter">
+ <div class="sh"><div><span class="eyebrow">02 · Prosjekter</span><h2>To forskningsspor</h2></div></div>
+ <h3 class="sub-h" id="p-lotto" data-sub="Spor 1 · Lotterier">Spor 1 · Lotterier, tilfeldighet og numerologi</h3>
+ <p class="lead">Kan noe som helst, enten statistikk eller numerologi, forutsi tall som er laget for å være tilfeldige? Vi tester det på ekte trekninger, med tilfeldige rekker som kontroll.</p>
+ <div class="proj">
+  <a class="projcard" href="/Keno/"><span class="status live">Live</span><h3>Keno</h3><p class="mini">20 av 70 tall hver dag. Neste trekning, sirkeldiagram over alle tall, simulator og utbetalingstabell.</p><span class="cta">Åpne →</span><span class="when2">Daglig oppdatering · data fra 2011</span></a>
+  <a class="projcard" href="/forskning/lotto/"><span class="status live">Live</span><h3>Lotto</h3><p class="mini">7 av 34 tall hver lørdag. Eksakte sannsynligheter, premieeksempel og historikk-avspilling.</p><span class="cta">Åpne →</span><span class="when2">Norsk Tipping API · fra 2016</span></a>
+  <a class="projcard" href="/forskning/eurojackpot/"><span class="status live">Live</span><h3>EuroJackpot</h3><p class="mini">5 av 50 og 2 av 12, tirsdag og fredag. Alle 12 premienivåer med eksakte sannsynligheter.</p><span class="cta">Åpne →</span><span class="when2">WestLotto · fra 2012</span></a>
  </div>
+ <h3 class="sub-h" id="wallet-agent" data-sub="Spor 2 · Wallet-agent">Spor 2 · Wallet-agenten</h3>
+ <div class="proj"><div class="projcard"><span class="status plan">Planlagt</span><h3>Wallet-agent</h3><p class="mini">Hvordan en autonom agent tar beslutninger, hvordan de måles og hvordan de kan etterprøves. Mål, data og metode beskrives når prosjektet er definert.</p></div></div>
 </section>
 
-<section class="section" id="wallet-agent">
- <div class="eyebrow">Spor 2</div>
- <h2>Wallet-agenten</h2>
- <p class="help">Et eget forskningsspor for wallet-agenten: hvordan en autonom agent tar beslutninger, hvordan de måles og hvordan de kan etterprøves.</p>
- <div class="grid">
-  <div class="card"><span class="status plan">Planlagt</span><h3>Wallet-agent</h3><p>Mål, data og metode beskrives her når prosjektet er definert.</p><span class="meta">Beskrivelse kommer</span></div>
- </div>
+<section id="hypoteser" class="sec" data-nav="Hypoteser">
+ <div class="sh"><div><span class="eyebrow">03 · Forhåndsregistrert</span><h2>Hypoteser vi tester</h2></div></div>
+ <p class="lead">Hver hypotese skrives ned før testen kjøres. En hypotese regnes som støttet bare hvis den holder på nye trekninger som kom etter at den ble registrert.</p>
+ <div class="tablebox"><table class="table"><thead><tr><th>#</th><th>Hypotese</th><th>Status</th></tr></thead><tbody>
+  <tr><td>H1</td><td style="white-space:normal;text-align:left">Numerologi-rekker basert på trekningsdatoen gir flere treff enn tilfeldige rekker (primær, én test, α = 0,05).</td><td>Ikke støttet i baktest. Forhåndsregistrert test pågår fra 6.11.2026</td></tr>
+  <tr><td>H2</td><td style="white-space:normal;text-align:left">Tall som er trukket mye nylig («varme tall») blir trukket oftere i neste trekning.</td><td>Ikke støttet så langt</td></tr>
+  <tr><td>H3</td><td style="white-space:normal;text-align:left">Arkivene er forenlige med ren, likefordelt tilfeldig trekning (χ²-test).</td><td>Testes løpende</td></tr>
+  <tr><td>H4</td><td style="white-space:normal;text-align:left">Personlige numerologi-rekker (fødselsdato) skiller seg fra tilfeldighet for noen fødselsdatoer.</td><td>Åpen: krever korreksjon for mange tester</td></tr>
+ </tbody></table></div>
 </section>
 
-<section class="section" id="treff">
- <div class="eyebrow">Treffprosent så langt</div>
- <h2>Hvor ofte har vi gjettet riktig?</h2>
- <p class="help">Andelen av de trukne tallene som numerologi-rekka vår traff, mot det ren tilfeldighet gir. «Tilbakeregnet» er alle historiske trekninger spilt på nytt med bare data fra før hver trekning. «Forhåndsregistrert» er rekker som var låst før trekningen, og bare de er bevis.</p>
- <div class="grid" id="scoreGrid"><div class="card"><p>Beregner…</p></div></div>
+<section id="logg" class="sec" data-nav="Forskningslogg">
+ <div class="sh"><div><span class="eyebrow">04 · Forskningslogg</span><h2>Hva vi har gjort, og hva vi fant</h2></div></div>
+ <details class="more" open><summary>6. november 2026 · Én forskning for Keno, Lotto og EuroJackpot</summary><div class="body"><p>Alle tre spill bruker nå samme motor (<code>/forskning/engine.js</code>), testet mot den opprinnelige Keno-koden. Baktesten er korrigert for flere tester med Holm over hele familien: 81 tester for Keno, 9 for Lotto og 18 for EuroJackpot. Ingen metode overlever korreksjonen. Laveste Holm-p er 0,81 for Keno og 1,0 for Lotto. Uten korreksjon ser 9 av 81 Keno-tester «signifikante» ut (4 er ventet av flaks), og den tilfeldige kontrollrekka på nivå 3 har z = +2,58, akkurat derfor vi korrigerer. Fra 6. november låser serveren rekker før hver trekning i en SHA-256-kjede, og bare disse regnes som bevis. Utbetalingstabellen for Keno gir 55,21 % tilbakebetaling på nivå 10, i samsvar med den uavhengige revisjonen.</p></div></details>
+ <details class="more"><summary>6. november 2026 · Numerologi-motor for Keno og første baktest</summary><div class="body"><p>Motoren <code>setaei-keno-numerology-v1</code> er tatt i bruk. Over 5 009 Keno-trekninger fra 2013 traff numerologi-rekka på nivå 10 i snitt 2,867 tall, mot 2,857 forventet (z = 0,52). På nivå 5 ble z = −0,46. Ikke til å skille fra tilfeldighet.</p></div></details>
+ <details class="more"><summary>6. november 2026 · Keno-arkiv og uavhengig revisjon</summary><div class="body"><p>Arkivet inneholder 5 500 trekninger (2011–2026). Frekvensstrategier med vindu 90, 180 og 365 ga 2,849–2,898 treff mot 2,857 forventet. Ingen viste en fordel som kan gjentas.</p></div></details>
 </section>
 
-<section class="section" id="hypoteser">
- <div class="eyebrow">Forhåndsregistrert</div>
- <h2>Hypoteser vi tester</h2>
- <p class="help">Hver hypotese skrives ned før testen kjøres. En hypotese regnes som støttet bare hvis den holder på nye trekninger som kom etter at den ble registrert.</p>
- <ol class="hyp">
-  <li><b>H1</b><span>Numerologi-rekker basert på trekningsdatoen gir flere treff enn tilfeldige rekker i Keno.</span><span class="res">Ikke støttet i baktest (z = 0,52). Forhåndsregistrert test pågår fra 6.11.2026</span></li>
-  <li><b>H2</b><span>Tall som er trukket mye nylig («varme tall») blir trukket oftere i neste trekning.</span><span class="res">Ikke støttet så langt</span></li>
-  <li><b>H3</b><span>Keno-arkivet er forenlig med en ren, likefordelt tilfeldig trekning (χ²-test per år).</span><span class="res ok">Testes løpende på /Keno/</span></li>
-  <li><b>H4</b><span>Personlige numerologi-rekker (fødselsdato) skiller seg fra tilfeldighet for noen fødselsdatoer.</span><span class="res">Åpen: krever korreksjon for mange tester</span></li>
- </ol>
-</section>
-
-<section class="section" id="logg">
- <div class="eyebrow">Forskningslogg</div>
- <h2>Hva vi har gjort, og hva vi fant</h2>
- <div class="log">
-  <div class="entry"><time datetime="2026-11-06">6. november 2026</time><h3>Én forskning for Keno, Lotto og EuroJackpot</h3><p>Alle tre spill bruker nå samme motor (<code>/forskning/engine.js</code>), testet mot den opprinnelige Keno-koden. Baktesten er korrigert for flere tester med Holm over hele familien: 81 tester for Keno, 9 for Lotto og 18 for EuroJackpot. Ingen metode overlever korreksjonen. Laveste Holm-p er 0,81 for Keno og 1,0 for Lotto. Uten korreksjon ser 9 av 81 Keno-tester «signifikante» ut (4 er ventet ved flaks), og den tilfeldige kontrollrekka på nivå 3 har z = +2,58. Det er akkurat hvorfor vi korrigerer. Fra 6. november lagrer serveren rekker før hver trekning i en hash-kjede, og bare disse regnes som bevis.</p></div>
-  <div class="entry"><time datetime="2026-11-06">6. november 2026</time><h3>Numerologi-motor for Keno og første baktest</h3><p>Motoren <code>setaei-keno-numerology-v1</code> er tatt i bruk. Over 5 009 Keno-trekninger fra 2013 traff numerologi-rekka på nivå 10 i snitt 2,867 tall, mot 2,857 forventet ved ren tilfeldighet (z = 0,52). På nivå 5 ble z = −0,46. Det er ikke til å skille fra tilfeldighet.</p></div>
-  <div class="entry"><time datetime="2026-11-06">6. november 2026</time><h3>Keno-arkiv og uavhengig revisjon</h3><p>Arkivet inneholder 5 500 trekninger (2011–2026). Frekvensstrategier med vindu på 90, 180 og 365 trekninger ga 2,849–2,898 treff mot 2,857 forventet. Ingen av dem viste en fordel som kan gjentas.</p></div>
- </div>
-</section>
-
-<section class="section" id="prinsipper">
- <div class="eyebrow">Slik jobber vi</div>
- <h2>Prinsipper</h2>
- <div class="principles">
-  <div><h3>Ingen etterpåklokskap</h3><p>Modellene ser bare data som fantes før hver trekning.</p></div>
-  <div><h3>Alltid en kontroll</h3><p>Hver metode sammenlignes med tilfeldige rekker.</p></div>
-  <div><h3>Alt føres i loggen</h3><p>Negative resultater publiseres på lik linje med positive.</p></div>
-  <div><h3>Ingen pengespill</h3><p>Vi selger ikke spill og tar ikke imot innsats. 18+ · <a href="https://hjelpelinjen.no/" style="color:var(--accent)" target="_blank" rel="noopener noreferrer">Hjelpelinjen</a></p></div>
+<section id="prinsipper" class="sec" data-nav="Prinsipper">
+ <div class="sh"><div><span class="eyebrow">05 · Slik jobber vi</span><h2>Prinsipper</h2></div></div>
+ <div class="grid4">
+  <div class="kpi"><div class="l">Ingen etterpåklokskap</div><div class="d">Modellene ser bare data som fantes før hver trekning.</div></div>
+  <div class="kpi"><div class="l">Alltid en kontroll</div><div class="d">Hver metode sammenlignes med tilfeldige rekker.</div></div>
+  <div class="kpi"><div class="l">Alt føres i loggen</div><div class="d">Negative resultater publiseres på lik linje med positive.</div></div>
+  <div class="kpi"><div class="l">Ingen pengespill</div><div class="d">Vi selger ikke spill og tar ikke imot innsats. 18+ · <a href="https://hjelpelinjen.no/" style="color:var(--accent)" target="_blank" rel="noopener noreferrer">Hjelpelinjen</a></div></div>
  </div>
 </section>
 </main>
-<footer class="footer"><div class="wrap">© 2026 SETAEI Forskning · <a href="/">setai.no</a></div></footer>
-<script src="/forskning/engine.js?v=1"></script>
+<footer class="footer"><div class="wrap footerinner"><span>© <span id="copyrightYear"></span> SETAEI Forskning · uavhengig prosjekt</span><span><a href="/">setai.no</a></span></div></footer>
+<script src="/forskning/shell.js?v=1"></script>
+<script src="/forskning/engine.js?v=2"></script>
+<script src="/forskning/viz.js?v=1"></script>
 <script>
 (function(){
 'use strict';
-var E=window.SETAEI_ENGINE,grid=document.getElementById('scoreGrid');
+var E=window.SETAEI_ENGINE,V=window.SETAEI_VIZ;
+document.getElementById('copyrightYear').textContent=new Date().getFullYear();
 function fmt(n,d){return Number(n).toLocaleString('nb-NO',{maximumFractionDigits:d==null?1:d})}
 function pf(p){return p<0.001?'< 0,001':fmt(p,3)}
 function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e}
-var SPEC=[['keno','Keno','/Keno/','k10','nivå 10 (10 tall)','Keno/draws.json','Keno/preregistered.json'],
- ['lotto','Lotto','/forskning/lotto/','main7','7 av 34','forskning/data/lotto.json','forskning/data/lotto-prereg.json'],
- ['eurojackpot','EuroJackpot','/forskning/eurojackpot/','main5','5 hovedtall','forskning/data/eurojackpot.json','forskning/data/eurojackpot-prereg.json']];
-function load(u){return fetch('/'+u,{cache:'no-cache'}).then(function(r){if(!r.ok)throw Error(u+' '+r.status);return r.json()})}
-function row(card,l,v){var r=el('div','row');r.appendChild(el('span',null,l));r.appendChild(el('b',null,v));card.appendChild(r)}
-function build(spec,i){
- return Promise.all([load(spec[5]),load(spec[6]).catch(function(){return {entries:[]}})]).then(function(a){
-  var draws=a[0].draws,prereg=a[1].entries||[],G=E.GAMES[spec[0]],slotIds=[spec[3]];
-  if(spec[0]==='eurojackpot')slotIds.push('stars2');
-  var cells=E.backtestAll(spec[0],draws,'all'),scored=E.scoreEntries(spec[0],prereg.filter(function(e){return draws.some(function(d){return d.date===e.reg.date})}),draws);
-  var card=el('a','card');card.href=spec[2];card.appendChild(el('h3',null,spec[1]));
-  slotIds.forEach(function(id,j){
-   var slot=G.slots.filter(function(s){return s.id===id})[0],num=cells.filter(function(c){return c.key==='numerology|'+id})[0],rnd=cells.filter(function(c){return c.key==='random|'+id})[0];
-   var box=el('div','score');box.appendChild(el('div','metriclabel',(id==='stars2'?'Stjernetall · 2 av 12':spec[4])+' · numerologi'));
-   box.appendChild(el('div','big',fmt(100*num.mean/slot.k)+' %'));
-   box.appendChild(el('div','detail','av de trukne tallene traff rekka vår (tilbakeregnet, '+fmt(num.n,0)+' trekninger)'));
-   row(box,'Ren tilfeldighet',fmt(100*num.expected/slot.k)+' %');
-   row(box,'Tilfeldig kontrollrekke',fmt(100*rnd.mean/slot.k)+' %');
-   row(box,'Forskjell mot tilfeldighet','z = '+(num.z>=0?'+':'')+fmt(num.z,2)+' · p = '+pf(num.p));
-   var live=scored.filter(function(c){return c.strategy==='numerology'&&c.slot===id})[0];
-   row(box,'Forhåndsregistrert (live)',live&&live.n?fmt(100*live.mean/slot.k)+' % over '+live.n+' trekninger':'ingen scorede ennå ('+prereg.length+' låst)');
-   box.appendChild(el('div','verdict',num.p<0.05?'Avviker uten korreksjon, men må tåle flere tester og nye trekninger.':'Ikke til å skille fra tilfeldighet.'));
-   if(j)box.style.cssText='border-top:1px solid var(--line);padding-top:12px;margin-top:4px';
-   card.appendChild(box);
-  });
-  card.appendChild(el('span','cta','Se alle trekninger og gjetting →'));
-  return card;
+function nice(d){return new Date(d+'T12:00:00').toLocaleDateString('nb-NO',{weekday:'short',day:'2-digit',month:'short',year:'numeric'})}
+function days(iso){var a=new Date(new Date().toISOString().slice(0,10)+'T12:00:00Z'),b=new Date(iso+'T12:00:00Z');return Math.round((b-a)/864e5)}
+var SPEC=[
+ {g:'keno',name:'Keno',href:'/Keno/',slot:'k10',label:'nivå 10',data:'/Keno/draws.json',pre:'/Keno/preregistered.json'},
+ {g:'lotto',name:'Lotto',href:'/forskning/lotto/',slot:'main7',label:'7 av 34',data:'/forskning/data/lotto.json',pre:'/forskning/data/lotto-prereg.json'},
+ {g:'eurojackpot',name:'EuroJackpot',href:'/forskning/eurojackpot/',slot:'main5',label:'5 hovedtall',data:'/forskning/data/eurojackpot.json',pre:'/forskning/data/eurojackpot-prereg.json'}];
+function load(u){return fetch(u,{cache:'no-cache'}).then(function(r){if(!r.ok)throw Error(u+' '+r.status);return r.json()})}
+var loaded=SPEC.map(function(s){return Promise.all([load(s.data),load(s.pre).catch(function(){return {entries:[]}})]).then(function(a){s.draws=a[0].draws;s.entries=a[1].entries||[];return s})});
+/* next draws */
+Promise.all(loaded).then(function(all){
+ var box=document.getElementById('hubNext');box.textContent='';
+ all.forEach(function(s){
+  var G=E.GAMES[s.g],next=E.nextDrawDate(s.g,s.draws[s.draws.length-1].date),rows=E.buildRows(s.g,s.draws,next),d=days(next);
+  var card=el('a','nextcard');card.href=s.href;card.appendChild(el('h3',null,s.name));
+  card.appendChild(el('div','when',nice(next)+' · '+(d<=0?'i dag':d===1?'i morgen':'om '+d+' dager')));
+  card.appendChild(el('div','grouplabel','Numerologi-rekke'+(s.g==='keno'?' · nivå 10':'')));
+  G.slots.filter(function(x){return s.g!=='keno'||x.id==='k10'}).forEach(function(slot){
+   var b=el('div','bigballs');rows.numerology[slot.id].forEach(function(n,i){var x=el('span','ball xl'+(slot.field==='stars'?' star':''),String(n));x.style.animationDelay=(i*40)+'ms';b.appendChild(x)});card.appendChild(b)});
+  var lock=s.entries.filter(function(e){return e.reg.date===next})[0];
+  card.appendChild(el('div','mini',lock?'Låst '+lock.reg.registeredAt.slice(0,16).replace('T',' ')+' UTC · hash '+lock.hash.slice(0,10)+'…':'Ikke låst ennå'));
+  card.appendChild(el('span','cta','Se alle detaljer →'));box.appendChild(card);
  });
-}
-Promise.all(SPEC.map(build)).then(function(cards){grid.textContent='';cards.forEach(function(c){grid.appendChild(c)})}).catch(function(e){grid.textContent='';var c=el('div','card');c.appendChild(el('p',null,'Kunne ikke beregne treffprosent: '+e.message));grid.appendChild(c)});
+}).catch(function(e){document.getElementById('hubNext').textContent='Kunne ikke laste: '+e.message});
+/* hit rates */
+Promise.all(loaded).then(function(all){
+ var grid=document.getElementById('scoreGrid');grid.textContent='';
+ all.forEach(function(s,i){
+  var G=E.GAMES[s.g],ids=[s.slot];if(s.g==='eurojackpot')ids.push('stars2');
+  var cells=E.backtestAll(s.g,s.draws,'all'),scored=E.scoreEntries(s.g,s.entries.filter(function(e){return s.draws.some(function(d){return d.date===e.reg.date})}),s.draws);
+  var card=el('a','projcard');card.href=s.href;card.appendChild(el('h3',null,s.name));
+  ids.forEach(function(id){
+   var slot=G.slots.filter(function(x){return x.id===id})[0],num=cells.filter(function(c){return c.key==='numerology|'+id})[0],rnd=cells.filter(function(c){return c.key==='random|'+id})[0],live=scored.filter(function(c){return c.strategy==='numerology'&&c.slot===id})[0];
+   var wrap=el('div','score');wrap.appendChild(el('div','grouplabel',(id==='stars2'?'Stjernetall · 2 av 12':s.label)+' · numerologi'));
+   var db=el('div','donutbox'),ch=el('div','chart');V.donut(ch,{value:num.mean/slot.k,chance:num.expected/slot.k,text:fmt(100*num.mean/slot.k)+'%',aria:'Treffprosent'});db.appendChild(ch);
+   var tx=el('div');tx.appendChild(el('div','mini','av de trukne tallene traff rekka vår (tilbakeregnet, '+fmt(num.n,0)+' trekninger)'));tx.appendChild(el('div','mini','Hvit strek = ren tilfeldighet '+fmt(100*num.expected/slot.k)+' %'));db.appendChild(tx);wrap.appendChild(db);
+   [['Tilfeldig kontrollrekke',fmt(100*rnd.mean/slot.k)+' %'],['Forskjell mot tilfeldighet','z = '+(num.z>=0?'+':'')+fmt(num.z,2)+' · p = '+pf(num.p)],['Forhåndsregistrert (live)',live&&live.n?fmt(100*live.mean/slot.k)+' % over '+live.n+' trekninger':'ingen scorede ennå ('+s.entries.length+' låst)']].forEach(function(r){var row=el('div','sigcell');row.appendChild(el('span','mini',r[0]));row.appendChild(el('b',null,r[1]));wrap.appendChild(row)});
+   wrap.appendChild(el('div','mini',num.p<0.05?'Avviker uten korreksjon, men må tåle flere tester og nye trekninger.':'Ikke til å skille fra tilfeldighet.'));
+   if(id==='stars2')wrap.style.cssText='border-top:1px solid var(--line);padding-top:12px';
+   card.appendChild(wrap);
+  });
+  card.appendChild(el('span','cta','Se alle trekninger og gjetting →'));grid.appendChild(card);
+ });
+}).catch(function(e){document.getElementById('scoreGrid').textContent='Kunne ikke beregne treffprosent: '+e.message});
 })();
 </script>
 </body>

@@ -5,76 +5,128 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#10100F">
 <meta name="robots" content="noindex,follow">
-<title>Lotto – topp 10, numerologi og ærlig baktest | SETAEI Forskning</title>
-<meta name="description" content="SETAEI Forskning: Lotto-analyse med topp 10-tall, numerologiske rekker, tilfeldighetstester, Holm-korrigert baktest og forhåndsregistrerte rekker.">
+<title>Lotto – neste trekning, analyse og forskning | SETAEI Forskning</title>
+<meta name="description" content="SETAEI Forskning: Lotto med neste trekning, interaktive visualiseringer, gevinstoversikt og forhåndsregistrerte rekker testet mot tilfeldighet.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../spill.css?v=2">
+<link rel="stylesheet" href="/forskning/forskning.css?v=3">
 </head>
-<body data-game="lotto">
-<header class="top"><div class="wrap topinner">
- <a class="wordmark" href="/" aria-label="SETAEI – hjem"><svg viewBox="15 15 545 105" role="img" aria-label="SETAEI"><g fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="butt" stroke-linejoin="round"><path d="M78 29H49C31 29 27 50 43 58L68 70C83 77 79 105 58 105H27"/><path d="M118 31h58M118 68h48M118 105h58"/><path d="M215 31h70M250 31v74"/><path d="M321 105l34-74 34 74"/><path d="M429 31h58M429 68h48M429 105h58"/><path d="M539 31v74"/></g><path fill="#F47A2A" d="M355 58l5 11 12 1-9 8 3 12-11-6-11 6 3-12-9-8 12-1z"/></svg><small>Forskning</small></a>
- <nav class="navlinks" aria-label="Lotto-analyse"><a href="#topp10">Topp 10</a><a href="#rekker">Rekker</a><a href="#baktest">Baktest</a><a href="#forhand">Forhåndsregistrert</a><a href="#resultater">Trekninger</a><a href="#metode">Metode</a><a class="hub" href="/forskning/">Alle prosjekter</a></nav>
-</div></header>
-<main class="wrap">
-<section class="hero">
- <div class="eyebrow">SETAEI Forskning / Lotterier / Lotto</div>
- <h1>Syv av 34,<br><span>under lupen.</span></h1>
- <p class="lede">7 av 34 tall trekkes hver lørdag. Vi måler hvilke tall som skiller seg ut, lager rekker med numerologi-motoren og tester alt mot tilfeldige kontrollrekker, bare med data som fantes før hver trekning.</p>
- <div class="pillline"><span class="pill">7 av 34 hver lørdag</span><span class="pill">Sjanse per tall: <strong>20,59 %</strong></span><span class="pill">Ingen salg · ingen innsats</span></div>
-</section>
-<section class="section stats" aria-label="Datagrunnlag">
- <div class="panel"><div class="metriclabel">Trekninger i arkivet</div><div class="metric" id="totalCount">—</div><div class="detail">7 av 34</div></div>
- <div class="panel"><div class="metriclabel">Siste trekning</div><div class="metric" id="lastDate" style="font-size:clamp(20px,2.2vw,28px)">—</div><div class="detail" id="dataStatus">Laster…</div></div>
- <div class="panel"><div class="metriclabel">Forventet treff</div><div class="metric" style="font-size:clamp(18px,2vw,24px)">Forventet treff på 7 tall er 1,441.</div><div class="detail">Per rekke, uansett strategi</div></div>
- <div class="panel"><div class="metriclabel">Hva dette er</div><div class="metric" style="font-size:clamp(18px,2vw,24px)">Forskning</div><div class="detail">Ikke tips, ikke investering</div></div>
-</section>
-<div id="dataUrl" data-url="/forskning/data/lotto.json" data-prereg="/forskning/data/lotto-prereg.json" hidden></div>
-<div class="toolbar controls" role="group" aria-label="Analysevalg">
- <div class="control"><label for="period">Analyseperiode</label><select id="period"></select></div>
-</div>
+<body data-game="lotto" data-url="/forskning/data/lotto.json" data-prereg="/forskning/data/lotto-prereg.json">
+<main id="main" class="wrap">
 
-<section class="section" id="topp10">
- <div class="sectiontitle"><div><div class="eyebrow">01 / Topp 10</div><h2>De ti som skiller seg ut</h2></div></div>
- <p class="help">Avvik innenfor ±2 σ er helt normalt. Med mange tall vil noen alltid ligge utenfor ved ren tilfeldighet.</p>
- <div id="topBox" style="display:grid;gap:12px">Laster…</div>
+<section id="neste" data-nav="Neste trekning" class="hero2">
+ <span class="eyebrow">SETAEI Forskning / Lotterier / Lotto · 7 av 34 · lørdag</span>
+ <h1>Lotto: <span>neste trekning</span></h1>
+ <p class="when" id="nextWhen">…</p>
+ <div class="nextcard">
+  <div class="tabs" id="strategyTabs" role="tablist" aria-label="Velg metode"></div>
+  
+  <div id="nextBalls" aria-live="polite"></div>
+  <div id="nextWhy"></div>
+  <div class="nextfoot"><div class="facts" id="nextFacts"></div><button class="btn" id="copyRow" type="button">Kopier rekke</button></div>
+  <div class="honest"><strong>Forskning, ikke et tips.</strong> Alle rekker har nøyaktig samme sjanse. Rekka over er et eksperiment som testes åpent mot tilfeldighet, og ingen metode har så langt vist en fordel.</div>
+ </div>
+ <p class="notice" id="loadError" hidden></p>
 </section>
 
-<section class="section" id="rekker">
- <div class="sectiontitle"><div><div class="eyebrow">02 / Rekker for neste trekning</div><h2>Rekker for <span id="nextDate">…</span></h2></div></div>
- <p class="help">Fem metoder side om side. Numerologi-rekkene kommer fra SETAEI-motoren (dato, redusert etter Åse Steinslands metode med mestertall 11/22/33). Tilfeldig kontroll er den ærlige målestokken alle andre må slå.</p>
- <div class="rowgrid" id="rows"></div>
+<section id="oversikt" class="sec" data-nav="Oversikt">
+ <div class="sh"><div><span class="eyebrow">01 · Oversikt</span><h2>Hvordan går det så langt?</h2></div><span class="mini"><span id="totalCount">—</span> trekninger · siste <span id="lastDate">—</span> · <span id="dataStatus">…</span></span></div>
+ <div class="grid4" id="kpis"><div class="kpi"><div class="l">Beregner</div><div class="v">…</div></div></div>
+ <p class="honest" id="verdict" style="margin-top:12px">Beregner…</p>
 </section>
 
-<section class="section" id="baktest">
- <div class="sectiontitle"><div><div class="eyebrow">03 / Ærlig baktest</div><h2>Slår noen metode tilfeldighet?</h2></div></div>
- <div class="panel" style="display:grid;gap:14px">
-  <div class="controls"><div class="control"><label for="testYear">Testperiode</label><select id="testYear"></select></div></div>
-  <p class="help">Hver historiske trekning spilles på nytt: frekvensmodellene ser bare trekningene <strong>før</strong> den. Alle strategier vurderes på de samme trekningene. Tabellen er sortert etter p-verdi; Holm-p er korrigert for hele familien.</p>
-  <div class="tablebox"><table class="table"><thead><tr><th>Strategi</th><th>Trekninger</th><th>Snitt treff</th><th>Avvik</th><th>z</th><th>p</th><th>Holm-p</th><th>Beste</th></tr></thead><tbody id="backtest"><tr><td colspan="8">Beregner…</td></tr></tbody></table></div>
-  <div class="notice" id="backtestNotice">Beregner…</div>
+<section id="viz" class="sec" data-nav="Visualiseringer">
+ <div class="sh"><div><span class="eyebrow">02 · Visualiseringer</span><h2>Se tilfeldigheten</h2></div>
+  <div class="control"><label for="period" class="mini">Periode</label><select id="period"></select></div></div>
+ <h3 class="sub-h" id="v-freq" data-sub="Frekvens per tall">Hvor ofte er hvert tall trukket?</h3>
+ <div class="tabs" id="freqView" role="tablist" aria-label="Visning"></div><div class="tabs" id="freqGroup" role="tablist" hidden style="margin-top:6px"></div>
+ <div class="chart" id="freqChart" style="margin-top:12px"></div>
+ <p class="cap" id="freqInfo"></p>
+ <div class="grid2">
+  <div><h3 class="sub-h" id="v-dist" data-sub="Antall riktige">Antall riktige: oss mot teori</h3><div class="chart" id="distChart"></div><div class="legend2" id="distLegend"></div>
+   <p class="cap">Søylene skal ligge tett inntil de hvite (teori) hvis metoden ikke har noen effekt. Forskjellene her er innenfor det flaks gir.</p></div>
+  <div><h3 class="sub-h" id="v-path" data-sub="Kumulativt overskudd">Kumulativt overskudd over tid</h3><div class="chips" id="pathLegend"></div><div class="chart" id="pathChart" style="margin-top:8px"></div>
+   <p class="cap">Summen av (treff − forventet) trekning for trekning. Det grå feltet er der 95 % av banene ren tilfeldighet ville havnet. En linje som holder seg inne er ikke til å skille fra flaks; med mange linjer vil noen likevel krysse en gang.</p></div>
  </div>
 </section>
 
-<section class="section" id="forhand">
- <div class="sectiontitle"><div><div class="eyebrow">04 / Forhåndsregistrert</div><h2>Rekker låst før trekningen</h2></div></div>
- <p class="help">Bare dette er bevis. Rekkene lagres av serveren før hver trekning og kobles i en hash-kjede, slik at ingen kan skrives om etterpå.</p>
- <div class="panel" id="prereg"><p class="detail">Laster…</p></div>
+<section id="lek" class="sec" data-nav="Lek og utforsk">
+ <div class="sh"><div><span class="eyebrow">03 · Lek og utforsk</span><h2>Prøv selv</h2></div></div>
+ <p class="lead">Lag din egen rekke, spill historien på nytt og simuler tusenvis av trekninger. Det er den raskeste måten å kjenne på hvorfor ingen rekke har fordel.</p>
+ <h3 class="sub-h" id="l-egen" data-sub="Din egen rekke">Din egen rekke</h3>
+ <div class="toolrow" id="labTools"></div><div id="labPicker" style="margin-top:12px;display:grid;gap:12px"></div>
+ <h3 class="sub-h" id="l-replay" data-sub="Spill historien på nytt">Spill historien på nytt</h3><div id="labReplay"></div>
+ <h3 class="sub-h" id="l-sim" data-sub="Simulator">Simulator</h3><div id="simBox"></div>
+ <h3 class="sub-h" id="l-pers" data-sub="Personlig numerologi">Personlig numerologi</h3><div id="personal"></div>
 </section>
 
-<section class="section" id="resultater">
- <div class="sectiontitle"><div><div class="eyebrow">05 / Trekningslogg</div><h2>Siste 10 trekninger og vår gjetting</h2></div></div>
- <div class="panel" id="recentDraws"><p class="detail">Laster…</p></div>
+<section id="gevinst" class="sec" data-nav="Mulig gevinst">
+ <div class="sh"><div><span class="eyebrow">04 · Mulig gevinst</span><h2>Hva er sannsynlighetene og utbetalingene?</h2></div></div>
+ <div id="payBox"></div>
+ <p class="mini" style="margin-top:10px">Pengespill er ikke en inntektskilde. 18+ · Trenger du hjelp, kontakt <a href="https://hjelpelinjen.no/" target="_blank" rel="noopener noreferrer" style="color:var(--accent)">Hjelpelinjen</a>.</p>
 </section>
 
-<section class="section" id="metode"><div class="sectiontitle"><div><div class="eyebrow">Metode og datakilder</div><h2>Reproduserbar, ikke etterpåklok.</h2></div></div>
-<div class="panel"><p>Data: Norsk Tipping sitt åpne resultat-API (<code>api.norsk-tipping.no</code>), arkiv fra 2. januar 2016. Dataene valideres for format, tallområde og unike datoer; oppdateringen stopper hvis en ny rad motsier en gammel.</p>
-<p>Alle treff telles mot den hypergeometriske fordelingen. z viser hvor mange standardfeil snittet ligger fra tilfeldighet. Familien av tester korrigeres med Holm. Motoren (<code>/forskning/engine.js</code>) deles med Keno-siden og er testet mot den opprinnelige koden.</p>
-<p class="sub">Dette nettstedet selger ingen spill, tar ikke imot innsats og er ikke tilknyttet noen spilloperatør. 18+ for pengespill. Trenger du hjelp til å begrense spillingen, kontakt <a style="color:var(--accent)" href="https://hjelpelinjen.no/" target="_blank" rel="noopener noreferrer">Hjelpelinjen</a>.</p></div></section>
+<section id="trekninger" class="sec" data-nav="Siste trekninger">
+ <div class="sh"><div><span class="eyebrow">05 · Trekningslogg</span><h2>Siste trekninger og vår gjetting</h2></div><button class="btn" id="recentMore" type="button">Vis 10 trekninger</button></div>
+ <div class="panel" id="recentDraws"></div>
+ <p class="cap">Oransje = riktig gjettet. «Forhåndsregistrert» betyr at rekka var låst før trekningen; «rekonstruert» betyr regnet ut i etterkant med samme motor og bare data fra før trekningen.</p>
+</section>
+
+<section id="design" class="sec" data-nav="Forskningsdesign">
+ <div class="sh"><div><span class="eyebrow">06 · Forskningsdesign</span><h2>Slik avgjør vi om noe virker</h2></div></div>
+ <p class="lead">Spørsmålet er smalt: gir en metode flere riktige enn tilfeldighet, målt på trekninger som ikke fantes da rekka ble laget? Alt under er bestemt før vi ser resultatene.</p>
+ <h3 class="sub-h" id="d-hyp" data-sub="Hypoteser">Hypoteser</h3>
+ <div class="tablebox"><table class="table"><thead><tr><th>#</th><th>Hypotese</th><th>Status</th></tr></thead><tbody>
+  <tr><td>H1</td><td style="white-space:normal;text-align:left">Numerologi etter dato gir flere riktige enn tilfeldig kontroll (primær, én test, α = 0,05 tosidig).</td><td>Pågår, forhåndsregistrert</td></tr>
+  <tr><td>H2</td><td style="white-space:normal;text-align:left">Nylig hyppige tall trekkes oftere i neste trekning.</td><td>Utforskende, Holm</td></tr>
+  <tr><td>H3</td><td style="white-space:normal;text-align:left">Arkivet er forenlig med en rettferdig, likefordelt trekning (χ²).</td><td>Testes løpende</td></tr>
+  <tr><td>H4</td><td style="white-space:normal;text-align:left">Personlige numerologi-rekker (fødselsdato) avviker fra tilfeldighet for noen fødselsdatoer.</td><td>Åpen, krever korreksjon</td></tr>
+ </tbody></table></div>
+ <h3 class="sub-h" id="d-power" data-sub="Statistisk styrke">Hvor lenge må vi vente? Statistisk styrke</h3>
+ <div id="powerBox"></div>
+ <h3 class="sub-h" id="d-pre" data-sub="Forhåndsregistrering">Forhåndsregistrering (live)</h3>
+ <details class="more"><summary>Åpne registeret <span class="hint">hash-kjede, scoretabell og siste oppføringer</span></summary><div class="body" id="prereg"><p class="mini">Laster…</p></div></details>
+ <h3 class="sub-h" id="d-bt" data-sub="Baktest">Baktest over hele historikken</h3>
+ <details class="more"><summary>Åpne baktesten <span class="hint">alle strategier, Holm-korrigert</span></summary><div class="body">
+  <div class="control"><label for="testYear" class="mini">Testperiode</label><select id="testYear"></select></div>
+  <p class="mini">Hver historiske trekning spilles på nytt: frekvensmodellene ser bare trekningene før den, og numerologi bare datoen. Alle strategier måles på de samme trekningene. Sortert etter p.</p>
+  <div class="tablebox"><table class="table"><thead><tr><th>Strategi</th><th>Trekninger</th><th>Snitt</th><th>Avvik</th><th>z</th><th>p</th><th>Holm-p</th><th>Beste</th></tr></thead><tbody id="backtest"><tr><td colspan="8">Beregner…</td></tr></tbody></table></div>
+  <div class="notice" id="backtestNotice">…</div></div></details>
+</section>
+
+<section id="statistikk" class="sec" data-nav="Tall og tester">
+ <div class="sh"><div><span class="eyebrow">07 · Tall og tester</span><h2>Topp 10 og tilfeldighetstester</h2></div></div>
+ <details class="more"><summary>Åpne topplister og χ²-test <span class="hint">følger valgt periode</span></summary><div class="body"><div id="topBox"></div></div></details>
+</section>
+
+<section id="metode" class="sec" data-nav="Metode og kilder">
+ <div class="sh"><div><span class="eyebrow">08 · Metode og kilder</span><h2>Reproduserbar, ikke etterpåklok</h2></div></div>
+ <details class="more"><summary>Datakilder</summary><div class="body"><p>Norsk Tipping sitt åpne resultat-API (<code>api.norsk-tipping.no</code>), offisielt arkiv fra 2. januar 2016. Ikke et krav om komplett historikk siden spillet startet. Premieeksempel fra trekningen 31.10.2026. Oppdateringen sammenligner nye rader med lagrede og stopper ved motsigelser.</p></div></details>
+ <details class="more"><summary>Statistisk modell</summary><div class="body"><p>7 tall trekkes uten tilbakelegging fra 34, pluss ett tilleggstall. Antall riktige X er hypergeometrisk: P(X = h) = C(7,h)·C(27,7−h) / C(34,7), med E[X] = 49/34 ≈ 1,441 og Var[X] = 7·(7/34)·(27/34)·(27/33).</p><div class="formula">z = (x̄ − E[X]) / √(Var[X] / n) &nbsp;·&nbsp; p = 2·(1 − Φ(|z|))</div><p>Utvalgsgjennomsnittet x̄ over n trekninger er tilnærmet normalfordelt (sentralgrenseteoremet; n er flere hundre). Likefordelingstesten er Pearsons χ² med (N−1) frihetsgrader, korrigert for trekning uten tilbakelegging, p-verdi med Wilson–Hilferty-tilnærming.</p></div></details>
+ <details class="more"><summary>Flere tester: Holm-korreksjon</summary><div class="body"><p>Vi tester mange strategier, nivåer og vinduer. Uten korreksjon gir 5 % av tester «signifikante» resultater ved ren flaks. Holms sekvensielle prosedyre kontrollerer sannsynligheten for minst én falsk positiv over hele familien (FWER) uten å anta uavhengighet. Tilfeldig kontroll og faste tall er med i familien som negative kontroller.</p></div></details>
+ <details class="more"><summary>Forhåndsregistrering og hash-kjede</summary><div class="body"><p>Før hver trekning lagrer serveren rekker for alle metoder i en loggfil. Hver oppføring har SHA-256-hash over forrige hash og sitt eget innhold, så ingen oppføring kan endres eller fjernes uten at kjeden brytes, og du kan verifisere kjeden i nettleseren (se Forskningsdesign). Rekker registreres ikke etter kl. 12:00 norsk tid på trekningsdagen. Bare disse rekkene regnes som bevis, og ingen konklusjon trekkes før minst 30 scorede trekninger.</p></div></details>
+ <details class="more"><summary>Numerologi-motoren</summary><div class="body"><p>Motoren er deterministisk og delt mellom alle spill (<code>/forskning/engine.js</code>). Hvert tall bygges av navngitte faktorer fra trekningsdatoen (universelt dagtall, måned og år, dag, dag + måned, speilet dag, årstallets to siste sifre) redusert med mestertall 11/22/33, og fylles ut med tall som deler rotvibrasjon. Motoren er testet mot den opprinnelige koden: identisk output for alle datoer og nivåer.</p></div></details>
+ <details class="more"><summary>Begrensninger og trusler mot validitet</summary><div class="body"><ul class="refs"><li>Tredjepartsdata (Keno) kan ha feil; vi sjekker format, ikke ekthet.</li><li>Etterpåklokskap og «garden of forking paths»: derfor forhåndsregistrering og Holm.</li><li>Små effekter krever mange år med data (se statistisk styrke).</li><li>Trekningstidspunkt og registreringsfrist er forsiktige antakelser.</li><li>Tilfeldige trekninger har ingen hukommelse; «forfalte» tall og «varme» tall er psykologi (Tversky &amp; Kahneman, 1971).</li></ul></div></details>
+ <details class="more"><summary>Referanser</summary><div class="body"><ol class="refs">
+<li>Holm, S. (1979). A simple sequentially rejective multiple test procedure. <em>Scandinavian Journal of Statistics, 6</em>(2), 65–70.</li>
+<li>Nosek, B. A., Ebersole, C. R., DeHaven, A. C., &amp; Mellor, D. T. (2018). The preregistration revolution. <em>Proceedings of the National Academy of Sciences, 115</em>(11), 2600–2606.</li>
+<li>Ioannidis, J. P. A. (2005). Why most published research findings are false. <em>PLoS Medicine, 2</em>(8), e124.</li>
+<li>Gelman, A., &amp; Loken, E. (2013). The garden of forking paths: Why multiple comparisons can be a problem, even when there is no «fishing expedition». Working paper, Columbia University.</li>
+<li>Tversky, A., &amp; Kahneman, D. (1971). Belief in the law of small numbers. <em>Psychological Bulletin, 76</em>(2), 105–110.</li>
+<li>Pearson, K. (1900). On the criterion that a given system of deviations from the probable in the case of a correlated system of variables is such that it can be reasonably supposed to have arisen from random sampling. <em>Philosophical Magazine, 50</em>(302), 157–175.</li>
+<li>Wilson, E. B., &amp; Hilferty, M. M. (1931). The distribution of chi-square. <em>Proceedings of the National Academy of Sciences, 17</em>(12), 684–688.</li>
+<li>Feller, W. (1968). <em>An Introduction to Probability Theory and Its Applications</em> (3rd ed., Vol. 1). Wiley. (Hypergeometric distribution.)</li>
+<li>Cohen, J. (1988). <em>Statistical Power Analysis for the Behavioral Sciences</em> (2nd ed.). Lawrence Erlbaum.</li>
+<li>Abramowitz, M., &amp; Stegun, I. A. (1964). <em>Handbook of Mathematical Functions</em>. National Bureau of Standards. (Eq. 7.1.26, normal CDF approximation.)</li>
+</ol></div></details>
+ <p class="mini">Dette nettstedet selger ingen spill, tar ikke imot innsats og er ikke tilknyttet noen spilloperatør. 18+ for pengespill.</p>
+</section>
 </main>
-<footer class="footer"><div class="wrap footerinner"><span>© <span id="copyrightYear"></span> SETAEI Forskning · uavhengig prosjekt</span><span><a href="/forskning/">Alle forskningsprosjekter</a> · <a href="/Keno/">Keno</a> · <a href="/">setai.no</a></span></div></footer>
-<script src="../engine.js?v=1"></script>
-<script src="../ui.js?v=2"></script>
-<script src="../game.js?v=2"></script>
+<footer class="footer"><div class="wrap footerinner"><span>© <span id="copyrightYear"></span> SETAEI Forskning · uavhengig prosjekt</span><span><a href="/forskning/">Alle forskningsprosjekter</a> · <a href="/">setai.no</a></span></div></footer>
+<script src="/forskning/shell.js?v=1"></script>
+<script src="/forskning/engine.js?v=2"></script>
+<script src="/forskning/viz.js?v=1"></script>
+<script src="/forskning/ui.js?v=3"></script>
+<script src="/forskning/game.js?v=3"></script>
 </body>
 </html>

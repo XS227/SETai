@@ -47,3 +47,7 @@ Keno is now part of **SETAEI Forskning** (`/forskning/`, see `handoffs/forskning
 
 ## Shared engine and pre-registration (2026-11-06)
 Rows, scoring and Holm correction now come from `/forskning/engine.js` (shared with `/forskning/lotto/` and `/forskning/eurojackpot/`). `Keno/preregistered.json` is written by `scripts/forskning_prereg.js` from cron (`ops/forskning.cron`): rows for the next draw are locked before it happens in a SHA-256 hash chain. Run `node --test tests/forskning_engine.test.js tests/forskning_prereg.test.js`.
+
+
+## Redesign v2 (2026-11-06)
+`/Keno/`, `/forskning/lotto/` and `/forskning/eurojackpot/` are now generated from one template and run on `forskning/game.js`. Shared front-end: `forskning/shell.js` (app bar + slide-in side panel built from `data-nav` / `data-sub` markers), `forskning/viz.js` (dependency-free SVG charts), `forskning/ui.js`, `forskning/forskning.css`. `Keno/app.js` is gone; `Keno/numerology.js` stays only as the tested v1 wrapper. Official Keno payouts: `forskning/data/keno-payouts.json` (RTP 55.21 % at level 10, matches the earlier audit); Lotto prize example: `forskning/data/lotto-prizes.json`.
