@@ -22,6 +22,14 @@ python scripts/keno_update.py
 \`\`\`
 The scheduled GitHub Action runs after each Norwegian evening drawing. It only writes new draws and **stops on contradictory or invalid records**. Scheduled workflows run only once this feature is on the repository default branch and GitHub Actions are enabled. Updates may lag the drawing or fail when the third-party site changes.
 
+
+## Live deployment (6 November 2026)
+The active public host is **vps-5359843 (5.249.252.88)**, not the former server vps-1431514 (5.249.255.116). Public Keno is served from \`/var/www/setai/Keno/\`. A standalone root-owned updater is installed at \`/opt/setai-keno/update.py\` with an isolated Python environment at \`/opt/setai-keno/venv\`; it writes \`/var/www/setai/Keno/draws.json\` as \`www-data\`.
+
+The **live production** refresh job is \`/etc/cron.d/setai-keno-refresh\` and is recorded in \`ops/keno-refresh.cron\`. It runs daily at **03:17 UTC** and writes logs to \`/var/log/setai-keno-refresh.log\`. This is separate from the GitHub Action, which refreshes the repository dataset but does not publish new data to the VPS.
+
+The old \`/EuroJackpot/\`, \`/Lotto/\`, \`/Vikinglotto/\` and \`/LotteryAudit/\` routes were deliberately retired (HTTP 410) during the 2026-10-28 VPS migration, according to the new host's Nginx comment. Keno is a new independent page; its own navigation uses active internal anchors rather than pointing to the retired routes. Do not remove the existing 410 rule without a separate decision to restore the former modules.
+
 ## Statistical design
 The Keno draw is modeled as 20 distinct numbers sampled without replacement from 70. At Keno level k (2–10), the expected number of matches is k×20/70. Each of the user's k-number selections has the same mathematical probability of getting all k correct: C(20,k)/C(70,k).
 
