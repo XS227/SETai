@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="no">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0c1019">
+<meta name="robots" content="noindex,follow">
+<title>Keno – historisk analyse og uavhengig baktesting | SETAEI LotteryAudit</title>
+<meta name="description" content="SETAEI sin uavhengige Keno-analyse: historiske trekninger, frekvens, sannsynlighet og ærlig baktesting uten etterpåklokskap.">
+<style>
+:root{color-scheme:dark;--bg:#0c1019;--card:#161d29;--card2:#1c2432;--line:#344052;--muted:#9cabbc;--txt:#f5f6f9;--gold:#ebc37a;--cyan:#8dcfe0}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 50% -15%,#233047 0%,#0c1019 48%);color:var(--txt);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.55}a{color:inherit;text-decoration:none}a:hover{color:var(--gold)}button,select{font:inherit}.wrap{width:min(1220px,calc(100% - 36px));margin:auto}.top{border-bottom:1px solid #ffffff1b;background:#0c1019d9;backdrop-filter:blur(14px);position:sticky;top:0;z-index:10}.topinner{display:flex;align-items:center;gap:22px;min-height:73px}.brand{display:flex;align-items:center;gap:12px}.brand img{width:98px;height:auto;max-height:43px;object-fit:contain}.brand small{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}nav{margin-left:auto;display:flex;align-items:center;gap:22px;font-size:13px;font-weight:600}nav .active{color:var(--gold)}.navlinks{display:flex;gap:15px}.eyebrow{color:var(--gold);font-size:12px;letter-spacing:.24em;text-transform:uppercase;font-weight:700}.hero{padding:70px 0 33px;position:relative}.hero h1{font-size:clamp(48px,8.3vw,103px);line-height:1.02;letter-spacing:-.075em;margin:18px 0 15px;font-weight:750}.hero h1 span{background:linear-gradient(140deg,#fff 5%,#c7d1dd 46%,#edc27d 93%);color:transparent;background-clip:text}.lede{max-width:710px;color:#b3bed0;font-size:clamp(15px,2.1vw,19px)}.pillline{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}.pill{border:1px solid #ffffff2c;background:#ffffff07;border-radius:100px;padding:7px 12px;font-size:12px;color:#cfdae7}.pill strong{color:var(--gold)}.section{margin:34px 0}.sectiontitle{display:flex;justify-content:space-between;align-items:end;gap:12px;flex-wrap:wrap;margin-bottom:15px}.section h2{font-size:clamp(23px,2.7vw,33px);line-height:1.1;letter-spacing:-.045em;margin:0}.help{color:var(--muted);font-size:12px;max-width:680px}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.panel{border:1px solid #ffffff13;background:linear-gradient(145deg,#192231,#121923);box-shadow:0 6px 24px #00000025;border-radius:19px;padding:22px;min-width:0}.metriclabel{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:700}.metric{font-size:clamp(26px,3.4vw,43px);font-weight:720;letter-spacing:-.05em;margin:8px 0 2px;line-height:1.12;font-variant-numeric:tabular-nums}.detail{font-size:12px;color:var(--muted)}.controls{display:flex;gap:14px;flex-wrap:wrap;align-items:end}.control{display:flex;flex-direction:column;gap:7px}.control label{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.08em;font-weight:650}select{border:1px solid #455269;background:#1b2535;color:var(--txt);border-radius:10px;padding:11px 35px 11px 13px;min-width:160px}.slider-row{display:flex;align-items:center;gap:14px}.slider-row input{width:190px;accent-color:var(--gold)}.level{font-size:21px;font-weight:750;color:var(--gold);min-width:35px}.heatmap{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:8px;margin:16px 0}.cell{border:1px solid #ffffff12;min-height:66px;border-radius:10px;background:linear-gradient(160deg,#233044,#1b2431);padding:8px;text-align:left;display:flex;flex-direction:column;align-items:start;justify-content:center;cursor:pointer;transition:border-color .2s,transform .2s}.cell:hover,.cell.selected{border-color:var(--gold);transform:translateY(-2px)}.cell .n{font-size:17px;font-weight:720;color:#f8f9fc;line-height:1.2}.cell .count{font-size:11px;color:#c8d2e1}.legend{display:flex;gap:12px;align-items:center;color:var(--muted);font-size:11px}.legend .grad{height:8px;width:136px;border-radius:12px;background:linear-gradient(90deg,#27344d,#31788b,#ebc37a)}.tablebox{overflow:auto}.table{width:100%;border-collapse:collapse;font-size:13px;white-space:nowrap}.table td,.table th{padding:13px 14px;text-align:right;border-bottom:1px solid #ffffff12;font-variant-numeric:tabular-nums}.table th:first-child,.table td:first-child{text-align:left}.table th{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}.table tr:last-child td{border-bottom:0}.table tr.primary td:first-child{color:var(--gold);font-weight:750}.accent{color:var(--gold)}.negative{color:#f5adad}.good{color:var(--cyan)}.result{display:flex;justify-content:space-between;gap:16px;align-items:start;padding:16px 0;border-bottom:1px solid #ffffff13}.result:last-child{border-bottom:0}.drawdate{min-width:104px;font-size:13px;color:#c2cfe0;font-weight:650}.balls{display:flex;flex-wrap:wrap;gap:5px}.ball{min-width:28px;height:28px;padding:0 5px;border-radius:50%;display:inline-flex;justify-content:center;align-items:center;background:#293449;border:1px solid #ffffff17;font-size:11px;font-weight:700;font-variant-numeric:tabular-nums}.ball.hot{background:var(--gold);border-color:var(--gold);color:#18202d}.cols{display:grid;grid-template-columns:1.35fr 1fr;gap:15px}.divider{height:1px;background:#ffffff17;margin:18px 0}.notice{border-left:3px solid var(--gold);padding:14px 18px;border-radius:4px;background:#eac27c0d;color:#cdd6e2;font-size:13px}.notice strong{color:#fff}.footer{border-top:1px solid #ffffff18;margin-top:60px;padding:32px 0 55px;color:#a7b3c4;font-size:12px}.footerinner{display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}.nodata{padding:30px;text-align:center;color:var(--muted)}.badge{display:inline-block;background:#284353;color:#a8e4f2;border:1px solid #436474;border-radius:99px;font-size:11px;padding:4px 9px}.noborder{border:0;background:transparent}.sub{font-size:12px;color:var(--muted)}.gridgap{display:grid;gap:15px}
+@media(max-width:850px){.stats{grid-template-columns:repeat(2,1fr)}.cols{grid-template-columns:1fr}.heatmap{gap:5px}.cell{min-height:50px;padding:5px}.cell .n{font-size:14px}.cell .count{font-size:9px}.topinner{flex-wrap:wrap;padding:10px 0}.navlinks{width:100%;overflow:auto;padding:0 0 8px}nav{margin:0}.hero{padding-top:43px}.result{display:block}.drawdate{margin-bottom:9px}}@media(max-width:420px){.wrap{width:calc(100% - 24px)}.stats{gap:8px}.panel{padding:15px;border-radius:14px}.heatmap{gap:4px}.cell{min-height:47px;border-radius:7px}.ball{min-width:25px;height:25px;font-size:10px}.metric{font-size:26px}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap topinner">
+ <a href="/" class="brand" aria-label="SETAEI – hjem"><img src="/assets/logo/setaei-logo.png" alt="SETAEI"></a>
+ <nav class="navlinks" aria-label="Keno-analyse"><a href="/">SETAEI</a><a href="#frekvenser">Frekvenser</a><a href="#baktest">Baktest</a><a href="#resultater">Trekninger</a><a href="#metode">Metode</a></nav>
+</div></header>
+<main class="wrap">
+<section class="hero">
+ <div class="eyebrow">SETAEI / LOTTERY RESEARCH / KENO</div>
+ <h1>Tilfeldighet.<br><span>Under lupen.</span></h1>
+ <p class="lede">Vi undersøker Keno med statistikk, historiske trekninger og baktesting som aldri bruker fremtidige data. Resultatene er forskning på tilfeldighet — ikke en tjeneste som lover vinnertall.</p>
+ <div class="pillline"><span class="pill">20 av 70 trekkes daglig</span><span class="pill">9 nivåer: 2–10</span><span class="pill">Sannsynlighet per tall: <strong>28,57 %</strong></span><span class="pill">Uavhengig prosjekt</span></div>
+</section>
+<section class="section stats" aria-label="Datagrunnlag">
+ <div class="panel"><div class="metriclabel">Verifiserte formatriktige poster</div><div class="metric" id="totalCount">—</div><div class="detail">20 unike tall / dato</div></div>
+ <div class="panel"><div class="metriclabel">Siste registrerte trekning</div><div class="metric" id="lastDate" style="font-size:clamp(22px,2.4vw,31px)">—</div><div class="detail">Tredjepartsarkiv, ikke live-feed</div></div>
+ <div class="panel"><div class="metriclabel">Forventet treff · nivå 10</div><div class="metric">2,857</div><div class="detail">Per rekke og trekning</div></div>
+ <div class="panel"><div class="metriclabel">Teoretisk tilbakebetaling</div><div class="metric">≈ 55 %</div><div class="detail">Ikke en investeringsavkastning</div></div>
+</section>
+<section class="section" id="frekvenser">
+ <div class="sectiontitle"><div><div class="eyebrow">01 / Frekvenser</div><h2>70 tall. Ett datagrunnlag.</h2></div><div class="controls"><div class="control"><label for="period">Analyseperiode</label><select id="period"><option value="30">Siste 30 trekninger</option><option value="90">Siste 90 trekninger</option><option value="365">Siste 365 trekninger</option><option value="2026" selected>År 2026</option><option value="all">Alle trekninger</option></select></div></div></div>
+ <div class="panel"><div class="help" id="periodDescription">Laster datagrunnlag…</div><div class="heatmap" id="heatmap"></div><div class="legend"><span>Færre</span><span class="grad"></span><span>Flere</span><span id="selectedInfo" style="margin-left:auto"></span></div></div>
+</section>
+<section class="section" id="baktest">
+ <div class="sectiontitle"><div><div class="eyebrow">02 / Ærlig baktest</div><h2>Hva ville modellen faktisk truffet?</h2></div></div>
+ <div class="panel gridgap">
+  <div class="controls">
+   <div class="control"><label for="level">Keno-nivå</label><div class="slider-row"><input type="range" id="level" min="2" max="10" step="1" value="10" aria-label="Velg nivå"><strong class="level" id="levelDisplay">10</strong></div></div>
+   <div class="control"><label for="window">Treningsvindu</label><select id="window"><option value="90" selected>90 tidligere trekninger</option><option value="180">180 tidligere trekninger</option><option value="365">365 tidligere trekninger</option></select></div>
+   <div class="control"><label for="testYear">Testperiode</label><select id="testYear"><option value="all" selected>Alle år fra 2013</option><option value="2026">2026</option><option value="2025">2025</option><option value="2024">2024</option></select></div>
+  </div>
+  <p class="help">For hver historiske trekning velger modellen tall kun ut fra trekningene som kom <strong>før</strong> den. Det samme vinduet holdes konstant gjennom testen. Antall gjennomsnittlige treff kan sammenlignes med den matematiske forventningen for en uavhengig trekning.</p>
+  <div class="tablebox"><table class="table"><thead><tr><th>Strategi</th><th>Trekk</th><th>Snitt treff</th><th>Avvik fra forventning</th><th>Beste treff</th></tr></thead><tbody id="backtest"><tr><td colspan="5">Beregner…</td></tr></tbody></table></div>
+  <div class="notice" id="backtestNotice"><strong>Tolkningsregel:</strong> En positiv forskjell i en delperiode er ikke bevis på at neste trekning kan forutsies. Alle modellvarianter må vurderes samlet for å unngå tilfeldige «vinnere».</div>
+ </div>
+</section>
+<section class="section cols" id="resultater">
+ <div><div class="sectiontitle"><div><div class="eyebrow">03 / Trekningslogg</div><h2>Siste resultater</h2></div></div><div class="panel" id="recentDraws"><p class="nodata">Laster…</p></div></div>
+ <div class="gridgap">
+  <div><div class="sectiontitle"><div><div class="eyebrow">04 / Sannsynlighet</div><h2>Hva betyr tallene?</h2></div></div>
+  <div class="panel"><div class="metriclabel">Sannsynlighet for alle valgte tall trukket</div><div class="metric accent" id="perfectOdds">—</div><div class="detail" id="perfectDetails">—</div><div class="divider"></div><div class="metriclabel">Forventet treff per trekning</div><div class="metric" id="expectedHits">—</div><div class="detail">Matematisk forventning; påvirkes ikke av tidligere trekninger.</div><div class="divider"></div><div class="sub">Keno har faste odds med teoretisk premieandel rundt 55 %. Gevinster har høy variasjon; tilsynelatende lønnsomme perioder er ikke en påvist fordel.</div></div></div>
+ </div>
+</section>
+<section class="section" id="metode"><div class="sectiontitle"><div><div class="eyebrow">Metode og datakilder</div><h2>Reproduserbar, ikke etterpåklok.</h2></div></div>
+<div class="panel"><p>Historiske tall er hentet fra det uavhengige <a class="accent" href="https://statyr.com/nb-no/keno/arkiv" target="_blank" rel="noopener noreferrer">Statyr Keno-arkivet</a>. Spilleregler og premiestruktur fra <a class="accent" href="https://www.norsk-tipping.no/lotteri/keno/slik-spiller-du" target="_blank" rel="noopener noreferrer">Norsk Tipping</a>. Arkivdata er kontrollert for 20 forskjellige tall i intervallet 1–70, stigende datoer og duplikater; formatkontroll er ikke det samme som offisiell verifisering av hver trekning.</p><p>Baktesten er «walk-forward» fra 1. januar 2013 og bruker ingen informasjon fra testtrekningen eller senere trekninger. Det finnes ingen dokumentert, gjentakbar fordel ved å velge historisk hyppige eller sjeldne tall. Lagrede modellresultater må vises sammen med antall tester og kontrollgrupper.</p><p class="sub">Dette nettstedet selger ingen spill, tar ikke imot innsats og er ikke tilknyttet Norsk Tipping. 18+ for pengespill. Trenger du hjelp til å begrense spilling, se <a class="accent" href="https://hjelpelinjen.no/" target="_blank" rel="noopener noreferrer">Hjelpelinjen</a>.</p><span class="badge" id="dataStatus">Datakilde: kontrolleres…</span></div></section>
+</main>
+<footer class="footer"><div class="wrap footerinner"><span>© <span id="copyrightYear"></span> SETAEI · Uavhengig forskningsprosjekt</span><span><a href="#frekvenser">Frekvenskart</a> · <a href="#baktest">Baktest</a> · <a href="/">setai.no</a></span></div></footer>
+<script>
+(function(){
+"use strict";
+document.getElementById('copyrightYear').textContent=new Date().getFullYear();
+var archive=[], chosenNumber=null, rowsCache=[];
+var period=document.getElementById('period'), level=document.getElementById('level'), windowEl=document.getElementById('window'), yearEl=document.getElementById('testYear');
+function fmt(n){return Number(n).toLocaleString('nb-NO',{maximumFractionDigits:3})}
+function niceDate(d){return new Date(d+'T12:00:00').toLocaleDateString('nb-NO',{day:'2-digit',month:'short',year:'numeric'})}
+function chooseRows(){
+ var x=period.value;
+ if(x==='all')return archive;
+ if(x==='2026')return archive.filter(function(d){return d.date.substring(0,4)==='2026'});
+ return archive.slice(-Number(x));
+}
+function renderFrequencies(){
+ var ds=chooseRows();rowsCache=ds;
+ var count=Array(71).fill(0);ds.forEach(function(d){d.numbers.forEach(function(n){count[n]++})});
+ var min=Math.min.apply(null,count.slice(1)),max=Math.max.apply(null,count.slice(1));
+ document.getElementById('periodDescription').textContent=fmt(ds.length)+' trekninger · Forventet antall per tall: '+fmt(ds.length*20/70)+' · Hvert tall har samme sannsynlighet i neste trekning.';
+ var grid=document.getElementById('heatmap');grid.textContent='';
+ for(var n=1;n<=70;n++){
+   var fraction=(count[n]-min)/Math.max(1,max-min);
+   var hue=214-175*fraction, light=22+29*fraction;
+   var button=document.createElement('button');button.type='button';button.className='cell'+(n===chosenNumber?' selected':'');
+   button.style.background='linear-gradient(140deg,hsl('+hue+' 35% '+light+'%),#182130)';
+   button.setAttribute('aria-label','Tall '+n+': '+count[n]+' trekninger');
+   var number=document.createElement('span');number.className='n';number.textContent=n;
+   var value=document.createElement('span');value.className='count';value.textContent=count[n]+' / '+ds.length;
+   button.appendChild(number);button.appendChild(value);
+   (function(num){button.addEventListener('click',function(){chosenNumber=num;renderFrequencies()})})(n);
+   grid.appendChild(button);
+ }
+ document.getElementById('selectedInfo').textContent=chosenNumber===null?'Trykk på et tall for detalj':'Tall '+chosenNumber+': '+count[chosenNumber]+' trekk ('+fmt(100*count[chosenNumber]/Math.max(1,ds.length))+' %)';
+}
+function rollingBacktest(pickCount,lookback,yr){
+ var counter=Array(71).fill(0);
+ var strategies=[{name:'Hyppigste tall',key:'hot',results:[],css:'primary'},{name:'Sjeldneste tall',key:'cold',results:[]},{name:'Faste tall (1–'+pickCount+')',key:'fixed',results:[]}];
+ var det=function(d){var seed=2166136261;for(var a=0;a<d.length;a++){seed^=d.charCodeAt(a);seed=Math.imul(seed,16777619)}return seed>>>0};
+ for(var i=0;i<archive.length;i++){
+  var curr=archive[i];
+  if(i>=lookback){
+   if(curr.date>='2013-01-01'&&(yr==='all'||curr.date.substring(0,4)===yr)){
+    var sorted=Array.from({length:70},function(_,j){return j+1});
+    sorted.sort(function(a,b){return counter[b]-counter[a]||a-b});
+    var hot=new Set(sorted.slice(0,pickCount));
+    sorted.sort(function(a,b){return counter[a]-counter[b]||a-b});
+    var cold=new Set(sorted.slice(0,pickCount));
+    var drawn=new Set(curr.numbers);
+    [[hot,'hot'],[cold,'cold'],[new Set(Array.from({length:pickCount},function(_,j){return j+1})),'fixed']].forEach(function(x){
+     var hits=0;x[0].forEach(function(n){if(drawn.has(n))hits++});
+     strategies.find(function(s){return s.key===x[1]}).results.push(hits);
+    });
+   }
+   archive[i-lookback].numbers.forEach(function(n){counter[n]--});
+  }
+  curr.numbers.forEach(function(n){counter[n]++});
+ }
+ return strategies;
+}
+function renderBacktest(){
+ var k=Number(level.value),w=Number(windowEl.value),y=yearEl.value;
+ var result=rollingBacktest(k,w,y),expected=k*20/70;
+ var target=document.getElementById('backtest');target.textContent='';
+ function cell(tr,content,klass){var el=document.createElement('td');el.textContent=content;if(klass)el.className=klass;tr.appendChild(el)}
+ result.forEach(function(v){
+  var r=v.results,len=r.length,avg=r.reduce(function(a,b){return a+b},0)/Math.max(1,len),diff=avg-expected;
+  var tr=document.createElement('tr');if(v.css)tr.className=v.css;
+  cell(tr,v.name);cell(tr,fmt(len));cell(tr,fmt(avg));cell(tr,(diff>=0?'+':'')+fmt(diff),Math.abs(diff)>.09?(diff>0?'good':'negative'):'');cell(tr,fmt(Math.max.apply(null,r)));target.appendChild(tr);
+ });
+ document.getElementById('backtestNotice').textContent='Referanse: '+fmt(expected)+' forventede treff per trekning på nivå '+k+'. Resultatene er eksplorerende og ingen enkeltmodell er dokumentert som forutsigbar. Se også resultater for andre treningsvinduer og år.';
+}
+function fact(n){var p=1;for(var i=2;i<=n;i++)p*=i;return p}
+function comb(n,k){if(k<0||k>n)return 0;var out=1;for(var i=1;i<=k;i++)out=out*(n-i+1)/i;return out}
+function renderProbability(){
+ var k=Number(level.value);document.getElementById('levelDisplay').textContent=k;
+ var p=comb(20,k)/comb(70,k);document.getElementById('perfectOdds').textContent='1 av '+fmt(Math.round(1/p));
+ document.getElementById('perfectDetails').textContent='Sjanse for '+k+' rette på nivå '+k+': '+fmt(p*100)+' % per rekke.';
+ document.getElementById('expectedHits').textContent=fmt(k*20/70);
+}
+function renderRecent(){
+ var target=document.getElementById('recentDraws');target.textContent='';
+ archive.slice(-8).reverse().forEach(function(draw){
+  var line=document.createElement('div');line.className='result';
+  var d=document.createElement('div');d.className='drawdate';d.textContent=niceDate(draw.date);
+  var numbers=document.createElement('div');numbers.className='balls';
+  draw.numbers.forEach(function(n){var b=document.createElement('span');b.className='ball'+(n===chosenNumber?' hot':'');b.textContent=n;numbers.appendChild(b)});
+  line.appendChild(d);line.appendChild(numbers);target.appendChild(line);
+ });
+}
+function validate(data){
+ if(!data||!Array.isArray(data.draws)||data.draws.length<365)throw new Error('Datagrunnlag mangler');
+ var last='';data.draws.forEach(function(d){
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(d.date)||d.date<=last||!Array.isArray(d.numbers)||d.numbers.length!==20||new Set(d.numbers).size!==20||d.numbers.some(function(n){return !Number.isInteger(n)||n<1||n>70}))throw new Error('Ugyldig eller duplisert trekning '+d.date);
+  last=d.date;
+ });return data.draws;
+}
+function refresh(){
+ if(!archive.length)return;
+ renderFrequencies();renderProbability();renderBacktest();renderRecent();
+}
+period.addEventListener('change',renderFrequencies);
+level.addEventListener('input',function(){renderProbability();renderBacktest()});
+windowEl.addEventListener('change',renderBacktest);
+yearEl.addEventListener('change',renderBacktest);
+fetch('./draws.json',{cache:'no-cache'}).then(function(r){if(!r.ok)throw Error('HTTP '+r.status);return r.json()}).then(function(data){
+ archive=validate(data);
+ document.getElementById('totalCount').textContent=fmt(archive.length);
+ document.getElementById('lastDate').textContent=niceDate(archive[archive.length-1].date);
+ document.getElementById('dataStatus').textContent='Arkiv sist hentet '+data.retrieved+' · kilde: Statyr · ikke offisielt bekreftet';
+ refresh();
+}).catch(function(err){
+ document.getElementById('periodDescription').textContent='Kan ikke laste historikken: '+err.message;
+ document.getElementById('heatmap').className='nodata';document.getElementById('heatmap').textContent='Datagrunnlaget er midlertidig utilgjengelig.';
+ document.getElementById('backtest').textContent='Ingen resultater – historikken er utilgjengelig.';
+ document.getElementById('recentDraws').textContent='Trekningene kunne ikke lastes.';
+ document.getElementById('dataStatus').textContent='Datastatus: feil ved lasting';
+});
+})();
+</script>
+</body>
+</html>

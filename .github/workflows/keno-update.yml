@@ -1,0 +1,41 @@
+name: Keno archive refresh
+
+on:
+  schedule:
+    # 22:15 CET / 23:15 CEST, after the daily Norwegian draw
+    - cron: '15 21 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: keno-archive-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install parser dependency
+        run: python -m pip install 'beautifulsoup4==4.12.3'
+      - name: Refresh archive (fail closed on bad or conflicting data)
+        run: python scripts/keno_update.py
+      - name: Commit new validated draws when present
+        run: |
+          if git diff --quiet -- Keno/draws.json; then
+            echo "No new Keno draws"
+            exit 0
+          fi
+          git config user.name "setaei-lottery-audit[bot]"
+          git config user.email "setaei-lottery-audit[bot]@users.noreply.github.com"
+          git add Keno/draws.json
+          git commit -m "data(keno): refresh validated draw archive"
+          git push
