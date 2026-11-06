@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="no">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#10100F">
+<meta name="robots" content="noindex,follow">
+<title>SETAEI Forskning – åpne forskningsprosjekter</title>
+<meta name="description" content="SETAEI Forskning: langsiktige, åpne forskningsprosjekter om tilfeldighet, lotterier, numerologi og autonome agenter, med forhåndsregistrerte hypoteser og en løpende logg.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:dark;--bg:#10100F;--card:#181715;--card2:#211f1c;--line:#ffffff17;--txt:#FFFAF0;--muted:#B9B2A6;--soft:#D6D0C4;--accent:#F47A2A;--cool:#7CC7B2}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(ellipse at 50% -20%,#2a1b10 0%,var(--bg) 52%);color:var(--txt);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.6;overflow-x:hidden}
+a{color:inherit;text-decoration:none}h1,h2,h3{font-family:"Space Grotesk",Inter,sans-serif;letter-spacing:-.03em}
+.wrap{width:min(1180px,calc(100% - 32px));margin:auto}
+.top{border-bottom:1px solid var(--line);background:#10100fdd;backdrop-filter:blur(14px);position:sticky;top:0;z-index:10}
+.topinner{display:flex;align-items:center;gap:20px;min-height:68px}
+.wordmark{display:flex;align-items:center;gap:12px}.wordmark svg{width:112px;height:auto;display:block}.wordmark small{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);border-left:1px solid var(--line);padding-left:12px}
+.navlinks{margin-left:auto;display:flex;gap:18px;font-size:13px;font-weight:600;white-space:nowrap}.navlinks a:hover{color:var(--accent)}
+.eyebrow{color:var(--accent);font-size:12px;letter-spacing:.22em;text-transform:uppercase;font-weight:700}
+.hero{padding:70px 0 30px}.hero h1{font-size:clamp(44px,8vw,96px);line-height:1;margin:16px 0;font-weight:700;letter-spacing:-.05em}.hero h1 span{color:var(--accent)}
+.lede{max-width:740px;color:var(--soft);font-size:clamp(15px,2vw,19px)}
+.section{margin:56px 0;scroll-margin-top:84px}.section>h2{font-size:clamp(26px,3vw,36px);margin:6px 0 8px}
+.help{color:var(--muted);font-size:14px;max-width:760px;margin:0 0 18px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.card{border:1px solid var(--line);background:linear-gradient(150deg,var(--card2),var(--card));border-radius:18px;padding:22px;display:flex;flex-direction:column;gap:10px;min-width:0;transition:border-color .2s,transform .2s}
+a.card:hover{border-color:var(--accent);transform:translateY(-2px)}
+.card h3{margin:0;font-size:22px}.card p{margin:0;color:var(--soft);font-size:14px}.card .meta{color:var(--muted);font-size:12px;margin-top:auto}
+.status{align-self:flex-start;font-size:10px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;border-radius:99px;padding:3px 9px;border:1px solid}
+.live{color:var(--cool);border-color:#7CC7B266}.build{color:var(--accent);border-color:#F47A2A66}.plan{color:var(--soft);border-color:#ffffff33}
+.cta{color:var(--accent);font-weight:600;font-size:14px}
+.hyp{list-style:none;padding:0;margin:0;display:grid;gap:10px}
+.hyp li{border:1px solid var(--line);border-radius:14px;padding:14px 16px;background:#ffffff04;display:grid;grid-template-columns:56px 1fr auto;gap:12px;align-items:start}
+.hyp b{color:var(--accent);font-family:"Space Grotesk"}.hyp span.res{font-size:12px;color:var(--muted);white-space:nowrap}.hyp span.res.ok{color:var(--cool)}
+.log{border-left:2px solid var(--line);margin-left:6px;padding-left:22px;display:grid;gap:22px}
+.entry{position:relative}.entry:before{content:"";position:absolute;left:-29px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--accent)}
+.entry time{font-size:12px;color:var(--muted);letter-spacing:.06em}.entry h3{margin:2px 0 6px;font-size:18px}.entry p{margin:0;color:var(--soft);font-size:14px;max-width:780px}
+.principles{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.principles div{border-top:2px solid var(--accent);padding-top:12px}.principles h3{font-size:16px;margin:0 0 6px}.principles p{margin:0;color:var(--muted);font-size:13px}
+.footer{border-top:1px solid var(--line);margin-top:60px;padding:30px 0 50px;color:var(--muted);font-size:12px}
+@media(max-width:900px){.grid{grid-template-columns:1fr 1fr}.principles{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.grid,.principles{grid-template-columns:1fr}.topinner{flex-wrap:wrap;padding:10px 0;gap:8px}.navlinks{margin:0;width:100%;overflow-x:auto;padding-bottom:6px}.wordmark small{display:none}.hyp li{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap topinner">
+ <a class="wordmark" href="/" aria-label="SETAEI – hjem"><svg viewBox="15 15 545 105" role="img" aria-label="SETAEI"><g fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="butt" stroke-linejoin="round"><path d="M78 29H49C31 29 27 50 43 58L68 70C83 77 79 105 58 105H27"/><path d="M118 31h58M118 68h48M118 105h58"/><path d="M215 31h70M250 31v74"/><path d="M321 105l34-74 34 74"/><path d="M429 31h58M429 68h48M429 105h58"/><path d="M539 31v74"/></g><path fill="#F47A2A" d="M355 58l5 11 12 1-9 8 3 12-11-6-11 6 3-12-9-8 12-1z"/></svg><small>Forskning</small></a>
+ <nav class="navlinks" aria-label="Forskning"><a href="#lotterier">Lotterier</a><a href="#wallet-agent">Wallet-agent</a><a href="#hypoteser">Hypoteser</a><a href="#logg">Logg</a><a href="#prinsipper">Prinsipper</a></nav>
+</div></header>
+<main class="wrap">
+<section class="hero">
+ <div class="eyebrow">SETAEI Forskning</div>
+ <h1>Langsiktige spørsmål.<br><span>Åpne svar.</span></h1>
+ <p class="lede">Her samler SETAEI forskningsprosjektene som skal jobbes med over tid. Hypotesene skrives ned før vi tester dem, all kode og data er åpen, og alle resultater føres i en logg, også de som ikke ble som vi håpet.</p>
+</section>
+
+<section class="section" id="lotterier">
+ <div class="eyebrow">Spor 1</div>
+ <h2>Lotterier, tilfeldighet og numerologi</h2>
+ <p class="help">Kan noe som helst, enten statistikk eller numerologi, forutsi tall som er laget for å være tilfeldige? Vi tester det på ekte trekninger, med tilfeldige rekker som kontroll.</p>
+ <div class="grid">
+  <a class="card" href="/Keno/"><span class="status live">Live</span><h3>Keno</h3><p>20 av 70 tall hver dag. Topp 10-lister, likefordelingstester, numerologi-rekker og walk-forward-baktest på over 5 500 trekninger.</p><span class="cta">Åpne analysen →</span><span class="meta">Oppdateres daglig · data fra 2011</span></a>
+  <div class="card"><span class="status build">Under oppbygging</span><h3>Lotto</h3><p>7 av 34 tall, én gang i uka. Samme metode som for Keno. Datasettet fra den gamle Lotto-laben skal flyttes inn her.</p><span class="meta">Den gamle /Lotto/-siden er stengt med 410 etter servermigreringen</span></div>
+  <div class="card"><span class="status build">Under oppbygging</span><h3>EuroJackpot</h3><p>5 av 50 tall og 2 av 12 stjernetall. Her ble numerologi-motoren først laget. Gamle studier og forhåndsregistrerte rekker skal tas med.</p><span class="meta">Den gamle /EuroJackpot/-siden er stengt med 410 etter servermigreringen</span></div>
+ </div>
+</section>
+
+<section class="section" id="wallet-agent">
+ <div class="eyebrow">Spor 2</div>
+ <h2>Wallet-agenten</h2>
+ <p class="help">Et eget forskningsspor for wallet-agenten: hvordan en autonom agent tar beslutninger, hvordan de måles og hvordan de kan etterprøves.</p>
+ <div class="grid">
+  <div class="card"><span class="status plan">Planlagt</span><h3>Wallet-agent</h3><p>Mål, data og metode beskrives her når prosjektet er definert.</p><span class="meta">Beskrivelse kommer</span></div>
+ </div>
+</section>
+
+<section class="section" id="hypoteser">
+ <div class="eyebrow">Forhåndsregistrert</div>
+ <h2>Hypoteser vi tester</h2>
+ <p class="help">Hver hypotese skrives ned før testen kjøres. En hypotese regnes som støttet bare hvis den holder på nye trekninger som kom etter at den ble registrert.</p>
+ <ol class="hyp">
+  <li><b>H1</b><span>Numerologi-rekker basert på trekningsdatoen gir flere treff enn tilfeldige rekker i Keno.</span><span class="res">Ikke støttet så langt (z = 0,52)</span></li>
+  <li><b>H2</b><span>Tall som er trukket mye nylig («varme tall») blir trukket oftere i neste trekning.</span><span class="res">Ikke støttet så langt</span></li>
+  <li><b>H3</b><span>Keno-arkivet er forenlig med en ren, likefordelt tilfeldig trekning (χ²-test per år).</span><span class="res ok">Testes løpende på /Keno/</span></li>
+  <li><b>H4</b><span>Personlige numerologi-rekker (fødselsdato) skiller seg fra tilfeldighet for noen fødselsdatoer.</span><span class="res">Åpen: krever korreksjon for mange tester</span></li>
+ </ol>
+</section>
+
+<section class="section" id="logg">
+ <div class="eyebrow">Forskningslogg</div>
+ <h2>Hva vi har gjort, og hva vi fant</h2>
+ <div class="log">
+  <div class="entry"><time datetime="2026-11-06">6. november 2026</time><h3>Numerologi-motor for Keno og første baktest</h3><p>Motoren <code>setaei-keno-numerology-v1</code> er tatt i bruk. Over 5 009 Keno-trekninger fra 2013 traff numerologi-rekka på nivå 10 i snitt 2,867 tall, mot 2,857 forventet ved ren tilfeldighet (z = 0,52). På nivå 5 ble z = −0,46. Det er ikke til å skille fra tilfeldighet.</p></div>
+  <div class="entry"><time datetime="2026-11-06">6. november 2026</time><h3>Keno-arkiv og uavhengig revisjon</h3><p>Arkivet inneholder 5 500 trekninger (2011–2026). Frekvensstrategier med vindu på 90, 180 og 365 trekninger ga 2,849–2,898 treff mot 2,857 forventet. Ingen av dem viste en fordel som kan gjentas.</p></div>
+ </div>
+</section>
+
+<section class="section" id="prinsipper">
+ <div class="eyebrow">Slik jobber vi</div>
+ <h2>Prinsipper</h2>
+ <div class="principles">
+  <div><h3>Ingen etterpåklokskap</h3><p>Modellene ser bare data som fantes før hver trekning.</p></div>
+  <div><h3>Alltid en kontroll</h3><p>Hver metode sammenlignes med tilfeldige rekker.</p></div>
+  <div><h3>Alt føres i loggen</h3><p>Negative resultater publiseres på lik linje med positive.</p></div>
+  <div><h3>Ingen pengespill</h3><p>Vi selger ikke spill og tar ikke imot innsats. 18+ · <a href="https://hjelpelinjen.no/" style="color:var(--accent)" target="_blank" rel="noopener noreferrer">Hjelpelinjen</a></p></div>
+ </div>
+</section>
+</main>
+<footer class="footer"><div class="wrap">© 2026 SETAEI Forskning · <a href="/">setai.no</a></div></footer>
+</body>
+</html>

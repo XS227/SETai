@@ -40,3 +40,6 @@ Each walk-forward simulation selects k numbers using only the previous W draws, 
 - Mean 10-number hit rate over 5,009 walk-forward draws, 2013–2026: 90-draw hot 2.86145, 180-draw hot 2.85406, 365-draw hot 2.84927, 90-draw cold 2.89838. Chance expectation = 2.85714.
 - These are **not** reliable predictions. No reproducible positive edge established.
 - Theoretical prize share at level 10 using the published payout table was approximately 55.21% (before rare jackpot truncation effects).
+
+## Redesign 2026-11-06 (research hub)
+Keno is now part of **SETAEI Forskning** (`/forskning/`, see `handoffs/forskning/README.md`). The page logic moved to `app.js`, and the numerology engine lives in `numerology.js` (`setaei-keno-numerology-v1`). The page now shows top-10 lists, randomness tests, rows for the next draw (numerology by date, personal, hot, overdue, random control) and a backtest with z-scores. The logo is the inline SETAEI SVG wordmark, not `/assets/logo/setaei-logo.png`.
