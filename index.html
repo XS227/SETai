@@ -92,6 +92,30 @@
 <link rel="stylesheet" href="/assets/css/setaei-brand-v2.css?v=1">
 <link rel="stylesheet" href="/assets/css/setaei-header-v4.css?v=2">
 <link rel="stylesheet" href="/assets/home/home.css?v=4">
+<style>
+  .stenhuset-teaser {
+    margin-block: 1.5rem;
+    padding: clamp(.85rem, 3vw, 1.2rem) clamp(1rem, 3vw, 1.5rem);
+    border: 1px solid var(--line);
+    border-inline-start: 2px solid var(--accent);
+    border-radius: .5rem;
+    background: linear-gradient(115deg, #242321, #181a1b);
+  }
+  .home .stenhuset-teaser .step {
+    margin-block-end: .3rem;
+    font-size: .82rem;
+  }
+  .home .stenhuset-teaser h3 {
+    color: var(--ink);
+    font-size: 1.35rem;
+  }
+  .home .stenhuset-teaser p {
+    font-size: 1rem;
+  }
+  .stenhuset-teaser + .projects {
+    margin-block-start: 0;
+  }
+</style>
 </head>
 <body>
 <a class="skip" href="#contact" data-en="Skip to contact" data-fa="رفتن به تماس">Hopp til kontakt</a>
@@ -139,6 +163,11 @@
 <p class="step" data-en="Projects" data-fa="پروژه‌ها">Prosjekter</p>
 <h2 data-en="One studio, many worlds" data-fa="یک استودیو، دنیاهای بسیار">Ett studio, mange verdener</h2>
 <p data-en="Own products, client work, research and film." data-fa="محصولات خودمان، پروژه‌های مشتریان، پژوهش و فیلم.">Egne produkter, kundearbeid, forskning og film.</p>
+<div class="stenhuset-teaser" id="stenhuset-kommer-snart">
+  <p class="step" data-en="Coming soon" data-fa="به‌زودی">Kommer snart</p>
+  <h3><bdi>Stenhuset</bdi></h3>
+  <p data-en="It starts with stone. The rest is yet to be revealed." data-fa="همه‌چیز با سنگ شروع می‌شود. باقی‌اش را به‌زودی می‌بینید.">Det begynner med stein. Resten får du se.</p>
+</div>
 <ul class="projects">
 <li><a href="/projects/realgram/"><b>RealGram</b><small data-en="VPN, wallet, AI" data-fa="VPN، کیف پول، هوش مصنوعی">VPN, wallet, AI</small></a></li>
 <li><a href="https://trustai.no/"><b>TrustAI</b><small>SaaS</small></a></li>
