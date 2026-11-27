@@ -1,0 +1,611 @@
+0|V2 til gjennomgang · Eksempelprodukter, -selgere og -priser · Ingen ekte bestillinger eller betaling
+1|Markedsplass
+2|3D-studio
+3|Inspirasjon
+4|Merker og selgere
+5|Artikler
+6|Be om tilbud
+7|Selg på KASHI
+8|Ordrer og tilbud
+9|Kontakt
+10|Søk i overflater…
+11|Handlekurv
+12|Lagrede overflater
+13|Kobler produsenter. Kobler markeder. Skaper rom.
+14|Handle
+15|Selgere
+16|Bli selger
+17|Selgerpanel
+18|Adminpanel
+19|KASHI
+20|Om oss
+21|Spørsmål og svar
+22|Personvern
+23|Prototype til gjennomgang · Ingen betalinger behandles.
+24|Eksempelkatalog
+25|Priser per m², uten mva. og frakt.
+26|Søk
+27|Navn, merke, materiale…
+28|Materiale
+29|Naturstein
+30|Porselen
+31|Keramikk
+32|Alle
+33|Rom
+34|Bad
+35|Kjøkken
+36|Stue
+37|Utendørs
+38|Uttrykk
+39|Varm
+40|Lys
+41|Mørk
+42|Farge
+43|Grå
+44|Overflatefinish
+45|Matt
+46|Polert
+47|Slipt
+48|Glasert
+49|Selger
+50|Makspris per m²
+51|Filtre
+52|Sortering
+53|Anbefalt
+54|Nyeste
+55|Pris: lav til høy
+56|Pris: høy til lav
+57|Navn
+58|Eksempel
+59|Lagre
+60|Se i 3D-rom
+61|Legg i kurven
+62|Sammenlign
+63|{n} overflater
+64|{n} av 4 til sammenligning
+65|Tøm alt
+66|Overflate
+67|Nærbilde
+68|Legging
+69|uten mva.
+70|Venter på verifisering
+71|Format
+72|Dekning per eske
+73|Tiltenkte rom
+74|Skli- og frostklasse
+75|Testrapport og CE-erklæring
+76|Beregn bestillingen
+77|Areal (m²)
+78|Svinn
+79|Be om prøve
+80|eksempel på leveringstid {n} dager
+81|Lignende
+82|Du vil kanskje også like
+83|Historikk
+84|Nylig sett
+85|Esker
+86|Uten mva.
+87|Mva. 24 %
+88|Totalt
+89|Fjernet
+90|Ligger allerede i prøveesken
+91|Åpne
+92|Island · global innkjøp
+93|Vakre overflater.
+94|Én markedsplass.
+95|Oppdag fliser, stein og bygningsmaterialer fra uavhengige selgere. Sammenlign, design og bestill gjennom KASHI.
+96|Utforsk markedsplassen
+97|Åpne 3D-studio
+98|eksempeloverflater
+99|eksempelselgere
+100|3D-romtyper
+101|Rolig travertinbad
+102|3D-konseptbilde
+103|Åpne dette rommet
+104|Stue i basalt og hvitt
+105|Terrakottakjøkken
+106|Fjordblått bad
+107|Smart søk
+108|Fortell oss om rommet ditt.
+109|Veiledet søk i eksempelkatalogen.
+110|Alle
+111|Budsjett (ISK, uten mva.)
+112|Finn materialene
+113|Kolleksjoner
+114|Finn din overflate.
+115|Alle produkter
+116|Alle kolleksjoner
+117|Nyheter
+118|Utvalgte materialer
+119|Se alle nyheter
+120|Rom å starte med
+121|Alle rom
+122|Kjøkken med mosegrønn glasur
+123|Stue i sølvmarmor
+124|Slik virker det
+125|Fra idé til bestilling
+126|Oppdag
+127|Filtrer på materiale, tone, format og selger.
+128|Visualiser
+129|Prøv gulv og vegg sammen i et opplyst 3D-rom.
+130|Beregn
+131|Se hele esker, svinn og mva. med en gang.
+132|Bestill eller spør
+133|Gjennomfør en prøvebestilling eller be om tilbud.
+134|Materialkunnskap
+135|Alle artikler
+136|Guide
+137|{n} min lesing
+138|Porselen eller keramikk: hva er forskjellen?
+139|To brente leirmaterialer som ligner i hylla, men oppfører seg ulikt på gulvet.
+140|Planlegging
+141|Hvor mange kvadratmeter bør du bestille?
+142|Mål flaten, legg til svinn og rund opp til hele esker.
+143|Design
+144|Fire overflater for rolige nordiske interiører
+145|Varm kalkstein, kjølig betong, lys porselen og strukturert stein.
+146|Samarbeid
+147|Dine produkter. Vår markedsplass.
+148|Nå nye kunder med digital butikk, produktkatalog og ordrehåndtering. KASHI tjener provisjon på fullførte salg.
+149|Eksempel på oppstartsavgift
+150|Eksempel på provisjon
+151|Første marked
+152|Markedsplass for overflater
+153|Ditt utvalg
+154|Lagres bare i denne nettleseren.
+155|Ingenting lagret ennå
+156|Trykk på hjertet på et produkt for å beholde det her.
+157|Prøver
+158|Prøveeske
+159|Opptil fem overflater. Testversjon: ingenting sendes.
+160|Fjern
+161|Spør om prøver på e-post
+162|Side om side
+163|Ingenting å sammenligne
+164|Velg opptil fire overflater på markedsplassen.
+165|Design rommet ditt
+166|Et levende, opplyst rom. Velg rom, bytt overflater på gulv og vegg og flytt dagslyset.
+167|Foran
+168|Side
+169|Ovenfra
+170|Dagslys
+171|Lagre bilde
+172|Kopier lenke
+173|Kun visuell forhåndsvisning. Ekte mønstre, farger og mål avhenger av produsentprøver.
+174|Forslag
+175|Dra for å se deg rundt · trykk på en flate for å endre den
+176|Gulv
+177|Vegger
+178|Bredde
+179|Lengde
+180|To vegger
+181|Materialoverslag inkl. mva.
+182|Inkluderer 10 % svinn, rundet opp til hele esker. Frakt og legging er ikke inkludert.
+183|Legg begge i kurven
+184|3D-konseptbilder laget med eksempeloverflatene. Åpne et rom og gjør det til ditt.
+185|Interiører
+186|Stemningsbilder
+187|Fotografiene er kun for stemning. De viser ikke KASHI-produkter eller -prosjekter.
+188|Partnerpipeline
+189|Oppføring krever godkjenning og signerte avtaler.
+190|Eksempelselger
+191|Eksempelselger med porselen i rolige nordiske toner, fra lys marmorlook til mørk basalt.
+192|Eksempelselger med steinoverflater og store formater for arkitekter og interiørstudioer.
+193|Eksempelselger med småformat keramikk: teglstein, glasur og farge til blikkfangvegger.
+194|Mulige leverandører
+195|Ikke tatt opp. Ingen produkter tilbys på deres vegne.
+196|Iran · prospekt, ikke tatt opp
+197|Iran · kontakt pågår
+198|Katalog over aktuelle leverandører
+199|Selgerkatalog
+200|Søknader lagret i denne nettleseren. Godkjenn dem i adminpanelet.
+201|Filtrer på firma, by eller land
+202|{n} godkjent i denne testen
+203|Til behandling
+204|Sted
+205|Eksempel på leveringstid
+206|{n} dager
+207|Verifisering
+208|Eksempelselger, ikke et ekte firma
+209|Katalog
+210|Selgerregistrering
+211|Bli med på markedsplassen. Det foreslås ingen oppføringsavgift i piloten.
+212|Firma
+213|Levering
+214|Produkter
+215|Testversjon: bruk oppdiktede firmaopplysninger. Valg av land er ingen godkjenning til å handle.
+216|Firmanavn
+217|Organisasjonsnummer
+218|Land
+219|Velg land eller område
+220|By
+221|Postnummer
+222|Nettsted
+223|Firmaets e-post
+224|Leveringsområder (land eller byer)
+225|Valuta (ISO-kode)
+226|Vanlig leveringstid (dager)
+227|Produkter og kategorier
+228|Jeg forstår at dette er en testversjon og at ingen søknad sendes.
+229|Tilbake
+230|Fortsett
+231|Lagre søknad
+232|Søk og bekreft firmaets identitet.
+233|Avtal provisjon og leveringsvilkår.
+234|Publiser den godkjente katalogen.
+235|Motta og lever bestillinger.
+236|Avstem salg, returer og provisjon.
+237|Inntektseksempel
+238|Månedlig salg
+239|15 % er et foreslått eksempel, ikke et avtalevilkår.
+240|Provisjon
+241|Selgers andel før andre gebyrer
+242|Prosjekter og store mengder
+243|For store mengder, spesialmål eller hele prosjekter.
+244|Produkt eller prosjekt
+245|Hvilket materiale ser du etter?
+246|Leveringsland
+247|Trengs innen
+248|Navn
+249|E-post
+250|Om prosjektet
+251|Lagre tilbudsforespørsel
+252|Én forespørsel. Flere selgere.
+253|KASHI kan sende forespørselen til aktuelle selgere, sammenligne tilbud og holde handelen på plattformen.
+254|Testversjonen lagrer skjemaet i nettleseren din. Ingen selger mottar det.
+255|Vil du ha et ekte svar nå?
+256|Send spørsmålet til KASHI-teamet fra din egen e-postapp.
+257|Kontakt teamet
+258|Din bestilling
+259|Handlekurven er tom
+260|Legg til overflater fra markedsplassen eller 3D-studioet.
+261|Din aktivitet
+262|Ingen ordrer ennå
+263|Legg inn en prøvebestilling for å følge statusen her.
+264|Tilbud
+265|Dine tilbudsforespørsler
+266|Ingen tilbudsforespørsler ennå.
+267|Salg per produkt
+268|Å gjøre
+269|åpne ordrer
+270|tilbudsforespørsler å svare på
+271|publiserte produkter
+272|Selgerpanel · test
+273|Testpanel med demodata. Ingen innlogging og ingen ekte kontoer.
+274|Last inn demodata på nytt
+275|Slett alle mine lokale data
+276|Prøvesalg uten mva.
+277|Oversikt
+278|Ordrer
+279|Adminpanel · test
+280|Kontrollsenter for markedsplassen
+281|Ikke et adminområde med innlogging.
+282|Selgervisning
+283|Prøveomsetning på markedsplassen
+284|Beregnet KASHI-provisjon
+285|Omsetning per selger
+286|Provisjonssimulator
+287|Endre satsen for nye prøvebestillinger. Eksisterende ordrer beholder sin sats.
+288|Sats
+289|Selgersøknader
+290|Veggfliser
+291|Godkjenn
+292|Avslå
+293|Ordrebok
+294|Ordre
+295|Dato
+296|Selger / produkt
+297|Verdi
+298|Status
+299|Prøve — ikke betalt
+300|Bekreftet
+301|Klargjøres
+302|Sendt
+303|Levert
+304|Av {sales} i salg: {fee} i provisjon og {net} til selger, før andre gebyrer.
+305|Utkast til artikler som skal fagkontrolleres før lansering.
+306|Teknisk
+307|Valg av fliser til islandske forhold
+308|Frost, grus, vann og gulvvarme betyr noe. Utseendet alene er ikke nok.
+309|Vannopptak
+310|Porselen defineres av svært lavt vannopptak: 0,5 % eller mindre i gruppe BIa i EN 14411. Mange keramiske veggfliser trekker langt mer vann og brukes derfor vanligvis innendørs og på vegg.
+311|Hvor de passer
+312|Porselen er det vanlige valget til gulv, inngangspartier og våtrom. Glasert keramikk er lettere, enklere å kutte og gir rike farger på vegger.
+313|Be om testrapporten
+314|Navnet alene er ikke bevis. Velg etter dokumenterte verdier for akkurat det produktet: vannopptak, bruddstyrke, sklisikring og, utendørs, frostmotstand.
+315|Redaksjonelt utkast. Kontroller kravene med produsent og håndverker. Fotografiet er kun for stemning.
+316|Les videre
+317|Flere artikler
+318|Mål
+319|Gang lengde med bredde for hver gulv- og veggflate. Trekk fra store åpninger som dører og store vinduer.
+320|Legg til svinn
+321|Et vanlig utgangspunkt er 10 % for rett legging og rundt 15 % for diagonal eller mønstret legging. Kompliserte rom kan kreve mer.
+322|Kjøp fra samme parti
+323|Nyanse og mål kan variere mellom produksjonspartier. Bestill alt samtidig og behold noen ekstra fliser til reparasjoner.
+324|Start med lyset
+325|Nordisk dagslys endrer seg mye gjennom året. Sammenlign en overflate i morgen-, dags- og kveldslys før du velger; i 3D-studioet kan du flytte solen.
+326|Begrens paletten
+327|Én dominerende gulvflate og én roligere veggflate virker vanligvis mer harmonisk enn tre materialer som konkurrerer.
+328|Bestill en prøve
+329|En skjerm kan ikke vise struktur eller riktig farge. Be om fysiske prøver før du bestiller til et helt prosjekt.
+330|Frost
+331|Utendørsfliser trenger dokumentert frostmotstand, drenert underlag og egnet fleksibelt lim. Frost og tining avslører svake løsninger.
+332|Friksjon
+333|Sjekk oppgitt skliklasse for våtrom, innganger og trapper. Ikke vurder friksjon ut fra et bilde.
+334|Gulvvarme
+335|Stein og porselen leder varme godt. Følg anvisningene for lim og bevegelsesfuger fra håndverker og produsent.
+336|Vår historie
+337|Materialer med mening.
+338|KASHI er et konsept under utvikling for en markedsplass for fliser og overflater på Island.
+339|Fotografiet er kun for stemning.
+340|Laget for Island
+341|Praktiske formater, tydelige prosjektpriser og materialvalg for hjem og profesjonelle prosjekter.
+342|Åpne innkjøp
+343|Vi vil oppgi opprinnelse, produsent, spesifikasjoner, tilgjengelighet og bekreftet leveringstid.
+344|Ikke i drift ennå
+345|Firmaregistrering, leverandøravtaler og betalingsgodkjenning pågår fortsatt. Ingenting kan kjøpes her.
+346|Tillit og dokumentasjon
+347|Dette viser vi før vi selger
+348|Vi viser aldri et merke eller sertifikat vi ikke har.
+349|Testrapporter etter EN 14411
+350|CE-merking og ytelseserklæring
+351|Skli- og frostklasser
+352|Firmaregistrering og mva-nummer
+353|Produsentens kvalitetssystemer
+354|Opprinnelse og sporbarhet
+355|Hjelp
+356|Er KASHI en ekte nettbutikk?
+357|Nei. Dette er en testversjon. Produkter, priser og selgere er eksempler, og ingen bestilling eller betaling behandles.
+358|Hva skjer med det jeg skriver inn?
+359|Det lagres bare i din egen nettleser. Ingenting sendes med mindre du åpner en e-post og sender den selv.
+360|Hvordan beregnes mengden?
+361|Arealet pluss svinn rundes opp til hele esker. 24 % mva. legges til eksempelprisen.
+362|Kan jeg få fysiske prøver?
+363|Du kan legge til opptil fem prøveønsker for å se hvordan flyten blir. Ingen prøver sendes fra testversjonen.
+364|Hvordan blir selgere godkjent?
+365|Planen er å bekrefte firmaet, avtale provisjon og levering og gå gjennom katalogen før noe publiseres.
+366|Hva koster det å selge?
+367|Den foreslåtte piloten har ingen oppstartsavgift og et eksempel på 15 % provisjon av fullførte salg. Det er ikke et avtalevilkår.
+368|Hvilke land dekkes?
+369|Island kommer først. Andre markeder krever godkjenning av regelverk, importør og betalingsleverandør.
+370|Start en samtale
+371|La oss forme rommet ditt.
+372|Oppussing, utbygging eller engros? Fortell oss hva du trenger.
+373|Prosjekttype
+374|Privat oppussing
+375|Entreprenør / bedrift
+376|Engros
+377|Selgersamarbeid
+378|Annet
+379|Melding
+380|Åpne i e-postappen
+381|Meldingen klargjøres i din egen e-postapp. Du bestemmer om den skal sendes.
+382|Kontaktpersoner
+383|Kontakter for den planlagte virksomheten. Islandsk firmaregistrering pågår.
+384|Dataene blir hos deg
+385|Hva lagres
+386|Handlekurv, lagrede produkter, sammenligninger, skjemaer, prøvebestillinger, språk og rominnstillinger lagres bare i nettleseren din.
+387|Tredjeparter
+388|Skrifttyper lastes fra Google Fonts og 3D-motoren fra jsDelivr. Tjenestene mottar vanlige tekniske data, som IP-adressen din.
+389|Slett
+390|Du kan når som helst slette alt dette nettstedet har lagret.
+391|Siden finnes ikke
+392|Denne overflaten finnes ikke
+393|Siden kan være flyttet.
+394|Til forsiden
+395|Demo: to bad, levering til våren.
+396|Pris per m² (ISK)
+397|Leveringsdager
+398|Send tilbud
+399|Demo: inngangsparti og trapp til et lite kontor.
+400|Produkt
+401|Pris per m²
+402|Publisert
+403|Legg til et eksempelprodukt
+404|Produktnavn
+405|Stein
+406|Marmor
+407|Betong
+408|Travertin
+409|Leire
+410|Glasur
+411|Publiser i eksempelkatalogen
+412|{n} eksempeltreff. Egnethet, lager, frakt og legging må bekreftes.
+413|inkl. mva.
+414|Ingen produkter passer
+415|Prøv færre filtre, eller be selgere om tilbud.
+416|Lagret
+417|Opptil fire overflater.
+418|12 m² inkl. mva. og 10 % svinn
+419|3D-rommet kunne ikke starte. Det trenger WebGL og internett.
+420|Ingen prøver valgt.
+421|Ingen søknader ennå.
+422|Bestilling fra flere selgere · ingen ekte betaling.
+423|Handle videre
+424|{n} esker
+425|Ordresammendrag
+426|Oppgis av selger
+427|{n} selger(e). Mengder rundes opp til hele esker.
+428|Til kassen
+429|Forhåndsvisning av kassen
+430|Fullfør prøvebestillingen
+431|Ingen betaling trekkes og ingen varer sendes.
+432|Bruk oppdiktede opplysninger. De blir i nettleseren.
+433|Kundetype
+434|Privat
+435|Bedrift
+436|Adresse
+437|Leveringsmåte
+438|Levering til fortauskant
+439|Hent hos selger
+440|Jeg forstår at dette er en prøvebestilling uten betaling.
+441|Legg inn prøvebestilling
+442|Prøvebestilling lagret
+443|Ingen kjøp eller betaling er gjennomført.
+444|Legg disse i kurven igjen
+445|Tips: åpne selgerpanelet og svar på din egen forespørsel for å se hele flyten.
+446|Ingen ordrer ennå.
+447|{name}: én eske lagt til
+448|Du kan sammenligne opptil fire overflater
+449|Prøveesken har plass til fem overflater
+450|Lagt i prøveesken
+451|Gulv og vegger lagt til
+452|3D-rommet lastes fortsatt
+453|Lenke kopiert
+454|Demodata lastet inn
+455|Slette alt dette nettstedet har lagret i nettleseren?
+456|Lokale data slettet
+457|Status oppdatert
+458|Søknad lagret
+459|Lagret i denne nettleseren. Ingenting er sendt til KASHI.
+460|Behandle i adminpanelet
+461|Se katalogen
+462|Forespørsel lagret
+463|Se forespørslene dine
+464|Hvis ingenting åpnet seg, skriv til {email}.
+465|Ingen treff. Endre kriteriene eller be om tilbud.
+466|Produktet er publisert
+467|Tilbud sendt
+468|Mottatt
+469|Tilbud mottatt
+470|Venter på selgere
+471|Skjult fra markedsplassen
+472|Inne
+473|Godkjent
+474|Avslått
+475|{name}: {n} esker lagt til
+476|Opplysninger
+477|Kontroller
+478|Logg inn
+479|Founding Partners 2026
+480|Norge · Island · global innkjøp
+481|Regelbasert søk i eksempelkatalogen, ikke KI.
+482|Hva ser du etter?
+483|For eksempel: lyse porselensfliser til badet
+484|Leveringsby eller -land
+485|Nå nye kunder med digital butikk, produktkatalog og ordrehåndtering. Behold eget merke og egne priser.
+486|Kjøpere betaler
+487|Introår til 31.12.2026
+488|Ordinær årsavgift
+489|Bli med på markedsplassen og behold eget merke, egen katalog og egne priser.
+490|Provisjonssatsen er ikke bestemt. Dette er bare et regneeksempel.
+491|Team
+492|Medlemskap
+493|Land
+494|Søknader
+495|Rolle
+496|Eier
+497|Administrator
+498|Salg, support og markedsføring
+499|Provisjon og medlemskap
+500|Revisjonslogg
+501|KASHI er et konsept under utvikling for en markedsplass for fliser og overflater, med start i Norge og Island.
+502|Laget for nord
+503|Ordinær årsavgift for selgere er 12 000 NOK. Selgere som blir med innen 31. desember 2026 betaler 6 000 NOK for introåret. Provisjon og avtalevilkår er ikke bestemt.
+504|Hva koster det å kjøpe?
+505|Kjøpere bruker KASHI gratis.
+506|Norge og Island kommer først. Andre markeder krever godkjenning av regelverk, importør og betalingsleverandør.
+507|Bli funnet. Bli valgt. Selg mer.
+508|Behold eget merke, egen katalog og egne priser, mens kjøpere finner deg gjennom KASHI. Kjøpere bruker KASHI gratis.
+509|Åpent til 31. desember 2026
+510|Founding Partner
+511|Introduksjonspris per år, 50 % rabatt, for selgere som blir med innen 31. desember 2026.
+512|Ordinær
+513|Selgermedlemskap
+514|Ordinær årsavgift for selgere.
+515|Dette får selgere
+516|Egen selgerprofil og katalog
+517|Du setter egne priser
+518|Tilbudsforespørsler og ordrer i ett panel
+519|Veiledet produktsøk for kjøpere
+520|Aktiv markedsføring og søkemotoroptimalisering planlagt fra 2027
+521|Ikke bestemt ennå
+522|Provisjonssats og beregningsgrunnlag
+523|Om rabatten videreføres ved fornyelse
+524|Mva., fakturadatoer, betaling og refusjon
+525|Avtalevilkår
+526|Utkast til tilbud, med forbehold om endelig godkjenning. Ingenting faktureres i testversjonen.
+527|Ditt KASHI-panel
+528|Én identitet per person, med tilgang til virksomhetene du tilhører.
+529|Vipps Login — ikke koblet til ennå
+530|Vipps Login er planlagt som hovedinnlogging i Norge. Det krever en KASHI-avtale med Vipps og en sikker server. Andre land får egnede alternativer.
+531|Forhåndsvis et panel
+532|Privatkunde
+533|Lagrede overflater, prosjekter, tilbud og ordrer
+534|Proffkunde
+535|Prosjektmapper, mengder og team
+536|Katalog, ordrer, team og medlemskap
+537|KASHI-ansatte
+538|I det ferdige produktet kun etter invitasjon
+539|Tilbudsforespørsler
+540|Romprosjekter
+541|Kundekonto · forhåndsvisning
+542|Min konto
+543|Forhåndsvisning av rolle. Ingen innlogging og ingen tilgangskontroll: alt blir i denne nettleseren. Bruk oppdiktede opplysninger.
+544|Bytt rolle
+545|Profil
+546|Adresser
+547|Support
+548|Legg i prosjektet
+549|Slett prosjektet
+550|Prosjektnavn
+551|Opprett prosjekt
+552|Proffkunde · forhåndsvisning
+553|Prosjektrom
+554|For arkitekter, designere, entreprenører og utbyggere.
+555|Kjøpshistorikk
+556|Prosjekter
+557|Importer fra CSV
+558|CSV-rader
+559|Importer
+560|Butikkprofil
+561|Organisasjonsnummer
+562|Frakt og retur
+563|Minste bestilling (m²)
+564|Distribusjonsmarkeder
+565|Utstillingslokaler
+566|Ingen utstillingslokaler ennå.
+567|Legg til utstillingslokale
+568|Ingen teammedlemmer ennå.
+569|Katalogredaktør
+570|Ordrebehandler
+571|Økonomi (lesetilgang)
+572|Legg til teammedlem
+573|Ingen invitasjon sendes i forhåndsvisningen.
+574|Medlemskap og fakturaer
+575|Ikke aktivt
+576|Fakturaer
+577|Ingen fakturaer. Fakturering er ikke aktivert.
+578|Ingen adresser ennå.
+579|Merkelapp
+580|Hjem
+581|Legg til adresse
+582|Designer
+583|Innkjøper
+584|Kun demofirmaer. Ekte prospekter og kontakter hører hjemme i et privat CRM med innlogging.
+585|Identifisert
+586|Kontaktet
+587|Møte
+588|Avtale sendt
+589|Signert
+590|Fase
+591|Trukket
+592|Ikke verifisert
+593|Legg til prospekt
+594|Provisjonssatsen er ikke bestemt. Test en sats for nye prøvebestillinger; eksisterende ordrer beholder sin.
+595|Se tilbudet
+596|Ingen hendelser ennå.
+597|Oppgi gjerne leveringsby i forespørselen senere.
+598|Levering til {place} er ikke verifisert.
+599|Ingen overflater i prosjektet ennå.
+600|Ingen prosjekter ennå
+601|Opprett et prosjekt for å samle overflater og mengder.
+602|Tolket som: {list}.
+603|Oppgi areal for å beregne materialkostnad.
+604|{added} importert, {skipped} hoppet over
+605|Introduksjonstilbudet er avsluttet
+606|Årsavgift for selgere
+607|Fase endret for prospekt
+608|Provisjonssats endret
+609|Ordrestatus endret
+610|Prospekt lagt til

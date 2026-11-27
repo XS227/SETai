@@ -1,0 +1,611 @@
+0|V2 forskoðun · Sýnivörur, seljendur og verð · Engar raunverulegar pantanir eða greiðslur|نسخهٔ آزمایشی ۲ · محصولات، فروشندگان و قیمت‌های نمونه · بدون سفارش یا پرداخت واقعی
+1|Markaðstorg|بازار
+2|Þrívíddarstofa|استودیوی سه‌بعدی
+3|Innblástur|ایده‌ها
+4|Vörumerki og seljendur|برندها و فروشندگان
+5|Greinar|مجله
+6|Óska eftir tilboði|درخواست قیمت
+7|Selja á KASHI|فروش در کاشی
+8|Pantanir og tilboð|سفارش‌ها و پیشنهادها
+9|Hafa samband|تماس
+10|Leita að yfirborðsefnum…|جستجوی سطوح…
+11|Karfa|سبد خرید
+12|Vistaðar vörur|سطوح ذخیره‌شده
+13|Tengjum framleiðendur. Tengjum markaði. Sköpum rými.|پیوند سازندگان. پیوند بازارها. آفرینش فضاها.
+14|Verslun|خرید
+15|Seljendur|فروشندگان
+16|Gerast seljandi|فروشنده شوید
+17|Seljendagátt|پنل فروشنده
+18|Stjórnborð|بخش مدیریت
+19|KASHI|کاشی
+20|Um okkur|دربارهٔ ما
+21|Spurningar og svör|پرسش و پاسخ
+22|Persónuvernd|حریم خصوصی
+23|Forskoðun · Engar greiðslur eru unnar.|نمونهٔ آزمایشی · هیچ پرداختی انجام نمی‌شود.
+24|Sýnisvörulisti|فهرست محصولات نمونه
+25|Verð á m², án vsk. og flutnings.|قیمت هر متر مربع، بدون مالیات و ارسال.
+26|Leit|جستجو
+27|Heiti, vörumerki, efni…|نام، برند، جنس…
+28|Efni|جنس
+29|Náttúrusteinn|سنگ طبیعی
+30|Postulín|پرسلان
+31|Keramik|سرامیک
+32|Allt|همه
+33|Rými|فضا
+34|Baðherbergi|حمام
+35|Eldhús|آشپزخانه
+36|Stofa|پذیرایی
+37|Útisvæði|فضای باز
+38|Yfirbragð|ظاهر
+39|Hlýtt|گرم
+40|Ljóst|روشن
+41|Dökkt|تیره
+42|Litur|رنگی
+43|Grátt|خاکستری
+44|Áferð|پرداخت سطح
+45|Matt|مات
+46|Gljáfægt|پولیش
+47|Slípað|هوند (نیمه‌مات)
+48|Glerjað|لعاب‌دار
+49|Seljandi|فروشنده
+50|Hámarksverð á m²|حداکثر قیمت هر متر
+51|Síur|فیلترها
+52|Röðun|مرتب‌سازی
+53|Mælt með|پیشنهادی
+54|Nýjast|جدیدترین
+55|Verð: lægst fyrst|قیمت: کم به زیاد
+56|Verð: hæst fyrst|قیمت: زیاد به کم
+57|Heiti|نام
+58|Sýnishorn|نمونه
+59|Vista|ذخیره
+60|Skoða í þrívíddarrými|دیدن در اتاق سه‌بعدی
+61|Setja í körfu|افزودن به سبد
+62|Bera saman|مقایسه
+63|{n} yfirborðsefni|{n} سطح
+64|{n} af 4 í samanburði|{n} از ۴ برای مقایسه
+65|Hreinsa allt|پاک کردن همه
+66|Yfirborð|سطح
+67|Nærmynd|نمای نزدیک
+68|Lögn|چیدمان
+69|án vsk.|بدون مالیات
+70|Bíður staðfestingar|در انتظار تأیید
+71|Stærð|ابعاد
+72|Magn í kassa|پوشش هر جعبه
+73|Ætluð rými|فضاهای پیشنهادی
+74|Hálku- og frostþol|ردهٔ لغزندگی و یخ‌زدگی
+75|Prófunarskýrsla og CE-yfirlýsing|گزارش آزمون و گواهی CE
+76|Reiknaðu pöntunina|محاسبهٔ سفارش
+77|Flatarmál (m²)|مساحت (متر مربع)
+78|Afföll|درصد پرت
+79|Biðja um prufu|درخواست نمونه
+80|dæmi um afgreiðslutíma {n} dagar|زمان تحویل نمونه {n} روز
+81|Svipað|مشابه
+82|Þér gæti líka líkað|شاید این‌ها را هم بپسندید
+83|Saga|سابقه
+84|Nýlega skoðað|اخیراً دیده‌شده
+85|Kassar|جعبه‌ها
+86|Án vsk.|بدون مالیات
+87|Vsk. 24 %|مالیات ۲۴٪
+88|Samtals|جمع کل
+89|Fjarlægt|حذف شد
+90|Þegar í prufukassanum|از قبل در جعبهٔ نمونه است
+91|Opna|باز کردن
+92|Ísland · alþjóðleg innkaup|ایسلند · تأمین جهانی
+93|Falleg yfirborð.|سطوح زیبا.
+94|Eitt markaðstorg.|یک بازار.
+95|Skoðaðu flísar, stein og byggingarefni frá sjálfstæðum seljendum. Berðu saman, hannaðu og pantaðu í gegnum KASHI.|کاشی، سنگ و مصالح معماری را از فروشندگان مستقل پیدا کنید؛ مقایسه، طراحی و سفارش از طریق کاشی.
+96|Skoða markaðstorg|مشاهدهٔ بازار
+97|Opna þrívíddarstofu|ورود به استودیوی سه‌بعدی
+98|sýnisvörur|سطح نمونه
+99|sýnisseljendur|فروشندهٔ نمونه
+100|þrívíddarrými|نوع اتاق سه‌بعدی
+101|Rólegt travertínbað|حمام آرام تراورتن
+102|Þrívíddarmynd|تصویر سه‌بعدی مفهومی
+103|Opna þetta rými|باز کردن این اتاق
+104|Basalt og hvít stofa|پذیرایی بازالت و سفید
+105|Terrakotta-eldhús|آشپزخانهٔ تراکوتا
+106|Fjarðarblátt baðherbergi|حمام آبی آبدره
+107|Snjallleit|جستجوی هوشمند
+108|Segðu okkur frá rýminu þínu.|از فضای خود بگویید.
+109|Leiðsögn í sýnisvörulistanum.|جستجوی راهنما در محصولات نمونه.
+110|Hvað sem er|هرکدام
+111|Fjárhæð (ISK, án vsk.)|بودجه (کرون، بدون مالیات)
+112|Finna efni|یافتن مصالح
+113|Flokkar|مجموعه‌ها
+114|Finndu þitt yfirborð.|سطح مورد نظرتان را پیدا کنید.
+115|Allar vörur|همهٔ محصولات
+116|Allir flokkar|همهٔ مجموعه‌ها
+117|Nýtt|تازه‌ها
+118|Valin efni|مصالح منتخب
+119|Sjá allt nýtt|همهٔ تازه‌ها
+120|Rými til að byrja á|اتاق‌هایی برای شروع
+121|Öll rými|همهٔ اتاق‌ها
+122|Mosagrænt eldhús|آشپزخانهٔ لعاب خزه‌ای
+123|Stofa með silfurmarmara|سالن مرمر نقره‌ای
+124|Svona virkar það|روش کار
+125|Frá hugmynd til pöntunar|از ایده تا سفارش
+126|Uppgötvaðu|کشف
+127|Síaðu eftir efni, tón, stærð og seljanda.|بر اساس جنس، رنگ، ابعاد و فروشنده فیلتر کنید.
+128|Sjáðu fyrir þér|تجسم
+129|Prófaðu gólf og vegg saman í upplýstu þrívíddarrými.|کف و دیوار را با هم در اتاق سه‌بعدی نورپردازی‌شده ببینید.
+130|Reiknaðu|محاسبه
+131|Heilir kassar, afföll og vsk. strax.|تعداد جعبه، پرت و مالیات را از ابتدا بدانید.
+132|Pantaðu eða spyrðu|سفارش یا پرسش
+133|Kláraðu prufupöntun eða óskaðu eftir tilboði.|سفارش نمونه ثبت کنید یا قیمت بخواهید.
+134|Efnisfræði|دانش مصالح
+135|Allar greinar|همهٔ مقاله‌ها
+136|Leiðarvísir|راهنما
+137|{n} mín. lestur|{n} دقیقه مطالعه
+138|Postulín eða keramik: hver er munurinn?|پرسلان یا سرامیک: تفاوت چیست؟
+139|Tvö brennd leirefni sem líta svipað út í hillu en hegða sér ólíkt á gólfi.|دو سطح از خاک پخته که در قفسه شبیه‌اند اما روی کف رفتار متفاوتی دارند.
+140|Skipulag|برنامه‌ریزی
+141|Hversu marga fermetra þarftu?|چند متر مربع سفارش دهیم؟
+142|Mældu flötinn, bættu við afföllum og rúnnaðu upp í heila kassa.|سطح را اندازه بگیرید، پرت را اضافه کنید و به جعبهٔ کامل گرد کنید.
+143|Hönnun|طراحی
+144|Fjögur efni fyrir róleg norræn rými|چهار سطح برای فضاهای آرام نوردیک
+145|Hlýr kalksteinn, svöl steypa, ljóst postulín og steinn með áferð.|سنگ آهک گرم، بتن خنک، پرسلان روشن و سنگ بافت‌دار.
+146|Samstarf|همکاری
+147|Þínar vörur. Okkar markaðstorg.|محصولات شما، بازار ما.
+148|Náðu til nýrra viðskiptavina með vefverslun, vörulista og pantanakerfi. KASHI fær þóknun af loknum sölum.|با ویترین دیجیتال، فهرست محصولات و مدیریت سفارش به مشتریان تازه برسید. کاشی از فروش‌های تکمیل‌شده کمیسیون می‌گیرد.
+149|Dæmi um stofngjald|هزینهٔ راه‌اندازی نمونه
+150|Dæmi um þóknun|کمیسیون نمونه
+151|Fyrsti markaður|نخستین بازار
+152|Markaðstorg yfirborðsefna|بازار سطوح
+153|Þitt val|انتخاب شما
+154|Aðeins geymt í þessum vafra.|فقط در همین مرورگر ذخیره می‌شود.
+155|Ekkert vistað enn|هنوز چیزی ذخیره نشده
+156|Ýttu á hjartað á vöru til að geyma hana hér.|برای نگه‌داشتن محصول روی قلب آن بزنید.
+157|Prufur|نمونه‌ها
+158|Prufukassi|جعبهٔ نمونه
+159|Allt að fimm efni. Forskoðun: ekkert er sent.|حداکثر پنج سطح. نسخهٔ آزمایشی: چیزی ارسال نمی‌شود.
+160|Fjarlægja|حذف
+161|Spyrja um prufur í tölvupósti|پرسش دربارهٔ نمونه با ایمیل
+162|Hlið við hlið|کنار هم
+163|Ekkert til að bera saman|چیزی برای مقایسه نیست
+164|Veldu allt að fjögur efni á markaðstorginu.|در بازار تا چهار سطح انتخاب کنید.
+165|Hannaðu rýmið þitt|اتاق خود را طراحی کنید
+166|Lifandi, upplýst rými. Veldu herbergi, skiptu um gólf- og veggefni og færðu dagsbirtuna.|اتاقی زنده با نور. نوع اتاق را انتخاب کنید، کف و دیوار را عوض کنید و نور روز را تغییر دهید.
+167|Framan|روبه‌رو
+168|Hlið|پهلو
+169|Ofan|بالا
+170|Dagsbirta|نور روز
+171|Vista mynd|ذخیرهٔ تصویر
+172|Afrita tengil|کپی پیوند
+173|Aðeins sjónræn forskoðun. Raunveruleg mynstur, litir og stærðir ráðast af prufum frá framleiðanda.|فقط پیش‌نمایش تصویری. طرح، رنگ و ابعاد واقعی به نمونهٔ تولیدکننده بستگی دارد.
+174|Forstillingar|پیشنهادهای آماده
+175|Dragðu til að líta í kring · ýttu á flöt til að breyta honum|برای چرخاندن بکشید · برای تغییر روی سطح بزنید
+176|Gólf|کف
+177|Veggir|دیوارها
+178|Breidd|عرض
+179|Lengd|طول
+180|Tveir veggir|دو دیوار
+181|Áætlaður efniskostnaður með vsk.|برآورد مصالح با مالیات
+182|Með 10 % afföllum, rúnnað upp í heila kassa. Flutningur og lögn eru ekki innifalin.|با ۱۰٪ پرت و گرد به جعبهٔ کامل. ارسال و نصب جداست.
+183|Setja bæði í körfu|افزودن هر دو به سبد
+184|Þrívíddarmyndir gerðar með sýnisefnunum. Opnaðu rými og gerðu það að þínu.|تصویرهای سه‌بعدی ساخته‌شده با سطوح نمونه. هر اتاق را باز کنید و سلیقهٔ خود را اعمال کنید.
+185|Innréttingar|فضای داخلی
+186|Stemningsmyndir|تصاویر الهام‌بخش
+187|Ljósmyndir eingöngu til stemningar. Þær sýna hvorki vörur né verkefni KASHI.|عکس‌ها فقط برای حال‌وهوا هستند و محصول یا پروژهٔ کاشی را نشان نمی‌دهند.
+188|Samstarfsaðilar í vinnslu|مسیر همکاران
+189|Skráningar krefjast samþykkis og undirritaðra viðskiptasamninga.|نمایش محصولات نیازمند تأیید و قرارداد تجاری امضاشده است.
+190|Sýnisseljandi|فروشندهٔ نمونه
+191|Sýnisseljandi með postulín í rólegum norrænum tónum, frá ljósu marmaraútliti til dökks basalts.|فروشندهٔ نمونه با مجموعهٔ پرسلان در رنگ‌های آرام نوردیک، از طرح مرمر روشن تا بازالت تیره.
+192|Sýnisseljandi með steinefni og stórar flísar fyrir arkitekta og innanhússhönnuði.|فروشندهٔ نمونه با تمرکز بر سنگ و قطعات بزرگ برای معماران و طراحان داخلی.
+193|Sýnisseljandi með litlar keramikflísar: múrsteinsáferð, glerung og lit á áhersluveggi.|فروشندهٔ نمونهٔ سرامیک کوچک: آجرنما، لعاب و رنگ برای دیوار شاخص.
+194|Mögulegir birgjar|تأمین‌کنندگان احتمالی
+195|Ekki skráðir. Engar vörur eru boðnar fyrir þeirra hönd.|هنوز عضو نشده‌اند. محصولی از طرف آن‌ها عرضه نمی‌شود.
+196|Íran · til skoðunar, ekki skráður|ایران · در بررسی، هنوز عضو نشده
+197|Íran · samskipti í gangi|ایران · در حال گفت‌وگو
+198|Birgjalisti í skoðun|فهرست شناسایی تأمین‌کنندگان
+199|Seljendaskrá|فهرست فروشندگان
+200|Umsóknir vistaðar í þessum vafra. Samþykktu þær í stjórnborðinu.|درخواست‌های ذخیره‌شده در این مرورگر. در بخش مدیریت تأییدشان کنید.
+201|Sía eftir fyrirtæki, borg eða landi|فیلتر بر اساس شرکت، شهر یا کشور
+202|{n} samþykktir í þessari forskoðun|{n} مورد تأییدشده در این نسخه
+203|Bíður yfirferðar|در انتظار بررسی
+204|Staðsetning|مکان
+205|Dæmi um afgreiðslutíma|زمان تحویل نمونه
+206|{n} dagar|{n} روز
+207|Staðfesting|احراز هویت
+208|Sýnisseljandi, ekki raunverulegt fyrirtæki|فروشندهٔ نمونه، شرکت واقعی نیست
+209|Vörulisti|فهرست محصولات
+210|Skráning seljanda|ثبت‌نام فروشنده
+211|Vertu með á markaðstorginu. Ekkert skráningargjald er fyrirhugað í tilraunafasanum.|به بازار بپیوندید. برای دورهٔ آزمایشی هزینهٔ ثبت پیشنهاد نشده است.
+212|Fyrirtæki|شرکت
+213|Afhending|ارسال
+214|Vörur|محصولات
+215|Forskoðun: notaðu tilbúnar fyrirtækjaupplýsingar. Val á landi er ekki leyfi til viðskipta.|نسخهٔ آزمایشی: اطلاعات ساختگی وارد کنید. انتخاب کشور به معنی مجوز تجارت نیست.
+216|Heiti fyrirtækis|نام شرکت
+217|Kennitala / skráningarnúmer|شمارهٔ ثبت کسب‌وکار
+218|Land|کشور
+219|Veldu land eða svæði|کشور یا منطقه را انتخاب کنید
+220|Borg / sveitarfélag|شهر
+221|Póstnúmer|کد پستی
+222|Vefsíða|وب‌سایت
+223|Netfang fyrirtækis|ایمیل کاری
+224|Afhendingarsvæði (lönd eða borgir)|مناطق ارسال (کشور یا شهر)
+225|Gjaldmiðill (ISO-kóði)|واحد پول (کد ISO)
+226|Dæmigerður afgreiðslutími (dagar)|زمان معمول تحویل (روز)
+227|Vörur og flokkar|محصولات و دسته‌ها
+228|Ég skil að þetta er forskoðun og engin umsókn er send.|می‌دانم این نسخهٔ آزمایشی است و درخواستی ارسال نمی‌شود.
+229|Til baka|بازگشت
+230|Áfram|ادامه
+231|Vista umsókn|ذخیرهٔ درخواست
+232|Sæktu um og staðfestu fyrirtækið.|درخواست دهید و هویت کسب‌وکار را تأیید کنید.
+233|Semjið um þóknun og afhendingarskilmála.|دربارهٔ کمیسیون و شرایط ارسال توافق کنید.
+234|Birtu samþykktan vörulista.|فهرست تأییدشده را منتشر کنید.
+235|Taktu við pöntunum og afgreiddu þær.|سفارش بگیرید و تحویل دهید.
+236|Gerið upp sölur, skil og þóknun.|فروش، مرجوعی و کمیسیون را تسویه کنید.
+237|Tekjudæmi|نمونهٔ درآمد
+238|Mánaðarleg sala|فروش ماهانه
+239|15 % er tillaga til viðmiðunar, ekki samningsskilmáli.|۱۵٪ نرخ پیشنهادی نمونه است، نه شرط قرارداد.
+240|Þóknun|کمیسیون
+241|Hlutur seljanda fyrir önnur gjöld|سهم فروشنده پیش از سایر هزینه‌ها
+242|Verkefni og mikið magn|پروژه‌ها و مقادیر زیاد
+243|Fyrir mikið magn, sérstærðir eða heil verkefni.|برای حجم زیاد، ابعاد سفارشی یا پروژهٔ کامل.
+244|Vara eða verkefni|محصول یا پروژه
+245|Hvaða efni vantar þig?|دنبال کدام مصالح هستید؟
+246|Afhendingarland|کشور تحویل
+247|Þarf fyrir|مورد نیاز تا
+248|Nafn|نام شما
+249|Netfang|ایمیل
+250|Um verkefnið|جزئیات پروژه
+251|Vista tilboðsbeiðni|ذخیرهٔ درخواست قیمت
+252|Ein beiðni. Margir seljendur.|یک درخواست، چند فروشنده.
+253|KASHI getur sent beiðnina til viðeigandi seljenda, borið saman tilboð og haldið viðskiptunum á einum stað.|کاشی می‌تواند درخواست شما را به فروشندگان مناسب بفرستد، پیشنهادها را مقایسه کند و معامله را در پلتفرم نگه دارد.
+254|Þessi forskoðun geymir eyðublaðið í vafranum þínum. Enginn seljandi fær það.|این نسخه فرم را فقط در مرورگر شما ذخیره می‌کند و هیچ فروشنده‌ای آن را دریافت نمی‌کند.
+255|Viltu raunverulegt svar núna?|همین حالا پاسخ واقعی می‌خواهید؟
+256|Sendu KASHI-teyminu spurninguna úr þínu eigin póstforriti.|پرسش خود را از برنامهٔ ایمیل خودتان برای تیم کاشی بفرستید.
+257|Hafa samband við teymið|تماس با تیم
+258|Pöntunin þín|سفارش شما
+259|Karfan er tóm|سبد شما خالی است
+260|Bættu við efnum af markaðstorginu eða úr þrívíddarstofunni.|از بازار یا استودیوی سه‌بعدی محصول اضافه کنید.
+261|Virknin þín|فعالیت شما
+262|Engar pantanir enn|هنوز سفارشی نیست
+263|Gerðu prufupöntun til að fylgjast með stöðunni hér.|سفارش نمونه ثبت کنید تا وضعیت آن را اینجا ببینید.
+264|Tilboð|پیشنهادها
+265|Tilboðsbeiðnirnar þínar|درخواست‌های قیمت شما
+266|Engar tilboðsbeiðnir enn.|هنوز درخواست قیمتی نیست.
+267|Sala eftir vörum|فروش بر اساس محصول
+268|Verkefnalisti|کارها
+269|opnar pantanir|سفارش باز
+270|tilboðsbeiðnir ósvaraðar|درخواست قیمت بی‌پاسخ
+271|birtar vörur|محصول منتشرشده
+272|Seljendagátt · forskoðun|پنل فروشنده · آزمایشی
+273|Forskoðun með sýnigögnum. Engin innskráning og engir raunverulegir aðgangar.|محیط آزمایشی با داده‌های نمایشی. بدون ورود و حساب واقعی.
+274|Endurhlaða sýnigögnum|بارگذاری دوبارهٔ دادهٔ نمایشی
+275|Eyða öllum staðbundnum gögnum|پاک کردن همهٔ داده‌های من
+276|Sýnissala án vsk.|فروش نمونه بدون مالیات
+277|Yfirlit|نمای کلی
+278|Pantanir|سفارش‌ها
+279|Stjórnborð · forskoðun|مدیریت · آزمایشی
+280|Stjórnstöð markaðstorgsins|مرکز کنترل بازار
+281|Ekki auðkennt stjórnborð.|بخش مدیریت بدون احراز هویت.
+282|Sýn seljanda|نمای فروشنده
+283|Velta markaðstorgs (sýni)|حجم نمونهٔ بازار
+284|Áætluð þóknun KASHI|کمیسیون برآوردی کاشی
+285|Velta eftir seljanda|حجم بر اساس فروشنده
+286|Þóknunarreiknir|شبیه‌ساز کمیسیون
+287|Breyttu hlutfallinu fyrir nýjar prufupantanir. Eldri pantanir halda sínu.|نرخ سفارش‌های نمونهٔ بعدی را تغییر دهید. سفارش‌های قبلی نرخ خود را حفظ می‌کنند.
+288|Hlutfall|نرخ
+289|Umsóknir seljenda|درخواست‌های فروشندگی
+290|Veggflísar|کاشی دیواری
+291|Samþykkja|تأیید
+292|Hafna|رد
+293|Pantanabók|دفتر سفارش‌ها
+294|Pöntun|سفارش
+295|Dagsetning|تاریخ
+296|Seljandi / vara|فروشنده / محصول
+297|Upphæð|مبلغ
+298|Staða|وضعیت
+299|Prufa — ógreitt|نمونه — پرداخت‌نشده
+300|Staðfest|تأییدشده
+301|Í undirbúningi|در حال آماده‌سازی
+302|Sent|ارسال‌شده
+303|Afhent|تحویل‌شده
+304|Af {sales} sölu: {fee} þóknun og {net} til seljanda, fyrir önnur gjöld.|از {sales} فروش واجد شرایط: {fee} کمیسیون و {net} سهم فروشنده، پیش از سایر هزینه‌ها.
+305|Drög að greinum, yfirfarin fyrir tæknilega nákvæmni áður en opnað er.|پیش‌نویس مقاله‌ها؛ پیش از راه‌اندازی از نظر فنی بازبینی می‌شوند.
+306|Tæknilegt|فنی
+307|Flísar fyrir íslenskar aðstæður|انتخاب کاشی برای شرایط ایسلند
+308|Frost, möl, vatn og gólfhiti skipta máli. Útlitið eitt dugar ekki.|یخ‌زدگی، شن، آب و گرمایش از کف همه مهم‌اند. ظاهر به‌تنهایی کافی نیست.
+309|Vatnsupptaka|جذب آب
+310|Postulín er skilgreint með mjög lítilli vatnsupptöku: 0,5 % eða minna í flokki BIa samkvæmt EN 14411. Margar keramikveggflísar drekka í sig mun meira og eru því yfirleitt notaðar innandyra og á veggi.|پرسلان با جذب آب بسیار کم تعریف می‌شود: ۰٫۵٪ یا کمتر در گروه BIa استاندارد EN 14411. بسیاری از کاشی‌های دیواری سرامیکی آب بسیار بیشتری جذب می‌کنند و معمولاً داخل ساختمان و روی دیوار استفاده می‌شوند.
+311|Hvar hvort hentar|کاربرد هرکدام
+312|Postulín er yfirleitt valið á gólf, í anddyri og votrými. Glerjað keramik er léttara, auðveldara að skera og býður ríka liti á veggi.|پرسلان انتخاب معمول برای کف، ورودی و فضای مرطوب است. سرامیک لعاب‌دار سبک‌تر است، آسان‌تر برش می‌خورد و رنگ‌های متنوعی برای دیوار دارد.
+313|Biddu um prófunarskýrslu|گزارش آزمون بخواهید
+314|Nafnið eitt er ekki sönnun. Veldu eftir skjalfestum gildum vörunnar: vatnsupptöku, brotstyrk, hálkuvörn og, utandyra, frostþoli.|نام محصول دلیل کافی نیست. بر اساس مقادیر مستند همان محصول انتخاب کنید: جذب آب، مقاومت شکست، لغزندگی و برای فضای باز مقاومت در برابر یخ‌زدگی.
+315|Drög. Staðfestu kröfur hjá framleiðanda og verktaka. Ljósmynd eingöngu til stemningar.|پیش‌نویس. الزامات را با تولیدکننده و نصاب بررسی کنید. عکس فقط برای حال‌وهوا است.
+316|Lesa næst|مطالعهٔ بعدی
+317|Fleiri greinar|مقاله‌های بیشتر
+318|Mældu|اندازه‌گیری
+319|Margfaldaðu lengd og breidd hvers gólf- og veggflatar. Dragðu frá stór op eins og hurðir og stóra glugga.|طول و عرض هر سطح کف و دیوار را ضرب کنید و بازشوهای بزرگ مانند در و پنجره را کم کنید.
+320|Bættu við afföllum|افزودن پرت
+321|Algengt viðmið er 10 % fyrir beina lögn og um 15 % fyrir skálögn eða mynstur. Flókin rými geta þurft meira.|معمولاً برای چیدمان مستقیم ۱۰٪ و برای چیدمان مورب یا طرح‌دار حدود ۱۵٪ در نظر می‌گیرند. فضاهای پیچیده ممکن است بیشتر بخواهند.
+322|Keyptu úr sömu lotu|از یک سری تولید بخرید
+323|Litblær og stærð geta verið ólík milli framleiðslulota. Pantaðu allt í einu og geymdu nokkrar aukaflísar til viðgerða.|رنگ و اندازه ممکن است بین سری‌های تولید فرق کند. همه را یکجا سفارش دهید و چند قطعه برای تعمیر نگه دارید.
+324|Byrjaðu á birtunni|از نور شروع کنید
+325|Norræn dagsbirta breytist mikið yfir árið. Berðu efni saman í morgun-, hádegis- og kvöldbirtu; í þrívíddarstofunni geturðu fært sólina.|نور روز در شمال در طول سال بسیار تغییر می‌کند. پیش از تصمیم، سطح را در نور صبح، ظهر و عصر مقایسه کنید؛ در استودیو می‌توانید خورشید را جابه‌جا کنید.
+326|Takmarkaðu litavalið|پالت را محدود کنید
+327|Eitt ráðandi gólfefni og eitt rólegra veggefni virka yfirleitt rólegra en þrjú efni sem keppa.|یک سطح اصلی برای کف و یک سطح آرام‌تر برای دیوار معمولاً آرام‌تر از سه مصالح رقیب است.
+328|Pantaðu prufu|نمونه سفارش دهید
+329|Skjár sýnir hvorki áferð né réttan lit. Biddu um prufur áður en þú pantar heilt verkefni.|صفحه‌نمایش بافت و رنگ واقعی را نشان نمی‌دهد. پیش از سفارش کل پروژه نمونهٔ فیزیکی بخواهید.
+330|Frost|یخ‌زدگی
+331|Útiflísar þurfa skjalfest frostþol, drenað undirlag og sveigjanlegt flísalím. Frost og þíða finna veikleikana.|کاشی فضای باز به مقاومت مستند در برابر یخ‌زدگی، زیرسازی زهکشی‌شده و چسب انعطاف‌پذیر مناسب نیاز دارد. چرخهٔ یخ و ذوب ضعف‌ها را آشکار می‌کند.
+332|Hálkuvörn|اصطکاک
+333|Kannaðu uppgefna hálkuvörn fyrir votrými, anddyri og tröppur. Ekki meta grip út frá mynd.|ردهٔ لغزندگی اعلام‌شده را برای حمام، ورودی و پله بررسی کنید. از روی عکس قضاوت نکنید.
+334|Gólfhiti|گرمایش از کف
+335|Steinn og postulín leiða hita vel. Fylgdu leiðbeiningum um lím og þensluraufar.|سنگ و پرسلان گرما را خوب منتقل می‌کنند. دستور نصاب و تولیدکننده دربارهٔ چسب و درز انبساط را رعایت کنید.
+336|Sagan okkar|داستان ما
+337|Efni sem skipta máli.|مصالحی با معنا.
+338|KASHI er hugmynd í mótun að markaðstorgi fyrir flísar og yfirborðsefni á Íslandi.|کاشی ایده‌ای در حال شکل‌گیری برای بازار کاشی و سطوح در ایسلند است.
+339|Ljósmynd eingöngu til stemningar.|عکس فقط برای حال‌وهوا است.
+340|Fyrir Ísland|برای ایسلند
+341|Hagnýtar stærðir, skýr verkefnaverð og efnisval fyrir heimili og fagverkefni.|ابعاد کاربردی، قیمت‌گذاری شفاف پروژه و انتخاب مصالح برای خانه و پروژه‌های حرفه‌ای.
+342|Gagnsæ innkaup|تأمین شفاف
+343|Við ætlum að birta uppruna, framleiðanda, tæknilýsingar, framboð og staðfestan afgreiðslutíma.|قصد داریم مبدأ، تولیدکننده، مشخصات، موجودی و زمان تحویل تأییدشده را اعلام کنیم.
+344|Ekki enn í viðskiptum|هنوز فعالیت تجاری نداریم
+345|Fyrirtækjaskráning, birgjasamningar og greiðslusamþykki eru enn í vinnslu. Ekkert er hægt að kaupa hér.|ثبت شرکت، قرارداد تأمین و تأیید پرداخت هنوز در جریان است. اینجا چیزی قابل خرید نیست.
+346|Traust og skjöl|اعتماد و مدارک
+347|Það sem við sýnum áður en við seljum|آنچه پیش از فروش ارائه می‌کنیم
+348|Við birtum aldrei merki eða vottorð sem við höfum ekki.|هیچ نشان یا گواهی‌ای که نداریم نمایش نمی‌دهیم.
+349|Prófunarskýrslur samkvæmt EN 14411|گزارش آزمون طبق EN 14411
+350|CE-merking og yfirlýsing um nothæfi|نشان CE و اظهارنامهٔ عملکرد
+351|Hálku- og frostþolsflokkar|رده‌های لغزندگی و یخ‌زدگی
+352|Fyrirtækjaskráning og vsk-númer|ثبت شرکت و شمارهٔ مالیاتی
+353|Gæðakerfi framleiðenda|سیستم‌های کیفیت تولیدکننده
+354|Uppruni og rekjanleiki|مبدأ و ردیابی
+355|Aðstoð|راهنما
+356|Er KASHI virk verslun?|آیا کاشی فروشگاه فعال است؟
+357|Nei. Þetta er forskoðun. Vörur, verð og seljendur eru dæmi og engin pöntun eða greiðsla er unnin.|خیر. این نسخهٔ آزمایشی است. محصولات، قیمت‌ها و فروشندگان نمونه‌اند و سفارش یا پرداختی انجام نمی‌شود.
+358|Hvað verður um upplýsingarnar sem ég slæ inn?|اطلاعاتی که وارد می‌کنم چه می‌شود؟
+359|Þær eru aðeins geymdar í vafranum þínum. Ekkert er sent nema þú opnir tölvupóst og sendir hann.|فقط در مرورگر خودتان ذخیره می‌شود. چیزی ارسال نمی‌شود مگر خودتان ایمیلی بفرستید.
+360|Hvernig er magnið reiknað?|مقدار چگونه محاسبه می‌شود؟
+361|Flatarmálið að viðbættum afföllum er rúnnað upp í heila kassa. 24 % vsk. bætist við sýniverðið.|مساحت به‌اضافهٔ پرت به جعبهٔ کامل گرد می‌شود و ۲۴٪ مالیات به قیمت نمونه افزوده می‌شود.
+362|Get ég fengið prufur?|می‌توانم نمونهٔ فیزیکی بگیرم؟
+363|Þú getur bætt við allt að fimm prufubeiðnum til að sjá ferlið. Engar prufur eru sendar úr forskoðuninni.|می‌توانید تا پنج درخواست نمونه اضافه کنید تا روند را ببینید. در نسخهٔ آزمایشی نمونه‌ای ارسال نمی‌شود.
+364|Hvernig verða seljendur samþykktir?|فروشندگان چگونه تأیید می‌شوند؟
+365|Ætlunin er að staðfesta fyrirtækið, semja um þóknun og afhendingu og fara yfir vörulistann áður en nokkuð er birt.|طرح این است که پیش از انتشار، هویت کسب‌وکار تأیید، کمیسیون و ارسال توافق و فهرست محصولات بررسی شود.
+366|Hvað kostar að selja?|هزینهٔ فروش چقدر است؟
+367|Í tillögunni er ekkert stofngjald og dæmi um 15 % þóknun af loknum sölum. Það er ekki samningsskilmáli.|در طرح آزمایشی هزینهٔ راه‌اندازی صفر و کمیسیون نمونه ۱۵٪ از فروش تکمیل‌شده است. این شرط قراردادی نیست.
+368|Hvaða lönd eru með?|کدام کشورها پوشش دارند؟
+369|Ísland kemur fyrst. Aðrir markaðir krefjast samþykkis varðandi reglur, innflytjanda og greiðsluþjónustu.|ایسلند در اولویت است. بازارهای دیگر نیازمند رعایت مقررات و تأیید واردکننده و درگاه پرداخت‌اند.
+370|Byrjum samtalið|گفت‌وگو را آغاز کنید
+371|Mótum rýmið þitt.|فضای شما را بسازیم.
+372|Endurbætur, uppbygging eða heildsala? Segðu okkur hvað þig vantar.|بازسازی خانه، پروژهٔ ساختمانی یا عمده‌فروشی؟ نیازتان را بگویید.
+373|Tegund verkefnis|نوع پروژه
+374|Endurbætur heimilis|بازسازی خصوصی
+375|Verktaki / fyrirtæki|پیمانکار / شرکت
+376|Heildsala|عمده‌فروشی
+377|Samstarf um sölu|همکاری فروش
+378|Annað|سایر
+379|Skilaboð|پیام
+380|Opna í póstforritinu|باز کردن در برنامهٔ ایمیل
+381|Skilaboðin eru útbúin í þínu póstforriti. Þú ræður hvort þú sendir þau.|پیام در برنامهٔ ایمیل خودتان آماده می‌شود و ارسال آن با شماست.
+382|Tengiliðir|راه‌های تماس
+383|Tengiliðir fyrirhugaðs reksturs. Skráning fyrirtækis á Íslandi er í vinnslu.|رابط‌های کسب‌وکار برنامه‌ریزی‌شده. ثبت شرکت در ایسلند در انتظار است.
+384|Gögnin þín eru hjá þér|داده‌های شما نزد خودتان می‌ماند
+385|Hvað er geymt|چه چیزی ذخیره می‌شود
+386|Karfa, vistaðar vörur, samanburður, eyðublöð, prufupantanir, tungumál og rýmisstillingar eru aðeins geymd í vafranum þínum.|سبد، محصولات ذخیره‌شده، مقایسه‌ها، فرم‌ها، سفارش‌های نمونه، زبان و تنظیمات اتاق فقط در مرورگر شما نگه‌داری می‌شود.
+387|Þriðju aðilar|اشخاص ثالث
+388|Letur er sótt frá Google Fonts og þrívíddarvélin frá jsDelivr. Þessar þjónustur fá venjuleg tæknigögn, t.d. IP-tölu.|قلم‌ها از Google Fonts و موتور سه‌بعدی از شبکهٔ jsDelivr بارگذاری می‌شوند. این سرویس‌ها داده‌های فنی معمول مانند نشانی IP را دریافت می‌کنند.
+389|Eyða|حذف
+390|Þú getur eytt öllu sem þessi vefur hefur geymt hvenær sem er.|هر زمان می‌توانید همهٔ داده‌های ذخیره‌شدهٔ این سایت را پاک کنید.
+391|Síða fannst ekki|صفحه پیدا نشد
+392|Þetta yfirborð er ekki til|این سطح وجود ندارد
+393|Síðan gæti hafa verið færð.|ممکن است صفحه جابه‌جا شده باشد.
+394|Aftur á forsíðu|بازگشت به آغاز
+395|Sýnidæmi: tvö baðherbergi, afhending í vor.|نمایشی: دو حمام، تحویل در بهار.
+396|Verð á m² (ISK)|قیمت هر متر (کرون)
+397|Afhendingardagar|روزهای تحویل
+398|Senda tilboð|ارسال پیشنهاد
+399|Sýnidæmi: anddyri og stigi fyrir litla skrifstofu.|نمایشی: لابی ورودی و پله برای یک دفتر کوچک.
+400|Vara|محصول
+401|Verð á m²|قیمت هر متر
+402|Birt|منتشرشده
+403|Bæta við sýnisvöru|افزودن محصول نمونه
+404|Vöruheiti|نام محصول
+405|Steinn|سنگ
+406|Marmari|مرمر
+407|Steypa|بتن
+408|Travertín|تراورتن
+409|Leir|سفال
+410|Glerungur|لعاب
+411|Birta í sýnisvörulista|انتشار در فهرست نمونه
+412|{n} sýnisvörur passa. Hæfni, birgðir, flutning og lögn þarf að staðfesta.|{n} مورد نمونه پیدا شد. تناسب، موجودی، حمل و نصب نیاز به تأیید دارد.
+413|með vsk.|با مالیات
+414|Engar vörur passa|محصولی پیدا نشد
+415|Prófaðu færri síur eða óskaðu eftir tilboði frá seljendum.|فیلتر کمتری امتحان کنید یا از فروشندگان قیمت بخواهید.
+416|Vistað|ذخیره شد
+417|Allt að fjögur efni.|تا چهار سطح.
+418|12 m² með vsk. og 10 % afföllum|۱۲ متر با مالیات و ۱۰٪ پرت
+419|Þrívíddarrýmið ræstist ekki. Það þarf WebGL og nettengingu.|اتاق سه‌بعدی اجرا نشد. به WebGL و اینترنت نیاز دارد.
+420|Engar prufur valdar.|نمونه‌ای انتخاب نشده.
+421|Engar umsóknir enn.|هنوز درخواستی نیست.
+422|Pöntun frá mörgum seljendum · engin greiðsla.|سفارش چندفروشنده · بدون پرداخت واقعی.
+423|Versla meira|ادامهٔ خرید
+424|{n} kassar|{n} جعبه
+425|Samantekt|خلاصهٔ سفارش
+426|Tilboð seljanda|اعلام توسط فروشنده
+427|{n} seljandi/-ur. Magn er rúnnað upp í heila kassa.|{n} فروشنده. مقدار به جعبهٔ کامل گرد می‌شود.
+428|Áfram í greiðsluferli|ادامه به تسویه
+429|Forskoðun á greiðsluferli|پیش‌نمایش تسویه
+430|Kláraðu prufupöntunina|سفارش نمونه را کامل کنید
+431|Engin greiðsla er tekin og engar vörur sendar.|پولی دریافت و کالایی ارسال نمی‌شود.
+432|Notaðu tilbúnar upplýsingar. Þær eru áfram í vafranum.|اطلاعات ساختگی وارد کنید؛ در مرورگر شما می‌ماند.
+433|Tegund viðskiptavinar|نوع مشتری
+434|Einstaklingur|شخصی
+435|Fyrirtæki|شرکتی
+436|Heimilisfang|نشانی
+437|Afhendingarmáti|روش تحویل
+438|Heimsending að lóðamörkum|تحویل کنار خیابان
+439|Sækja til seljanda|دریافت از فروشنده
+440|Ég skil að þetta er prufupöntun án greiðslu.|می‌دانم این سفارش نمونه و بدون پرداخت است.
+441|Staðfesta prufupöntun|ثبت سفارش نمونه
+442|Prufupöntun vistuð|سفارش نمونه ذخیره شد
+443|Engin kaup eða greiðsla áttu sér stað.|هیچ خرید یا پرداختی انجام نشد.
+444|Setja aftur í körfu|افزودن دوباره به سبد
+445|Ábending: opnaðu seljendagáttina og svaraðu eigin beiðni til að sjá allt ferlið.|نکته: در پنل فروشنده به درخواست خودتان پاسخ دهید تا کل روند را ببینید.
+446|Engar pantanir enn.|هنوز سفارشی نیست.
+447|{name}: einum kassa bætt við|{name}: یک جعبه اضافه شد
+448|Hægt er að bera saman allt að fjórar vörur|حداکثر چهار سطح قابل مقایسه است
+449|Prufukassinn rúmar fimm efni|جعبهٔ نمونه جای پنج سطح دارد
+450|Bætt í prufukassann|به جعبهٔ نمونه اضافه شد
+451|Gólfi og veggjum bætt við|کف و دیوارها اضافه شد
+452|Þrívíddarrýmið er enn að hlaðast|اتاق سه‌بعدی در حال بارگذاری است
+453|Tengill afritaður|پیوند کپی شد
+454|Sýnigögn endurhlaðin|دادهٔ نمایشی دوباره بارگذاری شد
+455|Eyða öllu sem þessi vefur hefur geymt í vafranum?|همهٔ داده‌هایی که این سایت در مرورگر ذخیره کرده پاک شود؟
+456|Gögnum eytt|داده‌ها پاک شد
+457|Staða uppfærð|وضعیت به‌روز شد
+458|Umsókn vistuð|درخواست ذخیره شد
+459|Vistað í þessum vafra. Ekkert var sent til KASHI.|در همین مرورگر ذخیره شد. چیزی برای کاشی ارسال نشد.
+460|Skoða í stjórnborði|بررسی در بخش مدیریت
+461|Sjá skrána|مشاهدهٔ فهرست
+462|Beiðni vistuð|درخواست ذخیره شد
+463|Sjá beiðnirnar þínar|مشاهدهٔ درخواست‌ها
+464|Ef ekkert opnaðist, skrifaðu á {email}.|اگر چیزی باز نشد، به {email} بنویسید.
+465|Ekkert passar. Breyttu skilyrðum eða óskaðu eftir tilboði.|موردی پیدا نشد. معیارها را تغییر دهید یا قیمت بخواهید.
+466|Vara birt|محصول منتشر شد
+467|Tilboð sent|پیشنهاد ارسال شد
+468|Móttekið|دریافت‌شده
+469|Tilboð komið|پیشنهاد رسید
+470|Bíður seljenda|در انتظار فروشندگان
+471|Falið á markaðstorgi|از بازار پنهان شد
+472|Innan úr rými|داخل
+473|Samþykkt|تأیید شد
+474|Hafnað|رد شد
+475|{name}: {n} kössum bætt við|{name}: {n} جعبه اضافه شد
+476|Upplýsingar|مشخصات
+477|Yfirferð|بازبینی
+478|Innskráning|ورود
+479|Founding Partners 2026|شرکای بنیان‌گذار ۲۰۲۶
+480|Noregur · Ísland · alþjóðleg innkaup|نروژ · ایسلند · تأمین جهانی
+481|Reglubundin leit í sýnisvörulistanum, ekki gervigreind.|جستجوی قاعده‌محور در محصولات نمونه، نه هوش مصنوعی.
+482|Hverju ertu að leita að?|دنبال چه چیزی هستید؟
+483|Til dæmis: ljósar postulínsflísar á baðið|مثلاً: کاشی پرسلان روشن برای حمام
+484|Afhendingarborg eða land|شهر یا کشور تحویل
+485|Náðu til nýrra viðskiptavina með vefverslun, vörulista og pantanakerfi. Haltu eigin vörumerki og verði.|با ویترین دیجیتال، فهرست محصولات و مدیریت سفارش به مشتریان تازه برسید. برند و قیمت خودتان را حفظ کنید.
+486|Kaupendur greiða|هزینهٔ خریداران
+487|Kynningarár til 31.12.2026|سال معرفی تا ۳۱ دسامبر ۲۰۲۶
+488|Almennt árgjald|حق عضویت سالانهٔ عادی
+489|Vertu með og haltu eigin vörumerki, vörulista og verði.|به بازار بپیوندید و برند، فهرست و قیمت خود را حفظ کنید.
+490|Þóknunarhlutfall er óákveðið. Þetta er aðeins reikningsdæmi.|نرخ کمیسیون هنوز تعیین نشده است. این فقط یک مثال محاسبه است.
+491|Teymi|تیم
+492|Aðild|عضویت
+493|Lönd|کشورها
+494|Umsóknir|درخواست‌ها
+495|Hlutverk|نقش
+496|Eigandi|مالک
+497|Stjórnandi|مدیر
+498|Sala, aðstoð og markaðsmál|فروش، پشتیبانی و بازاریابی
+499|Þóknun og aðild|کمیسیون و عضویت
+500|Atburðaskrá|گزارش رویدادها
+501|KASHI er hugmynd í mótun að markaðstorgi fyrir flísar og yfirborðsefni, fyrst í Noregi og á Íslandi.|کاشی ایده‌ای در حال شکل‌گیری برای بازار کاشی و سطوح است که از نروژ و ایسلند آغاز می‌شود.
+502|Fyrir norðurslóðir|برای شمال
+503|Almennt árgjald seljenda er 12.000 NOK. Seljendur sem skrá sig fyrir 31. desember 2026 greiða 6.000 NOK fyrir kynningarárið. Þóknun og samningsskilmálar eru óákveðnir.|حق عضویت سالانهٔ عادی فروشندگان ۱۲٬۰۰۰ کرون نروژ است. فروشندگانی که تا ۳۱ دسامبر ۲۰۲۶ بپیوندند برای سال معرفی ۶٬۰۰۰ کرون می‌پردازند. کمیسیون و شرایط قرارداد هنوز تعیین نشده است.
+504|Hvað kostar að kaupa?|هزینهٔ خرید چقدر است؟
+505|Kaupendur nota KASHI sér að kostnaðarlausu.|خریداران رایگان از کاشی استفاده می‌کنند.
+506|Noregur og Ísland koma fyrst. Aðrir markaðir krefjast samþykkis varðandi reglur, innflytjanda og greiðsluþjónustu.|نروژ و ایسلند در اولویت‌اند. بازارهای دیگر نیازمند رعایت مقررات و تأیید واردکننده و درگاه پرداخت‌اند.
+507|Finnist. Vertu valinn. Seldu meira.|دیده شوید. انتخاب شوید. بیشتر بفروشید.
+508|Haltu eigin vörumerki, vörulista og verði á meðan kaupendur finna þig í gegnum KASHI. Kaupendur nota KASHI ókeypis.|برند، فهرست و قیمت خود را حفظ کنید تا خریداران از راه کاشی شما را پیدا کنند. استفاده برای خریداران رایگان است.
+509|Opið til 31. desember 2026|باز تا ۳۱ دسامبر ۲۰۲۶
+510|Stofnfélagi|شریک بنیان‌گذار
+511|Kynningarárgjald með 50 % afslætti fyrir seljendur sem skrá sig fyrir 31. desember 2026.|حق عضویت سالانهٔ معرفی با ۵۰٪ تخفیف برای فروشندگانی که تا ۳۱ دسامبر ۲۰۲۶ بپیوندند.
+512|Almennt|عادی
+513|Seljendaaðild|عضویت فروشندگان
+514|Almennt árgjald seljenda.|حق عضویت سالانهٔ عادی فروشندگان.
+515|Það sem seljendur fá|آنچه فروشندگان دریافت می‌کنند
+516|Eigin seljendasíða og vörulisti|صفحه و فهرست محصولات اختصاصی
+517|Þú ræður verðinu|قیمت‌گذاری با خود شماست
+518|Tilboðsbeiðnir og pantanir á einum stað|درخواست قیمت و سفارش در یک پنل
+519|Leiðsögn í vöruleit fyrir kaupendur|راهنمای کشف محصول برای خریداران
+520|Virk markaðssetning og leitarvélabestun fyrirhuguð frá 2027|بازاریابی فعال و بهینه‌سازی جستجو از ۲۰۲۷ برنامه‌ریزی شده
+521|Óákveðið|هنوز تعیین‌نشده
+522|Þóknunarhlutfall og reiknistofn|نرخ کمیسیون و مبنای محاسبه
+523|Hvort afslátturinn haldist við endurnýjun|ادامهٔ تخفیف در تمدید
+524|Vsk., gjalddagar, greiðslur og endurgreiðslur|مالیات، تاریخ صورتحساب، پرداخت و استرداد
+525|Samningsskilmálar|شرایط قرارداد
+526|Drög að tilboði með fyrirvara um endanlegt samþykki. Ekkert er innheimt í forskoðuninni.|پیش‌نویس پیشنهاد و منوط به تأیید نهایی. در نسخهٔ آزمایشی چیزی صورتحساب نمی‌شود.
+527|KASHI-stjórnborðið þitt|پنل کاشی شما
+528|Eitt auðkenni á mann, með aðgang að þeim fyrirtækjum sem þú tilheyrir.|یک هویت برای هر فرد، با دسترسی به سازمان‌هایی که عضوشان هستید.
+529|Vipps Login — ekki tengt enn|ورود با Vipps — هنوز متصل نیست
+530|Vipps Login er fyrirhugað sem aðalinnskráning í Noregi. Til þess þarf samning KASHI við Vipps og öruggan netþjón. Önnur lönd fá viðeigandi lausnir.|ورود با Vipps به‌عنوان روش اصلی در نروژ برنامه‌ریزی شده است و به قرارداد کاشی با Vipps و سرور امن نیاز دارد. برای کشورهای دیگر روش مناسب ارائه می‌شود.
+531|Skoða stjórnborð|پیش‌نمایش پنل
+532|Einstaklingur|خریدار شخصی
+533|Vistaðar vörur, verkefni, tilboð og pantanir|سطوح ذخیره‌شده، پروژه‌ها، پیشنهادها و سفارش‌ها
+534|Fagkaupandi|خریدار حرفه‌ای
+535|Verkefnamöppur, magn og teymi|پوشهٔ پروژه، مقادیر و تیم
+536|Vörulisti, pantanir, teymi og aðild|فهرست، سفارش‌ها، تیم و عضویت
+537|Starfsfólk KASHI|کارکنان کاشی
+538|Í fullbúinni vöru aðeins með boði|در محصول واقعی فقط با دعوت‌نامه
+539|Tilboðsbeiðnir|درخواست‌های قیمت
+540|Rýmisverkefni|پروژه‌های فضا
+541|Kaupendaaðgangur · forskoðun|حساب خریدار · پیش‌نمایش
+542|Minn aðgangur|حساب من
+543|Forskoðun á hlutverki. Engin innskráning og engin aðgangsstýring: allt er í þessum vafra. Notaðu tilbúnar upplýsingar.|پیش‌نمایش نقش. بدون ورود و کنترل دسترسی؛ همه‌چیز در همین مرورگر می‌ماند. اطلاعات ساختگی وارد کنید.
+544|Skipta um hlutverk|تغییر نقش
+545|Prófíll|نمایه
+546|Heimilisföng|نشانی‌ها
+547|Aðstoð|پشتیبانی
+548|Bæta í verkefni|افزودن به پروژه
+549|Eyða verkefni|حذف پروژه
+550|Heiti verkefnis|نام پروژه
+551|Stofna verkefni|ایجاد پروژه
+552|Fagkaupandi · forskoðun|خریدار حرفه‌ای · پیش‌نمایش
+553|Verkefnarými|فضای پروژه
+554|Fyrir arkitekta, hönnuði, verktaka og framkvæmdaaðila.|برای معماران، طراحان، پیمانکاران و سازندگان.
+555|Kaupsaga|سابقهٔ خرید
+556|Verkefni|پروژه‌ها
+557|Flytja inn úr CSV|ورود از CSV
+558|CSV-línur|سطرهای CSV
+559|Flytja inn|وارد کردن
+560|Verslunarsíða|نمایهٔ فروشگاه
+561|Kennitala|شمارهٔ ثبت
+562|Sending og skil|ارسال و مرجوعی
+563|Lágmarkspöntun (m²)|حداقل سفارش (متر مربع)
+564|Dreifingarmarkaðir|بازارهای توزیع
+565|Sýningarsalir|نمایشگاه‌ها
+566|Engir sýningarsalir enn.|هنوز نمایشگاهی ثبت نشده.
+567|Bæta við sýningarsal|افزودن نمایشگاه
+568|Engir í teyminu enn.|هنوز عضوی در تیم نیست.
+569|Ritstjóri vörulista|ویرایشگر فهرست
+570|Umsjón pantana|مسئول سفارش‌ها
+571|Skoðun fjármála|مشاهده‌گر مالی
+572|Bæta í teymið|افزودن عضو تیم
+573|Ekkert boð er sent í forskoðuninni.|در پیش‌نمایش دعوت‌نامه‌ای ارسال نمی‌شود.
+574|Aðild og reikningar|عضویت و صورتحساب‌ها
+575|Ekki virk|غیرفعال
+576|Reikningar|صورتحساب‌ها
+577|Engir reikningar. Innheimta er ekki virk.|صورتحسابی نیست. صدور صورتحساب فعال نیست.
+578|Engin heimilisföng enn.|هنوز نشانی‌ای ثبت نشده.
+579|Merki|عنوان
+580|Heima|خانه
+581|Bæta við heimilisfangi|افزودن نشانی
+582|Hönnuður|طراح
+583|Innkaupastjóri|مسئول خرید
+584|Aðeins sýnifyrirtæki. Raunverulegir tengiliðir eiga heima í lokuðu CRM með innskráningu.|فقط شرکت‌های نمایشی. سرنخ‌ها و مخاطبان واقعی باید در CRM خصوصی با ورود امن باشند.
+585|Fundið|شناسایی‌شده
+586|Haft samband|تماس‌گرفته‌شده
+587|Fundur|جلسه
+588|Samningur sendur|قرارداد ارسال‌شده
+589|Undirritað|امضاشده
+590|Stig|مرحله
+591|Dregið til baka|انصراف
+592|Óstaðfest|تأییدنشده
+593|Bæta við aðila|افزودن سرنخ
+594|Þóknunarhlutfall er óákveðið. Prófaðu hlutfall fyrir nýjar prufupantanir; eldri halda sínu.|نرخ کمیسیون تعیین نشده است. نرخی را برای سفارش‌های نمونهٔ بعدی آزمایش کنید؛ قبلی‌ها تغییر نمی‌کنند.
+595|Sjá tilboðið|مشاهدهٔ پیشنهاد
+596|Engir atburðir enn.|هنوز رویدادی نیست.
+597|Bættu afhendingarborg við beiðnina síðar.|شهر تحویل را بعداً در درخواست اضافه کنید.
+598|Afhending til {place} er óstaðfest.|تحویل به {place} تأیید نشده است.
+599|Engin efni í verkefninu enn.|هنوز سطحی در این پروژه نیست.
+600|Engin verkefni enn|هنوز پروژه‌ای نیست
+601|Stofnaðu verkefni til að safna efnum og magni.|برای جمع‌آوری سطوح و مقادیر پروژه بسازید.
+602|Skilið sem: {list}.|برداشت شد: {list}.
+603|Sláðu inn flatarmál til að áætla efniskostnað.|برای برآورد هزینه مساحت را وارد کنید.
+604|{added} flutt inn, {skipped} sleppt|{added} وارد شد، {skipped} رد شد
+605|Kynningartilboði lokið|پیشنهاد معرفی پایان یافته
+606|Árgjald seljenda|حق عضویت سالانه
+607|Stigi aðila breytt|مرحلهٔ سرنخ تغییر کرد
+608|Þóknunarhlutfalli breytt|نرخ کمیسیون تغییر کرد
+609|Pöntunarstöðu breytt|وضعیت سفارش تغییر کرد
+610|Aðila bætt við|سرنخ افزوده شد

@@ -34,3 +34,32 @@ Country/city landing pages using real verified inventory; canonical/hreflang, st
 
 ## Status
 Prototype and handoff committed to a separate review branch. Existing site remains untouched. No standalone KASHI repo was found in accessible repos; SETai is a temporary handoff location, not a verified deployment repo. Move to a private KASHI repo before adding confidential strategy, real customer/seller records, credentials or payment details.
+
+## Implementation status, 2026-11-27 (stitched build)
+The branch page and the separately rebuilt V2 are now one codebase. This section supersedes "Review implementation" above.
+
+Layout: `v2/` is the site (plain HTML, CSS, JS; servable as-is for gate 1). `tools/` holds build, deploy, tests and translations.
+
+    python3 -m http.server 8080                     # from kashi/, then open /v2/
+    ./tools/build.sh                                # v2/ -> tools/dist/ with a cache-busting stamp
+    sudo ./tools/deploy.sh                          # owner approval required; backs up the live /v2/
+    python3 -m http.server 8792 --bind 127.0.0.1 --directory tools/www &
+    node tools/crawl.js                             # all routes, EN/NO/IS/FA, flows, narrow screens
+
+New UI text: add the English key to `tools/keys.json`, add `index|IS|FA` to `translations.txt` and `index|NO` to `translations-no.txt`, run `python3 tools/make-i18n.py`.
+
+| Handoff item | State |
+|---|---|
+| Marketplace, product pages, calculator, compare, basket, checkout, quotes | Prototype, browser storage |
+| Existing 3D engine | Connected; living room, bathroom, kitchen |
+| Free-text discovery with destination and budget | Rule-based (EN/NO/IS/FA), no AI |
+| Seller application with country, city, currency, regions | Prototype; stores an offer-eligibility timestamp locally |
+| Founding Partner offer (NOK 12,000 / 6,000 until 2026-12-31) | Shown as draft. Cut-off uses the visitor's clock; timezone and server check pending |
+| Commission | Not decided; adjustable test rate only |
+| Buyer, professional, seller and admin panels with role views | UI previews at hash routes (`#account`, `#pro`, `#seller`, `#admin`). No access control |
+| Partner pipeline CRM | UI with invented demo companies. The real prospect register is not in the site |
+| Vipps Login | Not implemented; disabled button. Needs KASHI's own Vipps agreement, credentials and a server (state, nonce, PKCE, ID-token validation as specified) |
+| Database, authentication, server API, AI search, payments, ledger | Not started |
+| Norwegian | Added. NO/IS/FA need native review |
+
+Open: this repository is public and holds the prospect register and pricing plan (see "move to a private repo" above). Review access to the live page is not protected (noindex only). Product prices are ISK samples while Norway is the primary market.
