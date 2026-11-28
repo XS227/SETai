@@ -4,15 +4,12 @@
 @media(max-width:720px){html{scroll-padding-top:80px}.header{height:76px;padding-inline:22px}.scrolled .header{height:65px}.header nav{display:none}.header-book{font-size:10px}.header-book span{margin-right:8px}.brand{font-size:11px;gap:8px}.brand small{font-size:9px}.brand-mark{font-size:36px;width:36px}.header-actions{gap:10px}.menu-toggle{display:block}.hero{height:auto;max-height:none;min-height:0;grid-template-columns:1fr;gap:34px;padding:120px 24px 60px}.hero-copy{padding:0}.hero-copy .eyebrow{margin-bottom:12px;font-size:10px}.hero h1{font-size:clamp(64px,14vw,92px);line-height:1.4;letter-spacing:-2px;margin-bottom:15px}.hero h1 .line{display:inline-block;margin-left:10px}.hero-description{font-size:14px;margin-bottom:24px}.hero-description br{display:none}.hero-foot{display:none}.button{min-height:50px;padding:12px 20px}.hero-art{width:100%;height:490px;border-radius:170px 170px 3px 3px}.hero-image{object-position:65% 8%;height:100%;object-fit:cover}.portrait-caption{font-size:11px}.scroll-cue{right:24px;bottom:18px;font-size:9px}.section-space{padding:70px 24px}.philosophy{display:block}.section-label{margin-bottom:32px}.philosophy>.section-label{margin-top:0}.philosophy h2{font-size:clamp(33px,8vw,52px);line-height:1.85;letter-spacing:-1px}.philosophy-bottom{margin-top:30px;gap:25px}.philosophy-bottom p{font-size:12px}.flower{font-size:52px}.journey{display:block;padding:0 24px}.journey-visual{height:48svh;min-height:290px;max-height:440px;top:64px;padding:20px 0 0;z-index:2;background:var(--night)}.journey-image-frame{height:calc(100% - 24px);width:100%;border-radius:120px 120px 3px 3px}.visual-caption{padding:35px 20px 14px}.scene-track{margin-top:15px;padding-bottom:10px}.chapter{min-height:65svh;padding:60px 0 75px;max-width:none;justify-content:flex-start}.chapter h2{font-size:44px;line-height:1.6}.chapter h2 br{display:none}.chapter p{font-size:13px;max-width:100%;margin-top:18px}.chapter .eyebrow{margin-bottom:14px}.chapter .text-link{margin-top:24px}.journey-content{position:relative;z-index:1}.section-heading{display:block;margin-bottom:30px}.section-heading h2{font-size:42px}.section-heading p{margin-top:22px;font-size:12px}.filters{gap:5px;flex-wrap:nowrap;overflow-x:auto;padding-bottom:16px;scrollbar-width:none}.filters button{white-space:nowrap;font-size:11px;padding:10px 15px}.filters small{display:none}.service-grid{grid-template-columns:1fr;gap:0}.service{min-height:104px;padding:16px 0}.service-name{font-size:16px}.service-note{line-height:2}.doctor{grid-template-columns:1fr;gap:38px}.doctor-photo{max-width:430px;margin:auto;aspect-ratio:4/4.6}.doctor-copy h2{font-size:40px}.doctor-copy p{font-size:13px}.process-grid{grid-template-columns:1fr;gap:30px}.process article{display:grid;grid-template-columns:35px 1fr;gap:6px 14px;padding-top:22px}.process article>span{padding-top:9px}.process h3{margin:0;font-size:22px}.process p{grid-column:2;font-size:12px}.process{padding-bottom:0}.faq{grid-template-columns:1fr;gap:25px}.faq h2{font-size:36px}.faq .eyebrow{margin-bottom:12px}summary{font-size:13px}details p{font-size:12px}.contact h2{font-size:53px}.contact .eyebrow{font-size:11px}.contact-top{font-size:10px}.contact-bottom{flex-direction:column;align-items:flex-start;gap:30px;margin-top:35px}.contact-phone{font-size:31px}.contact{padding-bottom:95px}.contact-watermark{font-size:21vw}footer{padding:25px 24px;flex-wrap:wrap;gap:25px}footer>span{display:none}.service-dialog{padding:65px 24px 30px}.service-dialog h2{font-size:30px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation:none!important;transition:none!important}.js .reveal{opacity:1;transform:none}.hero-image{will-change:auto}.reading-progress{display:none}}
 
-/* Camera and marker share one source-image coordinate system (941 × 1672). */
-.journey-stage{position:absolute;left:0;top:0;width:941px;height:1672px;transform-origin:0 0;transition:transform .85s var(--ease);will-change:transform;direction:ltr}
-.journey-stage .journey-image{display:block;width:941px;height:1672px;max-width:none;object-fit:fill;transform:none;animation:none}
-.focus-ring{position:absolute;left:514px;top:490px;width:164px;height:164px;border:1px solid #f0dfb8c9;border-radius:50%;transform:translate(-50%,-50%);box-shadow:0 0 0 7px #f4f1ea09;pointer-events:none;transition:left .85s var(--ease),top .85s var(--ease),width .85s var(--ease),height .85s var(--ease)}
-.journey-stage:not([data-ready]) .focus-ring{visibility:hidden}
-.journey-stage:not([data-ready]){position:relative;width:100%;height:100%;transition:none}
-.journey-stage:not([data-ready]) .journey-image{width:100%;height:100%;object-fit:cover;object-position:65% 8%}
-.journey-stage.is-measuring,.journey-stage.is-measuring .focus-ring{transition:none}
-@media(prefers-reduced-motion:reduce){.journey-stage,.focus-ring{transition:none!important;will-change:auto}}
+/* Individual scene images keep lip, chin and skin framing in sync. */
+.journey-scenes{position:absolute;inset:0;direction:ltr}
+.journey-scenes .journey-scene{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;opacity:0;transform:scale(1.025);transition:opacity .85s var(--ease),transform 1.4s var(--ease);pointer-events:none}
+.journey-scenes .journey-scene.is-active{opacity:1;transform:scale(1);z-index:1}
+.journey-scenes [data-scene-image="1"]{object-position:55% 48%}
+@media(prefers-reduced-motion:reduce){.journey-scenes .journey-scene{transition:none;transform:none}}
 
 /* Video journal + location — v4.2 */
 .video-blog{border-top:1px solid var(--line);background:#eeebe3}
@@ -92,3 +89,30 @@
 .service-banner{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:1;overflow:visible}
 .service-banner image{width:1122px;height:1402px}
 .service-thumb-img{display:none!important}
+
+/* Section photography — v5.3 */
+.hero-sections{isolation:isolate;gap:0;background:#efe1d1}
+.hero-sections .hero-copy{position:relative;z-index:2;grid-column:1;width:100%;padding-inline-end:2vw}
+.hero-sections .hero-art{position:absolute;inset:90px 0 0;border-radius:0;z-index:0;background:#efe1d1;pointer-events:none}
+.hero-picture{display:block;width:100%;height:100%}
+.hero-sections .hero-image{object-position:center;animation:soft-in 1.2s var(--ease) both}
+.hero-sections .portrait-caption,.hero-sections .art-index{display:none}
+.hero-sections .scroll-cue{z-index:3}
+.doctor-portrait{width:100%;height:100%;object-fit:cover;object-position:center 35%}
+.clinic{border-top:1px solid var(--line);background:#eeebe3}
+.clinic-gallery{display:grid;grid-template-columns:1fr 1fr;gap:28px;direction:ltr}
+.clinic-photo{margin:0;overflow:hidden}
+.clinic-photo img{width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;transition:transform .9s var(--ease)}
+.clinic-photo:hover img{transform:scale(1.025)}
+.clinic-photo figcaption{direction:rtl;padding-top:16px;font-size:12px;color:var(--muted)}
+.service[hidden]{display:none!important}
+@media(max-width:720px){
+ .hero-sections{background:var(--paper);gap:30px}
+ .hero-sections .hero-copy{padding:0;grid-column:auto}
+ .hero-sections .hero-art{position:relative;inset:auto;height:540px;border-radius:170px 170px 3px 3px;pointer-events:auto}
+ .hero-sections .hero-image{object-position:50% 77%}
+ .hero-sections .hero-image-wrap{height:100%}
+ .hero-sections .portrait-caption{display:flex}
+ .journey-scenes .journey-scene{object-position:50% 44%}
+ .clinic-gallery{grid-template-columns:1fr;gap:30px}
+}

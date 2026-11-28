@@ -8,42 +8,18 @@ const chapters = $$('.chapter');
 const bar = $('.reading-progress');
 const heroImage = $('.hero-image');
 const focusFrame = $('.journey-image-frame');
-const stage = $('.journey-stage');
-const ring = $('.focus-ring');
-let cameraSize = '';
+const sceneImages = $$('.journey-scene');
 let cameraScene = -1;
-let measureFrame;
-// Intrinsic pixel landmarks in portrait-hq.webp, independent of object-fit or viewport.
+// Each chapter owns an image; crossfade without reusing old portrait landmarks.
 function updateCamera(scene) {
- const width = focusFrame.clientWidth;
- const height = focusFrame.clientHeight;
- if (!width || !height) return;
- const size = `${width}:${height}`;
- if (size === cameraSize && scene === cameraScene) return;
- const resized = size !== cameraSize;
- const focus = chapters[scene].dataset;
- const sourceX = Number(focus.focusX);
- const sourceY = Number(focus.focusY);
- const scale = Math.max(width / 941, height / 1672) * Number(focus.focusZoom);
- const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
- // Center the named feature, while keeping the image over every edge of the frame.
- const x = clamp(width * .5 - sourceX * scale, width - 941 * scale, 0);
- const y = clamp(height * .48 - sourceY * scale, height - 1672 * scale, 0);
- if (resized) stage.classList.add('is-measuring');
- stage.dataset.ready = 'true';
- stage.style.transform = `translate3d(${x}px, ${y}px, 0) scale(${scale})`;
- ring.style.left = `${sourceX}px`;
- ring.style.top = `${sourceY}px`;
- ring.style.width = ring.style.height = `${Number(focus.focusRadius) * 2}px`;
- $('.focus-label').textContent = focus.focusLabel;
- cameraSize = size;
+ if (scene === cameraScene) return;
+ sceneImages.forEach((image, index) => {
+  const active = index === scene;
+  image.classList.toggle('is-active', active);
+  image.setAttribute('aria-hidden', String(!active));
+ });
+ $('.focus-label').textContent = chapters[scene].dataset.focusLabel;
  cameraScene = scene;
- if (resized) {
-  cancelAnimationFrame(measureFrame);
-  // Flush the new geometry before allowing transitions again (rotation / fold resize).
-  stage.getBoundingClientRect();
-  measureFrame = requestAnimationFrame(() => stage.classList.remove('is-measuring'));
- }
 }
 let queued = false;
 function paint() {
