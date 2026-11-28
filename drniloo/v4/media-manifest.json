@@ -1,0 +1,21 @@
+{
+  "source": "Public Instagram embeds for the doctor; video URL resolved once then stored on the existing VPS.",
+  "files": [
+    {
+      "path": "/drniloo/media/outline.mp4",
+      "sha256": "80ac8439d47b8c11fb49ec6c0d16319577c9646b2f86a7e35322732ea4cce0b9",
+      "bytes": 9243174,
+      "permalink": "https://www.instagram.com/reel/DcY-gJTNLu_/"
+    },
+    {
+      "path": "/drniloo/media/lip-aftercare.mp4",
+      "sha256": "e493048a6eafa2e15fe68b950e34f74390d6494a677a163d504f63616f74c7d2",
+      "bytes": 7157384,
+      "permalink": "https://www.instagram.com/reel/DQ4RvdwDJaw/"
+    }
+  ],
+  "full_face": {
+    "permalink": "https://www.instagram.com/reel/DdEtu5VKmZm/",
+    "availability": "No public playable video returned by the embed. Original Instagram link retained, without a simulated in-page play control."
+  }
+}

@@ -11,8 +11,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./styles.css?v=1">
+<style>#page-bg{position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none}</style>
 </head>
 <body>
+<canvas id="page-bg" data-theme="wave" data-accent="#c99a48" data-layout="center" data-bg="#071426" aria-hidden="true"></canvas>
   <div class="scroll-progress" aria-hidden="true"><span id="scrollProgress"></span></div>
   <div class="ambient ambient-a"></div><div class="ambient ambient-b"></div>
   <header class="topbar glass">
@@ -20,7 +22,7 @@
     <nav aria-label="ناوبری پروژه">
       <a href="#client">اطلاعات</a><a href="#clarify">نیاز به تأیید</a><a href="#services">خدمات</a><a href="#analysis">تحلیل</a><a href="#brand">برندینگ</a><a href="#plan">برنامه</a><a href="#cto">سایت</a>
     </nav>
-    <a class="pill" href="./v3/">مشاهده سایت</a>
+    <a class="pill" href="./v4/">مشاهده سایت</a>
   </header>
 
   <main>
@@ -29,7 +31,7 @@
         <div class="kicker">پروژه رشد دیجیتال · کرج + تهران</div>
         <h1>دکتر نیلوفر غفوری</h1>
         <p class="hero-lede">طراحی هویت دیجیتال، وب‌سایت پویا و معماری سئو برای تبدیل یک برند فعال اینستاگرامی به مرجع قابل جست‌وجو در گوگل.</p>
-        <div class="hero-actions"><a class="btn primary" href="#client">شروع بررسی پروژه</a><a class="btn ghost" href="./v3/">مشاهده سایت</a></div>
+        <div class="hero-actions"><a class="btn primary" href="#client">شروع بررسی پروژه</a><a class="btn ghost" href="./v4/">مشاهده سایت</a></div>
         <div class="hero-tags"><span>RTL / فارسی</span><span>Motion-first</span><span>SEO-ready</span><span>Mobile-first</span></div>
       </div>
       <div class="portrait-stage reveal" data-parallax="0.16">
@@ -112,7 +114,7 @@
         </div>
       </div>
       <div class="reveal" style="margin-top:26px;display:flex;justify-content:flex-start">
-        <a class="btn primary" href="./seo/">مشاهده تحلیل کامل کلمات کلیدی، رقبا و برنامه ۹۰ روزه ←</a>
+        <a class="btn primary" href="./seo/">مشاهده گزارش سئو آذر ۱۴۰۵: رقبا، نقشه، درآمد و تایم‌لاین ←</a>
       </div>
     </section>
 
@@ -142,12 +144,13 @@
     <section class="panel cto-panel" id="cto" data-section>
       <div class="section-head reveal"><span>۰۶</span><div><p>وب‌سایت</p><h2>نسخه فعلی پروژه</h2></div></div>
       <div class="versions latest-only">
-  <a class="version active reveal" href="./v3/"><div class="vtag">در حال توسعه</div><small>وب‌سایت فعلی</small><h3>مشاهده سایت</h3><p>نسخه‌ای که اکنون در حال طراحی و توسعه است؛ شامل تجربه اسکرول، خدمات تصویری، ویدیو بلاگ و ساختار آماده سئو.</p><span class="arrow">← مشاهده سایت</span></a>
-  <a class="version reveal" href="./seo/"><div class="vtag muted">SEO</div><small>تحلیل و برنامه رشد</small><h3>تحلیل سئو</h3><p>کلمات کلیدی، رقبا، فرصت‌های محلی و برنامه اجرایی رشد ارگانیک.</p><span class="arrow">← مشاهده تحلیل</span></a>
+  <a class="version active reveal" href="./v4/"><div class="vtag">نسخه ۴ · اصلی</div><small>وب‌سایت فعلی</small><h3>مشاهده سایت</h3><p>نسخه‌ای که اکنون در حال طراحی و توسعه است؛ شامل تجربه اسکرول، خدمات تصویری، ویدیو بلاگ و ساختار آماده سئو.</p><span class="arrow">← مشاهده سایت</span></a>
+  <a class="version reveal" href="./seo/"><div class="vtag muted">SEO</div><small>تحلیل و برنامه رشد</small><h3>تحلیل سئو</h3><p>به‌روزرسانی آذر ۱۴۰۵: سهم رقبا، نقشه بازار، قیمت‌های ۱۴۰۵، پتانسیل درآمد و تایم‌لاین ۱۲ ماهه.</p><span class="arrow">← مشاهده تحلیل</span></a>
 </div>
 <footer class="project-footer reveal"><span>SETAEI × Dr. Niloufar Ghafouri</span><a href="https://github.com/XS227/SETai">مخزن پروژه در GitHub</a></footer>
     </section>
   </main>
   <script src="./app.js?v=1" defer></script>
+<script src="/assets/home/page-bg.js?v=4" defer></script>
 </body>
 </html>
